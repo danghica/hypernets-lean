@@ -1,0 +1,140 @@
+\Needspace{18\baselineskip}
+\section{Provenance and context closure at arbitrary box depth}
+The shallow origin map alone is insufficient for deep replacement: an enclosing
+box edge stays in place while occurrences in its body may change. We construct
+provenance through each selected enclosing box and then induct on the typed site.
+
+\Needspace{24\baselineskip}
+\subsection{Local provenance for a changed label}
+\begin{definition}[Fibre provenance]
+For old and new labels $l,l'$ at the same outer depth and a replacement $H$, a
+fibre provenance certificate is an injective map
+\[
+ F_d(l')\longrightarrow F_d(l)+\operatorname{Occurrences}(H)
+\]
+preserving the hole observation in the indicated summand. It accounts for
+changing one label while retaining or inserting the occurrences within that label.
+\end{definition}
+\lean{Graph/DeepContext}{12}{19}{Linear.FiberProvenance}
+An unchanged label has the left inclusion as its origin map, which is injective
+and preserves observation by reflexivity. If the new label merely has a proof
+of equality to the old label, first transport its fibre address along that
+equality and then use the left inclusion. Injectivity follows from transport
+injectivity; the hole equation is the inverse direction of the transport
+observation equation.
+\lean{Graph/DeepContext}{22}{26}{Linear.FiberProvenance.unchanged}
+\lean{Graph/DeepContext}{29}{33}{Linear.FiberProvenance.retained}
+
+\begin{lemma}[Assembly of local provenance]
+Suppose a signature-preserving per-edge relabelling of $G$ has a fibre provenance
+certificate at every edge. If only a single designated edge can produce inserted
+origins, these certificates assemble into provenance for the relabelled graph
+relative to $G,H$.
+\end{lemma}
+\begin{proof}
+At a result pair $(e,x)$ inspect its fibre origin. A retained origin $y$ gives
+the old graph occurrence $(e,y)$; an inserted origin is already an occurrence
+of $H$. Observation preservation is precisely the local certificate's equation.
+For injectivity, consider the two output tags. Two retained origins identify
+their outer edges and then their local retained addresses; local injectivity
+identifies the original fibre addresses. Mixed output tags cannot agree.
+If both origins are inserted, each outer edge must be the designated one:
+otherwise the hypothesis that all its origins are retained contradicts its
+inserted tag. With the outer edges identified, equality of inserted addresses
+and local injectivity again identify the fibre addresses. Thus the global
+origin map is injective in every case.
+\end{proof}
+\lean{Graph/DeepContext}{36}{91}{Linear.relabelProvenance}
+The single-designated-edge restriction prevents two different outer edges from
+claiming the same inserted occurrence. The lemma proves this separation; it
+does not assume global injectivity as an extra graph law.
+
+\Needspace{24\baselineskip}
+\subsection{Lifting a body's provenance through one box}
+Suppose the old and new bodies $B,B'$ have the same bound/free interface and a
+provenance certificate $p$ for $B',B,H$. Their outer box labels differ only in
+body content. Construct fibre provenance as follows. The shallow occurrence of
+the box is retained as the old box's shallow occurrence. A new child address is
+converted to the fibre-coordinate address of $B'$ and sent through $p$. Retained
+body origins are converted back to body addresses and tagged as old box children;
+inserted origins remain occurrences of $H$.
+\begin{proof}[Injectivity and observation preservation]
+A retained shallow box occurrence is distinct from every retained child and
+every inserted origin by its tags. For two children, inspect the two body-origin
+tags. Mixed tags cannot give equal lifted origins. If both are retained,
+equality of the lifted children, followed by the old body's occurrence bijection,
+identifies the retained body origins. If both are inserted, their equality is
+already equality of body origins. In both cases body-provenance injectivity and
+the new body's occurrence-bijection injectivity identify the original children.
+For observations, the shallow box lookup is empty on both sides. A child's lookup
+agrees with its body-coordinate observation by the bijection lemma; body
+provenance gives the intermediate equality. In the retained case the inverse
+bijection of the old body supplies the remaining observation equation. In the
+inserted case the body equation already gives the replacement observation.
+\end{proof}
+\lean{Graph/DeepContext}{95}{147}{Linear.boxFiberProvenance}
+
+To lift through a specified edge of a larger graph, use this box certificate at
+that edge and an equality-transported retained certificate at every other edge.
+Classical testing of edge equality selects the two cases. At the selected edge,
+the given label equality identifies its old box, and the new label contains the
+modified body with unchanged metadata. Elsewhere the label is unchanged, so all
+local origins are retained. The assembly lemma therefore constructs provenance
+for the existing concrete box-replacement operation.
+\lean{Graph/DeepContext}{150}{170}{Linear.replaceBoxProvenance}
+
+\Needspace{24\baselineskip}
+\subsection{The deep context closure theorem}
+\begin{theorem}[Provenance at every typed site]
+For every typed site $s$ in $G$ and matching replacement $H$, the defined result
+$\mathsf{plugAt}(s,H)$ has injective, hole-observation-preserving provenance
+relative to $G,H$.
+\end{theorem}
+\begin{proof}
+Induct on the site. A shallow site uses the concrete shallow provenance map.
+For an inside site, the induction hypothesis gives provenance for the replacement
+in the chosen body's inner site. Lift this certificate through the selected
+outer box using the preceding construction. That is exactly the inside branch
+of the definition of deep plugging. Induction follows the finite site address,
+so the proof works at every finite nesting depth.
+\end{proof}
+\lean{Graph/DeepContext}{173}{180}{Linear.siteProvenance}
+
+\begin{theorem}[Deep replacement preserves contexts under compatibility]
+If $G,H$ have unique holes and the concrete site provenance is compatible, then
+$\mathsf{plugAt}(s,H)$ has unique holes.
+\end{theorem}
+\begin{proof}
+Use the constructed site provenance in the compatible-provenance uniqueness
+theorem. No locality or occurrence-injectivity hypothesis remains to be supplied:
+those properties have been proved for the actual replacement operation.
+The remaining compatibility premise is explicitly a restriction on colliding
+hole labels at retained origins.
+\end{proof}
+\lean{Graph/DeepContext}{183}{188}{Linear.plugAt_uniqueHoles_of_compatible}
+Full disjointness of $G,H$ gives a simpler sufficient condition: instantiate the
+full-disjointness provenance theorem with the same site certificate. This
+condition is stronger than compatibility because it also inspects discarded host
+occurrences; it is not asserted to be necessary.
+\lean{Graph/DeepContext}{190}{194}{Linear.plugAt_uniqueHoles}
+Every hole label of the deep result belongs to the inventory of the host or
+replacement, by the provenance inventory-subset theorem. This is an upper bound
+on the deep inventory, not an exact description of which host labels survive.
+\lean{Graph/DeepContext}{197}{200}{Linear.plugAt_hasHole_subset}
+If $H$ is hole-free, it has unique holes and is disjoint from $G$. Substituting
+these two facts gives context closure for replacing any addressed edge by
+hole-free material, with no separate freshness witness required.
+\lean{Graph/DeepContext}{203}{207}{Linear.plugAt_holeFree_unique}
+Finally, $\mathsf{Context.plugAt}$ accepts a certified host context, a typed site,
+a certified replacement context, and full disjointness. It returns the concrete
+deeply filled graph paired with its proved context certificate. The original
+ordered outer interface and enclosing incidence laws are those already supplied
+by deep replacement.
+\lean{Graph/DeepContext}{209}{212}{Linear.Context.plugAt}
+
+This milestone supplies globally unique-hole context closure and concrete origin
+tracking through boxes. The exact necessary-and-sufficient inventory criterion
+has been proved for shallow plugging. For arbitrary deep sites we have compatible
+provenance and the stated sufficient conditions; an exact syntactic deep inventory,
+associativity of plugging, and recursive isomorphism of box contents remain
+separate obligations. None of these results yet defines the concrete UAM.

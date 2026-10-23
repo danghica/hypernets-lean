@@ -1,0 +1,97 @@
+\Needspace{18\baselineskip}
+\section{Context composition: absence, reuse, and a collision}
+\Needspace{24\baselineskip}
+\subsection{Hole-free filling inside a box}
+The value corolla is hole-free: any hole witness would claim that the lookup
+of a primitive operation is a hole label, whereas that lookup is empty.
+Applying deep context closure for a hole-free replacement to the old boxed-hole
+site proves that its filled result has unique holes. The context-valued operation
+also builds a certified filled context from the boxed context and the value
+corolla, using hole-free uniqueness and disjointness for the replacement.
+\lean{Graph/ContextExamples}{10}{12}{Linear.Examples.value_holeFree}
+\lean{Graph/ContextExamples}{14}{15}{Linear.Examples.filledBox_unique}
+\lean{Graph/ContextExamples}{17}{19}{Linear.Examples.filledContext}
+
+The single-hole corolla has no retained occurrence when its only outer edge is
+removed. A proposed retained witness includes an edge different from zero, but
+every element of its edge carrier $\operatorname{Fin}(1)$ equals zero. This
+contradicts the witness's inequality certificate.
+\lean{Graph/ContextExamples}{21}{25}{Linear.Examples.singleHole_retained_absent}
+Consequently replacing its only hole by the very same single-hole corolla still
+gives a context. Use sharp context closure: both input uniqueness proofs are
+available, and the retained part of the freshness premise is impossible by the
+preceding result. However, these two identical input graphs do not have fully
+disjoint inventories: their sole edge is a witness for the same label in each.
+Applying a proposed full-disjointness proof to those two witnesses gives a
+contradiction. Together these examples show that sharp freshness admits valid
+label reuse which the stronger sufficient condition would exclude.
+\lean{Graph/ContextExamples}{28}{30}{Linear.Examples.reuse_removed_label}
+\lean{Graph/ContextExamples}{33}{34}{Linear.Examples.reuse_not_fully_disjoint}
+
+Filling the single-hole corolla with the value is hole-free, not just a context.
+The exact inventory theorem leaves a retained alternative or a value alternative;
+the first is impossible by absence of surviving old edges and the second by
+hole-freeness of the value.
+\lean{Graph/ContextExamples}{36}{40}{Linear.Examples.filled_single_holeFree}
+The boxed filled result is hole-free at every depth as well. Express any proposed
+hole in fibre coordinates. Its outer edge has singleton carrier, so it is zero.
+The already proved label equation identifies that edge as a box whose body is
+the filled single-hole graph. Transport the fibre address along that equation,
+which preserves its hole observation. Its shallow alternative cannot observe a
+hole because it is a box; its child alternative contradicts the filled body's
+hole-freeness. Thus no shallow or deep witness exists in the result.
+\lean{Graph/ContextExamples}{43}{55}{Linear.Examples.filledBox_holeFree}
+
+\Needspace{24\baselineskip}
+\subsection{Two distinct shallow holes in series}
+For a natural-number name $n$, define a hole label $\chi_n$ with one term input
+and one term output. The two-hole graph has external type $*\to *$, one internal
+term vertex $v$, and edges $e_0,e_1$ with labels $\chi_0,\chi_1$ and incidence
+\[
+ \mathsf{input}_0\xrightarrow{e_0}v\xrightarrow{e_1}\mathsf{output}_0.
+\]
+This notation records the two source and target singleton lists, not an extra
+path assumption.
+\lean{Graph/ContextExamples}{58}{58}{Linear.Examples.chainHole}
+\lean{Graph/ContextExamples}{61}{128}{Linear.Examples.twoHoles}
+\begin{proof}[Graph invariants]
+The carriers are $\operatorname{Fin}(1)$ and $\operatorname{Fin}(2)$, with finite
+range enumerations. Every incidence list is singleton and hence distinct.
+For source uniqueness, two edges of different indices have different source
+constructors, namely input and internal, so a shared source is impossible;
+equal-index cases give equal edges. The target argument uses internal and output
+constructors instead. Coverage chooses $e_0$ for the input source and internal
+target, and $e_1$ for the internal source and output target. Outer outputs have
+no source occurrence and outer inputs no target occurrence by constructor
+disjointness. There is only one internal index and one index at each boundary,
+so these cases exhaust all vertices. Every displayed vertex label is term,
+matching the singleton input and output lists of both typed hole labels.
+\end{proof}
+
+This graph has unique holes. Two equal observed labels give equal numeric hole
+names. If one edge index is zero and the other is not, their names are respectively
+zero and one, a contradiction. If both are zero they agree directly. If neither
+is zero, both are one because their ordinal carrier has size two, so they agree
+again. At depth zero these are all occurrence addresses.
+\lean{Graph/ContextExamples}{130}{149}{Linear.Examples.twoHoles_unique}
+
+\Needspace{24\baselineskip}
+\subsection{A checked failure without freshness}
+Let the replacement be the corolla of $\chi_1$, with the same external interface
+as $e_0$. It is itself a context: any two occurrences belong to its singleton
+edge carrier and hence are equal, independently of their lookup hypotheses.
+\lean{Graph/ContextExamples}{151}{152}{Linear.Examples.repeatedHole}
+\lean{Graph/ContextExamples}{154}{159}{Linear.Examples.repeatedHole_unique}
+Nevertheless, replacing $e_0$ in the two-hole graph by this corolla violates
+unique holes. In the result, the retained host edge $e_1$ and the inserted
+replacement edge both observe $\chi_1$. Context uniqueness would identify their
+occurrences, but their edge tags are different constructors of the disjoint sum.
+This is a contradiction. Thus well-formed graph plugging and uniqueness of each
+input graph alone do not guarantee the context condition in the result.
+\lean{Graph/ContextExamples}{162}{167}{Linear.Examples.collision_breaks_unique}
+The same witnesses explicitly refute sharp freshness: $e_1$ and its shallow fibre
+address witness retained presence of $\chi_1$, and the replacement's only edge
+witnesses inserted presence. Feeding both to a proposed freshness proof gives
+false. This regression exercises the actual collision excluded by the
+necessary-and-sufficient theorem, alongside the valid label-reuse example above.
+\lean{Graph/ContextExamples}{169}{172}{Linear.Examples.collision_not_fresh}

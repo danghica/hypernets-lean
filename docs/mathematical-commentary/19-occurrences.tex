@@ -1,0 +1,99 @@
+\Needspace{18\baselineskip}
+\section{Occurrence fibres and transport of hole observations}
+The next milestone completes context closure under explicit hole freshness,
+including replacement at arbitrary box depth. Its proofs need to distinguish
+individual occurrences, rather than merely sets of labels. This section provides
+coordinates for those occurrences without changing the existing hypernet type.
+
+\Needspace{24\baselineskip}
+\subsection{Coordinates local to an outer edge}
+\begin{definition}[Children and occurrence fibre]
+For a label $l$ at depth zero, its child occurrence type is empty. At depth $d+1$,
+a primitive label again has no children; a box label with body $B$ has child type
+$\operatorname{AllEdge}(B)$. Define the fibre of $l$ to be
+\[
+ F_d(l)=\{\bullet\}+\operatorname{Children}_d(l).
+\]
+The left element is the edge itself; a right element is an occurrence below it.
+\end{definition}
+\lean{Graph/Occurrences}{12}{16}{Linear.Children}
+\lean{Graph/Occurrences}{19}{20}{Linear.Fiber}
+The shallow hole observation reads the primitive hole label at depth zero or in
+the primitive summand at positive depth, and returns no hole on a box label.
+The child observation eliminates empty child types and otherwise uses the
+body's existing hole lookup. The fibre observation combines these functions:
+left elements use shallow lookup and right elements use child lookup.
+\lean{Graph/Occurrences}{22}{25}{Linear.shallowHole}
+\lean{Graph/Occurrences}{27}{31}{Linear.childHole}
+\lean{Graph/Occurrences}{33}{36}{Linear.fiberHole}
+An occurrence of a graph $G$ in fibre coordinates is a dependent pair
+\[
+ (e,x),\qquad e\in G_E,\quad x\in F_d(\lambda_G(e)).
+\]
+The first component is always an outer edge, even when $x$ goes deep into a box.
+This representation depends on edge labels and occurrence addresses, not on
+vertex incidence or a particular enumeration of the carriers.
+\lean{Graph/Occurrences}{39}{40}{Linear.Occurrences}
+
+\begin{lemma}[Occurrence coordinates]
+The existing occurrence type $\operatorname{AllEdge}(G)$ is bijective to the
+fibre-coordinate occurrence type.
+\end{lemma}
+\begin{proof}
+At depth zero, send an edge $e$ to $(e,\mathsf{left}(\bullet))$; the inverse
+forgets that singleton component. A right component would belong to the empty
+type and is impossible. At positive depth, send a shallow edge to the same
+left-tagged pair, and a deep address $(e,a)$ to $(e,\mathsf{right}(a))$.
+The inverse removes the fibre tag to reconstruct the corresponding shallow or
+deep address. Both inverse laws follow by cases on the tags and uniqueness of the unit value.
+\end{proof}
+\lean{Graph/Occurrences}{42}{60}{Linear.occurrenceBijection}
+Define a graph's occurrence observation at $(e,x)$ by applying the fibre
+observation to $\lambda_G(e)$ and $x$.
+\lean{Graph/Occurrences}{62}{63}{Linear.occurrenceHole}
+The bijection preserves hole observations. At depth zero this is definitional.
+For a positive-depth shallow occurrence, split the label into primitive or box
+and compute both lookups. For a deep occurrence, both lookups read the same
+body address: exposing the label cases makes the equality reflexive. The original
+hierarchy lookup now uses a directly dependent reader, avoiding unnecessary
+proof-dependent casts while retaining the same definition by label cases.
+\lean{Graph/Occurrences}{65}{77}{Linear.occurrenceBijection_hole}
+
+\begin{lemma}[The context condition in fibre coordinates]
+A graph has unique holes exactly when any two fibre-coordinate occurrences
+observing the same hole label are equal.
+\end{lemma}
+\begin{proof}
+For the forward direction, apply unique holes to the inverse images of the two
+occurrences. Observation preservation supplies their lookup hypotheses. Map
+the resulting equality forwards and cancel the inverse pairs. Conversely, map
+the two original addresses forwards, use fibre-coordinate uniqueness and
+observation preservation, and conclude by injectivity of the bijection.
+\end{proof}
+\lean{Graph/Occurrences}{80}{96}{Linear.uniqueHoles_iff_occurrences}
+
+\Needspace{24\baselineskip}
+\subsection{Transport along equality and edge maps}
+If labels $l,l'$ are equal, transport of $x\in F_d(l)$ along that equality gives
+an element of $F_d(l')$ with the same hole observation. Such transport is injective.
+For each assertion, eliminate the label equality; transport becomes the identity,
+so the observation equation is reflexive and injectivity is the given equality
+of transported elements.
+\lean{Graph/Occurrences}{98}{101}{Linear.fiberHole_transport}
+\lean{Graph/Occurrences}{103}{106}{Linear.fiber_transport_injective}
+A shallow edge map $f:G_E\to H_E$ with equations
+$\lambda_G(e)=\lambda_H(f(e))$ maps all occurrences by
+\[
+ (e,x)\longmapsto (f(e),\operatorname{transport}(x)).
+\]
+The descendant address is preserved through the label equality; it is not
+searched for again by comparing box contents.
+\lean{Graph/Occurrences}{109}{112}{Linear.mapOccurrences}
+This map preserves hole observation by the equality-transport observation lemma.
+If $f$ is injective, the occurrence map is injective: equality of mapped pairs
+first identifies their edge indices by injectivity of $f$. After substituting
+that equality, equality of their transported second components implies equality
+of the original components by transport injectivity. The dependent pairs are
+therefore equal.
+\lean{Graph/Occurrences}{114}{119}{Linear.mapOccurrences_hole}
+\lean{Graph/Occurrences}{121}{132}{Linear.mapOccurrences_injective}

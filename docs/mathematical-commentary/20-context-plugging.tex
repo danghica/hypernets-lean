@@ -1,0 +1,201 @@
+\Needspace{18\baselineskip}
+\section{Hole inventories and sharp shallow context closure}
+\label{sec:context-closure}
+All hole-label comparisons in this section compare complete typed labels: the
+name and both interface lists. The occurrence quantifiers include every box depth.
+
+\Needspace{24\baselineskip}
+\subsection{Hole inventories, absence, and isomorphism}
+\begin{definition}[Presence, absence, and disjointness]
+Write $\mathsf{HasHole}(G,h)$ when some occurrence of $G$ looks up to $h$.
+Write $\mathsf{HoleFree}(G)$ when no label has such an occurrence. Two graphs
+have disjoint holes when no complete hole label occurs in both. The graphs may
+have different external interfaces and depth bounds.
+\end{definition}
+\lean{Graph/ContextPlugging}{11}{12}{Linear.HasHole}
+\lean{Graph/ContextPlugging}{14}{15}{Linear.HoleFree}
+\lean{Graph/ContextPlugging}{18}{19}{Linear.HolesDisjoint}
+Hole presence is equivalently witnessed by a fibre-coordinate occurrence with
+the same observation. Transport a witness by the occurrence bijection for one
+direction and by its inverse for the other, using observation preservation and
+the inverse equation.
+\lean{Graph/ContextPlugging}{21}{31}{Linear.hasHole_iff_occurrences}
+A hole-free graph has unique holes vacuously: the first purported hole occurrence
+already contradicts absence. Disjointness is symmetric by exchanging its two
+presence premises. Any graph is disjoint from a hole-free graph because a hole
+in the second graph would contradict its absence property.
+\lean{Graph/ContextPlugging}{33}{36}{Linear.holeFree_unique}
+\lean{Graph/ContextPlugging}{38}{40}{Linear.HolesDisjoint.symm}
+\lean{Graph/ContextPlugging}{42}{44}{Linear.holeFree_disjoint}
+
+Boxing neither creates nor removes a hole label from the inventory of the body.
+A shallow box occurrence cannot be a hole. A deep occurrence is exactly an
+address in its body with the same lookup, so it supplies a body witness. Conversely,
+tag a body witness with the box's only outer edge. Consequently a hole-free body
+gives a hole-free box: transfer any proposed hole witness to the body and contradict
+its absence property.
+\lean{Graph/ContextPlugging}{47}{58}{Linear.box_hasHole_iff}
+\lean{Graph/ContextPlugging}{60}{63}{Linear.box_holeFree}
+
+A label-preserving edge map preserves hole presence: map the fibre-coordinate
+witness using the occurrence map and its observation equation. An injective such
+edge map reflects unique holes: map two proposed equal-label occurrences into
+the target, apply target uniqueness, and use occurrence-map injectivity.
+\lean{Graph/ContextPlugging}{66}{71}{Linear.hasHole_map}
+\lean{Graph/ContextPlugging}{74}{82}{Linear.uniqueHoles_of_embedding}
+It follows that graph isomorphisms preserve and reflect hole inventories, and
+preserve and reflect the context condition. Apply presence preservation to the
+forward and inverse edge bijections for the first equivalence. Apply reflection
+of uniqueness to the inverse bijection for forward preservation and to the
+forward bijection for reflection. Label preservation is supplied by the
+isomorphism equations with the appropriate equality direction.
+\lean{Graph/ContextPlugging}{84}{87}{Linear.iso_hasHole_iff}
+\lean{Graph/ContextPlugging}{89}{94}{Linear.iso_uniqueHoles_iff}
+These results use the current isomorphism notion that fixes edge labels. They do
+not yet extend it to isomorphic, independently renamed box contents.
+
+\Needspace{24\baselineskip}
+\subsection{Provenance and the abstract collision argument}
+\begin{definition}[Provenance certificate]
+For result $R$, host $C$, and replacement $H$, a provenance certificate is an
+injective function
+\[
+ p:\operatorname{Occurrences}(R)\longrightarrow
+ \operatorname{Occurrences}(C)+\operatorname{Occurrences}(H)
+\]
+that preserves hole observation in the chosen summand. Its left values identify
+retained host occurrences and its right values identify inserted occurrences.
+Different result occurrences must have different tagged origins.
+\end{definition}
+\lean{Graph/ContextPlugging}{98}{106}{Linear.Provenance}
+This is a reusable intermediate interface. Unlike the earlier specimen laws,
+the provenance certificates required for actual plugging are constructed below
+from the concrete operations, rather than left as unproved assumptions.
+
+Every result hole label belongs to the host or replacement inventory. Choose its
+fibre-coordinate witness, inspect the origin tag, and use preservation to obtain
+a witness in the indicated graph.
+\lean{Graph/ContextPlugging}{113}{119}{Linear.Provenance.holes_subset}
+A provenance certificate is \emph{compatible} when no inserted hole label is
+observed at any retained host origin. Formally, if $p(a)=\mathsf{left}(c)$ and
+$c$ observes $h$, then $H$ does not contain $h$. Host occurrences outside the
+image of the left branch are irrelevant to this condition.
+\lean{Graph/ContextPlugging}{122}{124}{Linear.Provenance.Compatible}
+
+\begin{theorem}[Unique holes from compatible provenance]
+If $C,H$ have unique holes and a provenance certificate for $R,C,H$ is compatible,
+then $R$ has unique holes.
+\end{theorem}
+\begin{proof}
+Take two result occurrences observing the same $h$ and inspect their origins.
+If both origins are retained, host uniqueness identifies their host addresses.
+If both are inserted, replacement uniqueness identifies their replacement
+addresses. In either case the tagged origins agree and provenance injectivity
+identifies the result occurrences. If one origin is retained and one inserted,
+observation preservation gives a retained host observation of $h$ and a hole
+witness for $h$ in $H$, contradicting compatibility. This covers all four tag
+combinations and proves fibre-coordinate uniqueness, hence the original condition.
+\end{proof}
+\lean{Graph/ContextPlugging}{126}{151}{Linear.Provenance.unique_of_compatible}
+Full disjointness of the host and replacement inventories implies compatibility:
+any retained host occurrence is in particular a host occurrence. Substituting
+this fact into the preceding theorem gives unique holes under full disjointness.
+\lean{Graph/ContextPlugging}{154}{157}{Linear.Provenance.unique}
+
+\Needspace{24\baselineskip}
+\subsection{Concrete shallow provenance and a first context operation}
+The provenance map for $C[e:=H]$ reads its outer edge tag. A surviving host edge
+with fibre address $x$ maps to the corresponding old host edge with $x$;
+an inserted edge maps to its replacement edge with $x$. In either case the
+edge label, and hence the fibre, is definitionally unchanged.
+\begin{proof}[Injectivity and observation preservation]
+Mixed edge tags give different origin tags and cannot agree. Two retained
+origins first identify the old edge values. Their surviving-edge subtype values
+then agree because their inequality certificates are propositions; equality of
+the dependent second components identifies their fibre addresses. Two inserted
+origins are already the same replacement pair. In every case fibre observation
+is unchanged by definition. Thus these data construct a provenance certificate
+for any shallow replacement, including when the removed edge is a box.
+\end{proof}
+\lean{Graph/ContextPlugging}{163}{190}{Linear.shallowProvenance}
+The general provenance theorem now proves context closure for shallow plugging
+under full hole disjointness. A context-valued operation packages the filled
+graph with this proof, taking certified host and replacement contexts and a
+proof of disjointness. All graph incidence invariants still come from the earlier
+certified net plugging construction.
+\lean{Graph/ContextPlugging}{193}{198}{Linear.plug_uniqueHoles}
+\lean{Graph/ContextPlugging}{200}{204}{Linear.Context.plug}
+
+\Needspace{24\baselineskip}
+\subsection{Exact inventory and the sharp freshness condition}
+\begin{definition}[Retained hole label]
+A retained hole label for removal of edge $e$ in $C$ is a hole observation in the
+fibre of an outer edge $f\ne e$. This includes deep occurrences below $f$.
+It excludes both the removed edge and every occurrence inside its label.
+\end{definition}
+\lean{Graph/ContextPlugging}{207}{209}{Linear.RetainedHole}
+\begin{theorem}[Exact shallow hole inventory]
+For each label $h$,
+\[
+ \mathsf{HasHole}(C[e:=H],h)
+ \quad\Longleftrightarrow\quad
+ \mathsf{RetainedHole}(C,e,h)\ \lor\ \mathsf{HasHole}(H,h).
+\]
+\end{theorem}
+\begin{proof}
+Express presence using fibre coordinates. A result occurrence has an outer edge
+tag that is either a surviving host edge or an inserted edge. The first case
+supplies exactly the retained witness; the second supplies a replacement witness.
+Conversely, a retained witness gives a result occurrence at the left edge tag,
+using its inequality proof to construct the surviving-edge subtype. A replacement
+witness gives a result occurrence at the right tag. Their hole observations
+are unchanged by definition.
+\end{proof}
+\lean{Graph/ContextPlugging}{212}{229}{Linear.plug_hasHole_iff}
+
+Define sharp plugging freshness to mean that no retained host hole label occurs
+in the replacement. This is weaker than requiring the replacement to be disjoint
+from the entire original host: labels confined to the removed edge's region may
+be reused.
+\lean{Graph/ContextPlugging}{232}{235}{Linear.PlugFresh}
+Sharp freshness implies uniqueness of the filled graph when both inputs have
+unique holes. Apply the compatible-provenance theorem to shallow provenance.
+Any result occurrence with a retained origin must have a surviving host edge
+tag; its fibre is the retained witness required by sharp freshness. An inserted
+edge cannot have a retained origin, so the other case is impossible.
+\lean{Graph/ContextPlugging}{237}{249}{Linear.plug_uniqueHoles_of_fresh}
+
+\begin{theorem}[Sharp freshness is necessary]
+If $C[e:=H]$ has unique holes, sharp plugging freshness holds.
+\end{theorem}
+\begin{proof}
+Suppose a retained host fibre observes $h$ and $H$ contains $h$. Form the two
+result occurrences from their witnesses as in the inventory theorem. Result
+uniqueness identifies them. Equality of their first components would identify
+a surviving host edge tag with an inserted edge tag, which is impossible.
+\end{proof}
+\lean{Graph/ContextPlugging}{252}{261}{Linear.plug_fresh_necessary}
+Consequently, for two contexts the filled graph has unique holes if and only if
+sharp plugging freshness holds. Necessity is the preceding theorem, which did
+not require uniqueness of either input; sufficiency uses the two input certificates.
+\lean{Graph/ContextPlugging}{264}{269}{Linear.plug_uniqueHoles_iff_fresh}
+
+\Needspace{24\baselineskip}
+\subsection{Consumption of a selected hole and certified composition}
+In a context, if the removed edge's shallow lookup is $h$, that label has no
+retained occurrence elsewhere. Otherwise the retained occurrence and the selected
+edge's shallow occurrence would be two occurrences of $h$. Context uniqueness
+identifies their pairs, so their outer edges agree, contradicting the retained
+edge's inequality certificate.
+\lean{Graph/ContextPlugging}{272}{277}{Linear.removed_hole_not_retained}
+It follows that the consumed label $h$ occurs in $C[e:=H]$ exactly when it occurs
+in $H$. Use the exact inventory theorem and exclude its retained alternative
+by the preceding result. Thus consumption removes the old occurrence; it does
+not forbid the replacement from deliberately reintroducing that label.
+\lean{Graph/ContextPlugging}{280}{287}{Linear.plug_consumed_hole_iff}
+The operation $\mathsf{Context.plugFresh}$ packages shallow composition with this
+sharp freshness premise. Its result graph is ordinary net plugging, and its
+context certificate is the sharp sufficiency proof. It supports arbitrary finite
+depth and arbitrary selected outer edges, rather than requiring that the selected
+edge's label itself be a hole.
+\lean{Graph/ContextPlugging}{289}{293}{Linear.Context.plugFresh}

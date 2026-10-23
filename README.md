@@ -75,12 +75,40 @@ extra abstract assumptions:
 
 The current `Net.Iso` fixes edge labels, so it handles carrier renaming at one
 graph level, not yet a recursive equivalence that identifies independently
-renamed box contents. Addressed deep replacement is also not yet a proof of
-context plugging associativity or of general preservation of unique hole labels
-under plugging. The typed, depth-indexed hierarchy includes explicit binder
+renamed box contents. The new context calculus proves preservation of unique hole labels under
+explicit freshness conditions at arbitrary depth. Plugging associativity remains
+to prove. The typed, depth-indexed hierarchy includes explicit binder
 metadata on box labels; a formal representation theorem relating it to the
 paper's set-based, graph-labelled presentation remains to prove. These
 distinctions are part of the remaining work below.
+
+## Context calculus milestone
+
+The concrete context condition is now preserved by plugging, with its freshness
+requirements proved explicitly rather than left as abstract locality laws:
+
+- Occurrence fibres identify an address by its outer edge and a position in that
+  edge's label. A proved bijection relates them to the existing deep occurrences
+  and preserves hole lookup.
+- Shallow plugging has an exact hole inventory: retained host holes together
+  with replacement holes. Only occurrences below the removed edge are discarded.
+- Given two contexts, the result is a context **if and only if** no retained host
+  hole label occurs in the replacement. The consumed label can be reused.
+- Concrete injective provenance is constructed through every enclosing box.
+  It proves context closure at any addressed depth under retained-origin
+  compatibility, with full host/replacement disjointness as a simpler sufficient
+  condition. Hole-free replacements need no separate freshness proof.
+- `Context.plugFresh` and `Context.plugAt` return certified contexts. Graph
+  isomorphisms preserve hole inventories and the unique-hole context condition.
+- Regressions prove valid reuse of a consumed label, global absence of holes
+  after filling inside a box, and failure of uniqueness when two individually
+  valid contexts introduce a retained/inserted label collision.
+
+The exact necessary-and-sufficient inventory criterion is currently shallow.
+For arbitrary deep sites, the proved compatibility condition uses the concrete
+provenance map. The deep inventory theorem is an upper bound, not an exact
+syntactic inventory theorem. Associativity and recursive box isomorphism remain
+open; the concrete UAM and the bridge to Theorem 6 remain the main later work.
 
 ## Checked source
 
@@ -112,7 +140,15 @@ distinctions are part of the remaining work below.
 - `Hypernets/Graph/DeepPlugging.lean`: addressed replacement at arbitrary depth
   and its enclosing-graph locality properties.
 - `Hypernets/Graph/Examples.lean` and `Audit.lean`: graph-level regression proofs
-  and explicit logical-dependency reports for the new constructions.
+  and explicit logical-dependency reports for the concrete constructions.
+- `Hypernets/Graph/Occurrences.lean`: label-local occurrence fibres, their
+  bijection with deep addresses, observation preservation, and edge-map transport.
+- `Hypernets/Graph/ContextPlugging.lean`: hole inventories, isomorphism invariance,
+  provenance, exact shallow inventory, sharp freshness, and certified context plugging.
+- `Hypernets/Graph/DeepContext.lean`: provenance through box replacement and
+  certified context closure for replacement at any addressed depth.
+- `Hypernets/Graph/ContextExamples.lean`: hole-free filling, consumed-label reuse,
+  and an explicit collision between two individually valid contexts.
 
 The implementation uses Lean's bundled `Std`, with no external library
 dependencies. The toolchain is pinned in `lean-toolchain`.
@@ -120,9 +156,9 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 272 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 274
-source-fragment links point to immutable code revision `ce31471`. It distinguishes
+all 344 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 347
+source-fragment links point to immutable code revision `f4d6ccd`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem.
 
@@ -160,9 +196,9 @@ logical axioms, if used, are shown explicitly.
 
 1. Prove adequacy of the typed graph representation, extend isomorphism
    recursively through box contents, and prove the context
-   algebra: associativity of plugging and preservation of globally unique hole
-   labels under the appropriate freshness hypotheses. The graph representation,
-   typed hierarchy, well-formed replacement, and basic path locality are now checked.
+   algebra, especially associativity of plugging. Global hole-label uniqueness
+   under freshness is now checked even for deep replacement. Extend the exact
+   shallow hole-inventory characterization to arbitrary deep sites.
 2. Define focussed states, search and rewrite transitions, rootedness,
    determinism, and refocusing (§§5–7, Appendices C–D).
 3. Define concrete type-indexed pre-templates, specimens, quasi-specimens,

@@ -133,15 +133,15 @@ address. A purported child occurrence under a primitive has empty type and is
 eliminated. Dependent transports in Lean express that the selected label really
 is the box whose body is being searched.
 \lean{Graph/Hierarchy}{197}{199}{Linear.primitiveHole}
-\lean{Graph/Hierarchy}{202}{215}{Linear.holeAt}
+\lean{Graph/Hierarchy}{202}{214}{Linear.holeAt}
 \begin{definition}[Unique holes and contexts]
 A hypernet has unique holes if, for each complete typed hole label $h$, any two
 occurrences whose lookup returns $h$ are equal. A context is a hypernet together
 with this property. This permits multiple different hole labels and also permits
 no holes; it is an at-most-once condition for each label over all depths.
 \end{definition}
-\lean{Graph/Hierarchy}{219}{222}{Linear.UniqueHoles}
-\lean{Graph/Hierarchy}{224}{225}{Linear.Context}
+\lean{Graph/Hierarchy}{218}{221}{Linear.UniqueHoles}
+\lean{Graph/Hierarchy}{223}{224}{Linear.Context}
 \begin{lemma}[Boxing preserves unique holes]
 If a body has unique holes, its one-edge box has unique holes.
 \end{lemma}
@@ -152,14 +152,15 @@ parent indices agree. Their lookups are the body lookups, whose occurrences
 agree by the body's uniqueness assumption. Tagging these equal child addresses
 with their common parent gives equality of the original occurrences.
 \end{proof}
-\lean{Graph/Hierarchy}{229}{250}{Linear.box_unique_holes}
+\lean{Graph/Hierarchy}{228}{249}{Linear.box_unique_holes}
 Boxing a context now means boxing its underlying graph and supplying this lemma
 as the context certificate. Shallow plugging at any fixed hierarchy depth is
 just the generic typed net plugging construction with that depth's alphabet;
 its interface constraints are checked by the type of its replacement argument.
-\lean{Graph/Hierarchy}{252}{255}{Linear.boxContext}
-\lean{Graph/Hierarchy}{258}{262}{Linear.plug}
-This last operation returns a hypernet. It is not yet a general theorem that
-plugging two contexts yields a context: freshness of hole labels and its preservation
-proof remain required. Likewise the typed hierarchy has not yet been proved
+\lean{Graph/Hierarchy}{251}{254}{Linear.boxContext}
+\lean{Graph/Hierarchy}{257}{261}{Linear.plug}
+This last operation returns a hypernet. The later context-calculus development
+now proves that its result is a context under explicit freshness conditions
+(Section~\ref{sec:context-closure}), including a sharp necessary-and-sufficient
+condition for shallow plugging. The typed hierarchy has not yet been proved
 adequate for the paper's original set-based presentation of graph-labelled edges.

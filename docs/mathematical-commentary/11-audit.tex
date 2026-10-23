@@ -11,11 +11,17 @@ introduce no new definitions or proofs.
 The graph audit inspects shallow plugging, host and inserted path equivalence,
 plugging congruence, exact trace uniqueness, typed operation-path uniqueness,
 finite deep enumeration, unique holes under boxing, deep plugging and its other-label
-locality, and the self-loop and deep-replacement regression proofs.
+locality, and the self-loop and deep-replacement regression proofs. Twelve further commands
+audit occurrence-coordinate observation preservation, exact hole inventories,
+sharp freshness and consumption, isomorphism invariance of contexts, deep site
+provenance, deep context closure, and the new reuse and collision regressions.
 \lean{Graph/Audit}{5}{17}{Graph.Audit: concrete theorem dependencies}
+\lean{Graph/Audit}{19}{30}{Graph.Audit: context calculus dependencies}
 
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
-and unique holes under boxing report only \texttt{propext} and \texttt{Quot.sound}.
+unique holes under boxing, occurrence-coordinate observation preservation,
+isomorphism invariance of unique holes, and uniqueness of the two-hole example
+report only \texttt{propext} and \texttt{Quot.sound}.
 The other audited declarations additionally report \texttt{Classical.choice}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
@@ -71,9 +77,11 @@ hypotheses:
 \item Prove a representation theorem relating the typed depth-indexed hierarchy
 with explicit binder metadata to the paper's set-based graph-labelled hypernets.
 Extend isomorphism recursively to identify independently renamed box bodies.
-\item Complete the context algebra: associativity of plugging and preservation
-of global hole-label uniqueness under suitable freshness conditions. Shallow
-well-formedness, path locality, and addressed deep replacement are already proved.
+\item Complete the remaining context algebra, especially associativity of plugging.
+Global hole-label uniqueness is now preserved under explicit freshness conditions
+for arbitrary deep replacement. Shallow plugging has an exact inventory and a
+necessary-and-sufficient freshness criterion; an equally explicit syntactic
+inventory characterization for arbitrary deep sites remains to prove.
 \item Define concrete focussed UAM states, search and rewrite transitions,
 rootedness, determinism, and refocusing. Prove their structural transition laws.
 Concrete focus labels and operation traversal alone do not define that machine.
@@ -88,5 +96,5 @@ last instantiation with all concrete obligations discharged yields the target
 robustness theorem.
 \end{enumerate}
 The present milestone proves both the abstract quantitative argument and a
-substantial concrete graph foundation. It does not yet establish that all
+substantial concrete graph and context-calculus foundation. It does not yet establish that all
 hypotheses of the former hold for the universal abstract machine.

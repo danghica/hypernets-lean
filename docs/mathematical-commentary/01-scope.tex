@@ -10,7 +10,9 @@ consequences. Constructing this structure from the paper's actual hypernets is
 still a separate task. The concrete graph part now supplies finite interfaced
 graphs, certified shallow plugging, renaming and path invariance, a typed boxed
 hierarchy, and addressed deep replacement. These constructions and their
-regression examples are explained after the abstract development.
+regression examples are explained after the abstract development. The context
+calculus now also proves exact shallow hole inventories, sharp freshness, and
+context closure for replacement at arbitrary box depth.
 
 There are three distinct kinds of assertion below. A \emph{definition} specifies
 a mathematical object or predicate. A \emph{proved statement} is established by
@@ -19,7 +21,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{ce31471}, rather than to the moving
+All code links point to revision \texttt{f4d6ccd}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}
@@ -69,7 +71,8 @@ The concrete branch begins with
 \leanfile{Hypernets/Graph/Basic.lean}{Graph/Basic.lean}. Plugging, paths, and
 isomorphism support the hierarchy and deep replacement modules. Operation-path
 uniqueness imports the counted-execution results, providing a concrete use of the
-abstract machine lemmas. Both branches are imported by the root file.
+abstract machine lemmas. Occurrence fibres and provenance then support shallow and deep context closure
+in the new context modules. Both branches are imported by the root file.
 
 The exposition follows these dependency orders. Section numbers and theorem
 numbers here are local to this document; references to the paper are explicitly
