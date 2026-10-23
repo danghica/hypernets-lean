@@ -1,4 +1,4 @@
-import Hypernets.Graph.SiteTransportExamples
+import Hypernets.Graph.CompositionExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -61,3 +61,20 @@ import Hypernets.Graph.SiteTransportExamples
 #print axioms Hypernets.Linear.SiteIso.plug_unique_iff
 #print axioms Hypernets.Linear.Examples.simultaneous_deep_renaming
 #print axioms Hypernets.Linear.Examples.wrong_address_changes_result
+
+#print axioms Hypernets.Graph.Net.plug_assoc
+#print axioms Hypernets.Graph.Net.corolla_plug_iso
+#print axioms Hypernets.Graph.Net.plug_corolla_iso
+#print axioms Hypernets.Linear.plugAt_assoc
+#print axioms Hypernets.Linear.plugAtModuloIso_comp
+#print axioms Hypernets.Linear.siteRetainedHole_comp
+#print axioms Hypernets.Linear.plugAt_comp_unique_iff
+#print axioms Hypernets.Linear.Context.plugAtComp
+#print axioms Hypernets.Linear.plugAtModuloIso_comp_three
+#print axioms Hypernets.Linear.plugAt_original
+#print axioms Hypernets.Linear.plugAtModuloIso_corolla
+#print axioms Hypernets.Graph.Examples.loop_associativity
+#print axioms Hypernets.Linear.Examples.intermediate_collision_repaired
+#print axioms Hypernets.Linear.Examples.repaired_inventory
+#print axioms Hypernets.Linear.Examples.shallow_then_deep_associativity
+#print axioms Hypernets.Linear.Examples.three_stage_composition
