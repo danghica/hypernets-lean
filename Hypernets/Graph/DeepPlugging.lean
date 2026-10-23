@@ -3,8 +3,8 @@ import Hypernets.Graph.Hierarchy
 /-!
 Type-correct replacement at an arbitrary box depth. Sites select an occurrence,
 not an edge label, so equal box bodies do not cause simultaneous replacement.
-This is an addressed replacement operation, not yet the hole-label-unique
-context calculus or its associativity theorem.
+This module defines addressed replacement. DeepContext proves context closure
+under hole-label freshness; plugging associativity remains a separate obligation.
 -/
 
 namespace Hypernets.Graph.Net

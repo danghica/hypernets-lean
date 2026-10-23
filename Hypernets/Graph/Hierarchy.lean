@@ -206,13 +206,12 @@ def holeAt {Op : Type} (ops : Operations Op) :
   | _ + 1, _, _, G, .inl e => match G.edgeLabel e with
       | .inl p => primitiveHole p
       | .inr _ => none
-  | n + 1, _, _, G, .inr ⟨e, occurrence⟩ => by
-      cases label : G.edgeLabel e with
-      | inl p =>
-          have absent : Empty := by simpa only [label] using occurrence
-          exact nomatch absent
-      | inr b =>
-          exact holeAt ops n b.body (by simpa only [label] using occurrence)
+  | n + 1, _, _, G, .inr ⟨e, occurrence⟩ =>
+      let read : (label : Primitive Op ⊕ Box (alphabet ops n)) →
+          (match label with | .inl _ => Empty | .inr b => AllEdge ops n b.body) → Option Hole
+        | .inl _, absent => nomatch absent
+        | .inr b, child => holeAt ops n b.body child
+      read (G.edgeLabel e) occurrence
 
 /-- The paper's context condition: a typed hole label occurs at most once at
 any depth. The addressed replacement operation does not assume this condition. -/
