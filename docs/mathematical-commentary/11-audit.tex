@@ -21,11 +21,18 @@ Nine further commands audit the exact deep inventory, both versions of sharp
 context closure, hole-freeness, selected-label consumption, certified deep
 plugging, and the deep reuse and collision regressions.
 \lean{Graph/Audit}{32}{40}{Graph.Audit: exact deep inventory dependencies}
+Eleven further commands audit recursive label transitivity, operation-path
+invariance, occurrence embeddings, hole and context invariance, deep congruence,
+quotient plugging and context validity, and the strict-extension regressions.
+\lean{Graph/Audit}{42}{52}{Graph.Audit: recursive isomorphism dependencies}
 
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
 isomorphism invariance of unique holes, and uniqueness of the two-hole example
 report only \texttt{propext} and \texttt{Quot.sound}.
+Recursive label transitivity, recursive operation-path invariance, the
+nonexistence of a literal-label isomorphism between the example boxes, and their
+equality as quotient classes likewise report only these two axioms.
 The other audited declarations additionally report \texttt{Classical.choice}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
@@ -80,8 +87,11 @@ hypotheses:
 \begin{enumerate}
 \item Prove a representation theorem relating the typed depth-indexed hierarchy
 with explicit binder metadata to the paper's set-based graph-labelled hypernets.
-Extend isomorphism recursively to identify independently renamed box bodies.
-\item Complete the remaining context algebra, especially associativity of plugging.
+Recursive isomorphism within each fixed depth layer is now proved. Relating
+different depth bounds and proving full representation adequacy remain open.
+\item Complete the remaining context algebra, especially associativity of plugging
+and transport of sites between isomorphic hosts. The quotient plugging operation
+currently fixes its concrete host and site.
 Global hole-label uniqueness is now preserved under explicit freshness conditions
 for arbitrary deep replacement. Exact syntactic inventories and
 necessary-and-sufficient freshness are now proved at every finite box depth,

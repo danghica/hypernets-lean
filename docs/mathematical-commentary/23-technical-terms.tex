@@ -48,6 +48,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{simulation}{Counting simulation}{A relation preserving finality and matching steps using related execution counts and an up-to relation, with an explicit stuck-execution alternative.}
 
+\glossaryentry{all-edge-transport}{Deep address transport}{The map obtained by converting a deep address to fibre coordinates, applying a hole embedding, and converting back to a target address.}
+
 \glossaryentry{site-fresh}{Deep freshness}{Disjointness between the replacement hole inventory and the host holes retained along the selected address; it is necessary and sufficient for composing two contexts.}
 
 \glossaryentry{all-edges}{Deep occurrence}{An address that records an enclosing box edge and recursively an occurrence in its body, distinguishing equal bodies at different locations.}
@@ -74,6 +76,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{cost-orders}{Exact cost order}{The preorder $E$ with $a\,E\,b$ exactly when $a=b$, requiring identical successful execution counts in refinement.}
 
+\glossaryentry{hole-embedding}{Fibre embedding}{An injective map between label fibres that preserves the complete hole observation at every position.}
+
 \glossaryentry{fibre-provenance}{Fibre provenance}{An injective, hole-observation-preserving map from a changed label's occurrence fibre to retained old fibre addresses or replacement occurrences.}
 
 \glossaryentry{machine}{Final state}{A state satisfying a machine's successful-finality predicate; the machine laws require that it has no outgoing transition.}
@@ -85,6 +89,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{observations}{Fragment}{An element of the family $F_i$ in an observation interface, matched with contexts of the same interface index $i$.}
 
 \glossaryentry{ports}{Graph signature}{The assignment of an ordered input-label list and output-label list to each operation label.}
+
+\glossaryentry{hole-embedding}{Hole embedding}{An injective map of graph occurrences preserving hole labels and the absence of a hole; it need not itself preserve incidence.}
 
 \glossaryentry{hole-presence}{Hole inventory}{The collection of complete hole labels $h$ for which some shallow or deep occurrence observes $h$.}
 
@@ -117,6 +123,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{ports}{Internal vertex}{A vertex from the internal carrier, tagged separately from all input and output boundary positions.}
 
 \glossaryentry{isomorphism}{Isomorphism}{Bijections of internal vertices and edges preserving labels and ordered incidence lists while fixing the external boundary positions.}
+
+\glossaryentry{recursive-quotient}{Isomorphism class}{A hypernet modulo recursive isomorphism at a fixed depth bound and ordered interface.}
 
 \glossaryentry{lifting}{Lifted state relation}{The relation witnessed by a remote specimen with rooted endpoints equal to the two states being compared.}
 
@@ -162,11 +170,25 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{quasi}{Quasi-specimen}{The abstract relation requiring a non-rewrite specimen witness, with prescribed endpoint relations, whenever the compared states are rooted.}
 
+\glossaryentry{quotient-context-validity}{Quotient context validity}{The unique-hole predicate on recursive isomorphism classes, justified by invariance under a change of representative.}
+
+\glossaryentry{quotient-plugging}{Quotient plugging}{For a fixed concrete host and site, the well-defined operation sending a replacement isomorphism class to the class of the plugged graph.}
+
 \glossaryentry{reasonable}{Reasonable triple}{Three cost preorders satisfying the addition, decrease, inclusion, and sandwich conditions used by counting-simulation soundness.}
+
+\glossaryentry{deep-isomorphism}{Recursive isomorphism}{Carrier bijections preserving incidence and primitive labels, with corresponding box bodies recursively isomorphic and all binder metadata preserved.}
+
+\glossaryentry{recursive-label-equivalence}{Recursive label equivalence}{Equality of primitives, or matching box metadata with recursively isomorphic bodies; primitive and box labels are never equivalent.}
 
 \glossaryentry{reindexing}{Reindexing}{Renaming a net's internal and edge carriers along bijections, transporting labels and incidence while preserving boundary order.}
 
 \glossaryentry{relabelling}{Relabelling}{Changing operation labels along a signature-preserving map, leaving the graph's carriers, vertex labels, and incidence unchanged.}
+
+\glossaryentry{related-boxes}{Related boxes}{Boxes with the same bound/free metadata and bodies satisfying a specified relation at that exact interface.}
+
+\glossaryentry{relational-isomorphism}{Relational isomorphism}{Boundary-preserving carrier bijections preserving ordered incidence and vertex labels, with corresponding edge labels related by a supplied relation.}
+
+\glossaryentry{relational-plugging}{Relational plugging congruence}{The construction extending a replacement isomorphism for a reflexive label relation by identity on the surviving host.}
 
 \glossaryentry{lifting}{Remote specimen}{A specimen whose mode is not rewrite or which is not entering; only an entering rewrite focus is excluded.}
 

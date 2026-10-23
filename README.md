@@ -73,9 +73,9 @@ extra abstract assumptions:
   specializes this to typed hypernets without an additional determinism premise
   (the graph-theoretic content of Lemma 22).
 
-The current `Net.Iso` fixes edge labels, so it handles carrier renaming at one
-graph level, not yet a recursive equivalence that identifies independently
-renamed box contents. The new context calculus proves preservation of unique hole labels under
+`Net.Iso` fixes edge labels and handles carrier renaming at one graph level.
+The new `DeepIso` extends this to independently renamed box contents, as described
+below. The context calculus proves preservation of unique hole labels under
 explicit freshness conditions at arbitrary depth. Plugging associativity remains
 to prove. The typed, depth-indexed hierarchy includes explicit binder
 metadata on box labels; a formal representation theorem relating it to the
@@ -123,8 +123,28 @@ The inventory and sharp freshness theorems now hold at every finite box depth:
 - Concrete boxed regressions verify consumed-label reuse, genuine removal, and
   failure of uniqueness when an inserted label collides with a surviving sibling.
 
-Associativity and recursive box isomorphism remain open; the concrete UAM and
-its bridge to Theorem 6 remain the main later work.
+## Recursive isomorphism milestone
+
+`DeepIso` now compares complete finite hierarchies, allowing independent
+vertex and edge renaming in each box body:
+
+- `LabelEquiv` preserves primitive labels, binder metadata, ordered signatures,
+  and the operation predicate. Identity, inverse, and composition are proved.
+- Adjacency, paths, and complete operation traces are preserved and reflected.
+- Concrete injective maps transport occurrences through every box. Recursive
+  isomorphisms preserve hole inventories, hole-freeness, and context validity.
+- `plugAt_deepIso` proves replacement congruence at every addressed depth, with
+  no freshness, context-uniqueness, or non-self-loop premise.
+- `HypernetModuloIso` quotients graphs at each fixed depth and interface by this
+  equivalence. `plugAtModuloIso` is well-defined on replacement classes for a
+  fixed concrete host and site; context validity also descends to the quotient.
+- A checked example renames the two edges inside a box. The boxes are recursively
+  isomorphic but admit no literal-label `Net.Iso`, demonstrating the strict extension.
+
+The host/site pair is not yet quotiented, and sites have not yet been transported
+between isomorphic hosts. Plugging associativity, comparison across different
+depth bounds, and representation adequacy remain open. The concrete UAM and its
+bridge to Theorem 6 remain the main later work.
 
 ## Checked source
 
@@ -169,18 +189,29 @@ its bridge to Theorem 6 remain the main later work.
 - `Hypernets/Graph/ContextExamples.lean`: hole-free filling, consumed-label reuse,
   and an explicit collision between two individually valid contexts.
 
+- `Hypernets/Graph/RelIso.lean` and `RelIsoPlug.lean`: incidence isomorphisms
+  relative to a label relation and generic shallow replacement congruence.
+- `Hypernets/Graph/RecursiveIso.lean`: recursive label equivalence, deep
+  isomorphisms, equivalence laws, signatures, and operation-path invariance.
+- `Hypernets/Graph/RecursiveIsoHoles.lean`: occurrence embeddings and invariance
+  of hole inventories, hole-freeness, and contexts under recursive renaming.
+- `Hypernets/Graph/RecursiveIsoPlug.lean`: deep congruence, exact freshness
+  invariance, recursive isomorphism classes, and quotient replacement.
+- `Hypernets/Graph/RecursiveIsoExamples.lean`: body renaming, the strict extension
+  beyond literal-label isomorphism, and concrete quotient/congruence regressions.
+
 The implementation uses Lean's bundled `Std`, with no external library
 dependencies. The toolchain is pinned in `lean-toolchain`.
 
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 379 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 383
-source-fragment links point to immutable code revision `855b855`. It distinguishes
+all 442 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 447
+source-fragment links point to immutable code revision `75ba60f`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 110 technical terms, with short descriptions and internal PDF links
+glossary of 121 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -215,9 +246,10 @@ logical axioms, if used, are shown explicitly.
 
 ## Remaining work toward the milestone
 
-1. Prove adequacy of the typed graph representation, extend isomorphism
-   recursively through box contents, and prove the context
-   algebra, especially associativity of plugging. Global hole-label uniqueness
+1. Prove adequacy of the typed graph representation, relate different depth
+   bounds, transport sites between isomorphic hosts, and prove the context
+   algebra, especially associativity of plugging. Recursive box isomorphism
+   and replacement congruence at fixed host/site are now proved. Global hole-label uniqueness
    under freshness, exact hole inventories, and sharp context closure are now
    checked even for deep replacement.
 2. Define focussed states, search and rewrite transitions, rootedness,

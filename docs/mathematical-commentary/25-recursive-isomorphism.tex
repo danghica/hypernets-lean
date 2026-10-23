@@ -1,0 +1,410 @@
+\Needspace{18\baselineskip}
+\section{Recursive isomorphism and substitution modulo renaming}
+\label{sec:recursive-isomorphism}
+
+Literal equality of edge labels is too restrictive when a label contains a
+whole graph. Renaming the body of a box changes its graph record, although its
+mathematical incidence structure is unchanged. This section defines recursive
+isomorphism, proves its invariants, and proves congruence of replacement at any
+addressed depth. All comparisons are within a fixed depth bound and fixed
+ordered outer interface. The quotient construction below does not identify
+different depth bounds or prove the representation theorem for the paper's
+set-based presentation.
+
+\subsection{Isomorphisms with related labels}
+
+\begin{definition}[Isomorphism relative to a label relation]\label{term:relational-isomorphism}
+Fix a signature and a relation $R$ on its labels. An $R$-isomorphism from $G$ to
+$H$ consists of bijections $v:G_V\to H_V$ of internal vertices and
+$e:G_E\to H_E$ of edges. Internal vertex labels agree, corresponding edge labels
+are related by $R$, and mapping every source or target list through the induced
+port map gives the corresponding list in $H$. The port map fixes each ordered
+input and output position. We write $G\cong_R H$ for the existence of such data.
+\end{definition}
+\lean{Graph/RelIso}{10}{16}{Net.RelIso}
+
+\begin{lemma}[Identity, inverse, and composition]
+If $R$ is reflexive, every graph has an identity $R$-isomorphism. If $R$ is
+symmetric, every $R$-isomorphism has an inverse. If $R$ is transitive,
+$R$-isomorphisms compose.
+\end{lemma}
+\begin{proof}
+For identity use identity carrier maps and reflexivity of $R$. For inverse use
+the inverse carrier bijections. Evaluate the original label equation at the
+inverse image, cancel the edge bijection, and use symmetry of $R$. For incidence,
+map the original incidence equation through the inverse port map; cancellation
+recovers the reversed equation. Composition uses composed carrier bijections,
+transitivity of the label relation, and the fact that a list mapped twice is
+mapped by the composite. Port maps compose because they act on internal names
+and fix both kinds of boundary position.
+\end{proof}
+\lean{Graph/RelIso}{22}{28}{Net.RelIso.refl}
+\lean{Graph/RelIso}{30}{44}{Net.RelIso.symm}
+\lean{Graph/RelIso}{46}{62}{Net.RelIso.trans}
+
+\begin{lemma}[Incidence paths and ordinary isomorphisms]
+Every $R$-isomorphism preserves and reflects adjacency, hence preserves and
+reflects paths under its edge bijection. Every ordinary label-preserving
+isomorphism gives an $R$-isomorphism when $R$ is reflexive.
+\end{lemma}
+\begin{proof}
+Map a shared vertex to obtain forward adjacency. For reflection, source and
+target preservation express the shared target vertex as images of two original
+ports. Injectivity of the port bijection makes those ports equal, giving the
+original shared vertex. Apply the existing list-path mapping lemma to this
+adjacency equivalence. For an ordinary isomorphism, retain all carrier and
+incidence data; equality of its labels and reflexivity give the required
+$R$-relation at each edge.
+\end{proof}
+\lean{Graph/RelIso}{64}{78}{Net.RelIso.adjacent_iff}
+\lean{Graph/RelIso}{80}{82}{Net.RelIso.path_iff}
+\lean{Graph/RelIso}{86}{93}{Net.RelIso.ofIso}
+
+\subsection{Recursive comparison of box contents}
+
+\begin{definition}[Related boxes]\label{term:related-boxes}
+For a relation on bodies of each fixed interface, two boxes are related when
+they have the same number of bound variables, the same number of free outputs,
+and related bodies at the interface specified by those two numbers. The
+constructor $\mathsf{BoxRelated.bodies}$ enforces both metadata equalities; it
+does not merely require equality of their sum.
+\end{definition}
+\lean{Graph/RecursiveIso}{10}{13}{Linear.BoxRelated}
+
+\begin{definition}[Recursive label equivalence]\label{term:recursive-label-equivalence}
+At depth zero, label equivalence is literal equality. At positive depth,
+primitive labels are equivalent exactly when they are equal; a primitive and a
+box are never equivalent. Two box labels are equivalent when their metadata
+agree and there exists an isomorphism of their bodies whose corresponding
+labels are recursively equivalent at the smaller depth. This is a well-founded
+definition because the depth decreases whenever a box body is compared.
+\end{definition}
+\lean{Graph/RecursiveIso}{17}{23}{Linear.LabelEquiv}
+
+\begin{definition}[Recursive hypernet isomorphism]\label{term:deep-isomorphism}
+A recursive isomorphism $G\cong_d H$, represented by $\mathsf{DeepIso}$, is an
+isomorphism relative to recursive label equivalence at depth $d$. Its outer
+carrier bijections are explicit data. The label proof at a box supplies the
+existence of a further body isomorphism, independently of the names chosen at
+any other box. Every level preserves its own ordered boundary positions.
+\end{definition}
+\lean{Graph/RecursiveIso}{27}{27}{Linear.DeepIso}
+
+\begin{lemma}[Equivalence laws for recursive labels]
+Recursive label equivalence is reflexive, symmetric, and transitive.
+\end{lemma}
+\begin{proof}
+Induct on depth. At depth zero the claims are equality laws. At positive depth,
+primitive cases again reduce to equality and mixed primitive/box cases are
+impossible. For box reflexivity, the induction hypothesis supplies reflexivity
+of the body-label relation, so the identity relative isomorphism witnesses body
+equivalence. For box symmetry, take a witnessing body isomorphism and invert it
+using symmetry at the smaller depth. For transitivity, matching the two
+box-relation constructors identifies all metadata, so the two body isomorphisms
+have a common middle graph and interface. Compose them using transitivity at
+the smaller depth. Package each resulting body isomorphism in the box relation.
+\end{proof}
+\lean{Graph/RecursiveIso}{30}{39}{Linear.labelEquiv_refl}
+\lean{Graph/RecursiveIso}{42}{57}{Linear.labelEquiv_symm}
+\lean{Graph/RecursiveIso}{60}{82}{Linear.labelEquiv_trans}
+Identity, inverse, and composition of recursive graph isomorphisms follow by
+instantiating the generic constructions with these three laws. Ordinary
+isomorphisms embed into recursive ones by reflexivity of the label relation.
+\lean{Graph/RecursiveIso}{87}{87}{Linear.DeepIso.refl}
+\lean{Graph/RecursiveIso}{89}{89}{Linear.DeepIso.symm}
+\lean{Graph/RecursiveIso}{91}{92}{Linear.DeepIso.trans}
+\lean{Graph/RecursiveIso}{95}{95}{Linear.DeepIso.ofIso}
+
+\begin{lemma}[Signatures and operation labels are invariant]
+Equivalent labels have equal ordered input signatures, equal ordered output
+signatures, and the same operation-label predicate.
+\end{lemma}
+\begin{proof}
+At depth zero or for two primitives, substitute the label equality. Mixed
+labels are impossible. For two boxes, the relation constructor identifies the
+bound/free metadata, and both signatures depend only on those numbers. Both
+box labels fail the operation predicate. No information about body carrier
+names is used in these conclusions.
+\end{proof}
+\lean{Graph/RecursiveIso}{100}{112}{Linear.labelEquiv_input}
+\lean{Graph/RecursiveIso}{115}{127}{Linear.labelEquiv_output}
+\lean{Graph/RecursiveIso}{130}{142}{Linear.labelEquiv_isOperation}
+
+\Needspace{16\baselineskip}
+\subsection{Operation traces and paths}
+
+\begin{theorem}[Recursive renaming preserves and reflects operation paths]
+Let $f:G\cong_d H$, with port map $v$ and edge bijection $e$. An operation trace
+from $x$ to $y$ along the edge list $\ell$ in $G$ exists exactly when the trace
+from $v(x)$ to $v(y)$ along $\mathsf{map}(e,\ell)$ exists in $H$. The analogous
+statement holds for forward operation paths.
+\end{theorem}
+\begin{proof}
+First prove forward trace transport by induction on the trace. An empty trace
+maps to an empty trace. For a nonempty trace, operation-label invariance supplies
+the required label predicate. Source and target preservation map its two
+incidence witnesses, and induction supplies the remaining trace.
+
+For reflection transport the target trace through the inverse recursive
+isomorphism. The inverse port and edge maps cancel the original maps, recovering
+both original endpoints and exactly the original edge list. A forward operation
+path is the reverse-oriented trace with its edge list reversed. List mapping
+commutes with reversal, so the trace equivalence gives the path equivalence.
+In particular, input and output endpoints retain their boundary indices.
+\end{proof}
+\lean{Graph/RecursiveIso}{145}{156}{Linear.DeepIso.operationTrace}
+\lean{Graph/RecursiveIso}{159}{171}{Linear.DeepIso.operationTrace_iff}
+\lean{Graph/RecursiveIso}{174}{181}{Linear.DeepIso.operationPath_iff}
+
+\subsection{Transporting occurrences and holes through all boxes}
+
+\begin{definition}[Fibre and hole embeddings]\label{term:hole-embedding}
+A fibre embedding maps positions in one label to positions in another,
+injectively, and preserves their complete hole observations, including the
+absence of a hole. A hole embedding similarly maps graph occurrences
+injectively and preserves their observations. These maps concern occurrence
+addresses; their definition does not itself assert any incidence property.
+\end{definition}
+\lean{Graph/RecursiveIsoHoles}{9}{12}{Linear.FiberEmbedding}
+\lean{Graph/RecursiveIsoHoles}{15}{18}{Linear.HoleEmbedding}
+
+\begin{lemma}[Assembling fibre embeddings]
+An injective map of outer edges and a fibre embedding over each mapped edge
+together give a hole embedding of graphs.
+\end{lemma}
+\begin{proof}
+Map $(a,x)$ to the mapped edge paired with the image of $x$ under its fibre
+embedding. If two results coincide, projecting their edges and using edge-map
+injectivity identifies the original edges. Their remaining fibre positions now
+have the same type, and fibre-map injectivity identifies them. Observation
+preservation is exactly the preservation property of the corresponding fibre
+embedding.
+\end{proof}
+\lean{Graph/RecursiveIsoHoles}{21}{32}{Linear.HoleEmbedding.ofFibers}
+
+\termdef{all-edge-transport}
+A hole embedding also transports the original deep addresses: first use the
+occurrence-coordinate bijection of the source, apply the hole embedding, then
+use the inverse coordinate bijection of the target. This defines
+$\mathsf{HoleEmbedding.allEdge}$.
+\lean{Graph/RecursiveIsoHoles}{35}{37}{Linear.HoleEmbedding.allEdge}
+The resulting address map is injective. Apply the target coordinate bijection
+to an equality of images, cancel its inverse, use embedding injectivity, and
+finally use source-coordinate injectivity. It preserves hole lookup because
+both coordinate bijections preserve observation and the middle embedding does
+so as well.
+\lean{Graph/RecursiveIsoHoles}{39}{45}{Linear.HoleEmbedding.allEdge_injective}
+\lean{Graph/RecursiveIsoHoles}{47}{53}{Linear.HoleEmbedding.allEdge_hole}
+
+\begin{lemma}[Recursive labels admit fibre embeddings]
+If two labels are recursively equivalent, an injective, observation-preserving
+map of their fibres exists.
+\end{lemma}
+\begin{proof}
+Induct on depth. Equal primitives use the identity map. Mixed label cases are
+impossible. For equivalent boxes, choose a witnessing isomorphism of their
+bodies. For each body edge, the induction hypothesis supplies a fibre embedding
+from its recursive label-equivalence proof; choose one such map per edge.
+Assemble these maps over the body isomorphism's injective edge map to obtain a
+body hole embedding, and express it in original deep-address coordinates.
+
+Map the box's shallow position to the shallow position, and each child address
+through this body map. The two alternatives remain disjoint. Within the shallow
+alternative equality is immediate; within the child alternative injectivity is
+the proved injectivity of body-address transport. Shallow observations are empty
+on both sides, while child observations agree by the body's transport theorem.
+This constructs the desired embedding. Classical choice selects witnesses of
+the existential body-isomorphism and embedding statements; it does not supply
+any graph invariant as an additional assumption.
+\end{proof}
+\lean{Graph/RecursiveIsoHoles}{57}{96}{Linear.labelEquiv_hasEmbedding}
+The noncomputable function $\mathsf{labelEquiv\_embedding}$ chooses the embedding
+whose existence was just proved. Applying it at every outer edge of a recursive
+isomorphism, and assembling over its edge bijection, defines
+$\mathsf{DeepIso.holeEmbedding}$.
+\lean{Graph/RecursiveIsoHoles}{99}{101}{Linear.labelEquiv_embedding}
+\lean{Graph/RecursiveIsoHoles}{104}{107}{Linear.DeepIso.holeEmbedding}
+
+\begin{lemma}[Presence transports and uniqueness reflects]
+A hole embedding transports every present hole label from source to target. If
+the target has unique hole observations, so does the source.
+\end{lemma}
+\begin{proof}
+Map the occurrence witnessing a present label and use preservation of lookup.
+For uniqueness, map two source occurrences with equal hole observations. Target
+uniqueness makes their images equal, and embedding injectivity makes the
+original occurrences equal.
+\end{proof}
+\lean{Graph/RecursiveIsoHoles}{110}{113}{Linear.HoleEmbedding.hasHole}
+\lean{Graph/RecursiveIsoHoles}{116}{122}{Linear.HoleEmbedding.unique}
+
+\begin{theorem}[Hole and context invariance under recursive isomorphism]
+Recursively isomorphic graphs have identical hole inventories. One has unique
+holes if and only if the other does; one is hole-free if and only if the other
+is.
+\end{theorem}
+\begin{proof}
+Construct hole embeddings from the isomorphism and its inverse. Presence
+transport gives the two implications for inventory equality. Uniqueness
+reflection, in the two directions, gives the context equivalence. Negating hole
+presence for every label gives the hole-freeness equivalence. The two chosen
+embeddings are not asserted to be mutually inverse; the two implications and
+injectivity are sufficient for these results.
+\end{proof}
+\lean{Graph/RecursiveIsoHoles}{125}{127}{Linear.DeepIso.hasHole_iff}
+\lean{Graph/RecursiveIsoHoles}{130}{132}{Linear.DeepIso.uniqueHoles_iff}
+\lean{Graph/RecursiveIsoHoles}{134}{137}{Linear.DeepIso.holeFree_iff}
+
+\subsection{Congruence of shallow and deep replacement}
+
+\termdef{relational-plugging}
+For a fixed host $C$ and shallow selected edge $h$, an $R$-isomorphism
+$f:H\cong_R K$ gives the candidate carrier bijections for the plugged graphs:
+use identity on the host summand and $f$ on the replacement summand. For edges,
+the host summand is the subtype of edges different from $h$.
+\lean{Graph/RelIsoPlug}{16}{17}{Net.RelIsoPlug.vertices}
+\lean{Graph/RelIsoPlug}{19}{20}{Net.RelIsoPlug.edges}
+The induced port map commutes with host embedding, by a case split on internal,
+input, and output ports. It commutes with insertion after the replacement's own
+port map: an internal port uses the right summand, and a boundary port reduces
+to the host-embedding equation at the selected source or target port.
+\lean{Graph/RelIsoPlug}{22}{24}{Net.RelIsoPlug.map_host}
+\lean{Graph/RelIsoPlug}{26}{32}{Net.RelIsoPlug.map_insert}
+
+\begin{theorem}[Shallow congruence for related labels]
+For reflexive $R$, an $R$-isomorphism $H\cong_R K$ induces
+$C[h:=H]\cong_R C[h:=K]$. No non-self-loop condition is required.
+\end{theorem}
+\begin{proof}
+Use the preceding sum bijections. Host internal labels are unchanged and
+replacement internal labels are preserved by $f$. Host edge labels satisfy
+reflexivity of $R$, and inserted edge labels use the relation supplied by $f$.
+For a host incidence list, commute the port map with host embedding pointwise.
+For an inserted incidence list, commute it with insertion and then use the
+source or target preservation equation of $f$. This establishes every field of
+the resulting relative isomorphism without requiring insertion to be globally
+injective.
+\end{proof}
+\lean{Graph/RelIsoPlug}{38}{85}{Net.RelIso.plug}
+
+\begin{lemma}[Box congruence]
+Boxing recursively isomorphic bodies with the same metadata gives recursively
+isomorphic boxes. Replacing one fixed box edge in a surrounding graph by either
+of those bodies also gives recursively isomorphic graphs.
+\end{lemma}
+\begin{proof}
+For a single boxed graph, use identity maps on its empty internal carrier and
+one-edge carrier. Its labels are related by the body-isomorphism witness, and
+its boundary lists depend only on the common metadata. In a surrounding graph,
+use identity maps on both outer carriers. At the selected edge use the related
+box-body witness; at every other edge use reflexivity of recursive label
+equivalence. The two outer incidence structures are identical, so their
+preservation equations reduce to mapping a list by identity.
+\end{proof}
+\lean{Graph/RecursiveIsoPlug}{10}{19}{Linear.DeepIso.box}
+\lean{Graph/RecursiveIsoPlug}{23}{42}{Linear.replaceBox_deepIso}
+
+\begin{theorem}[Congruence at every addressed depth]
+For a fixed host $G$ and typed site $s$, if $H\cong_r K$, then
+\[
+ G[s:=H]\cong_d G[s:=K].
+\]
+No context-uniqueness, freshness, or non-self-loop assumption is needed.
+\end{theorem}
+\begin{proof}
+Induct on the site. A shallow site uses the generic shallow congruence with the
+reflexive recursive-label relation. For a site inside a box, induction gives an
+isomorphism between the two changed bodies. Lift it through the selected box
+using box congruence. Repeating this step crosses every enclosing box in the
+address.
+\end{proof}
+\lean{Graph/RecursiveIsoPlug}{46}{51}{Linear.plugAt_deepIso}
+
+Two consequences connect this congruence with the preceding milestone. Exact
+site freshness is invariant when the replacement is changed by recursive
+isomorphism: the retained host predicate stays fixed, and the replacement hole
+inventories coincide. Context validity of the two plugged results is also
+equivalent, by context invariance applied to their constructed recursive
+isomorphism. The latter statement does not assume the host is a context.
+\lean{Graph/RecursiveIsoPlug}{54}{58}{Linear.siteFresh_deepIso_iff}
+\lean{Graph/RecursiveIsoPlug}{61}{64}{Linear.plugAt_deepIso_unique_iff}
+
+\subsection{Graphs and replacement modulo recursive renaming}
+
+\begin{definition}[Recursive isomorphism classes]\label{term:recursive-quotient}
+At fixed depth $d$ and interface $(I,O)$, declare $G\sim H$ when a recursive
+isomorphism exists. Identity, inverse, and composition prove that this is an
+equivalence relation, packaged as $\mathsf{deepSetoid}$. Its quotient is
+$\mathsf{HypernetModuloIso}$, the type of graphs modulo independent carrier
+renaming at all levels of their hierarchy. Write $[G]$ for the class of $G$.
+\end{definition}
+\lean{Graph/RecursiveIsoPlug}{67}{73}{Linear.deepSetoid}
+\lean{Graph/RecursiveIsoPlug}{76}{77}{Linear.HypernetModuloIso}
+
+\begin{definition}[Plugging a replacement class]\label{term:quotient-plugging}
+For a fixed concrete host and site $s$, define
+\[
+ \mathsf{plugAtModuloIso}(s,[H])=[G[s:=H]].
+\]
+\end{definition}
+\begin{proof}[Well-definedness]
+If $H$ and $K$ represent the same source class, their recursive isomorphism
+induces one between the plugged graphs by deep congruence. The results therefore
+belong to the same target class. Quotient elimination defines the displayed
+operation from this representative-independent function. Its value on a
+concrete representative is the displayed equation by the computation rule of
+quotient elimination.
+\end{proof}
+\lean{Graph/RecursiveIsoPlug}{81}{84}{Linear.plugAtModuloIso}
+\lean{Graph/RecursiveIsoPlug}{87}{90}{Linear.plugAtModuloIso_mk}
+\termdef{quotient-context-validity}
+Context validity descends to classes as well: define
+$\mathsf{moduloIsoUniqueHoles}([G])$ to mean that $G$ has unique holes. The
+isomorphism-invariance theorem makes these propositions equivalent for any two
+representatives; propositional extensionality supplies the equality required by
+quotient elimination.
+\lean{Graph/RecursiveIsoPlug}{93}{94}{Linear.moduloIsoUniqueHoles}
+
+These constructions quotient the replacement argument for a fixed host and
+address. They do not yet transport arbitrary sites between isomorphic hosts,
+quotient the host/site pair, or establish associativity of substitution.
+
+\subsection{A strict extension of literal-label isomorphism}
+
+Use the earlier two-hole chain. The permutation $i\mapsto 1-i$ on its two-edge
+carrier exchanges edge names. Applying it twice is identity because
+$0\leq i<2$. Reindex the chain's edges by this bijection and keep its internal
+vertex name unchanged; call the result $H'$. The existing reindexing isomorphism,
+embedded into recursive isomorphism, witnesses $H\cong_0 H'$.
+\lean{Graph/RecursiveIsoExamples}{9}{13}{Linear.Examples.swapTwo}
+\lean{Graph/RecursiveIsoExamples}{15}{16}{Linear.Examples.renamedTwoHoles}
+\lean{Graph/RecursiveIsoExamples}{18}{19}{Linear.Examples.twoHoles_deepIso}
+The records $H$ and $H'$ are unequal. If they were equal, their edge-label
+functions would agree at the edge named zero. Reading the hole name there gives
+$0$ in $H$ and $1$ in $H'$, a contradiction.
+\lean{Graph/RecursiveIsoExamples}{22}{29}{Linear.Examples.renamedTwoHoles_ne}
+
+Box $H'$ with zero bound variables and one free output. Box congruence relates
+this box to the earlier box of $H$.
+\lean{Graph/RecursiveIsoExamples}{31}{32}{Linear.Examples.renamedBoxedTwoHoles}
+\lean{Graph/RecursiveIsoExamples}{35}{36}{Linear.Examples.boxedTwoHoles_deepIso}
+No literal label-preserving isomorphism relates these two boxed graphs. Such an
+isomorphism's label equation at the sole source edge would make their box labels
+equal. Equality of these labels forces equality of the body records, contrary
+to the preceding result. This proves that recursive isomorphism identifies
+strictly more graphs than the earlier literal-label notion.
+\lean{Graph/RecursiveIsoExamples}{40}{46}{Linear.Examples.boxedTwoHoles_no_literalIso}
+The renamed box remains a context by recursive invariance of unique holes. The
+two different box records represent the same quotient class by quotient
+soundness applied to their recursive isomorphism.
+\lean{Graph/RecursiveIsoExamples}{48}{49}{Linear.Examples.renamedBoxedTwoHoles_unique}
+\lean{Graph/RecursiveIsoExamples}{52}{55}{Linear.Examples.renamedBoxes_same_class}
+
+For a nontrivial addressed replacement, use the earlier site selecting the first
+hole inside a box. Substituting $H$ or $H'$ there gives recursively isomorphic
+results by deep congruence. Finally, the primitive operations named
+$\mathsf{value}$ and $\mathsf{otherValue}$ are not equivalent: at depth zero
+recursive label equivalence is equality, and these are distinct constructors.
+Thus carrier renaming does not erase semantic operation labels.
+\lean{Graph/RecursiveIsoExamples}{58}{60}{Linear.Examples.deep_plug_renaming}
+\lean{Graph/RecursiveIsoExamples}{63}{66}{Linear.Examples.distinct_operations_not_equivalent}
