@@ -1,4 +1,4 @@
-import Hypernets.Graph.ContextExamples
+import Hypernets.Graph.DeepInventoryExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -28,3 +28,13 @@ import Hypernets.Graph.ContextExamples
 #print axioms Hypernets.Linear.Examples.filledBox_holeFree
 #print axioms Hypernets.Linear.Examples.twoHoles_unique
 #print axioms Hypernets.Linear.Examples.collision_breaks_unique
+
+#print axioms Hypernets.Linear.plugAt_hasHole_iff
+#print axioms Hypernets.Linear.plugAt_uniqueHoles_iff
+#print axioms Hypernets.Linear.plugAt_uniqueHoles_iff_fresh
+#print axioms Hypernets.Linear.plugAt_holeFree_iff
+#print axioms Hypernets.Linear.plugAt_consumed_hole_iff
+#print axioms Hypernets.Linear.Context.plugAtFresh
+#print axioms Hypernets.Linear.Examples.deep_reuse_unique
+#print axioms Hypernets.Linear.Examples.deep_collision_breaks_unique
+#print axioms Hypernets.Linear.Examples.deep_collision_inventory

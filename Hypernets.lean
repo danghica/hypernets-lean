@@ -4,4 +4,4 @@ import Hypernets.Simulation
 import Hypernets.Contextual
 import Hypernets.LocalReasoning
 import Hypernets.Examples
-import Hypernets.Graph.ContextExamples
+import Hypernets.Graph.DeepInventoryExamples
