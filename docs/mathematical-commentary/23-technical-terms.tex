@@ -24,6 +24,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{box-replacement}{Box-label replacement}{Changing the body of one selected box edge while retaining its binding metadata and all outer incidence data.}
 
+\glossaryentry{certified-composition}{Certified composed plugging}{A context constructor using pairwise disjoint retained and final inventories, without requiring intermediate validity.}
+
 \glossaryentry{deep-certified-fresh}{Certified deep fresh plugging}{The context constructor that packages addressed replacement with a proof of exact site freshness, permitting reuse of consumed labels.}
 
 \glossaryentry{fibre}{Child occurrence}{An occurrence inside a box body. Primitive labels have no child occurrences.}
@@ -31,6 +33,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{compatible}{Compatible provenance}{The condition that no hole label in the replacement occurs at a retained host origin of the provenance map.}
 
 \glossaryentry{complement-restriction}{Complement restriction}{The bijection between the complements of corresponding selected elements, used for surviving host edges.}
+
+\glossaryentry{composed-site}{Composed site}{The address of an inner selected occurrence after inserting its host at an outer site.}
 
 \glossaryentry{net}{Concrete typed net}{A finite labelled hypergraph with ordered boundaries and certified distinctness, incidence uniqueness, coverage, and signature typing.}
 
@@ -160,6 +164,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{opposite}{Opposite specimen system}{The specimen system obtained by swapping its left and right endpoint maps while retaining modes and entering and rootedness predicates.}
 
+\glossaryentry{original-fragment}{Original selected fragment}{The corolla carrying a site's selected label, including the whole body when the label is a box.}
+
 \glossaryentry{cost-orders}{Overhead cost order}{The preorder $H$ with $a\,H\,b$ exactly when $a\leq b$; the target successful execution takes at least as many steps as the source.}
 
 \glossaryentry{path}{Path}{A nonempty edge list whose consecutive edges are adjacent. Repeated edges are allowed; this predicate does not specify endpoint vertices.}
@@ -181,6 +187,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{quotient-plugging}{Quotient plugging}{For a fixed concrete host and site, the well-defined operation sending a replacement isomorphism class to the class of the plugged graph.}
 
 \glossaryentry{reasonable}{Reasonable triple}{Three cost preorders satisfying the addition, decrease, inclusion, and sandwich conditions used by counting-simulation soundness.}
+
+\glossaryentry{reassociation}{Reassociation bijections}{Carrier bijections that change the sum tags of host, middle, and final replacement vertices and edges.}
 
 \glossaryentry{deep-isomorphism}{Recursive isomorphism}{Carrier bijections preserving incidence and primitive labels, with corresponding box bodies recursively isomorphic and all binder metadata preserved.}
 
@@ -237,6 +245,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{refinement}{State refinement}{The requirement that each successful source execution has a successful target execution with counts related by the chosen cost preorder.}
 
 \glossaryentry{determinism}{Stuck state}{A normal state that is not successfully final; it cannot step and does not count as successful termination.}
+
+\glossaryentry{substitution-unit}{Substitution unit}{A selected one-edge corolla: filling it returns the inserted graph, while restoring an edge's own corolla returns its host, up to isomorphism.}
 
 \glossaryentry{indexed-port}{Target port}{A target-list vertex selected by a finite index in the edge label's output signature.}
 

@@ -16,7 +16,9 @@ freshness, and exact consumption of selected hole labels at arbitrary box depth.
 Recursive isomorphism now identifies independently renamed box contents and
 respects paths, hole observations, and deep replacement. Sites now transport across
 isomorphic hosts, and substitution respects simultaneous host and replacement
-renaming, including the exact freshness condition.
+renaming, including the exact freshness condition. Nested substitutions now
+associate at arbitrary box depth, with corolla unit laws and a sharp final
+context-validity criterion even when an intermediate collision is later removed.
 
 There are three distinct kinds of assertion below. A \emph{definition} specifies
 a mathematical object or predicate. A \emph{proved statement} is established by
@@ -25,7 +27,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{693a25d}, rather than to the moving
+All code links point to revision \texttt{6bb37ea}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

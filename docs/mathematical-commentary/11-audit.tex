@@ -1,4 +1,4 @@
-\Needspace{18\baselineskip}
+\Needspace{32\baselineskip}
 \section{Proof checking and remaining obligations}
 \Needspace{24\baselineskip}
 \subsection{The two axiom audits}
@@ -29,6 +29,12 @@ Ten further commands audit shallow host congruence, site transport and its
 specification, simultaneous congruence, quotient invariance, retained holes,
 freshness, result validity, and the moved-address and wrong-address regressions.
 \lean{Graph/Audit}{54}{63}{Graph.Audit: site transport dependencies}
+Sixteen further commands inspect shallow associativity, both corolla units,
+deep associativity, quotient composition, composed retained inventories, sharp
+composite context closure and its certified constructor, three-stage coherence,
+deep restoration, quotient identity, and the self-loop, repair, and mixed-depth
+regressions.
+\lean{Graph/Audit}{65}{80}{Graph.Audit: composition and unit dependencies}
 
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
@@ -39,7 +45,8 @@ nonexistence of a literal-label isomorphism between the example boxes, and their
 equality as quotient classes likewise report only these two axioms. Existence
 of transported sites also reports only these two axioms; the chosen transport
 and substitution results additionally use classical choice.
-The other audited declarations additionally report \texttt{Classical.choice}.
+All newly audited composition and unit results report these three standard
+axioms. The other audited declarations additionally report \texttt{Classical.choice}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
 \texttt{sorryAx} or a project-specific axiom.
@@ -95,8 +102,10 @@ hypotheses:
 with explicit binder metadata to the paper's set-based graph-labelled hypernets.
 Recursive isomorphism within each fixed depth layer is now proved. Relating
 different depth bounds and proving full representation adequacy remain open.
-\item Complete the remaining context algebra, especially associativity of plugging
-and a quotient of host/site pairs. Site transport between recursively
+\item Complete the remaining context algebra, including a quotient of host/site
+pairs and interchange for independent sites. Nested substitution associativity,
+corolla units, quotient three-stage coherence, and sharp composite context
+closure are now proved. Site transport between recursively
 isomorphic hosts is now proved, together with simultaneous host/replacement
 congruence and invariance of quotient substitution and exact freshness.
 Global hole-label uniqueness is now preserved under explicit freshness conditions

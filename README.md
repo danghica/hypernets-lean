@@ -76,8 +76,8 @@ extra abstract assumptions:
 `Net.Iso` fixes edge labels and handles carrier renaming at one graph level.
 The new `DeepIso` extends this to independently renamed box contents, as described
 below. The context calculus proves preservation of unique hole labels under
-explicit freshness conditions at arbitrary depth. Plugging associativity remains
-to prove. The typed, depth-indexed hierarchy includes explicit binder
+explicit freshness conditions at arbitrary depth. Nested plugging associativity
+and corolla unit laws are now proved. The typed, depth-indexed hierarchy includes explicit binder
 metadata on box labels; a formal representation theorem relating it to the
 paper's set-based, graph-labelled presentation remains to prove. These
 distinctions are part of the remaining work below.
@@ -153,9 +153,28 @@ vertex and edge renaming in each box body:
   keeping the former numerical address can give a non-isomorphic substitution result.
 
 Transport chooses inner isomorphisms classically; no canonical choice or round-trip
-law is asserted. The host/site pair is not yet quotiented. Plugging associativity,
-comparison across different depth bounds, and representation adequacy remain open. The concrete UAM and its
+law is asserted. The host/site pair is not yet quotiented. Comparison across
+different depth bounds and representation adequacy remain open. The concrete UAM and its
 bridge to Theorem 6 remain the main later work.
+
+## Composition and unit milestone
+
+- `Site.comp` explicitly locates a site of an inserted graph in the resulting host.
+  `plugAt_assoc` proves arbitrary-depth nested substitution associativity by
+  constructing recursive isomorphisms, including at self-loop interfaces.
+- `plugAtModuloIso_comp` and `plugAtModuloIso_comp_three` give binary composition
+  and three-stage agreement on recursive isomorphism classes.
+- Corolla substitution satisfies both unit laws; `plugAt_original` restores the
+  original host at any deep site. A selected corolla acts identically on quotient classes.
+- `siteRetainedHole_comp` computes the retained inventory of a composed address.
+  `plugAt_comp_unique_iff` proves sharp final context closure: the final replacement
+  is unique and the two retained inventories and final inventory are pairwise disjoint.
+  `Context.plugAtComp` packages this result without demanding intermediate validity.
+- Checked regressions cover self-loops, mixed shallow/deep composition, three stages,
+  and a duplicate-hole intermediate graph repaired by the second substitution.
+
+These are nested substitution laws. A quotient of host/site pairs and interchange
+for independent sites remain open, along with the concrete UAM and specimen bridge.
 
 ## Checked source
 
@@ -215,6 +234,12 @@ bridge to Theorem 6 remain the main later work.
 - `Hypernets/Graph/SiteTransport.lean`: structural site correspondence, existence
   of transport, simultaneous congruence, quotient invariance, and exact freshness.
 - `Hypernets/Graph/SiteTransportExamples.lean`: moved-address and wrong-address regressions.
+- `Hypernets/Graph/PlugAssociativity.lean`: explicit shallow reassociation isomorphisms.
+- `Hypernets/Graph/DeepAssociativity.lean`: site composition, deep associativity,
+  exact composite inventories, sharp context closure, and three-stage quotient agreement.
+- `Hypernets/Graph/PlugUnits.lean` and `DeepUnits.lean`: corolla units, deep restoration,
+  and identity equations on recursive isomorphism classes.
+- `Hypernets/Graph/CompositionExamples.lean`: self-loop, collision-repair, and mixed-depth regressions.
 
 The implementation uses Lean's bundled `Std`, with no external library
 dependencies. The toolchain is pinned in `lean-toolchain`.
@@ -222,12 +247,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 477 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 483
-source-fragment links point to immutable code revision `693a25d`. It distinguishes
+all 529 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 536
+source-fragment links point to immutable code revision `6bb37ea`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 126 technical terms, with short descriptions and internal PDF links
+glossary of 131 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -264,9 +289,9 @@ logical axioms, if used, are shown explicitly.
 
 1. Prove adequacy of the typed graph representation, relate different depth
    bounds, quotient host/site pairs, and prove the context
-   algebra, especially associativity of plugging. Recursive box isomorphism
-   and simultaneous host/replacement congruence through transported sites are now
-   proved. Global hole-label uniqueness under freshness, exact hole inventories, and sharp context closure are now
+   algebra, including interchange for independent sites. Recursive isomorphism,
+   simultaneous host/replacement congruence, deep associativity, corolla units, and
+   sharp composite context closure are proved. Global hole-label uniqueness under freshness, exact hole inventories, and sharp context closure are now
    checked even for deep replacement.
 2. Define focussed states, search and rewrite transitions, rootedness,
    determinism, and refocusing (§§5–7, Appendices C–D).

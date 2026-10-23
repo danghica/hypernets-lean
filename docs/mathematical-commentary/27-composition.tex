@@ -1,0 +1,409 @@
+\Needspace{18\baselineskip}
+\section{Associativity, units, and exact context composition}
+\label{sec:composition}
+
+We now compose addressed substitutions, rather than merely compare renamed
+versions of one substitution. If $s$ selects an occurrence in $G$, inserting
+$H$ there creates a copy of every occurrence of $H$. A site $t$ in $H$ thus
+induces a site in $\mathsf{plugAt}(s,H)$. The main theorem identifies substitution
+at that induced site with first substituting within $H$ and then inserting the
+result at $s$. The identification is a concrete recursive isomorphism; on
+isomorphism classes it is equality. We also prove the corolla unit laws and
+an exact context-validity criterion for the composite, including cases where
+an intermediate collision is removed by the final substitution.
+
+\subsection{Shallow associativity with explicit carrier bijections}
+
+Let $C$ be a graph, $e$ a selected edge, $H$ a replacement of its interface,
+$f$ an edge of $H$, and $A$ a replacement of the interface of $f$. Compare
+\[
+ L=(C[e:=H])[\mathsf{inr}(f):=A],\qquad
+ R=C[e:=H[f:=A]].
+\]
+These have the same outer interface, but different carrier records.
+
+\begin{definition}[Reassociation bijections]\label{term:reassociation}
+The internal-vertex bijection from $L$ to $R$ is
+\[
+ (C_V+H_V)+A_V\longrightarrow C_V+(H_V+A_V),
+\]
+which keeps each original name and changes only its sum tags. Its three cases
+send a host vertex to the host summand, a middle vertex to the middle summand,
+and a final vertex to the final summand. The edge bijection does the same for
+surviving host edges, surviving middle edges, and final inserted edges.
+\end{definition}
+More explicitly, the left surviving-edge carrier consists of edges of
+$(C_E\setminus\{e\})+H_E$ other than $\mathsf{inr}(f)$. A surviving host
+edge maps to the host summand on the right. An edge $\mathsf{inr}(y)$ maps to
+the surviving-middle summand, with $y\ne f$ obtained by injectivity of the sum
+constructor. Final edges map to final edges. The inverse maps reverse these
+three cases; inverse equations are proved by cases, with proof irrelevance
+identifying the subtype certificates.
+\lean{Graph/PlugAssociativity}{13}{18}{Net.PlugAssoc.vertices}
+\lean{Graph/PlugAssociativity}{21}{32}{Net.PlugAssoc.edges}
+
+\begin{lemma}[Attachment and port commutation]
+The source and target positions of the inserted edge $\mathsf{inr}(f)$ are the
+images, under insertion into $C$, of the corresponding positions of $f$ in $H$.
+The reassociation port map commutes with inclusion of original host ports,
+inclusion of middle ports, and insertion of final replacement ports.
+\end{lemma}
+\begin{proof}
+The attachment assertions unfold positional lookup in the inserted incidence
+lists and use lookup through a list map. For host ports, case analysis on
+internal, input, and output ports proves the equation directly. For middle
+ports, internal vertices are immediate; an input or output is attached to a
+host port, so use the host equation. For final ports, internal vertices are
+again immediate. A boundary port attaches at $f$; rewrite that attachment by
+the positional lookup assertion and apply the middle-port equation.
+No argument assumes that an input attachment differs from an output attachment.
+\end{proof}
+\lean{Graph/PlugAssociativity}{35}{37}{Net.PlugAssoc.sourcePort_inserted}
+\lean{Graph/PlugAssociativity}{40}{42}{Net.PlugAssoc.targetPort_inserted}
+\lean{Graph/PlugAssociativity}{45}{48}{Net.PlugAssoc.map_host}
+\lean{Graph/PlugAssociativity}{51}{58}{Net.PlugAssoc.map_middle}
+\lean{Graph/PlugAssociativity}{61}{75}{Net.PlugAssoc.map_insert}
+
+\begin{theorem}[Shallow associativity]
+There is a literal-label graph isomorphism $L\cong R$.
+\end{theorem}
+\begin{proof}
+Use the two reassociation bijections. Vertex and edge labels agree by the
+three carrier cases. For sources, split an edge into surviving host, surviving
+middle, or final replacement. In the host case the left source list maps the
+original host list through two inclusions and reassociation; combine list maps
+and apply host commutation. The middle case uses middle commutation, and the
+final case uses final insertion commutation. These give exactly the three
+right-hand source lists. The target proof is identical with target lists.
+The isomorphism preserves literal labels and is valid for self-loops and cycles.
+\end{proof}
+\lean{Graph/PlugAssociativity}{80}{118}{Net.plug_assoc}
+
+\subsection{Composition at arbitrary box depth}
+
+\begin{lemma}[Overwrite and insertion of box bodies]
+Replacing the same box body twice has exactly the effect of the last replacement.
+Changing the body of an inserted box commutes, up to literal-label isomorphism,
+with changing that body before shallow insertion.
+\end{lemma}
+\begin{proof}
+For overwrite, the two graphs have the same carriers, incidence, and internal
+labels. At the selected edge both final labels contain the last body. At any
+other edge both conditional updates keep the original label. Extensionality of
+the label function and proof irrelevance give equality of the graph records.
+
+For commutation with insertion use identity carrier bijections. Surviving host
+labels are unchanged. On inserted edges the two tests for being the selected
+edge agree, because $\mathsf{inr}(x)=\mathsf{inr}(f)$ exactly when $x=f$.
+Incidence is unchanged by box replacement. The insertion functions also agree:
+internal ports have the same tags, and boundary ports attach to the same outer
+host positions. List mapping then proves both incidence equations.
+\end{proof}
+\lean{Graph/DeepAssociativity}{10}{20}{Linear.replaceBox_overwrite}
+\lean{Graph/DeepAssociativity}{23}{62}{Linear.plug_replaceBox_iso}
+
+\begin{definition}[Composed site]\label{term:composed-site}
+Let $s:\mathsf{Site}(G,r,J,K)$ and $t:\mathsf{Site}(H,q,U,V)$, where $H$ has
+the replacement interface of $s$. Define
+\[
+ s\star t:\mathsf{Site}(\mathsf{plugAt}(s,H),q,U,V).
+\]
+If $s$ is shallow and $t$ is shallow, select the inserted edge
+$\mathsf{inr}(f)$. If $s$ is shallow and $t$ enters a box, enter the corresponding
+inserted box and retain $t$'s inner address. If $s$ enters a box, rebuild that
+box with the first replacement already performed, then descend to the recursively
+composed inner site.
+\end{definition}
+This is recursion on the outer address. The new enclosing box carries exactly
+the body produced by the first substitution, so the box-label equation is the
+selected branch of the update. Local depth and interface indices are preserved
+by construction. Although the surrounding graph operations use classical
+finite-subset constructions, no isomorphism or target address is selected by
+an existence theorem here.
+\lean{Graph/DeepAssociativity}{66}{77}{Linear.Site.comp}
+
+\begin{theorem}[Deep associativity]
+For every compatible $s,t,A$,
+\[
+ \mathsf{plugAt}(s\star t,A)\cong_d
+ \mathsf{plugAt}(s,\mathsf{plugAt}(t,A)).
+\]
+No uniqueness, freshness, or non-self-loop premise is required.
+\end{theorem}
+\begin{proof}
+Induct on $s$. When $s$ and $t$ are shallow use the explicit shallow associator
+and embed its literal-label isomorphism into recursive isomorphism. When $s$
+is shallow and $t$ enters a box, use the box/insertion commutation lemma.
+When $s$ enters a box, the left expression first updates that box to contain
+$\mathsf{plugAt}(s_{\rm inner},H)$ and later updates it again after following
+the composed inner address. Overwrite reduces these two updates to one. The
+induction hypothesis compares its final body to the body obtained by performing
+the inner substitution before the outer one. Box replacement congruence lifts
+that body isomorphism through the enclosing box.
+\end{proof}
+\lean{Graph/DeepAssociativity}{80}{94}{Linear.plugAt_assoc}
+
+\begin{lemma}[Quotient composition and three-stage coherence]
+On recursive isomorphism classes,
+\[
+ P_{s\star t}([A])=P_s(P_t([A])),\qquad
+ P_s=\mathsf{plugAtModuloIso}(s,-).
+\]
+For a third compatible site $u$, the two functions associated with
+$(s\star t)\star u$ and $s\star(t\star u)$ also agree on every replacement class.
+\end{lemma}
+\begin{proof}
+For the binary equation use quotient induction and quotient soundness applied
+to deep associativity on representatives. For three stages, apply the binary
+equation twice to each side; both reduce to $P_s(P_t(P_u([A])))$.
+The ambient concrete hosts of the two composite addresses can differ, so this
+is a statement about the induced quotient results, not literal equality of
+address records in different hosts.
+\end{proof}
+\lean{Graph/DeepAssociativity}{97}{102}{Linear.plugAtModuloIso_comp}
+\lean{Graph/DeepAssociativity}{205}{210}{Linear.plugAtModuloIso_comp_three}
+
+The selected-hole observation of $s\star t$ equals that of $t$. Induct on $s$;
+for shallow $s$, either form of $t$ retains the same selected label, and for
+inside $s$ the definition discards the enclosing box and the induction hypothesis
+applies.
+\lean{Graph/DeepAssociativity}{105}{110}{Linear.Site.selectedHole_comp}
+
+\subsection{Exact inventories and context validity of composites}
+
+Write $R_s(h)$ for $\mathsf{SiteRetainedHole}(s,h)$ and $H_A(h)$ for
+$\mathsf{HasHole}(A,h)$.
+
+\begin{lemma}[Retained inventories compose by union]
+Removing an inserted shallow edge $\mathsf{inr}(f)$ retains exactly the holes
+under surviving original-host edges and surviving middle-graph edges. More
+generally,
+\[
+ R_{s\star t}(h)\quad\Longleftrightarrow\quad R_s(h)\lor R_t(h).
+\]
+Consequently the final hole inventory is exactly
+$R_s(h)\lor R_t(h)\lor H_A(h)$.
+\end{lemma}
+\begin{proof}
+For shallow inserted-edge removal, decompose a retained occurrence by its outer
+edge tag. A surviving host tag already supplies its inequality with the original
+selected edge. An inserted tag survives precisely when its middle edge differs
+from $f$. Its fibre position and hole observation are unchanged. Conversely,
+construct the appropriate tagged edge from either of these witnesses.
+
+For the general statement induct on $s$. A shallow $s$ and shallow $t$ give
+the preceding result directly. If $t$ enters a box, append its retained inner
+inventory and reassociate disjunction. For inside $s$, replacement of its
+selected box preserves all retained outer-edge fibres; apply that fact and
+the induction hypothesis to the inner composite, then reassociate disjunction.
+Finally apply the exact inventory theorem for replacement at $s\star t$.
+\end{proof}
+\lean{Graph/DeepAssociativity}{114}{124}{Linear.retainedHole_inserted}
+\lean{Graph/DeepAssociativity}{127}{143}{Linear.siteRetainedHole_comp}
+\lean{Graph/DeepAssociativity}{147}{153}{Linear.plugAt_comp_hasHole_iff}
+
+\begin{lemma}[Composite freshness]
+Exact freshness for $(s\star t,A)$ is equivalent to both
+\[
+ \forall h,\ \neg(R_s(h)\land H_A(h))
+ \quad\text{and}\quad
+ \mathsf{SiteFresh}(t,A).
+\]
+\end{lemma}
+\begin{proof}
+Use the retained-union theorem. In the forward direction include either retained
+inventory into the union and apply composite freshness. In the reverse direction,
+split a retained witness according to the union and apply the corresponding
+freshness assumption.
+\end{proof}
+\lean{Graph/DeepAssociativity}{156}{168}{Linear.siteFresh_comp_iff}
+
+\begin{theorem}[Sharp context closure for composition]
+Suppose $G$ and $H$ have unique holes. Then
+$\mathsf{plugAt}(s\star t,A)$ has unique holes if and only if all three conditions
+hold:
+\begin{enumerate}
+\item $A$ has unique holes;
+\item $A$ is fresh for the composite site $s\star t$;
+\item $\forall h,\ \neg(R_s(h)\land R_t(h))$.
+\end{enumerate}
+Thus the three inventories $R_s,R_t,H_A$ must be pairwise disjoint.
+The intermediate graph $\mathsf{plugAt}(s,H)$ need not have unique holes.
+\end{theorem}
+\begin{proof}
+By deep associativity it suffices to check uniqueness of
+$\mathsf{plugAt}(s,\mathsf{plugAt}(t,A))$. Apply sharp context closure first
+with host $G$, then with host $H$. This gives uniqueness of $A$, freshness for
+$(t,A)$, and disjointness of $R_s$ from the hole inventory of
+$\mathsf{plugAt}(t,A)$. The latter inventory is $R_t\cup H_A$ by the exact
+inventory theorem. Splitting that union gives disjointness of $R_s$ from $R_t$
+and from $H_A$. Combine the last condition with freshness for $(t,A)$ using
+the composite-freshness lemma. Conversely, reverse each implication: the
+pairwise exclusions make the inner result fresh for $s$, and both applications
+of sharp closure establish the final result's uniqueness.
+\end{proof}
+\lean{Graph/DeepAssociativity}{173}{191}{Linear.plugAt_comp_unique_iff}
+
+\begin{definition}[Certified composed plugging]\label{term:certified-composition}
+Given contexts $G,H,A$, compatible sites $s,t$, composite freshness, and
+disjoint retained inventories $R_s,R_t$, package
+$\mathsf{plugAt}(s\star t,A)$ with the uniqueness proof just obtained.
+This defines \texttt{Context.plugAtComp}; it requires no certificate that the
+intermediate plugged graph is a context.
+\end{definition}
+\lean{Graph/DeepAssociativity}{195}{201}{Linear.Context.plugAtComp}
+
+\subsection{Corolla units}
+
+\begin{definition}[Substitution unit]\label{term:substitution-unit}
+For a signature label $o$, let $\mathbf c_o$ be its one-edge corolla, with its
+sole edge selected. This is a substitution unit of interface
+$(\sigma_{\rm in}(o),\sigma_{\rm out}(o))$. It is an addressed graph, with no uniqueness premise on its label;
+no free wire identifying an input vertex with an output vertex is introduced.
+\end{definition}
+We prove $\mathbf c_o[0:=H]\cong H$ and
+$C[e:=\mathbf c_{\ell(e)}]\cong C$ using literal-label isomorphisms.
+
+A corolla has no surviving edge after removing zero: an element of
+$\{i:\mathsf{Fin}(1)\mid i\ne0\}$ contradicts the fact that every index below
+one is zero. Its $i$th source and target attachment positions are its input
+and output ports at $i$, respectively. These equations follow by unfolding
+lookup in the mapped finite-range lists.
+\lean{Graph/PlugUnits}{10}{10}{Net.PlugUnit.noEdge}
+\lean{Graph/PlugUnits}{13}{14}{Net.PlugUnit.corolla_sourcePort}
+\lean{Graph/PlugUnits}{17}{18}{Net.PlugUnit.corolla_targetPort}
+
+\begin{lemma}[Left unit]
+Replacing the sole edge of $\mathbf c_o$ by $H$ yields a graph isomorphic to $H$.
+\end{lemma}
+\begin{proof}
+The vertex bijection discards the empty left summand in $\varnothing+H_V$.
+The edge bijection discards the impossible surviving-corolla summand and retains
+$H_E$. Their inverses include into the right summands. Both inverse laws follow
+by cases, eliminating impossible elements.
+
+Mapping an inserted port through the vertex projection gives the original port:
+internal ports are immediate; input and output ports use the corolla attachment
+equations. For each inserted edge, combine the incidence list maps and apply
+this port equation, leaving the original source or target list. Surviving
+corolla edges are impossible. All labels agree directly on the remaining
+summands.
+\end{proof}
+\lean{Graph/PlugUnits}{21}{25}{Net.PlugUnit.leftVertices}
+\lean{Graph/PlugUnits}{28}{32}{Net.PlugUnit.leftEdges}
+\lean{Graph/PlugUnits}{35}{40}{Net.PlugUnit.left_insert}
+\lean{Graph/PlugUnits}{88}{111}{Net.corolla_plug_iso}
+
+\begin{lemma}[Right unit]
+Replacing $e$ in $C$ by its own labelled corolla yields a graph isomorphic to $C$.
+\end{lemma}
+\begin{proof}
+The vertex bijection discards the empty right summand. The edge bijection maps
+each surviving host edge to itself and the inserted corolla edge to $e$.
+Its inverse tests whether an edge equals $e$: if so use the sole corolla edge;
+otherwise use the surviving-host subtype. The inverse laws follow from this
+test and uniqueness of an element of $\mathsf{Fin}(1)$.
+
+The vertex projection cancels inclusion of host ports. Enumerating all source
+positions of $e$ reconstructs $C$'s source list: the lengths agree by typing,
+and each indexed element agrees by lookup in the finite-range map. The target
+list is reconstructed in the same way. Thus surviving-edge incidence agrees
+by cancellation of host inclusion; the inserted corolla's full boundary list
+maps to exactly the source or target list of $e$. Labels agree on both edge
+cases. This proof also covers an edge whose source and target share vertices.
+\end{proof}
+\lean{Graph/PlugUnits}{43}{47}{Net.PlugUnit.rightVertices}
+\lean{Graph/PlugUnits}{50}{63}{Net.PlugUnit.rightEdges}
+\lean{Graph/PlugUnits}{66}{68}{Net.PlugUnit.right_host}
+\lean{Graph/PlugUnits}{71}{76}{Net.PlugUnit.sourcePort_list}
+\lean{Graph/PlugUnits}{79}{84}{Net.PlugUnit.targetPort_list}
+\lean{Graph/PlugUnits}{114}{145}{Net.plug_corolla_iso}
+
+\Needspace{16\baselineskip}
+\subsection{Restoration and unit equations at deep sites}
+
+\begin{definition}[Original selected fragment]\label{term:original-fragment}
+The original fragment at a site $s$ is the corolla carrying the label of its
+selected edge. For an inside site descend to its inner site. If the selected
+edge is itself a box, its original fragment includes that complete box label
+and its original body. The fragment has exactly the local depth and interface
+required by $s$.
+\end{definition}
+\lean{Graph/DeepUnits}{11}{15}{Linear.Site.original}
+
+\begin{lemma}[Deep restoration]
+Substituting the original fragment at any site restores the entire host up to
+recursive isomorphism.
+\end{lemma}
+\begin{proof}
+First note that reinstalling a box's original body gives a literal-label
+isomorphism with identity carriers: at the selected edge use its original
+box-label equality, and elsewhere no label changes. Incidence and internal
+labels are untouched.
+
+Now induct on the site. For a shallow site apply the right unit. For an inside
+site, the induction hypothesis restores its inner host up to recursive
+isomorphism. Box congruence transports that isomorphism to the surrounding
+updated box. Compose it with the just-proved isomorphism for reinstalling the
+original body.
+\end{proof}
+\lean{Graph/DeepUnits}{18}{33}{Linear.replaceBox_original_iso}
+\lean{Graph/DeepUnits}{37}{43}{Linear.plugAt_original}
+
+Consequently, plugging the original fragment class at $s$ returns the original
+host class, by quotient soundness. A selected one-edge corolla acts as identity
+on every replacement class of its interface: quotient induction reduces this
+to the left-unit isomorphism. Together with the composition equations above,
+these are unit and associativity laws for the induced substitution operations
+on recursive isomorphism classes. They do not construct a quotient of addresses
+or prove an interchange law for disjoint sites.
+\lean{Graph/DeepUnits}{46}{49}{Linear.plugAtModuloIso_original}
+\lean{Graph/DeepUnits}{52}{57}{Linear.plugAtModuloIso_corolla}
+
+\subsection{Regression proofs: self-loops, mixed depth, and repaired collisions}
+
+For the concrete one-edge self-loop, instantiate shallow associativity with
+two unary corollas. Instantiate the right unit with the loop's own corolla as
+well. Both retain the loop's shared source/target vertex, demonstrating that
+neither theorem relies on a non-self-loop hypothesis.
+\lean{Graph/CompositionExamples}{8}{11}{Graph.Examples.loop_associativity}
+\lean{Graph/CompositionExamples}{14}{15}{Graph.Examples.loop_unit}
+
+Define a unary variable fragment $V$ as a corolla of the variable label. It has
+interface $*\to *$ and no holes: any alleged hole observation would equate
+\texttt{none} with \texttt{some}. Let $t$ select the sole edge of the earlier
+replacement containing hole one. Its retained inventory is empty, because
+there is no other edge in its one-element carrier.
+\lean{Graph/CompositionExamples}{22}{23}{Linear.Examples.variableFragment}
+\lean{Graph/CompositionExamples}{25}{27}{Linear.Examples.variableFragment_holeFree}
+\lean{Graph/CompositionExamples}{30}{30}{Linear.Examples.repeatedSite}
+\lean{Graph/CompositionExamples}{32}{34}{Linear.Examples.repeatedSite_retained_absent}
+
+Take the earlier boxed two-hole host and let $s$ select hole zero inside it.
+Inserting the one-hole replacement carrying label one gives the already proved
+collision with the surviving hole one. This intermediate graph is invalid.
+Now fill the inserted occurrence at $s\star t$ with $V$. The composite criterion
+proves uniqueness: $V$ is hole-free, hence unique and fresh; and the empty
+retained inventory of $t$ is disjoint from the retained host inventory.
+\lean{Graph/CompositionExamples}{38}{46}{Linear.Examples.intermediate_collision_repaired}
+The final graph still contains the host's hole one, witnessed by the surviving
+inner edge. Hole zero is absent: it cannot be retained by $s$ because it was
+the selected unique hole; it cannot be retained by $t$ because that inventory
+is empty; and it cannot occur in $V$ because $V$ is hole-free. The exact composite
+inventory theorem exhausts these three possibilities.
+\lean{Graph/CompositionExamples}{49}{60}{Linear.Examples.repaired_inventory}
+
+For a mixed-depth example, form a one-edge shell whose label is the box label
+of the boxed two-hole host, and select that shell's sole edge. Insert the boxed
+host, then follow its deep first-hole site. Deep associativity compares this
+with filling the boxed host first and then inserting it into the shell.
+\lean{Graph/CompositionExamples}{63}{64}{Linear.Examples.boxShell}
+\lean{Graph/CompositionExamples}{66}{66}{Linear.Examples.shellSite}
+\lean{Graph/CompositionExamples}{68}{71}{Linear.Examples.shallow_then_deep_associativity}
+A three-stage instance adds the sole site of the repeated-hole replacement and
+then the variable fragment; the two site-composition bracketings agree on the
+resulting quotient class by three-stage coherence. Finally, restoring the
+original fragment at the boxed first-hole site recovers the original boxed
+host by deep restoration.
+\lean{Graph/CompositionExamples}{74}{79}{Linear.Examples.three_stage_composition}
+\lean{Graph/CompositionExamples}{82}{83}{Linear.Examples.deep_restoration}
