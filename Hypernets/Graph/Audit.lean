@@ -1,4 +1,4 @@
-import Hypernets.Graph.RecursiveIsoExamples
+import Hypernets.Graph.SiteTransportExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -50,3 +50,14 @@ import Hypernets.Graph.RecursiveIsoExamples
 #print axioms Hypernets.Linear.Examples.boxedTwoHoles_no_literalIso
 #print axioms Hypernets.Linear.Examples.renamedBoxes_same_class
 #print axioms Hypernets.Linear.Examples.deep_plug_renaming
+
+#print axioms Hypernets.Graph.Net.RelIso.plugHost
+#print axioms Hypernets.Linear.Site.transport_exists
+#print axioms Hypernets.Linear.Site.transport_spec
+#print axioms Hypernets.Linear.SiteIso.plug_congr
+#print axioms Hypernets.Linear.plugAtModuloIso_transport
+#print axioms Hypernets.Linear.SiteIso.retainedHole_iff
+#print axioms Hypernets.Linear.SiteIso.fresh_iff
+#print axioms Hypernets.Linear.SiteIso.plug_unique_iff
+#print axioms Hypernets.Linear.Examples.simultaneous_deep_renaming
+#print axioms Hypernets.Linear.Examples.wrong_address_changes_result
