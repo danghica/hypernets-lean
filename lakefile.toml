@@ -1,0 +1,6 @@
+name = "hypernets"
+version = "0.1.0"
+defaultTargets = ["Hypernets"]
+
+[[lean_lib]]
+name = "Hypernets"
