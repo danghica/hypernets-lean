@@ -47,7 +47,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/f4d6ccdca5f432131038b6605d4edb14386ab98a}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/855b8551edd3aa472b780c34ea66432a648fb465}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -55,11 +55,11 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{23 October 2026\\\small Source snapshot: \texttt{f4d6ccd}; Lean \texttt{4.35.0}}
+\date{23 October 2026\\\small Source snapshot: \texttt{855b855}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
-This document explains every definition and proved statement in the current Lean development, including its regression examples. It gives proofs in mathematical English and links each declaration to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright. The forward and converse robustness arguments are proved relative to an explicit specimen interface. The concrete development constructs finite typed graphs, proves well-formed shallow plugging, path and isomorphism results, operation-path uniqueness, finite boxed hierarchies, addressed deep replacement, and globally unique-hole context closure under explicit freshness conditions. Shallow plugging additionally has an exact hole inventory and a necessary-and-sufficient freshness criterion. The connection to a concrete universal abstract machine and the verification of the specimen interface remain outstanding; the development is therefore not yet a formalization of the paper's full Theorem~6.
+This document explains every definition and proved statement in the current Lean development, including its regression examples. It gives proofs in mathematical English and links each declaration to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright. The forward and converse robustness arguments are proved relative to an explicit specimen interface. The concrete development constructs finite typed graphs, proves well-formed shallow plugging, path and isomorphism results, operation-path uniqueness, finite boxed hierarchies, addressed deep replacement, and globally unique-hole context closure under explicit freshness conditions. Plugging at every finite box depth has an exact syntactic hole inventory and a necessary-and-sufficient freshness criterion, including exact consumption of the selected hole label. The connection to a concrete universal abstract machine and the verification of the specimen interface remain outstanding; the development is therefore not yet a formalization of the paper's full Theorem~6.
 \end{abstract}
 \clearpage
 \begingroup
@@ -88,6 +88,7 @@ This document explains every definition and proved statement in the current Lean
 \input{20-context-plugging}
 \input{21-deep-context}
 \input{22-context-examples}
+\input{24-deep-inventory}
 \input{11-audit}
 \begin{thebibliography}{9}
 \bibitem{paper}
@@ -97,7 +98,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/f4d6ccdca5f432131038b6605d4edb14386ab98a}{Repository at revision \texttt{f4d6ccd}}.
+\href{https://github.com/danghica/hypernets-lean/tree/855b8551edd3aa472b780c34ea66432a648fb465}{Repository at revision \texttt{855b855}}.
 \end{thebibliography}
 \clearpage
 \appendix

@@ -17,6 +17,10 @@ sharp freshness and consumption, isomorphism invariance of contexts, deep site
 provenance, deep context closure, and the new reuse and collision regressions.
 \lean{Graph/Audit}{5}{17}{Graph.Audit: concrete theorem dependencies}
 \lean{Graph/Audit}{19}{30}{Graph.Audit: context calculus dependencies}
+Nine further commands audit the exact deep inventory, both versions of sharp
+context closure, hole-freeness, selected-label consumption, certified deep
+plugging, and the deep reuse and collision regressions.
+\lean{Graph/Audit}{32}{40}{Graph.Audit: exact deep inventory dependencies}
 
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
@@ -79,9 +83,9 @@ with explicit binder metadata to the paper's set-based graph-labelled hypernets.
 Extend isomorphism recursively to identify independently renamed box bodies.
 \item Complete the remaining context algebra, especially associativity of plugging.
 Global hole-label uniqueness is now preserved under explicit freshness conditions
-for arbitrary deep replacement. Shallow plugging has an exact inventory and a
-necessary-and-sufficient freshness criterion; an equally explicit syntactic
-inventory characterization for arbitrary deep sites remains to prove.
+for arbitrary deep replacement. Exact syntactic inventories and
+necessary-and-sufficient freshness are now proved at every finite box depth,
+together with the exact fate of a consumed hole label.
 \item Define concrete focussed UAM states, search and rewrite transitions,
 rootedness, determinism, and refocusing. Prove their structural transition laws.
 Concrete focus labels and operation traversal alone do not define that machine.

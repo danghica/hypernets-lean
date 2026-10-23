@@ -104,11 +104,27 @@ requirements proved explicitly rather than left as abstract locality laws:
   after filling inside a box, and failure of uniqueness when two individually
   valid contexts introduce a retained/inserted label collision.
 
-The exact necessary-and-sufficient inventory criterion is currently shallow.
-For arbitrary deep sites, the proved compatibility condition uses the concrete
-provenance map. The deep inventory theorem is an upper bound, not an exact
-syntactic inventory theorem. Associativity and recursive box isomorphism remain
-open; the concrete UAM and the bridge to Theorem 6 remain the main later work.
+## Exact deep inventory milestone
+
+The inventory and sharp freshness theorems now hold at every finite box depth:
+
+- `SiteRetainedHole` computes retained host labels from the original graph and
+  address alone. It does not depend on the replacement or a provenance certificate.
+- `plugAt_hasHole_iff` proves that the result contains exactly the retained host
+  labels and the replacement labels, without uniqueness or freshness assumptions.
+- For a host context, `plugAt_uniqueHoles_iff` proves that the result has unique
+  holes **if and only if** the replacement has unique holes and satisfies
+  `SiteFresh`. Replacement uniqueness is itself a necessary conclusion.
+- `Context.plugAtFresh` packages the resulting context using this exact condition.
+  Full host/replacement disjointness is no longer required.
+- `plugAt_holeFree_iff` characterizes complete removal of holes, and
+  `plugAt_consumed_hole_iff` proves that a consumed label remains precisely when
+  the replacement reintroduces it.
+- Concrete boxed regressions verify consumed-label reuse, genuine removal, and
+  failure of uniqueness when an inserted label collides with a surviving sibling.
+
+Associativity and recursive box isomorphism remain open; the concrete UAM and
+its bridge to Theorem 6 remain the main later work.
 
 ## Checked source
 
@@ -147,6 +163,9 @@ open; the concrete UAM and the bridge to Theorem 6 remain the main later work.
   provenance, exact shallow inventory, sharp freshness, and certified context plugging.
 - `Hypernets/Graph/DeepContext.lean`: provenance through box replacement and
   certified context closure for replacement at any addressed depth.
+- `Hypernets/Graph/DeepInventory.lean`: exact deep inventories, box decomposition,
+  necessary-and-sufficient context closure, hole-freeness, and selected-label consumption.
+- `Hypernets/Graph/DeepInventoryExamples.lean`: deep reuse, removal and collision regressions.
 - `Hypernets/Graph/ContextExamples.lean`: hole-free filling, consumed-label reuse,
   and an explicit collision between two individually valid contexts.
 
@@ -156,12 +175,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 344 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 347
-source-fragment links point to immutable code revision `f4d6ccd`. It distinguishes
+all 379 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 383
+source-fragment links point to immutable code revision `855b855`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 104 technical terms, with short descriptions and internal PDF links
+glossary of 110 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -199,8 +218,8 @@ logical axioms, if used, are shown explicitly.
 1. Prove adequacy of the typed graph representation, extend isomorphism
    recursively through box contents, and prove the context
    algebra, especially associativity of plugging. Global hole-label uniqueness
-   under freshness is now checked even for deep replacement. Extend the exact
-   shallow hole-inventory characterization to arbitrary deep sites.
+   under freshness, exact hole inventories, and sharp context closure are now
+   checked even for deep replacement.
 2. Define focussed states, search and rewrite transitions, rootedness,
    determinism, and refocusing (§§5–7, Appendices C–D).
 3. Define concrete type-indexed pre-templates, specimens, quasi-specimens,

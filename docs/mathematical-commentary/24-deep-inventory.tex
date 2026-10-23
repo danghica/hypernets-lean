@@ -1,0 +1,312 @@
+\Needspace{18\baselineskip}
+\section{Exact inventories and sharp context closure at every depth}
+\label{sec:deep-inventory}
+
+The provenance argument establishes a useful upper bound on hole inventories.
+We now strengthen it to an equality described entirely by the original host and
+the selected address. This also gives a necessary-and-sufficient freshness
+condition. Throughout this section $s$ is a site in $G$, $H$ has the interface
+and local depth required by $s$, and $G[s:=H]$ denotes $\mathsf{plugAt}(s,H)$.
+Write $\mathcal H(G)$ for the set of full typed hole labels present in $G$.
+These statements concern the concrete typed hierarchy; they do not presuppose
+any specimen laws or a concrete UAM semantics.
+
+\subsection{Separating one outer edge from the rest of a graph}
+
+\begin{definition}[Inventory of an edge]\label{term:edge-hole-inventory}
+For an outer edge $e$ of $G$, let $E_G(e,h)$ mean that some position in the fibre
+of $e$ observes $h$. This includes the edge itself and all descendants within
+its label. Thus $E_G(e,h)$ is the predicate $\mathsf{EdgeHasHole}(G,e,h)$.
+\end{definition}
+\lean{Graph/DeepInventory}{9}{10}{Linear.EdgeHasHole}
+
+\begin{definition}[Uniqueness away from an edge]\label{term:away-unique}
+The predicate $\mathsf{AwayUnique}(G,e)$ says that any two occurrences with outer
+edges different from $e$ and with the same hole observation are equal. It places
+no condition on occurrences within the fibre of $e$.
+\end{definition}
+\lean{Graph/DeepInventory}{13}{15}{Linear.AwayUnique}
+
+\begin{lemma}[Partition of uniqueness]
+The graph $G$ has unique holes if and only if all three conditions hold:
+occurrences away from $e$ are unique; hole observations within the fibre of $e$
+are unique; and no label is observed both away from $e$ and within that fibre.
+\end{lemma}
+\begin{proof}
+Global uniqueness restricts to each part. A collision between the two parts
+would force equality of their outer edges, contradicting the requirement that
+the first outer edge differ from $e$. Conversely, take two occurrences of the
+same hole label. If both lie away from $e$, use away-uniqueness. If both have
+outer edge $e$, use fibre uniqueness. The two mixed cases contradict the
+cross-part disjointness condition. These cases exhaust all occurrences.
+\end{proof}
+\lean{Graph/DeepInventory}{19}{43}{Linear.uniqueHoles_partition}
+
+\begin{lemma}[Inventories of a box and of a whole graph]
+If the label of $e$ is a box with body $B$, then $E_G(e,h)$ holds exactly when
+$h\in\mathcal H(B)$. For an arbitrary edge $e$, a label $h$ occurs in $G$ exactly
+when it occurs away from $e$ or satisfies $E_G(e,h)$.
+\end{lemma}
+\begin{proof}
+The shallow position of a box is not a hole, while each of its child positions
+is precisely an occurrence of its body, with the same observation. For the
+whole-graph statement, write an occurrence as an outer edge and a fibre
+position, and split according to whether that edge equals $e$. In the reverse
+direction either witness is already an occurrence of $G$.
+\end{proof}
+\lean{Graph/DeepInventory}{46}{56}{Linear.edgeHasHole_box}
+\lean{Graph/DeepInventory}{59}{69}{Linear.hasHole_partition}
+
+\begin{lemma}[Exact inventory after replacing a box body]
+Changing the body of box edge $e$ to $B'$ preserves the inventory away from $e$
+exactly. The entire new inventory is the union of the old inventory away from
+$e$ and $\mathcal H(B')$.
+\end{lemma}
+\begin{proof}
+Every other edge has exactly the same label before and after the change.
+Transport its fibre positions along this label equality; fibre transport
+preserves observations in both directions. This proves the first claim.
+Partition the new graph at $e$ and use the preceding box-inventory lemma to
+identify its selected fibre with the new body's inventory.
+\end{proof}
+\lean{Graph/DeepInventory}{72}{84}{Linear.replaceBox_retained_iff}
+\lean{Graph/DeepInventory}{87}{92}{Linear.replaceBox_hasHole_iff}
+
+\begin{lemma}[Box uniqueness]
+The hole observations in a box fibre are unique exactly when its body has
+unique holes. Consequently, the body of every box in a context has unique holes.
+\end{lemma}
+\begin{proof}
+A box's shallow position cannot witness a hole. Two child positions observing
+the same hole are equal precisely when their body occurrences are equal.
+Injectivity of the child constructor proves the reverse implication. For the
+consequence, restrict the graph's uniqueness to the selected fibre using the
+partition lemma, then apply this equivalence.
+\end{proof}
+\lean{Graph/DeepInventory}{95}{109}{Linear.boxFiber_unique_iff}
+\lean{Graph/DeepInventory}{112}{117}{Linear.uniqueHoles_box_body}
+
+\begin{lemma}[Uniqueness after changing one box]
+Suppose $G$ is a context. Replacing the body of box edge $e$ by $B'$ yields a
+context if and only if $B'$ has unique holes and its hole inventory is disjoint
+from the inventory of $G$ away from $e$.
+\end{lemma}
+\begin{proof}
+First the unchanged part remains unique: transport two of its occurrences to
+$G$ along their unchanged label equalities, apply uniqueness in $G$, and use
+injectivity of fibre transport to recover equality in the new graph.
+The uniqueness partition for the changed graph now has a proved first
+condition. Its second condition is equivalent to uniqueness of $B'$, by box
+uniqueness. Its third condition is exactly the stated disjointness, by the
+preservation of the outside inventory and the exact inventory of a box.
+\end{proof}
+\lean{Graph/DeepInventory}{120}{133}{Linear.replaceBox_awayUnique}
+\lean{Graph/DeepInventory}{137}{157}{Linear.replaceBox_uniqueHoles_iff}
+
+\subsection{A syntactic inventory of retained holes}
+
+\begin{definition}[Retention along a site]\label{term:site-retained-hole}
+Let $R_s(h)$ be defined recursively on the site address. At a shallow site
+selecting $e$ in $G$, it is $\mathsf{RetainedHole}(G,e,h)$: there is an occurrence
+of $h$ under another outer edge. If the site descends through box edge $e$ to an
+inner site $t$, set
+\[
+ R_s(h)\quad\Longleftrightarrow\quad
+ \mathsf{RetainedHole}(G,e,h)\ \lor\ R_t(h).
+\]
+This is $\mathsf{SiteRetainedHole}$. It depends only on the host and address,
+not on the replacement graph or a provenance certificate. It excludes all
+occurrences below the edge finally removed, while retaining the siblings of
+every enclosing box. Enclosing box edges are not themselves holes.
+\end{definition}
+\lean{Graph/DeepInventory}{161}{165}{Linear.SiteRetainedHole}
+
+\begin{theorem}[Exact deep hole inventory]
+For every site and every type-correct replacement, without uniqueness or
+freshness assumptions,
+\[
+ h\in\mathcal H(G[s:=H])\quad\Longleftrightarrow\quad
+ R_s(h)\ \lor\ h\in\mathcal H(H).
+\]
+\end{theorem}
+\lean{Graph/DeepInventory}{168}{176}{Linear.plugAt_hasHole_iff}
+\begin{proof}
+Induct on the site address. The shallow case is the exact shallow inventory
+theorem. For a site inside a box, the exact box-replacement inventory is the
+union of the unaffected outer inventory and the changed body's inventory.
+The induction hypothesis identifies the latter as the inner retained inventory
+union the replacement inventory. Reassociate these three alternatives; the
+first two are exactly $R_s$. Both directions are preserved at each step, so no
+retained or inserted label is lost from the characterization.
+\end{proof}
+
+\begin{definition}[Exact deep freshness]\label{term:site-fresh}
+The predicate $\mathsf{SiteFresh}(s,H)$ says
+\[
+ \forall h,\quad R_s(h)\ \Longrightarrow\ h\notin\mathcal H(H).
+\]
+Only retained host labels constrain the replacement; a label that is wholly
+consumed is available for reuse.
+\end{definition}
+\lean{Graph/DeepInventory}{179}{181}{Linear.SiteFresh}
+
+\begin{lemma}[Retention implies original presence]
+If $R_s(h)$, then $h\in\mathcal H(G)$.
+\end{lemma}
+\begin{proof}
+Induct on the site. An outside witness is already a host occurrence. For an
+inner retained witness, the induction hypothesis supplies an occurrence in the
+original box body; the box-inventory lemma and whole-graph partition lift it
+back into the host.
+\end{proof}
+\lean{Graph/DeepInventory}{184}{193}{Linear.siteRetainedHole_hasHole}
+
+\begin{lemma}[Replacement uniqueness is necessary for shallow plugging]
+If a shallow plugged graph has unique holes, its replacement has unique holes.
+\end{lemma}
+\begin{proof}
+The right-tagged injection embeds every replacement edge into the result,
+preserving labels and all fibre observations. Uniqueness reflects along this
+injective edge map by the established embedding theorem.
+\end{proof}
+\lean{Graph/DeepInventory}{196}{200}{Linear.plug_uniqueHoles_replacement}
+
+\subsection{Necessary and sufficient context closure}
+
+\begin{theorem}[Exact context criterion at arbitrary depth]
+Suppose $G$ has unique holes. Then
+\[
+ \mathsf{UniqueHoles}(G[s:=H])
+ \quad\Longleftrightarrow\quad
+ \mathsf{UniqueHoles}(H)\ \land\ \mathsf{SiteFresh}(s,H).
+\]
+Thus uniqueness of the replacement is a necessary conclusion in the forward
+direction, not an additional assumption of the theorem.
+\end{theorem}
+\begin{proof}
+Induct on the address. At a shallow site, uniqueness of the result forces both
+replacement uniqueness and sharp shallow freshness. The reverse implication is
+the proved shallow closure theorem.
+
+For an inside site, let $B$ be the old body and $t$ the inner address. Since $G$
+is a context, $B$ is a context. The box-replacement criterion says that the
+result is a context exactly when $B[t:=H]$ is a context and its inventory is
+disjoint from the outer inventory away from the selected box. The induction
+hypothesis replaces its first condition by uniqueness of $H$ and inner
+freshness.
+
+For necessity, inner freshness excludes collisions with inner retained labels.
+A label inserted from $H$ is present in the changed body by the exact inventory
+theorem; outer disjointness therefore excludes collisions with every retained
+outer label. These are precisely the two alternatives defining $R_s$.
+
+For sufficiency, site freshness supplies inner freshness, so induction proves
+uniqueness of the changed body. Consider a label shared by that body and an
+unaffected outer edge. The exact inventory theorem gives two cases. If the
+label comes from $H$, site freshness is contradicted. If it is retained inside
+the body, retention implies its presence in the old body. It would then have
+occurred both inside and outside that box already in $G$, contradicting the
+uniqueness partition of $G$. This proves the required outer disjointness and
+completes the induction.
+\end{proof}
+\lean{Graph/DeepInventory}{204}{234}{Linear.plugAt_uniqueHoles_iff}
+
+If $H$ is already a context, its uniqueness conjunct is known, leaving the
+necessary-and-sufficient condition $\mathsf{SiteFresh}(s,H)$ alone.
+\lean{Graph/DeepInventory}{237}{242}{Linear.plugAt_uniqueHoles_iff_fresh}
+\termdef{deep-certified-fresh}
+The constructor $\mathsf{Context.plugAtFresh}$ pairs the deep replacement graph
+with the proof supplied by this equivalence. Unlike full-label disjointness,
+its required certificate permits reuse of consumed labels at any box depth.
+\lean{Graph/DeepInventory}{245}{248}{Linear.Context.plugAtFresh}
+
+\begin{theorem}[Exact hole-freeness criterion]
+The result $G[s:=H]$ is hole-free if and only if no label satisfies $R_s$ and $H$
+is hole-free. No uniqueness assumption is needed.
+\end{theorem}
+\begin{proof}
+The exact inventory is empty precisely when both of its constituent inventories
+are empty. In either direction, an alleged witness in one part gives, or comes
+from, a witness in the union.
+\end{proof}
+\lean{Graph/DeepInventory}{252}{260}{Linear.plugAt_holeFree_iff}
+
+\subsection{Consumption of the selected label}
+
+\begin{definition}[Selected hole label]\label{term:selected-hole}
+The partial observation $\mathsf{Site.selectedHole}(s)$ follows the address to
+its selected edge and reads that edge's own shallow hole label. It does not
+inspect descendants of the selected edge. Thus selecting a box yields no hole
+label, even if its body contains holes.
+\end{definition}
+\lean{Graph/DeepInventory}{263}{267}{Linear.Site.selectedHole}
+
+\begin{lemma}[Presence and non-retention of a selected hole]
+If the selected label is $h$, then $h$ occurs in the original host. If the host
+is a context, $R_s(h)$ is false.
+\end{lemma}
+\begin{proof}
+For presence, the shallow case uses the selected edge's shallow fibre position.
+The inside case lifts the induction hypothesis from the body through the box.
+For non-retention, the shallow statement is the existing consumed-label lemma.
+Inside a box, a retained witness outside the box contradicts the old graph's
+uniqueness partition, because the selected label occurs inside its body. An
+inner retained witness contradicts induction applied to that body's uniqueness.
+\end{proof}
+\lean{Graph/DeepInventory}{270}{276}{Linear.Site.selectedHole_present}
+\lean{Graph/DeepInventory}{280}{291}{Linear.site_selected_not_retained}
+
+\begin{theorem}[Exact consumption at arbitrary depth]
+If $G$ is a context and $s$ selects a hole labelled $h$, then
+\[
+ h\in\mathcal H(G[s:=H])\quad\Longleftrightarrow\quad h\in\mathcal H(H).
+\]
+\end{theorem}
+\begin{proof}
+Use the exact deep inventory theorem and eliminate its retained-host alternative
+by non-retention of the selected label. This permits both genuine removal and
+intentional reintroduction, depending on the replacement.
+\end{proof}
+\lean{Graph/DeepInventory}{294}{299}{Linear.plugAt_consumed_hole_iff}
+
+\subsection{Concrete regressions inside boxes}
+
+In the existing one-hole boxed graph, no label is retained when the inner hole
+is selected. At the outer level there is no other edge (the carrier has one
+element), and inside the box there is no other edge either. This proves
+$\neg R_s(h)$ for every $h$.
+\lean{Graph/DeepInventoryExamples}{9}{14}{Linear.Examples.boxedHole_retained_absent}
+Replacing that hole by the same one-hole context therefore preserves uniqueness,
+by sharp deep freshness. Full disjointness fails because both original graphs
+contain the selected label. The consumed-label theorem also proves that this
+label is genuinely present after replacement, witnessed by its occurrence in
+the inserted graph.
+\lean{Graph/DeepInventoryExamples}{17}{19}{Linear.Examples.deep_reuse_unique}
+\lean{Graph/DeepInventoryExamples}{21}{23}{Linear.Examples.deep_reuse_not_disjoint}
+\lean{Graph/DeepInventoryExamples}{26}{27}{Linear.Examples.deep_reuse_present}
+Replacing instead with the hole-free value graph yields a hole-free result:
+combine absence of retained labels and hole-freeness of the value using the
+exact hole-freeness criterion. This is a shorter independent derivation of the
+previous global filling result.
+\lean{Graph/DeepInventoryExamples}{30}{31}{Linear.Examples.deep_fill_holeFree}
+
+For a negative example, box the earlier two-hole chain with zero bound variables
+and one free output. Its external interface is one zero-binding thunk input and
+one term output. Define a site descending into this box and selecting the first
+hole. The boxed graph is a context because the two-hole body is a context and
+boxing preserves uniqueness.
+\lean{Graph/DeepInventoryExamples}{34}{35}{Linear.Examples.boxedTwoHoles}
+\lean{Graph/DeepInventoryExamples}{37}{38}{Linear.Examples.boxedFirstSite}
+\lean{Graph/DeepInventoryExamples}{40}{41}{Linear.Examples.boxedTwoHoles_unique}
+The one-hole replacement carrying label~$1$ is also a context, but it collides
+with the retained second hole. These two witnesses refute deep freshness. The
+necessary direction of the deep context theorem then proves that the result
+fails uniqueness.
+\lean{Graph/DeepInventoryExamples}{44}{46}{Linear.Examples.deep_collision_not_fresh}
+\lean{Graph/DeepInventoryExamples}{48}{53}{Linear.Examples.deep_collision_breaks_unique}
+Finally, the exact inventory distinguishes the labels: label~$0$ is absent and
+label~$1$ is present. The first claim uses consumption and the fact that the
+replacement's label has name~$1$, not~$0$; the second uses its inserted witness.
+An inventory records presence rather than multiplicity, so this is consistent
+with the independently proved duplicate occurrence of label~$1$.
+\lean{Graph/DeepInventoryExamples}{56}{65}{Linear.Examples.deep_collision_inventory}

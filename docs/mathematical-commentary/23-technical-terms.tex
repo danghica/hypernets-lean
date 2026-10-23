@@ -22,6 +22,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{box-replacement}{Box-label replacement}{Changing the body of one selected box edge while retaining its binding metadata and all outer incidence data.}
 
+\glossaryentry{deep-certified-fresh}{Certified deep fresh plugging}{The context constructor that packages addressed replacement with a proof of exact site freshness, permitting reuse of consumed labels.}
+
 \glossaryentry{fibre}{Child occurrence}{An occurrence inside a box body. Primitive labels have no child occurrences.}
 
 \glossaryentry{compatible}{Compatible provenance}{The condition that no hole label in the replacement occurs at a retained host origin of the provenance map.}
@@ -46,9 +48,13 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{simulation}{Counting simulation}{A relation preserving finality and matching steps using related execution counts and an up-to relation, with an explicit stuck-execution alternative.}
 
+\glossaryentry{site-fresh}{Deep freshness}{Disjointness between the replacement hole inventory and the host holes retained along the selected address; it is necessary and sufficient for composing two contexts.}
+
 \glossaryentry{all-edges}{Deep occurrence}{An address that records an enclosing box edge and recursively an occurrence in its body, distinguishing equal bodies at different locations.}
 
 \glossaryentry{deep-plugging}{Deep plugging}{Typed replacement at an addressed site, recursively descending through boxes and rebuilding the selected enclosing labels.}
+
+\glossaryentry{site-retained-hole}{Deep retained hole}{A host hole under an unselected edge at some level of the address, as defined recursively without reference to the replacement graph.}
 
 \glossaryentry{hypernet}{Depth bound}{The index bounding permitted box nesting in a hypernet; a graph need not use all of the available depth.}
 
@@ -59,6 +65,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{hole-presence}{Disjoint hole inventories}{The condition that no complete typed hole label occurs in both graphs, including occurrences inside boxes.}
 
 \glossaryentry{net}{Edge}{An element of a net's finite edge carrier, carrying an operation label and ordered source and target vertex lists.}
+
+\glossaryentry{edge-hole-inventory}{Edge hole inventory}{The hole labels observed in one edge fibre, including all descendants of its label.}
 
 \glossaryentry{empty-graph}{Empty graph}{The net with no internal vertices, no edges, and empty input and output boundaries.}
 
@@ -176,6 +184,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{focus}{Search mode}{The abstract focus mode $\mathsf{search}$, used with entering specimens in the input-safety premise.}
 
+\glossaryentry{selected-hole}{Selected hole label}{The partial observation of the selected edge itself after following a site address; selecting a box returns no hole label.}
+
 \glossaryentry{lifting}{Settled specimen}{A specimen in backtracking mode, or in search mode without entering; every settled specimen is remote.}
 
 \glossaryentry{all-edges}{Shallow occurrence}{The occurrence of an edge at the current graph layer, without descending into a box body.}
@@ -205,6 +215,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{unary}{Unary operations}{The condition that every selected operation edge has a source list of length one; no one-output condition is imposed.}
 
 \glossaryentry{context}{Unique holes}{The property that any two occurrences observing the same complete typed hole label are equal, at every nesting depth.}
+
+\glossaryentry{away-unique}{Uniqueness away from an edge}{Uniqueness of hole occurrences whose outer edges differ from one selected edge, with no restriction on the selected fibre.}
 
 \glossaryentry{cost-orders}{Universal cost order}{The preorder $U$ relating every pair of natural-number counts, so refinement ignores quantitative cost.}
 
