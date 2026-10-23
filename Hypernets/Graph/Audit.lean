@@ -1,4 +1,4 @@
-import Hypernets.Graph.CompositionExamples
+import Hypernets.Graph.FocusedExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -78,3 +78,10 @@ import Hypernets.Graph.CompositionExamples
 #print axioms Hypernets.Linear.Examples.repaired_inventory
 #print axioms Hypernets.Linear.Examples.shallow_then_deep_associativity
 #print axioms Hypernets.Linear.Examples.three_stage_composition
+
+#print axioms Hypernets.Linear.focusFree_plugAt
+#print axioms Hypernets.Linear.Focussed.plug
+#print axioms Hypernets.Linear.Focussed.plugAt
+#print axioms Hypernets.Linear.Focussed.fillings_boundary_agreement
+#print axioms Hypernets.Linear.Examples.search_filling_initial
+#print axioms Hypernets.Linear.Examples.boxed_focus_not_free

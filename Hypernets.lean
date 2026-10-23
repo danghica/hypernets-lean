@@ -5,3 +5,4 @@ import Hypernets.Contextual
 import Hypernets.LocalReasoning
 import Hypernets.Examples
 import Hypernets.Graph.CompositionExamples
+import Hypernets.Graph.FocusedExamples
