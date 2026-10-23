@@ -1,0 +1,92 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=27mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!55!black]{hyperref}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\BeforeBeginEnvironment{definition}{\Needspace{12\baselineskip}}
+\BeforeBeginEnvironment{lemma}{\Needspace{8\baselineskip}}
+\BeforeBeginEnvironment{proposition}{\Needspace{9\baselineskip}}
+\BeforeBeginEnvironment{theorem}{\Needspace{9\baselineskip}}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Hypernets: mathematical commentary}
+\fancyhead[R]{\small Lean 4 formalization}
+\fancyfoot[C]{\thepage}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\setlist[enumerate]{leftmargin=*,itemsep=3pt}
+\setlist[itemize]{leftmargin=*,itemsep=3pt}
+\allowdisplaybreaks[2]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}[definition]{Remark}
+\newcommand{\steps}[1]{\mathrel{\longrightarrow^{#1}}}
+\newcommand{\fin}{\mathsf{Final}}
+\newcommand{\normal}{\mathsf{Normal}}
+\newcommand{\stuck}{\mathsf{Stuck}}
+\newcommand{\rt}{\mathsf{Root}}
+\newcommand{\mode}{\mathsf{mode}}
+\newcommand{\ent}{\mathsf{Enter}}
+\newcommand{\remote}{\mathsf{Remote}}
+\newcommand{\settled}{\mathsf{Settled}}
+\newcommand{\Lft}{\mathcal L_G}
+\newcommand{\upto}[3]{\mathsf{UpTo}_{#1,#2}(#3)}
+\newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
+\newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
+\newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/ce31471dc80a604e2307f183d6c8dad58a46a708}
+\newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
+\newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
+\title{Robustness, Typed Hypernets, and Plugging\\\large A mathematical commentary on the Lean development}
+\author{Companion to \texttt{danghica/hypernets-lean}}
+\date{23 October 2026\\\small Source snapshot: \texttt{ce31471}; Lean \texttt{4.35.0}}
+\begin{document}
+\maketitle
+\begin{abstract}
+This document explains every definition and proved statement in the current Lean development, including its regression examples. It gives proofs in mathematical English and links each declaration to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright. The forward and converse robustness arguments are proved relative to an explicit specimen interface. The concrete development constructs finite typed graphs, proves well-formed shallow plugging, path and isomorphism results, operation-path uniqueness, finite boxed hierarchies, and addressed deep replacement. The connection to a concrete universal abstract machine and the verification of the specimen interface remain outstanding; the development is therefore not yet a formalization of the paper's full Theorem~6.
+\end{abstract}
+\clearpage
+\tableofcontents
+\clearpage
+\input{01-scope}
+\input{02-transitions}
+\input{03-quantitative}
+\input{04-simulation}
+\input{05-contextual}
+\input{06-specimens}
+\input{07-forward}
+\input{08-converse}
+\input{09-consequences}
+\input{10-examples}
+\input{12-finite-graphs}
+\input{13-plugging}
+\input{14-paths-isomorphisms}
+\input{15-operation-paths}
+\input{16-hierarchy}
+\input{17-deep-plugging}
+\input{18-graph-examples}
+\input{11-audit}
+\begin{thebibliography}{9}
+\bibitem{paper}
+Dan R. Ghica, Koko Muroya, and Todd Waugh Ambridge.
+\emph{A robust graph-based approach to observational equivalence}.
+Logical Methods in Computer Science 21(2:8), 2025.
+Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
+\bibitem{code}
+\emph{Hypernets in Lean 4}.
+\href{https://github.com/danghica/hypernets-lean/tree/ce31471dc80a604e2307f183d6c8dad58a46a708}{Repository at revision \texttt{ce31471}}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,231 @@
+\Needspace{18\baselineskip}
+\section{Semantic examples and regression proofs}
+
+The examples are small abstract machines used to check the meaning and
+edge cases of the definitions. They do not formalize the paper's
+lambda-calculus translation, copying UAM, or program-equivalence examples.
+
+\Needspace{17\baselineskip}
+\subsection{A countdown machine}
+
+\begin{definition}[Countdown]
+The countdown machine has state set $\mathbb N$, transition
+$s\to t$ if $s=t+1$, and final predicate $s=0$.
+\end{definition}
+\lean{Examples}{11}{14}{Examples.countdown}
+\begin{proof}[Verification of the machine law]
+If $s=0$, an outgoing transition would imply $0=t+1$, impossible for
+a natural number $t$. Thus final states are normal as required by
+the machine structure.
+\end{proof}
+
+\begin{lemma}[Countdown is deterministic]
+If $s\to a$ and $s\to b$, then $a=b$.
+\end{lemma}
+\lean{Examples}{16}{19}{Examples.countdown_deterministic}
+\begin{proof}
+The premises give $s=a+1$ and $s=b+1$. Cancellation of successor
+gives $a=b$.
+\end{proof}
+
+\begin{lemma}[Canonical countdown execution]
+For every $n\in\mathbb N$, the countdown machine has
+$n\steps{n}0$.
+\end{lemma}
+\lean{Examples}{21}{24}{Examples.countdown_run}
+\begin{proof}
+Induct on $n$. For $n=0$, use the zero-step constructor. For $n+1$,
+take the transition $n+1\to n$ and prepend it to the induction
+hypothesis $n\steps{n}0$.
+\end{proof}
+
+\begin{proposition}[Countdown characterizes the cost relation]
+For every cost preorder $Q$ and states $a,b\in\mathbb N$,
+\[
+ a\preceq_Q b\quad\Longleftrightarrow\quad a\,Q\,b.
+\]
+\end{proposition}
+\lean{Examples}{27}{36}{Examples.countdown_refines_iff}
+\begin{proof}
+Suppose $a\preceq_Q b$. Apply it to the canonical successful execution
+$a\steps{a}0$. It gives a successful execution of some length $m$
+from $b$ and $a\,Q\,m$. Compare this execution with
+$b\steps{b}0$. Determinism and final-execution uniqueness give
+$m=b$, so $a\,Q\,b$.
+
+Conversely assume $a\,Q\,b$. For any successful execution of length
+$n$ from $a$, compare it with $a\steps{a}0$. Uniqueness gives
+$n=a$. Choose $b\steps{b}0$ as the target execution; its cost
+condition is $n\,Q\,b$, obtained by replacing $n$ with $a$.
+\end{proof}
+
+The file then proves three anonymous examples, each by the proposition
+and the indicated numerical fact:
+\begin{enumerate}
+\item $5\preceq_I3$, because $3\leq5$.
+\item $3\not\preceq_I5$, because $5\nleq3$.
+\item $5\not\preceq_E3$, because $5\ne3$.
+\end{enumerate}
+\lean{Examples}{38}{39}{Examples: improvement from 5 to 3}
+\lean{Examples}{41}{44}{Examples: no improvement from 3 to 5}
+\lean{Examples}{46}{49}{Examples: unequal exact counts}
+These verify that improvement uses the target count as the smaller
+quantity. Reversing the intended cost orientation would invalidate the
+first two examples.
+
+\Needspace{17\baselineskip}
+\subsection{A crash and an infinite loop}
+
+\begin{definition}[Fault states and the fault machine]
+There are four distinct states:
+\[
+ \mathsf{done},\quad\mathsf{crash},\quad\mathsf{stuck},\quad\mathsf{loop}.
+\]
+The only transitions are
+\[
+ \mathsf{crash}\to\mathsf{stuck},\qquad
+ \mathsf{loop}\to\mathsf{loop}.
+\]
+Only $\mathsf{done}$ is final.
+\end{definition}
+\lean{Examples}{51}{53}{Examples.FaultState}
+\lean{Examples}{55}{60}{Examples.fault}
+The four names are constructors of a finite datatype with derived
+decidable equality. Here the constructor $\mathsf{stuck}$ names a
+particular state; $\stuck(s)$ remains the general predicate defined
+earlier.
+\begin{proof}[Verification of the machine law]
+No transition has source $\mathsf{done}$, because both possible source
+constructors are distinct from it. Consequently a final state has no
+outgoing transition.
+\end{proof}
+
+\begin{lemma}[The fault machine is deterministic]
+Any two transitions with the same source have the same target.
+\end{lemma}
+\lean{Examples}{62}{65}{Examples.fault_deterministic}
+\begin{proof}
+Case-analyze the two transition proofs. If both use the crash rule,
+both targets are $\mathsf{stuck}$. If both use the loop rule, both
+targets are $\mathsf{loop}$. Either mixed case would equate
+$\mathsf{crash}$ with $\mathsf{loop}$ and is impossible.
+\end{proof}
+
+\begin{definition}[The crash--loop candidate]
+Let $R(s,t)$ mean $s=\mathsf{crash}$ and $t=\mathsf{loop}$.
+\end{definition}
+\lean{Examples}{67}{67}{Examples.crashLoop}
+
+\begin{lemma}[A simulation using the stuck alternative]
+The crash--loop candidate is an $(E,E,E)$-counting simulation.
+\end{lemma}
+\lean{Examples}{71}{88}{Examples.crash_loop_simulation}
+\begin{proof}
+For its only related pair, the source is $\mathsf{crash}$, which is
+not final; hence the finality condition is vacuous. Its only successor
+is $\mathsf{stuck}$. Use the zero-step execution from that successor
+to itself in the stuck alternative of simulation. It is normal because
+neither transition rule starts there, and it is not final because it
+differs from $\mathsf{done}$.
+\end{proof}
+
+The next anonymous example concludes
+$\mathsf{crash}\preceq_E\mathsf{loop}$.
+\lean{Examples}{90}{91}{Examples: crash refines loop}
+\begin{proof}
+Apply counting-simulation soundness to the preceding simulation, fault
+determinism, the reasonable triple $(E,E,E)$, and the only pair of $R$.
+\end{proof}
+There is no requirement to match a successful source execution, because
+none exists. Thus the result is consistent even with exact costs. The
+example exercises the stuck branch of the implemented proof; it does
+not prove that every conceivable up-to simulation proof of this same
+refinement must use that branch.
+
+\Needspace{23\baselineskip}
+\Needspace{17\baselineskip}
+\subsection{The zero-step converse case}
+
+\begin{definition}[Visit specimens and endpoint maps]
+The type of specimens has three distinct constructors
+$\mathsf{entering},\mathsf{settled},\mathsf{finished}$, with derived
+decidable equality. The endpoint maps into the countdown machine are
+\[
+ \begin{aligned}
+ \ell(\mathsf{entering})&=2,& r(\mathsf{entering})&=1,\\
+ \ell(\mathsf{settled})&=1,& r(\mathsf{settled})&=1,\\
+ \ell(\mathsf{finished})&=0,& r(\mathsf{finished})&=0.
+ \end{aligned}
+\]
+\end{definition}
+\lean{Examples}{93}{95}{Examples.Visit}
+\lean{Examples}{97}{100}{Examples.visitLeft}
+\lean{Examples}{102}{105}{Examples.visitRight}
+
+\begin{definition}[Visit specimen system]
+Every visit specimen has search mode. The entering predicate holds
+exactly of the constructor $\mathsf{entering}$. Every state is declared
+rooted. Together with the endpoint maps above, these data define a
+specimen system over countdown.
+\end{definition}
+\lean{Examples}{107}{126}{Examples.visitSystem}
+\begin{proof}[Verification of the interface laws]
+Rootedness preservation is immediate since rootedness is the true
+predicate. Final-state agreement holds because the endpoint pairs are
+$(2,1)$, $(1,1)$, and $(0,0)$: only in the third pair is either endpoint
+zero, and then both are.
+
+For context-only traversal, consider the specimen. The constructor
+$\mathsf{entering}$ cannot satisfy the settled premise: its mode is
+search and its entering predicate holds. At the constructor
+$\mathsf{settled}$, both endpoints are $1$. Choose
+$\mathsf{finished}$ and the countdown transitions $1\to0$ on both
+sides; its search mode is remote. At $\mathsf{finished}$, both
+endpoints are zero and neither has an outgoing transition, contradicting
+the availability premise. These cases exhaust the datatype.
+\end{proof}
+This is a deliberately abstract instance. For example, all its modes are
+search, including that of the pair of final states. The specimen interface
+does not enforce a concrete UAM convention for final focus modes.
+
+\begin{lemma}[Visit input-safety]
+The visit system is input-safe for $(H^{-1},E)$.
+\end{lemma}
+\lean{Examples}{129}{137}{Examples.visit_safe}
+\begin{proof}
+The entering premise forces the input specimen to be
+$\mathsf{entering}$. Use safety~II with output specimen
+$\mathsf{settled}$ and $k=l=0$. The left execution is the single
+countdown transition $2\to1$; the right execution has zero steps at
+$1$. The output specimen is searching without entering and is therefore
+settled. The cost requirement is $1\,H^{-1}\,0$, or $0\leq1$.
+\end{proof}
+
+\begin{lemma}[Visit converse robustness]
+The opposite visit system is robust for $(H,E,E)$.
+\end{lemma}
+\lean{Examples}{139}{142}{Examples.visit_converse_robust}
+\begin{proof}
+Its mode is always search. The rewrite-mode premise of robustness is
+therefore impossible, so every required implication holds vacuously.
+\end{proof}
+
+\begin{proposition}[The converse zero-step regression]
+In countdown, $1\preceq_H2$.
+\end{proposition}
+\lean{Examples}{146}{149}{Examples.converse_zero_step_case}
+\begin{proof}
+Use converse state sufficiency for the visit system. Countdown is
+deterministic, $(H,E,E)$ is reasonable, and the preceding two lemmas
+supply its safety and converse robustness premises. The entering
+specimen is remote, both its endpoints are rooted, and it witnesses
+$\Lft(2,1)$. The theorem consequently gives $1\preceq_H2$.
+
+In the underlying converse simulation construction, safety~II provides
+the pair $(1,1)$ after one original left step and zero original right
+steps. The prescribed right step is $1\to0$. Context traversal at
+$(1,1)$ supplies $(0,0)$ and adds one transition to the original left
+execution, now $2\to1\to0$. Thus the source terminates in one step
+and the target in two, satisfying $1\,H\,2$. This is precisely the
+zero-step subcase proved in the converse argument.
+\end{proof}

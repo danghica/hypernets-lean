@@ -1,0 +1,172 @@
+\Needspace{18\baselineskip}
+\section{The abstract specimen interface}
+
+\begin{definition}[Focus modes]
+The type of modes has exactly three constructors:
+$\mathsf{search}$, $\mathsf{backtrack}$, and $\mathsf{rewrite}$.
+\end{definition}
+\lean{LocalReasoning}{15}{17}{Focus}
+They represent the paper's searching, backtracking, and triggering focuses.
+The derived decidable equality allows their distinctness to be checked by
+finite case analysis. This datatype records only a mode, not a graph
+position or a focus edge.
+
+\begin{definition}[Specimen system]\label{def:specimen}
+A specimen system $G$ over $M$ consists of a type $\Sigma$ of specimens,
+maps $\ell,r:\Sigma\to X$, a mode map
+$\mode:\Sigma\to\mathsf{Focus}$, a predicate $\ent$ on specimens,
+and a predicate $\rt$ on states. Its laws are:
+\begin{enumerate}
+\item \emph{Rootedness preservation:} $\rt(s)$ and $s\to t$ imply $\rt(t)$.
+\item \emph{Final-state agreement:} for every $c\in\Sigma$,
+  $\fin(\ell(c))\iff\fin(r(c))$.
+\item \emph{Context-only traversal:} suppose both endpoints of $c$ are
+  rooted and $c$ is either backtracking or searching without entering.
+  If either endpoint has an outgoing transition, there is a specimen $d$
+  whose focus is remote and such that
+  \[
+    \ell(c)\to\ell(d),\qquad r(c)\to r(d).
+  \]
+\end{enumerate}
+The terms ``rooted,'' ``entering,'' and ``remote'' receive their precise
+abstract meanings from these data and the definitions immediately below.
+\end{definition}
+\lean{LocalReasoning}{24}{38}{SpecimenSystem}
+The corresponding fields are \texttt{Specimen}, \texttt{left},
+\texttt{right}, \texttt{mode}, \texttt{entering}, \texttt{rooted},
+\texttt{rooted\_step}, \texttt{same\_final}, and \texttt{context\_step}.
+The last three are hypotheses needed to construct an instance, not results
+proved here from a graph model. The intended specimen consists of a
+multi-hole focussed context and two pointwise related vectors of fragments.
+That intended representation is not a field of this abstract structure.
+
+In particular, the interface does not identify modes with a focus field on
+states, define rootedness as reachability from an initial state, or define
+entering by incidence with a hole. The context-traversal law captures the
+consequence of graph locality and output-closure that the simulation proof
+uses. Its availability premise is symmetric between the two endpoints,
+which will be essential in the converse proof.
+
+\begin{definition}[Remote, settled, and lifted specimens]
+A specimen $c$ is remote if
+\[
+ \remote(c)\iff \mode(c)\ne\mathsf{rewrite}\ \lor\ \neg\ent(c).
+\]
+It is settled if
+\[
+ \settled(c)\iff \mode(c)=\mathsf{backtrack}\ \lor\
+   (\mode(c)=\mathsf{search}\land\neg\ent(c)).
+\]
+Its lifted state relation is
+\[
+ \Lft(s,t)\iff\exists c\in\Sigma\;
+  \remote(c)\land\rt(\ell(c))\land\rt(r(c))
+  \land s=\ell(c)\land t=r(c).
+\]
+\end{definition}
+\lean{LocalReasoning}{45}{45}{SpecimenSystem.Remote}
+\lean{LocalReasoning}{47}{48}{SpecimenSystem.Settled}
+\lean{LocalReasoning}{50}{52}{SpecimenSystem.Lifting}
+Remote excludes only an entering rewrite focus. It allows an entering
+search focus. Settled is stronger: it excludes every rewrite focus and
+also excludes an entering search focus. The two equalities in the lifting
+definition expose a particular specimen as a witness for the endpoints.
+
+\begin{lemma}[Settled implies remote]
+If $\settled(c)$, then $\remote(c)$.
+\end{lemma}
+\lean{LocalReasoning}{54}{56}{SpecimenSystem.settled_remote}
+\begin{proof}
+A backtracking or searching mode is distinct from the rewrite mode.
+Therefore the first disjunct in the remote predicate holds in either case.
+\end{proof}
+
+\begin{lemma}[Rootedness along a finite execution]
+If $\rt(s)$ and $s\steps{n}t$, then $\rt(t)$.
+\end{lemma}
+\lean{LocalReasoning}{58}{62}{SpecimenSystem.rooted_steps}
+\begin{proof}
+Induct on the execution. At length zero nothing changes. For a positive
+execution, the one-step rootedness law makes its first successor rooted;
+the induction hypothesis propagates this property through the remainder.
+\end{proof}
+
+\begin{definition}[Abstract non-rewrite quasi-specimen]
+For relations $A,B$ on states, define $\quasi{A}{B}(s,t)$ to mean that
+\emph{if} $s$ and $t$ are rooted, then there is a specimen $c$ with
+\[
+ \begin{gathered}
+ \mode(c)\ne\mathsf{rewrite},\qquad
+ \rt(\ell(c)),\quad\rt(r(c)),\\
+ A(s,\ell(c)),\qquad B(r(c),t).
+ \end{gathered}
+\]
+\end{definition}
+\lean{LocalReasoning}{67}{70}{SpecimenSystem.Quasi}
+The outer implications matter: no witness is required if either endpoint
+is unrooted. Subsequent proofs establish both rootedness hypotheses before
+using a quasi-specimen. Unlike the paper's full definition, this abstract
+consequence does not compare focus labels of $s,t$ with that of $c$;
+there is no state-focus map in the interface. It specifically packages the
+non-rewrite situation used by safety and robustness.
+
+\begin{lemma}[A rooted quasi-specimen supplies an up-to witness]
+If $\quasi{\preceq_P}{\preceq_S}(s,t)$ and both $s,t$ are rooted, then
+$\upto{P}{S}{\Lft}(s,t)$.
+\end{lemma}
+\lean{LocalReasoning}{72}{77}{SpecimenSystem.quasi_upTo}
+\begin{proof}
+Obtain its witness $c$. Its non-rewrite mode makes it remote. Together
+with rootedness of its endpoints, this gives $\Lft(\ell(c),r(c))$.
+Use $\ell(c)$ and $r(c)$ as the intermediate states in the up-to
+definition, with the two refinements furnished by the quasi-specimen.
+\end{proof}
+
+\Needspace{24\baselineskip}
+\begin{definition}[Input-safety]
+The predicate $\safe{Q}{P}$ requires the following for every specimen $c$
+whose endpoints are rooted, whose mode is search, and which is entering.
+At least one of these three cases must hold:
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item Both endpoints have finite executions to stuck states. Their counts
+  may be unrelated, and either count may be zero.
+\item For some settled specimen $d$ and $k,l\in\mathbb N$,
+  \[
+    \ell(c)\steps{1+k}\ell(d),\quad r(c)\steps{l}r(d),\quad
+    (1+k)\,Q\,l.
+  \]
+\item For some states $a,b$ and $k,l\in\mathbb N$,
+  \[
+    \ell(c)\steps{1+k}a,\quad r(c)\steps{1+l}b,\quad
+    (1+k)\,Q\,(1+l),
+  \]
+  and $\quasi{\simeq_P}{\simeq_P}(a,b)$ holds.
+\end{enumerate}
+\end{definition}
+\lean{LocalReasoning}{81}{91}{SpecimenSystem.InputSafe}
+Case~II requires a positive left execution but permits zero right steps.
+Case~III requires positive executions on both sides and auxiliary
+\emph{equivalences}. Retaining both directions of those equivalences is
+necessary for reusing safety in the converse theorem.
+
+\begin{definition}[Robustness]
+The predicate $\robust{Q}{P}{S}$ requires that for every specimen $c$
+with rooted endpoints, rewrite mode, and $\neg\ent(c)$, each transition
+$\ell(c)\to s'$ satisfies one of:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item $s'$ has a finite execution to a stuck state;
+\item for some $k,l,a,b$,
+  \[
+   s'\steps{k}a,\quad r(c)\steps{l}b,\quad (1+k)\,Q\,l,
+  \]
+  and $\quasi{\preceq_P}{\preceq_S}(a,b)$ holds.
+\end{enumerate}
+\end{definition}
+\lean{LocalReasoning}{95}{101}{SpecimenSystem.Robust}
+This is a rooted, remote restriction of the consequences used from the
+paper's robustness condition. The paper's alternative that an endpoint is
+unrooted is contradictory under the present premises. The abstract
+machine does not classify its transition relation into search and rewrite
+rules; it is the specimen's mode that determines where this predicate is
+invoked. Establishing the correspondence with concrete rewrite transitions
+is part of the missing hypernet instance.

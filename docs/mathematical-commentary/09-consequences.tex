@@ -1,0 +1,89 @@
+\Needspace{18\baselineskip}
+\section{State and contextual consequences}
+
+The following results compose the two simulation constructions with the
+soundness and observation lemmas. They are short in Lean because their
+mathematical work has been isolated in those earlier results.
+
+\begin{theorem}[Converse state sufficiency]
+If $M$ is deterministic, $(Q,P,S)$ is reasonable,
+$\safe{Q^{-1}}{P}$ holds, and $G^{\mathrm{op}}$ is robust for
+$(Q,P,S)$, then
+\[
+ \Lft(s,t)\ \Longrightarrow\ t\preceq_Q s.
+\]
+\end{theorem}
+\lean{LocalReasoning}{281}{286}{SpecimenSystem.sufficiency_converse}
+\begin{proof}
+The lifting-opposite lemma changes the premise into
+$\mathcal L_{G^{\mathrm{op}}}(t,s)$. The converse construction supplies
+a counting simulation on this relation. Apply counting-simulation
+soundness to obtain the stated refinement.
+\end{proof}
+
+\begin{theorem}[Mutual state refinement]
+Suppose $M$ is deterministic, $(Q,P,S)$ is reasonable, $G$ is
+input-safe for both $(Q,P)$ and $(Q^{-1},P)$, and both $G$ and
+$G^{\mathrm{op}}$ are robust for $(Q,P,S)$. Then
+\[
+ \Lft(s,t)\ \Longrightarrow\ s\simeq_Q t.
+\]
+\end{theorem}
+\lean{LocalReasoning}{289}{295}{SpecimenSystem.equivalence}
+\begin{proof}
+Forward state sufficiency supplies $s\preceq_Q t$. Converse state
+sufficiency supplies $t\preceq_Q s$. These are exactly the two
+components of state equivalence.
+\end{proof}
+The main cost relation $Q$ itself need not be symmetric. The two
+directional refinement statements use the same $Q$, with source and
+target counts exchanged when the states are exchanged.
+
+For the contextual results, fix the observation interface of the earlier
+section and a family $T_i$ of relations on fragments. Assume the
+following \emph{initial-lifting property}: for $T_i(a,b)$, every
+allowed context $c$ and observations
+$\mathsf{Obs}(c,a,s)$, $\mathsf{Obs}(c,b,t)$ give $\Lft(s,t)$.
+This property is the explicit premise \texttt{initial\_lift} in the
+source. It connects the abstract specimen system with the separately
+supplied observation relation.
+
+\begin{theorem}[Forward contextual sufficiency]
+If $M$ is deterministic, $(Q,P,S)$ is reasonable,
+$\safe{Q}{P}$ and $\robust{Q}{P}{S}$ hold, and the initial-lifting
+property holds, then
+\[
+ T_i(a,b)\ \Longrightarrow\ a\preceq_Q^{\mathcal O}b.
+\]
+\end{theorem}
+\lean{LocalReasoning}{311}{316}{SpecimenSystem.contextual_sufficiency}
+\begin{proof}
+Use contextual refinement from a lifted relation, taking $L=\Lft$.
+Its initial-lifting premise is precisely the one assumed here. Its
+state-soundness premise is forward state sufficiency. Applying that
+proposition to $T_i(a,b)$ gives the desired contextual refinement.
+\end{proof}
+
+\begin{theorem}[Converse contextual sufficiency]
+If $M$ is deterministic, $(Q,P,S)$ is reasonable,
+$\safe{Q^{-1}}{P}$ holds, $G^{\mathrm{op}}$ is robust for
+$(Q,P,S)$, and the same initial-lifting property holds, then
+\[
+ T_i(a,b)\ \Longrightarrow\ b\preceq_Q^{\mathcal O}a.
+\]
+\end{theorem}
+\lean{LocalReasoning}{318}{323}{SpecimenSystem.contextual_sufficiency_converse}
+\begin{proof}
+Fix $T_i(a,b)$, an allowed context, an observation of $b$ producing
+$s$, and an observation of $a$ producing $t$. Supply the observations
+to initial lifting in the original $a,b$ order to get $\Lft(t,s)$.
+Converse state sufficiency then gives $s\preceq_Q t$, the required
+contextual comparison.
+\end{proof}
+
+These are conditional abstract counterparts of the two clauses of the
+paper's Theorem~6. Refocusing, output-closure, type-correct plugging, and
+the paper's concrete specimen definitions have not disappeared from the
+mathematics: their required consequences are currently represented by
+the specimen-system laws and initial-lifting premise. Instantiating
+those hypotheses is the remaining concrete formalization problem.

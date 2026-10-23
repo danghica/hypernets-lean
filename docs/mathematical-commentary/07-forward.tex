@@ -1,0 +1,111 @@
+\Needspace{18\baselineskip}
+\section{The forward robustness argument}
+
+Throughout this section $M$ is deterministic, $(Q,P,S)$ is reasonable,
+and $G$ is a specimen system satisfying $\safe{Q}{P}$ and
+$\robust{Q}{P}{S}$. In particular, all the interface laws of
+Definition~\ref{def:specimen} are available.
+
+\begin{theorem}[Forward construction of a counting simulation]
+The relation $\Lft$ is a $(Q,P,S)$-counting simulation.
+\end{theorem}
+\lean{LocalReasoning}{104}{163}{SpecimenSystem.countingSimulation}
+This is an abstract form of the forward clause of the paper's
+Proposition~40. The proof checks the two simulation fields directly.
+
+\begin{proof}
+Take $\Lft(s,t)$ and choose a witnessing specimen $c$. Thus
+$s=\ell(c)$, $t=r(c)$, the specimen is remote, and both endpoints are
+rooted.
+
+\emph{Finality.} If $s$ is final, final-state agreement for $c$ makes
+$t$ final. This verifies simulation condition~(A).
+
+\emph{A common context-traversal case.} Suppose $c$ is settled and
+there is a prescribed transition $s\to s'$. The context-traversal law
+gives a remote specimen $d$ and transitions
+\[
+ \ell(c)\to\ell(d),\qquad r(c)\to r(d).
+\]
+Determinism identifies $s'$ with $\ell(d)$. Both new endpoints are
+rooted, so $\Lft(\ell(d),r(d))$. The simulation matching case can use
+zero further left steps and one right step. Its cost obligation is
+$(1+0)\,Q\,1$, which is reflexivity of $Q$. To obtain the up-to
+relation, choose $\ell(d),r(d)$ as intermediate states and insert
+reflexive refinements for $P$ and $S$ on either side of their lifted
+relation. These are the local proof witnesses named
+\texttt{context\_case} and \texttt{settled\_case} in Lean.
+
+It remains to cover all possible modes of $c$.
+
+\emph{Backtracking.} Such a specimen is settled by definition, so the
+common context-traversal argument applies.
+
+\emph{Searching without entering.} This is the other settled case and
+uses the same argument.
+
+\emph{Entering search.} Apply input-safety, obtaining one of its three
+cases.
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item There is a stuck execution from $\ell(c)$. Since
+  $\ell(c)\to s'$ is available, the stuck-after-step lemma removes
+  that first step and gives a stuck execution from $s'$. This is the
+  stuck alternative of simulation. Safety also supplies a stuck execution
+  on the right, but the forward simulation condition does not need it.
+\item There are $d,k,l$ with $d$ settled,
+  \[
+    \ell(c)\steps{1+k}\ell(d),\qquad r(c)\steps{l}r(d),\qquad
+    (1+k)\,Q\,l.
+  \]
+  Remove the prescribed first transition from the left execution using
+  determinism. The resulting execution from $s'$ to $\ell(d)$ has
+  length $k$. Rootedness propagates to both endpoints of $d$, and
+  settledness implies remoteness. Hence
+  $\Lft(\ell(d),r(d))$. Add reflexive auxiliary refinements as in
+  the context-traversal case. The matching counts are $k,l$, with the
+  cost condition already supplied by safety.
+\item There are $k,l,a,b$ with the positive executions and quasi-specimen
+  of safety~III. Remove the prescribed first step from the left execution,
+  giving $s'\steps{k}a$; retain the right execution of length $1+l$.
+  Both $a$ and $b$ are rooted. Unpack the quasi-specimen to get a
+  non-rewrite specimen $d$ with rooted endpoints and
+  \[
+     a\simeq_P\ell(d),\qquad r(d)\simeq_P b.
+  \]
+  Use the forward half of the first equivalence to obtain
+  $a\preceq_P\ell(d)$. The forward half of the second gives
+  $r(d)\preceq_P b$, and monotonicity with $P\subseteq S$ changes
+  this to $r(d)\preceq_S b$. Thus the quasi-up-to lemma supplies
+  $\upto{P}{S}{\Lft}(a,b)$. The matching counts are $k,1+l$,
+  and their required cost relation is exactly
+  $(1+k)\,Q\,(1+l)$.
+\end{enumerate}
+
+\emph{Rewrite mode.} Remoteness now implies $\neg\ent(c)$, since
+the other remote disjunct contradicts the current mode. Apply robustness
+to the prescribed transition $\ell(c)\to s'$. If it provides a stuck
+execution from $s'$, use the stuck alternative of simulation. Otherwise
+it provides matching executions of lengths $k,l$, the cost proof
+$(1+k)\,Q\,l$, and a quasi-specimen up to $\preceq_P,\preceq_S$.
+Its left endpoint is rooted by the prescribed step followed by the
+$k$-step execution; its right endpoint is rooted by its $l$-step
+execution. The quasi-up-to lemma therefore supplies the required up-to
+relation. This completes every mode and every simulation condition.
+\end{proof}
+
+\begin{theorem}[Forward state sufficiency]
+Under the hypotheses of this section,
+\[
+ \Lft(s,t)\ \Longrightarrow\ s\preceq_Q t.
+\]
+\end{theorem}
+\lean{LocalReasoning}{167}{171}{SpecimenSystem.sufficiency}
+\begin{proof}
+The preceding theorem constructs a counting simulation on $\Lft$.
+Apply counting-simulation soundness, Theorem~\ref{thm:soundness}, with
+the same deterministic machine and reasonable triple.
+\end{proof}
+All graph-specific information in this theorem is supplied through the
+specimen system and the safety and robustness premises. The theorem's
+short proof is therefore not evidence that the missing graph-locality
+verification is automatic.

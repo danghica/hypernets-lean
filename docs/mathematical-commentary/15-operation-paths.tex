@@ -1,0 +1,80 @@
+\Needspace{18\baselineskip}
+\section{Concrete uniqueness of operation paths}
+Choose a predicate $P$ on operation labels in a net $G$. This section first proves
+a generic graph theorem; the next section shows that the single-source condition
+is automatic for the typed operation labels of the linear hierarchy.
+
+\begin{definition}[Unary operations and traversal]
+Selected operations are unary when each edge whose label satisfies $P$ has a
+source list of length one. An operation step $s\rightsquigarrow t$ chooses such
+an edge $e$ with $s\in s(e)$ and $t\in t(e)$.
+\end{definition}
+\lean{Graph/OperationPaths}{17}{18}{Net.UnaryOperations}
+\lean{Graph/OperationPaths}{20}{21}{Net.OperationStep}
+Reverse traversal is the machine whose transition from $t$ to $s$ is
+$s\rightsquigarrow t$ and whose successful final states are boundary inputs.
+Inputs are normal: any reverse step from an input would put that input in a
+target list, contradicting target exclusion.
+\lean{Graph/OperationPaths}{24}{29}{Net.reverseOperations}
+\begin{lemma}[Determinism derived from incidence]
+If selected operations are unary, reverse operation traversal is deterministic.
+\end{lemma}
+\begin{proof}
+Two reverse steps from the same vertex select edges both targeting that vertex.
+Target uniqueness identifies the edges. Their source list has length one, so
+both predecessor vertices equal its only entry and hence equal one another.
+There is no additional determinism premise.
+\end{proof}
+\lean{Graph/OperationPaths}{31}{44}{Net.reverseOperations_deterministic}
+
+\begin{definition}[Edge-recording trace]
+A reverse operation trace from $v$ to $w$ records its actual edge list. The empty
+trace starts and ends at the same vertex. A nonempty trace first chooses an
+operation edge targeting the current vertex and a vertex in its source, then
+continues recursively from that source vertex.
+\end{definition}
+\lean{Graph/OperationPaths}{47}{52}{Net.OperationTrace}
+A trace with edge list $l$ yields exactly $|l|$ steps in the reverse machine.
+Induct on its construction: the empty trace is a zero-step execution and each
+trace constructor supplies the first step of the counted execution.
+\lean{Graph/OperationPaths}{54}{58}{Net.OperationTrace.steps}
+
+\begin{theorem}[Exact uniqueness to inputs]
+Under the unary condition, two reverse traces from the same vertex to inputs
+have equal edge lists and equal ending input vertices.
+\end{theorem}
+\begin{proof}
+Induct on the first trace. If it is empty, the starting vertex is an input;
+the second trace cannot be nonempty, since no input belongs to a target list.
+Thus it too is empty and both conclusions follow. If the first trace is
+nonempty, the second cannot be empty, for the same target-exclusion reason.
+Their first edges are equal by target uniqueness. Their next vertices agree by
+the determinism lemma. Apply the induction hypothesis to their tails and prefix
+the common edge to the resulting list equality.
+\end{proof}
+\lean{Graph/OperationPaths}{62}{83}{Net.OperationTrace.unique_to_inputs}
+A forward operation path from $s$ to $t$ with edge list $l$ means a reverse trace
+from $t$ to $s$ with list $\operatorname{reverse}(l)$. Empty paths are allowed in
+this endpoint-sensitive notion, unlike the nonempty edge-only path predicate of
+the preceding section.
+\lean{Graph/OperationPaths}{86}{87}{Net.OperationPath}
+Two forward operation paths from inputs to the same vertex therefore have equal
+forward edge lists and equal starting input indices. Apply exact trace uniqueness,
+use injectivity of list reversal, and then injectivity of the input constructor.
+\lean{Graph/OperationPaths}{89}{94}{Net.operationPath_unique_from_inputs}
+
+\begin{theorem}[No positive cycle on an input-rooted operation path]
+If a vertex $v$ is reached by a forward operation path from an input, every
+reverse operation trace from $v$ back to $v$ has an empty edge list.
+\end{theorem}
+\begin{proof}
+The input-rooted path gives a reverse execution from $v$ to a successful input.
+Prefix that execution by the proposed cycle to obtain another successful
+execution from $v$ to the same input. Deterministic terminal uniqueness identifies
+their lengths. Thus $|\mathit{cycle}|+|\mathit{path}|=|\mathit{path}|$, so the
+cycle has length zero and is empty.
+\end{proof}
+\lean{Graph/OperationPaths}{99}{111}{Net.no_operation_cycle_on_input_path}
+This is a statement about cycles at input-reachable vertices, not a global
+acyclicity restriction on nets. The self-loop example below is a valid net with
+a cycle and no boundary inputs.

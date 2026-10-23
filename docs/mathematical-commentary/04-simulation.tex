@@ -1,0 +1,114 @@
+\Needspace{18\baselineskip}
+\section{Counting simulation and its soundness}
+
+\begin{definition}[Up-to closure]
+Given a relation $R$ on states and cost orders $P,S$, define
+\[
+ \upto{P}{S}{R}(s,t)\quad\Longleftrightarrow\quad
+ \exists u,v\;\bigl(s\preceq_P u\ \land\ R(u,v)\ \land\ v\preceq_S t\bigr).
+\]
+\end{definition}
+\lean{Simulation}{10}{11}{Machine.UpTo}
+The witnesses occur in path order. In particular the right-hand refinement
+is from $v$ to $t$, not from $t$ to $v$. Auxiliary refinement can change the
+states at which the candidate relation is resumed.
+
+\begin{definition}[Counting simulation]
+A relation $R$ is a $(Q,P,S)$-counting simulation if whenever $R(s,t)$:
+\begin{enumerate}[label=\textup{(\Alph*)}]
+\item If $s$ is final, then $t$ is final.
+\item For every transition $s\to s'$, one of the following holds:
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item There exist $k,z$ such that $s'\steps{k}z$ and $z$ is stuck.
+\item There exist $k,l,h_1,h_2$ such that
+\[
+ s'\steps{k}h_1,\qquad t\steps{l}h_2,\qquad
+ (1+k)\,Q\,l,\qquad \upto{P}{S}{R}(h_1,h_2).
+\]
+\end{enumerate}
+\end{enumerate}
+\end{definition}
+\lean{Simulation}{14}{19}{Machine.CountingSimulation}
+The leading $1$ charges for the already prescribed transition $s\to s'$.
+Neither $k$ nor $l$ is required to be positive. The stuck alternative is a
+deliberate part of the definition, consistent with observing only successful
+termination. The finality condition is stronger than simply allowing the
+target to reach a final state after some extra steps: it requires the target
+to be final already when the source is final.
+
+\begin{theorem}[Soundness of counting simulation]\label{thm:soundness}
+Suppose $M$ is deterministic, $(Q,P,S)$ is reasonable, and $R$ is a
+$(Q,P,S)$-counting simulation. Then
+\[
+ R(s,t)\ \Longrightarrow\ s\preceq_Q t.
+\]
+\end{theorem}
+\lean{Simulation}{24}{51}{Machine.CountingSimulation.sound}
+This is the abstract transition-system form of the paper's Proposition~37.
+Its proof is a strong induction on the length of a successful source
+execution. Although simulation provides a step-wise, coinductive style of
+reasoning, the soundness theorem itself is proved by induction on a finite
+observation; no coinductive datatype is introduced in this file.
+
+\begin{proof}
+We prove, simultaneously for all states $s,t,z$, that if $R(s,t)$,
+$s\steps{N}z$, and $\fin(z)$, then there are $m,w$ such that
+$N\,Q\,m$, $t\steps{m}w$, and $\fin(w)$. Use strong induction on $N$;
+the induction hypothesis applies to every smaller natural number and every
+pair of related states.
+
+\emph{Base case.} If $N=0$, then $s=z$ is final. Condition~(A) makes
+$t$ final. Choose the zero-step execution at $t$ and use $0\,Q\,0$.
+
+\emph{Positive case.} Write $N=n+1$ and decompose the successful execution:
+\[
+ s\to s'\steps{n}z.
+\]
+Apply condition~(B) of simulation. Its stuck alternative would give a
+finite execution from $s'$ to a stuck state. This is impossible by the
+lemma that a state on a successful execution cannot be stuck, applied to
+the successful execution $s'\steps{n}z$.
+
+Consequently there are $k,l,h_1,h_2,u,v$ satisfying
+\begin{gather*}
+ s'\steps{k}h_1,\qquad t\steps{l}h_2,\qquad (1+k)\,Q\,l,\\
+ h_1\preceq_P u,\qquad R(u,v),\qquad v\preceq_S h_2.
+\end{gather*}
+The prefix lemma, using determinism and finality of $z$, gives a remainder
+length $r$ such that
+\[
+ n=k+r,\qquad h_1\steps{r}z.
+\]
+Apply $h_1\preceq_P u$ to this remaining successful execution. It supplies
+$a,z_a$ with
+\[
+ r\,P\,a,\qquad u\steps{a}z_a,\qquad \fin(z_a).
+\]
+The decrease condition of reasonableness gives $a\leq r$. Since
+$N=1+k+r$, we have $a<N$. This is the strict inequality needed to invoke
+the strong induction hypothesis. The proof would not be justified for
+arbitrary auxiliary cost preorders.
+
+Applying that hypothesis to $R(u,v)$ gives $b,z_b$ such that
+\[
+ a\,Q\,b,\qquad v\steps{b}z_b,\qquad \fin(z_b).
+\]
+Now apply $v\preceq_S h_2$. We obtain $c,z_c$ with
+\[
+ b\,S\,c,\qquad h_2\steps{c}z_c,\qquad \fin(z_c).
+\]
+The sandwich condition combines $r\,P\,a$, $a\,Q\,b$, and $b\,S\,c$
+to yield $r\,Q\,c$. Additivity of $Q$ then gives
+\[
+ (1+k+r)\,Q\,(l+c),\quad\text{that is,}\quad N\,Q\,(l+c).
+\]
+Concatenate $t\steps{l}h_2$ with $h_2\steps{c}z_c$. The result is a
+successful execution of length $l+c$ from $t$, which supplies the required
+witnesses.
+\end{proof}
+
+The code follows these witnesses exactly: its \texttt{count} is $n=k+r$,
+\texttt{smaller} is $a<n+1$, \texttt{rc} is $r\,Q\,c$, and
+\texttt{total} is $(n+1)\,Q\,(l+c)$. The inclusion $P\subseteq S$ is
+not needed in this particular proof; it is part of the shared reasonable
+triple and will be used by the specimen argument.

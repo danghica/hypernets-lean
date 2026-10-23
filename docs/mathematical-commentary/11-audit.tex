@@ -1,0 +1,92 @@
+\Needspace{18\baselineskip}
+\section{Proof checking and remaining obligations}
+\Needspace{24\baselineskip}
+\subsection{The two axiom audits}
+The file \leanfile{Hypernets/Audit.lean}{Audit.lean} contains six
+\texttt{\#print axioms} commands. They inspect counting-simulation soundness,
+the forward and converse simulation constructions, the two contextual sufficiency
+theorems, and the zero-step converse regression theorem. These diagnostic commands
+introduce no new definitions or proofs.
+\lean{Audit}{5}{10}{Audit: abstract theorem dependencies}
+The graph audit inspects shallow plugging, host and inserted path equivalence,
+plugging congruence, exact trace uniqueness, typed operation-path uniqueness,
+finite deep enumeration, unique holes under boxing, deep plugging and its other-label
+locality, and the self-loop and deep-replacement regression proofs.
+\lean{Graph/Audit}{5}{17}{Graph.Audit: concrete theorem dependencies}
+
+In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
+and unique holes under boxing report only \texttt{propext} and \texttt{Quot.sound}.
+The other audited declarations additionally report \texttt{Classical.choice}.
+These are standard Lean logical axioms: propositional extensionality, quotient
+soundness, and classical choice, respectively. Neither audit reports
+\texttt{sorryAx} or a project-specific axiom.
+
+Absence of project-specific axioms does not discharge a theorem's hypotheses.
+Specimen laws and initial lifting remain parameters of the abstract sufficiency
+results. They do not appear as named global axioms in the report. In contrast,
+the concrete graph constructions explicitly prove the invariant fields needed
+to construct their results. Neither fact supplies the missing bridge to a
+concrete UAM.
+
+\Needspace{24\baselineskip}
+\subsection{Reproducing the Lean and document checks}
+The snapshot pins Lean \texttt{4.35.0} in
+\leanfile{lean-toolchain}{lean-toolchain} and uses only the bundled \texttt{Std}.
+With that toolchain available, run
+\begin{quote}\ttfamily
+lake build\\
+lake env lean Hypernets/Audit.lean\\
+lake env lean Hypernets/Graph/Audit.lean
+\end{quote}
+The script \leanfile{scripts/check.sh}{scripts/check.sh} runs the build and both
+audits. Run it using \texttt{bash} with the script path as its argument. It selects
+the workspace-local
+macOS ARM compiler if present, and otherwise uses \texttt{lake} from the environment.
+The audits are checked separately from the root import.
+
+The commentary's source checker recursively scans all Lean modules under
+\texttt{Hypernets/}, including nested graph modules, attributed declarations,
+noncomputable definitions, abbreviations, and anonymous examples. It verifies
+that each declaration has a source-fragment link, all linked ranges are valid,
+and each working source file equals the version at the pinned commit. Diagnostic
+audit ranges are linked separately. Run it with
+\begin{quote}\ttfamily\small
+python3 docs/mathematical-commentary/check\_sources.py
+\end{quote}
+This syntactic coverage check complements the mathematical exposition; it does
+not itself check the correctness of English explanations. Source links are
+immutable GitHub commit links, so future edits cannot move the referenced proof.
+
+From the commentary project directory, \texttt{make} checks the links, compiles
+with \texttt{latexmk}, and exports the PDF to the repository's
+\texttt{output/pdf/} directory. The committed PDF can therefore be read without
+a TeX installation, and its editable sources and reproduction instructions are
+included alongside it.
+
+\Needspace{24\baselineskip}
+\subsection{What remains for the paper's concrete theorem}
+The following obligations remain before Theorem~6 can be claimed with its original
+hypotheses:
+\begin{enumerate}
+\item Prove a representation theorem relating the typed depth-indexed hierarchy
+with explicit binder metadata to the paper's set-based graph-labelled hypernets.
+Extend isomorphism recursively to identify independently renamed box bodies.
+\item Complete the context algebra: associativity of plugging and preservation
+of global hole-label uniqueness under suitable freshness conditions. Shallow
+well-formedness, path locality, and addressed deep replacement are already proved.
+\item Define concrete focussed UAM states, search and rewrite transitions,
+rootedness, determinism, and refocusing. Prove their structural transition laws.
+Concrete focus labels and operation traversal alone do not define that machine.
+\item Define concrete pre-templates, specimens, quasi-specimens, output-closure,
+input-safety, and robustness, with the paper's typing and context restrictions.
+\item Construct the abstract specimen interface from those objects, proving its
+rootedness, final-agreement, and context-only traversal laws, including the needed
+consequences of Lemma~39. Prove the safety and robustness bridges and initial
+lifting for concrete observations.
+\item Instantiate the two checked contextual sufficiency results. Only this
+last instantiation with all concrete obligations discharged yields the target
+robustness theorem.
+\end{enumerate}
+The present milestone proves both the abstract quantitative argument and a
+substantial concrete graph foundation. It does not yet establish that all
+hypotheses of the former hold for the universal abstract machine.

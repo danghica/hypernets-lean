@@ -1,0 +1,183 @@
+\Needspace{18\baselineskip}
+\section{Finite carriers and concrete interfaced graphs}
+
+We now turn to actual graph objects. The constructions in the following sections
+prove their own incidence and typing obligations. They do not assume the specimen
+laws used in the preceding abstract argument. We work with small finite vertex
+and edge carriers; operation labels may live in a larger universe.
+
+\Needspace{24\baselineskip}
+\subsection{Enumerations and bijections}
+\begin{definition}[Finite enumeration]
+An enumeration of a type $A$ consists of a finite list $l$ and a proof that every
+$a\in A$ belongs to $l$. Repetitions are allowed. This witnesses finiteness without
+requiring decidable equality or a canonical choice of names.
+\end{definition}
+\lean{Graph/Finite}{9}{11}{Enumeration}
+The empty type is enumerated by the empty list: completeness follows because
+there is no element to check. The finite ordinal $\{0,\ldots,n-1\}$ is enumerated
+in increasing order by Lean's finite range; its library membership theorem proves
+completeness, including when $n=0$.
+\lean{Graph/Finite}{15}{15}{Enumeration.empty}
+\lean{Graph/Finite}{17}{17}{Enumeration.fin}
+For a disjoint union $A+B$, concatenate the tagged enumerations of $A$ and $B$.
+An element has exactly one tag, and completeness of the corresponding list places
+it in the appropriate half of the concatenation.
+\lean{Graph/Finite}{19}{25}{Enumeration.sum}
+For a subset $\{a\in A\mid p(a)\}$, attach membership certificates to the enumeration
+of $A$ and retain just entries satisfying $p$. Classical decidability of $p$
+allows this filtering. Every subset element is retained because its certificate
+proves the test true. The resulting definition is noncomputable for an arbitrary
+proposition $p$; no algorithm deciding $p$ is claimed.
+\lean{Graph/Finite}{27}{37}{Enumeration.subtype}
+For a dependent sum $\sum_{a\in A}B_a$, enumerate each fibre, tag it with $a$, and
+concatenate over the enumeration of $A$. A pair $(a,b)$ appears because $a$ occurs
+in the outer list and $b$ in the enumeration of its fibre.
+\lean{Graph/Finite}{39}{43}{Enumeration.sigma}
+
+\begin{definition}[Bijection]
+A bijection $f:A\cong B$ consists of functions $f:A\to B$ and $f^{-1}:B\to A$
+with both inverse equations, pointwise.
+\end{definition}
+\lean{Graph/Finite}{47}{51}{Bijection}
+Identity uses the identity function twice. Inversion interchanges the two functions
+and their inverse laws. Composition uses $g\circ f$ forwards and
+$f^{-1}\circ g^{-1}$ backwards; cancelling the inner inverse pair and then the
+outer pair proves each law.
+\lean{Graph/Finite}{57}{57}{Bijection.refl}
+\lean{Graph/Finite}{59}{60}{Bijection.symm}
+\lean{Graph/Finite}{62}{66}{Bijection.trans}
+Bijections extend to disjoint unions by applying the appropriate map inside each
+tag. Case analysis on the tag reduces both inverse laws to the component laws.
+\lean{Graph/Finite}{68}{73}{Bijection.sum}
+Every bijection is injective: apply its inverse to an equality of images and
+cancel. An enumeration transports along a bijection by mapping its forward
+function over the list. For $b\in B$, the listed preimage $f^{-1}(b)$ maps to $b$,
+proving completeness.
+\lean{Graph/Finite}{75}{77}{Bijection.injective}
+\lean{Graph/Finite}{79}{81}{Bijection.enumeration}
+\begin{lemma}[Distinctness under restricted injectivity]
+If a list $l$ has no repeated elements and $f$ is injective on elements of $l$,
+then $\operatorname{map}(f,l)$ has no repeated elements.
+\end{lemma}
+\begin{proof}
+Distinct positions in $l$ contain distinct elements. If their images were equal,
+restricted injectivity would identify those elements, a contradiction. Lean
+expresses this as preservation of the pairwise inequality predicate under mapping.
+\end{proof}
+\lean{Graph/Finite}{86}{92}{nodup_map_on}
+This restricted version will be essential: replacement can identify an input
+with an output, while remaining injective on each incidence list separately.
+
+\Needspace{24\baselineskip}
+\subsection{Ports, signatures, and graph invariants}
+\begin{definition}[Signature and ports]
+A signature $\sigma$ assigns an ordered input-label list and output-label list
+to every operation. With internal carrier $V$ and boundary lengths $n,m$, vertices
+are the disjoint union
+\[
+ \operatorname{Port}(V,n,m)=V+\operatorname{Fin}(n)+\operatorname{Fin}(m).
+\]
+The three constructors are internal, input, and output. In particular the two
+boundary sets are disjoint even if their wire labels agree.
+\end{definition}
+\lean{Graph/Basic}{13}{15}{Signature}
+\lean{Graph/Basic}{17}{21}{Port}
+The predicates $\mathsf{IsInput}$ and $\mathsf{IsOutput}$ test the corresponding
+constructor. A carrier map $f:V\to W$ acts only on internal vertices and fixes
+each boundary position. It is injective whenever $f$ is: unlike constructors
+cannot have equal images, and equality within the internal constructor reduces
+to injectivity of $f$. The input and output predicates are preserved and reflected
+by this map, by the same three-case analysis.
+\lean{Graph/Basic}{27}{29}{Port.IsInput}
+\lean{Graph/Basic}{31}{33}{Port.IsOutput}
+\lean{Graph/Basic}{35}{38}{Port.map}
+\lean{Graph/Basic}{40}{43}{Port.map_injective}
+\lean{Graph/Basic}{45}{46}{Port.map_isInput}
+\lean{Graph/Basic}{48}{49}{Port.map_isOutput}
+Given boundary-label lists $I,O$ and internal labelling $\lambda:V\to L$, the label
+of an internal vertex is $\lambda(v)$, of input $i$ is $I_i$, and of output $j$
+is $O_j$. The finite-index types ensure that these lookups are defined.
+\lean{Graph/Basic}{51}{54}{Port.label}
+
+\begin{definition}[Concrete typed net]
+A net $G:\!I\to O$ has finite internal and edge carriers, labels for both, and
+ordered source and target vertex lists $s(e),t(e)$ for each edge. It satisfies:
+\begin{enumerate}
+\item Each individual source list and target list has no repetitions.
+\item A vertex belongs to the sources of at most one edge, and to the targets
+of at most one edge.
+\item A vertex belongs to some source list exactly when it is not an output;
+it belongs to some target list exactly when it is not an input.
+\item Mapping vertex labels over $s(e)$ and $t(e)$ gives precisely the input
+and output lists of the signature of the edge label.
+\end{enumerate}
+\end{definition}
+\lean{Graph/Basic}{61}{77}{Net}
+These fields are part of a net's certificate of well-formedness. Coverage excludes
+isolated vertices. It does not exclude cycles or a vertex belonging to both the
+source and target of the same edge. The full vertex type and its label function
+are abbreviations for the port type and the labelling just defined.
+\lean{Graph/Basic}{84}{84}{Net.Vertex}
+\lean{Graph/Basic}{86}{86}{Net.vertexLabel}
+From forward source coverage, membership in $s(e)$ implies that a vertex is not
+an output. From target coverage, membership in $t(e)$ implies that it is not an
+input. Apply the appropriate equivalence to the witness edge $e$.
+\lean{Graph/Basic}{88}{89}{Net.source_not_output}
+\lean{Graph/Basic}{91}{92}{Net.target_not_input}
+Taking lengths in the two typing equations shows that incidence-list lengths are
+exactly the corresponding signature arities: mapping labels does not change length.
+\lean{Graph/Basic}{94}{96}{Net.source_length}
+\lean{Graph/Basic}{98}{100}{Net.target_length}
+The $i$th source port of $e$ is its source list indexed by a position in the
+signature's input list; the preceding length equality justifies the lookup.
+Target ports are defined in the same way with the output list.
+\lean{Graph/Basic}{102}{103}{Net.sourcePort}
+\lean{Graph/Basic}{105}{106}{Net.targetPort}
+Each indexed port belongs to its incidence list, by the list lookup membership
+lemma. Within either list, equality of indexed ports implies equality of indices,
+because that list has no duplicates; equality of finite ordinals follows from
+equality of their underlying natural numbers.
+\lean{Graph/Basic}{108}{108}{Net.sourcePort_mem}
+\lean{Graph/Basic}{110}{110}{Net.targetPort_mem}
+\lean{Graph/Basic}{112}{114}{Net.sourcePort_injective}
+\lean{Graph/Basic}{116}{118}{Net.targetPort_injective}
+The label of source port $i$ is the $i$th signature input label, and the label of
+target port $i$ is the $i$th signature output label. Apply indexed lookup to the
+appropriate list typing equation, then commute lookup with mapping.
+\lean{Graph/Basic}{120}{123}{Net.sourcePort_label}
+\lean{Graph/Basic}{125}{128}{Net.targetPort_label}
+Finally, membership in a source list is equivalent to being its indexed port for
+some signature input position. Given membership, choose its list index and
+transport the bound along the arity equality. Conversely, indexed ports belong
+to their lists. The target statement uses the output arity and the identical
+membership argument.
+\lean{Graph/Basic}{130}{137}{Net.mem_source_iff_port}
+\lean{Graph/Basic}{139}{146}{Net.mem_target_iff_port}
+
+\Needspace{24\baselineskip}
+\subsection{Elementary graph constructors}
+The ordered finite range has no duplicates: equality of its entries at two
+positions gives equality of their underlying natural numbers and hence of the
+positions.
+\lean{Graph/Constructors}{5}{9}{finRange_nodup}
+\begin{definition}[Corolla and empty graph]
+The corolla of operation $o$ has one edge labelled $o$, no internal vertices,
+and all of its prescribed inputs and outputs in signature order. Its sources
+are precisely the input constructors and its targets the output constructors.
+\end{definition}
+\begin{proof}[Well-formedness]
+Finite ranges and their constructor maps give distinct incidence lists. There
+is only one edge, so edge uniqueness is immediate. Every input occurs in its
+source range and every output in its target range, and the opposite boundary
+constructors cannot occur there. There are no internal vertices to check.
+Mapping labels over either ordered range recovers the corresponding signature
+list, proving typing.
+\end{proof}
+\lean{Graph/Constructors}{18}{52}{Net.corolla}
+The empty graph has empty internal and edge carriers and empty boundaries. Each
+incidence or label function has empty domain; all obligations follow by eliminating
+the purported element of an empty type. A bare identity wire is not provided:
+a single vertex serving as both boundary input and boundary output would violate
+the disjoint-boundary representation used here.
+\lean{Graph/Constructors}{56}{78}{Net.empty}

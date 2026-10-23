@@ -1,0 +1,76 @@
+\Needspace{18\baselineskip}
+\section{Scope, notation, and the status of the formalization}
+
+The abstract part of the development follows the proof in Appendix~F of
+\cite{paper}. Its completed mathematical core is the soundness of counting
+simulation, corresponding to Proposition~37. The remaining argument is expressed
+through a structure of abstract specimens. Given that structure and its laws,
+Lean proves both directions of the simulation construction and their contextual
+consequences. Constructing this structure from the paper's actual hypernets is
+still a separate task. The concrete graph part now supplies finite interfaced
+graphs, certified shallow plugging, renaming and path invariance, a typed boxed
+hierarchy, and addressed deep replacement. These constructions and their
+regression examples are explained after the abstract development.
+
+There are three distinct kinds of assertion below. A \emph{definition} specifies
+a mathematical object or predicate. A \emph{proved statement} is established by
+a Lean proof term. An \emph{interface law} is a hypothesis carried by a
+structure; the current code uses that hypothesis but does not prove it for
+concrete hypernets. In particular, the laws of a specimen system must not be
+read as established theorems about the universal abstract machine.
+
+All code links point to revision \texttt{ce31471}, rather than to the moving
+\texttt{main} branch. Each link highlights the declaration together with its
+proof or defining fields. Namespace prefixes in link labels disambiguate
+declarations with the same short name. Anonymous Lean \texttt{example}
+declarations are explained alongside the named theorems.
+
+\Needspace{17\baselineskip}
+\subsection{Conventions}
+
+Fix a set of states $X$ and a machine $M$ on $X$. Write $s\to t$ for its
+one-step transition relation, $s\steps{n}t$ for exactly $n$ transitions, and
+$\fin(s)$ for successful finality. Natural numbers include zero. A cost
+preorder $Q$ is written infix: $n\,Q\,m$. The source count is always the
+left argument and the target count the right argument. Write $s\preceq_Q t$
+for state refinement, and $s\simeq_Q t$ for mutual state refinement.
+
+The paper's three cost parameters $(Q,Q',Q'')$ are named $(Q,P,S)$ in the
+code and in this commentary. Thus $P$ is the auxiliary relation on the
+\emph{left} of a simulation candidate, and $S$ is the one on its
+\emph{right}. We spell out witnesses rather than relying on a convention for
+composition of relations.
+
+No result assumes that all executions terminate. An arbitrary state can be
+final, stuck, or capable of further computation. Successful termination is the
+only qualitative observation in the present state-refinement definition.
+Neither equality of returned values nor equality of final states across two
+different source states is required.
+
+\Needspace{17\baselineskip}
+\subsection{Dependency order}
+
+The files are organized as follows. Finite-execution facts in
+\leanfile{Hypernets/Transition.lean}{Transition.lean} support the quantitative
+relations in \leanfile{Hypernets/Quantitative.lean}{Quantitative.lean} and
+the soundness argument in
+\leanfile{Hypernets/Simulation.lean}{Simulation.lean}. The observation interface
+in \leanfile{Hypernets/Contextual.lean}{Contextual.lean} converts state
+results into contextual ones. The specimen argument in
+\leanfile{Hypernets/LocalReasoning.lean}{LocalReasoning.lean} constructs the
+simulation to which soundness applies. Finally,
+\leanfile{Hypernets/Examples.lean}{Examples.lean} checks substantive edge
+cases, and \leanfile{Hypernets/Audit.lean}{Audit.lean} reports theorem
+dependencies. The root file \leanfile{Hypernets.lean}{Hypernets.lean} imports
+the development and its examples; it adds no mathematical declaration.
+
+The concrete branch begins with
+\leanfile{Hypernets/Graph/Finite.lean}{Graph/Finite.lean} and
+\leanfile{Hypernets/Graph/Basic.lean}{Graph/Basic.lean}. Plugging, paths, and
+isomorphism support the hierarchy and deep replacement modules. Operation-path
+uniqueness imports the counted-execution results, providing a concrete use of the
+abstract machine lemmas. Both branches are imported by the root file.
+
+The exposition follows these dependency orders. Section numbers and theorem
+numbers here are local to this document; references to the paper are explicitly
+identified as such.

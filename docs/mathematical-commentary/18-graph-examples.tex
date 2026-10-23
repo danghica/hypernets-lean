@@ -1,0 +1,145 @@
+\Needspace{18\baselineskip}
+\section{Concrete graph examples and regression proofs}
+\Needspace{24\baselineskip}
+\subsection{Self-loop gluing and the necessary reflection restriction}
+Use a singleton wire-label set and a singleton operation alphabet, whose only
+operation has one input and one output of that label. The graph named
+$\mathsf{loop}$ has one internal vertex, one edge, no outer boundary, and that
+vertex as both the edge's source and target.
+\lean{Graph/Examples}{7}{9}{Examples.unary}
+\lean{Graph/Examples}{12}{44}{Examples.loop}
+Its finite carriers are both $\operatorname{Fin}(1)$. Singleton incidence lists
+are distinct; all edges are equal since their indices are bounded by one. The
+only internal vertex is incident on both sides, providing coverage, while
+boundary cases have empty finite-index types. Label typing is reflexive. Thus
+this is a well-formed net despite its cycle. Let $\mathsf{wireEdge}$ be the
+corolla of the same unary operation, with its two distinct boundary vertices.
+\lean{Graph/Examples}{46}{46}{Examples.wireEdge}
+
+The corolla is not adjacent to itself: a shared target/source witness would have
+to be both its output constructor and its input constructor, an impossible
+constructor equality.
+\lean{Graph/Examples}{49}{54}{Examples.corolla_not_self_adjacent}
+When the corolla replaces the loop's sole edge, its input and output images are
+equal. Both are, by definition, the same old internal vertex, because the host
+hole's source and target port coincide. Hence the inserted edge is adjacent to
+itself: use that old vertex as the witness and compute the mapped singleton
+source and target lists.
+\lean{Graph/Examples}{58}{60}{Examples.inserted_boundary_identified}
+\lean{Graph/Examples}{62}{67}{Examples.inserted_self_adjacent}
+Consequently the inserted two-entry list $[e,e]$ is a path, while $[e,e]$ is not
+a path in the original corolla. The positive part uses its new self-adjacency and
+a singleton tail path. The negative part extracts its first adjacency and
+contradicts the corolla result. This proves that unconditional reflection of
+inserted paths would be false; the non-self-loop hypothesis cannot simply be
+omitted from that theorem.
+\lean{Graph/Examples}{71}{76}{Examples.unconditional_path_reflection_fails}
+The original loop itself has the two-entry path $[e,e]$, using its sole internal
+vertex as the shared witness. This verifies that the graph representation has
+not silently imposed global acyclicity.
+\lean{Graph/Examples}{80}{81}{Examples.loop_is_cyclic}
+
+The finite ordinal with one element is bijective to the unit type: send its
+index to the sole unit element and send unit back to zero. The inverse laws
+follow respectively from the ordinal bound and unit case analysis. An anonymous
+example reindexes the corolla's edge carrier along this bijection and applies
+shallow plugging congruence. It obtains isomorphic filled loops despite the
+different replacement-edge carrier types, testing actual renaming rather than
+reflexivity alone.
+\lean{Graph/Examples}{83}{87}{Examples.oneToUnit}
+\lean{Graph/Examples}{89}{91}{Examples.example (line 89)}
+
+\Needspace{24\baselineskip}
+\subsection{Values, boxes, and distinguished occurrence addresses}
+For the linear examples, take two operation labels, value and other-value. Give
+both zero term arguments and no thunk arguments; each therefore has signature
+$*\to []$. The graph $\mathsf{value}$ is the corolla of the first operation at
+depth zero.
+\lean{Graph/Examples}{99}{100}{Linear.Examples.Op}
+\lean{Graph/Examples}{102}{104}{Linear.Examples.operations}
+\lean{Graph/Examples}{106}{107}{Linear.Examples.value}
+Boxing it with zero bound and free variables yields a closed box of type
+$T^0(*)\to []$ at depth one. A further example constructs the analogous graph
+at depth bound two by putting a primitive value at depth one inside a box.
+This is a larger \emph{available bound}, not a claim that the example has two
+actually nested boxes.
+\lean{Graph/Examples}{110}{110}{Linear.Examples.boxedValue}
+\lean{Graph/Examples}{112}{115}{Linear.Examples.higherBoxedValue}
+An anonymous proof verifies that any occurrence in the depth-one boxed value
+belongs to the recursive occurrence enumeration, by the general completeness
+theorem. The outer box edge is represented by a shallow left-tagged occurrence;
+the value edge in its body is a right-tagged pair of parent edge and child edge.
+\lean{Graph/Examples}{117}{118}{Linear.Examples.example (line 117)}
+\lean{Graph/Examples}{122}{122}{Linear.Examples.outerOccurrence}
+\lean{Graph/Examples}{124}{124}{Linear.Examples.innerOccurrence}
+These two addresses are unequal. If equal, applying the sum-tag test would give
+$\mathsf{true}=\mathsf{false}$, which is impossible. This checks separation of
+outer and inner occurrences even though each individual edge carrier is singleton.
+\lean{Graph/Examples}{126}{129}{Linear.Examples.outer_ne_inner}
+
+The other-value corolla has exactly the same interface as the value corolla.
+A site inside the boxed value descends through its only box edge and selects the
+value edge in its body. Replacing at this site with other-value defines
+$\mathsf{replacedInside}$.
+\lean{Graph/Examples}{131}{132}{Linear.Examples.otherValue}
+\lean{Graph/Examples}{135}{136}{Linear.Examples.insideValue}
+\lean{Graph/Examples}{138}{139}{Linear.Examples.replacedInside}
+Its outer source and target functions equal those of the original boxed value;
+instantiate the two deep-locality theorems at the selected site. Its sole outer
+edge label is the box with body $\mathsf{value}[e:=\mathsf{otherValue}]$.
+For this label equation, unfold the site and replacement, simplify the equality
+test selecting the sole outer edge, and use reflexivity for the resulting body.
+The outer box is retained rather than replaced by the value operation itself.
+\lean{Graph/Examples}{141}{142}{Linear.Examples.deep_replacement_source_unchanged}
+\lean{Graph/Examples}{144}{145}{Linear.Examples.deep_replacement_target_unchanged}
+\lean{Graph/Examples}{147}{151}{Linear.Examples.deep_replacement_body}
+
+\Needspace{24\baselineskip}
+\subsection{An input-rooted operation path}
+Give the single unit operation one term argument and no binders. Its corolla
+$\mathsf{argument}$ has type $*\to *$. The input, its only edge, and the output
+form a forward operation path: read this as the one-step reverse trace, check
+membership in the two singleton incidence lists, and end with an empty trace.
+\lean{Graph/Examples}{153}{155}{Linear.Examples.argumentOperations}
+\lean{Graph/Examples}{157}{158}{Linear.Examples.argument}
+\lean{Graph/Examples}{160}{166}{Linear.Examples.argument_path}
+Any reverse operation trace from its output back to that output has empty edge
+list. Apply the no-cycle theorem to the constructed input-rooted path, deriving
+the required unary condition from the typed signature. This exercises the
+connection between concrete graph typing and generic machine terminal uniqueness.
+\lean{Graph/Examples}{168}{172}{Linear.Examples.no_cycle_after_argument}
+
+\Needspace{24\baselineskip}
+\subsection{Filling a hole inside a certified context}
+Choose the typed hole label with name zero, one term input, and no outputs.
+Its corolla $\mathsf{singleHole}$ is a depth-zero hypernet. It has unique holes
+because any two edge occurrences are equal: both are elements of
+$\operatorname{Fin}(1)$, so their underlying indices are zero. Pairing this graph
+with the proof constructs a context.
+\lean{Graph/Examples}{174}{174}{Linear.Examples.holeLabel}
+\lean{Graph/Examples}{176}{177}{Linear.Examples.singleHole}
+\lean{Graph/Examples}{179}{184}{Linear.Examples.singleHole_unique}
+\lean{Graph/Examples}{186}{186}{Linear.Examples.singleContext}
+Box the graph with zero bound and free variables to obtain $\mathsf{boxedHole}$,
+and box the certified context to obtain $\mathsf{boxedContext}$. The unique-hole
+certificate in the latter is supplied by the general boxing theorem. Looking
+up the deep address consisting of the only outer edge and the only body edge
+returns the chosen hole label by definition.
+\lean{Graph/Examples}{188}{189}{Linear.Examples.boxedHole}
+\lean{Graph/Examples}{191}{192}{Linear.Examples.boxedContext}
+\lean{Graph/Examples}{194}{195}{Linear.Examples.hole_is_deep}
+The corresponding site descends into that box and chooses its shallow hole edge.
+Filling this site with the value corolla produces $\mathsf{filledBox}$. Its outer
+label is the same zero-bound, zero-free box, now containing
+$\mathsf{singleHole}[e:=\mathsf{value}]$; unfold deep replacement and simplify the
+selected-edge equality test to prove this equation.
+\lean{Graph/Examples}{197}{198}{Linear.Examples.boxedHoleSite}
+\lean{Graph/Examples}{200}{200}{Linear.Examples.filledBox}
+\lean{Graph/Examples}{202}{206}{Linear.Examples.filled_box_body}
+Finally every edge of this filled body has no primitive hole label. Split on
+its edge tag. An old surviving edge would be an element of the singleton old
+carrier different from its only element, contradicting the surviving-edge
+certificate. An inserted value edge is an operation, whose primitive hole lookup
+is definitionally empty. Thus this example proves removal of the old hole, not
+merely the well-typedness of the filled graph.
+\lean{Graph/Examples}{210}{216}{Linear.Examples.filled_body_no_holes}

@@ -1,0 +1,75 @@
+\Needspace{18\baselineskip}
+\section{Typed observations and contextual lifting}
+
+\begin{definition}[Observation interface]
+Let $J$ be a type of interfaces, and for each $i\in J$ let $F_i$ be a
+type of fragments and $C_i$ a type of contexts. An observation interface
+consists of a predicate $\mathsf{Allowed}(c)$ for contexts and a relation
+\[
+ \mathsf{Obs}(c,a,s),\qquad c\in C_i,\ a\in F_i,\ s\in X.
+\]
+The intended reading is that placing $a$ in $c$ and initializing the
+result can produce state $s$.
+\end{definition}
+\lean{Contextual}{15}{18}{Observations}
+The common index $i$ prevents a fragment and a context of incompatible
+interfaces from being compared. Observation is a relation rather than a
+total function. It can be undefined, and the structure does not require
+uniqueness of the produced state. The current code does not yet define it
+by graph plugging.
+
+\begin{definition}[Contextual refinement and equivalence]
+For $a,b\in F_i$, write $a\preceq_Q^{\mathcal O} b$ if for every
+$c\in C_i$ and states $s,t$,
+\[
+ \mathsf{Allowed}(c)\ \land\ \mathsf{Obs}(c,a,s)\ \land\ \mathsf{Obs}(c,b,t)
+ \ \Longrightarrow\ s\preceq_Q t.
+\]
+Contextual equivalence $a\simeq_Q^{\mathcal O}b$ is the conjunction of
+this refinement and the refinement in the opposite direction.
+\end{definition}
+\lean{Contextual}{26}{28}{Observations.Refines}
+\lean{Contextual}{30}{31}{Observations.Equiv}
+The quantifiers compare every pair of observations of the two fragments
+in the same allowed context. The definition imposes no existence obligation
+when either fragment has no observation there. Also, state-refinement
+reflexivity alone does not establish contextual reflexivity for this fully
+general interface: two observations of the same fragment might give
+different states. A concrete, functional initialization relation can supply
+the missing property, but it is not assumed here.
+
+\begin{proposition}[Contextual refinement from a lifted relation]
+Let $T_i$ be a relation on $F_i$ for each interface $i$, and let $L$ be
+a relation on states. Suppose:
+\begin{enumerate}
+\item Whenever $T_i(a,b)$ and $c$ is allowed, observations
+  $\mathsf{Obs}(c,a,s)$ and $\mathsf{Obs}(c,b,t)$ imply $L(s,t)$.
+\item $L(s,t)$ implies $s\preceq_Q t$.
+\end{enumerate}
+Then $T_i(a,b)$ implies $a\preceq_Q^{\mathcal O}b$.
+\end{proposition}
+\lean{Contextual}{35}{44}{Observations.contextual_of_lifting}
+\begin{proof}
+Fix $T_i(a,b)$, an allowed $c$, and the two observations. The first
+hypothesis, named \texttt{initial\_lift} in Lean, puts their initial states
+in $L$. The second hypothesis, named \texttt{sound}, then gives the state
+refinement required by the definition of contextual refinement.
+\end{proof}
+This isolates the logical step of the paper's Proposition~38. Its concrete
+proof still has to establish the initial-specimen hypothesis for actual
+plugging and initialization. The proposition above neither asserts nor
+requires closure under plugging at this abstract level.
+
+\begin{proposition}[Contextual equivalence from a lifted relation]
+Under the same initial-lifting hypothesis, if $L(s,t)$ implies
+$s\simeq_Q t$, then $T_i(a,b)$ implies $a\simeq_Q^{\mathcal O}b$.
+\end{proposition}
+\lean{Contextual}{46}{57}{Observations.contextual_equiv_of_lifting}
+\begin{proof}
+For the forward refinement, apply the preceding proposition using the
+forward component of state equivalence. For the reverse refinement, fix
+observations of $b$ and $a$ in an allowed context. Put them into
+\texttt{initial\_lift} in the order $a,b$, obtaining $L$ from the state
+of $a$ to the state of $b$. Use the reverse component of its state
+equivalence. This does not require that $T_i$ or $L$ be symmetric.
+\end{proof}

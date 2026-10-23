@@ -1,0 +1,145 @@
+\Needspace{18\baselineskip}
+\section{Cost relations and state refinement}
+
+\begin{definition}[Cost preorder]
+A cost order is a reflexive, transitive relation $Q$ on $\mathbb N$.
+\end{definition}
+\lean{Quantitative}{6}{9}{CostOrder}
+The relation and its two preorder proofs are stored together. Antisymmetry,
+decidability, and compatibility with addition are not part of this definition.
+
+\begin{definition}[Reasonable triple]
+A triple $(Q,P,S)$ of cost preorders is \emph{reasonable} if all four of the
+following implications hold:
+\begin{align*}
+ a\,Q\,b\ \land\ c\,Q\,d &\ \Longrightarrow\ (a+c)\,Q\,(b+d),\tag{addition}\\
+ a\,P\,b &\ \Longrightarrow\ b\leq a,\tag{decrease}\\
+ a\,P\,b &\ \Longrightarrow\ a\,S\,b,\tag{inclusion}\\
+ a\,P\,b\ \land\ b\,Q\,c\ \land\ c\,S\,d
+   &\ \Longrightarrow\ a\,Q\,d.\tag{sandwich}
+\end{align*}
+\end{definition}
+\lean{Quantitative}{12}{16}{Reasonable}
+These four fields express the paper's three conditions: the decrease and
+inclusion fields are the two parts of its condition~(B). The decrease field
+will justify a strict descent in the soundness proof. Inclusion is used when
+turning safety's auxiliary equivalences into an asymmetric up-to relation.
+
+\Needspace{23\baselineskip}
+\begin{definition}[Converse and the basic cost orders]
+The converse preorder is $a\,Q^{-1}\,b$ if $b\,Q\,a$. The four named
+orders are
+\[
+ \begin{aligned}
+ a\,E\,b &\iff a=b,&
+ a\,I\,b &\iff b\leq a,\\
+ a\,H\,b &\iff a\leq b,&
+ a\,U\,b &\iff \text{true}.
+ \end{aligned}
+\]
+Here $E$, $I$, $H$, and $U$ denote \texttt{exact}, \texttt{improvement},
+\texttt{overhead}, and \texttt{any}, respectively.
+\end{definition}
+\lean{Quantitative}{20}{23}{CostOrder.converse}
+\lean{Quantitative}{25}{25}{CostOrder.exact}
+\lean{Quantitative}{27}{28}{CostOrder.improvement}
+\lean{Quantitative}{30}{30}{CostOrder.overhead}
+\lean{Quantitative}{32}{32}{CostOrder.any}
+\begin{proof}[Verification of the preorder fields]
+Converse preserves reflexivity. Given $b\,Q\,a$ and $c\,Q\,b$,
+transitivity of $Q$ gives $c\,Q\,a$, establishing transitivity of
+$Q^{-1}$. Equality is reflexive and transitive. The relation $I$ is
+reflexive by $a\leq a$; from $b\leq a$ and $c\leq b$ one obtains
+$c\leq a$. The corresponding verification for $H$ uses the usual order
+direction. All requirements for the universal relation $U$ are immediate.
+\end{proof}
+
+\begin{lemma}[Exact costs are reasonable]
+The triple $(E,E,E)$ is reasonable.
+\end{lemma}
+\lean{Quantitative}{34}{38}{CostOrder.reasonable_exact}
+\begin{proof}
+Substitute equals for equals in the addition condition. The decrease
+condition reduces to $a\leq a$, inclusion is equality included in itself,
+and the sandwich condition is transitivity of equality.
+\end{proof}
+
+\begin{lemma}[Improvement costs are reasonable]
+The triple $(I,I,I)$ is reasonable.
+\end{lemma}
+\lean{Quantitative}{40}{44}{CostOrder.reasonable_improvement}
+\begin{proof}
+For addition, $b\leq a$ and $d\leq c$ give $b+d\leq a+c$. Decrease is
+the definition of $I$, and inclusion is reflexive inclusion. The sandwich
+premises give $d\leq c\leq b\leq a$, hence $a\,I\,d$.
+\end{proof}
+
+\begin{lemma}[Unconstrained termination costs are reasonable]
+The triple $(U,I,U)$ is reasonable.
+\end{lemma}
+\lean{Quantitative}{46}{50}{CostOrder.reasonable_termination}
+\begin{proof}
+Addition, inclusion, and the sandwich condition have universally true
+conclusions. Decrease is again the definition of $I$.
+\end{proof}
+
+\begin{lemma}[Overhead with exact auxiliary costs is reasonable]
+The triple $(H,E,E)$ is reasonable.
+\end{lemma}
+\lean{Quantitative}{52}{56}{CostOrder.reasonable_overhead}
+\begin{proof}
+The addition condition is monotonicity of addition for $\leq$. Equality
+implies the required weak decrease and includes into itself. In the sandwich
+condition, substitute $a=b$ and $c=d$ into $b\leq c$ to obtain $a\leq d$.
+\end{proof}
+
+\begin{definition}[State refinement]
+For a cost preorder $Q$, define
+\[
+ s\preceq_Q t\quad\Longleftrightarrow\quad
+ \begin{gathered}
+ \text{for every $n,z$ with $s\steps{n}z$ and $\fin(z)$,}\\
+ \text{there exist $m,w$ with $n\,Q\,m$, $t\steps{m}w$, and $\fin(w)$.}
+ \end{gathered}
+\]
+State equivalence is mutual refinement:
+$s\simeq_Q t$ if $s\preceq_Q t$ and $t\preceq_Q s$.
+\end{definition}
+\lean{Quantitative}{65}{67}{Machine.Refines}
+\lean{Quantitative}{69}{70}{Machine.Equiv}
+If $s$ has no successful execution, its refinement obligation is vacuous.
+The definition therefore does not distinguish stuckness from divergence
+unless a surrounding observation supplies additional distinctions.
+For $Q=I$, the target must terminate in no more steps than the source.
+For $Q=H$, it must terminate in at least as many steps. For $Q=E$, the
+counts agree exactly; for $Q=U$, counts are ignored.
+
+\begin{lemma}[Reflexivity]
+For every $s$, $s\preceq_Q s$.
+\end{lemma}
+\lean{Quantitative}{74}{76}{Machine.Refines.refl}
+\begin{proof}
+Given a successful execution of length $n$ from $s$, choose that same
+execution and final state as witnesses. Reflexivity supplies $n\,Q\,n$.
+\end{proof}
+
+\begin{lemma}[Transitivity]
+If $s\preceq_Q t$ and $t\preceq_Q v$, then $s\preceq_Q v$.
+\end{lemma}
+\lean{Quantitative}{78}{83}{Machine.Refines.trans}
+\begin{proof}
+Take a successful execution of length $n$ from $s$. The first refinement
+supplies a successful execution of length $m$ from $t$, with $n\,Q\,m$.
+Apply the second refinement to this execution to obtain a successful
+execution of length $k$ from $v$, with $m\,Q\,k$. Transitivity gives
+$n\,Q\,k$, and these are the required witnesses. Determinism is unnecessary.
+\end{proof}
+
+\begin{lemma}[Monotonicity in the cost relation]
+If $Q\subseteq P$ and $s\preceq_Q t$, then $s\preceq_P t$.
+\end{lemma}
+\lean{Quantitative}{85}{90}{Machine.Refines.mono}
+\begin{proof}
+Reuse each execution and final-state witness supplied by the original
+refinement. Replace its cost proof $n\,Q\,m$ by $n\,P\,m$ using the inclusion.
+\end{proof}

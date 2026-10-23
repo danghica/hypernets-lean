@@ -1,0 +1,146 @@
+\Needspace{18\baselineskip}
+\section{Machines and finite executions}
+
+\begin{definition}[Machine]
+A machine on $X$ consists of a relation ${\to}\subseteq X\times X$, a
+predicate $\fin\subseteq X$, and the law
+\[
+  \fin(s)\ \Longrightarrow\ \neg(s\to t)\qquad(s,t\in X).
+\]
+Thus every successful final state has no outgoing transition. No converse is
+assumed: an unsuccessful normal form is permitted.
+\end{definition}
+\lean{Transition}{12}{15}{Machine}
+The fields \texttt{step} and \texttt{final} supply the relation and predicate.
+The field \texttt{final\_normal} supplies the displayed law. A machine may
+have any state type; finiteness or a graphical representation is not required.
+
+\begin{definition}[Determinism, normality, and stuckness]
+The machine is \emph{deterministic} if $s\to t_1$ and $s\to t_2$ imply
+$t_1=t_2$. A state $s$ is \emph{normal} if $s\to t$ is false for every
+$t$. It is \emph{stuck} if it is normal and is not final:
+\[
+ \normal(s)\iff\forall t\,\neg(s\to t),\qquad
+ \stuck(s)\iff\normal(s)\land\neg\fin(s).
+\]
+\end{definition}
+\lean{Transition}{21}{22}{Machine.Deterministic}
+\lean{Transition}{24}{24}{Machine.Normal}
+\lean{Transition}{26}{27}{Machine.Stuck}
+Determinism is a separate hypothesis, not a field of every machine. Stuckness
+distinguishes failure from successful finality even though both are normal
+forms.
+
+\begin{definition}[Counted execution]
+The relation $s\steps{n}t$ is generated inductively by
+\[
+ \frac{}{s\steps{0}s},\qquad
+ \frac{s\to u\quad u\steps{n}t}{s\steps{n+1}t}.
+\]
+\end{definition}
+\lean{Transition}{30}{32}{Machine.Steps}
+These are precisely the constructors \texttt{zero} and \texttt{cons}. The
+count includes every transition of the machine. There is no separate cost
+weight for searching or rewriting. In particular, zero transitions cannot
+change a state.
+
+\begin{lemma}[Zero-step equality]
+If $s\steps{0}t$, then $s=t$.
+\end{lemma}
+\lean{Transition}{36}{38}{Machine.Steps.zero_eq}
+\begin{proof}
+Only the zero constructor can produce an execution with count zero. Its two
+endpoints are the same state. The step constructor has a positive count and
+cannot occur.
+\end{proof}
+
+\begin{lemma}[Concatenation]
+If $s\steps{m}t$ and $t\steps{n}v$, then $s\steps{m+n}v$.
+\end{lemma}
+\lean{Transition}{40}{45}{Machine.Steps.append}
+\begin{proof}
+Induct on the first execution. For a zero-step execution, $s=t$, so the second
+execution is the required one. Otherwise its first transition is $s\to u$
+and its remaining execution has some length $k$. By induction, that remainder
+followed by the second execution has length $k+n$. Prepending $s\to u$
+gives length $(k+n)+1=(k+1)+n$. No determinism is used.
+\end{proof}
+
+\begin{lemma}[An execution from a normal state]
+If $s\steps{n}t$ and $\normal(s)$, then $n=0$ and $s=t$.
+\end{lemma}
+\lean{Transition}{47}{51}{Machine.Steps.normal_eq}
+\begin{proof}
+The zero-step case has both conclusions by definition. A positive execution
+would begin with a transition out of $s$, contradicting normality.
+\end{proof}
+
+For the following three lemmas, assume determinism.
+
+\begin{lemma}[Every execution is a prefix of a final execution]
+Suppose $s\steps{m}t$, $s\steps{n}z$, and $\fin(z)$. Then there is a
+natural number $r$ such that
+\[
+ n=m+r\quad\text{and}\quad t\steps{r}z.
+\]
+In particular $m\leq n$.
+\end{lemma}
+\lean{Transition}{54}{67}{Machine.Steps.prefix_of_final}
+\begin{proof}
+Induct on the execution of length $m$, allowing $n$ to vary. If $m=0$, then
+$t=s$; take $r=n$ and use the given final execution.
+
+Otherwise the first execution starts with $s\to u$. The final execution
+cannot have length zero: that would make $s=z$ final while an outgoing
+transition exists. It therefore starts with $s\to u'$. Determinism gives
+$u=u'$. Apply the induction hypothesis to the two remaining executions. If
+their lengths are $m-1$ and $n-1$, the result gives
+$n-1=(m-1)+r$ and the required execution $t\steps{r}z$. Hence $n=m+r$.
+The Lean proof uses constructor indices rather than natural-number
+subtraction, so no subtraction side conditions are needed.
+\end{proof}
+
+\begin{lemma}[Uniqueness of successful terminal executions]
+If $s\steps{m}t$, $s\steps{n}z$, $\fin(t)$, and $\fin(z)$, then
+$m=n$ and $t=z$.
+\end{lemma}
+\lean{Transition}{69}{74}{Machine.Steps.final_unique}
+\begin{proof}
+The prefix lemma gives $n=m+r$ and $t\steps{r}z$. Finality of $t$ makes
+it normal. The normal-state lemma yields $r=0$ and $t=z$, and therefore
+$m=n$.
+\end{proof}
+
+\begin{lemma}[A state on a successful execution is not stuck]
+If $s\steps{m}t$, $s\steps{n}z$, and $\fin(z)$, then $t$ is not stuck.
+\end{lemma}
+\lean{Transition}{76}{82}{Machine.Steps.not_stuck_of_final}
+\begin{proof}
+Suppose $t$ were stuck. The prefix lemma gives a remaining execution
+$t\steps{r}z$. Normality of $t$ forces $t=z$. Since $z$ is final, $t$
+is final, contradicting the unsuccessful part of stuckness.
+\end{proof}
+
+\begin{lemma}[Removing a prescribed first transition]
+If $s\to s'$ and $s\steps{n+1}t$, then $s'\steps{n}t$.
+\end{lemma}
+\lean{Transition}{84}{90}{Machine.Steps.drop_first}
+\begin{proof}
+The positive execution has a first transition $s\to u$ and a remainder
+$u\steps{n}t$. Determinism identifies $u$ with $s'$, giving the stated
+remainder. The conclusion concerns the \emph{prescribed} successor $s'$;
+without determinism it would only be valid for some successor.
+\end{proof}
+
+\begin{lemma}[A stuck execution continues after an available step]
+If $s\to s'$, $s\steps{n}t$, and $\stuck(t)$, then for some $k$,
+$s'\steps{k}t$.
+\end{lemma}
+\lean{Transition}{93}{101}{Machine.Steps.stuck_after_step}
+\begin{proof}
+The execution cannot have length zero, since then $s=t$ would be normal
+despite $s\to s'$. Its first transition is therefore $s\to u$, with a
+remaining execution to $t$. Determinism gives $u=s'$. Take the length of
+that remainder as $k$. The code does not retain the additional equality
+$n=k+1$, because later uses need only the existence of a remainder.
+\end{proof}

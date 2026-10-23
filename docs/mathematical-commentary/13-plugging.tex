@@ -1,0 +1,159 @@
+\Needspace{18\baselineskip}
+\section{Shallow plugging, including self-loop holes}
+Fix a host $C:I\to O$, an edge $h$ to remove, and a replacement $H$ whose boundary
+lists are exactly the input and output signature lists of $C$'s label at $h$.
+All constructions in this section are in the namespace $\mathsf{Net.Replacement}$
+unless explicitly stated otherwise.
+
+\Needspace{24\baselineskip}
+\subsection{Carriers and boundary identification}
+\begin{definition}[Replacement carriers]
+The new internal vertices are $C_V+H_V$, with disjoint tags providing freshness.
+The new edges are $(C_E\setminus\{h\})+H_E$. The outer boundary remains $I,O$.
+The surviving-edge subtype carries a proof of inequality to $h$, so the removed
+edge cannot accidentally survive as an old edge.
+\end{definition}
+\lean{Graph/Plugging}{19}{19}{Net.Replacement.Vertex}
+\lean{Graph/Plugging}{20}{20}{Net.Replacement.Edge}
+The host embedding $j$ tags each old internal vertex on the left and fixes the
+outer boundary. The insertion map $k$ tags a replacement internal vertex on the
+right, sends replacement input $i$ to $j(s_h(i))$, and sends replacement output
+$i$ to $j(t_h(i))$. Thus gluing is expressed by a function rather than a quotient
+of all vertex names.
+\lean{Graph/Plugging}{22}{22}{Net.Replacement.host}
+\lean{Graph/Plugging}{24}{27}{Net.Replacement.insert}
+The host embedding is injective by injectivity of the left sum tag and the port
+map lemma. Its image is disjoint from freshly tagged replacement internals:
+case analysis on a host vertex gives either a boundary constructor or an internal
+left tag, neither equal to an internal right tag.
+\lean{Graph/Plugging}{29}{30}{Net.Replacement.host_injective}
+\lean{Graph/Plugging}{32}{33}{Net.Replacement.host_ne_internal}
+
+\begin{lemma}[The two restricted insertion injections]
+The insertion map is injective on vertices that are not outputs. It is also
+injective on vertices that are not inputs.
+\end{lemma}
+\begin{proof}
+For the first claim, exclude output cases using the hypotheses. Two internal
+images agree only when their right-tagged names agree. An internal image cannot
+agree with an input image, by freshness. Two input images agree only when their
+host source ports agree, and source-port injectivity identifies their indices.
+For the second claim, exclude input cases instead, use target-port injectivity
+on two outputs, and use the same freshness argument on mixed cases.
+\end{proof}
+\lean{Graph/Plugging}{35}{50}{Net.Replacement.insert_source_injective}
+\lean{Graph/Plugging}{52}{67}{Net.Replacement.insert_target_injective}
+If a non-output replacement vertex has insertion image $j(v)$, it must be some
+input $i$, with $s_h(i)=v$. Outputs are excluded by hypothesis, internals by
+freshness, and in the input case host injectivity gives the equation. Dually, a
+non-input replacement vertex mapping to $j(v)$ must be output $i$ with
+$t_h(i)=v$. These inversion lemmas control mixed old/new incidence cases.
+\lean{Graph/Plugging}{69}{75}{Net.Replacement.insert_source_host}
+\lean{Graph/Plugging}{77}{83}{Net.Replacement.insert_target_host}
+
+\Needspace{24\baselineskip}
+\subsection{Preservation of incidence invariants}
+Sources and targets of surviving host edges are their old lists mapped by $j$.
+Those of inserted edges are the replacement lists mapped by $k$.
+\lean{Graph/Plugging}{85}{87}{Net.Replacement.source}
+\lean{Graph/Plugging}{89}{91}{Net.Replacement.target}
+\begin{lemma}[Distinct incidence entries]
+Every new source list and every new target list has no duplicates.
+\end{lemma}
+\begin{proof}
+A surviving host list uses the injective map $j$. A replacement source list
+contains no outputs, so the first restricted injection of $k$ applies to its
+members. A replacement target list contains no inputs, so the second injection
+applies. In all cases use preservation of distinctness under restricted injectivity.
+\end{proof}
+\lean{Graph/Plugging}{93}{98}{Net.Replacement.source_nodup}
+\lean{Graph/Plugging}{100}{105}{Net.Replacement.target_nodup}
+
+\begin{lemma}[Unique source and target incidence]
+A vertex belongs to the sources of at most one new edge, and to the targets
+of at most one new edge.
+\end{lemma}
+\begin{proof}
+For source incidence, split on the two edge tags. Two host edges reduce, by
+injectivity of $j$, to old source uniqueness. Two inserted edges reduce, by
+restricted source injectivity of $k$, to source uniqueness in $H$. In the mixed
+case the shared vertex is an inserted input, by the source inversion lemma;
+its corresponding host vertex is therefore a source port of $h$. Old source
+uniqueness identifies the surviving host edge with $h$, contradicting its subtype
+certificate. The other mixed ordering is the same contradiction with the equality
+reversed. For target incidence, repeat the four cases with target uniqueness,
+restricted target injectivity, and the target inversion lemma: the mixed vertex
+is now an inserted output and a target port of $h$.
+\end{proof}
+\lean{Graph/Plugging}{107}{136}{Net.Replacement.source_unique}
+\lean{Graph/Plugging}{138}{167}{Net.Replacement.target_unique}
+A vertex in a new source list is not an outer output. In the host case use the
+old source property and preservation of boundary constructors. In the inserted
+case an internal vertex remains internal, an input maps to a source port of $h$,
+and an output is impossible in a replacement source list. For a new target list,
+exchange source/input with target/output: inserted inputs are impossible and
+inserted outputs map to host target ports, which cannot be outer inputs.
+\lean{Graph/Plugging}{169}{180}{Net.Replacement.source_not_output}
+\lean{Graph/Plugging}{182}{193}{Net.Replacement.target_not_input}
+
+\begin{lemma}[Coverage of surviving host vertices]
+For every host vertex $v$ that is not an output, $j(v)$ belongs to a new source
+list. If $v$ is not an input, $j(v)$ belongs to a new target list.
+\end{lemma}
+\begin{proof}
+Choose an old source edge by coverage in $C$. If it differs from $h$, retain it.
+If it equals $h$, express $v$ as source port $i$; replacement input $i$ belongs
+to a source edge by coverage in $H$, and its image is $j(v)$. For target coverage,
+choose an old target edge. Retain it unless it is $h$; in that case express $v$
+as target port $i$ and use coverage at replacement output $i$.
+\end{proof}
+\lean{Graph/Plugging}{195}{204}{Net.Replacement.source_host_covered}
+\lean{Graph/Plugging}{206}{215}{Net.Replacement.target_host_covered}
+Full source coverage now follows by splitting a new vertex into a host internal,
+a fresh internal, an outer input, or an outer output. Host internals and inputs
+use the preceding lemma. Fresh internals use replacement coverage and map the
+witness edge into the right edge tag. Outer outputs contradict the required
+non-output hypothesis. The reverse implication is the source exclusion already
+proved. Full target coverage uses host internals and outer outputs, replacement
+coverage for fresh internals, and excludes outer inputs; its reverse implication
+is target exclusion.
+\lean{Graph/Plugging}{217}{231}{Net.Replacement.source_coverage}
+\lean{Graph/Plugging}{233}{247}{Net.Replacement.target_coverage}
+
+\Needspace{24\baselineskip}
+\subsection{Labels, typing, and the certified result}
+New internal labels use the host label on left tags and replacement label on
+right tags. Surviving edges keep their labels; inserted edges receive their
+replacement labels.
+\lean{Graph/Plugging}{249}{249}{Net.Replacement.internalLabel}
+\lean{Graph/Plugging}{251}{253}{Net.Replacement.edgeLabel}
+Labelling commutes with $j$, by the three port cases. It also commutes with $k$:
+internal labels agree by definition, while input and output labels agree by the
+host indexed-port typing lemmas and the matching replacement interface.
+\lean{Graph/Plugging}{255}{257}{Net.Replacement.host_label}
+\lean{Graph/Plugging}{259}{264}{Net.Replacement.insert_label}
+For source typing, split the edge tag and compose the incidence map with the
+vertex-label map. The commuting equation just proved reduces the result to
+source typing in $C$ or $H$, respectively. For target typing the same composition
+argument reduces to their target typing equations.
+\lean{Graph/Plugging}{266}{276}{Net.Replacement.source_typed}
+\lean{Graph/Plugging}{278}{288}{Net.Replacement.target_typed}
+
+\begin{theorem}[Well-formed shallow plugging]
+There is a net $C[h:=H]:I\to O$ with the carriers, labels, and incidence lists
+above. It preserves the entire ordered external interface and all graph invariants,
+even when $h$ has a vertex in both its source and target lists.
+\end{theorem}
+\begin{proof}
+Enumerate the new internal carrier by the sum enumeration. Enumerate surviving
+host edges by subset filtering, and concatenate the tagged replacement-edge
+enumeration. Supply each of the distinctness, uniqueness, coverage, and typing
+proofs established above as the corresponding net field. This assembles the
+certified graph. Classical filtering of the surviving-edge subtype accounts for
+the noncomputable qualifier.
+\end{proof}
+\lean{Graph/Plugging}{294}{312}{Net.plug}
+There is deliberately no claim that $k$ is globally injective in this theorem.
+If a host source port equals a host target port, its replacement input and output
+are identified. The separate source and target injection arguments are sufficient
+for every net invariant.

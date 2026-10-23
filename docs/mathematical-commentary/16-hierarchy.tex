@@ -1,0 +1,165 @@
+\Needspace{18\baselineskip}
+\section{Typed boxes, deep occurrences, and contexts}
+\Needspace{24\baselineskip}
+\subsection{Relabelling without changing incidence}
+A signature-preserving map $f$ of operation alphabets relabels a net by replacing
+each edge label $o$ with $f(o)$. All carriers, enumerations, vertex labels, and
+incidence data are retained. Hence their invariant proofs are retained too.
+For typing, compose the old typing equality with the inverse of the stipulated
+signature equality for $f(o)$. This yields the new signature list at that edge.
+\lean{Graph/Hierarchy}{17}{36}{Net.relabel}
+
+\Needspace{24\baselineskip}
+\subsection{The linear wire and label discipline}
+\begin{definition}[Wire types, operation arities, and holes]
+A wire type is either a term wire $*$ or a thunk wire $T^n(*)$, carrying a natural
+number $n$ of bound variables. An operation specification assigns each operation
+an argument count $a(o)$ and an ordered list of binder counts $b(o)$. A hole label
+contains a natural-number name together with arbitrary input and output wire lists.
+Equality of hole labels includes these lists as well as the name.
+\end{definition}
+\lean{Graph/Hierarchy}{44}{47}{Linear.Wire}
+\lean{Graph/Hierarchy}{51}{53}{Linear.Operations}
+\lean{Graph/Hierarchy}{56}{60}{Linear.Hole}
+Primitive edge labels are operations, variables, focus labels from the abstract
+three-mode type, or typed holes. This introduces concrete focus \emph{labels};
+it does not yet define the UAM transition relation.
+\lean{Graph/Hierarchy}{62}{66}{Linear.Primitive}
+Their signature is as follows. Every non-hole primitive has one term input.
+Operation $o$ has $a(o)$ term outputs followed by the thunk outputs specified in
+$b(o)$. A variable or focus has one term output. A hole uses precisely the input
+and output lists stored in its label. Ordering is part of each of these definitions.
+\lean{Graph/Hierarchy}{68}{76}{Linear.primitiveSignature}
+
+\begin{definition}[Alphabets and typed boxes]
+An alphabet is a label type and a signature on it. A box over alphabet $A$ stores
+numbers $n,m$ and a body net over $A$ of type
+\[
+ *\longrightarrow *^{n+m}.
+\]
+The corresponding outer box edge will have type
+$T^n(*)\longrightarrow *^m$. Thus body boundary and outer boundary differ:
+$n$ body outputs account for binding, and $m$ for exposed free variables.
+\end{definition}
+\lean{Graph/Hierarchy}{80}{82}{Linear.Alphabet}
+\lean{Graph/Hierarchy}{84}{87}{Linear.Box}
+All alphabet label types live in one fixed higher universe, while graph carriers
+remain small types. The base alphabet contains just primitives, raised into that
+universe by a universe lift; its signature reads the underlying primitive. The
+successor alphabet is the disjoint union of primitives and boxes over the previous
+alphabet. Its signature uses the primitive signature on the left and the stated
+external box interface on the right.
+\lean{Graph/Hierarchy}{89}{94}{Linear.baseAlphabet}
+\lean{Graph/Hierarchy}{96}{105}{Linear.nextAlphabet}
+Recursively, depth zero uses the base alphabet and depth $d+1$ uses the successor
+of the depth-$d$ alphabet. A hypernet at depth bound $d$ is a net over that
+alphabet. The bound limits possible nesting; it need not be the actual minimum
+depth of the particular graph.
+\lean{Graph/Hierarchy}{107}{109}{Linear.alphabet}
+\lean{Graph/Hierarchy}{111}{112}{Linear.Hypernet}
+
+The operation predicate selects primitive operation labels only. At depth zero
+it inspects the universe-lifted primitive; at a successor depth it accepts only
+the primitive-operation summand, excluding boxes and all other primitive kinds.
+\lean{Graph/Hierarchy}{114}{118}{Linear.IsOperation}
+Selected operation edges have exactly one source. Rewrite the incidence length
+using signature typing, split on the depth and label constructors, discard labels
+excluded by the predicate, and compute the operation input list $[*]$.
+\lean{Graph/Hierarchy}{120}{131}{Linear.unary_operations}
+It follows that two operation paths from inputs to the same vertex have identical
+edge lists and input indices in every typed hypernet. Instantiate the generic
+operation-path uniqueness theorem with the preceding derived unary proof. This
+is the graph-theoretic uniqueness conclusion associated with the paper's Lemma~22
+for this representation; neither determinism nor a locality field is assumed.
+\lean{Graph/Hierarchy}{135}{140}{Linear.operation_path_unique}
+
+\Needspace{24\baselineskip}
+\subsection{Box construction and promotion of the depth bound}
+The box constructor takes a body with the specified $n+m$ output interface and
+forms the corolla of its box label in the successor alphabet. Corolla
+well-formedness proves all outer graph conditions. The result has exactly one
+outer box edge and the external type $T^n(*)\to *^m$.
+\lean{Graph/Hierarchy}{143}{147}{Linear.box}
+Promotion raises the available depth bound by one without changing the outer
+graph. At depth zero, send a lifted primitive to the primitive summand at depth
+one. At a successor depth, keep primitives and recursively promote each box
+body, retaining its bound/free metadata. These maps preserve signatures because
+neither primitive signatures nor external box arities change. Apply the generic
+relabel construction at each recursive step.
+\lean{Graph/Hierarchy}{151}{161}{Linear.raise}
+Outer sources and targets are unchanged by promotion. The code records these
+as heterogeneous equalities: the dependent graph types are indexed by different
+depths, although after unfolding either defining case the incidence functions
+are definitionally the same. Splitting on depth proves both equalities by
+reflexivity.
+\lean{Graph/Hierarchy}{163}{165}{Linear.raise_source}
+\lean{Graph/Hierarchy}{167}{169}{Linear.raise_target}
+
+\Needspace{24\baselineskip}
+\subsection{Finite occurrence addresses at arbitrary depth}
+\begin{definition}[All edge occurrences]
+At depth zero, an occurrence is a shallow edge. At depth $d+1$, an occurrence is
+either a shallow edge or a pair $(e,a)$ where $e$ is a box edge and $a$ an
+occurrence in its body. A primitive edge has the empty type of child occurrences.
+\end{definition}
+\lean{Graph/Hierarchy}{173}{178}{Linear.AllEdge}
+The parent edge is part of every deep address. In particular identical bodies
+placed at different parent edges do not identify their child occurrences.
+
+\begin{theorem}[Finiteness of all occurrences]
+Every finite-depth hypernet has an explicit finite enumeration of its shallow
+and deep edge occurrences.
+\end{theorem}
+\begin{proof}
+Recurse on the depth bound. At zero use the graph's edge enumeration. At a
+successor bound, enumerate shallow edges in the left summand. For the right
+summand enumerate the dependent sum over outer edges: a primitive contributes
+an empty enumeration, and a box contributes the recursively obtained enumeration
+of its body. The sum and dependent-sum enumeration constructions already prove
+completeness of this list. Recursion decreases the depth at every box descent.
+\end{proof}
+\lean{Graph/Hierarchy}{182}{190}{Linear.allEdgesFinite}
+Every given occurrence belongs to this enumeration, by its completeness field.
+This is the finiteness content of Appendix~A, Lemma~19, for the typed hierarchy.
+The list need not be duplicate-free, since completeness suffices here.
+\lean{Graph/Hierarchy}{192}{195}{Linear.every_edge_enumerated}
+
+\Needspace{24\baselineskip}
+\subsection{Hole lookup and the context condition}
+A primitive hole lookup returns its stored label for a hole constructor and no
+label otherwise. Full occurrence lookup uses that function on a shallow primitive,
+returns no hole at a shallow box edge, and recursively looks inside a deep box
+address. A purported child occurrence under a primitive has empty type and is
+eliminated. Dependent transports in Lean express that the selected label really
+is the box whose body is being searched.
+\lean{Graph/Hierarchy}{197}{199}{Linear.primitiveHole}
+\lean{Graph/Hierarchy}{202}{215}{Linear.holeAt}
+\begin{definition}[Unique holes and contexts]
+A hypernet has unique holes if, for each complete typed hole label $h$, any two
+occurrences whose lookup returns $h$ are equal. A context is a hypernet together
+with this property. This permits multiple different hole labels and also permits
+no holes; it is an at-most-once condition for each label over all depths.
+\end{definition}
+\lean{Graph/Hierarchy}{219}{222}{Linear.UniqueHoles}
+\lean{Graph/Hierarchy}{224}{225}{Linear.Context}
+\begin{lemma}[Boxing preserves unique holes]
+If a body has unique holes, its one-edge box has unique holes.
+\end{lemma}
+\begin{proof}
+A shallow occurrence in the outer box is not a hole, so either proposed hole
+occurrence must be deep. The outer graph has only one edge; therefore their
+parent indices agree. Their lookups are the body lookups, whose occurrences
+agree by the body's uniqueness assumption. Tagging these equal child addresses
+with their common parent gives equality of the original occurrences.
+\end{proof}
+\lean{Graph/Hierarchy}{229}{250}{Linear.box_unique_holes}
+Boxing a context now means boxing its underlying graph and supplying this lemma
+as the context certificate. Shallow plugging at any fixed hierarchy depth is
+just the generic typed net plugging construction with that depth's alphabet;
+its interface constraints are checked by the type of its replacement argument.
+\lean{Graph/Hierarchy}{252}{255}{Linear.boxContext}
+\lean{Graph/Hierarchy}{258}{262}{Linear.plug}
+This last operation returns a hypernet. It is not yet a general theorem that
+plugging two contexts yields a context: freshness of hole labels and its preservation
+proof remain required. Likewise the typed hierarchy has not yet been proved
+adequate for the paper's original set-based presentation of graph-labelled edges.

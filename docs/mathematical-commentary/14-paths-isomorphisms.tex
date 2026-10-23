@@ -1,0 +1,176 @@
+\Needspace{18\baselineskip}
+\section{Paths, renaming, and isomorphism}
+\Needspace{24\baselineskip}
+\subsection{Paths and their behaviour under plugging}
+\begin{definition}[Adjacency and path]
+Edges $e,f$ are adjacent when some vertex belongs to both $t(e)$ and $s(f)$.
+A path is a nonempty edge list: a singleton is a path; prepending $e$ to a path
+starting at $f$ gives a path when $e,f$ are adjacent. Edges may repeat, and this
+notion does not specify a chosen boundary vertex at either end.
+\end{definition}
+\lean{Graph/Paths}{11}{12}{Net.Adjacent}
+\lean{Graph/Paths}{15}{17}{Net.Path}
+For a list beginning $e,f$, the path predicate is equivalent to adjacency of
+$e,f$ together with the path predicate for the tail starting at $f$. Invert the
+path constructor for the forward implication and apply it for the reverse one.
+\lean{Graph/Paths}{19}{23}{Net.path_pair_iff}
+Any map on edges preserving adjacency maps paths to paths. Induct on the path:
+singletons remain singletons, and the inductive step transports its first
+adjacency and then its tail path. If the edge map preserves and reflects
+adjacency, it preserves and reflects paths. Induct on the list: the empty list
+is a path on neither side, singletons are paths on both sides, and longer lists
+reduce to the first adjacency equivalence and the tail induction hypothesis.
+\lean{Graph/Paths}{25}{31}{Net.Path.map}
+\lean{Graph/Paths}{33}{42}{Net.path_map_iff}
+
+\begin{lemma}[Host and inserted adjacencies]
+Two surviving host edges are adjacent after plugging exactly when they were
+adjacent before plugging. Two inserted edges that were adjacent remain adjacent.
+\end{lemma}
+\begin{proof}
+For host reflection, pull both incidence witnesses back through their mapped
+lists. Equality of their host images implies equality of the original vertices
+by injectivity of $j$, giving an old shared witness. For host preservation map
+an old shared witness through $j$. For inserted preservation map the shared
+replacement witness through $k$; injectivity is unnecessary in this direction.
+\end{proof}
+\lean{Graph/Paths}{51}{61}{Net.Replacement.adjacent_host_iff}
+\lean{Graph/Paths}{63}{66}{Net.Replacement.adjacent_insert}
+\begin{definition}[Non-self-loop hole]
+The hole $h$ is non-self-looping if no vertex belongs to both $s(h)$ and $t(h)$.
+This requires the two lists to be disjoint; it is stronger than distinctness
+within each individual list, already required of every net.
+\end{definition}
+\lean{Graph/Paths}{70}{70}{Net.Replacement.NonSelfLoop}
+For such a hole, $k$ is globally injective. Equal internal images reduce to equal
+names; mixed internal/boundary cases contradict freshness. Two input images or
+two output images reduce to the appropriate port injection. Equality of an
+input image and an output image would exhibit a host vertex in both $s(h)$ and
+$t(h)$, contrary to non-self-looping.
+\lean{Graph/Paths}{72}{93}{Net.Replacement.insert_injective}
+Consequently inserted adjacency is reflected as well as preserved: pull the two
+mapped-list witnesses back and use global injectivity of $k$ to identify them.
+The other implication is the unconditional preservation result above.
+\lean{Graph/Paths}{95}{104}{Net.Replacement.adjacent_insert_iff}
+
+\begin{theorem}[Path preservation and reflection]
+A list of surviving host edges is a path after plugging if and only if its old
+edge list is a path. Any replacement path gives an inserted path. For a
+non-self-loop hole the converse holds for inserted paths too.
+\end{theorem}
+\begin{proof}
+For host paths, induct on the surviving-edge list. Empty and singleton lists
+are immediate; a longer list reduces to host adjacency equivalence and the tail
+hypothesis. For inserted preservation, apply path mapping to inserted adjacency
+preservation. For inserted reflection under the stated restriction, apply the
+general path equivalence lemma to inserted adjacency equivalence.
+\end{proof}
+\lean{Graph/Paths}{109}{120}{Net.Replacement.path_host_iff}
+\lean{Graph/Paths}{122}{125}{Net.Replacement.path_insert}
+\lean{Graph/Paths}{129}{132}{Net.Replacement.path_insert_iff}
+
+\Needspace{24\baselineskip}
+\subsection{Transport along carrier bijections}
+A bijection on internal names extends to ports by mapping only internal vertices.
+Its inverse laws follow by cases on a port: internal cases use the original
+inverse laws and boundary cases are reflexive. Mapping the identity is pointwise
+the identity, also by port cases; function extensionality gives the corresponding
+identity of functions.
+\lean{Graph/Isomorphism}{9}{14}{Port.bijection}
+\lean{Graph/Isomorphism}{16}{17}{Port.map_id}
+\lean{Graph/Isomorphism}{19}{20}{Port.map_id_fun}
+Fix bijections $a:G_V\cong V'$ and $b:G_E\cong E'$. Reindexed sources and targets
+at $e'\in E'$ are the old incidence lists at $b^{-1}(e')$, mapped by the port
+extension of $a$.
+\lean{Graph/Isomorphism}{35}{36}{Net.Reindex.source}
+\lean{Graph/Isomorphism}{38}{39}{Net.Reindex.target}
+Source uniqueness survives this transport: two shared mapped witnesses are equal
+by port injectivity, so old source uniqueness identifies their old edge indices;
+apply $b$ and cancel $b\circ b^{-1}$. The target uniqueness proof uses old target
+uniqueness and the same cancellation.
+\lean{Graph/Isomorphism}{41}{48}{Net.Reindex.source_unique}
+\lean{Graph/Isomorphism}{50}{57}{Net.Reindex.target_unique}
+For source coverage, a new source witness pulls back to an old source vertex,
+which is not an output; port maps preserve this property. Conversely, pull a
+non-output vertex backwards through $a^{-1}$, choose an old source edge by
+coverage, and map both the edge and vertex forwards. The two inverse laws prove
+that this is a witness for the original new vertex. Target coverage repeats this
+argument with non-input vertices and old target coverage.
+\lean{Graph/Isomorphism}{59}{70}{Net.Reindex.source_coverage}
+\lean{Graph/Isomorphism}{72}{83}{Net.Reindex.target_coverage}
+Give an internal name $w$ the label of $a^{-1}(w)$. Labelling an old vertex after
+mapping by $a$ then agrees with its old label: the internal case cancels
+$a^{-1}\circ a$, and boundary labels are fixed.
+\lean{Graph/Isomorphism}{85}{88}{Net.Reindex.label_map}
+\begin{definition}[Reindexed graph]
+The reindexed net uses the new carriers, inverse-transported labels, and the
+incidence lists just defined.
+\end{definition}
+\begin{proof}[Well-formedness]
+Transport finite enumerations along the bijections. Distinctness follows from
+port injectivity, uniqueness and coverage from the preceding lemmas. For typing,
+compose incidence mapping with the vertex-label map, use label commutation, and
+apply the original typing equation. The boundary lists are unchanged.
+\end{proof}
+\lean{Graph/Isomorphism}{94}{121}{Net.reindex}
+
+\Needspace{24\baselineskip}
+\subsection{Graph isomorphism and shallow context congruence}
+\begin{definition}[Isomorphism]
+An isomorphism $G\cong H$ between nets with the same signature and boundary lists
+is a bijection of internal vertices and a bijection of edges preserving internal
+labels, edge labels, and both ordered incidence lists. Its port action fixes
+boundary positions.
+\end{definition}
+\lean{Graph/Isomorphism}{123}{129}{Net.Iso}
+Identity bijections and identity list maps yield a reflexive isomorphism. For the
+inverse isomorphism, invert both bijections. Inverse label preservation follows
+by applying the original equation at an inverse image and cancelling. To invert
+an incidence equation, map its two sides by the inverse port map and cancel the
+forward/inverse maps pointwise. For composition, compose carrier bijections;
+compose label equalities, and use successive list mapping followed by the two
+incidence-preservation equations.
+\lean{Graph/Isomorphism}{135}{141}{Net.Iso.refl}
+\lean{Graph/Isomorphism}{143}{157}{Net.Iso.symm}
+\lean{Graph/Isomorphism}{159}{175}{Net.Iso.trans}
+Isomorphisms preserve and reflect adjacency: transport a shared witness forwards
+for preservation; for reflection pull both witnesses back from the incidence
+maps and identify their preimages by port injectivity. Applying the general path
+equivalence lemma then preserves and reflects paths, with their edge lists
+mapped by the edge bijection.
+\lean{Graph/Isomorphism}{177}{191}{Net.Iso.adjacent_iff}
+\lean{Graph/Isomorphism}{193}{195}{Net.Iso.path_iff}
+The original graph is isomorphic to its reindexing. Use the chosen carrier
+bijections; inverse cancellation proves label preservation and each incidence
+identity directly from the definition of reindexing.
+\lean{Graph/Isomorphism}{199}{207}{Net.reindexIso}
+
+Suppose $f:H\cong K$ and both graphs have the interface of host hole $h$.
+The intended isomorphism between $C[h:=H]$ and $C[h:=K]$ is the identity on
+host internal names and $f$ on replacement internal names, and likewise the
+identity on surviving host edges and $f$ on inserted edges. Sum bijections
+supply their inverse laws.
+\lean{Graph/PlugIsomorphism}{16}{17}{Net.PlugIso.vertices}
+\lean{Graph/PlugIsomorphism}{19}{20}{Net.PlugIso.edges}
+The resulting port map commutes with host embedding: check the three port
+constructors, all of which are reflexive. It commutes with insertion too:
+internal vertices use the replacement part of the sum map, and boundary vertices
+reduce to the host-embedding equation at the corresponding hole port.
+\lean{Graph/PlugIsomorphism}{22}{24}{Net.PlugIso.map_host}
+\lean{Graph/PlugIsomorphism}{26}{32}{Net.PlugIso.map_insert}
+\begin{theorem}[Congruence of shallow plugging]
+For every typed host and hole, $H\cong K$ implies $C[h:=H]\cong C[h:=K]$.
+No non-self-loop hypothesis is required.
+\end{theorem}
+\begin{proof}
+Use the sum bijections above. For each label equation split the carrier tag:
+host labels are unchanged and inserted labels use $f$'s corresponding equation.
+For a host source list, commute the new port map past host embedding pointwise.
+For an inserted source list, commute it past insertion and then use source
+preservation by $f$. Repeat with target lists and target preservation. These
+arguments prove all isomorphism fields without reflecting through insertion.
+\end{proof}
+\lean{Graph/PlugIsomorphism}{38}{85}{Net.plugIso}
+Here edge labels are preserved by literal equality. For boxed labels containing
+bodies, this is not yet the recursive notion that would identify independently
+renamed but isomorphic bodies. No such stronger congruence is claimed.

@@ -1,0 +1,74 @@
+\Needspace{18\baselineskip}
+\section{Addressed deep replacement and concrete locality}
+\Needspace{24\baselineskip}
+\subsection{Changing one box body}
+A per-edge signature-preserving relabelling generalizes alphabet relabelling:
+it assigns a new label directly to each edge, rather than requiring the assignment
+to factor through its old label. All carriers, incidence, and vertex labels stay
+unchanged. The two new typing equations follow by composing each old typing
+proof with the inverse of the specified per-edge signature equality.
+\lean{Graph/DeepPlugging}{15}{35}{Net.relabelEdges}
+
+\begin{definition}[Replacement of a box label]
+Suppose outer edge $e$ is labelled by a box $(n,m,B)$. Given a new body $B'$ of
+the same body type $*\to *^{n+m}$ and depth bound, change just the label at $e$
+to $(n,m,B')$, retaining every other edge label.
+\end{definition}
+\begin{proof}[Well-formedness]
+Use classical equality testing on outer edges to select $e$. At $e$ the old and
+new labels have the same external input $[T^n(*)]$ and output $*^m$; this follows
+from the given equality identifying the old label as the box. At every other
+edge the label is unchanged. These two cases prove the per-edge signature
+conditions for relabelling, which supplies the certified net.
+\end{proof}
+\lean{Graph/DeepPlugging}{45}{63}{Linear.replaceBox}
+Selection uses an edge occurrence, not equality of box contents. Equal bodies
+at other edges therefore do not cause simultaneous replacement.
+
+\Needspace{24\baselineskip}
+\subsection{Typed sites and replacement at a site}
+\begin{definition}[Site]
+A site in an outer hypernet $G$ carries a local depth bound and two wire-label
+lists $J,K$. It is either a shallow edge of $G$, in which case $J,K$ are exactly
+that edge's signature lists, or a box edge with a proof identifying its box
+label together with a recursively chosen site in its body. In the latter case
+the site's local depth and interface are inherited from the child site.
+\end{definition}
+\lean{Graph/DeepPlugging}{67}{75}{Linear.Site}
+The indices prevent supplying a replacement of the wrong interface or local
+depth. A site may select an arbitrary edge, not only an edge labelled as a hole;
+the separate unique-hole context condition is not assumed here.
+
+\begin{definition}[Deep plugging]
+To replace at a shallow site use shallow net plugging. To replace at a site
+inside a box, recursively replace in its body and use box-label replacement to
+put that modified body back at the chosen outer edge. The recursion is on the
+site's finite constructor structure, and the result retains the outer depth
+bound and boundary interface.
+\end{definition}
+\lean{Graph/DeepPlugging}{79}{85}{Linear.plugAt}
+At a shallow site this definition agrees with shallow plugging by reflexivity:
+both sides unfold to the same term.
+\lean{Graph/DeepPlugging}{87}{91}{Linear.plugAt_shallow}
+
+\begin{theorem}[Locality at every enclosing box]
+Replacement strictly inside a selected box leaves all outer source lists and
+all outer target lists unchanged. It also leaves the label of every other outer
+edge unchanged.
+\end{theorem}
+\begin{proof}
+The inside branch changes only an edge label using per-edge relabelling. The
+source and target fields of that construction are definitionally those of the
+old graph, so their equalities are reflexive, independent of what the recursive
+replacement did inside. For another outer edge $f\ne e$, the conditional defining
+box-label replacement chooses the old-label branch, proving the label equation.
+Repeated descent applies this fact at each enclosing layer.
+\end{proof}
+\lean{Graph/DeepPlugging}{94}{98}{Linear.plugAt_inside_source}
+\lean{Graph/DeepPlugging}{100}{104}{Linear.plugAt_inside_target}
+\lean{Graph/DeepPlugging}{108}{113}{Linear.plugAt_inside_other_label}
+These are unconditional, concrete graph locality results about the defined
+replacement operation. They do not yet prove UAM traversal locality, refocusing,
+or the specimen interface laws: no concrete machine transition relation has
+been constructed. Nor do they yet establish associativity of context plugging
+or a recursive isomorphism theorem for deep replacement.

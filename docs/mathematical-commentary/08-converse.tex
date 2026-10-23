@@ -1,0 +1,141 @@
+\Needspace{18\baselineskip}
+\section{Opposite specimens and the converse argument}
+
+\begin{definition}[Opposite specimen system]
+The opposite system $G^{\mathrm{op}}$ has the same specimens, modes,
+entering predicate, and rooted-state predicate as $G$. It swaps the two
+endpoint maps:
+\[
+ \ell_{G^{\mathrm{op}}}(c)=r_G(c),\qquad
+ r_{G^{\mathrm{op}}}(c)=\ell_G(c).
+\]
+\end{definition}
+\lean{LocalReasoning}{174}{187}{SpecimenSystem.opposite}
+\begin{proof}[Verification of its interface laws]
+Rootedness preservation is unchanged. Final-state agreement is the
+reverse implication pair of the original agreement. For context-only
+traversal, exchange the two rootedness hypotheses and the two alternatives
+of the availability premise. Apply the original law to get a remote
+specimen $d$ and two transitions. Return those transitions in the
+opposite order. This explains why the interface law permits availability
+on either side, rather than only on the left.
+\end{proof}
+
+\begin{lemma}[Lifting commutes with taking the opposite]
+For all states $s,t$,
+\[
+ \mathcal L_{G^{\mathrm{op}}}(s,t)\iff\Lft(t,s).
+\]
+\end{lemma}
+\lean{LocalReasoning}{189}{194}{SpecimenSystem.lifting_opposite}
+\begin{proof}
+In either direction retain the witnessing specimen and its remoteness.
+Exchange the two rootedness proofs and the two endpoint equalities.
+The resulting tuple is precisely the witness required by the other
+lifting definition.
+\end{proof}
+
+\begin{theorem}[Converse construction of a counting simulation]
+Suppose $M$ is deterministic, $(Q,P,S)$ is reasonable,
+$\safe{Q^{-1}}{P}$ holds, and $G^{\mathrm{op}}$ is robust for
+$(Q,P,S)$. Then $\mathcal L_{G^{\mathrm{op}}}$ is a
+$(Q,P,S)$-counting simulation.
+\end{theorem}
+\lean{LocalReasoning}{199}{278}{SpecimenSystem.countingSimulation_converse}
+The safety premise is a property of the \emph{original} system at the
+converse cost relation. It is not assumed that the opposite system
+already satisfies input-safety. This distinction is important when the
+right execution in safety~II has length zero.
+
+\begin{proof}
+Choose a witness $c$ of $\mathcal L_{G^{\mathrm{op}}}(s,t)$, so
+$s=r(c)$, $t=\ell(c)$, $c$ is remote, and both endpoints are rooted.
+Finality of $r(c)$ implies finality of $\ell(c)$ by the reverse
+direction of final-state agreement. This establishes condition~(A).
+For condition~(B), fix a transition $r(c)\to s'$.
+
+\emph{Settled case.} If $c$ is settled, the symmetric availability
+premise of context-only traversal applies to this right transition.
+Obtain a remote specimen $d$ with transitions
+\[
+ \ell(c)\to\ell(d),\qquad r(c)\to r(d).
+\]
+Determinism gives $s'=r(d)$. Propagate rootedness, and obtain
+$\mathcal L_{G^{\mathrm{op}}}(r(d),\ell(d))$. Choose zero further
+steps from $s'$ and one step from $\ell(c)$. The cost condition is
+$1\,Q\,1$, and reflexive refinements give the up-to witness. This
+covers backtracking and non-entering search.
+
+\emph{Entering search.} Input-safety for $Q^{-1},P$ supplies three
+cases, which must be read in the original endpoint order.
+\begin{enumerate}[label=\textup{(\Roman*)}]
+\item Use the supplied stuck execution from $r(c)$. The prescribed
+  step $r(c)\to s'$ and the stuck-after-step lemma give a stuck
+  execution from $s'$. The supplied stuck execution from $\ell(c)$
+  is not needed in this direction.
+\item There are a settled specimen $d$ and counts $k,l$ with
+  \[
+    \ell(c)\steps{1+k}\ell(d),\qquad r(c)\steps{l}r(d),\qquad
+    l\,Q\,(1+k).
+  \]
+  Both endpoints of $d$ are rooted. We distinguish the two possible
+  forms of $l$.
+
+  If $l=j+1$, remove the prescribed transition from the right execution
+  to get $s'\steps{j}r(d)$. Keep the left execution of length $1+k$.
+  The opposite lifted pair is $(r(d),\ell(d))$, and its cost condition
+  is $(1+j)\,Q\,(1+k)$, exactly the supplied relation with $l=j+1$.
+  Reflexive auxiliary refinements finish this subcase.
+
+  If $l=0$, the zero-step equality gives $r(c)=r(d)$. Thus the
+  prescribed transition is an outgoing transition from $r(d)$.
+  Apply context-only traversal to the \emph{settled} specimen $d$.
+  Obtain a remote specimen $e$ and transitions
+  \[
+    \ell(d)\to\ell(e),\qquad r(d)\to r(e).
+  \]
+  Determinism identifies $s'$ with $r(e)$. Propagating rootedness
+  gives the opposite lifted pair $(r(e),\ell(e))$. There are zero
+  further source steps, whereas the target execution is
+  \[
+    \ell(c)\steps{1+k}\ell(d)\to\ell(e),
+  \]
+  of length $(1+k)+1$. Its cost obligation is
+  $1\,Q\,((1+k)+1)$. The safety relation in this subcase is
+  $0\,Q\,(1+k)$. Add $1\,Q\,1$ using additivity of $Q$ to
+  obtain the required relation. This additional traversal is the
+  essential zero-step correction; the proof never attempts to remove
+  a step from a zero-step execution.
+\item There are $k,l,a,b$ with
+  \[
+    \ell(c)\steps{1+k}a,\qquad r(c)\steps{1+l}b,\qquad
+    (1+l)\,Q\,(1+k),
+  \]
+  and a quasi-specimen for auxiliary equivalences. Remove the prescribed
+  right transition to get $s'\steps{l}b$. Both $a,b$ are rooted;
+  unpacking the quasi-specimen yields a non-rewrite specimen $d$ with
+  rooted endpoints and
+  \[
+    a\simeq_P\ell(d),\qquad r(d)\simeq_P b.
+  \]
+  This time take the \emph{reverse} halves:
+  $b\preceq_P r(d)$ and $\ell(d)\preceq_P a$. Enlarge the
+  latter auxiliary order using $P\subseteq S$ to obtain
+  $\ell(d)\preceq_S a$. Since
+  $\mathcal L_{G^{\mathrm{op}}}(r(d),\ell(d))$, these form
+  \[
+    \upto{P}{S}{\mathcal L_{G^{\mathrm{op}}}}(b,a).
+  \]
+  The matching counts are $l,1+k$, with the already supplied cost
+  relation $(1+l)\,Q\,(1+k)$.
+\end{enumerate}
+
+\emph{Rewrite mode.} Remoteness gives $\neg\ent(c)$. Apply
+robustness in $G^{\mathrm{op}}$ to the prescribed transition from
+$r(c)$, which is its left endpoint. The stuck alternative is already
+the required one. Otherwise the two matching executions and their cost
+relation are supplied directly. Rootedness propagates along the
+prescribed transition and both executions. Apply the quasi-up-to lemma
+\emph{in the opposite system} to obtain the up-to relation on
+$\mathcal L_{G^{\mathrm{op}}}$. This completes the proof.
+\end{proof}
