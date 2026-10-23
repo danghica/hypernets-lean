@@ -1,4 +1,4 @@
-import Hypernets.Graph.DeepInventoryExamples
+import Hypernets.Graph.RecursiveIsoExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -38,3 +38,15 @@ import Hypernets.Graph.DeepInventoryExamples
 #print axioms Hypernets.Linear.Examples.deep_reuse_unique
 #print axioms Hypernets.Linear.Examples.deep_collision_breaks_unique
 #print axioms Hypernets.Linear.Examples.deep_collision_inventory
+
+#print axioms Hypernets.Linear.labelEquiv_trans
+#print axioms Hypernets.Linear.DeepIso.operationPath_iff
+#print axioms Hypernets.Linear.labelEquiv_hasEmbedding
+#print axioms Hypernets.Linear.DeepIso.hasHole_iff
+#print axioms Hypernets.Linear.DeepIso.uniqueHoles_iff
+#print axioms Hypernets.Linear.plugAt_deepIso
+#print axioms Hypernets.Linear.plugAtModuloIso
+#print axioms Hypernets.Linear.moduloIsoUniqueHoles
+#print axioms Hypernets.Linear.Examples.boxedTwoHoles_no_literalIso
+#print axioms Hypernets.Linear.Examples.renamedBoxes_same_class
+#print axioms Hypernets.Linear.Examples.deep_plug_renaming
