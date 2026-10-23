@@ -1,0 +1,196 @@
+\Needspace{18\baselineskip}
+\section{Concrete focuses and the boundary argument of Lemma 39(1)}
+\label{sec:concrete-focus}
+
+This section returns to the proof order of Appendix~F. We formalize the
+boundary argument in Proof~F.4: replacing focus-free fragments preserves the
+context's focus mode and whether its source is an input. The result holds for
+arbitrarily deep sites and finite sequences of fillings. It does not use
+output-closure, rootedness, determinism, or transitions. It supplies the
+initial/final agreement needed in Lemma~39(1), for the present substitution
+representation. Connecting it to the paper's full specimen definition is still
+an obligation; no concrete \texttt{SpecimenSystem} is constructed here.
+
+\subsection{Global focus freedom and a unique shallow focus}
+\begin{definition}[Focus labels and focus freedom]\label{term:focus-free}
+For a mode $m$, the symbol $\mathsf{focusLabel}(d,m)$ is the primitive focus
+symbol in the alphabet of depth $d$. At depth zero it uses the universe-lift
+wrapper; at a successor depth it uses the primitive summand.
+A label is \emph{focus-free} if it is a primitive other than every focus symbol,
+or a box whose body has only focus-free labels. A graph is focus-free when all
+its edge labels satisfy this recursively defined condition. Thus the condition
+excludes focuses inside boxes at every depth, not merely at the outer layer.
+\end{definition}
+\lean{Graph/Focused}{13}{15}{Linear.focusLabel}
+\lean{Graph/Focused}{18}{21}{Linear.LabelFocusFree}
+\lean{Graph/Focused}{24}{25}{Linear.FocusFree}
+
+\begin{definition}[Focussed hypernet]\label{term:focussed-hypernet}
+A focussed hypernet consists of a hypernet $G$, a distinguished shallow edge
+$f$, its mode $m$, and the following certificates. The label of $f$ is
+$\mathsf{focusLabel}(d,m)$; every other edge has a focus-free label; the source
+and target lists of $f$ are respectively $[s]$ and $[t]$; $s\ne t$; and it is
+not the case that $s$ is an input and $t$ an output.
+The label of $f$ is primitive, so has no box children. Consequently these
+certificates enforce exactly one focus globally, with the shallowness,
+self-acyclicity, and non-exposure required in \S6.2. The explicit singleton
+incidence certificates record the endpoints without choosing positional casts.
+\end{definition}
+\lean{Graph/Focused}{29}{39}{Linear.Focussed}
+
+\begin{lemma}[Focus-free addressed substitution]
+If $G$ and $H$ are focus-free, so is $\mathsf{plugAt}(s,H)$ for every site $s$ in $G$
+with the interface of $H$.
+\end{lemma}
+\begin{proof}
+Induct on the site. At a shallow site, every surviving edge retains its old
+label, and every inserted edge has a label of $H$, so both kinds are focus-free.
+Inside a box, focus freedom of the host implies focus freedom of that box's
+body. Apply the induction hypothesis to the body. Replacing its label preserves
+focus freedom of that edge; every other outer label remains unchanged.
+\end{proof}
+\lean{Graph/Focused}{42}{63}{Linear.focusFree_plugAt}
+
+\begin{definition}[Boundary initiality and finality]\label{term:boundary-finality}
+For a focussed hypernet, define $\mathsf{Initial}$ to mean that the mode is
+search and the focus source is an input. Define $\mathsf{Final}$ by replacing
+search with backtrack. These predicates are defined on any interface for use
+in the preservation lemmas. On states of type $*\to\epsilon$, there is exactly
+one input, giving the boundary characterizations used in \S6.4 and Proof~F.4.
+Finality is a syntactic predicate here; absence of outgoing transitions from
+final states has not yet been proved, because concrete transitions are not yet
+defined.
+\end{definition}
+\lean{Graph/Focused}{69}{70}{Linear.Focussed.Initial}
+\lean{Graph/Focused}{73}{74}{Linear.Focussed.Final}
+
+\subsection{Preservation through one filling}
+\begin{lemma}[Shallow filling preserves the focussed structure]
+Let $G$ be focussed at $f$ and let $e\ne f$. Replacing $e$ by a focus-free $H$
+produces a focussed hypernet with the same mode.
+\end{lemma}
+\begin{proof}
+The new focus is the retained edge $\mathsf{inl}(f)$ with unchanged label.
+Every other retained edge inherits focus freedom from $G$; every inserted edge
+inherits it from $H$. Its endpoints are the host images of $s,t$, and its
+incidence lists are their singleton lists by functoriality of list mapping.
+The host map is injective, so these endpoints remain distinct. It maps internal
+ports to internal ports and fixes input and output constructors. Therefore
+exposure cannot be introduced.
+\end{proof}
+\lean{Graph/Focused}{77}{107}{Linear.Focussed.plug}
+
+\begin{lemma}[Shallow boundary preservation and agreement]
+A shallow filling as above is initial exactly when its host is initial, and
+final exactly when its host is final. Any two focus-free fillings of the same
+selected edge therefore agree on initiality and finality.
+\end{lemma}
+\begin{proof}
+The focus mode is unchanged. The host image of its source is an input if and
+only if the original source is an input, by case analysis on the three port
+constructors. Substitute these facts into the two boundary predicates. For two
+fillings, compose each equivalence with the inverse equivalence for the other
+filling. This is exactly the argument of Proof~F.4.
+\end{proof}
+\lean{Graph/Focused}{111}{116}{Linear.Focussed.plug_initial_iff}
+\lean{Graph/Focused}{118}{123}{Linear.Focussed.plug_final_iff}
+\lean{Graph/Focused}{127}{135}{Linear.Focussed.specimen_boundary_agreement}
+
+\begin{lemma}[Replacing a box body preserves an outer focus]
+Replacing a box body by a focus-free body of the same interface preserves a
+surrounding focussed hypernet.
+\end{lemma}
+\begin{proof}
+The box edge cannot be the focus edge: their labels belong to distinct summands
+of the alphabet. Keep the focus, its mode, and its two endpoints. All incidence
+lists are unchanged by box-body replacement, so the self-acyclicity and
+non-exposure certificates remain valid. The changed label is focus-free by the
+hypothesis on the new body, and all other non-focus labels are unchanged.
+\end{proof}
+\lean{Graph/Focused}{138}{164}{Linear.Focussed.replaceBox}
+
+\begin{definition}[A site avoiding the focus]\label{term:focus-avoiding-site}
+A shallow site avoids the focus when its selected edge differs from the focus
+edge. A site strictly inside a box automatically avoids the focus, since the
+focus is shallow and primitive. This condition does not assert that the
+selected edge is a hole: the preservation results intentionally apply to a
+larger class of replacements than paper specimens require.
+\end{definition}
+\lean{Graph/Focused}{168}{172}{Linear.Focussed.Avoids}
+
+\begin{lemma}[Deep focussed filling and boundary agreement]
+A focus-free filling of any site avoiding the focus preserves the focussed
+structure and both boundary predicates. Consequently two such fillings of one
+site agree on initiality and finality.
+\end{lemma}
+\begin{proof}
+For a shallow site use the shallow filling construction. For a site inside a
+box, the box is distinct from the focus, hence its old body is focus-free.
+Focus-free addressed substitution proves the modified body focus-free. Apply
+the box-body preservation construction. In this second case the outer mode and
+endpoints remain literally the same, so both boundary equivalences are
+reflexive. Finally compose the equivalences for two fillings through their
+common host.
+\end{proof}
+\lean{Graph/Focused}{175}{190}{Linear.Focussed.plugAt}
+\lean{Graph/Focused}{193}{200}{Linear.Focussed.plugAt_boundary_iff}
+\lean{Graph/Focused}{204}{211}{Linear.Focussed.deep_specimen_boundary_agreement}
+
+\subsection{Finite fillings and the state space}
+\begin{definition}[Finite filling sequence]\label{term:focus-fillings}
+A filling sequence starts with a focussed graph and consists of finitely many
+addressed substitutions of focus-free graphs at sites avoiding the current
+focus. The constructors are the empty sequence and extension by one filling.
+Sites may occur at any box depth. Each intermediate focus is the certified
+focus transported by the preceding construction. In particular, successive
+fillings of a context's holes are included whenever their sites are supplied.
+This representation does not yet define a simultaneous tuple-substitution API
+or identify all such sequences modulo permutation.
+\end{definition}
+\lean{Graph/Focused}{215}{221}{Linear.Focussed.Fillings}
+
+\begin{theorem}[Boundary agreement for finite fillings]
+Every finite filling sequence preserves initiality and finality. If two
+sequences start from the same focussed context, their endpoints agree on both
+predicates.
+\end{theorem}
+\begin{proof}
+Induct on the sequence. The empty case is reflexivity. In the extension case,
+compose the one-step boundary equivalence with the induction hypothesis. For
+two sequences, compose the resulting equivalences through their common initial
+context. No template relation between replacements is necessary. Thus once
+concrete specimens supply these filling witnesses, the initial/final conclusion
+of Lemma~39(1) follows without an extra assumed locality law.
+\end{proof}
+\lean{Graph/Focused}{224}{231}{Linear.Focussed.fillings_boundary_iff}
+\lean{Graph/Focused}{235}{241}{Linear.Focussed.fillings_boundary_agreement}
+
+\begin{definition}[Concrete state]\label{term:concrete-state}
+A state packages a hypernet of type $*\to\epsilon$, a focussed structure on that
+hypernet, and a proof that it contains no holes at any depth. This is the state
+space of \S6.4 in our graph representation. It is not yet equipped with a
+\texttt{Machine}: search, substitution, and compute transitions remain open.
+\end{definition}
+\lean{Graph/Focused}{247}{250}{Linear.State}
+
+\subsection{Nonvacuous checks}
+The regression graph has an input, an internal vertex, and an output, with a
+focus edge from the input to the internal vertex followed by a unary hole.
+It is obtained by relabelling the existing two-edge chain, preserving all
+signatures. Its focus is certified directly: the only other edge is the hole,
+the endpoints differ, and its target is internal, so the focus is not exposed.
+\lean{Graph/FocusedExamples}{9}{13}{Linear.Examples.focusChain}
+\lean{Graph/FocusedExamples}{15}{34}{Linear.Examples.focusChain_focussed}
+The unary variable corolla is focus-free because a variable label cannot equal
+a focus label. Filling the second edge of the search chain by this corolla
+remains initial by shallow boundary preservation. The backtracking chain is
+final, whereas the search chain is not, since the two mode constructors differ.
+\lean{Graph/FocusedExamples}{36}{38}{Linear.Examples.variableFragment_focusFree}
+\lean{Graph/FocusedExamples}{41}{46}{Linear.Examples.search_filling_initial}
+\lean{Graph/FocusedExamples}{49}{51}{Linear.Examples.boundary_modes_distinct}
+Finally, boxing the search chain gives a graph whose outer edge is a box but
+whose body contains a focus. If it were focus-free, applying that predicate to
+the outer box edge and then the first body edge would say that the search focus
+label differs from itself, a contradiction. This checks that the definition
+really inspects nested boxes.
+\lean{Graph/FocusedExamples}{55}{60}{Linear.Examples.boxed_focus_not_free}

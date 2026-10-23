@@ -20,6 +20,62 @@ renaming, including the exact freshness condition. Nested substitutions now
 associate at arbitrary box depth, with corolla unit laws and a sharp final
 context-validity criterion even when an intermediate collision is later removed.
 
+The concrete development now also defines globally focus-free hypernets,
+focussed hypernets, and the hole-free state space. The boundary argument of
+Lemma~39(1) is proved for finite sequences of addressed focus-free fillings;
+see Section~\ref{sec:concrete-focus}. Concrete transitions and the full specimen
+interpretation remain open.
+
+\Needspace{18\baselineskip}
+\subsection{Paper-to-Lean proof dependency map}
+The target is the proof of Theorem~6 through Propositions~40, 37, and 38.
+The following map separates checked arguments from their missing concrete
+interpretations, rather than treating graph infrastructure as progress on every
+part of that proof.
+\begin{enumerate}
+\item \textbf{Proposition~37: checked.}\par
+\texttt{Machine.CountingSimulation.sound} proves counting-simulation soundness
+for a deterministic machine and a reasonable cost triple. Its proof follows
+the quantitative argument, including the eventual-stuck alternative.
+\item \textbf{Proposition~40: checked conditionally.}\par
+\texttt{SpecimenSystem.countingSimulation} and its converse construct counting
+simulations from the abstract specimen laws, safety, and robustness. These laws
+are parameters, not established concrete UAM facts.
+\item \textbf{Lemma~39(1), Proof~F.4: boundary argument checked.}\par
+\texttt{Focussed.fillings\_boundary\_agreement} proves initial/final agreement
+for two finite filling sequences of one focussed hypernet. The proof preserves
+the focus mode and input status of its source, as in the paper. The remaining
+connection is to construct such witnesses from the eventual concrete specimen
+and tuple-substitution definitions.
+\item \textbf{Lemma~39(2) and (3): open.}\par
+Point~(2) uses the contrapositive of Lemma~26(3), requiring concrete rooted
+states and output-closure. Point~(3) requires the Fig.~9 search rules, the
+entering/exiting classifications, and the context-only traversal argument.
+The abstract field \texttt{context\_step} currently assumes their needed
+consequence. It has not been discharged by the graph path results.
+\item \textbf{Proposition~38: logical lifting checked; initial bridge open.}\par
+\texttt{Observations.contextual\_of\_lifting} proves the logical implication
+once initial pairs belong to the lifting. Building concrete initial focuses,
+allowed contexts, and specimen witnesses remains the explicit
+\texttt{initial\_lift} parameter.
+\item \textbf{Theorem~6: conditional, not complete.}\par
+The two \texttt{contextual\_sufficiency} theorems combine these abstract pieces.
+The paper itself assumes determinism and refocusing of the UAM. Those should
+remain the theorem's hypotheses: the missing work is to define their concrete
+meaning and prove the required structural consequences under them, not to
+prove arbitrary extrinsic rewrite systems deterministic.
+\end{enumerate}
+
+The typed finite-depth hierarchy and explicit renaming bijections are
+representation choices. Relating them to the paper's set-based hypernets and
+across depth bounds is a separate adequacy obligation. The existing plugging,
+path, inventory, and isomorphism lemmas support that representation; they do
+not replace the operational proofs in Appendix~F. The next proof dependency
+is the concrete transition relation of \S6.4 (including the active/passive
+operation distinction and Fig.~9 rules), followed by rootedness, Lemma~26(3),
+and Lemma~39(2--3). These then support the concrete Proposition~40 bridge;
+initial focus construction supplies the separate Proposition~38 bridge.
+
 There are three distinct kinds of assertion below. A \emph{definition} specifies
 a mathematical object or predicate. A \emph{proved statement} is established by
 a Lean proof term. An \emph{interface law} is a hypothesis carried by a
@@ -27,7 +83,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{6bb37ea}, rather than to the moving
+All code links point to revision \texttt{fd0c1c8}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

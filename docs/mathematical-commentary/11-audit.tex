@@ -36,6 +36,11 @@ deep restoration, quotient identity, and the self-loop, repair, and mixed-depth
 regressions.
 \lean{Graph/Audit}{65}{80}{Graph.Audit: composition and unit dependencies}
 
+Six further commands inspect global focus-free substitution, focussed shallow
+and deep substitution, finite-filling boundary agreement, the initiality
+regression, and rejection of a boxed focus.
+\lean{Graph/Audit}{82}{87}{Graph.Audit: concrete focus dependencies}
+
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
 isomorphism invariance of unique holes, and uniqueness of the two-hole example
@@ -45,8 +50,9 @@ nonexistence of a literal-label isomorphism between the example boxes, and their
 equality as quotient classes likewise report only these two axioms. Existence
 of transported sites also reports only these two axioms; the chosen transport
 and substitution results additionally use classical choice.
-All newly audited composition and unit results report these three standard
-axioms. The other audited declarations additionally report \texttt{Classical.choice}.
+All audited composition and unit results report these three standard
+axioms. The focus results do too, except the boxed-focus rejection, which uses
+only \texttt{propext} and \texttt{Quot.sound}. The other audited declarations additionally report \texttt{Classical.choice}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
 \texttt{sorryAx} or a project-specific axiom.
@@ -112,14 +118,17 @@ Global hole-label uniqueness is now preserved under explicit freshness condition
 for arbitrary deep replacement. Exact syntactic inventories and
 necessary-and-sufficient freshness are now proved at every finite box depth,
 together with the exact fate of a consumed hole label.
-\item Define concrete focussed UAM states, search and rewrite transitions,
-rootedness, determinism, and refocusing. Prove their structural transition laws.
-Concrete focus labels and operation traversal alone do not define that machine.
+\item Concrete focussed hypernets and the state space are now defined. Define
+search, substitution, and compute transitions, rootedness, and refocusing. Prove
+the structural laws under the paper's determinism and refocusing hypotheses.
+The state space and boundary predicates alone do not define that machine.
 \item Define concrete pre-templates, specimens, quasi-specimens, output-closure,
 input-safety, and robustness, with the paper's typing and context restrictions.
 \item Construct the abstract specimen interface from those objects, proving its
 rootedness, final-agreement, and context-only traversal laws, including the needed
-consequences of Lemma~39. Prove the safety and robustness bridges and initial
+consequences of Lemma~39. Its initial/final boundary argument is now proved for
+finite fillings; connecting concrete specimens to those fillings remains open.
+Prove the safety and robustness bridges and initial
 lifting for concrete observations.
 \item Instantiate the two checked contextual sufficiency results. Only this
 last instantiation with all concrete obligations discharged yields the target

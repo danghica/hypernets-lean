@@ -35,6 +35,41 @@ Their equivalence to the paper's concrete graph definitions remains to prove.
 Output-closure and refocusing have not been independently defined: their
 consequences are currently requirements of the specimen interface.
 
+## Paper proof dependency map
+
+- **Proposition 37 — checked:** `Machine.CountingSimulation.sound` follows the
+  quantitative soundness proof for deterministic machines.
+- **Proposition 40 — conditional:** `SpecimenSystem.countingSimulation` and its
+  converse use explicit specimen locality, safety, and robustness assumptions.
+- **Lemma 39(1), Appendix F.4 — boundary argument checked:**
+  `Focussed.fillings_boundary_agreement` proves initial/final agreement for two
+  finite sequences of focus-free fillings of a common focussed graph, including
+  deep sites. It preserves the focus mode and input status of its source, just
+  as the paper does. Connecting paper specimens to these filling sequences is
+  still open.
+- **Lemma 39(2–3) — open:** point (2) depends on Lemma 26(3), rootedness, and
+  output-closure; point (3) needs the concrete search rules and context-only
+  traversal. The current `context_step` field assumes the required consequence.
+- **Proposition 38 — initial bridge open:** the logical lifting theorem is
+  checked, but initial focus construction and concrete specimen witnesses must
+  discharge `initial_lift`.
+- **Theorem 6 — still conditional:** the abstract pieces are combined, but a
+  concrete `SpecimenSystem` and the safety/robustness bridges remain missing.
+  Determinism and refocusing are hypotheses of the paper's theorem, not claims
+  to prove for arbitrary extrinsic rewrite rules.
+
+The next dependency is §6.4's concrete transitions (including active/passive
+operations and Fig. 9), then rootedness, Lemma 26(3), and Lemma 39(2–3).
+The finite-depth typed representation and explicit isomorphisms are implementation
+choices whose adequacy for the paper remains a separate obligation.
+
+`Hypernets/Graph/Focused.lean` now defines global focus freedom, the unique
+shallow non-exposed self-acyclic focus, and hole-free states of type `* → ε`.
+It proves preservation through shallow/deep substitution and finite fillings.
+`FocusedExamples.lean` checks a real focus-and-hole chain, distinguishes search
+from finality, and rejects a focus hidden inside a box. These are state-space
+and boundary results; no concrete transition relation is claimed yet.
+
 ## Concrete graph milestone
 
 The new `Hypernets/Graph/` development proves structural results about actual
@@ -247,12 +282,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 529 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 536
-source-fragment links point to immutable code revision `6bb37ea`. It distinguishes
+all 555 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 563
+source-fragment links point to immutable code revision `fd0c1c8`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 131 technical terms, with short descriptions and internal PDF links
+glossary of 138 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -293,8 +328,9 @@ logical axioms, if used, are shown explicitly.
    simultaneous host/replacement congruence, deep associativity, corolla units, and
    sharp composite context closure are proved. Global hole-label uniqueness under freshness, exact hole inventories, and sharp context closure are now
    checked even for deep replacement.
-2. Define focussed states, search and rewrite transitions, rootedness,
-   determinism, and refocusing (§§5–7, Appendices C–D).
+2. Focussed hypernets and the concrete state space are defined. Define search,
+   substitution, and compute transitions, rootedness, and refocusing; prove
+   structural laws under the paper's determinism/refocusing hypotheses.
 3. Define concrete type-indexed pre-templates, specimens, quasi-specimens,
    output-closure, input-safety, and robustness (§8).
 4. Construct `SpecimenSystem` for those concrete definitions. Prove its
