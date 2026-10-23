@@ -47,7 +47,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/75ba60f254e994303306104faa6e5ce95467814e}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/693a25dd4c96ca67957be28cd24d5ee44921ef16}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -55,11 +55,11 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{23 October 2026\\\small Source snapshot: \texttt{75ba60f}; Lean \texttt{4.35.0}}
+\date{23 October 2026\\\small Source snapshot: \texttt{693a25d}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
-This document explains every definition and proved statement in the current Lean development, including its regression examples. It gives proofs in mathematical English and links each declaration to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright. The forward and converse robustness arguments are proved relative to an explicit specimen interface. The concrete development constructs finite typed graphs, proves well-formed shallow plugging, path and isomorphism results, operation-path uniqueness, finite boxed hierarchies, addressed deep replacement, and globally unique-hole context closure under explicit freshness conditions. Plugging at every finite box depth has an exact syntactic hole inventory and a necessary-and-sufficient freshness criterion, including exact consumption of the selected hole label. Recursive isomorphism now permits independent renaming inside boxes, preserves operation paths and context validity, and makes substitution well-defined on replacement isomorphism classes for a fixed host and site. The connection to a concrete universal abstract machine and the verification of the specimen interface remain outstanding; the development is therefore not yet a formalization of the paper's full Theorem~6.
+This document explains every definition and proved statement in the current Lean development, including its regression examples. It gives proofs in mathematical English and links each declaration to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright. The forward and converse robustness arguments are proved relative to an explicit specimen interface. The concrete development constructs finite typed graphs, proves well-formed shallow plugging, path and isomorphism results, operation-path uniqueness, finite boxed hierarchies, addressed deep replacement, and globally unique-hole context closure under explicit freshness conditions. Plugging at every finite box depth has an exact syntactic hole inventory and a necessary-and-sufficient freshness criterion, including exact consumption of the selected hole label. Recursive isomorphism now permits independent renaming inside boxes, preserves operation paths and context validity, and makes substitution well-defined on replacement isomorphism classes. Sites now transport across recursively isomorphic hosts, with simultaneous host/replacement congruence and invariance of exact freshness. The connection to a concrete universal abstract machine and the verification of the specimen interface remain outstanding; the development is therefore not yet a formalization of the paper's full Theorem~6.
 \end{abstract}
 \clearpage
 \begingroup
@@ -91,6 +91,7 @@ This document explains every definition and proved statement in the current Lean
 \input{22-context-examples}
 \input{24-deep-inventory}
 \input{25-recursive-isomorphism}
+\input{26-site-transport}
 \input{11-audit}
 \begin{thebibliography}{9}
 \bibitem{paper}
@@ -100,7 +101,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/75ba60f254e994303306104faa6e5ce95467814e}{Repository at revision \texttt{75ba60f}}.
+\href{https://github.com/danghica/hypernets-lean/tree/693a25dd4c96ca67957be28cd24d5ee44921ef16}{Repository at revision \texttt{693a25d}}.
 \end{thebibliography}
 \clearpage
 \appendix

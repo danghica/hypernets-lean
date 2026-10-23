@@ -18,6 +18,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{ports}{Boundary port}{An input or output constructor carrying an index in the corresponding ordered boundary list; input and output constructors are disjoint.}
 
+\glossaryentry{boundary-transport}{Boundary transport}{Reindexing boundary ports along equal ordered interfaces while preserving internal and edge carriers.}
+
 \glossaryentry{box}{Box}{A label storing bound/free counts $n,m$ and a body of type $*\to *^{n+m}$; its outer edge has type $T^n(*)\to *^m$.}
 
 \glossaryentry{box-replacement}{Box-label replacement}{Changing the body of one selected box edge while retaining its binding metadata and all outer incidence data.}
@@ -27,6 +29,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{fibre}{Child occurrence}{An occurrence inside a box body. Primitive labels have no child occurrences.}
 
 \glossaryentry{compatible}{Compatible provenance}{The condition that no hole label in the replacement occurs at a retained host origin of the provenance map.}
+
+\glossaryentry{complement-restriction}{Complement restriction}{The bijection between the complements of corresponding selected elements, used for surviving host edges.}
 
 \glossaryentry{net}{Concrete typed net}{A finite labelled hypergraph with ordered boundaries and certified distinctness, incidence uniqueness, coverage, and signature typing.}
 
@@ -39,6 +43,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{contextual}{Contextual refinement}{The requirement that observations of two fragments in each common allowed context produce states related by the chosen state refinement.}
 
 \glossaryentry{corolla}{Corolla}{A graph with one operation edge, no internal vertices, and precisely that operation's ordered input and output boundaries.}
+
+\glossaryentry{site-correspondence}{Corresponding sites}{Addresses related by edge bijections at each enclosing level, with the same local replacement interface.}
 
 \glossaryentry{cost-orders}{Cost converse}{The relation $Q^{-1}$ defined by $a\,Q^{-1}\,b$ exactly when $b\,Q\,a$.}
 
@@ -215,6 +221,10 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{shallow-plugging}{Shallow plugging}{Replacing one outer edge by a graph with its exact signature interface, gluing corresponding boundary ports and retaining the outer interface.}
 
 \glossaryentry{freshness}{Sharp plugging freshness}{The requirement that no retained host hole label occurs in the replacement; labels confined to the removed region may be reused.}
+
+\glossaryentry{site-interface-transport}{Site interface transport}{Equality transport of the interface indices of an address, leaving its selected occurrence unchanged.}
+
+\glossaryentry{site-transport}{Site transport}{A classically chosen corresponding address in a recursively isomorphic host, with unchanged local depth and interface.}
 
 \glossaryentry{indexed-port}{Source port}{A source-list vertex selected by a finite index in the edge label's input signature; the arity equation justifies the lookup.}
 

@@ -141,9 +141,20 @@ vertex and edge renaming in each box body:
 - A checked example renames the two edges inside a box. The boxes are recursively
   isomorphic but admit no literal-label `Net.Iso`, demonstrating the strict extension.
 
-The host/site pair is not yet quotiented, and sites have not yet been transported
-between isomorphic hosts. Plugging associativity, comparison across different
-depth bounds, and representation adequacy remain open. The concrete UAM and its
+## Site transport milestone
+
+- `Site.transport_exists` proves that every addressed occurrence has a structurally
+  corresponding site in a recursively isomorphic host, at the same depth and interface.
+- `SiteIso.plug_congr` proves congruence when both host and replacement are renamed.
+  No freshness or non-self-loop assumption is needed for congruence.
+- Retained hole inventories, exact freshness, and result context validity are invariant.
+  Quotient substitution agrees before and after host/site transport.
+- A boxed edge-swap regression checks the moved address. A counterexample proves that
+  keeping the former numerical address can give a non-isomorphic substitution result.
+
+Transport chooses inner isomorphisms classically; no canonical choice or round-trip
+law is asserted. The host/site pair is not yet quotiented. Plugging associativity,
+comparison across different depth bounds, and representation adequacy remain open. The concrete UAM and its
 bridge to Theorem 6 remain the main later work.
 
 ## Checked source
@@ -199,6 +210,11 @@ bridge to Theorem 6 remain the main later work.
   invariance, recursive isomorphism classes, and quotient replacement.
 - `Hypernets/Graph/RecursiveIsoExamples.lean`: body renaming, the strict extension
   beyond literal-label isomorphism, and concrete quotient/congruence regressions.
+- `Hypernets/Graph/TransportPlug.lean`: boundary transport, complement bijections,
+  ordered attachment transport, and generic shallow host congruence.
+- `Hypernets/Graph/SiteTransport.lean`: structural site correspondence, existence
+  of transport, simultaneous congruence, quotient invariance, and exact freshness.
+- `Hypernets/Graph/SiteTransportExamples.lean`: moved-address and wrong-address regressions.
 
 The implementation uses Lean's bundled `Std`, with no external library
 dependencies. The toolchain is pinned in `lean-toolchain`.
@@ -206,12 +222,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 442 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 447
-source-fragment links point to immutable code revision `75ba60f`. It distinguishes
+all 477 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 483
+source-fragment links point to immutable code revision `693a25d`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 121 technical terms, with short descriptions and internal PDF links
+glossary of 126 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -247,10 +263,10 @@ logical axioms, if used, are shown explicitly.
 ## Remaining work toward the milestone
 
 1. Prove adequacy of the typed graph representation, relate different depth
-   bounds, transport sites between isomorphic hosts, and prove the context
+   bounds, quotient host/site pairs, and prove the context
    algebra, especially associativity of plugging. Recursive box isomorphism
-   and replacement congruence at fixed host/site are now proved. Global hole-label uniqueness
-   under freshness, exact hole inventories, and sharp context closure are now
+   and simultaneous host/replacement congruence through transported sites are now
+   proved. Global hole-label uniqueness under freshness, exact hole inventories, and sharp context closure are now
    checked even for deep replacement.
 2. Define focussed states, search and rewrite transitions, rootedness,
    determinism, and refocusing (§§5–7, Appendices C–D).

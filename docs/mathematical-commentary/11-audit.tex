@@ -25,6 +25,10 @@ Eleven further commands audit recursive label transitivity, operation-path
 invariance, occurrence embeddings, hole and context invariance, deep congruence,
 quotient plugging and context validity, and the strict-extension regressions.
 \lean{Graph/Audit}{42}{52}{Graph.Audit: recursive isomorphism dependencies}
+Ten further commands audit shallow host congruence, site transport and its
+specification, simultaneous congruence, quotient invariance, retained holes,
+freshness, result validity, and the moved-address and wrong-address regressions.
+\lean{Graph/Audit}{54}{63}{Graph.Audit: site transport dependencies}
 
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
@@ -32,7 +36,9 @@ isomorphism invariance of unique holes, and uniqueness of the two-hole example
 report only \texttt{propext} and \texttt{Quot.sound}.
 Recursive label transitivity, recursive operation-path invariance, the
 nonexistence of a literal-label isomorphism between the example boxes, and their
-equality as quotient classes likewise report only these two axioms.
+equality as quotient classes likewise report only these two axioms. Existence
+of transported sites also reports only these two axioms; the chosen transport
+and substitution results additionally use classical choice.
 The other audited declarations additionally report \texttt{Classical.choice}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
@@ -90,8 +96,9 @@ with explicit binder metadata to the paper's set-based graph-labelled hypernets.
 Recursive isomorphism within each fixed depth layer is now proved. Relating
 different depth bounds and proving full representation adequacy remain open.
 \item Complete the remaining context algebra, especially associativity of plugging
-and transport of sites between isomorphic hosts. The quotient plugging operation
-currently fixes its concrete host and site.
+and a quotient of host/site pairs. Site transport between recursively
+isomorphic hosts is now proved, together with simultaneous host/replacement
+congruence and invariance of quotient substitution and exact freshness.
 Global hole-label uniqueness is now preserved under explicit freshness conditions
 for arbitrary deep replacement. Exact syntactic inventories and
 necessary-and-sufficient freshness are now proved at every finite box depth,

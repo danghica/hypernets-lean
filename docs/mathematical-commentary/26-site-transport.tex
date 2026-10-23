@@ -1,0 +1,277 @@
+\Needspace{18\baselineskip}
+\section{Transporting replacement sites through isomorphisms}
+\label{sec:site-transport}
+
+An address denotes an occurrence, not a permanent numerical edge name. If an
+isomorphism exchanges two edges, the selected occurrence must move with it.
+This section proves existence of that transport at arbitrary box depth,
+congruence when both host and replacement change, and invariance of the exact
+freshness condition. Depth bounds and ordered outer interfaces remain fixed.
+
+\subsection{Transport of boundary indices and shallow hosts}
+
+\begin{definition}[Boundary transport]\label{term:boundary-transport}
+Given equalities $I=I'$ and $O=O'$ of ordered interfaces, transport a port by
+fixing its internal name, or by retaining its numerical input or output index
+and using the equality to prove the new bound. Transport a graph to the new
+interface by keeping its internal vertices, edges, enumerations, and labels,
+and mapping every incidence list through this port transport. This graph is
+written $H^{I',O'}$ below.
+\end{definition}
+All graph invariants follow by eliminating the two interface equalities: the
+port map is then the identity, and every invariant is exactly the original
+one. Reflexive port transport is pointwise the identity, hence is the identity
+function by function extensionality. Reflexive graph transport is equal to the
+original graph by record equality and the identity law for list mapping.
+Keeping carriers definitionally unchanged makes the construction useful even
+before the interface equality proofs have been eliminated.
+\lean{Graph/TransportPlug}{8}{12}{Port.cast}
+\lean{Graph/TransportPlug}{14}{15}{Port.cast_refl}
+\lean{Graph/TransportPlug}{17}{19}{Port.cast_refl_fun}
+\lean{Graph/TransportPlug}{22}{39}{Net.reboundary}
+\lean{Graph/TransportPlug}{41}{43}{Net.reboundary_refl}
+
+\begin{definition}[Complement restriction]\label{term:complement-restriction}
+For a bijection $f:A\to B$ and $a\in A$, restrict $f$ to a bijection
+$A\setminus\{a\}\to B\setminus\{f(a)\}$. Its inverse is the restriction of
+$f^{-1}$.
+\end{definition}
+Injectivity shows that a surviving source cannot map to $f(a)$. Conversely, if
+$f^{-1}(b)=a$, the right inverse equation gives $b=f(a)$, contradicting survival.
+Both inverse laws follow from those of $f$, since subtype elements with equal
+underlying values are equal.
+\lean{Graph/TransportPlug}{46}{51}{Bijection.except}
+
+\begin{lemma}[Transport of attachment positions]
+Let $f:C\cong_R D$ and let $e$ be a selected edge. If its corresponding input
+interfaces are equal, mapping the $i$th source port of $e$ by $f$ gives the
+$i$th source port of $f(e)$. The analogous assertion holds for targets when the
+output interfaces are equal.
+\end{lemma}
+\begin{proof}
+Apply optional list lookup at index $i$ to the source-list equation of $f$.
+The typing invariant identifies the source-list length with the input-interface
+length, so both lookups are in bounds. Lookup commutes with mapping; cancelling
+the optional-result constructor gives the port equation. The interface equality
+supplies the bound for the target index. Repeat for the target-list equation.
+No disjointness between source and target lists is used.
+\end{proof}
+\lean{Graph/TransportPlug}{58}{65}{Net.RelIso.sourcePort}
+\lean{Graph/TransportPlug}{68}{75}{Net.RelIso.targetPort}
+
+\begin{theorem}[Shallow host congruence]
+Suppose $f:C\cong_R D$, $R$ is reflexive, and corresponding selected edges have
+equal input and output interfaces. For every replacement $A$ of the source
+interface,
+\[
+ C[e:=A]\cong_R D[f(e):=A^{I',O'}].
+\]
+\end{theorem}
+\begin{proof}
+On internal vertices use the disjoint sum of the host vertex bijection and the
+identity on replacement vertices. On edges use the complement restriction of
+the host edge bijection and the identity on replacement edges. These are the
+auxiliary maps \texttt{HostPlug.vertices} and \texttt{HostPlug.edges}.
+The whole-graph port map commutes with host inclusion by case analysis on a
+port. It also commutes with replacement insertion followed by boundary
+transport: internal vertices are immediate, and input and output ports use the
+attachment-position lemmas just proved.
+
+For surviving edges, label relatedness is supplied by $f$; for inserted edges,
+use reflexivity of $R$. Internal vertex labels are preserved by the host
+isomorphism or by identity. For incidence of a surviving edge, rewrite with
+$f$'s incidence equation, combine successive list maps, and apply commutation
+with host inclusion. For an inserted edge, combine the insertion and whole-port
+maps and use commutation with replacement insertion. The same argument proves
+the target equation. Self-loops are allowed throughout.
+\end{proof}
+\lean{Graph/TransportPlug}{83}{84}{Net.HostPlug.vertices}
+\lean{Graph/TransportPlug}{86}{88}{Net.HostPlug.edges}
+\lean{Graph/TransportPlug}{90}{93}{Net.HostPlug.map_host}
+\lean{Graph/TransportPlug}{95}{107}{Net.HostPlug.map_insert}
+\lean{Graph/TransportPlug}{112}{161}{Net.RelIso.plugHost}
+
+\Needspace{16\baselineskip}
+\subsection{Structural correspondence of addresses}
+
+\begin{definition}[Address interface transport]\label{term:site-interface-transport}
+Given $s:\mathsf{Site}(G,r,J,K)$ and equalities $J=J'$, $K=K'$, transport its
+interface indices to obtain an address of type $\mathsf{Site}(G,r,J',K')$.
+The selected occurrence is unchanged. Plugging $A$ at this transported address
+equals plugging the boundary-transported $A$ at the original address.
+\end{definition}
+The definition is equality elimination. For the plugging equation eliminate
+the two equalities and use reflexive graph boundary transport; both sides then
+become the same substitution.
+\lean{Graph/SiteTransport}{10}{12}{Linear.Site.reinterface}
+\lean{Graph/SiteTransport}{15}{18}{Linear.plugAt_reinterface}
+
+\begin{lemma}[Corresponding boxes and their replacement]
+If $f:G\cong_{d+1}H$ and edge $e$ of $G$ carries box $(n,m,B)$, then $f(e)$
+carries a box $(n,m,B')$ with $B\cong_d B'$. Moreover, replacing these two box
+bodies by any $A\cong_d A'$ gives recursively isomorphic whole graphs.
+\end{lemma}
+\begin{proof}
+For existence, inspect the target label in the label-relatedness proof for
+$e$. A primitive target contradicts the definition of recursive label
+equivalence. For a box target, the constructor of the box relation forces
+matching $n,m$ and supplies a body isomorphism. This reasoning constructs an
+existential statement, so elimination of the propositional box relation is
+legitimate.
+
+For replacement retain the vertex and edge bijections of $f$. At $e$ the new
+labels are related by the given isomorphism $A\cong_d A'$. At every other edge
+injectivity ensures that its target is different from $f(e)$, so both labels
+remain unchanged and their original relation applies. Neither replacement
+changes incidence or internal vertex labels; the remaining equations are
+exactly those of $f$.
+\end{proof}
+\lean{Graph/SiteTransport}{22}{36}{Linear.DeepIso.boxAt}
+\lean{Graph/SiteTransport}{39}{65}{Linear.DeepIso.replaceBox}
+
+\begin{definition}[Corresponding sites]\label{term:site-correspondence}
+The proposition $s\simeq t$, implemented by \texttt{SiteIso}, is generated by
+two structural rules. A shallow site selecting $e$ corresponds to the site
+selecting $f(e)$ for any recursive host isomorphism $f$; transport the latter's
+interface indices back along the signature equalities. For sites inside boxes,
+use a recursive outer-host isomorphism, corresponding selected box edges with
+equal binding/free metadata, and structurally corresponding inner sites.
+Both sites have the same local depth and replacement interface.
+\end{definition}
+This is a relation on addresses themselves, defined before proving anything
+about the results of plugging. An inner correspondence may choose any suitable
+isomorphism between the box bodies; the outer relation stores existence of a
+body isomorphism, not a distinguished naming map for every inner vertex.
+\lean{Graph/SiteTransport}{69}{84}{Linear.SiteIso}
+
+\begin{theorem}[Existence of transported sites]
+For every recursive isomorphism $f:G\cong_d H$ and every site
+$s:\mathsf{Site}(G,r,J,K)$, there exists
+$t:\mathsf{Site}(H,r,J,K)$ with $s\simeq t$.
+\end{theorem}
+\begin{proof}
+Induct on $s$. For a shallow site use the shallow correspondence constructor
+and the proved equality of corresponding signatures. For an inside site,
+extract the corresponding target box and a body isomorphism using the preceding
+lemma. Apply the induction hypothesis to the inner site and that body
+isomorphism, then assemble the outer correspondence with the inside constructor.
+This follows a finite address down the hierarchy and therefore terminates.
+\end{proof}
+\lean{Graph/SiteTransport}{87}{94}{Linear.Site.transport_exists}
+
+\begin{definition}[Chosen site transport]\label{term:site-transport}
+Write $s^f$ for a site chosen from this existence theorem by classical choice.
+It has the original local depth and interface in the target host, and satisfies
+$s\simeq s^f$ by the specification theorem for choice.
+\end{definition}
+The construction is noncomputable. No uniqueness, definitional round-trip law,
+or canonical choice of inner box isomorphisms is asserted.
+\lean{Graph/SiteTransport}{97}{99}{Linear.Site.transport}
+\lean{Graph/SiteTransport}{102}{104}{Linear.Site.transport_spec}
+
+\subsection{Substitution and freshness under transport}
+
+\begin{theorem}[Simultaneous host and replacement congruence]
+If $s\simeq t$ and $A\cong_r B$, then
+\[
+ \mathsf{plugAt}(s,A)\cong_d\mathsf{plugAt}(t,B).
+\]
+\end{theorem}
+\begin{proof}
+First take the same replacement on both sides and induct on the structural
+correspondence. In the shallow case rewrite plugging at a transported interface
+using its equation, then apply shallow host congruence. Recursive label
+equivalence supplies the signature equalities and reflexivity required there.
+In the inside case the induction hypothesis supplies an isomorphism of the
+replaced inner bodies. Lift it through the corresponding outer boxes using
+box replacement congruence. This proves \texttt{SiteIso.plug}.
+For distinct isomorphic replacements, compose that isomorphism with the
+previously proved congruence in the replacement at the fixed target site $t$.
+\end{proof}
+\lean{Graph/SiteTransport}{107}{117}{Linear.SiteIso.plug}
+\lean{Graph/SiteTransport}{120}{125}{Linear.SiteIso.plug_congr}
+
+\begin{lemma}[Quotient substitution agrees after host transport]
+For every replacement isomorphism class $[A]$,
+$\mathsf{plugAtModuloIso}(s,[A])=
+\mathsf{plugAtModuloIso}(s^f,[A])$.
+\end{lemma}
+\begin{proof}
+Use quotient induction to choose a representative $A$. The specification of
+$s^f$ gives a structural correspondence; substitution congruence gives a
+recursive isomorphism between the two results. Quotient soundness identifies
+their classes.
+\end{proof}
+This is invariance under transporting the host/site pair. A separate quotient
+type of host/site pairs and a full context algebra have not been constructed.
+\lean{Graph/SiteTransport}{128}{132}{Linear.plugAtModuloIso_transport}
+
+\begin{lemma}[Invariance of retained holes]
+A recursive host isomorphism preserves and reflects the holes outside a
+selected outer edge. Structurally corresponding sites retain exactly the same
+hole labels at every depth.
+\end{lemma}
+\begin{proof}
+An outer retained occurrence consists of an edge $x\ne e$ and a hole-observing
+position in its label. Map $x$ by the host edge bijection and the position by
+the previously constructed label-fibre embedding. Injectivity preserves
+$x\ne e$, and the embedding preserves its hole observation. For reflection,
+use the inverse edge bijection and the inverse isomorphism's fibre embedding;
+the right inverse equation ensures that the preimage survives.
+
+Interface transport does not change retention: eliminate the interface
+equalities. Now induct on structural site correspondence. The shallow case
+uses this equality elimination and the outer retained-hole equivalence. The
+inside case uses the definition of deep retention as a disjunction: either
+the occurrence lies under a surviving outer edge, or it is retained by the
+inner site. Apply the outer equivalence and the induction hypothesis to the
+two disjuncts.
+\end{proof}
+\lean{Graph/SiteTransport}{135}{147}{Linear.DeepIso.retainedHole_iff}
+\lean{Graph/SiteTransport}{150}{153}{Linear.SiteRetainedHole_reinterface}
+\lean{Graph/SiteTransport}{156}{164}{Linear.SiteIso.retainedHole_iff}
+
+\begin{lemma}[Invariance of freshness and result validity]
+For $s\simeq t$ and $A\cong_r B$, exact freshness holds for $(s,A)$ if and
+only if it holds for $(t,B)$. The two substituted results satisfy global
+unique-hole validity together, whether or not either original host is valid.
+\end{lemma}
+\begin{proof}
+Freshness forbids a label occurring both in the retained host and in the
+replacement. Transport the first occurrence with retained-hole equivalence and
+the second with the replacement isomorphism's hole-inventory equivalence. This
+proves each direction. For result validity, simultaneous substitution
+congruence supplies a recursive isomorphism; apply its preservation and
+reflection of unique holes. No original-host validity hypothesis is needed
+for this invariance statement.
+\end{proof}
+\lean{Graph/SiteTransport}{167}{173}{Linear.SiteIso.fresh_iff}
+\lean{Graph/SiteTransport}{176}{181}{Linear.SiteIso.plug_unique_iff}
+
+\subsection{A moved address and a wrong-address counterexample}
+
+Use the two-hole chain and its edge swap from the preceding section. The first
+hole, formerly edge zero, is edge one after renaming. Define the target deep
+site to enter the renamed box and select edge one. The outer boxed isomorphism
+and the shallow correspondence for the edge swap prove structural
+correspondence with the original deep site.
+\lean{Graph/SiteTransportExamples}{9}{11}{Linear.Examples.renamedFirstSite}
+\lean{Graph/SiteTransportExamples}{14}{16}{Linear.Examples.firstSites_correspond}
+Simultaneous congruence now allows both the host body and the inserted chain to
+be renamed independently. The replacement consisting of hole one still
+collides with the retained hole one: freshness invariance transports the
+previously proved failure of freshness to the new site.
+\lean{Graph/SiteTransportExamples}{19}{21}{Linear.Examples.simultaneous_deep_renaming}
+\lean{Graph/SiteTransportExamples}{24}{26}{Linear.Examples.renamed_collision_not_fresh}
+
+For contrast within this example, define the wrong target site by keeping the
+old numerical name zero. It selects hole one instead of hole zero. After
+inserting the one-hole replacement, the wrong result retains hole zero,
+witnessed by the surviving edge one inside the renamed box. The exact deep
+inventory theorem therefore proves that hole zero is present. In the original
+substitution, hole zero is consumed and absent, as already proved. A recursive
+isomorphism would preserve hole presence, contradicting these two facts.
+Thus the wrong-address substitution is not recursively isomorphic to the
+original substitution; moving the address is essential.
+\lean{Graph/SiteTransportExamples}{29}{31}{Linear.Examples.wrongRenamedSite}
+\lean{Graph/SiteTransportExamples}{35}{42}{Linear.Examples.wrong_address_changes_result}
