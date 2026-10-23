@@ -1,7 +1,7 @@
 \Needspace{18\baselineskip}
 \section{Machines and finite executions}
 
-\begin{definition}[Machine]
+\begin{definition}[Machine]\label{term:machine}
 A machine on $X$ consists of a relation ${\to}\subseteq X\times X$, a
 predicate $\fin\subseteq X$, and the law
 \[
@@ -15,7 +15,7 @@ The fields \texttt{step} and \texttt{final} supply the relation and predicate.
 The field \texttt{final\_normal} supplies the displayed law. A machine may
 have any state type; finiteness or a graphical representation is not required.
 
-\begin{definition}[Determinism, normality, and stuckness]
+\begin{definition}[Determinism, normality, and stuckness]\label{term:determinism}
 The machine is \emph{deterministic} if $s\to t_1$ and $s\to t_2$ imply
 $t_1=t_2$. A state $s$ is \emph{normal} if $s\to t$ is false for every
 $t$. It is \emph{stuck} if it is normal and is not final:
@@ -31,7 +31,7 @@ Determinism is a separate hypothesis, not a field of every machine. Stuckness
 distinguishes failure from successful finality even though both are normal
 forms.
 
-\begin{definition}[Counted execution]
+\begin{definition}[Counted execution]\label{term:execution}
 The relation $s\steps{n}t$ is generated inductively by
 \[
  \frac{}{s\steps{0}s},\qquad

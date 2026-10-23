@@ -7,7 +7,7 @@ unless explicitly stated otherwise.
 
 \Needspace{24\baselineskip}
 \subsection{Carriers and boundary identification}
-\begin{definition}[Replacement carriers]
+\begin{definition}[Replacement carriers]\label{term:replacement-carriers}
 The new internal vertices are $C_V+H_V$, with disjoint tags providing freshness.
 The new edges are $(C_E\setminus\{h\})+H_E$. The outer boundary remains $I,O$.
 The surviving-edge subtype carries a proof of inequality to $h$, so the removed
@@ -15,6 +15,7 @@ edge cannot accidentally survive as an old edge.
 \end{definition}
 \lean{Graph/Plugging}{19}{19}{Net.Replacement.Vertex}
 \lean{Graph/Plugging}{20}{20}{Net.Replacement.Edge}
+\termdef{embeddings}
 The host embedding $j$ tags each old internal vertex on the left and fixes the
 outer boundary. The insertion map $k$ tags a replacement internal vertex on the
 right, sends replacement input $i$ to $j(s_h(i))$, and sends replacement output
@@ -139,7 +140,7 @@ argument reduces to their target typing equations.
 \lean{Graph/Plugging}{266}{276}{Net.Replacement.source_typed}
 \lean{Graph/Plugging}{278}{288}{Net.Replacement.target_typed}
 
-\begin{theorem}[Well-formed shallow plugging]
+\begin{theorem}[Well-formed shallow plugging]\label{term:shallow-plugging}
 There is a net $C[h:=H]:I\to O$ with the carriers, labels, and incidence lists
 above. It preserves the entire ordered external interface and all graph invariants,
 even when $h$ has a vertex in both its source and target lists.

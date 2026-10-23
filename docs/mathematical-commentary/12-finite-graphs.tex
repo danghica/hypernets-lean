@@ -8,7 +8,7 @@ and edge carriers; operation labels may live in a larger universe.
 
 \Needspace{24\baselineskip}
 \subsection{Enumerations and bijections}
-\begin{definition}[Finite enumeration]
+\begin{definition}[Finite enumeration]\label{term:enumeration}
 An enumeration of a type $A$ consists of a finite list $l$ and a proof that every
 $a\in A$ belongs to $l$. Repetitions are allowed. This witnesses finiteness without
 requiring decidable equality or a canonical choice of names.
@@ -35,7 +35,7 @@ concatenate over the enumeration of $A$. A pair $(a,b)$ appears because $a$ occu
 in the outer list and $b$ in the enumeration of its fibre.
 \lean{Graph/Finite}{39}{43}{Enumeration.sigma}
 
-\begin{definition}[Bijection]
+\begin{definition}[Bijection]\label{term:bijection}
 A bijection $f:A\cong B$ consists of functions $f:A\to B$ and $f^{-1}:B\to A$
 with both inverse equations, pointwise.
 \end{definition}
@@ -71,7 +71,7 @@ with an output, while remaining injective on each incidence list separately.
 
 \Needspace{24\baselineskip}
 \subsection{Ports, signatures, and graph invariants}
-\begin{definition}[Signature and ports]
+\begin{definition}[Signature and ports]\label{term:ports}
 A signature $\sigma$ assigns an ordered input-label list and output-label list
 to every operation. With internal carrier $V$ and boundary lengths $n,m$, vertices
 are the disjoint union
@@ -95,12 +95,13 @@ by this map, by the same three-case analysis.
 \lean{Graph/Basic}{40}{43}{Port.map_injective}
 \lean{Graph/Basic}{45}{46}{Port.map_isInput}
 \lean{Graph/Basic}{48}{49}{Port.map_isOutput}
+\termdef{vertex-label}
 Given boundary-label lists $I,O$ and internal labelling $\lambda:V\to L$, the label
 of an internal vertex is $\lambda(v)$, of input $i$ is $I_i$, and of output $j$
 is $O_j$. The finite-index types ensure that these lookups are defined.
 \lean{Graph/Basic}{51}{54}{Port.label}
 
-\begin{definition}[Concrete typed net]
+\begin{definition}[Concrete typed net]\label{term:net}
 A net $G:\!I\to O$ has finite internal and edge carriers, labels for both, and
 ordered source and target vertex lists $s(e),t(e)$ for each edge. It satisfies:
 \begin{enumerate}
@@ -129,6 +130,7 @@ Taking lengths in the two typing equations shows that incidence-list lengths are
 exactly the corresponding signature arities: mapping labels does not change length.
 \lean{Graph/Basic}{94}{96}{Net.source_length}
 \lean{Graph/Basic}{98}{100}{Net.target_length}
+\termdef{indexed-port}
 The $i$th source port of $e$ is its source list indexed by a position in the
 signature's input list; the preceding length equality justifies the lookup.
 Target ports are defined in the same way with the output list.
@@ -161,7 +163,7 @@ The ordered finite range has no duplicates: equality of its entries at two
 positions gives equality of their underlying natural numbers and hence of the
 positions.
 \lean{Graph/Constructors}{5}{9}{finRange_nodup}
-\begin{definition}[Corolla and empty graph]
+\begin{definition}[Corolla and empty graph]\label{term:corolla}
 The corolla of operation $o$ has one edge labelled $o$, no internal vertices,
 and all of its prescribed inputs and outputs in signature order. Its sources
 are precisely the input constructors and its targets the output constructors.
@@ -175,6 +177,7 @@ Mapping labels over either ordered range recovers the corresponding signature
 list, proving typing.
 \end{proof}
 \lean{Graph/Constructors}{18}{52}{Net.corolla}
+\termdef{empty-graph}
 The empty graph has empty internal and edge carriers and empty boundaries. Each
 incidence or label function has empty domain; all obligations follow by eliminating
 the purported element of an empty type. A bare identity wire is not provided:

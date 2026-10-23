@@ -6,7 +6,7 @@ name and both interface lists. The occurrence quantifiers include every box dept
 
 \Needspace{24\baselineskip}
 \subsection{Hole inventories, absence, and isomorphism}
-\begin{definition}[Presence, absence, and disjointness]
+\begin{definition}[Presence, absence, and disjointness]\label{term:hole-presence}
 Write $\mathsf{HasHole}(G,h)$ when some occurrence of $G$ looks up to $h$.
 Write $\mathsf{HoleFree}(G)$ when no label has such an occurrence. Two graphs
 have disjoint holes when no complete hole label occurs in both. The graphs may
@@ -56,7 +56,7 @@ not yet extend it to isomorphic, independently renamed box contents.
 
 \Needspace{24\baselineskip}
 \subsection{Provenance and the abstract collision argument}
-\begin{definition}[Provenance certificate]
+\begin{definition}[Provenance certificate]\label{term:provenance}
 For result $R$, host $C$, and replacement $H$, a provenance certificate is an
 injective function
 \[
@@ -76,6 +76,7 @@ Every result hole label belongs to the host or replacement inventory. Choose its
 fibre-coordinate witness, inspect the origin tag, and use preservation to obtain
 a witness in the indicated graph.
 \lean{Graph/ContextPlugging}{113}{119}{Linear.Provenance.holes_subset}
+\termdef{compatible}
 A provenance certificate is \emph{compatible} when no inserted hole label is
 observed at any retained host origin. Formally, if $p(a)=\mathsf{left}(c)$ and
 $c$ observes $h$, then $H$ does not contain $h$. Host occurrences outside the
@@ -128,7 +129,7 @@ certified net plugging construction.
 
 \Needspace{24\baselineskip}
 \subsection{Exact inventory and the sharp freshness condition}
-\begin{definition}[Retained hole label]
+\begin{definition}[Retained hole label]\label{term:retained}
 A retained hole label for removal of edge $e$ in $C$ is a hole observation in the
 fibre of an outer edge $f\ne e$. This includes deep occurrences below $f$.
 It excludes both the removed edge and every occurrence inside its label.
@@ -153,6 +154,7 @@ are unchanged by definition.
 \end{proof}
 \lean{Graph/ContextPlugging}{212}{229}{Linear.plug_hasHole_iff}
 
+\termdef{freshness}
 Define sharp plugging freshness to mean that no retained host hole label occurs
 in the replacement. This is weaker than requiring the replacement to be disjoint
 from the entire original host: labels confined to the removed edge's region may

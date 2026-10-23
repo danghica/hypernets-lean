@@ -39,7 +39,19 @@ for name, start, end, label in references:
     if not path.exists() or not 1 <= int(start) <= int(end) <= len(path.read_text().splitlines()):
         errors.append(f"Invalid range: {name}:{start}-{end}: {label}")
 
+# Glossary entries must resolve to unique in-document definition destinations.
+glossary = re.findall(r"\\glossaryentry\{([^}]+)\}\{([^}]+)\}", text)
+term_destinations = re.findall(r"\\label\{term:([a-z0-9-]+)\}", text)
+term_destinations += re.findall(r"\\termdef\{([a-z0-9-]+)\}", text)
+for key, title in glossary:
+    if term_destinations.count(key) != 1:
+        errors.append(f"Glossary destination is missing or ambiguous: {title}: {key}")
+if [title.casefold() for _, title in glossary] != sorted(title.casefold() for _, title in glossary):
+    errors.append("Technical terms are not in alphabetical order")
+
 if errors:
     raise SystemExit("\n".join(errors))
 print(f"Verified {declarations} declarations and {len(references)} source-fragment links.")
 print(f"All source files match pinned revision {revision}.")
+
+print(f"Verified {len(glossary)} glossary entries and {len(set(term_destinations))} internal definition destinations.")

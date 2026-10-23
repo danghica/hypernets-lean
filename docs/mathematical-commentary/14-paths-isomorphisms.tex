@@ -2,7 +2,7 @@
 \section{Paths, renaming, and isomorphism}
 \Needspace{24\baselineskip}
 \subsection{Paths and their behaviour under plugging}
-\begin{definition}[Adjacency and path]
+\begin{definition}[Adjacency and path]\label{term:path}
 Edges $e,f$ are adjacent when some vertex belongs to both $t(e)$ and $s(f)$.
 A path is a nonempty edge list: a singleton is a path; prepending $e$ to a path
 starting at $f$ gives a path when $e,f$ are adjacent. Edges may repeat, and this
@@ -36,7 +36,7 @@ replacement witness through $k$; injectivity is unnecessary in this direction.
 \end{proof}
 \lean{Graph/Paths}{51}{61}{Net.Replacement.adjacent_host_iff}
 \lean{Graph/Paths}{63}{66}{Net.Replacement.adjacent_insert}
-\begin{definition}[Non-self-loop hole]
+\begin{definition}[Non-self-loop hole]\label{term:non-self-loop}
 The hole $h$ is non-self-looping if no vertex belongs to both $s(h)$ and $t(h)$.
 This requires the two lists to be disjoint; it is stronger than distinctness
 within each individual list, already required of every net.
@@ -102,7 +102,7 @@ Give an internal name $w$ the label of $a^{-1}(w)$. Labelling an old vertex afte
 mapping by $a$ then agrees with its old label: the internal case cancels
 $a^{-1}\circ a$, and boundary labels are fixed.
 \lean{Graph/Isomorphism}{85}{88}{Net.Reindex.label_map}
-\begin{definition}[Reindexed graph]
+\begin{definition}[Reindexed graph]\label{term:reindexing}
 The reindexed net uses the new carriers, inverse-transported labels, and the
 incidence lists just defined.
 \end{definition}
@@ -116,7 +116,7 @@ apply the original typing equation. The boundary lists are unchanged.
 
 \Needspace{24\baselineskip}
 \subsection{Graph isomorphism and shallow context congruence}
-\begin{definition}[Isomorphism]
+\begin{definition}[Isomorphism]\label{term:isomorphism}
 An isomorphism $G\cong H$ between nets with the same signature and boundary lists
 is a bijection of internal vertices and a bijection of edges preserving internal
 labels, edge labels, and both ordered incidence lists. Its port action fixes

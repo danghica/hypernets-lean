@@ -1,0 +1,215 @@
+\section{Technical terms}
+\label{app:terms}
+
+This appendix is alphabetical. Click a term or its page number to jump to its
+definition in this PDF. Related terms may share a definition. Descriptions of
+abstract interface predicates state what the interface supplies; they do not
+claim that a concrete UAM interpretation has already been constructed.
+
+\glossaryentry{path}{Adjacency}{Edges $e,f$ are adjacent when a vertex occurs in both the target list of $e$ and the source list of $f$.}
+
+\glossaryentry{observations}{Allowed context}{A context satisfying the supplied predicate $\mathsf{Allowed}$ in an observation interface.}
+
+\glossaryentry{box}{Alphabet}{A type of edge labels equipped with a signature assigning their input and output wire types.}
+
+\glossaryentry{focus}{Backtracking mode}{The abstract focus mode $\mathsf{backtrack}$, one of the three constructors of the focus datatype.}
+
+\glossaryentry{bijection}{Bijection}{A pair of forward and inverse functions satisfying both inverse equations.}
+
+\glossaryentry{ports}{Boundary port}{An input or output constructor carrying an index in the corresponding ordered boundary list; input and output constructors are disjoint.}
+
+\glossaryentry{box}{Box}{A label storing bound/free counts $n,m$ and a body of type $*\to *^{n+m}$; its outer edge has type $T^n(*)\to *^m$.}
+
+\glossaryentry{box-replacement}{Box-label replacement}{Changing the body of one selected box edge while retaining its binding metadata and all outer incidence data.}
+
+\glossaryentry{fibre}{Child occurrence}{An occurrence inside a box body. Primitive labels have no child occurrences.}
+
+\glossaryentry{compatible}{Compatible provenance}{The condition that no hole label in the replacement occurs at a retained host origin of the provenance map.}
+
+\glossaryentry{net}{Concrete typed net}{A finite labelled hypergraph with ordered boundaries and certified distinctness, incidence uniqueness, coverage, and signature typing.}
+
+\glossaryentry{context}{Context}{A hypernet in which each complete typed hole label occurs at most once over all nesting depths.}
+
+\glossaryentry{specimen}{Context-only traversal}{The specimen-interface law supplying paired context steps for a rooted, settled specimen whenever either endpoint can step.}
+
+\glossaryentry{contextual}{Contextual equivalence}{Mutual contextual refinement: both directions hold for every pair of observations in the same allowed context.}
+
+\glossaryentry{contextual}{Contextual refinement}{The requirement that observations of two fragments in each common allowed context produce states related by the chosen state refinement.}
+
+\glossaryentry{corolla}{Corolla}{A graph with one operation edge, no internal vertices, and precisely that operation's ordered input and output boundaries.}
+
+\glossaryentry{cost-orders}{Cost converse}{The relation $Q^{-1}$ defined by $a\,Q^{-1}\,b$ exactly when $b\,Q\,a$.}
+
+\glossaryentry{cost-preorder}{Cost preorder}{A reflexive and transitive relation on natural-number execution counts; additional algebraic properties are imposed separately.}
+
+\glossaryentry{execution}{Counted execution}{The relation $s\steps{n}t$, recording exactly $n$ machine transitions, including the zero-step execution from a state to itself.}
+
+\glossaryentry{simulation}{Counting simulation}{A relation preserving finality and matching steps using related execution counts and an up-to relation, with an explicit stuck-execution alternative.}
+
+\glossaryentry{all-edges}{Deep occurrence}{An address that records an enclosing box edge and recursively an occurrence in its body, distinguishing equal bodies at different locations.}
+
+\glossaryentry{deep-plugging}{Deep plugging}{Typed replacement at an addressed site, recursively descending through boxes and rebuilding the selected enclosing labels.}
+
+\glossaryentry{hypernet}{Depth bound}{The index bounding permitted box nesting in a hypernet; a graph need not use all of the available depth.}
+
+\glossaryentry{promotion}{Depth promotion}{Raising a hypernet's available depth bound by relabelling primitives and recursively promoting box bodies, without changing outer incidence.}
+
+\glossaryentry{determinism}{Determinism}{The property that any two one-step successors of the same state are equal.}
+
+\glossaryentry{hole-presence}{Disjoint hole inventories}{The condition that no complete typed hole label occurs in both graphs, including occurrences inside boxes.}
+
+\glossaryentry{net}{Edge}{An element of a net's finite edge carrier, carrying an operation label and ordered source and target vertex lists.}
+
+\glossaryentry{empty-graph}{Empty graph}{The net with no internal vertices, no edges, and empty input and output boundaries.}
+
+\glossaryentry{specimen}{Entering specimen}{A specimen satisfying the interface's supplied entering predicate. Its concrete interpretation by hole incidence is not yet instantiated.}
+
+\glossaryentry{cost-orders}{Exact cost order}{The preorder $E$ with $a\,E\,b$ exactly when $a=b$, requiring identical successful execution counts in refinement.}
+
+\glossaryentry{fibre-provenance}{Fibre provenance}{An injective, hole-observation-preserving map from a changed label's occurrence fibre to retained old fibre addresses or replacement occurrences.}
+
+\glossaryentry{machine}{Final state}{A state satisfying a machine's successful-finality predicate; the machine laws require that it has no outgoing transition.}
+
+\glossaryentry{enumeration}{Finite enumeration}{A finite list containing every element of a carrier, together with a completeness proof; the list may contain repetitions.}
+
+\glossaryentry{focus}{Focus mode}{One of $\mathsf{search}$, $\mathsf{backtrack}$, or $\mathsf{rewrite}$; this datatype alone does not specify a graph position.}
+
+\glossaryentry{observations}{Fragment}{An element of the family $F_i$ in an observation interface, matched with contexts of the same interface index $i$.}
+
+\glossaryentry{ports}{Graph signature}{The assignment of an ordered input-label list and output-label list to each operation label.}
+
+\glossaryentry{hole-presence}{Hole inventory}{The collection of complete hole labels $h$ for which some shallow or deep occurrence observes $h$.}
+
+\glossaryentry{wire}{Hole label}{A natural-number name together with input and output wire-type lists. Equality compares the complete typed label, not just its name.}
+
+\glossaryentry{hole-lookup}{Hole lookup}{The recursive function returning the typed hole label at an occurrence, or no label when that occurrence is not a hole.}
+
+\glossaryentry{hole-presence}{Hole presence}{The predicate $\mathsf{HasHole}(G,h)$, witnessed by an occurrence whose hole lookup returns $h$.}
+
+\glossaryentry{hole-presence}{Hole-free graph}{A graph having no hole label at any occurrence or nesting depth.}
+
+\glossaryentry{embeddings}{Host embedding}{The map retaining host vertices during shallow replacement, tagging internal names and fixing each external boundary position.}
+
+\glossaryentry{hypernet}{Hypernet}{A typed net over a finite-depth alphabet whose labels may include boxes with bodies over the preceding alphabet.}
+
+\glossaryentry{cost-orders}{Improvement cost order}{The preorder $I$ with $a\,I\,b$ exactly when $b\leq a$; the target successful execution takes no more steps than the source.}
+
+\glossaryentry{net}{Incidence coverage}{The net laws saying that exactly non-output vertices occur in some source list and exactly non-input vertices occur in some target list.}
+
+\glossaryentry{net}{Incidence uniqueness}{The net laws allowing a vertex to occur in the sources of at most one edge and in the targets of at most one edge.}
+
+\glossaryentry{initial-lifting}{Initial lifting}{The contextual-lifting hypothesis placing initial observations of related fragments into the specified lifted state relation.}
+
+\glossaryentry{safety}{Input-safety}{The abstract condition on rooted, entering search specimens: a stuck alternative, a cost-related execution to a settled specimen, or a quasi-specimen alternative.}
+
+\glossaryentry{embeddings}{Insertion map}{The map tagging replacement internal vertices freshly and identifying its boundary positions with the selected host edge's indexed ports.}
+
+\glossaryentry{net}{Interface}{For a concrete net, the ordered input and output wire-label lists; matching lists enforce type-correct replacement.}
+
+\glossaryentry{ports}{Internal vertex}{A vertex from the internal carrier, tagged separately from all input and output boundary positions.}
+
+\glossaryentry{isomorphism}{Isomorphism}{Bijections of internal vertices and edges preserving labels and ordered incidence lists while fixing the external boundary positions.}
+
+\glossaryentry{lifting}{Lifted state relation}{The relation witnessed by a remote specimen with rooted endpoints equal to the two states being compared.}
+
+\glossaryentry{machine}{Machine}{A transition relation on states, a successful-finality predicate, and a proof that final states cannot step.}
+
+\glossaryentry{non-self-loop}{Non-self-loop hole}{A selected edge whose source and target lists are disjoint; this condition permits reflection of inserted paths.}
+
+\glossaryentry{determinism}{Normal state}{A state with no outgoing transition, whether or not it is successfully final.}
+
+\glossaryentry{observations}{Observation interface}{Typed fragment and context families, an allowed-context predicate, and a possibly partial, nonfunctional relation producing observed states.}
+
+\glossaryentry{all-edges}{Occurrence}{An individual shallow edge or an addressed edge inside boxes; occurrences distinguish positions even when their labels agree.}
+
+\glossaryentry{occurrence-coordinates}{Occurrence coordinates}{A dependent pair consisting of an outer edge and an address in the occurrence fibre of that edge's label.}
+
+\glossaryentry{fibre}{Occurrence fibre}{The disjoint sum of the edge's own shallow occurrence and all child occurrences determined by its label.}
+
+\glossaryentry{fibre-lookup}{Occurrence observation}{For a fibre address, the hole lookup obtained either from its shallow label or recursively from its child address.}
+
+\glossaryentry{operation-path}{Operation path}{A forward, endpoint-sensitive path defined by a reverse operation trace with its edge list reversed; empty paths are permitted.}
+
+\glossaryentry{wire}{Operation specification}{The assignment of a term-argument count and an ordered list of thunk binder counts to each operation.}
+
+\glossaryentry{unary}{Operation step}{A step through an edge selected by the operation predicate, from a vertex in its source list to one in its target list.}
+
+\glossaryentry{operation-trace}{Operation trace}{A reverse traversal recording each actual operation edge, starting at a target vertex and continuing from that edge's source.}
+
+\glossaryentry{opposite}{Opposite specimen system}{The specimen system obtained by swapping its left and right endpoint maps while retaining modes and entering and rootedness predicates.}
+
+\glossaryentry{cost-orders}{Overhead cost order}{The preorder $H$ with $a\,H\,b$ exactly when $a\leq b$; the target successful execution takes at least as many steps as the source.}
+
+\glossaryentry{path}{Path}{A nonempty edge list whose consecutive edges are adjacent. Repeated edges are allowed; this predicate does not specify endpoint vertices.}
+
+\glossaryentry{site}{Plugging site}{An address selecting an edge, possibly inside boxes, indexed by the required local depth bound and replacement interface.}
+
+\glossaryentry{ports}{Port}{A vertex represented as an internal name, an indexed input, or an indexed output, with the three constructors kept disjoint.}
+
+\glossaryentry{primitive}{Primitive label}{An operation, variable, focus-mode label, or typed hole; a primitive label has no box body.}
+
+\glossaryentry{primitive-signature}{Primitive signature}{The typed port assignment for primitives: one term input for non-holes, operation outputs determined by arities, and stored interfaces for holes.}
+
+\glossaryentry{provenance}{Provenance certificate}{An injective map assigning every result occurrence a retained host or inserted replacement origin with the same hole observation.}
+
+\glossaryentry{quasi}{Quasi-specimen}{The abstract relation requiring a non-rewrite specimen witness, with prescribed endpoint relations, whenever the compared states are rooted.}
+
+\glossaryentry{reasonable}{Reasonable triple}{Three cost preorders satisfying the addition, decrease, inclusion, and sandwich conditions used by counting-simulation soundness.}
+
+\glossaryentry{reindexing}{Reindexing}{Renaming a net's internal and edge carriers along bijections, transporting labels and incidence while preserving boundary order.}
+
+\glossaryentry{relabelling}{Relabelling}{Changing operation labels along a signature-preserving map, leaving the graph's carriers, vertex labels, and incidence unchanged.}
+
+\glossaryentry{lifting}{Remote specimen}{A specimen whose mode is not rewrite or which is not entering; only an entering rewrite focus is excluded.}
+
+\glossaryentry{replacement-carriers}{Replacement carriers}{The disjoint union of host and replacement internal names, and the union of surviving host edges with inserted replacement edges.}
+
+\glossaryentry{retained}{Retained hole label}{A label observed below a surviving host edge, excluding the selected removed edge and all of its descendants.}
+
+\glossaryentry{reverse-traversal}{Reverse operation traversal}{The machine traversing selected operation edges backwards, taking boundary inputs as successful final states.}
+
+\glossaryentry{focus}{Rewrite mode}{The abstract focus mode $\mathsf{rewrite}$, used in the robustness premise for a remote specimen.}
+
+\glossaryentry{robustness}{Robustness}{The abstract condition requiring a rooted, remote rewrite specimen's source step to lead to stuckness or a cost-related quasi-specimen match.}
+
+\glossaryentry{specimen}{Rooted state}{A state satisfying the specimen interface's supplied predicate $\mathsf{Root}$, which its laws require to be preserved by transitions.}
+
+\glossaryentry{focus}{Search mode}{The abstract focus mode $\mathsf{search}$, used with entering specimens in the input-safety premise.}
+
+\glossaryentry{lifting}{Settled specimen}{A specimen in backtracking mode, or in search mode without entering; every settled specimen is remote.}
+
+\glossaryentry{all-edges}{Shallow occurrence}{The occurrence of an edge at the current graph layer, without descending into a box body.}
+
+\glossaryentry{shallow-plugging}{Shallow plugging}{Replacing one outer edge by a graph with its exact signature interface, gluing corresponding boundary ports and retaining the outer interface.}
+
+\glossaryentry{freshness}{Sharp plugging freshness}{The requirement that no retained host hole label occurs in the replacement; labels confined to the removed region may be reused.}
+
+\glossaryentry{indexed-port}{Source port}{A source-list vertex selected by a finite index in the edge label's input signature; the arity equation justifies the lookup.}
+
+\glossaryentry{specimen}{Specimen}{An element of the abstract specimen type, equipped with left and right state endpoints, a mode, and an entering predicate.}
+
+\glossaryentry{specimen}{Specimen system}{The interface packaging specimens, endpoints, modes and predicates, with rootedness preservation, final agreement, and context-traversal laws.}
+
+\glossaryentry{refinement}{State equivalence}{Mutual state refinement for the same cost preorder; it compares successful termination and execution counts in both directions.}
+
+\glossaryentry{refinement}{State refinement}{The requirement that each successful source execution has a successful target execution with counts related by the chosen cost preorder.}
+
+\glossaryentry{determinism}{Stuck state}{A normal state that is not successfully final; it cannot step and does not count as successful termination.}
+
+\glossaryentry{indexed-port}{Target port}{A target-list vertex selected by a finite index in the edge label's output signature.}
+
+\glossaryentry{wire}{Term wire}{The wire type $*$, distinguished from a thunk wire and used for ordinary operation inputs and term arguments.}
+
+\glossaryentry{wire}{Thunk wire}{The wire type $T^n(*)$, carrying the number $n$ of variables bound by a corresponding box.}
+
+\glossaryentry{unary}{Unary operations}{The condition that every selected operation edge has a source list of length one; no one-output condition is imposed.}
+
+\glossaryentry{context}{Unique holes}{The property that any two occurrences observing the same complete typed hole label are equal, at every nesting depth.}
+
+\glossaryentry{cost-orders}{Universal cost order}{The preorder $U$ relating every pair of natural-number counts, so refinement ignores quantitative cost.}
+
+\glossaryentry{up-to}{Up-to closure}{The relation obtained by placing a candidate relation between a left auxiliary state refinement and a right auxiliary state refinement.}
+
+\glossaryentry{vertex-label}{Vertex label}{The internal vertex's assigned label, or the wire label at the indexed position in the relevant boundary list.}
+
+\glossaryentry{wire}{Wire type}{Either the term type $*$ or a thunk type $T^n(*)$ with its binding count.}

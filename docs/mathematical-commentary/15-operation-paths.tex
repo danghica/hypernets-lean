@@ -4,13 +4,14 @@ Choose a predicate $P$ on operation labels in a net $G$. This section first prov
 a generic graph theorem; the next section shows that the single-source condition
 is automatic for the typed operation labels of the linear hierarchy.
 
-\begin{definition}[Unary operations and traversal]
+\begin{definition}[Unary operations and traversal]\label{term:unary}
 Selected operations are unary when each edge whose label satisfies $P$ has a
 source list of length one. An operation step $s\rightsquigarrow t$ chooses such
 an edge $e$ with $s\in s(e)$ and $t\in t(e)$.
 \end{definition}
 \lean{Graph/OperationPaths}{17}{18}{Net.UnaryOperations}
 \lean{Graph/OperationPaths}{20}{21}{Net.OperationStep}
+\termdef{reverse-traversal}
 Reverse traversal is the machine whose transition from $t$ to $s$ is
 $s\rightsquigarrow t$ and whose successful final states are boundary inputs.
 Inputs are normal: any reverse step from an input would put that input in a
@@ -27,7 +28,7 @@ There is no additional determinism premise.
 \end{proof}
 \lean{Graph/OperationPaths}{31}{44}{Net.reverseOperations_deterministic}
 
-\begin{definition}[Edge-recording trace]
+\begin{definition}[Edge-recording trace]\label{term:operation-trace}
 A reverse operation trace from $v$ to $w$ records its actual edge list. The empty
 trace starts and ends at the same vertex. A nonempty trace first chooses an
 operation edge targeting the current vertex and a vertex in its source, then
@@ -53,6 +54,7 @@ the determinism lemma. Apply the induction hypothesis to their tails and prefix
 the common edge to the resulting list equality.
 \end{proof}
 \lean{Graph/OperationPaths}{62}{83}{Net.OperationTrace.unique_to_inputs}
+\termdef{operation-path}
 A forward operation path from $s$ to $t$ with edge list $l$ means a reverse trace
 from $t$ to $s$ with list $\operatorname{reverse}(l)$. Empty paths are allowed in
 this endpoint-sensitive notion, unlike the nonempty edge-only path predicate of

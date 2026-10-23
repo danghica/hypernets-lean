@@ -160,7 +160,9 @@ all 344 definitions and proved statements in the abstract and concrete graph
 development, including regression examples, in mathematical English. Its 347
 source-fragment links point to immutable code revision `f4d6ccd`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
-obligations for the paper's concrete theorem.
+obligations for the paper's concrete theorem. Appendix A is an alphabetical
+glossary of 104 technical terms, with short descriptions and internal PDF links
+to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
 the LaTeX project folder in the Codex editor. To reproduce both the source-link

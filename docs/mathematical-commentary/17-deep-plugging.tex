@@ -9,7 +9,7 @@ unchanged. The two new typing equations follow by composing each old typing
 proof with the inverse of the specified per-edge signature equality.
 \lean{Graph/DeepPlugging}{15}{35}{Net.relabelEdges}
 
-\begin{definition}[Replacement of a box label]
+\begin{definition}[Replacement of a box label]\label{term:box-replacement}
 Suppose outer edge $e$ is labelled by a box $(n,m,B)$. Given a new body $B'$ of
 the same body type $*\to *^{n+m}$ and depth bound, change just the label at $e$
 to $(n,m,B')$, retaining every other edge label.
@@ -27,7 +27,7 @@ at other edges therefore do not cause simultaneous replacement.
 
 \Needspace{24\baselineskip}
 \subsection{Typed sites and replacement at a site}
-\begin{definition}[Site]
+\begin{definition}[Site]\label{term:site}
 A site in an outer hypernet $G$ carries a local depth bound and two wire-label
 lists $J,K$. It is either a shallow edge of $G$, in which case $J,K$ are exactly
 that edge's signature lists, or a box edge with a proof identifying its box
@@ -39,7 +39,7 @@ The indices prevent supplying a replacement of the wrong interface or local
 depth. A site may select an arbitrary edge, not only an edge labelled as a hole;
 the separate unique-hole context condition is not assumed here.
 
-\begin{definition}[Deep plugging]
+\begin{definition}[Deep plugging]\label{term:deep-plugging}
 To replace at a shallow site use shallow net plugging. To replace at a site
 inside a box, recursively replace in its body and use box-label replacement to
 put that modified body back at the chosen outer edge. The recursion is on the

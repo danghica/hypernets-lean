@@ -1,7 +1,7 @@
 \Needspace{18\baselineskip}
 \section{Counting simulation and its soundness}
 
-\begin{definition}[Up-to closure]
+\begin{definition}[Up-to closure]\label{term:up-to}
 Given a relation $R$ on states and cost orders $P,S$, define
 \[
  \upto{P}{S}{R}(s,t)\quad\Longleftrightarrow\quad
@@ -13,7 +13,7 @@ The witnesses occur in path order. In particular the right-hand refinement
 is from $v$ to $t$, not from $t$ to $v$. Auxiliary refinement can change the
 states at which the candidate relation is resumed.
 
-\begin{definition}[Counting simulation]
+\begin{definition}[Counting simulation]\label{term:simulation}
 A relation $R$ is a $(Q,P,S)$-counting simulation if whenever $R(s,t)$:
 \begin{enumerate}[label=\textup{(\Alph*)}]
 \item If $s$ is final, then $t$ is final.

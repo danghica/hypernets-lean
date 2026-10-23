@@ -2,6 +2,7 @@
 \section{Typed boxes, deep occurrences, and contexts}
 \Needspace{24\baselineskip}
 \subsection{Relabelling without changing incidence}
+\termdef{relabelling}
 A signature-preserving map $f$ of operation alphabets relabels a net by replacing
 each edge label $o$ with $f(o)$. All carriers, enumerations, vertex labels, and
 incidence data are retained. Hence their invariant proofs are retained too.
@@ -11,7 +12,7 @@ signature equality for $f(o)$. This yields the new signature list at that edge.
 
 \Needspace{24\baselineskip}
 \subsection{The linear wire and label discipline}
-\begin{definition}[Wire types, operation arities, and holes]
+\begin{definition}[Wire types, operation arities, and holes]\label{term:wire}
 A wire type is either a term wire $*$ or a thunk wire $T^n(*)$, carrying a natural
 number $n$ of bound variables. An operation specification assigns each operation
 an argument count $a(o)$ and an ordered list of binder counts $b(o)$. A hole label
@@ -21,17 +22,19 @@ Equality of hole labels includes these lists as well as the name.
 \lean{Graph/Hierarchy}{44}{47}{Linear.Wire}
 \lean{Graph/Hierarchy}{51}{53}{Linear.Operations}
 \lean{Graph/Hierarchy}{56}{60}{Linear.Hole}
+\termdef{primitive}
 Primitive edge labels are operations, variables, focus labels from the abstract
 three-mode type, or typed holes. This introduces concrete focus \emph{labels};
 it does not yet define the UAM transition relation.
 \lean{Graph/Hierarchy}{62}{66}{Linear.Primitive}
+\termdef{primitive-signature}
 Their signature is as follows. Every non-hole primitive has one term input.
 Operation $o$ has $a(o)$ term outputs followed by the thunk outputs specified in
 $b(o)$. A variable or focus has one term output. A hole uses precisely the input
 and output lists stored in its label. Ordering is part of each of these definitions.
 \lean{Graph/Hierarchy}{68}{76}{Linear.primitiveSignature}
 
-\begin{definition}[Alphabets and typed boxes]
+\begin{definition}[Alphabets and typed boxes]\label{term:box}
 An alphabet is a label type and a signature on it. A box over alphabet $A$ stores
 numbers $n,m$ and a body net over $A$ of type
 \[
@@ -51,6 +54,7 @@ alphabet. Its signature uses the primitive signature on the left and the stated
 external box interface on the right.
 \lean{Graph/Hierarchy}{89}{94}{Linear.baseAlphabet}
 \lean{Graph/Hierarchy}{96}{105}{Linear.nextAlphabet}
+\termdef{hypernet}
 Recursively, depth zero uses the base alphabet and depth $d+1$ uses the successor
 of the depth-$d$ alphabet. A hypernet at depth bound $d$ is a net over that
 alphabet. The bound limits possible nesting; it need not be the actual minimum
@@ -80,6 +84,7 @@ forms the corolla of its box label in the successor alphabet. Corolla
 well-formedness proves all outer graph conditions. The result has exactly one
 outer box edge and the external type $T^n(*)\to *^m$.
 \lean{Graph/Hierarchy}{143}{147}{Linear.box}
+\termdef{promotion}
 Promotion raises the available depth bound by one without changing the outer
 graph. At depth zero, send a lifted primitive to the primitive summand at depth
 one. At a successor depth, keep primitives and recursively promote each box
@@ -97,7 +102,7 @@ reflexivity.
 
 \Needspace{24\baselineskip}
 \subsection{Finite occurrence addresses at arbitrary depth}
-\begin{definition}[All edge occurrences]
+\begin{definition}[All edge occurrences]\label{term:all-edges}
 At depth zero, an occurrence is a shallow edge. At depth $d+1$, an occurrence is
 either a shallow edge or a pair $(e,a)$ where $e$ is a box edge and $a$ an
 occurrence in its body. A primitive edge has the empty type of child occurrences.
@@ -126,6 +131,7 @@ The list need not be duplicate-free, since completeness suffices here.
 
 \Needspace{24\baselineskip}
 \subsection{Hole lookup and the context condition}
+\termdef{hole-lookup}
 A primitive hole lookup returns its stored label for a hole constructor and no
 label otherwise. Full occurrence lookup uses that function on a shallow primitive,
 returns no hole at a shallow box edge, and recursively looks inside a deep box
@@ -134,7 +140,7 @@ eliminated. Dependent transports in Lean express that the selected label really
 is the box whose body is being searched.
 \lean{Graph/Hierarchy}{197}{199}{Linear.primitiveHole}
 \lean{Graph/Hierarchy}{202}{214}{Linear.holeAt}
-\begin{definition}[Unique holes and contexts]
+\begin{definition}[Unique holes and contexts]\label{term:context}
 A hypernet has unique holes if, for each complete typed hole label $h$, any two
 occurrences whose lookup returns $h$ are equal. A context is a hypernet together
 with this property. This permits multiple different hole labels and also permits

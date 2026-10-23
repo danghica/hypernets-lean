@@ -1,7 +1,7 @@
 \Needspace{18\baselineskip}
 \section{Typed observations and contextual lifting}
 
-\begin{definition}[Observation interface]
+\begin{definition}[Observation interface]\label{term:observations}
 Let $J$ be a type of interfaces, and for each $i\in J$ let $F_i$ be a
 type of fragments and $C_i$ a type of contexts. An observation interface
 consists of a predicate $\mathsf{Allowed}(c)$ for contexts and a relation
@@ -18,7 +18,7 @@ total function. It can be undefined, and the structure does not require
 uniqueness of the produced state. The current code does not yet define it
 by graph plugging.
 
-\begin{definition}[Contextual refinement and equivalence]
+\begin{definition}[Contextual refinement and equivalence]\label{term:contextual}
 For $a,b\in F_i$, write $a\preceq_Q^{\mathcal O} b$ if for every
 $c\in C_i$ and states $s,t$,
 \[
@@ -38,7 +38,7 @@ general interface: two observations of the same fragment might give
 different states. A concrete, functional initialization relation can supply
 the missing property, but it is not assumed here.
 
-\begin{proposition}[Contextual refinement from a lifted relation]
+\begin{proposition}[Contextual refinement from a lifted relation]\label{term:initial-lifting}
 Let $T_i$ be a relation on $F_i$ for each interface $i$, and let $L$ be
 a relation on states. Suppose:
 \begin{enumerate}

@@ -1,14 +1,14 @@
 \Needspace{18\baselineskip}
 \section{Cost relations and state refinement}
 
-\begin{definition}[Cost preorder]
+\begin{definition}[Cost preorder]\label{term:cost-preorder}
 A cost order is a reflexive, transitive relation $Q$ on $\mathbb N$.
 \end{definition}
 \lean{Quantitative}{6}{9}{CostOrder}
 The relation and its two preorder proofs are stored together. Antisymmetry,
 decidability, and compatibility with addition are not part of this definition.
 
-\begin{definition}[Reasonable triple]
+\begin{definition}[Reasonable triple]\label{term:reasonable}
 A triple $(Q,P,S)$ of cost preorders is \emph{reasonable} if all four of the
 following implications hold:
 \begin{align*}
@@ -26,7 +26,7 @@ will justify a strict descent in the soundness proof. Inclusion is used when
 turning safety's auxiliary equivalences into an asymmetric up-to relation.
 
 \Needspace{23\baselineskip}
-\begin{definition}[Converse and the basic cost orders]
+\begin{definition}[Converse and the basic cost orders]\label{term:cost-orders}
 The converse preorder is $a\,Q^{-1}\,b$ if $b\,Q\,a$. The four named
 orders are
 \[
@@ -93,7 +93,7 @@ implies the required weak decrease and includes into itself. In the sandwich
 condition, substitute $a=b$ and $c=d$ into $b\leq c$ to obtain $a\leq d$.
 \end{proof}
 
-\begin{definition}[State refinement]
+\begin{definition}[State refinement]\label{term:refinement}
 For a cost preorder $Q$, define
 \[
  s\preceq_Q t\quad\Longleftrightarrow\quad

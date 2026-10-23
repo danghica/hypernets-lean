@@ -1,7 +1,7 @@
 \Needspace{18\baselineskip}
 \section{The abstract specimen interface}
 
-\begin{definition}[Focus modes]
+\begin{definition}[Focus modes]\label{term:focus}
 The type of modes has exactly three constructors:
 $\mathsf{search}$, $\mathsf{backtrack}$, and $\mathsf{rewrite}$.
 \end{definition}
@@ -11,7 +11,7 @@ The derived decidable equality allows their distinctness to be checked by
 finite case analysis. This datatype records only a mode, not a graph
 position or a focus edge.
 
-\begin{definition}[Specimen system]\label{def:specimen}
+\begin{definition}[Specimen system]\label{term:specimen}\label{def:specimen}
 A specimen system $G$ over $M$ consists of a type $\Sigma$ of specimens,
 maps $\ell,r:\Sigma\to X$, a mode map
 $\mode:\Sigma\to\mathsf{Focus}$, a predicate $\ent$ on specimens,
@@ -47,7 +47,7 @@ consequence of graph locality and output-closure that the simulation proof
 uses. Its availability premise is symmetric between the two endpoints,
 which will be essential in the converse proof.
 
-\begin{definition}[Remote, settled, and lifted specimens]
+\begin{definition}[Remote, settled, and lifted specimens]\label{term:lifting}
 A specimen $c$ is remote if
 \[
  \remote(c)\iff \mode(c)\ne\mathsf{rewrite}\ \lor\ \neg\ent(c).
@@ -91,7 +91,7 @@ execution, the one-step rootedness law makes its first successor rooted;
 the induction hypothesis propagates this property through the remainder.
 \end{proof}
 
-\begin{definition}[Abstract non-rewrite quasi-specimen]
+\begin{definition}[Abstract non-rewrite quasi-specimen]\label{term:quasi}
 For relations $A,B$ on states, define $\quasi{A}{B}(s,t)$ to mean that
 \emph{if} $s$ and $t$ are rooted, then there is a specimen $c$ with
 \[
@@ -123,7 +123,7 @@ definition, with the two refinements furnished by the quasi-specimen.
 \end{proof}
 
 \Needspace{24\baselineskip}
-\begin{definition}[Input-safety]
+\begin{definition}[Input-safety]\label{term:safety}
 The predicate $\safe{Q}{P}$ requires the following for every specimen $c$
 whose endpoints are rooted, whose mode is search, and which is entering.
 At least one of these three cases must hold:
@@ -149,7 +149,7 @@ Case~III requires positive executions on both sides and auxiliary
 \emph{equivalences}. Retaining both directions of those equivalences is
 necessary for reusing safety in the converse theorem.
 
-\begin{definition}[Robustness]
+\begin{definition}[Robustness]\label{term:robustness}
 The predicate $\robust{Q}{P}{S}$ requires that for every specimen $c$
 with rooted endpoints, rewrite mode, and $\neg\ent(c)$, each transition
 $\ell(c)\to s'$ satisfies one of:
