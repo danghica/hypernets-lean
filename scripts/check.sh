@@ -11,3 +11,4 @@ fi
 
 lake build
 lake env lean Hypernets/Audit.lean
+lake env lean Hypernets/Graph/Audit.lean
