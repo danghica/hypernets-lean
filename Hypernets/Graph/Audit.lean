@@ -1,4 +1,4 @@
-import Hypernets.Graph.RootedExamples
+import Hypernets.Graph.OneWayExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -166,3 +166,20 @@ import Hypernets.Graph.RootedExamples
 #print axioms Hypernets.Linear.DeepStateClass.refocusing_execution
 #print axioms Hypernets.Linear.Examples.final_value_rooted
 #print axioms Hypernets.Linear.Examples.interior_state_not_rooted
+
+#print axioms Hypernets.Linear.operation_source_term
+#print axioms Hypernets.Linear.operationTrace_input_term
+#print axioms Hypernets.Linear.oneWay_iff
+#print axioms Hypernets.Linear.DeepIso.oneWay_iff
+#print axioms Hypernets.Linear.OneWayReplacement.insert_not_input
+#print axioms Hypernets.Linear.OneWayReplacement.extract
+#print axioms Hypernets.Linear.OneWayReplacement.reflect
+#print axioms Hypernets.Linear.OneWayReplacement.path_operations
+#print axioms Hypernets.Linear.OneWayReplacement.oneWay_plug
+#print axioms Hypernets.Linear.Focussed.oneWay_not_rooted
+#print axioms Hypernets.Linear.Focussed.oneWay_pair_not_rooted
+#print axioms Hypernets.Linear.Examples.variable_oneWay
+#print axioms Hypernets.Linear.Examples.operation_not_oneWay
+#print axioms Hypernets.Linear.Examples.thunk_only_oneWay
+#print axioms Hypernets.Linear.Examples.thunk_output_reachable
+#print axioms Hypernets.Linear.Examples.oneWay_filled_not_rooted
