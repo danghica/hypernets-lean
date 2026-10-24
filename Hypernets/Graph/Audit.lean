@@ -1,4 +1,4 @@
-import Hypernets.Graph.DeepSearchExamples
+import Hypernets.Graph.RootedExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -149,3 +149,20 @@ import Hypernets.Graph.DeepSearchExamples
 #print axioms Hypernets.Linear.StateClass.final_run_toDeep_iff
 #print axioms Hypernets.Linear.Examples.renamedBoxedTwoHoles_focusFree
 #print axioms Hypernets.Linear.Examples.recovered_value_lift
+
+#print axioms Hypernets.Linear.State.deepSearch_underlying
+#print axioms Hypernets.Linear.DeepStateClass.search_root
+#print axioms Hypernets.Linear.DeepStateClass.rooted_search
+#print axioms Hypernets.Linear.SearchStep.operationReachable
+#print axioms Hypernets.Linear.IncomingTrace.operations
+#print axioms Hypernets.Linear.operationTrace_sources_avoid
+#print axioms Hypernets.Linear.operationTrace_insert
+#print axioms Hypernets.Linear.State.focus_operationReachable
+#print axioms Hypernets.Linear.State.rooted_focus_path
+#print axioms Hypernets.Linear.State.not_rooted_of_path
+#print axioms Hypernets.Linear.DeepStateClass.rooted_iff_initial_run
+#print axioms Hypernets.Linear.DeepStateClass.search_refocusing
+#print axioms Hypernets.Linear.DeepStateClass.refocusing_with_search
+#print axioms Hypernets.Linear.DeepStateClass.refocusing_execution
+#print axioms Hypernets.Linear.Examples.final_value_rooted
+#print axioms Hypernets.Linear.Examples.interior_state_not_rooted
