@@ -1,4 +1,4 @@
-import Hypernets.Graph.OneWayExamples
+import Hypernets.Graph.AlternatingFillings
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -183,3 +183,29 @@ import Hypernets.Graph.OneWayExamples
 #print axioms Hypernets.Linear.Examples.thunk_only_oneWay
 #print axioms Hypernets.Linear.Examples.thunk_output_reachable
 #print axioms Hypernets.Linear.Examples.oneWay_filled_not_rooted
+
+#print axioms Hypernets.Graph.Net.Expansion.source_owner
+#print axioms Hypernets.Graph.Net.Expansion.target_owner
+#print axioms Hypernets.Graph.Net.Expansion.source_unique
+#print axioms Hypernets.Graph.Net.Expansion.target_unique
+#print axioms Hypernets.Graph.Net.Expansion.source_coverage
+#print axioms Hypernets.Graph.Net.Expansion.target_coverage
+#print axioms Hypernets.Linear.ExpansionPaths.extract
+#print axioms Hypernets.Linear.ExpansionPaths.oneWay_target
+#print axioms Hypernets.Linear.ExpansionPaths.predecessor
+#print axioms Hypernets.Linear.ExpansionPaths.path_operations
+#print axioms Hypernets.Linear.ExpansionPaths.focussed_boundary
+#print axioms Hypernets.Linear.ExpansionPaths.pair_not_rooted
+#print axioms Hypernets.Linear.ExpansionPaths.identityIso
+#print axioms Hypernets.Linear.ExpansionPaths.holeFree
+#print axioms Hypernets.Linear.ShallowSpecimen.focus_copies
+#print axioms Hypernets.Linear.ShallowSpecimen.other_free
+#print axioms Hypernets.Linear.ShallowSpecimen.outputClosedPair
+#print axioms Hypernets.Linear.ShallowSpecimen.not_both_rooted
+#print axioms Hypernets.Linear.ShallowSpecimen.rooted_context_path
+#print axioms Hypernets.Linear.ShallowSpecimen.boundary_agreement
+#print axioms Hypernets.Linear.Examples.twoHoleSpecimen_not_rooted
+#print axioms Hypernets.Linear.Examples.twoHoleSpecimen_boundary
+#print axioms Hypernets.Linear.AlternatingFillings.output_closed
+#print axioms Hypernets.Linear.AlternatingFillings.no_global_oneWay_side
+#print axioms Hypernets.Linear.AlternatingFillings.not_both_reachable

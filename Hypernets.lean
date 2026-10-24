@@ -13,3 +13,4 @@ import Hypernets.Graph.QuotientSearchExamples
 import Hypernets.Graph.DeepSearchExamples
 import Hypernets.Graph.RootedExamples
 import Hypernets.Graph.OneWayExamples
+import Hypernets.Graph.AlternatingFillings
