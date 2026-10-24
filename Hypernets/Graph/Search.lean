@@ -1,7 +1,7 @@
 import Hypernets.Graph.Focused
 
 /-! The five search rules of Fig. 9(a–e), in coordinates on the underlying
-hypernet. StateSearch lifts these to explicit states; local-rewrite adequacy remains open. -/
+hypernet. StateSearch lifts these to explicit states; HoleContextSearch proves contextual adequacy. -/
 namespace Hypernets.Linear
 open Graph
 variable {Op : Type} {ops : Operations Op}

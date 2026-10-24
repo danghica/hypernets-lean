@@ -1,7 +1,7 @@
 import Hypernets.Graph.FocusRoundTrip
 
 /-! A search relation on arbitrary explicit states, via general erasure and
-reinsertion modulo focus-preserving isomorphism. Local rewrite adequacy remains open. -/
+reinsertion modulo focus-preserving isomorphism. HoleContextSearch proves contextual adequacy. -/
 namespace Hypernets.Linear
 open Graph
 variable {Op : Type} {ops : Operations Op}
@@ -82,7 +82,7 @@ theorem coordinate_boundary (s : State ops d) :
 
 /-- Erasure-based search on actual states. Targets may use arbitrary vertex and
 edge names, provided they are focus-preservingly isomorphic to the realized result.
-Equivalence to the paper's contextual local-rewrite definition remains to prove. -/
+HoleContextSearch proves equivalence to contextual finite-pattern rewriting. -/
 def Search (kind : Op → OperationKind) (s t : State ops d) : Prop :=
   ∃ q : TypedPosition s.focussed.underlying,
     SearchStep s.focussed.underlying kind (coordinate s).val q.val ∧

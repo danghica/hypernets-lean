@@ -1,5 +1,5 @@
 import Hypernets.Graph.ExpansionSearchExamples
-import Hypernets.Graph.LocalSearchExamples
+import Hypernets.Graph.ContextualSearchExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -318,3 +318,28 @@ import Hypernets.Graph.LocalSearchExamples
 #print axioms Hypernets.Linear.State.incidenceSearch_deterministic
 #print axioms Hypernets.Linear.LocalSearchExamples.value_terminates
 #print axioms Hypernets.Linear.LocalSearchExamples.variable_successor
+
+-- Finite interaction-pattern factorization and actual simple-hole contexts.
+#print axioms Hypernets.Linear.OutputFocusInsertion.insert
+#print axioms Hypernets.Linear.PatternPlugging.input_iso
+#print axioms Hypernets.Linear.PatternPlugging.output_iso
+#print axioms Hypernets.Linear.FocusSubdivision.iso
+#print axioms Hypernets.Linear.PatternPlugging.sound
+#print axioms Hypernets.Linear.PatternPlugging.complete
+#print axioms Hypernets.Linear.PatternPlugging.interaction_closed
+#print axioms Hypernets.Linear.PatternPlugging.realization
+#print axioms Hypernets.Linear.State.search_iff_contextual
+#print axioms Hypernets.Linear.SearchContexts.plug_iso
+#print axioms Hypernets.Linear.SearchContexts.plug_iso_reverse
+#print axioms Hypernets.Linear.SearchContexts.unique
+#print axioms Hypernets.Linear.SearchContexts.only_hole
+#print axioms Hypernets.Linear.SearchContexts.close_simple
+#print axioms Hypernets.Linear.State.search_iff_holeContext
+#print axioms Hypernets.Linear.State.incidenceSearch_iff_holeContext
+#print axioms Hypernets.Linear.State.deepSearch_iff_holeContext
+#print axioms Hypernets.Linear.State.arbitrary_simple_context
+#print axioms Hypernets.Linear.ContextualSearchExamples.value_contextual
+#print axioms Hypernets.Linear.ContextualSearchExamples.variable_contextual
+#print axioms Hypernets.Linear.ContextualSearchExamples.output_fragment_incidence
+#print axioms Hypernets.Linear.ContextualSearchExamples.loop_input
+#print axioms Hypernets.Linear.ContextualSearchExamples.loop_output

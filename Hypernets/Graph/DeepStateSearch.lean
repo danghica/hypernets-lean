@@ -8,7 +8,7 @@ namespace State
 
 /-- Erasure-based search on actual states. Targets may use arbitrary vertex and
 edge names, provided they are recursively focus-preservingly isomorphic to the realized result.
-Equivalence to the paper's contextual local-rewrite definition remains to prove. -/
+HoleContextSearch proves equivalence to contextual finite-pattern rewriting. -/
 def DeepSearch (kind : Op → OperationKind) (s t : State ops d) : Prop :=
   ∃ q : TypedPosition s.focussed.underlying,
     SearchStep s.focussed.underlying kind (coordinate s).val q.val ∧
