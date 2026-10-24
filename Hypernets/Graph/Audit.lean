@@ -1,4 +1,4 @@
-import Hypernets.Graph.SequentialExamples
+import Hypernets.Graph.InterchangeExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -223,3 +223,23 @@ import Hypernets.Graph.SequentialExamples
 #print axioms Hypernets.Linear.ExpansionSequential.realize_modulo
 #print axioms Hypernets.Linear.AlternatingFillings.sequential_realizations
 #print axioms Hypernets.Linear.AlternatingFillings.reverse_schedule
+
+#print axioms Hypernets.Graph.Net.PlugInterchange.iso
+#print axioms Hypernets.Linear.plug_retained_box_iso
+#print axioms Hypernets.Linear.replaceBox_comm
+#print axioms Hypernets.Linear.IndependentSites.interchange
+#print axioms Hypernets.Linear.IndependentSites.residual_selectedHole
+#print axioms Hypernets.Linear.IndependentSites.interchange_modulo
+#print axioms Hypernets.Linear.IndependentSites.unique_iff
+#print axioms Hypernets.Linear.PointedRenaming.host
+#print axioms Hypernets.Linear.PointedRenaming.plug_congr
+#print axioms Hypernets.Linear.PointedRenaming.retainedHole_iff
+#print axioms Hypernets.Linear.pointedPlug
+#print axioms Hypernets.Linear.pointedFresh
+#print axioms Hypernets.Linear.pointedPlug_unique_iff
+#print axioms Hypernets.Linear.pointed_transport
+#print axioms Hypernets.Linear.IndependentSites.pointed_interchange
+#print axioms Hypernets.Linear.Examples.boxed_interchange
+#print axioms Hypernets.Linear.Examples.twin_interchange
+#print axioms Hypernets.Linear.Examples.pointed_renamed_first
+#print axioms Hypernets.Linear.Examples.pointed_wrong_address
