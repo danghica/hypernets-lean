@@ -22,3 +22,4 @@ import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.SpecimenTraversalExamples
 import Hypernets.Graph.LocalSearchExamples
 import Hypernets.Graph.ContextualSearchExamples
+import Hypernets.Graph.UAMExamples

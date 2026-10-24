@@ -1,5 +1,5 @@
 import Hypernets.Graph.ExpansionSearchExamples
-import Hypernets.Graph.ContextualSearchExamples
+import Hypernets.Graph.UAMExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -343,3 +343,19 @@ import Hypernets.Graph.ContextualSearchExamples
 #print axioms Hypernets.Linear.ContextualSearchExamples.output_fragment_incidence
 #print axioms Hypernets.Linear.ContextualSearchExamples.loop_input
 #print axioms Hypernets.Linear.ContextualSearchExamples.loop_output
+
+-- Concrete substitution and the assembled full UAM.
+#print axioms Hypernets.Linear.Substitution.prefixVariable
+#print axioms Hypernets.Linear.Substitution.before_focussed
+#print axioms Hypernets.Linear.Substitution.after_focussed
+#print axioms Hypernets.Linear.State.substitution_modes
+#print axioms Hypernets.Linear.State.substitution_variable
+#print axioms Hypernets.Linear.State.substitution_iso
+#print axioms Hypernets.Linear.State.substitution_not_compute
+#print axioms Hypernets.Linear.UAM.rewrite_modes
+#print axioms Hypernets.Linear.UAM.intrinsic_extrinsic_exclusive
+#print axioms Hypernets.Linear.UAM.final_normal
+#print axioms Hypernets.Linear.UAM.machine
+#print axioms Hypernets.Linear.UAMExamples.substitute
+#print axioms Hypernets.Linear.UAMExamples.terminates
+#print axioms Hypernets.Linear.UAMExamples.compute_step
