@@ -90,7 +90,11 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{specimen}{Entering specimen}{A specimen satisfying the interface's supplied entering predicate. Its concrete interpretation by hole incidence is not yet instantiated.}
 
+\glossaryentry{state-search}{Erasure-based state search}{Search between actual states, defined by a coordinate step on the erased source and a focus-preserving isomorphism to the realized target.}
+
 \glossaryentry{cost-orders}{Exact cost order}{The preorder $E$ with $a\,E\,b$ exactly when $a=b$, requiring identical successful execution counts in refinement.}
+
+\glossaryentry{state-coordinate}{Extracted state coordinate}{The original mode and joined term vertex in the generally erased underlying graph of an arbitrary closed state.}
 
 \glossaryentry{hole-embedding}{Fibre embedding}{An injective map between label fibres that preserves the complete hole observation at every position.}
 
@@ -102,15 +106,21 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{focus-fillings}{Finite filling sequence}{A finite sequence of focus-free addressed replacements avoiding the transported focus, preserving its boundary status.}
 
+\glossaryentry{focus-erasure}{Focus erasure}{Deleting the unique focus edge and its internal target, contracting the target onto the source while proving all graph invariants.}
+
 \glossaryentry{focus-insertion}{Focus insertion}{Splitting a non-output term vertex and connecting its old image to a fresh internal vertex by a new focus edge.}
 
 \glossaryentry{focus}{Focus mode}{One of $\mathsf{search}$, $\mathsf{backtrack}$, or $\mathsf{rewrite}$; this datatype alone does not specify a graph position.}
+
+\glossaryentry{focus-round-trip}{Focus round trip}{Erasure followed by reinsertion, with an explicit isomorphism restoring original names, the focus edge, and its endpoints.}
 
 \glossaryentry{focus-avoiding-site}{Focus-avoiding site}{A shallow site different from the focus edge, or any site strictly inside a box.}
 
 \glossaryentry{focus-free}{Focus-free hypernet}{A graph with no focus labels at any depth, including inside every boxed body.}
 
 \glossaryentry{focussed-hypernet}{Focussed hypernet}{A hypernet with exactly one global focus, shallow, self-acyclic, and not exposed.}
+
+\glossaryentry{focussed-isomorphism}{Focussed isomorphism}{A graph isomorphism preserving the distinguished focus edge and mode, hence its endpoints and boundary observations.}
 
 \glossaryentry{observations}{Fragment}{An element of the family $F_i$ in an observation interface, matched with contexts of the same interface index $i$.}
 

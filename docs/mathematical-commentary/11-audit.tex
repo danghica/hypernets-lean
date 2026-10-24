@@ -51,6 +51,11 @@ incidence-recovery laws, hole freedom, term-typing preservation, initial
 attachment, search endpoint realization, and the interior and value regressions.
 \lean{Graph/Audit}{98}{107}{Graph.Audit: focus realization dependencies}
 
+Twelve further commands inspect general erasure and its invariants, the
+reinsertion isomorphism and focus endpoints, arbitrary-state recovery, state
+search determinism and boundary laws, and the execution/interior regressions.
+\lean{Graph/Audit}{109}{120}{Graph.Audit: erasure and state search dependencies}
+
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
 isomorphism invariance of unique holes, and uniqueness of the two-hole example
@@ -65,7 +70,8 @@ axioms. The focus results do too, except the boxed-focus rejection, which uses
 only \texttt{propext} and \texttt{Quot.sound}. The search audits use only \texttt{propext} and \texttt{Quot.sound}, except
 shallow filling preservation, which also uses classical choice. The new realization audits use all three standard axioms, except term-typing
 preservation, which uses only propositional extensionality and quotient soundness.
-The remaining audited declarations additionally report \texttt{Classical.choice}.
+All new general-erasure and state-search audit entries use those three
+standard axioms. The remaining audited declarations additionally report \texttt{Classical.choice}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
 \texttt{sorryAx} or a project-specific axiom.
@@ -134,10 +140,14 @@ together with the exact fate of a consumed hole label.
 \item Concrete focussed hypernets and the state space are now defined. The five coordinate search rules, their determinism, and their forward shallow
 context-filling law are proved. Explicit focus insertion, incidence recovery,
 term-typing preservation, initial attachment, and realization of search endpoints
-as hole-free focussed states are now proved. Complete erasure of arbitrary
-focussed states and its inverse laws modulo isomorphism, and identify the search
-relation with the paper's contextual graph rewrites. Define substitution and
-compute transitions, rootedness, and refocusing. Prove
+as hole-free focussed states are now proved. General erasure of arbitrary
+closed focussed states and the erasure-then-insertion isomorphism are proved,
+including the focus edge and its endpoints. Erasure-based search on actual
+states is defined, deterministic up to focussed isomorphism, and satisfies
+search boundary laws. Prove source-isomorphism invariance, an
+insertion-then-erasure isomorphism, and descent to isomorphism classes; identify
+this search relation with the paper's contextual graph rewrites. Define
+substitution and compute transitions, rootedness, and refocusing. Prove
 the structural laws under the paper's determinism and refocusing hypotheses.
 The state space and boundary predicates alone do not define that machine.
 \item Define concrete pre-templates, specimens, quasi-specimens, output-closure,

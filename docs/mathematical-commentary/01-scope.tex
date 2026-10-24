@@ -28,8 +28,12 @@ determinism, boundary laws, and preservation under shallow filling proved
 (Section~\ref{sec:search}). Explicit focus insertion now realizes typed
 coordinates as actual states, preserving holes and boundary observations, and
 contracting each inserted focus recovers original incidences
-(Section~\ref{sec:realization}). General erasure, graph-rewrite adequacy,
-substitution and compute transitions, and the full specimen interpretation remain open.
+(Section~\ref{sec:realization}). General erasure and the focus-preserving erasure-then-insertion isomorphism are
+now proved for arbitrary closed focussed states. Erasure-based search on actual
+states is deterministic up to focussed isomorphism and has the expected search
+boundary laws (Section~\ref{sec:erasure}). Graph-rewrite adequacy, source
+isomorphism invariance, substitution and compute transitions, and the full
+specimen interpretation remain open.
 
 \Needspace{18\baselineskip}
 \subsection{Paper-to-Lean proof dependency map}
@@ -58,7 +62,8 @@ states and output-closure. Point~(3) requires the entering/exiting classificatio
 argument. The Fig.~9 search rules are now checked in underlying-graph coordinates,
 and existing context steps survive shallow hole filling. Extracting a context
 step from a filled specimen and proving adequacy for local graph rewriting remain
-open. Typed coordinates now have explicit focus-edge state realizations.
+open. Typed coordinates have explicit state realizations, and arbitrary closed states
+now have erasure-based search with proved boundary laws.
 The abstract field \texttt{context\_step} currently assumes their needed
 consequence. It has not been discharged by the graph path results.
 \item \textbf{Proposition~38: logical lifting checked; initial bridge open.}\par
@@ -79,7 +84,7 @@ representation choices. Relating them to the paper's set-based hypernets and
 across depth bounds is a separate adequacy obligation. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
 not replace the operational proofs in Appendix~F. The next proof dependency
-is general focus erasure and adequacy of coordinate search for local graph rewriting,
+is source-isomorphism invariance and adequacy of erasure-based search for local graph rewriting,
 together with the remaining transitions of \S6.4. Rootedness, Lemma~26(3), and
 Lemma~39(2--3) remain subsequent obligations. The active/passive operation
 partition and all five coordinate search rules are now defined. These then support the concrete Proposition~40 bridge;
@@ -93,7 +98,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{7a641dc}, rather than to the moving
+All code links point to revision \texttt{d6c2a19}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

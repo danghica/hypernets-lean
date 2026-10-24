@@ -60,8 +60,8 @@ consequences are currently requirements of the specimen interface.
   Determinism and refocusing are hypotheses of the paper's theorem, not claims
   to prove for arbitrary extrinsic rewrite rules.
 
-The next dependency is general focus erasure, inverse laws modulo isomorphism,
-and adequacy of the search coordinates for contextual graph rewriting, together with §6.4's substitution and compute transitions, then
+The next dependencies are source-isomorphism invariance, descent of search to
+isomorphism classes, and adequacy for contextual graph rewriting, together with §6.4's substitution and compute transitions, then
 rootedness, Lemma 26(3), and Lemma 39(2–3).
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices whose adequacy for the paper remains a separate obligation.
@@ -84,8 +84,18 @@ of the new focus back to the original incidence lists. `SearchRealization.lean`
 proves search preserves term typing, constructs genuine initial states, and gives
 explicit focussed state endpoints for every typed coordinate search step.
 `RealizationExamples.lean` checks initial/final value states and interior insertion.
-This advances the operational obligation in the PDF's remaining-work list; it
-does not yet prove erasure of arbitrary focussed states or contextual rewrite adequacy.
+`FocusErasure.lean` and `FocusRoundTrip.lean` now erase arbitrary closed focussed
+graphs and prove that reinsertion recovers them by an explicit focus-preserving
+isomorphism. `StateSearch.lean` extracts coordinates from arbitrary states and
+defines actual-state search through erasure and reinsertion. It proves determinism
+up to focussed isomorphism, target-renaming closure, and the initial/final search
+boundary laws. `ErasureExamples.lean` proves an actual initial-value-to-final-state
+search execution and tests recovery with an interior focus.
+
+This advances item 3 of the remaining-work list. Source-isomorphism invariance,
+descent to isomorphism classes, the opposite insertion/erasure round trip, and
+equivalence to the paper's contextual local rewrites remain open. The full UAM
+and concrete robustness theorem are not yet constructed.
 
 ## Concrete graph milestone
 
@@ -299,12 +309,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 641 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 651
-source-fragment links point to immutable code revision `7a641dc`. It distinguishes
+all 712 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 723
+source-fragment links point to immutable code revision `d6c2a19`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 146 technical terms, with short descriptions and internal PDF links
+glossary of 151 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -346,8 +356,9 @@ logical axioms, if used, are shown explicitly.
    sharp composite context closure are proved. Global hole-label uniqueness under freshness, exact hole inventories, and sharp context closure are now
    checked even for deep replacement.
 2. Focussed hypernets, the state space, and the five coordinate search rules are
-   defined. Focus insertion and state endpoint realization are proved. Complete
-   general erasure and coordinate/contextual rewrite adequacy; define
+   defined. General erasure, erasure-then-reinsertion recovery, and search on
+   explicit states are proved. Complete source-isomorphism invariance, quotient
+   descent, the opposite round trip, and contextual rewrite adequacy; define
    substitution and compute transitions, rootedness, and refocusing; prove
    structural laws under the paper's determinism/refocusing hypotheses.
 3. Define concrete type-indexed pre-templates, specimens, quasi-specimens,

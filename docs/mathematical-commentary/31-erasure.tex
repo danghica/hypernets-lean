@@ -1,0 +1,351 @@
+\Needspace{32\baselineskip}
+\section{General focus erasure and search on explicit states}
+\label{sec:erasure}
+
+We now erase the focus of an arbitrary focussed graph with no outputs, prove
+that reinsertion recovers the original graph and focus up to isomorphism, and
+use the construction to define search on actual states. Unlike the previous
+section's recovery result, the input need not have been constructed by our
+insertion function. Search is deterministic up to focus-preserving isomorphism,
+final states have no search step, and no search step ends in an initial state.
+A concrete initial value state makes a search step to an actual final state.
+
+The remaining operational adequacy obligation is precise: identify this
+erasure-based relation with the paper's contextual local-rewrite presentation.
+We have not yet proved source-isomorphism invariance, descended the relation
+to isomorphism classes, or constructed the full machine with substitution and
+compute transitions. Determinism up to isomorphism is not equality-based
+determinism on the current carrier of named state records.
+
+\Needspace{16\baselineskip}
+\subsection{Contraction maps and the retained carriers}
+Fix a focussed graph $G:I\to\epsilon$, focus edge $e_f$, source $s$, and an
+internal vertex $t$ equal to the focus target. We first work with this explicit
+witness, then prove that every such graph supplies it.
+
+\begin{definition}[General focus erasure maps]\label{term:focus-erasure}
+Remove $t$ from the internal carrier and $e_f$ from the edge carrier, using
+subtypes of names unequal to the deleted names. Let $j$ include the remaining
+ports into the old ports. If $w\ne t$, let $k(w)$ keep $w$ with its non-deletion
+certificate. Self-acyclicity ensures $s\ne t$, so $p=k(s)$ is defined. Set
+\[
+ c(w)=\begin{cases}p&w=t,\\k(w)&w\ne t,\end{cases}
+ \qquad
+ a(x)=\begin{cases}t&j(x)=s,\\j(x)&j(x)\ne s.\end{cases}
+\]
+The map $c$ contracts the focus. The map $a$ recovers the appropriate old
+\emph{source} representative, choosing $t$ at the joined port; $j$ recovers
+the old \emph{target} representative. Boundary ports and their order are
+unchanged.
+\end{definition}
+\lean{Graph/FocusErasure}{11}{11}{Linear.FocusErasure.Vertex}
+\lean{Graph/FocusErasure}{13}{13}{Linear.FocusErasure.lift}
+\lean{Graph/FocusErasure}{15}{19}{Linear.FocusErasure.keep}
+\lean{Graph/FocusErasure}{38}{38}{Linear.FocusErasure.position}
+\lean{Graph/FocusErasure}{40}{42}{Linear.FocusErasure.contract}
+\lean{Graph/FocusErasure}{62}{64}{Linear.FocusErasure.expand}
+
+\begin{lemma}[Port-map identities]
+The map $j$ is injective, avoids $t$, and satisfies $j(k(w))=w$.
+Moreover $j(p)=s$, $c(t)=c(s)=p$, $j(c(w))=w$ for $w\ne t$, and $c(j(x))=x$.
+The expansion $a(x)$ never equals $s$; it satisfies $a(c(w))=w$ for $w\ne s$
+and $c(a(x))=x$.
+\end{lemma}
+\begin{proof}
+The inclusion and keeping claims follow by port-constructor cases; subtype
+extensionality gives injectivity on internal ports, and the subtype certificate
+excludes $t$. The inequality $s\ne t$ is exactly focus self-acyclicity rewritten
+by the chosen target witness. The identities for $p,c$ follow by unfolding and
+splitting on whether the argument is $t$. Apply inclusion injectivity to derive
+$c(j(x))=x$ from $j(c(j(x)))=j(x)$.
+For expansion, when $j(x)=s$ its result is $t\ne s$; otherwise it is already
+different from $s$. To prove $a(c(w))=w$, split on $w=t$. At $t$, contraction
+lands at $p$ and expansion returns $t$. Otherwise inclusion after contraction
+returns $w\ne s$, so expansion leaves it unchanged. For $c(a(x))=x$, split
+on $j(x)=s$. In that case $x=p$ by inclusion injectivity; otherwise use
+$c(j(x))=x$.
+\end{proof}
+\lean{Graph/FocusErasure}{21}{22}{Linear.FocusErasure.lift_keep}
+\lean{Graph/FocusErasure}{24}{25}{Linear.FocusErasure.lift_injective}
+\lean{Graph/FocusErasure}{27}{31}{Linear.FocusErasure.lift_ne_target}
+\lean{Graph/FocusErasure}{33}{35}{Linear.FocusErasure.source_ne_target}
+\lean{Graph/FocusErasure}{44}{45}{Linear.FocusErasure.lift_position}
+\lean{Graph/FocusErasure}{47}{48}{Linear.FocusErasure.contract_target}
+\lean{Graph/FocusErasure}{50}{52}{Linear.FocusErasure.lift_contract}
+\lean{Graph/FocusErasure}{54}{56}{Linear.FocusErasure.contract_lift}
+\lean{Graph/FocusErasure}{58}{59}{Linear.FocusErasure.contract_source}
+\lean{Graph/FocusErasure}{66}{71}{Linear.FocusErasure.expand_ne_source}
+\lean{Graph/FocusErasure}{73}{78}{Linear.FocusErasure.expand_contract}
+\lean{Graph/FocusErasure}{80}{86}{Linear.FocusErasure.contract_expand}
+
+\begin{lemma}[Injectivity on retained incidence lists]
+A source of a retained edge cannot equal $s$, and a target of a retained edge
+cannot equal $t$. Contraction is injective on vertices other than $s$, and also
+on vertices other than $t$.
+\end{lemma}
+\begin{proof}
+If a retained edge sourced $s$, source uniqueness with the focus edge would
+identify the two edges, contrary to retention. Target uniqueness proves the
+other exclusion. For injectivity off $s$, apply $a$ to equality of contracted
+ports and use $a(c(w))=w$. For injectivity off $t$, apply $j$ and use
+$j(c(w))=w$. These are restricted injectivity assertions: $c$ itself identifies
+the two distinct focus endpoints.
+\end{proof}
+\lean{Graph/FocusErasure}{88}{91}{Linear.FocusErasure.source_avoids}
+\lean{Graph/FocusErasure}{93}{97}{Linear.FocusErasure.target_avoids}
+\lean{Graph/FocusErasure}{99}{102}{Linear.FocusErasure.source_injective}
+\lean{Graph/FocusErasure}{104}{107}{Linear.FocusErasure.target_injective}
+
+\begin{lemma}[Label preservation]
+Both focus endpoints have term label. Keeping an undeleted port preserves its
+label, and contraction preserves every port's label.
+\end{lemma}
+\begin{proof}
+Rewrite the focus source and target typing certificates using their singleton
+incidences and focus label; its signature is term-to-term. Keeping preserves
+labels by cases on internal and boundary ports. For contraction, all ports
+other than $t$ use keeping. At $t$, its image is the kept source and both
+endpoints have the same term label.
+\end{proof}
+\lean{Graph/FocusErasure}{109}{112}{Linear.FocusErasure.source_term}
+\lean{Graph/FocusErasure}{114}{118}{Linear.FocusErasure.target_term}
+\lean{Graph/FocusErasure}{120}{122}{Linear.FocusErasure.keep_label}
+\lean{Graph/FocusErasure}{124}{132}{Linear.FocusErasure.contract_label}
+
+\Needspace{16\baselineskip}
+\subsection{A valid focus-free underlying graph}
+\begin{theorem}[General erasure construction]
+Delete $e_f$ and $t$, retain every other edge label, and map all retained source
+and target lists through $c$. The result is a finite typed hypernet of the same
+interface $I\to\epsilon$.
+\end{theorem}
+\begin{proof}
+Finite subtype enumerations supply the carriers. Restricted contraction
+injectivity on retained sources and targets preserves no-repetition. Given a
+shared contracted source of two retained edges, restricted injectivity recovers
+a shared old source, so old source uniqueness identifies the edge names.
+The target proof is the same with the target restriction.
+
+For source coverage, there are no output ports. Given an erased port $x$, use
+the old source coverage at $a(x)$. Since $a(x)\ne s$, its source edge cannot be
+the focus; contraction of that source gives $c(a(x))=x$.
+For target coverage, a retained target $w$ differs from $t$, so
+$j(c(w))=w$ and its input status is unchanged. Conversely, if $x$ is not an
+input, old target coverage at $j(x)$ gives an edge. It is not the focus because
+$j(x)\ne t$. Its contracted target is $c(j(x))=x$.
+Finally, mapping contracted lists through labels equals reading the old labels,
+by label preservation, so both signature-typing certificates follow from $G$.
+\end{proof}
+\lean{Graph/FocusErasure}{135}{210}{Linear.FocusErasure.erase}
+
+\begin{lemma}[Erased invariants]
+The erased graph is globally focus-free, its distinguished port $p$ has term
+label, and erasure preserves global hole-freedom.
+\end{lemma}
+\begin{proof}
+Every retained edge was different from the unique focus, so its entire label,
+including any box body, is focus-free. The port $p$ keeps the term-labelled
+source, hence has term label. A hypothetical hole in the erased graph lies at
+a retained edge with unchanged label and label-local position; the same
+occurrence would be a hole in the original graph. Thus a hole-free original
+has a hole-free erasure.
+\end{proof}
+\lean{Graph/FocusErasure}{212}{213}{Linear.FocusErasure.erased_focusFree}
+\lean{Graph/FocusErasure}{215}{217}{Linear.FocusErasure.position_term}
+\lean{Graph/FocusErasure}{219}{222}{Linear.FocusErasure.erased_holeFree}
+
+\Needspace{16\baselineskip}
+\subsection{Reinsertion recovers an arbitrary focussed graph}
+\begin{definition}[Restoring a deleted name]\label{term:focus-round-trip}
+For any type $A$ and distinguished $b\in A$, the restoration bijection
+$(A\setminus\{b\})+1\to A$ sends retained names to themselves and the fresh
+singleton name to $b$. Its inverse tests whether a name equals $b$.
+Applying this to $t$ and $e_f$ gives the vertex and edge bijections needed for
+reinsertion. Reinsert the original focus mode at $p$ in the erased graph.
+The port $p$ is a non-output because the output interface is empty, and its
+term-typing certificate was proved above.
+\end{definition}
+\lean{Graph/FocusRoundTrip}{12}{23}{Linear.FocusErasure.restore}
+\lean{Graph/FocusRoundTrip}{25}{29}{Linear.FocusErasure.position_not_output}
+\lean{Graph/FocusRoundTrip}{32}{34}{Linear.FocusErasure.reinsert}
+The bijection's inverse laws follow by retained/fresh cases; the fresh carrier
+has exactly one member. At ports, restoring host inclusion agrees with $j$,
+and restoring the fresh insertion vertex gives $t$. Restoring the insertion's
+source-redirection map agrees with $a$: the test $x=p$ is equivalent to
+$j(x)=s$, by inclusion injectivity and $j(p)=s$.
+\lean{Graph/FocusRoundTrip}{36}{38}{Linear.FocusErasure.restore_host}
+\lean{Graph/FocusRoundTrip}{40}{41}{Linear.FocusErasure.restore_fresh}
+\lean{Graph/FocusRoundTrip}{43}{55}{Linear.FocusErasure.restore_split}
+
+\begin{theorem}[Focus-preserving round trip]
+Reinserting after erasure is isomorphic to the original graph. The isomorphism
+restores the focus edge, source, and target, preserves boundary order, and
+preserves literal edge labels, including complete boxed bodies.
+\end{theorem}
+\begin{proof}
+Use the restoration bijections. Retained internal labels are unchanged; the
+fresh insertion vertex has term label, equal to the original label of $t$.
+Retained edge labels are unchanged, and the new focus label equals the original
+focus label by its certificate.
+For a retained source list, restoration after insertion-redirection after
+contraction acts as $a\circ c$, which is the identity on these sources because
+they avoid $s$. For a retained target list, restoration acts as $j\circ c$,
+which is the identity because these targets avoid $t$. Map these pointwise
+identities over the lists. The new focus source restores to $j(p)=s$, and its
+target restores to $t$, giving the original singleton incidence lists.
+The fresh edge restores to $e_f$ by definition, and the preceding two port
+identities explicitly identify its endpoints.
+\end{proof}
+\lean{Graph/FocusRoundTrip}{59}{104}{Linear.FocusErasure.reinsert_iso}
+\lean{Graph/FocusRoundTrip}{107}{107}{Linear.FocusErasure.reinsert_focus_edge}
+\lean{Graph/FocusRoundTrip}{110}{116}{Linear.FocusErasure.reinsert_focus_endpoints}
+
+\begin{lemma}[Every closed focussed graph admits erasure]
+The focus target of any graph $G:I\to\epsilon$ is internal. Therefore every
+such focussed graph has a globally focus-free underlying graph, preserving
+hole-freedom, and reinserting its mode recovers it up to the proved isomorphism.
+\end{lemma}
+\begin{proof}
+The focus target occurs in a target list, so cannot be an input. There are no
+outputs. The remaining port constructor is internal. Choose its internal name
+with its equality certificate, and instantiate the preceding erasure,
+invariant, and round-trip constructions. This use of choice supplies a witness
+already proved to exist; it does not assume an erasure law.
+\end{proof}
+\lean{Graph/FocusRoundTrip}{127}{133}{Linear.Focussed.target_internal}
+\lean{Graph/FocusRoundTrip}{135}{135}{Linear.Focussed.targetVertex}
+\lean{Graph/FocusRoundTrip}{137}{137}{Linear.Focussed.targetVertex_spec}
+\lean{Graph/FocusRoundTrip}{140}{141}{Linear.Focussed.underlying}
+\lean{Graph/FocusRoundTrip}{143}{144}{Linear.Focussed.underlying_focusFree}
+\lean{Graph/FocusRoundTrip}{146}{147}{Linear.Focussed.underlying_holeFree}
+\lean{Graph/FocusRoundTrip}{151}{153}{Linear.Focussed.underlying_reinsert_iso}
+The theorem proves the erasure-then-insertion direction for arbitrary closed
+focussed graphs. A separate insertion-then-erasure isomorphism, and naturality
+under arbitrary source isomorphisms, are not asserted here.
+
+\Needspace{16\baselineskip}
+\subsection{Focus-preserving isomorphisms and state recovery}
+\begin{definition}[Focussed isomorphism]\label{term:focussed-isomorphism}
+A focussed isomorphism is a literal-label graph isomorphism together with
+equality of the two focus modes and an equation mapping the distinguished
+focus edge to the distinguished focus edge. Identity, inverse, and composition
+are obtained from the corresponding graph isomorphisms, using the edge
+bijection's inverse laws and composition for the focus equations.
+\end{definition}
+\lean{Graph/StateSearch}{12}{15}{Linear.Focussed.Iso}
+\lean{Graph/StateSearch}{20}{20}{Linear.Focussed.Iso.refl}
+\lean{Graph/StateSearch}{22}{27}{Linear.Focussed.Iso.symm}
+\lean{Graph/StateSearch}{29}{34}{Linear.Focussed.Iso.trans}
+
+\begin{lemma}[Endpoints and observations are invariant]
+A focussed isomorphism maps both focus endpoints correctly and preserves
+initiality and finality.
+\end{lemma}
+\begin{proof}
+Specialize the isomorphism's source-list equation to the focus edge and rewrite
+both lists as singletons. Singleton injectivity identifies the endpoints.
+Repeat for target lists. Port maps preserve input status; together with the
+mode equality, this yields both boundary-predicate equivalences.
+\end{proof}
+\lean{Graph/StateSearch}{36}{39}{Linear.Focussed.Iso.source}
+\lean{Graph/StateSearch}{41}{44}{Linear.Focussed.Iso.target}
+\lean{Graph/StateSearch}{46}{49}{Linear.Focussed.Iso.initial_iff}
+\lean{Graph/StateSearch}{51}{54}{Linear.Focussed.Iso.final_iff}
+
+\begin{definition}[Extracted state coordinate]\label{term:state-coordinate}
+For an arbitrary state $s$, erase its focus and take the typed position whose
+mode is the old mode and whose vertex is the joined port $p$. Its typing is
+the erased-position typing lemma. Re-realizing this coordinate in the globally
+focus-free, hole-free underlying graph yields a state focus-preservingly
+isomorphic to $s$, using the general round trip. Thus the input need not be a
+canonical insertion or carry an assumed representation certificate.
+\end{definition}
+\lean{Graph/StateSearch}{63}{65}{Linear.State.coordinate}
+\lean{Graph/StateSearch}{69}{74}{Linear.State.recover}
+The extracted coordinate is initial or final exactly when $s$ is. Compose the
+previous realization boundary equivalence with the focussed isomorphism's
+boundary equivalence.
+\lean{Graph/StateSearch}{76}{81}{Linear.State.coordinate_boundary}
+
+\Needspace{16\baselineskip}
+\subsection{Search between actual states}
+\begin{definition}[Erasure-based state search]\label{term:state-search}
+For a fixed operation-kind function, write $s\to_{\mathrm{er}}t$ if there is a
+typed coordinate $q$ on the underlying graph of $s$ such that the extracted
+coordinate of $s$ makes one of the five search steps to $q$, and the realization
+of $q$ is focus-preservingly isomorphic to $t$. Thus the target may use arbitrary
+vertex and edge names. This is a relation on actual state records, rather than
+merely a construction of two endpoints from a separately supplied graph.
+\end{definition}
+\lean{Graph/StateSearch}{86}{90}{Linear.State.Search}
+
+\begin{lemma}[Existence and target renaming]
+Every typed coordinate successor of an extracted state coordinate gives an
+actual state successor. Replacing a successor by a focus-preservingly
+isomorphic state preserves the step.
+\end{lemma}
+\begin{proof}
+For existence, realize the successor coordinate and use the identity focussed
+isomorphism as witness. For target renaming, retain the same coordinate step
+and compose its target isomorphism with the supplied isomorphism.
+\end{proof}
+\lean{Graph/StateSearch}{93}{98}{Linear.State.search_realize}
+\lean{Graph/StateSearch}{101}{104}{Linear.State.search_target_iso}
+
+\begin{theorem}[Search determinism up to focussed isomorphism]
+Two erasure-based search successors of the same state are focus-preservingly
+isomorphic.
+\end{theorem}
+\begin{proof}
+Both coordinate steps use the same erased graph and the same extracted input.
+Coordinate search determinism identifies their output pairs; subtype
+extensionality identifies the typed positions. Their canonical realizations
+therefore coincide. Compose the inverse of the first target isomorphism with
+the second target isomorphism to identify the actual successors.
+\end{proof}
+\lean{Graph/StateSearch}{107}{113}{Linear.State.search_deterministic}
+
+\begin{lemma}[Explicit-state search boundary laws]
+A final state has no erasure-based search step, and no such step ends in an
+initial state.
+\end{lemma}
+\begin{proof}
+If the source is final, its extracted coordinate has backtrack mode at an
+input. Coordinate search cannot start there. If the target is initial, pull
+initiality back through the target's focussed isomorphism and the realization
+boundary equivalence. The successor coordinate would be search at an input,
+which the coordinate search boundary theorem excludes.
+\end{proof}
+\lean{Graph/StateSearch}{116}{122}{Linear.State.final_no_search}
+\lean{Graph/StateSearch}{125}{133}{Linear.State.no_search_initial}
+These are search-only laws. Neither all-transition finality nor the full
+robustness theorem follows until the remaining transition classes and specimen
+obligations are supplied.
+
+\Needspace{20\baselineskip}
+\subsection{Concrete execution and interior recovery}
+Erase the focus of the previously constructed initial value state. Its value
+edge survives and has an empty argument/thunk view. Its source contracts from
+the old focus target to the joined port, which is exactly the extracted state
+coordinate's vertex. This proves the view's source certificate; the other
+certificates follow from the nullary value signature.
+\lean{Graph/ErasureExamples}{9}{22}{Linear.Examples.erasedValueOperation}
+Apply the passive nullary rule, advance the typed coordinate, and realize it.
+The existence lemma gives an actual state search step. The result is final
+because its mode is backtrack and its vertex retains the input status of the
+initial coordinate. This proves that the new state relation has a concrete
+execution, rather than only universal implications about hypothetical steps.
+\lean{Graph/ErasureExamples}{26}{37}{Linear.Examples.value_state_search}
+For an interior test, relabel the old focus of the initial value graph as a
+variable, retaining the value edge and all incidences. Both labels exclude
+focuses and holes, so this is a focus-free, hole-free closed two-edge chain.
+Insert search at its internal vertex to obtain a state whose focus source is
+internal. It is not initial, directly from that source constructor. General
+state recovery erases and reconstructs it with a focussed isomorphism, including
+its distinguished focus and mode.
+\lean{Graph/ErasureExamples}{40}{45}{Linear.Examples.closedChain}
+\lean{Graph/ErasureExamples}{47}{49}{Linear.Examples.closedChain_focusFree}
+\lean{Graph/ErasureExamples}{51}{53}{Linear.Examples.closedChain_holeFree}
+\lean{Graph/ErasureExamples}{56}{58}{Linear.Examples.interiorState}
+\lean{Graph/ErasureExamples}{60}{60}{Linear.Examples.interior_state_not_initial}
+\lean{Graph/ErasureExamples}{64}{67}{Linear.Examples.interior_state_recovery}
