@@ -10,14 +10,15 @@ The target milestone is the general sufficiency-of-robustness theorem
 
 ## Current status
 
-**The concrete hypernet theorem is not yet formalized.** The checked development
-contains its abstract transition-system argument and a conditional specimen
-argument, together with a concrete finite graph and boxed-hypernet foundation.
-There are no `sorry` proofs or project-specific axioms.
+**Both contextual robustness clauses are proved for the concrete fixed-depth
+class machine.** `ConcreteObservations.sufficiency` and its converse use
+independently defined observations and a proved initial-lifting theorem.
+The single-fragment specialisations cover arbitrary replacement graphs,
+including nested holes. There are no `sorry` proofs or project-specific axioms.
 
-The principal completed result is `Machine.CountingSimulation.sound`, the
-content of Proposition 37, generalized to arbitrary deterministic machines.
-It includes the stuck-state alternative and all three quantitative relations.
+**The literal paper theorem is not yet complete:** operational transfer to the
+union of all finite depths remains to be proved. The existing graph encoding
+does not establish preservation of executions or their step counts.
 
 Theorems `SpecimenSystem.contextual_sufficiency` and
 `SpecimenSystem.contextual_sufficiency_converse` prove abstract counterparts of
@@ -33,7 +34,8 @@ The full UAM now has a literally deterministic machine on recursive graph
 isomorphism classes, with a concrete specimen interface and both counting
 simulations. Safety and robustness are evaluated directly on that class machine;
 no equivalence with the earlier named-state predicates is assumed. General
-initial observation lifting and final contextual assembly remain open.
+initial observation lifting and both contextual clauses are now proved.
+Transfer to the paper's unbounded operational semantics remains open.
 
 ## Paper proof dependency map
 
@@ -61,19 +63,14 @@ initial observation lifting and final contextual assembly remain open.
   erasure-based state search in both directions. Arbitrary simple contexts,
   output-boundary fragments, recursive endpoint renaming, and self-looping
   attachments are covered.
-- **Proposition 38 — initial bridge open:** the logical lifting theorem is
-  checked and initial focus attachment is constructed. Concrete observations and
-  specimen witnesses must still discharge `initial_lift`.
-- **Theorem 6 — still conditional:** the abstract pieces are combined, but a
-  concrete named-state `SpecimenSystem` and safety/robustness bridges are now
-  constructed on names and classes; initial observations and final contextual assembly remain open.
-  Determinism and refocusing are hypotheses of the paper's theorem, not claims
-  to prove for arbitrary extrinsic rewrite rules.
+- **Proposition 38 — concrete initial bridge checked:** independent substitution
+  of related vectors constructs a paired filling and an allowed remote rooted
+  initial specimen. Observation contains no template or specimen premise.
+- **Theorem 6 — concrete fixed-depth clauses checked:** both contextual clauses
+  and their single-fragment specialisations are proved. Transfer to the paper's
+  unbounded operational semantics remains open. Determinism, refocusing, safety,
+  and robustness remain the stated semantic hypotheses.
 
-Contextual search adequacy and §6.4's concrete transition definitions are now
-complete. Stationary replay, substitution rootedness and uniqueness, and the
-full-UAM structural theorem are now proved. The next dependencies are the
-concrete observations and initial lifting.
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices. Their annotated set-presentation round trips and depth coherence are
 now proved. Fresh vertex naming also resolves the paper's graph-valued box-label
@@ -140,10 +137,10 @@ the value execution rooted and the valid interior-focus state behind a variable
 not rooted. These use the current erasure-based search semantics; contextual
 local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 
-The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains two unfinished tasks. Search adequacy, the full UAM transition
-definition, and its structural theorem are discharged; the concrete specimen
-interface and robustness bridges are proved; initial observation lifting,
-final theorem instantiation remains open.
+The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B)
+now records one unfinished obligation: operational transfer to the union of all
+finite depths. The previous observation-lifting and contextual-assembly tasks
+are discharged in the fixed-depth model.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
 invariance under recursive renaming and closure under one-way shallow filling,
@@ -239,10 +236,10 @@ unrooted robustness alternative. Rooted consequences are derived, not assumed.
 The nested-box example yields exactly one recorded hole; a mode-mismatched
 pair is rejected even with universally true up-to relations.
 
-Estimated completion by mathematical effort: **about 94%**, with a plausible
-range of **82–97%**, up from 93% after concrete converse integration.
-This is a planning judgment, not a declaration count. Initial observation lifting
-and final contextual assembly remain substantial.
+The fixed-depth concrete theorem is complete. The earlier **94%** estimate was
+a planning judgment; the scope audit now separates the unproved operational
+transfer to the paper's union of all finite depths. A more precise overall
+percentage is not justified until that transfer is assessed.
 
 ## Concrete graph milestone
 
@@ -516,10 +513,11 @@ logical axioms, if used, are shown explicitly.
 
 ## Remaining work toward the milestone
 
-1. Construct concrete observations and initial lifting for arbitrary related
-   fragments in allowed contexts, with membership and endpoint representation witnesses.
-2. Instantiate the contextual sufficiency results to obtain Theorem 6 under its
-   original hypotheses.
+The fixed-depth concrete theorem now has independently defined observations,
+proved initial lifting, and both contextual sufficiency clauses. The remaining
+obligation for the literal paper theorem is operational transfer to the union
+of all finite depths, including exact run counts, finality, and the semantic
+hypotheses. Existing graph-level encoding alone does not prove this transfer.
 
 The copying UAM, lambda-term translation, and example program equivalences
 are later milestones; the current abstract and graph-level examples do not
@@ -646,3 +644,18 @@ remoteness for constructed initial specimens.
 Appendix B now leaves general observation construction/initial lifting and
 final contextual assembly. The full contextual Theorem 6 is still outstanding.
 The Lean build and axiom audits pass without `sorry` or new axioms.
+
+## Concrete contextual theorem
+
+`ConcreteObservations.sufficiency` and `sufficiency_converse` prove both
+contextual robustness clauses for the fixed-depth class machine. Contexts
+and observation are independent of the template. Related fragment vectors
+construct the paired filling and initial specimen; no locality or initial
+lifting premise is left unproved. `single_sufficiency` and its converse cover
+arbitrary single graphs. A nested-hole regression proves observation existence
+and initial lifting through an original box body.
+
+This completes both previous Appendix B tasks **within the concrete fixed-depth
+model**. It does not establish operational equivalence with the paper's
+unbounded machine. Appendix B now records that transfer explicitly. Section 49
+explains every new declaration and its proof.

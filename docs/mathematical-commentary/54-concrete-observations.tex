@@ -1,0 +1,262 @@
+\Needspace{20\baselineskip}
+\section{Concrete observations and contextual robustness}
+\label{sec:concrete-observations}
+The two contextual sufficiency clauses are now proved for the concrete
+fixed-depth class machine. Observation is defined independently of a template:
+fill the declared holes of a context, then initialise the resulting closed,
+focus-free graph. Related fragments are subsequently used to construct the
+paired specimen needed by Proposition~38. Thus the theorem no longer assumes
+initial lifting or graph locality.
+
+The scope qualification matters. The operational carrier here is
+\texttt{DeepStateClass ops d}, with a fixed depth allowance $d$ throughout an
+execution. The paper states Theorem~6 on the union of all finite depths.
+The existing finite-union encoding concerns graphs and relations; an
+operational transfer theorem for computations that increase the required
+depth is not proved. The former Appendix~B tasks are discharged in the
+concrete model, but this does not by itself discharge that transfer.
+
+\subsection{Independent recursive substitution}
+\Needspace{9\baselineskip}
+\termdef{observation-slots}
+\begin{definition}[Typed slots and independent fragment vectors]
+A slot interface $J$ is a predicate on pairs $(n,h)$ of depth allowances and typed hole labels. A fragment vector assigns to every declared pair a graph of depth $n$ with exactly the input and output lists of $h$. The assignment does not depend on a template, another vector, or a filling certificate. Interfaces may declare unused slots; only the finitely many holes in the context contribute to an observation.
+\end{definition}
+\lean{Graph/ObservationFillings}{10}{10}{Slots}
+\lean{Graph/ObservationFillings}{13}{13}{Fragments}
+
+\Needspace{9\baselineskip}
+\termdef{observation-coverage}
+\begin{definition}[Coverage of an original context]
+A graph is covered by $J$ when each of its edge labels is covered. A primitive hole $h$ at depth $n$ requires $J(n,h)$; every other primitive label is covered automatically. A box requires coverage of its original body at the smaller depth. The mutual recursion thus visits every original nested hole.
+\end{definition}
+\lean{Graph/ObservationFillings}{17}{24}{Covers}
+\lean{Graph/ObservationFillings}{19}{24}{CoversLabel}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[Coverage at an edge]
+Coverage of a graph supplies coverage of the label of every edge.
+\end{lemma}
+\begin{proof}
+Unfold the graph-level coverage equation and apply the resulting universally quantified assertion to the selected edge.
+\end{proof}
+\lean{Graph/ObservationFillings}{27}{29}{Covers.edge}
+
+\Needspace{9\baselineskip}
+\termdef{independent-filling}
+\begin{definition}[Independent filling]
+Fill each edge of the context by its label's replacement and expand the resulting family simultaneously. At a primitive hole use the supplied fragment. At another primitive label use its corolla. At a box first fill its original body, then use the corolla labelled by the rebuilt box. Inserted fragments are leaves: substitution never recurses into them. These mutually recursive definitions decrease the depth on entry into a box.
+\end{definition}
+\lean{Graph/ObservationFillings}{33}{47}{fill}
+\lean{Graph/ObservationFillings}{36}{47}{fillLabel}
+
+\Needspace{9\baselineskip}
+\termdef{observation-related}
+\begin{definition}[Pointwise relatedness]
+Vectors $a,b$ are related by a layered pre-template $T$ when $(T_n)(a(n,h),b(n,h))$ holds at every declared slot. This is a relation on independent fragment data; it is not defined by existence of an observation or specimen.
+\end{definition}
+\lean{Graph/ObservationFillings}{51}{52}{Related}
+
+\Needspace{9\baselineskip}
+\begin{definition}[Retained label copies]
+A label-copy certificate for the graph assigned to an edge yields its retained-corolla certificate. Copy the distinguished edge, its label equality, its ordered source and target equations, and its uniqueness field.
+\end{definition}
+\lean{Graph/ObservationFillings}{55}{57}{retainedCopy}
+
+\Needspace{9\baselineskip}
+\termdef{paired-label}
+\begin{definition}[Local paired labels]
+A pair of label replacements is certified in one of three ways: both are copies of the original label; the original label is a hole and the replacements are template-related; or the original label is a box, its two new bodies form a recursive paired filling, and the replacements copy the two rebuilt box labels. This certificate separates the local label proof from the dependent types of a surrounding edge family.
+\end{definition}
+\lean{Graph/ObservationFillings}{60}{70}{PairedLabel}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[From local labels to edge certificates]
+A paired-label certificate at an actual context edge gives the existing recursive filling-edge certificate.
+\end{lemma}
+\begin{proof}
+Eliminate the certificate. Retained labels use the preceding copy conversion; filled holes preserve the label equality and template membership; rebuilt boxes preserve the recursive body certificate and both label copies.
+\end{proof}
+\lean{Graph/ObservationFillings}{73}{78}{PairedLabel.edge}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[Related vectors pair at every label]
+If $a,b$ are related, their independent replacements of any covered label form a paired-label certificate.
+\end{lemma}
+\begin{proof}
+Induct on the depth allowance. At a hole apply pointwise relatedness. At each non-hole primitive use two identical corolla-copy certificates. At a box apply the induction hypothesis to every original body edge, convert the local certificates to filling-edge certificates, and form a paired body expansion. Copies of the rebuilt box labels complete the box case.
+\end{proof}
+\lean{Graph/ObservationFillings}{81}{106}{paired_label}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[Paired edges and whole fillings]
+Independent substitution of related vectors yields paired certificates at all original edges and a paired recursive filling of the whole context.
+\end{lemma}
+\begin{proof}
+Apply the preceding local theorem to each edge and convert its certificate. Unfold the two independent filling equations; both are expansions of the same original context. The expansion constructor with those edge certificates proves the whole-graph assertion.
+\end{proof}
+\lean{Graph/ObservationFillings}{109}{113}{paired_edges}
+\lean{Graph/ObservationFillings}{116}{130}{paired}
+
+\Needspace{9\baselineskip}
+\begin{theorem}[Finite exact substitution tuple]
+For a unique-hole context and related vectors whose left filled graph is hole-free, there is a finite tuple realising the same two filled graphs. Its hole names have no duplicates and are exactly the original context's holes.
+\end{theorem}
+\begin{proof}
+Convert the proved paired filling into a tuple using the existing recursive tuple theorem. Apply the tuple inventory theorem with context uniqueness and left-result closure. Declared but unused slots add no tuple entries; the finite tuple is extracted from the context rather than from an enumeration of the slot interface.
+\end{proof}
+\lean{Graph/ObservationFillings}{123}{130}{finite_tuple}
+
+\subsection{Initial witnesses without a pre-existing specimen}
+\Needspace{9\baselineskip}
+\termdef{initial-observation-specimen}
+\begin{definition}[Initial specimen from a paired filling]
+Given an unfocussed, focus-free unique-hole context $C$, allowed membership, two paired edge families, and hole-free results, insert a search focus at the unique input of $C$. Keep the old filling families and add a retained focus corolla on each side. Insertion preserves unique holes; the insertion--erasure isomorphism transports allowed membership. The insertion--expansion isomorphism supplies closure of both filled endpoints. All specimen fields are constructed from these data.
+\end{definition}
+\lean{Graph/InitialObservations}{18}{27}{specimen}
+
+\Needspace{9\baselineskip}
+\termdef{initial-graph-observation}
+\begin{definition}[Initial graph observation]
+A class $s$ observes a graph $G$ when $G$ is focus-free and hole-free and $s$ is the class obtained by realising the initial position of $G$. The witnesses are graph-validity proofs. This definition has no template parameter.
+\end{definition}
+\lean{Graph/InitialObservations}{31}{33}{Observe}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[Independent endpoint representation]
+The left endpoint of the constructed specimen observes the independently filled left graph; likewise on the right.
+\end{lemma}
+\begin{proof}
+Paired-filling focus freedom supplies focus freedom of each result. Use the corresponding given hole-freedom proof. The insertion--expansion commuting isomorphism identifies the specimen endpoint with independent initialisation; promote it to a recursive focussed isomorphism and apply quotient soundness.
+\end{proof}
+\lean{Graph/InitialObservations}{36}{41}{left_observation}
+\lean{Graph/InitialObservations}{44}{49}{right_observation}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[Uniqueness of initial observation]
+Any two observations of the same filled graph give equal state classes.
+\end{lemma}
+\begin{proof}
+Unpack both observations. The initial realisations differ only in proofs of the same propositions. Proof irrelevance identifies those arguments, leaving reflexive equality.
+\end{proof}
+\lean{Graph/InitialObservations}{52}{56}{observe_unique}
+
+\Needspace{9\baselineskip}
+\begin{theorem}[Initial lifting for paired fillings]
+Independent observations of the two closed paired fillings belong to the constructed class specimen system's lifting relation.
+\end{theorem}
+\begin{proof}
+Construct the initial specimen. Its focus is search at the unique input, so it is remote. Boundary preservation makes both filled endpoints initial, and initiality gives rootedness. The two endpoint representation lemmas and uniqueness of observation identify the given classes with the witness endpoints. These facts supply every field of lifting.
+\end{proof}
+\lean{Graph/InitialObservations}{60}{75}{lifting}
+
+\subsection{The concrete contextual theorem}
+\Needspace{9\baselineskip}
+\termdef{concrete-observation-interface}
+\begin{definition}[Observation contexts and observations]
+An observation context consists of an actual unique-hole graph with outer interface $[\mathrm{term}]\to[]$, a proof of focus freedom, and coverage by its declared slot interface. Allowedness is the supplied context predicate on that graph. Observing vector $a$ means independently filling the graph with $a$ and taking an initial graph observation. Neither context data nor observation mentions $T$. Observation remains partial when the filled graph is not a valid closed state.
+\end{definition}
+\lean{Graph/ConcreteObservations}{10}{13}{ObservationContext}
+\lean{Graph/ConcreteObservations}{17}{21}{observations}
+
+\Needspace{9\baselineskip}
+\begin{theorem}[Concrete Proposition 38]
+Two independent observations of related vectors in the same allowed observation context belong to concrete class lifting.
+\end{theorem}
+\begin{proof}
+Extract hole freedom from each observation. The independent-substitution theorem supplies paired edge certificates on the original context. Apply initial lifting for paired fillings, retaining the original allowed-membership proof and the two observed endpoint classes. Thus the previously abstract initial-lifting premise is now proved from graph data.
+\end{proof}
+\lean{Graph/ConcreteObservations}{29}{41}{initial_lifting}
+
+\Needspace{9\baselineskip}
+\begin{theorem}[Concrete forward contextual sufficiency]
+Fix $d$. Assume an isomorphism-invariant class of allowed contexts, output closure of $T_d$, behaviour refocusing, behaviour invariance under recursive isomorphism, and behaviour determinism modulo isomorphism. Let $Q,P,R$ be reasonable cost orders. If class input safety and forward robustness hold at $Q,P,R$, then any pointwise related vectors satisfy contextual refinement at $Q$ for the concrete observations and the full class machine at depth $d$.
+\end{theorem}
+\begin{proof}
+Instantiate abstract contextual sufficiency with the constructed class specimen system and the independent observation interface. Supply literal class determinism, the already proved safety and robustness bridges, and the preceding concrete initial-lifting theorem. Every graph-locality and observation obligation is discharged; the remaining assumptions are the stated semantic and cost hypotheses.
+\end{proof}
+\lean{Graph/ConcreteObservations}{45}{55}{sufficiency}
+
+\Needspace{9\baselineskip}
+\begin{theorem}[Concrete converse contextual sufficiency]
+Under the same structural and reasonable-cost hypotheses, input safety on the original template at $Q^{\mathrm{op}},P$ and converse robustness at $Q,P,R$ imply contextual refinement from the right vector to the left at $Q$.
+\end{theorem}
+\begin{proof}
+Use the abstract converse contextual theorem with the same concrete initial lifting. Supply the original input-safety bridge with converse costs and the converse robustness bridge. The previously checked converse counting simulation preserves the zero-right-step safety case and both directions of the safety equivalences.
+\end{proof}
+\lean{Graph/ConcreteObservations}{59}{70}{sufficiency_converse}
+
+\Needspace{9\baselineskip}
+\begin{corollary}[Concrete contextual equivalence]
+When both sets of safety and robustness hypotheses hold, related vectors are contextually equivalent at $Q$.
+\end{corollary}
+\begin{proof}
+Pair the forward and converse contextual refinements. This is exactly the definition of observational equivalence.
+\end{proof}
+\lean{Graph/ConcreteObservations}{74}{82}{equivalence}
+
+\subsection{Single fragments and a nested regression}
+\Needspace{9\baselineskip}
+\termdef{single-observation-slot}
+\begin{definition}[Single-slot specialisation]
+The singleton interface for $(n,h)$ declares precisely pairs equal to $(n,h)$. A graph $G$ of that depth and signature gives a fragment vector by transporting $G$ along those equalities. Therefore the vector theorem includes ordinary replacement of one arbitrary graph.
+\end{definition}
+\lean{Graph/SingleObservations}{9}{9}{singleSlot}
+\lean{Graph/SingleObservations}{12}{16}{singleFragment}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[Exact original relation in the singleton case]
+The two singleton vectors are related exactly when their underlying graphs are related by $T_n$.
+\end{lemma}
+\begin{proof}
+In the forward direction evaluate relatedness at the distinguished slot with reflexive equalities. In the reverse direction eliminate the two equalities carried by any declared slot and use the original relation proof.
+\end{proof}
+\lean{Graph/SingleObservations}{19}{27}{single_related_iff}
+
+\Needspace{9\baselineskip}
+\begin{corollary}[Both single-fragment contextual clauses]
+The forward and converse contextual sufficiency theorems hold for arbitrary original related graphs, represented as singleton vectors, including contexts whose selected hole is nested.
+\end{corollary}
+\begin{proof}
+Convert the original relation proof by the preceding equivalence and apply the corresponding vector theorem. No relation on arbitrary filler functions is demanded from a single-graph user.
+\end{proof}
+\lean{Graph/SingleObservations}{35}{41}{single_sufficiency}
+\lean{Graph/SingleObservations}{45}{53}{single_sufficiency_converse}
+
+\Needspace{9\baselineskip}
+\begin{definition}[A genuinely nested observation context]
+Use the earlier outer graph with a maker, a box, and a consumer, with its sole hole inside the original box body at depth zero. Remove the earlier focus by using the unfocussed outer graph itself. Unique holes follow from insertion's uniqueness equivalence; focus freedom was already proved. Coverage checks the two non-hole operations and the single nested hole. The independently supplied singleton fragment is the variable corolla.
+\end{definition}
+\lean{Graph/ObservationExamples}{10}{25}{context}
+\lean{Graph/ObservationExamples}{28}{28}{fragments}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[Related and closed nested fillings]
+The regression's fragment is related to itself by the one-way equality template, and its independently filled outer graph is hole-free.
+\end{lemma}
+\begin{proof}
+Relatedness uses equality, focus freedom, and one-wayness of the variable corolla. For closure, use expansion's componentwise hole-freedom theorem. The outer operations have no holes. The box case reduces to its filled body, whose hole is replaced by the hole-free variable corolla.
+\end{proof}
+\lean{Graph/ObservationExamples}{30}{31}{related}
+\lean{Graph/ObservationExamples}{34}{55}{closed}
+
+\Needspace{9\baselineskip}
+\begin{lemma}[Non-vacuous observation and lifting]
+The regression has an actual initial observation, and any two such independently supplied observations satisfy concrete initial lifting.
+\end{lemma}
+\begin{proof}
+Paired-filling focus freedom and the preceding closure theorem construct an observation. Apply the general concrete initial-lifting theorem with the genuine related singleton vectors, the allowed nested context, the empty behaviour, and the established output-closure and context-invariance proofs. This tests a hole below a box, not merely an empty specimen type.
+\end{proof}
+\lean{Graph/ObservationExamples}{58}{60}{observation_exists}
+\lean{Graph/ObservationExamples}{63}{70}{initial_lifting}
+
+\paragraph{Scope audit and remaining work.}
+The former Appendix~B obligations---independent observations, initial lifting,
+and both contextual clauses---are complete for the existing fixed-depth model.
+That theorem is checked without new axioms or proof holes. It is not a proof
+that the fixed-depth operational semantics equals the paper's unbounded
+semantics. A finite execution has some finite maximum depth, but invoking
+that fact informally does not prove preservation and reflection of steps,
+termination, or costs under the existing graph encoding. Appendix~B records
+this remaining obligation explicitly. The copying UAM and language examples
+remain outside the selected general-theorem milestone.

@@ -1,13 +1,15 @@
 \Needspace{24\baselineskip}
 \section{What remains for the paper's concrete theorem}
 \label{app:remaining-work}
-This is a to-do list only: completed obligations are removed. The remaining
-work needed to claim Theorem~6 with its original hypotheses is:
+This is a to-do list only. The concrete fixed-depth observation interface,
+initial lifting, and both contextual sufficiency clauses are now proved.
+To identify that result with the literal unbounded Theorem~6 of the paper:
 \begin{enumerate}
-\item Construct the concrete observation interface and prove initial lifting
-for arbitrary related fragments in allowed contexts, including the context
-membership and endpoint representation witnesses.
-\item Instantiate both contextual sufficiency clauses using the concrete
-observations and lifting to obtain the complete target robustness theorem
-with the paper's original hypotheses.
+\item Prove the operational transfer to the union of all finite depths.
+Extend the existing graph and relation encoding to state observations and
+full-UAM executions, including computations that increase the required depth.
+Prove preservation and reflection of the relevant runs and finality with
+exact step counts, and transfer the safety, robustness, determinism, and
+refocusing hypotheses. Then derive the paper's unbounded contextual theorem.
+The graph-level encoding alone does not establish these operational facts.
 \end{enumerate}
