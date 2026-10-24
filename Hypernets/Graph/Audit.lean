@@ -3,6 +3,7 @@ import Hypernets.Graph.PaperEncodingExamples
 import Hypernets.Graph.UAMStructureExamples
 import Hypernets.Graph.SpecimenRelocationExamples
 import Hypernets.Graph.UAMClassExamples
+import Hypernets.Graph.ClassConverse
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -465,3 +466,12 @@ import Hypernets.Graph.UAMClassExamples
 #print axioms Hypernets.Linear.UAMClassExamples.deterministic
 #print axioms Hypernets.Linear.UAMClassExamples.compute_step
 #print axioms Hypernets.Linear.UAMClassExamples.initial_lifting
+
+#print axioms Hypernets.Linear.ClassSafety.converseQuasi_iff
+#print axioms Hypernets.Linear.ClassSafety.converseQuasi_equiv
+#print axioms Hypernets.Linear.ClassSafety.converseQuasi_bridge
+#print axioms Hypernets.Linear.ClassSafety.converseRobust_bridge
+#print axioms Hypernets.Linear.ClassSafety.countingSimulation_converse
+#print axioms Hypernets.Linear.ClassSafety.sufficiency_converse
+#print axioms Hypernets.Linear.ClassSafety.equivalence
+#print axioms Hypernets.Linear.ClassSafety.initial_equivalence
