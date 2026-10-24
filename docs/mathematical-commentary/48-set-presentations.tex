@@ -1,0 +1,402 @@
+\section{Set presentations, depth bounds, and a box-label obstruction}
+\label{sec:set-presentations}
+
+The representation question has two different parts. Changing arbitrary finite
+vertex sets into tagged internal and boundary vertices is now proved harmless.
+So is recursively making that change inside binder-annotated boxes, and
+normalizing a finite family of different depth allowances to one common bound.
+However, these results do not yet justify forgetting the binder annotations
+from box labels. The final subsection gives a checked counterexample to that
+particular proposed forgetful translation. Consequently the representation
+item in Appendix~\ref{app:remaining-work} is narrowed, not removed.
+
+\subsection{Arbitrary vertex sets and ordered boundaries}
+\termdef{set-presentation}
+\begin{definition}[Set presentation]
+For a signature $\sigma$ and ordered boundary types $I,O$, a set presentation
+has finite vertex and edge carriers $V,E$, vertex and edge labels, source and
+target lists, and injective boundary maps
+$i:\{0,\ldots,|I|-1\}\to V$ and $o:\{0,\ldots,|O|-1\}\to V$.
+The boundary images are disjoint and have the prescribed vertex labels.
+Source and target lists are separately duplicate-free, and no vertex occurs
+in the source lists of two different edges, or in the target lists of two
+different edges. A vertex has a source incidence exactly when it is not an
+output, and a target incidence exactly when it is not an input. Mapping vertex
+labels over an incidence list gives the signature of its edge label.
+\end{definition}
+This is the fixed-signature form of the paper's outer graph definition.
+The two boundary functions encode ordered lists by their indices. Disjointness
+and coverage exclude isolated vertices, but allow cycles and a vertex shared
+by the source and target of the same edge. The signature formulation implies
+the paper's equal-label/equal-signature condition. This implication concerns
+the chosen label alphabet; changing that alphabet requires a separate check.
+\lean{Graph/SetPresentation}{11}{37}{Graph.SetNet}
+
+\termdef{boundary-normalization}
+\begin{definition}[Boundary normalization]
+The interior $V^{\circ}$ consists of vertices outside both boundary images.
+The normalized vertex carrier is the disjoint union of $V^{\circ}$, input
+indices, and output indices. The map $\mathsf{decode}$ sends an interior to
+its old vertex and a boundary index to the corresponding boundary vertex.
+The inverse candidate $\mathsf{encode}$ first tests input membership, then
+output membership, and otherwise records the vertex as interior. Classical
+choice supplies the index when membership is known.
+\end{definition}
+\lean{Graph/SetPresentation}{40}{43}{Graph.SetNet.Interior}
+
+\lean{Graph/SetPresentation}{44}{49}{Graph.SetNet.decode}
+
+\lean{Graph/SetPresentation}{50}{54}{Graph.SetNet.encode}
+
+\begin{lemma}[Inverse maps]
+Decoding an encoded vertex returns the vertex. Decoding is injective, and
+encoding a decoded normalized vertex returns that normalized vertex.
+Consequently the two maps form a bijection.
+\end{lemma}
+\begin{proof}
+The first identity follows by the three membership cases and the specification
+of the chosen index. For injectivity, compare the constructors of both
+normalized vertices. Two interiors are equal by subtype extensionality;
+two inputs or two outputs are equal by boundary injectivity. Mixed cases
+contradict either an interior's defining exclusions or boundary disjointness.
+Apply this injectivity to the first identity to obtain the other inverse law.
+\end{proof}
+\lean{Graph/SetPresentation}{56}{64}{Graph.SetNet.decode_encode}
+
+\lean{Graph/SetPresentation}{65}{79}{Graph.SetNet.decode_injective}
+
+\lean{Graph/SetPresentation}{80}{83}{Graph.SetNet.encode_decode}
+
+\lean{Graph/SetPresentation}{84}{85}{Graph.SetNet.vertices}
+
+\begin{lemma}[Labels and boundary classification]
+Encoding preserves vertex labels. An encoded vertex is tagged as output
+exactly when its old vertex is in the output image; the analogous statement
+holds for inputs.
+\end{lemma}
+\begin{proof}
+For label preservation first prove the claim for decoding, by the three
+constructors and the two boundary typing laws, then use the inverse identity.
+For boundary classification, a tag supplies its index; conversely, an old
+boundary vertex is the decoding of that tag, so the second inverse identity
+forces the correct tag. No assumption of decidable carrier equality is needed.
+\end{proof}
+\lean{Graph/SetPresentation}{87}{96}{Graph.SetNet.encode_label}
+
+\lean{Graph/SetPresentation}{97}{110}{Graph.SetNet.output_iff}
+
+\lean{Graph/SetPresentation}{111}{123}{Graph.SetNet.input_iff}
+
+\begin{definition}[Normalized graph]
+Keep the edge carrier and edge labels, use $V^{\circ}$ as the internal carrier,
+and map $\mathsf{encode}$ over every source and target list. Interior finiteness
+is inherited by taking a subtype of the old finite vertex enumeration.
+\end{definition}
+\begin{proof}[Verification of the graph laws]
+Injectivity of encoding preserves duplicate-free incidence lists. Two source
+occurrences at a normalized vertex decode to the same old vertex, so source
+uniqueness identifies their edges; the target argument is identical. Inverse
+maps transfer list membership, and the boundary-classification lemma transfers
+the coverage equivalences. Finally, mapping labels after encoding is the same
+as mapping the old labels, so the old signature equations prove typing.
+\end{proof}
+\lean{Graph/SetPresentation}{126}{172}{Graph.SetNet.toNet}
+
+\subsection{Outer round trips and transport of isomorphisms}
+\begin{definition}[Set-graph isomorphism and exposure]
+A set-graph isomorphism comprises bijections of vertices and edges preserving
+labels, boundary indices, and the ordered incidence lists. Exposing an existing
+\texttt{Net} uses its entire tagged vertex carrier as one ordinary finite
+carrier; the input and output maps are its boundary constructors.
+\end{definition}
+The exposure enumeration concatenates the internal enumeration and the two
+finite index enumerations. The constructor cases prove coverage, disjointness,
+and boundary typing; all remaining incidence laws are inherited.
+\lean{Graph/SetPresentation}{175}{189}{Graph.SetNet.Iso}
+
+\lean{Graph/SetPresentation}{190}{221}{Graph.Net.toSet}
+
+\begin{theorem}[Outer round trips]
+Every set presentation is isomorphic to its normalization followed by exposure.
+Every tagged graph is isomorphic to its exposure followed by normalization.
+\end{theorem}
+\begin{proof}
+For the first direction use the encoding bijection on vertices and the identity
+on edges. Its inverse laws, label preservation, and boundary identities already
+supply all fields. For the second direction, the interior of an exposed tagged
+graph contains precisely its original internal vertices. The bijection sends
+an old internal vertex to its internal tag with the boundary exclusions.
+Its inverse eliminates impossible boundary cases. Encoding an arbitrary old
+vertex agrees with mapping this interior bijection over its port constructor;
+apply that equality to every source and target list to finish the isomorphism.
+\end{proof}
+\lean{Graph/SetPresentation}{224}{234}{Graph.Net.set_roundtrip}
+
+\lean{Graph/SetPresentation}{235}{248}{Graph.Net.interiorBijection}
+
+\lean{Graph/SetPresentation}{249}{254}{Graph.Net.encode_toSet}
+
+\lean{Graph/SetPresentation}{255}{266}{Graph.Net.roundtrip}
+
+\begin{definition}[Related-label isomorphism and relabelling]
+A related-label set isomorphism replaces literal edge-label equality by a
+supplied relation $R$; all other conditions remain unchanged. Relabelling
+along a signature-preserving function changes only edge labels. The new typing
+proof composes the old signature equation with the signature-preservation
+identity; all vertex and incidence fields are unchanged.
+\end{definition}
+\lean{Graph/SetPresentation}{273}{283}{Graph.SetNet.RelIso}
+
+\lean{Graph/SetPresentation}{284}{309}{Graph.SetNet.relabel}
+
+\begin{lemma}[Normalization of related-label isomorphisms]
+A related-label set isomorphism induces a related-label isomorphism between
+the normalized graphs, with the same edge bijection.
+\end{lemma}
+\begin{proof}
+Boundary membership is preserved by the boundary equations and reflected by
+vertex injectivity. Hence the vertex bijection restricts to the interiors;
+its inverse uses the inverse vertex map and the same boundary equations.
+Encoding commutes with that restricted bijection: decode both sides, inspect
+the port constructor, and use the inverse identities. Mapping this commuting
+square over each incidence list proves the two required list equations.
+Vertex labels and related edge labels come directly from the original
+isomorphism. These are the declarations \texttt{input\_iff},
+\texttt{output\_iff}, \texttt{interiors}, \texttt{encode\_map}, and
+\texttt{RelIso.toNet}, respectively.
+\end{proof}
+\lean{Graph/SetPresentation}{318}{323}{Graph.SetNet.RelIso.input_iff}
+
+\lean{Graph/SetPresentation}{324}{330}{Graph.SetNet.RelIso.output_iff}
+
+\lean{Graph/SetPresentation}{331}{340}{Graph.SetNet.RelIso.interiors}
+
+\lean{Graph/SetPresentation}{341}{353}{Graph.SetNet.RelIso.encode_map}
+
+\lean{Graph/SetPresentation}{354}{371}{Graph.SetNet.RelIso.toNet}
+
+\subsection{Recursive annotated boxes}
+\termdef{annotated-set-hierarchy}
+\begin{definition}[Annotated set hierarchy]
+An annotated set box records a bound count $b$, a free count $f$, and a set
+graph body with interface $\star\Rightarrow\star^{b+f}$.
+Its external signature is $T^b(\star)\Rightarrow\star^f$.
+The depth-zero alphabet contains primitives; the next alphabet adds boxes over
+the preceding alphabet. A hypernet is a set presentation over this alphabet.
+This intentionally retains the annotations of the existing Lean hierarchy.
+\end{definition}
+\lean{Graph/SetHierarchy}{10}{15}{Linear.SetHierarchy.SetBox}
+
+\lean{Graph/SetHierarchy}{16}{23}{Linear.SetHierarchy.nextAlphabet}
+
+\lean{Graph/SetHierarchy}{24}{27}{Linear.SetHierarchy.alphabet}
+
+\lean{Graph/SetHierarchy}{28}{28}{Linear.SetHierarchy.Hypernet}
+
+\begin{definition}[Recursive conversion]
+Normalization at depth zero uses outer normalization. At a successor depth it
+also relabels every box by the same counts and the recursively normalized body.
+Exposure performs the inverse-direction construction: expose the outer carrier
+and recursively expose every box body. Primitives are unchanged, and the
+external signatures agree because neither operation changes the counts.
+\end{definition}
+\lean{Graph/SetHierarchy}{31}{39}{Linear.SetHierarchy.normalize}
+
+\lean{Graph/SetHierarchy}{40}{46}{Linear.SetHierarchy.expose}
+
+\begin{theorem}[Recursive typed round trip]
+Every typed hypernet is recursively isomorphic to its exposure followed by
+normalization.
+\end{theorem}
+\begin{proof}
+Induct on the depth. The base is the outer round trip. At a successor, use its
+interior bijection, identity edge bijection, and incidence equations. A primitive
+label remains literally equal. A box retains both counts, and its bodies are
+recursively isomorphic by induction. This supplies exactly the recursive
+label relation required by \texttt{Linear.DeepIso}.
+\end{proof}
+\lean{Graph/SetHierarchy}{49}{65}{Linear.SetHierarchy.typed_roundtrip}
+
+\begin{definition}[Recursive set isomorphism]
+Related set boxes have equal binder counts and related bodies at their common
+interface. Set-label equivalence is equality for primitives and existence of a
+recursive set-graph isomorphism for boxes. A recursive set isomorphism is an
+outer related-label isomorphism using that relation.
+\end{definition}
+\lean{Graph/SetHierarchy}{68}{73}{Linear.SetHierarchy.BoxRelated}
+
+\lean{Graph/SetHierarchy}{74}{80}{Linear.SetHierarchy.LabelEquiv}
+
+\lean{Graph/SetHierarchy}{81}{81}{Linear.SetHierarchy.DeepIso}
+
+\begin{theorem}[Recursive set round trip]
+Every annotated set hypernet is recursively isomorphic to its normalization
+followed by exposure.
+\end{theorem}
+\begin{proof}
+Again induct on depth. The outer encoding bijection preserves labels and ordered
+boundaries. At a box label the counts are unchanged and the induction hypothesis
+supplies the body isomorphism. Thus independent vertex renaming at every
+nesting level is accounted for, rather than just renaming the outer graph.
+\end{proof}
+\lean{Graph/SetHierarchy}{85}{112}{Linear.SetHierarchy.set_roundtrip}
+
+\begin{lemma}[Metadata determined by external type]
+If two annotated boxes have equal external input and output types, their bound
+and free counts agree.
+\end{lemma}
+\begin{proof}
+Equality of the singleton input lists gives equality of the thunk labels, and
+injectivity of the thunk constructor gives the bound count. Taking lengths of
+the replicated output lists gives the free count. Notice the premise: the
+\emph{external type} is fixed. Equality of contents alone does not supply it.
+\end{proof}
+\lean{Graph/SetHierarchy}{116}{120}{Linear.SetHierarchy.metadata_unique}
+
+\begin{theorem}[Transport and reflection of recursive isomorphism]
+Normalization transports recursive set isomorphisms; exposure transports
+recursive typed isomorphisms. Two typed hypernets are recursively isomorphic
+if and only if their exposures are recursively set-isomorphic.
+\end{theorem}
+\begin{proof}
+For normalization, restrict the outer vertex bijection to interiors as above.
+Induct on depth for edge labels: primitive pairs retain their equality,
+primitive/box pairs are impossible, and a related box pair supplies the body
+isomorphism to which induction applies. Exposure uses the port bijection of
+the original internal-vertex bijection and the same recursive argument for
+labels. For reflection, normalize the proposed set isomorphism and compose
+with the typed round trip on the left and its inverse on the right. The forward
+direction is exposure transport itself.
+\end{proof}
+\lean{Graph/SetHierarchy}{145}{175}{Linear.SetHierarchy.normalize_iso}
+
+\lean{Graph/SetHierarchy}{176}{223}{Linear.SetHierarchy.expose_iso}
+
+\lean{Graph/SetHierarchy}{224}{229}{Linear.SetHierarchy.expose_iso_iff}
+
+\subsection{Coherence of depth allowances}
+\termdef{depth-promotion}
+\begin{definition}[Depth promotion]
+Promotion increases the permitted depth by one while preserving the outer
+carrier, incidence and primitive labels; each box body is recursively promoted.
+Repeated promotion, written $\mathsf{raiseBy}(n,k)$, increases a bound $n$ to
+$n+k$. There is a corresponding operation on typed hypernets.
+\end{definition}
+\lean{Graph/SetHierarchy}{123}{129}{Linear.SetHierarchy.raise}
+\lean{Graph/SetHierarchy}{232}{236}{Linear.SetHierarchy.raiseBy}
+
+\lean{Graph/SetHierarchy}{237}{240}{Linear.SetHierarchy.typedRaiseBy}
+
+\begin{theorem}[Normalization commutes with promotion]
+Normalizing after one promotion equals promoting after normalization.
+The same equality holds for any finite number of promotions.
+\end{theorem}
+\begin{proof}
+Induct on the original depth for one promotion. At depth zero the two graph
+records are definitionally equal. At a successor all outer data still agree;
+primitive labels agree immediately and the box-body fields agree by induction.
+Proof fields are irrelevant to equality. Induction on the number of promotions
+then proves the iterated equation using the one-step equation at the current
+bound. These are equalities of the resulting typed graphs, not merely
+existence of some isomorphism.
+\end{proof}
+\lean{Graph/SetHierarchy}{132}{142}{Linear.SetHierarchy.normalize_raise}
+\lean{Graph/SetHierarchy}{243}{249}{Linear.SetHierarchy.normalize_raiseBy}
+
+\termdef{uniform-box-family}
+\begin{definition}[Uniformization of a finite box family]
+A box family indexed by a finite carrier $E$ assigns each member its own depth,
+bound count, free count, and body. Take the maximum of the depths in an
+exhaustive finite enumeration of $E$, with maximum zero for an empty list.
+Pad each member from its original depth to that common maximum.
+\end{definition}
+\lean{Graph/SetHierarchy}{252}{258}{Linear.SetHierarchy.BoxFamily}
+
+\lean{Graph/SetHierarchy}{259}{260}{Linear.SetHierarchy.maximum}
+\lean{Graph/SetHierarchy}{272}{273}{Linear.SetHierarchy.BoxFamily.common}
+\lean{Graph/SetHierarchy}{280}{283}{Linear.SetHierarchy.BoxFamily.uniform}
+
+\begin{lemma}[Common bound and conversion]
+Each member's depth is at most the common maximum. Normalizing its uniformized
+body equals promoting its normalized original body to that same maximum.
+\end{lemma}
+\begin{proof}
+Membership in a list implies that an entry is bounded by its recursively
+computed maximum: for the head use the left maximum inequality, and for a tail
+member combine induction with the right maximum inequality. Exhaustiveness
+puts every family member in the mapped enumeration, even if the enumeration
+contains duplicates. Hence $n+(N-n)=N$, which supplies the interface-preserving
+depth transport used in uniformization. Normalization commutes with this
+transport by equality elimination. Apply the iterated promotion equation to
+finish the claimed equality.
+\end{proof}
+\lean{Graph/SetHierarchy}{263}{269}{Linear.SetHierarchy.le_maximum}
+\lean{Graph/SetHierarchy}{275}{277}{Linear.SetHierarchy.BoxFamily.le_common}
+\lean{Graph/SetHierarchy}{287}{297}{Linear.SetHierarchy.BoxFamily.uniform_normalize}
+This proves that a finite family of separately bounded annotated contents can
+be represented at a common bound. It does not yet formalize a translation of
+an undecorated graph-label alphabet from the paper; the distinction below is
+independent of finite-depth padding.
+
+\subsection{Why the representation item remains open}
+\termdef{body-consistency}
+\begin{definition}[Body consistency for binder erasure]
+A successor-depth typed graph is body-consistent when any two box edges whose
+contents are literally equal also have equal bound and free counts. The Lean
+premise uses heterogeneous equality so contents at definitionally different
+interface expressions can be compared. This is the condition needed for the
+naive operation that forgets binder annotations but leaves contents unchanged
+to respect the paper's equal-label/equal-signature requirement.
+\end{definition}
+\lean{Graph/SetHierarchyExamples}{11}{15}{Linear.SetHierarchyExamples.BodyConsistent}
+
+\begin{proposition}[Checked obstruction to naive binder erasure]
+There is a well-formed typed graph which is not body-consistent.
+\end{proposition}
+\begin{proof}
+Let $V:\star\Rightarrow\star$ be the unary variable corolla. Use this exact
+body in two boxes: one with $(b,f)=(0,1)$, and one with $(b,f)=(1,0)$.
+Their body records agree, but their external signatures are respectively
+$T^0(\star)\Rightarrow\star$ and $T^1(\star)\Rightarrow\epsilon$.
+Construct a graph with two input vertices of these thunk types and one term
+output. The first edge connects the first input to the output; the second
+edge has only the second input and no targets. The graph has no internal
+vertices. Direct finite case analysis verifies all incidence, coverage and
+typing conditions. Applying body consistency to its two edges would assert
+$0=1$, a contradiction.
+\end{proof}
+\lean{Graph/SetHierarchyExamples}{18}{18}{Linear.SetHierarchyExamples.exposed}
+
+\lean{Graph/SetHierarchyExamples}{19}{20}{Linear.SetHierarchyExamples.bound}
+
+\lean{Graph/SetHierarchyExamples}{21}{22}{Linear.SetHierarchyExamples.identical_contents}
+
+\lean{Graph/SetHierarchyExamples}{23}{25}{Linear.SetHierarchyExamples.different_signatures}
+\lean{Graph/SetHierarchyExamples}{28}{74}{Linear.SetHierarchyExamples.twoBoxes}
+\lean{Graph/SetHierarchyExamples}{77}{80}{Linear.SetHierarchyExamples.forgetting_binders_fails}
+
+The annotated normalization and round-trip theorems still apply to this
+counterexample, as checked by \texttt{twoBoxes\_roundtrip}. A second example
+checks a box with two holes, exercising recursive contents rather than just
+outer incidence. Finally, \texttt{promoted\_box} checks normalization of that
+box after two promotions. These examples test the exact scope of the theorems;
+none silently assumes body consistency.
+\lean{Graph/SetHierarchyExamples}{84}{88}{Linear.SetHierarchyExamples.twoBoxes_roundtrip}
+
+\lean{Graph/SetHierarchyExamples}{89}{93}{Linear.SetHierarchyExamples.nested_roundtrip}
+
+\lean{Graph/SetHierarchyExamples}{94}{100}{Linear.SetHierarchyExamples.promoted_box}
+
+\paragraph{Status and next obligation.}
+The results above discharge arbitrary-vertex boundary normalization, recursive
+round trips for the annotated hierarchy, isomorphism transport, and finite
+mixed-depth uniformization. They do not prove the full representation claim
+for the paper's undecorated box labels. The counterexample refutes only the
+naive forgetful translation, not the existence of a more careful representation:
+a restriction to an appropriate class or a proved freshening translation may
+resolve it. Such a translation must also support the uses required by the
+concrete theorem. Appendix~\ref{app:remaining-work} therefore still contains
+four items, with the first replaced by this precise remaining obligation.
+The mathematical-effort planning estimate stays at about 83\%; the new proofs
+are substantial, but the newly explicit correspondence issue offsets a
+confident increase in that estimate.

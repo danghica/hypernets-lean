@@ -146,8 +146,11 @@ prove arbitrary extrinsic rewrite systems deterministic.
 \end{enumerate}
 
 The typed finite-depth hierarchy and explicit renaming bijections are
-representation choices. Relating them to the paper's set-based hypernets and
-across depth bounds is a separate adequacy obligation. The existing plugging,
+representation choices. Outer set-presentation normalization, recursive annotated round trips, and
+compatibility across depth bounds are now checked in
+Section~\ref{sec:set-presentations}. The correspondence with undecorated box
+labels remains open: naive binder erasure violates the paper's equal-label/
+equal-signature condition on a checked two-box example. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
 not replace the operational proofs in Appendix~F. The contextual-search dependency is now discharged:
 Section~\ref{sec:contextual-search} identifies erasure-based state search with
@@ -165,7 +168,9 @@ As a planning estimate, approximately 83\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
 68--90\%). This increases the previous estimate of 80\% after proving finite
 original-hole tuple compatibility and defining the full concrete safety
-and robustness predicates.
+and robustness predicates. The estimate remains unchanged after the new
+representation proofs: the explicit binder-erasure obstruction warrants caution
+until the remaining correspondence is resolved.
 It is a subjective estimate, not a ratio of declarations or discharged
 checklist entries. The full-UAM structural proofs and deep specimen
 locality, safety, and robustness remain substantial obligations.

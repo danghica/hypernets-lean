@@ -16,13 +16,19 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{box}{Alphabet}{A type of edge labels equipped with a signature assigning their input and output wire types.}
 
+\glossaryentry{annotated-set-hierarchy}{Annotated set hierarchy}{A finite-depth graph-labelled hierarchy using arbitrary vertex carriers while retaining the bound and free counts on each box label.}
+
 \glossaryentry{focus}{Backtracking mode}{The abstract focus mode $\mathsf{backtrack}$, one of the three constructors of the focus datatype.}
 
 \glossaryentry{bijection}{Bijection}{A pair of forward and inverse functions satisfying both inverse equations.}
 
+\glossaryentry{body-consistency}{Body consistency}{The condition that box edges with literally equal contents have equal external binder metadata; needed by naive binder erasure.}
+
 \glossaryentry{boundary-finality}{Boundary finality}{Backtracking mode with the focus source at an input; on a state this is the final-state characterization of Proof F.4.}
 
 \glossaryentry{boundary-finality}{Boundary initiality}{Search mode with the focus source at an input; preserved through all certified fillings.}
+
+\glossaryentry{boundary-normalization}{Boundary normalization}{The bijective change from an arbitrary vertex carrier to disjoint internal, input-index, and output-index carriers.}
 
 \glossaryentry{ports}{Boundary port}{An input or output constructor carrying an index in the corresponding ordered boundary list; input and output constructors are disjoint.}
 
@@ -121,6 +127,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{hypernet}{Depth bound}{The index bounding permitted box nesting in a hypernet; a graph need not use all of the available depth.}
 
 \glossaryentry{promotion}{Depth promotion}{Raising a hypernet's available depth bound by relabelling primitives and recursively promoting box bodies, without changing outer incidence.}
+
+\glossaryentry{depth-promotion}{Depth promotion}{Increasing an allowed nesting depth while preserving incidence and recursively promoting box contents.}
 
 \glossaryentry{determinism}{Determinism}{The property that any two one-step successors of the same state are equal.}
 
@@ -380,6 +388,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{selected-hole}{Selected hole label}{The partial observation of the selected edge itself after following a site address; selecting a box returns no hole label.}
 
+\glossaryentry{set-presentation}{Set presentation}{A finite labelled graph with an arbitrary vertex carrier and injective, disjoint, ordered boundary maps.}
+
 \glossaryentry{lifting}{Settled specimen}{A specimen in backtracking mode, or in search mode without entering; every settled specimen is remote.}
 
 \glossaryentry{all-edges}{Shallow occurrence}{The occurrence of an edge at the current graph layer, without descending into a box body.}
@@ -439,6 +449,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{typed-position}{Typed search position}{A mode and term-labelled vertex of a graph of type $*\to\epsilon$, realizable as an explicit focussed state under focus and hole freedom.}
 
 \glossaryentry{unary}{Unary operations}{The condition that every selected operation edge has a source list of length one; no one-output condition is imposed.}
+
+\glossaryentry{uniform-box-family}{Uniform box family}{A finite family of separately bounded box contents promoted to a common maximum depth.}
 
 \glossaryentry{context}{Unique holes}{The property that any two occurrences observing the same complete typed hole label are equal, at every nesting depth.}
 

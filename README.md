@@ -71,7 +71,8 @@ Contextual search adequacy and §6.4's concrete transition definitions are now
 complete. The next dependencies are substitution rootedness, full-UAM structural
 laws and the remaining specimen-interface laws.
 The finite-depth typed representation and explicit isomorphisms are implementation
-choices whose adequacy for the paper remains a separate obligation.
+choices. Their annotated set-presentation round trips and depth coherence are
+now proved; correspondence with the paper's undecorated box labels remains open.
 
 `Hypernets/Graph/Focused.lean` now defines global focus freedom, the unique
 shallow non-exposed self-acyclic focus, and hole-free states of type `* → ε`.
@@ -277,8 +278,9 @@ The new `DeepIso` extends this to independently renamed box contents, as describ
 below. The context calculus proves preservation of unique hole labels under
 explicit freshness conditions at arbitrary depth. Nested plugging associativity
 and corolla unit laws are now proved. The typed, depth-indexed hierarchy includes explicit binder
-metadata on box labels; a formal representation theorem relating it to the
-paper's set-based, graph-labelled presentation remains to prove. These
+metadata on box labels. Annotated set-presentation conversion is now proved,
+but a checked binder-erasure obstruction leaves the undecorated graph-label
+correspondence open. These
 distinctions are part of the remaining work below.
 
 ## Context calculus milestone
@@ -354,7 +356,8 @@ vertex and edge renaming in each box body:
 Transport chooses inner isomorphisms classically; no canonical choice or round-trip
 law is asserted for the chosen transport function. The pointed-host quotient
 below identifies structural renaming zigzags. Comparison across
-different depth bounds and representation adequacy remain open. The full-UAM structural laws and its
+different depth bounds now has a checked normalization-coherence theorem.
+The remaining representation issue is undecorated box-label correspondence. The full-UAM structural laws and its
 bridge to Theorem 6 remain the main later work.
 
 ## Composition and unit milestone
@@ -505,7 +508,10 @@ logical axioms, if used, are shown explicitly.
 
 ## Remaining work toward the milestone
 
-1. Prove representation adequacy and compatibility across depth bounds.
+1. Resolve the correspondence between binder-annotated boxes and the paper's
+   undecorated graph labels. Naive binder erasure fails the same-label/same-signature
+   condition in a checked example; supply an appropriate restriction or proved
+   freshening translation and the compatibility needed by the concrete theorem.
 2. Prove substitution preserves rootedness, establish the required full-UAM
    consequences of refocusing, and prove the stationary rewrite criterion.
 3. Package synchronized successor coordinates as allowed concrete specimens,
@@ -519,3 +525,23 @@ logical axioms, if used, are shown explicitly.
 The copying UAM, lambda-term translation, and example program equivalences
 are later milestones; the current abstract and graph-level examples do not
 formalize those parts of the paper.
+
+
+## Annotated set-presentation milestone
+
+`SetPresentation.lean` proves conversions and both round trips between arbitrary
+finite vertex sets with ordered boundaries and the existing tagged-vertex graphs.
+`SetHierarchy.lean` extends these through every annotated box, transports recursive
+isomorphisms, reflects isomorphism of exposed typed graphs, and proves that
+normalization commutes with arbitrary depth promotion. Finite mixed-depth box
+families can be padded to a common maximum bound.
+
+**The full paper representation item is not closed.** `SetHierarchyExamples.lean`
+contains a verified obstruction to simply dropping binder metadata: two boxes
+can have the same unary variable body but external types `T⁰(*) → *` and
+`T¹(*) → ε`. Both coexist in a valid typed graph. Forgetting their annotations
+would give equal labels with different signatures, contrary to paper §3.1(3).
+This refutes that forgetful map, not every possible adequate representation.
+Appendix B retains four items, with representation narrowed to this correspondence.
+The mathematical-effort estimate remains about 83% (68–90%). Section 43 of the
+PDF explains all new definitions and proofs, including the counterexample.
