@@ -83,7 +83,7 @@ theorem boundary_agreement : (S.leftState.focussed.Initial ↔ S.rightState.focu
   exact ⟨l.1.trans r.1.symm,l.2.trans r.2.symm⟩
 
 /-- The outer graph construction agrees with finite ordinary substitution.
-This is a graph realization, not yet the original-hole-only tuple adequacy theorem. -/
+Original-hole-only tuple compatibility is proved separately in TupleFillings. -/
 theorem outer_realizations :
     (∃ n D, ShallowRun ops d [.term] [] S.context.val n D ∧ Nonempty (Net.Iso D S.leftState.graph)) ∧
     (∃ n D, ShallowRun ops d [.term] [] S.context.val n D ∧ Nonempty (Net.Iso D S.rightState.graph)) := by

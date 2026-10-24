@@ -1,5 +1,5 @@
 import Hypernets.Graph.ExpansionSearchExamples
-import Hypernets.Graph.UAMExamples
+import Hypernets.Graph.TupleSafetyExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -359,3 +359,20 @@ import Hypernets.Graph.UAMExamples
 #print axioms Hypernets.Linear.UAMExamples.substitute
 #print axioms Hypernets.Linear.UAMExamples.terminates
 #print axioms Hypernets.Linear.UAMExamples.compute_step
+
+-- Finite original-hole tuple adequacy and the full concrete safety predicates.
+#print axioms Hypernets.Linear.tupleFilling_iff
+#print axioms Hypernets.Linear.TupleFilling.related
+#print axioms Hypernets.Linear.TupleFilling.provenance
+#print axioms Hypernets.Linear.TupleFilling.unique
+#print axioms Hypernets.Linear.TupleFilling.complete
+#print axioms Hypernets.Linear.TupleFilling.entries_closed
+#print axioms Hypernets.Linear.appliesTuple_iff
+#print axioms Hypernets.Linear.DeepSpecimen.substitutionTuple
+#print axioms Hypernets.Linear.TupleFilling.specimen
+#print axioms Hypernets.Linear.ConcreteSafety.specimen_quasi
+#print axioms Hypernets.Linear.ConcreteSafety.NonRewriteQuasi.rooted_witness
+#print axioms Hypernets.Linear.ConcreteSafety.Robust.rooted
+#print axioms Hypernets.Linear.TupleSafetyExamples.nested_tuple_singleton
+#print axioms Hypernets.Linear.TupleSafetyExamples.unrooted_quasi
+#print axioms Hypernets.Linear.TupleSafetyExamples.different_modes_not_quasi
