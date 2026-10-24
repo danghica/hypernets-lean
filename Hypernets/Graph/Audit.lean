@@ -1,5 +1,5 @@
 import Hypernets.Graph.ExpansionSearchExamples
-import Hypernets.Graph.SpecimenTraversalExamples
+import Hypernets.Graph.LocalSearchExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -307,3 +307,14 @@ import Hypernets.Graph.SpecimenTraversalExamples
 #print axioms Hypernets.Linear.SpecimenTraversalExamples.actual_step
 #print axioms Hypernets.Linear.SpecimenTraversalExamples.matching
 #print axioms Hypernets.Linear.SpecimenTraversalExamples.no_initial_context_run
+
+-- Independent original-graph incidence search and its erasure correspondence.
+#print axioms Hypernets.Linear.LocalInteraction.sound
+#print axioms Hypernets.Linear.LocalInteraction.complete
+#print axioms Hypernets.Linear.LocalRewiring.iso
+#print axioms Hypernets.Linear.LocalRewiring.canonical
+#print axioms Hypernets.Linear.State.search_iff_incidence
+#print axioms Hypernets.Linear.State.deepSearch_iff_incidence
+#print axioms Hypernets.Linear.State.incidenceSearch_deterministic
+#print axioms Hypernets.Linear.LocalSearchExamples.value_terminates
+#print axioms Hypernets.Linear.LocalSearchExamples.variable_successor
