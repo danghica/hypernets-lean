@@ -34,3 +34,5 @@ import Hypernets.Graph.SpecimenRelocationExamples
 import Hypernets.Graph.UAMClassExamples
 
 import Hypernets.Graph.ClassConverse
+
+import Hypernets.Graph.ObservationExamples

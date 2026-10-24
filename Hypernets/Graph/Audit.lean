@@ -4,6 +4,7 @@ import Hypernets.Graph.UAMStructureExamples
 import Hypernets.Graph.SpecimenRelocationExamples
 import Hypernets.Graph.UAMClassExamples
 import Hypernets.Graph.ClassConverse
+import Hypernets.Graph.ObservationExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -475,3 +476,22 @@ import Hypernets.Graph.ClassConverse
 #print axioms Hypernets.Linear.ClassSafety.sufficiency_converse
 #print axioms Hypernets.Linear.ClassSafety.equivalence
 #print axioms Hypernets.Linear.ClassSafety.initial_equivalence
+
+#print axioms Hypernets.Linear.InitialObservations.left_observation
+#print axioms Hypernets.Linear.InitialObservations.right_observation
+#print axioms Hypernets.Linear.InitialObservations.observe_unique
+#print axioms Hypernets.Linear.InitialObservations.lifting
+#print axioms Hypernets.Linear.ObservationFillings.paired_label
+#print axioms Hypernets.Linear.ObservationFillings.paired_edges
+#print axioms Hypernets.Linear.ObservationFillings.paired
+#print axioms Hypernets.Linear.ObservationFillings.finite_tuple
+#print axioms Hypernets.Linear.ConcreteObservations.initial_lifting
+#print axioms Hypernets.Linear.ConcreteObservations.sufficiency
+#print axioms Hypernets.Linear.ConcreteObservations.sufficiency_converse
+#print axioms Hypernets.Linear.ConcreteObservations.equivalence
+#print axioms Hypernets.Linear.ConcreteObservations.single_related_iff
+#print axioms Hypernets.Linear.ConcreteObservations.single_sufficiency
+#print axioms Hypernets.Linear.ConcreteObservations.single_sufficiency_converse
+#print axioms Hypernets.Linear.ObservationExamples.closed
+#print axioms Hypernets.Linear.ObservationExamples.observation_exists
+#print axioms Hypernets.Linear.ObservationExamples.initial_lifting
