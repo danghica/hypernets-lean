@@ -132,7 +132,7 @@ the value execution rooted and the valid interior-focus state behind a variable
 not rooted. These use the current erasure-based search semantics; contextual
 local-rewrite adequacy is still open.
 
-The PDF's §30.3 contains only unfinished tasks. Contextual-rewrite adequacy,
+The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains only unfinished tasks. Contextual-rewrite adequacy,
 the full UAM, and the concrete robustness theorem remain open.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its

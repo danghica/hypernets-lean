@@ -1,21 +1,13 @@
 \Needspace{32\baselineskip}
-\section{Focus, search, and rooted-state paths}
+\section{Focus insertion, erasure, and recovery}
 \label{sec:erasure}
 
-We now erase the focus of an arbitrary focussed graph with no outputs, prove
-that reinsertion recovers the original graph and focus up to isomorphism, and
-use the construction to define search on actual states. Unlike the previous
-section's recovery result, the input need not have been constructed by our
-insertion function. Search is deterministic up to focus-preserving isomorphism,
-final states have no search step, and no search step ends in an initial state.
-A concrete initial value state makes a search step to an actual final state.
-
-The remaining operational adequacy obligation is precise: identify this
-erasure-based relation with the paper's contextual local-rewrite presentation.
-The later subsections prove both focus round trips, source and target renaming
-invariance, and descent to literal-label isomorphism classes, where search is
-deterministic by equality of successor classes. The full machine with
-substitution and compute transitions is still to be constructed.
+We now erase the focus of an arbitrary focussed graph with no outputs and
+prove that reinsertion recovers the original graph and focus up to isomorphism.
+Unlike the previous section's recovery result, the input need not have been
+constructed by our insertion function. The converse round trip, insertion
+followed by erasure, recovers the underlying graph. These constructions
+support the state-search semantics developed in Section~\ref{sec:state-search}.
 
 \Needspace{16\baselineskip}
 \subsection{Contraction maps and the retained carriers}
@@ -268,85 +260,70 @@ previous realization boundary equivalence with the focussed isomorphism's
 boundary equivalence.
 \lean{Graph/StateSearch}{76}{81}{Linear.State.coordinate_boundary}
 
-\Needspace{16\baselineskip}
-\subsection{Search between actual states}
-\begin{definition}[Erasure-based state search]\label{term:state-search}
-For a fixed operation-kind function, write $s\to_{\mathrm{er}}t$ if there is a
-typed coordinate $q$ on the underlying graph of $s$ such that the extracted
-coordinate of $s$ makes one of the five search steps to $q$, and the realization
-of $q$ is focus-preservingly isomorphic to $t$. Thus the target may use arbitrary
-vertex and edge names. This is a relation on actual state records, rather than
-merely a construction of two endpoints from a separately supplied graph.
-\end{definition}
-\lean{Graph/StateSearch}{86}{90}{Linear.State.Search}
-
-\begin{lemma}[Existence and target renaming]
-Every typed coordinate successor of an extracted state coordinate gives an
-actual state successor. Replacing a successor by a focus-preservingly
-isomorphic state preserves the step.
-\end{lemma}
-\begin{proof}
-For existence, realize the successor coordinate and use the identity focussed
-isomorphism as witness. For target renaming, retain the same coordinate step
-and compose its target isomorphism with the supplied isomorphism.
-\end{proof}
-\lean{Graph/StateSearch}{93}{98}{Linear.State.search_realize}
-\lean{Graph/StateSearch}{101}{104}{Linear.State.search_target_iso}
-
-\begin{theorem}[Search determinism up to focussed isomorphism]
-Two erasure-based search successors of the same state are focus-preservingly
-isomorphic.
-\end{theorem}
-\begin{proof}
-Both coordinate steps use the same erased graph and the same extracted input.
-Coordinate search determinism identifies their output pairs; subtype
-extensionality identifies the typed positions. Their canonical realizations
-therefore coincide. Compose the inverse of the first target isomorphism with
-the second target isomorphism to identify the actual successors.
-\end{proof}
-\lean{Graph/StateSearch}{107}{113}{Linear.State.search_deterministic}
-
-\begin{lemma}[Explicit-state search boundary laws]
-A final state has no erasure-based search step, and no such step ends in an
-initial state.
-\end{lemma}
-\begin{proof}
-If the source is final, its extracted coordinate has backtrack mode at an
-input. Coordinate search cannot start there. If the target is initial, pull
-initiality back through the target's focussed isomorphism and the realization
-boundary equivalence. The successor coordinate would be search at an input,
-which the coordinate search boundary theorem excludes.
-\end{proof}
-\lean{Graph/StateSearch}{116}{122}{Linear.State.final_no_search}
-\lean{Graph/StateSearch}{125}{133}{Linear.State.no_search_initial}
-These are search-only laws. Neither all-transition finality nor the full
-robustness theorem follows until the remaining transition classes and specimen
-obligations are supplied.
 
 \Needspace{20\baselineskip}
-\subsection{Concrete execution and interior recovery}
-Erase the focus of the previously constructed initial value state. Its value
-edge survives and has an empty argument/thunk view. Its source contracts from
-the old focus target to the joined port, which is exactly the extracted state
-coordinate's vertex. This proves the view's source certificate; the other
-certificates follow from the nullary value signature.
-\lean{Graph/ErasureExamples}{9}{22}{Linear.Examples.erasedValueOperation}
-Apply the passive nullary rule, advance the typed coordinate, and realize it.
-The existence lemma gives an actual state search step. The result is final
-because its mode is backtrack and its vertex retains the input status of the
-initial coordinate. This proves that the new state relation has a concrete
-execution, rather than only universal implications about hypothetical steps.
-\lean{Graph/ErasureExamples}{26}{37}{Linear.Examples.value_state_search}
-For an interior test, relabel the old focus of the initial value graph as a
-variable, retaining the value edge and all incidences. Both labels exclude
-focuses and holes, so this is a focus-free, hole-free closed two-edge chain.
-Insert search at its internal vertex to obtain a state whose focus source is
-internal. It is not initial, directly from that source constructor. General
-state recovery erases and reconstructs it with a focussed isomorphism, including
-its distinguished focus and mode.
-\lean{Graph/ErasureExamples}{40}{45}{Linear.Examples.closedChain}
-\lean{Graph/ErasureExamples}{47}{49}{Linear.Examples.closedChain_focusFree}
-\lean{Graph/ErasureExamples}{51}{53}{Linear.Examples.closedChain_holeFree}
-\lean{Graph/ErasureExamples}{56}{58}{Linear.Examples.interiorState}
-\lean{Graph/ErasureExamples}{60}{60}{Linear.Examples.interior_state_not_initial}
-\lean{Graph/ErasureExamples}{64}{67}{Linear.Examples.interior_state_recovery}
+\subsection{Insertion followed by erasure}
+\label{sec:insertion-cancellation}
+Fix a focus-free graph $G:I\to[]$, a term vertex $v$, and a mode $m$.
+Write $S=\operatorname{insert}(G,v,m)$ for the focussed graph constructed
+in Section~\ref{sec:realization}. The preceding round trip started with an
+arbitrary focussed graph. We now establish the opposite direction, including
+the position at which the focus was inserted.
+
+\begin{definition}[Deleting a fresh singleton]
+For any carrier $A$, deleting the fresh member from $A+\mathbf1$ leaves a
+carrier canonically bijective with $A$. The forward map sends a retained
+$\mathsf{inl}(a)$ to $a$; the inverse sends $a$ to that retained element.
+An element of the right summand cannot survive, since its singleton index
+must be zero. Apply general erasure to the fresh focus and fresh target of
+$S$ to define $E(S)$.
+\end{definition}
+The inverse laws hold by cases on the summand: the retained case is reflexive,
+and the fresh case contradicts its non-deletion certificate.
+\lean{Graph/InsertionRoundTrip}{10}{21}{Linear.FocusInsertion.deleteFresh}
+\lean{Graph/InsertionRoundTrip}{27}{28}{Linear.FocusInsertion.erasedInsertion}
+
+\begin{lemma}[Cancellation on ports]
+Let $D$ be the port map induced by deletion of the fresh singleton, $j$ the
+inclusion of retained ports, and $\kappa$ the collapse map of insertion.
+Then $D(x)=\kappa(j(x))$. The joined vertex maps to $v$, and for every port
+$w$ of $S$, $D(c(w))=\kappa(w)$, where $c$ is general focus contraction.
+\end{lemma}
+\begin{proof}
+The first identity follows by cases on the retained port. An internal
+right-summand case is impossible; input ports are fixed. For the joined
+vertex, inclusion gives the focus source, namely the hosted copy of $v$;
+collapse sends it to $v$. Finally, if $w$ is the fresh target, contraction
+gives the joined vertex and both sides equal $v$. Otherwise inclusion after
+contraction is $w$, and the first identity applies.
+\end{proof}
+\lean{Graph/InsertionRoundTrip}{31}{40}{Linear.FocusInsertion.deleteFresh_port}
+\lean{Graph/InsertionRoundTrip}{43}{47}{Linear.FocusInsertion.erase_position}
+\lean{Graph/InsertionRoundTrip}{50}{59}{Linear.FocusInsertion.erase_contract}
+
+\begin{theorem}[Insertion--erasure cancellation]
+\termdef{insertion-cancellation}
+There is an isomorphism $E(S)\cong G$ preserving full labels and ordered
+incidences. The choice-based operation $S.\mathsf{underlying}$ has such an
+isomorphism too, and one can choose it to send the joined vertex to $v$.
+\end{theorem}
+\begin{proof}
+Use deletion of the singleton on both internal vertices and edges. All
+surviving labels are inherited. Sources were first split by insertion and
+then contracted by erasure; the port cancellation identity reduces their
+composite to collapse after split, which is the identity. Targets were
+hosted by insertion, so the analogous composite is collapse after hosting,
+also the identity. These pointwise identities give equality of ordered lists.
+
+The target selected by general erasure is necessarily the fresh internal
+vertex: both it and the fresh vertex equal the focus target, and the internal
+port constructor is injective. Substituting this equality identifies the
+general underlying graph with $E(S)$. For the position-sensitive assertion,
+carry an arbitrary target together with its equality certificate, identify
+it with the fresh target, and use the explicit isomorphism and joined-port
+identity together. This keeps graph and coordinate recovery synchronized.
+\end{proof}
+\lean{Graph/InsertionRoundTrip}{62}{100}{Linear.FocusInsertion.erase_iso}
+\lean{Graph/InsertionRoundTrip}{103}{104}{Linear.FocusInsertion.targetVertex_eq}
+\lean{Graph/InsertionRoundTrip}{107}{111}{Linear.FocusInsertion.underlying_iso}
+\lean{Graph/InsertionRoundTrip}{115}{129}{Linear.FocusInsertion.underlying_position_exists}

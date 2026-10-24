@@ -1,0 +1,97 @@
+\Needspace{18\baselineskip}
+\section{Search and state isomorphism classes}
+\label{sec:state-search}
+
+The focus recovery constructions define search on actual states. Search is
+deterministic up to focus-preserving isomorphism, final states have no search
+step, and no search step ends in an initial state. A concrete initial value
+state makes a search step to an actual final state.
+
+We then prove source and target renaming invariance and descent to literal-label
+and recursive state isomorphism classes, where successor classes are unique.
+The remaining operational adequacy obligation is to identify erasure-based
+search with the paper's contextual local rewrites. Substitution and compute
+transitions for the full machine remain to be constructed.
+
+\Needspace{16\baselineskip}
+\subsection{Search between actual states}
+\begin{definition}[Erasure-based state search]\label{term:state-search}
+For a fixed operation-kind function, write $s\to_{\mathrm{er}}t$ if there is a
+typed coordinate $q$ on the underlying graph of $s$ such that the extracted
+coordinate of $s$ makes one of the five search steps to $q$, and the realization
+of $q$ is focus-preservingly isomorphic to $t$. Thus the target may use arbitrary
+vertex and edge names. This is a relation on actual state records, rather than
+merely a construction of two endpoints from a separately supplied graph.
+\end{definition}
+\lean{Graph/StateSearch}{86}{90}{Linear.State.Search}
+
+\begin{lemma}[Existence and target renaming]
+Every typed coordinate successor of an extracted state coordinate gives an
+actual state successor. Replacing a successor by a focus-preservingly
+isomorphic state preserves the step.
+\end{lemma}
+\begin{proof}
+For existence, realize the successor coordinate and use the identity focussed
+isomorphism as witness. For target renaming, retain the same coordinate step
+and compose its target isomorphism with the supplied isomorphism.
+\end{proof}
+\lean{Graph/StateSearch}{93}{98}{Linear.State.search_realize}
+\lean{Graph/StateSearch}{101}{104}{Linear.State.search_target_iso}
+
+\begin{theorem}[Search determinism up to focussed isomorphism]
+Two erasure-based search successors of the same state are focus-preservingly
+isomorphic.
+\end{theorem}
+\begin{proof}
+Both coordinate steps use the same erased graph and the same extracted input.
+Coordinate search determinism identifies their output pairs; subtype
+extensionality identifies the typed positions. Their canonical realizations
+therefore coincide. Compose the inverse of the first target isomorphism with
+the second target isomorphism to identify the actual successors.
+\end{proof}
+\lean{Graph/StateSearch}{107}{113}{Linear.State.search_deterministic}
+
+\begin{lemma}[Explicit-state search boundary laws]
+A final state has no erasure-based search step, and no such step ends in an
+initial state.
+\end{lemma}
+\begin{proof}
+If the source is final, its extracted coordinate has backtrack mode at an
+input. Coordinate search cannot start there. If the target is initial, pull
+initiality back through the target's focussed isomorphism and the realization
+boundary equivalence. The successor coordinate would be search at an input,
+which the coordinate search boundary theorem excludes.
+\end{proof}
+\lean{Graph/StateSearch}{116}{122}{Linear.State.final_no_search}
+\lean{Graph/StateSearch}{125}{133}{Linear.State.no_search_initial}
+These are search-only laws. Neither all-transition finality nor the full
+robustness theorem follows until the remaining transition classes and specimen
+obligations are supplied.
+
+\Needspace{20\baselineskip}
+\subsection{Concrete execution and interior recovery}
+Erase the focus of the previously constructed initial value state. Its value
+edge survives and has an empty argument/thunk view. Its source contracts from
+the old focus target to the joined port, which is exactly the extracted state
+coordinate's vertex. This proves the view's source certificate; the other
+certificates follow from the nullary value signature.
+\lean{Graph/ErasureExamples}{9}{22}{Linear.Examples.erasedValueOperation}
+Apply the passive nullary rule, advance the typed coordinate, and realize it.
+The existence lemma gives an actual state search step. The result is final
+because its mode is backtrack and its vertex retains the input status of the
+initial coordinate. This proves that the new state relation has a concrete
+execution, rather than only universal implications about hypothetical steps.
+\lean{Graph/ErasureExamples}{26}{37}{Linear.Examples.value_state_search}
+For an interior test, relabel the old focus of the initial value graph as a
+variable, retaining the value edge and all incidences. Both labels exclude
+focuses and holes, so this is a focus-free, hole-free closed two-edge chain.
+Insert search at its internal vertex to obtain a state whose focus source is
+internal. It is not initial, directly from that source constructor. General
+state recovery erases and reconstructs it with a focussed isomorphism, including
+its distinguished focus and mode.
+\lean{Graph/ErasureExamples}{40}{45}{Linear.Examples.closedChain}
+\lean{Graph/ErasureExamples}{47}{49}{Linear.Examples.closedChain_focusFree}
+\lean{Graph/ErasureExamples}{51}{53}{Linear.Examples.closedChain_holeFree}
+\lean{Graph/ErasureExamples}{56}{58}{Linear.Examples.interiorState}
+\lean{Graph/ErasureExamples}{60}{60}{Linear.Examples.interior_state_not_initial}
+\lean{Graph/ErasureExamples}{64}{67}{Linear.Examples.interior_state_recovery}
