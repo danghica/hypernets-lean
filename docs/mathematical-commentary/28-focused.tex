@@ -58,8 +58,8 @@ search with backtrack. These predicates are defined on any interface for use
 in the preservation lemmas. On states of type $*\to\epsilon$, there is exactly
 one input, giving the boundary characterizations used in \S6.4 and Proof~F.4.
 Finality is a syntactic predicate here; absence of outgoing transitions from
-final states has not yet been proved, because concrete transitions are not yet
-defined.
+final states has not yet been proved, because transitions on this explicit focus-edge state representation are not yet
+defined. Section~\ref{sec:search} proves the search-only boundary laws in coordinates.
 \end{definition}
 \lean{Graph/Focused}{69}{70}{Linear.Focussed.Initial}
 \lean{Graph/Focused}{73}{74}{Linear.Focussed.Final}
@@ -169,7 +169,8 @@ of Lemma~39(1) follows without an extra assumed locality law.
 A state packages a hypernet of type $*\to\epsilon$, a focussed structure on that
 hypernet, and a proof that it contains no holes at any depth. This is the state
 space of \S6.4 in our graph representation. It is not yet equipped with a
-\texttt{Machine}: search, substitution, and compute transitions remain open.
+\texttt{Machine}: the coordinate search relation of Section~\ref{sec:search} still needs a realization
+bridge, and substitution and compute transitions remain open.
 \end{definition}
 \lean{Graph/Focused}{247}{250}{Linear.State}
 

@@ -48,8 +48,9 @@ consequences are currently requirements of the specimen interface.
   as the paper does. Connecting paper specimens to these filling sequences is
   still open.
 - **Lemma 39(2–3) — open:** point (2) depends on Lemma 26(3), rootedness, and
-  output-closure; point (3) needs the concrete search rules and context-only
-  traversal. The current `context_step` field assumes the required consequence.
+  output-closure; point (3) needs context-only traversal. The five coordinate search rules
+  and preservation of existing context steps under shallow filling are proved;
+  extraction of context steps and realization by explicit focus edges remain open. The current `context_step` field assumes the required consequence.
 - **Proposition 38 — initial bridge open:** the logical lifting theorem is
   checked, but initial focus construction and concrete specimen witnesses must
   discharge `initial_lift`.
@@ -58,8 +59,9 @@ consequences are currently requirements of the specimen interface.
   Determinism and refocusing are hypotheses of the paper's theorem, not claims
   to prove for arbitrary extrinsic rewrite rules.
 
-The next dependency is §6.4's concrete transitions (including active/passive
-operations and Fig. 9), then rootedness, Lemma 26(3), and Lemma 39(2–3).
+The next dependency is the focus-edge insertion/removal bridge for the search
+coordinates, together with §6.4's substitution and compute transitions, then
+rootedness, Lemma 26(3), and Lemma 39(2–3).
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices whose adequacy for the paper remains a separate obligation.
 
@@ -67,8 +69,13 @@ choices whose adequacy for the paper remains a separate obligation.
 shallow non-exposed self-acyclic focus, and hole-free states of type `* → ε`.
 It proves preservation through shallow/deep substitution and finite fillings.
 `FocusedExamples.lean` checks a real focus-and-hole chain, distinguishes search
-from finality, and rejects a focus hidden inside a box. These are state-space
-and boundary results; no concrete transition relation is claimed yet.
+from finality, and rejects a focus hidden inside a box. These state-space and boundary results are now complemented by
+`Search.lean`: the five Fig. 9 search rules on actual underlying graph coordinates,
+with the active/passive operation partition, proved determinism, search boundary
+laws, and preservation under shallow hole filling. `SearchExamples.lean` checks
+argument order, skipping a thunk, nullary values, and variables. Coordinate
+search has not yet been identified with rewriting explicit focussed states;
+substitution and extrinsic computation are not yet defined.
 
 ## Concrete graph milestone
 
@@ -282,12 +289,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 555 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 563
-source-fragment links point to immutable code revision `fd0c1c8`. It distinguishes
+all 594 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 603
+source-fragment links point to immutable code revision `7c18a04`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 138 technical terms, with short descriptions and internal PDF links
+glossary of 143 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -328,8 +335,9 @@ logical axioms, if used, are shown explicitly.
    simultaneous host/replacement congruence, deep associativity, corolla units, and
    sharp composite context closure are proved. Global hole-label uniqueness under freshness, exact hole inventories, and sharp context closure are now
    checked even for deep replacement.
-2. Focussed hypernets and the concrete state space are defined. Define search,
-   substitution, and compute transitions, rootedness, and refocusing; prove
+2. Focussed hypernets, the state space, and the five coordinate search rules are
+   defined. Realize coordinate search by explicit focus-edge rewriting; define
+   substitution and compute transitions, rootedness, and refocusing; prove
    structural laws under the paper's determinism/refocusing hypotheses.
 3. Define concrete type-indexed pre-templates, specimens, quasi-specimens,
    output-closure, input-safety, and robustness (§8).

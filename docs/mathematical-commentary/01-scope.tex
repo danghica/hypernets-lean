@@ -23,8 +23,10 @@ context-validity criterion even when an intermediate collision is later removed.
 The concrete development now also defines globally focus-free hypernets,
 focussed hypernets, and the hole-free state space. The boundary argument of
 Lemma~39(1) is proved for finite sequences of addressed focus-free fillings;
-see Section~\ref{sec:concrete-focus}. Concrete transitions and the full specimen
-interpretation remain open.
+see Section~\ref{sec:concrete-focus}. The five search rules are now defined on underlying graph coordinates, with
+determinism, boundary laws, and preservation under shallow filling proved
+(Section~\ref{sec:search}). Realization by focus-edge rewriting, substitution
+and compute transitions, and the full specimen interpretation remain open.
 
 \Needspace{18\baselineskip}
 \subsection{Paper-to-Lean proof dependency map}
@@ -49,8 +51,10 @@ connection is to construct such witnesses from the eventual concrete specimen
 and tuple-substitution definitions.
 \item \textbf{Lemma~39(2) and (3): open.}\par
 Point~(2) uses the contrapositive of Lemma~26(3), requiring concrete rooted
-states and output-closure. Point~(3) requires the Fig.~9 search rules, the
-entering/exiting classifications, and the context-only traversal argument.
+states and output-closure. Point~(3) requires the entering/exiting classifications and context-only traversal
+argument. The Fig.~9 search rules are now checked in underlying-graph coordinates,
+and existing context steps survive shallow hole filling. Extracting a context
+step from a filled specimen and realizing the coordinates by focus edges remain open.
 The abstract field \texttt{context\_step} currently assumes their needed
 consequence. It has not been discharged by the graph path results.
 \item \textbf{Proposition~38: logical lifting checked; initial bridge open.}\par
@@ -71,9 +75,10 @@ representation choices. Relating them to the paper's set-based hypernets and
 across depth bounds is a separate adequacy obligation. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
 not replace the operational proofs in Appendix~F. The next proof dependency
-is the concrete transition relation of \S6.4 (including the active/passive
-operation distinction and Fig.~9 rules), followed by rootedness, Lemma~26(3),
-and Lemma~39(2--3). These then support the concrete Proposition~40 bridge;
+is the realization of the coordinate search rules by focus-edge insertion/removal,
+together with the remaining transitions of \S6.4. Rootedness, Lemma~26(3), and
+Lemma~39(2--3) remain subsequent obligations. The active/passive operation
+partition and all five coordinate search rules are now defined. These then support the concrete Proposition~40 bridge;
 initial focus construction supplies the separate Proposition~38 bridge.
 
 There are three distinct kinds of assertion below. A \emph{definition} specifies
@@ -83,7 +88,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{fd0c1c8}, rather than to the moving
+All code links point to revision \texttt{7c18a04}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

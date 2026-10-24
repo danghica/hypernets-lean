@@ -1,0 +1,220 @@
+\Needspace{18\baselineskip}
+\section{The five search rules on underlying graph coordinates}
+\label{sec:search}
+
+The next operational dependency is Fig.~9(a--e). We now define these five rules
+on actual ordered incidences of a fixed hypernet and prove determinism and
+preservation under shallow hole filling. The token is represented by a mode
+and a vertex of the underlying graph. This follows the paper's observation
+that search leaves the underlying graph unchanged. The relationship to the
+explicit focus-edge representation is still an adequacy obligation: we have
+not yet defined focus insertion/removal and proved that these coordinate
+steps coincide with the paper's contextual graph rewrites. The relation is
+defined even on graphs with holes; its intended state interpretation restricts
+the underlying graph to be focus-free, hole-free, and of type $*\to\epsilon$,
+with a token on a term vertex. The stronger structural lemmas below do not
+need these restrictions.
+
+\subsection{Operation kinds and certified incidence views}
+\begin{definition}[Operation kind]\label{term:operation-kind}
+The two operation kinds are passive and active. A function from operations to
+these kinds specifies the partition from \S5.1. Finishing a passive operation
+produces backtrack mode; finishing an active operation produces rewrite mode.
+Neither finishing mode is search, by distinction of constructors.
+\end{definition}
+\lean{Graph/Search}{10}{13}{Linear.OperationKind}
+\lean{Graph/Search}{16}{18}{Linear.OperationKind.finish}
+\lean{Graph/Search}{20}{21}{Linear.OperationKind.finish_ne_search}
+The embedding of primitive labels into each depth alphabet is the universe lift
+at zero and the left summand at successor depth. It is injective: project the
+lift at depth zero, or use injectivity of the left injection at successor depth.
+\lean{Graph/Search}{24}{26}{Linear.primitiveLabel}
+\lean{Graph/Search}{28}{32}{Linear.primitiveLabel_injective}
+
+\begin{definition}[Search operation view]\label{term:search-operation}
+A search operation view records an actual edge $e$ with operation label $o$,
+its source $s$, and lists $A,T$ of arguments and thunks. Its certificates assert
+\[
+ \mathsf{source}(e)=[s],\qquad
+ \mathsf{target}(e)=A\mathbin{+\!+}T,\qquad
+ |A|=\mathsf{arity}(o).
+\]
+Thus $A$ is exactly the ordered term-argument prefix. The ambient graph's
+signature typing already specifies the types of the remaining thunk targets.
+This view exposes certified data; it adds no machine-law assumption.
+\end{definition}
+\lean{Graph/Search}{36}{45}{Linear.SearchOperation}
+
+\begin{lemma}[Existence and uniqueness of operation data]
+Every shallow operation edge has such a view. Two views of the same edge have
+the same operation, source, and argument list. Every argument is a target of
+the edge, and the argument list has no repeated vertices.
+\end{lemma}
+\begin{proof}
+Signature typing gives a singleton source list and a target list at least as
+long as the arity. Choose its unique source; take the first arity-many targets
+for $A$ and drop that prefix for $T$. The take/drop identity gives the target
+certificate, and the length bound gives the arity certificate.
+For uniqueness, the edge label determines the operation by injectivity of
+primitive labels. Equality of singleton source lists determines the source.
+The two argument lists have the same length; taking that many entries from the
+equal target lists identifies them. Argument membership follows by inclusion
+of the left append summand. No repetitions follows by restriction of the
+whole target list's no-repetition certificate.
+\end{proof}
+\lean{Graph/Search}{52}{68}{Linear.SearchOperation.exists_view}
+\lean{Graph/Search}{71}{82}{Linear.SearchOperation.data_unique}
+\lean{Graph/Search}{84}{86}{Linear.SearchOperation.argument_mem}
+\lean{Graph/Search}{88}{91}{Linear.SearchOperation.arguments_nodup}
+
+\subsection{Local outcomes and the search relation}
+\begin{definition}[Entry and return outcomes]\label{term:search-outcomes}
+Entering an operation with argument list $A$ yields search at its first
+argument if $A$ is nonempty. If $A$ is empty, it yields the operation's finishing
+mode at its source. Returning from argument index $i$ yields search at argument
+$i+1$ if that entry exists; otherwise it yields the finishing mode at the
+source. Indices are zero-based. Return transitions additionally require that
+argument $i$ exists, so the last case cannot be reached by returning from an
+out-of-range index.
+\end{definition}
+\lean{Graph/Search}{94}{97}{Linear.SearchOperation.enter}
+\lean{Graph/Search}{100}{103}{Linear.SearchOperation.resume}
+These outcomes are independent of the chosen view of an edge. Substitute the
+operation, source, and argument equalities from data uniqueness into their
+definitions; the resulting expressions are identical.
+\lean{Graph/Search}{105}{108}{Linear.SearchOperation.enter_unique}
+\lean{Graph/Search}{110}{113}{Linear.SearchOperation.resume_unique}
+
+\begin{definition}[Search position and step]\label{term:search-step}
+A search position is a pair $(m,v)$ of mode and outer graph vertex. The search
+relation has three constructors covering the five rules:
+\begin{enumerate}
+\item At a variable edge's singleton source $v$, search becomes rewrite at $v$
+(Fig.~9a).
+\item At an operation's source, search yields its entry outcome
+(Fig.~9b for nonempty arguments and Fig.~9e for empty arguments).
+\item Backtracking at argument $i$ yields its return outcome
+(Fig.~9c when another argument exists and Fig.~9d when it does not).
+\end{enumerate}
+Every edge mentioned is shallow. Box contents and thunk targets are not searched
+by these rules. No rule changes the underlying graph, and this relation contains
+neither substitution nor extrinsic computation steps.
+\end{definition}
+\lean{Graph/Search}{151}{151}{Linear.SearchPosition}
+\lean{Graph/Search}{155}{163}{Linear.SearchStep}
+The four named operation rules specialize the two grouped constructors by
+rewriting the argument list or the lookup of the next argument. Together with
+the variable constructor, they expose precisely the five cases of Fig.~9(a--e).
+\lean{Graph/Search}{169}{172}{Linear.SearchStep.first_argument}
+\lean{Graph/Search}{175}{177}{Linear.SearchStep.nullary}
+\lean{Graph/Search}{180}{183}{Linear.SearchStep.next_argument}
+\lean{Graph/Search}{186}{189}{Linear.SearchStep.last_argument}
+
+\subsection{Determinism and initial/final boundaries}
+\begin{theorem}[Search determinism]
+Two search steps with the same input coordinates have the same output
+coordinates.
+\end{theorem}
+\begin{proof}
+Case-split on their rule constructors. Search and backtrack inputs cannot agree.
+For two variable steps the result is rewrite at the same vertex. For a variable
+step and an operation-entry step, uniqueness of the edge having the given
+source forces their edges equal, contradicting their distinct primitive labels.
+For two operation-entry steps, source incidence uniqueness again identifies the
+edges; entry-outcome uniqueness identifies the results.
+For two return steps, both starting vertices occur in their operation target
+lists. Target incidence uniqueness identifies the edges and hence their
+argument lists. Since these lists have no repetitions, equal arguments force
+equal indices. Return-outcome uniqueness then identifies the results.
+The more general helper permits two separately named input coordinates with an
+explicit equality; the deterministic theorem specializes that equality to
+reflexivity. No determinism hypothesis is assumed.
+\end{proof}
+\lean{Graph/Search}{192}{232}{Linear.SearchStep.result_unique}
+\lean{Graph/Search}{235}{237}{Linear.SearchStep.deterministic}
+
+\begin{lemma}[Search boundary laws]
+A rewrite-mode coordinate has no search step. A backtracking coordinate at an
+input has no search step. No search step yields search mode at an input.
+\end{lemma}
+\begin{proof}
+No constructor starts in rewrite mode. A step from backtrack must return from
+an argument, which is a target of an edge. The graph's incidence conditions
+forbid an input vertex from being a target.
+For the last assertion, a variable step ends in rewrite, and finishing an
+operation never produces search. Therefore a search-mode result must be an
+argument selected on entry or on return. It is again an edge target and cannot
+be an input. Apply this stronger non-input assertion to rule out any proposed
+step into an initial coordinate.
+\end{proof}
+\lean{Graph/Search}{240}{242}{Linear.SearchStep.no_rewrite}
+\lean{Graph/Search}{245}{249}{Linear.SearchStep.final_no_step}
+\lean{Graph/Search}{252}{265}{Linear.SearchStep.search_target_not_input}
+\lean{Graph/Search}{268}{270}{Linear.SearchStep.no_initial_target}
+The finality assertion here concerns search steps only. It is not yet the
+paper's assertion that final states have no transition of any kind; that also
+requires the substitution and compute rules and the focus-edge bridge.
+
+\subsection{Preservation under context filling}
+\begin{lemma}[Transport of retained operation data]
+Replacing an edge other than an operation edge retains a view of that operation.
+Entry and return outcomes commute with the host port map.
+\end{lemma}
+\begin{proof}
+Keep the operation label and use the surviving-edge injection. Map the source,
+argument list, and thunk list through the host map. Mapping a singleton and an
+append gives the two incidence certificates, and mapping preserves argument
+length. Entry commutation follows by the empty/nonempty cases of the argument
+list. Return commutation follows because lookup in a mapped list is the mapped
+optional lookup; split according to whether the next argument exists. Modes
+are unchanged by the port map.
+\end{proof}
+\lean{Graph/Search}{116}{127}{Linear.SearchOperation.plug}
+\lean{Graph/Search}{129}{136}{Linear.SearchOperation.plug_enter}
+\lean{Graph/Search}{138}{145}{Linear.SearchOperation.plug_resume}
+
+\begin{theorem}[Existing context search steps survive filling]
+Suppose $G$ has a shallow hole edge $h$ and a search step $p\to q$. For every
+interface-compatible filling $H$, the graph $G[h:=H]$ has a search step from
+the host image of $p$ to the host image of $q$.
+\end{theorem}
+\begin{proof}
+In every rule, the interacting edge is a variable or operation and therefore
+cannot equal the hole edge. In the variable case, retain that edge, its label,
+and its mapped singleton source to apply the same rule. In the entry case,
+use the retained operation view and entry commutation. In the return case,
+lookup commutes with mapping, so the old argument witness supplies the mapped
+argument witness; apply return commutation to identify the result.
+\end{proof}
+\lean{Graph/Search}{274}{308}{Linear.SearchStep.plug}
+This theorem starts with a step of the context itself. Lemma~39(3) instead
+starts with a step of a filled specimen and must establish that it comes from
+the context. Extracting that step requires the entering/exiting analysis,
+rootedness, output-closure, and the focus-edge bridge. The preservation theorem
+proves one needed direction of locality, not the whole lemma.
+
+\Needspace{24\baselineskip}
+\subsection{Concrete checks of rule selection}
+The fixture has one operation with two term arguments and one thunk. Its graph
+is a corolla with targets $0,1,2$ in that order; the operation view certifies
+that the argument list is $[0,1]$ and the thunk list is $[2]$. The incidence
+certificates are checked by computation.
+\lean{Graph/SearchExamples}{9}{9}{Linear.SearchExamples.ops}
+\lean{Graph/SearchExamples}{11}{12}{Linear.SearchExamples.graph}
+\lean{Graph/SearchExamples}{14}{23}{Linear.SearchExamples.operation}
+Entry selects target $0$ and return from target $0$ selects target $1$. Return
+from target $1$ finishes at the source in the declared mode, for either operation
+kind. These are direct applications of the corresponding rule theorems.
+\lean{Graph/SearchExamples}{26}{28}{Linear.SearchExamples.enter_first}
+\lean{Graph/SearchExamples}{31}{33}{Linear.SearchExamples.return_next}
+\lean{Graph/SearchExamples}{36}{38}{Linear.SearchExamples.finish_skips_thunk}
+A hypothetical return step to search at thunk target $2$ would, by determinism,
+have the same result as the finishing step. It would identify the finishing
+mode with search, which is impossible. This checks that the full target list
+has not accidentally been used as the argument list.
+\lean{Graph/SearchExamples}{41}{45}{Linear.SearchExamples.cannot_search_thunk}
+The existing nullary value corolla admits the empty argument view and finishes
+by backtracking when declared passive. The unary variable corolla uses the
+variable constructor and triggers rewrite without moving the coordinate.
+\lean{Graph/SearchExamples}{48}{54}{Linear.SearchExamples.value_finishes}
+\lean{Graph/SearchExamples}{57}{60}{Linear.SearchExamples.variable_triggers}

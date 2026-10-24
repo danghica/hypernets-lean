@@ -168,6 +168,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{fibre-lookup}{Occurrence observation}{For a fibre address, the hole lookup obtained either from its shallow label or recursively from its child address.}
 
+\glossaryentry{operation-kind}{Operation kind}{The active/passive classification; finishing produces rewrite/backtrack mode respectively.}
+
 \glossaryentry{operation-path}{Operation path}{A forward, endpoint-sensitive path defined by a reverse operation trace with its edge list reversed; empty paths are permitted.}
 
 \glossaryentry{wire}{Operation specification}{The assignment of a term-argument count and an ordered list of thunk binder counts to each operation.}
@@ -233,6 +235,14 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{specimen}{Rooted state}{A state satisfying the specimen interface's supplied predicate $\mathsf{Root}$, which its laws require to be preserved by transitions.}
 
 \glossaryentry{focus}{Search mode}{The abstract focus mode $\mathsf{search}$, used with entering specimens in the input-safety premise.}
+
+\glossaryentry{search-operation}{Search operation view}{A certified decomposition of an actual operation edge into its singleton source, ordered argument prefix, and remaining thunk targets.}
+
+\glossaryentry{search-outcomes}{Search outcome}{Entry selects the first argument or finishes; return selects the next argument or finishes after the last.}
+
+\glossaryentry{search-step}{Search position}{A mode and outer vertex of the underlying graph; the bridge to explicit focus edges remains open.}
+
+\glossaryentry{search-step}{Search step}{The coordinate relation implementing the five rules of Fig. 9(a--e), with no substitution or compute transitions.}
 
 \glossaryentry{selected-hole}{Selected hole label}{The partial observation of the selected edge itself after following a site address; selecting a box returns no hole label.}
 
