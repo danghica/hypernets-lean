@@ -1,0 +1,359 @@
+\Needspace{18\baselineskip}
+\section{Independent deep substitution and pointed host classes}
+\label{sec:deep-interchange}
+This section completes the host/site quotient and independent-site
+interchange obligation formerly listed in Appendix~\ref{app:remaining-work}.
+The theorem constructs surviving addresses after each substitution, at
+arbitrary depth, and compares the final graphs by recursive isomorphism.
+It complements nested associativity: independence excludes replacing a
+box and one of its descendants as the two independent steps.
+No hole-freshness or intermediate context-validity assumption is needed
+for the graph isomorphism.
+
+\Needspace{8\baselineskip}
+\subsection{Interchange at distinct shallow edges}
+Let $e\ne f$ be edges of a finite typed graph $C$, and let $H$ and $K$
+have their respective interfaces. After replacing $e$, write $f/e$ for
+the retained occurrence of $f$, and define $e/f$ symmetrically.
+\begin{theorem}[Shallow interchange]
+There is an explicit ordered-interface-preserving isomorphism
+\[
+       (C[e:=H])[f/e:=K]\ \cong\ (C[f:=K])[e/f:=H].
+\]
+The host may contain cycles or self-loops.
+\end{theorem}
+\begin{proof}
+The internal carriers are $(V_C+V_H)+V_K$ and $(V_C+V_K)+V_H$.
+The bijection fixes the original host component, sends the first filling
+component to its new position, and sends the second filling component to
+its new position. The inverse performs the reverse rearrangement;
+both identities follow by the three cases.
+The edge bijection similarly fixes the surviving original edges, each
+different from both selected edges, and exchanges the positions of the
+two filling-edge carriers. Its subtype proofs follow from $e\ne f$ and
+the fact that the original surviving edge differs from each selected edge.
+Again the three cases give the inverse identities.
+\lean{Graph/PlugInterchange}{12}{17}{Graph.Net.PlugInterchange.vertices}
+\lean{Graph/PlugInterchange}{19}{32}{Graph.Net.PlugInterchange.edges}
+
+For any retained edge, its source and target attachment ports after one
+replacement are the original ports mapped through host inclusion.
+Taking an indexed element of the mapped incidence list proves these
+two statements.
+\lean{Graph/PlugInterchange}{34}{36}{Graph.Net.PlugInterchange.sourcePort_retained}
+\lean{Graph/PlugInterchange}{38}{40}{Graph.Net.PlugInterchange.targetPort_retained}
+
+The composite inclusion of a host vertex commutes with the carrier
+bijection, by cases on internal, input, and output vertices.
+For a vertex of $H$, its inclusion after inserting $H$ first agrees with
+its inclusion when $H$ is inserted second. The internal case is
+definitional. The input and output cases use the retained-port formula
+for $e$ after inserting $K$, followed by the host-vertex identity.
+For $K$ the argument is reversed: first use its retained-port formula
+after inserting $H$, then the host identity. These three commuting maps
+cover every vertex used by an incidence list.
+\lean{Graph/PlugInterchange}{42}{46}{Graph.Net.PlugInterchange.map_host}
+\lean{Graph/PlugInterchange}{48}{63}{Graph.Net.PlugInterchange.map_first}
+\lean{Graph/PlugInterchange}{65}{79}{Graph.Net.PlugInterchange.map_second}
+
+Labels are unchanged under the carrier rearrangement. For source and
+target lists, split an edge into surviving host, $H$, or $K$ origin;
+compose the list maps and apply the corresponding commuting identity
+pointwise. This verifies ordered incidence and completes the
+isomorphism, not merely a bijection of carriers.
+\end{proof}
+\lean{Graph/PlugInterchange}{82}{116}{Graph.Net.PlugInterchange.iso}
+
+\Needspace{8\baselineskip}
+\subsection{Changing a box beside another substitution}
+A change to the body of box edge $f$ leaves the label of every $e\ne f$
+unchanged. Unfolding the conditional label update proves this directly.
+The source and target interfaces at $e$ are therefore equal to their
+original interfaces. The surviving shallow site is obtained by transporting
+its interface indices along these equalities.
+\lean{Graph/BoxInterchange}{9}{14}{Linear.replaceBox_other_label}
+\lean{Graph/BoxInterchange}{17}{26}{Linear.Site.afterBox}
+
+\begin{lemma}[Mixed shallow and box interchange]
+Replacing a shallow edge $e$ and changing the body of a distinct box edge
+$f$ commute up to ordinary graph isomorphism, with the shallow site
+transported to its unchanged interface.
+\end{lemma}
+\begin{proof}
+A body update preserves the host's entire outer incidence structure.
+To reuse the general incidence-transport construction, first regard its
+edge labels as related by the always-true relation. Identity carrier
+bijections then give an incidence isomorphism from the original host to
+the updated host. This auxiliary relation is used only for transporting
+incidence; it is not the final equality condition on labels.
+\lean{Graph/BoxInterchange}{29}{38}{Linear.replaceBox_incidence}
+
+Lift that incidence isomorphism through substitution at $e$, transporting
+the replacement's boundary indices along the equal interfaces.
+Use its vertex and edge bijections, internal labels, and source and target
+proofs for the desired final isomorphism. Check actual edge-label equality
+separately: a retained original edge has its updated box label precisely
+when it is $f$, while every inserted edge has its original replacement
+label. Equality with $f$ is equivalent to equality of its retained copy
+with the retained copy of $f$. This proves literal label equality and
+hence the stated ordinary graph isomorphism.
+\end{proof}
+\lean{Graph/BoxInterchange}{41}{73}{Linear.plug_retained_box_iso}
+
+\begin{lemma}[Distinct box updates commute]
+Changing the bodies at two distinct box edges, in either order, yields
+equal graph records.
+\end{lemma}
+\begin{proof}
+All carriers and incidence fields are unchanged. For the label function,
+split an edge into the cases that it is the first selected edge, the
+second selected edge, or neither. Distinctness excludes the two updates
+interfering, so the same final label is obtained in every case.
+\end{proof}
+\lean{Graph/BoxInterchange}{76}{93}{Linear.replaceBox_comm}
+
+\Needspace{8\baselineskip}
+\subsection{Structural independence and residual addresses}
+\begin{definition}[Independent sites]\label{term:independent-sites}
+A certificate of independence is generated structurally as follows.
+Two distinct shallow edges are independent. A shallow edge and a site
+inside a different box are independent. Sites inside two different
+boxes are independent, regardless of their inner depths. Two sites inside
+the same box are independent when their inner sites are independent.
+Finally independence can be reversed. These constructors allow any finite
+common chain of enclosing boxes before the addresses diverge; they give
+no constructor relating a selected edge to its own descendant.
+The certificate contains structural occurrence information, not an
+assumed interchange theorem.
+\end{definition}
+\lean{Graph/IndependentSites}{10}{30}{Linear.IndependentSites}
+
+\begin{definition}[Interchange result]\label{term:interchange-result}
+For independent $s,t$ in $C$ and replacements $A,B$, an interchange result
+contains a residual site $t/s$ in $C[s:=A]$, a residual site $s/t$ in
+$C[t:=B]$, and a recursive isomorphism
+\[
+        (C[s:=A])[t/s:=B]\ \simeq\
+        (C[t:=B])[s/t:=A].
+\]
+Here the residual sites are constructed by following retained occurrences,
+including their enclosing boxes. They are not chosen by searching for
+graphs with equal results.
+\end{definition}
+\lean{Graph/IndependentSites}{34}{39}{Linear.InterchangeResult}
+
+\begin{theorem}[Independent deep interchange]
+Every structural independence certificate and pair of interface-compatible
+replacements produces an interchange result.
+\end{theorem}
+\begin{proof}
+Induct on the independence certificate, with replacements arbitrary.
+For distinct shallow edges, use their retained copies and the shallow
+interchange isomorphism. For a shallow edge and a site inside another
+box, retain that box address after the shallow plug; in the other order,
+use the shallow site transported across the body update. The mixed
+interchange lemma supplies the isomorphism.
+
+For sites in different boxes, retain each enclosing edge and inner
+address after updating the other box. The unchanged-label lemma supplies
+the necessary box-label certificates. Distinct box updates commute as
+records, so recursive reflexivity gives the comparison.
+
+For two sites in a shared box, apply the induction hypothesis in its
+body. Lift each residual address through the updated enclosing box.
+Performing the second substitution updates that same box a second time;
+the overwrite lemma reduces each side to a single update with the final
+inner body. Lift the inner recursive isomorphism through this common
+outer update. This case is what permits arbitrary shared nesting depth.
+
+For a reversed independence certificate, apply the induction hypothesis
+with replacements reversed, exchange its two residual sites, and invert
+its isomorphism. All cases construct both addresses and their comparison.
+\end{proof}
+\lean{Graph/IndependentSites}{43}{79}{Linear.IndependentSites.interchange}
+
+Transporting a site's interface along equalities does not change its
+selected hole label: eliminate the equalities and the claim is reflexive.
+Induction on independence then proves that both residual addresses
+select the original hole labels. The shallow and separate-box cases
+are definitional; the mixed case uses interface transport and the
+unchanged-label lemma; the shared-box case uses the induction
+hypothesis; reversing independence exchanges the two assertions.
+This also covers non-hole sites, whose selected label is absent.
+\lean{Graph/IndependentSites}{82}{85}{Linear.Site.selectedHole_reinterface}
+\lean{Graph/IndependentSites}{88}{104}{Linear.IndependentSites.residual_selectedHole}
+
+The two final recursive graph classes are equal by quotient soundness
+applied to the constructed isomorphism. They have unique holes
+simultaneously, by invariance of that property under recursive
+isomorphism. The latter equivalence concerns the final graphs; neither
+intermediate graph is required to be a valid context.
+\lean{Graph/IndependentSites}{107}{112}{Linear.IndependentSites.interchange_modulo}
+\lean{Graph/IndependentSites}{115}{120}{Linear.IndependentSites.unique_iff}
+
+\Needspace{8\baselineskip}
+\subsection{A quotient of hosts with selected occurrences}
+\begin{definition}[Pointed hypernet]\label{term:pointed-hypernet}
+A pointed hypernet consists of a host $C:I\to O$ at depth bound $d$ and
+a selected site $s$ with local depth $r$ and interface $J\to K$.
+All these type indices are fixed for a particular space of pointed
+hypernets, while the host and its carrier names may vary.
+\end{definition}
+\lean{Graph/SiteQuotient}{9}{12}{Linear.PointedHypernet}
+
+\begin{definition}[Pointed renaming]\label{term:pointed-renaming}
+Two pointed hypernets are equivalent under the equivalence relation
+generated by structural site correspondences. Its constructors are a
+single existing $\mathsf{SiteIso}$ correspondence, reflexivity, reversal,
+and composition. Thus the relation consists of finite renaming zigzags.
+Equality of substituted results is not a generator: the selected occurrence
+remains part of the object being quotiented.
+This construction does not assert that the previously defined
+$\mathsf{SiteIso}$ itself has already been proved to be an equivalence.
+\end{definition}
+\lean{Graph/SiteQuotient}{16}{21}{Linear.PointedRenaming}
+
+A single site correspondence includes an outer recursive host isomorphism:
+inspect either its shallow or inside constructor. A finite pointed
+renaming therefore relates recursively isomorphic hosts, by induction;
+identity, inverse, and composition of graph isomorphisms handle the
+three equivalence constructors.
+\lean{Graph/SiteQuotient}{24}{29}{Linear.SiteIso.host}
+\lean{Graph/SiteQuotient}{31}{38}{Linear.PointedRenaming.host}
+
+Pointed renaming preserves plugging of a fixed replacement. For one
+structural correspondence use the existing site-substitution theorem.
+For reflexivity, reversal, and composition use the corresponding
+recursive isomorphism operations on results. If the replacements are
+also recursively isomorphic, compose this result with replacement
+congruence at the second selected site.
+\lean{Graph/SiteQuotient}{41}{49}{Linear.PointedRenaming.plug}
+\lean{Graph/SiteQuotient}{51}{56}{Linear.PointedRenaming.plug_congr}
+
+Retained-hole inventories also agree along any pointed renaming.
+The single-step case is the existing site correspondence invariant;
+the other cases use reflexivity, symmetry, and transitivity of logical
+equivalence.
+\lean{Graph/SiteQuotient}{59}{66}{Linear.PointedRenaming.retainedHole_iff}
+
+\begin{definition}[Pointed isomorphism class]\label{term:pointed-class}
+Use pointed renaming as a setoid relation, with its three equivalence
+constructors supplying the equivalence laws. A pointed isomorphism
+class is its quotient. The quotient identifies hosts and their selected
+occurrences together, with outer and local interfaces fixed.
+\end{definition}
+\lean{Graph/SiteQuotient}{68}{71}{Linear.pointedSetoid}
+\lean{Graph/SiteQuotient}{74}{75}{Linear.PointedModuloIso}
+
+\begin{definition}[Fully quotiented substitution]\label{term:pointed-plug}
+Given a pointed class $[C,s]$ and a replacement class $[A]$, define
+\[
+          \mathsf{pointedPlug}([C,s],[A])=[C[s:=A]].
+\]
+For a fixed pointed representative, the previously constructed
+replacement-quotient operation already makes the right-hand side
+independent of the representative of $[A]$. To eliminate the pointed
+quotient, use function extensionality and quotient induction on $[A]$.
+Pointed-renaming substitution invariance then proves equality of the
+result classes. On concrete representatives the defining equation is
+reflexive.
+\end{definition}
+\lean{Graph/SiteQuotient}{78}{85}{Linear.pointedPlug}
+\lean{Graph/SiteQuotient}{87}{89}{Linear.pointedPlug_mk}
+
+Forgetting the selected site gives a well-defined host class, because
+pointed renaming preserves recursive host isomorphism.
+The retained-hole predicate likewise descends to pointed classes,
+using the retained-inventory equivalence and propositional extensionality.
+\lean{Graph/SiteQuotient}{92}{94}{Linear.pointedHost}
+\lean{Graph/SiteQuotient}{97}{99}{Linear.pointedRetainedHole}
+
+\begin{definition}[Quotient freshness]\label{term:pointed-freshness}
+The predicate $\mathsf{pointedFresh}([C,s],[A])$ means that no hole
+retained outside $s$ occurs in $A$. Replacement-renaming invariance
+permits eliminating the replacement quotient. Retained-inventory
+invariance permits eliminating the pointed quotient: in either
+direction, transfer the retained-hole witness and apply the original
+freshness condition. Function and propositional extensionality turn
+these equivalences into the equalities required by quotient elimination.
+\end{definition}
+\lean{Graph/SiteQuotient}{102}{112}{Linear.pointedFresh}
+
+\begin{theorem}[Sharp context validity on classes]
+If the host class of $P$ has unique holes, then
+\[
+ \mathsf{UniqueHoles}(\mathsf{pointedPlug}(P,[A]))
+ \quad\Longleftrightarrow\quad
+ \mathsf{UniqueHoles}([A])\ \land\ \mathsf{pointedFresh}(P,[A]).
+\]
+\end{theorem}
+\begin{proof}
+Apply quotient induction to both arguments. The assertion becomes the
+existing sharp context criterion at the concrete selected site, with
+the supplied host-uniqueness hypothesis. No stronger disjointness
+condition on the whole host is introduced.
+\end{proof}
+\lean{Graph/SiteQuotient}{115}{122}{Linear.pointedPlug_unique_iff}
+
+Transporting a site along a recursive host isomorphism leaves its pointed
+class unchanged: the transport specification is a single structural
+site correspondence, hence a generator of pointed renaming.
+Finally, applying fully quotiented substitution at either of the
+constructed residual pointed hosts gives equal result classes by
+deep interchange and quotient soundness. This is the independent
+substitution law expressed through the new operation.
+\lean{Graph/SiteQuotient}{125}{129}{Linear.pointed_transport}
+\lean{Graph/SiteQuotient}{132}{137}{Linear.IndependentSites.pointed_interchange}
+
+\Needspace{8\baselineskip}
+\subsection{Examples that distinguish occurrences}
+The second site in the earlier boxed two-hole chain selects its second
+inner hole. The two sites are independent by the common-box constructor
+applied to distinct shallow holes. Filling one by the repeated-hole
+fragment and the other by a variable fragment gives equal final
+classes in either order. The earlier collision theorem proves that one
+intermediate graph has a duplicated hole label; interchange still
+applies because it is a theorem about well-formed graphs, not only valid
+intermediate contexts.
+\lean{Graph/InterchangeExamples}{9}{10}{Linear.Examples.boxedSecondSite}
+\lean{Graph/InterchangeExamples}{12}{13}{Linear.Examples.boxedSitesIndependent}
+\lean{Graph/InterchangeExamples}{17}{22}{Linear.Examples.boxed_interchange}
+
+A second host has two outer thunk inputs, no outputs or internal
+vertices, and two distinct box edges. Both edges have exactly the same
+single-hole body. Each source list contains its own input; both target
+lists are empty. Injectivity of the input constructor proves source
+uniqueness, while target uniqueness is vacuous. Inputs witness source
+coverage; there are no other vertices requiring coverage. Splitting
+the two-element edge type proves the source typings, and the empty
+target typings are reflexive. This constructs an actual finite graph.
+It need not be a unique-hole context, since the bodies deliberately
+repeat the same hole label.
+\lean{Graph/InterchangeExamples}{25}{59}{Linear.Examples.twinBoxes}
+
+Select the sole inner hole of either box. The separate-box constructor
+certifies independence despite equality of the box labels. Fill the
+first with the value operation and the second with the other-value
+operation. Deep interchange proves agreement of the two orders; each
+residual address follows its own enclosing edge.
+\lean{Graph/InterchangeExamples}{61}{62}{Linear.Examples.twinSite}
+\lean{Graph/InterchangeExamples}{64}{66}{Linear.Examples.twinIndependent}
+\lean{Graph/InterchangeExamples}{69}{72}{Linear.Examples.twin_interchange}
+
+The correctly transported first site in the renamed boxed chain gives
+the same pointed class as the original site, by the previously checked
+structural correspondence. In contrast, keeping its former numerical
+index selects the wrong hole and gives a different pointed class.
+If those classes were equal, quotient exactness would give a pointed
+renaming. Substitution invariance with the repeated-hole replacement
+would then give recursively isomorphic results, contradicting the
+existing wrong-address counterexample.
+\lean{Graph/InterchangeExamples}{75}{80}{Linear.Examples.pointed_renamed_first}
+\lean{Graph/InterchangeExamples}{83}{89}{Linear.Examples.pointed_wrong_address}
+
+The proof dependency is explicit: shallow carrier interchange and local
+box-update laws yield arbitrary-depth residual construction; site
+correspondence invariants yield the pointed quotient and its substitution
+operation; recursive isomorphism connects interchange to equality of
+result classes. Deep specimen representations and the concrete UAM
+rules are still separate obligations in Appendix~\ref{app:remaining-work}.

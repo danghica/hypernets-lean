@@ -7,7 +7,8 @@ ordinary shallow substitutions, and every completed schedule described below
 has the same result up to explicit graph isomorphism. This supplies the
 shallow compatibility obligation in Appendix~\ref{app:remaining-work}.
 It does not identify these structural substitutions with UAM transitions,
-nor prove interchange for arbitrary deep sites.
+nor by itself prove interchange for arbitrary deep sites; the latter is
+established in Section~\ref{sec:deep-interchange}.
 
 \subsection{Peeling one filling}
 \begin{definition}[Residual filling family]\label{term:residual-family}
@@ -255,6 +256,7 @@ The dependency chain is now: explicit peeling and identity-copy
 isomorphisms, then correctness of executions, then finite realization
 and schedule independence. These results remove a representation gap
 between simultaneous shallow specimens and ordinary graph replacement.
-They do not yet supply deep specimen substitution, a quotient of
-host/site pairs, or transport of the entire focused-state and UAM
-structure along arbitrary deep replacement schedules.
+Section~\ref{sec:deep-interchange} adds a quotient of host/site pairs and
+independent deep-site interchange. Deep specimen substitution and transport
+of the entire focused-state and UAM structure along arbitrary deep replacement
+schedules remain separate obligations.

@@ -164,14 +164,15 @@ simultaneous graph up to explicit isomorphism and are independent of order,
 including in the recursive graph quotient. Their length is bounded by the
 covering-list length. SequentialExamples.lean checks both alternating families
 and schedules beginning at either of the two holes. These are graph
-replacement results; deep specimens, arbitrary deep-site interchange, and
-the full UAM interface remain open.
+replacement results. The subsequent milestone below proves independent
+interchange at arbitrary depth and constructs the host/site quotient.
+Deep specimens and the full UAM interface remain open.
 
-Estimated completion by mathematical effort: **about 60%**, with a plausible
-range of **50–70%**, up from about 55% before the shallow multi-hole milestone.
-The sequential-realization bridge leaves this rounded estimate unchanged.
-This is a planning judgment, not a declaration count. The remaining operational
-and specimen-locality proofs may expose substantial additional work.
+Estimated completion by mathematical effort: **about 65%**, with a plausible
+range of **55–75%**, up from about 60% before the deep-interchange and
+pointed-host quotient milestone. This is a planning judgment, not a declaration
+count. The remaining operational and specimen-locality proofs may expose
+substantial additional work.
 
 ## Concrete graph milestone
 
@@ -291,7 +292,8 @@ vertex and edge renaming in each box body:
   keeping the former numerical address can give a non-isomorphic substitution result.
 
 Transport chooses inner isomorphisms classically; no canonical choice or round-trip
-law is asserted. The host/site pair is not yet quotiented. Comparison across
+law is asserted for the chosen transport function. The pointed-host quotient
+below identifies structural renaming zigzags. Comparison across
 different depth bounds and representation adequacy remain open. The concrete UAM and its
 bridge to Theorem 6 remain the main later work.
 
@@ -311,8 +313,26 @@ bridge to Theorem 6 remain the main later work.
 - Checked regressions cover self-loops, mixed shallow/deep composition, three stages,
   and a duplicate-hole intermediate graph repaired by the second substitution.
 
-These are nested substitution laws. A quotient of host/site pairs and interchange
-for independent sites remain open, along with the concrete UAM and specimen bridge.
+These are nested substitution laws. The independent-site and pointed-host
+milestone below complements them; the concrete UAM and deep specimen bridge
+remain open.
+
+## Independent deep substitution and pointed-host quotient
+
+- PlugInterchange.lean constructs the carrier and incidence isomorphism for
+  substitutions at distinct shallow edges, without excluding cycles or self-loops.
+- BoxInterchange.lean proves mixed shallow/box interchange and commuting changes
+  to distinct box bodies.
+- IndependentSites.lean follows structural independence through arbitrary shared
+  enclosing boxes. It constructs both residual addresses and a recursive
+  isomorphism of the two final graphs, preserves their selected hole labels,
+  and proves equality on recursive classes and equivalence of final context validity.
+- SiteQuotient.lean quotients typed host/site pairs by finite structural renaming
+  zigzags. Substitution, retained-hole inventories, and exact freshness descend;
+  the sharp context-validity criterion holds on classes.
+- InterchangeExamples.lean checks independent holes inside one box, distinct boxes
+  with identical bodies, and the pointed quotient's rejection of a wrong address.
+  Intermediate hole-label freshness is not an assumption of interchange.
 
 ## Checked source
 
@@ -387,7 +407,7 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
 all 1018 definitions and proved statements in the abstract and concrete graph
 development, including regression examples, in mathematical English. Its 1034
-source-fragment links point to immutable code revision `2dd3e91`. It distinguishes
+source-fragment links point to immutable code revision `af6296b`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
 glossary of 172 technical terms, with short descriptions and internal PDF links
@@ -426,19 +446,17 @@ logical axioms, if used, are shown explicitly.
 ## Remaining work toward the milestone
 
 1. Prove representation adequacy and compatibility across depth bounds.
-2. Construct a quotient of host/site pairs and prove interchange at arbitrary
-   independent deep sites.
-3. Prove equivalence of state search with the paper's contextual local rewrites.
-4. Define substitution and compute transitions and assemble the full UAM.
-5. Prove substitution preserves rootedness, establish the required full-UAM
+2. Prove equivalence of state search with the paper's contextual local rewrites.
+3. Define substitution and compute transitions and assemble the full UAM.
+4. Prove substitution preserves rootedness, establish the required full-UAM
    consequences of refocusing, extend the shallow Lemma 26(3) to deep specimens,
    and prove the stationary rewrite criterion.
-6. Extend shallow specimens to arbitrary deep holes and paper tuple substitution.
+5. Extend shallow specimens to arbitrary deep holes and paper tuple substitution.
    Define concrete quasi-specimens, input-safety, and robustness.
-7. Construct the concrete `SpecimenSystem`, extend the checked shallow boundary
+6. Construct the concrete `SpecimenSystem`, extend the checked shallow boundary
    and rooted-path laws to deep specimens, and prove the remaining Lemma 39
    classifications and traversal laws, safety/robustness bridges, and initial lifting.
-8. Instantiate the checked sufficiency results with all concrete obligations
+7. Instantiate the checked sufficiency results with all concrete obligations
    discharged to obtain Theorem 6.
 
 The copying UAM, lambda-term translation, and example program equivalences

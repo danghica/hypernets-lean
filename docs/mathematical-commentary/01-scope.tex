@@ -51,6 +51,9 @@ states and a multi-hole proof of Lemma~26(3) for this representation
 directly to these specimen states. Every finite simultaneous shallow filling
 now has a finite ordinary addressed-substitution realization, and completed
 schedules give isomorphic results (Section~\ref{sec:sequential-expansion}).
+Independent deep substitutions now have constructed residual sites and a
+recursive interchange isomorphism. A quotient of hosts with selected sites
+supports substitution and sharp context validity (Section~\ref{sec:deep-interchange}).
 Deep specimens, graph-rewrite adequacy, substitution and compute
 transitions, and the full specimen interpretation remain open.
 
@@ -118,16 +121,14 @@ partition and all five coordinate search rules are now defined. These then suppo
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 60\% of the mathematical effort toward
+As a planning estimate, approximately 65\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-50--70\%). This revises the preceding estimate of about 55\% after the
-concrete shallow multi-hole specimen milestone; the subsequent sequential
-realization and order-independence bridge strengthens that milestone without
-changing this rounded estimate. It is a subjective
-estimate, not a ratio of declarations or discharged checklist entries. The
-remaining operational adequacy, full UAM, and specimen locality arguments are
-substantial and may reveal further missing infrastructure. The active to-do
-list is maintained in Appendix~\ref{app:remaining-work}.
+55--75\%). This revises the preceding estimate of about 60\% after completing
+arbitrary-depth independent interchange and the pointed-host quotient.
+It is a subjective estimate, not a ratio of declarations or discharged
+checklist entries. Operational adequacy, the full UAM, and deep specimen
+locality, safety, and robustness remain substantial obligations.
+The active to-do list is maintained in Appendix~\ref{app:remaining-work}.
 
 There are three distinct kinds of assertion below. A \emph{definition} specifies
 a mathematical object or predicate. A \emph{proved statement} is established by
@@ -136,7 +137,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{2dd3e91}, rather than to the moving
+All code links point to revision \texttt{af6296b}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}
