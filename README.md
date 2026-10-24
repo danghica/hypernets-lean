@@ -30,19 +30,20 @@ class, output closure, and refocusing of the behaviour. The concrete safety and
 robustness predicates imply the abstract interface laws by proved bridges.
 
 The full UAM now has a literally deterministic machine on recursive graph
-isomorphism classes, with a concrete specimen interface and forward counting
-simulation. Safety and robustness are evaluated directly on that class machine;
+isomorphism classes, with a concrete specimen interface and both counting
+simulations. Safety and robustness are evaluated directly on that class machine;
 no equivalence with the earlier named-state predicates is assumed. General
-initial observation lifting and the converse integration remain open.
+initial observation lifting and final contextual assembly remain open.
 
 ## Paper proof dependency map
 
 - **Proposition 37 — checked:** `Machine.CountingSimulation.sound` follows the
   quantitative soundness proof for deterministic machines.
-- **Proposition 40 — concrete forward simulation checked:** `SpecimenSystem.countingSimulation` and its
+- **Proposition 40 — both concrete simulations checked:** `SpecimenSystem.countingSimulation` and its
   converse give the abstract argument. `ClassSafety.countingSimulation` now
-  instantiates the forward theorem with proved class locality and determinism,
-  under the class safety, robustness, and reasonable cost-order hypotheses.
+  instantiates the forward theorem, and `ClassSafety.countingSimulation_converse`
+  instantiates its converse, with proved class locality and determinism.
+  Safety, robustness, and reasonable cost orders remain explicit hypotheses.
 - **Lemma 39(1), Appendix F.4 — boundary argument checked:**
   `Focussed.fillings_boundary_agreement` proves initial/final agreement for two
   finite sequences of focus-free fillings of a common focussed graph, including
@@ -65,14 +66,14 @@ initial observation lifting and the converse integration remain open.
   specimen witnesses must still discharge `initial_lift`.
 - **Theorem 6 — still conditional:** the abstract pieces are combined, but a
   concrete named-state `SpecimenSystem` and safety/robustness bridges are now
-  constructed on names and classes; initial observations and converse integration remain open.
+  constructed on names and classes; initial observations and final contextual assembly remain open.
   Determinism and refocusing are hypotheses of the paper's theorem, not claims
   to prove for arbitrary extrinsic rewrite rules.
 
 Contextual search adequacy and §6.4's concrete transition definitions are now
 complete. Stationary replay, substitution rootedness and uniqueness, and the
 full-UAM structural theorem are now proved. The next dependencies are the
-concrete observations, initial lifting, and converse integration.
+concrete observations and initial lifting.
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices. Their annotated set-presentation round trips and depth coherence are
 now proved. Fresh vertex naming also resolves the paper's graph-valued box-label
@@ -142,7 +143,7 @@ local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains two unfinished tasks. Search adequacy, the full UAM transition
 definition, and its structural theorem are discharged; the concrete specimen
 interface and robustness bridges are proved; initial observation lifting,
-converse integration, and final theorem instantiation remain open.
+final theorem instantiation remains open.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
 invariance under recursive renaming and closure under one-way shallow filling,
@@ -238,10 +239,10 @@ unrooted robustness alternative. Rooted consequences are derived, not assumed.
 The nested-box example yields exactly one recorded hole; a mode-mismatched
 pair is rejected even with universally true up-to relations.
 
-Estimated completion by mathematical effort: **about 93%**, with a plausible
-range of **80–96%**, up from 91% after the deterministic class machine and forward simulation.
-This is a planning judgment, not a declaration count. Initial observation lifting,
-converse integration, and final contextual assembly remain substantial.
+Estimated completion by mathematical effort: **about 94%**, with a plausible
+range of **82–97%**, up from 93% after concrete converse integration.
+This is a planning judgment, not a declaration count. Initial observation lifting
+and final contextual assembly remain substantial.
 
 ## Concrete graph milestone
 
@@ -516,8 +517,7 @@ logical axioms, if used, are shown explicitly.
 ## Remaining work toward the milestone
 
 1. Construct concrete observations and initial lifting for arbitrary related
-   fragments in allowed contexts. Complete the converse class-machine integration,
-   preserving the converse cost relation and both equivalence directions.
+   fragments in allowed contexts, with membership and endpoint representation witnesses.
 2. Instantiate the contextual sufficiency results to obtain Theorem 6 under its
    original hypotheses.
 
@@ -562,7 +562,7 @@ on raw representatives still require their own isomorphism-invariance proofs.
 finite depth promotion. `PaperEncodingExamples.lean` repairs the prior two-box
 counterexample without imposing body consistency and checks context properties.
 
-Appendix B now has **two unfinished items**: initial observations and converse integration,
+Appendix B now has **two unfinished items**: initial observations,
 and the final concrete Theorem 6.
 The representation result concerns the paper's typed UAM discipline; it does
 not claim to finish those operational obligations or cover unrelated signatures.
@@ -609,7 +609,7 @@ Initial rooted specimens are also constructed without assuming the original
 specimen rooted. Section 46 of the commentary explains every new declaration.
 
 Appendix B has been shortened to the unfinished portions; it still has two
-items. General observation lifting and converse integration are
+items. General observation lifting and final contextual assembly are
 required before claiming the paper's full theorem. The later class-machine
 milestone below resolves the determinism mismatch.
 
@@ -631,5 +631,18 @@ assuming that projecting named runs preserves stuckness or refinement.
 The regressions include a two-step substitution execution, a genuine nonempty
 compute behaviour with literal class determinism, and a nested-hole initial
 lifting witness. Section 47 explains all new definitions and proofs. Appendix B
-now retains general observation lifting, converse integration, and final
+now retains general observation lifting and final
 contextual assembly; the complete Theorem 6 is not yet claimed.
+
+## Concrete converse simulation milestone
+
+`ClassConverse.lean` completes the concrete reverse counting simulation on the
+full class machine, using safety on the original template at the converse cost
+order and robustness with the actual endpoint vectors exchanged. Equivalence
+comparisons retain both directions. It proves reverse refinement, combines
+both directions into quantitative equivalence, and discharges rootedness and
+remoteness for constructed initial specimens.
+
+Appendix B now leaves general observation construction/initial lifting and
+final contextual assembly. The full contextual Theorem 6 is still outstanding.
+The Lean build and axiom audits pass without `sorry` or new axioms.

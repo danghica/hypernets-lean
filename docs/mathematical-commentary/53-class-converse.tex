@@ -1,0 +1,108 @@
+\Needspace{20\baselineskip}
+\section{Concrete converse simulation and two-sided refinement}
+\label{sec:class-converse}
+This section completes the converse integration left open in
+Section~\ref{sec:uam-classes}. It follows the reverse Proposition~40 argument
+in Appendix~F.9 of the paper, already proved abstractly in this development.
+The new work supplies its concrete class-machine predicates and bridges.
+Safety stays on the original template with the converse cost relation;
+robustness exchanges the specimen endpoints. General observation lifting
+remains separate.
+
+\Needspace{10\baselineskip}
+\termdef{converse-class-quasi}
+\begin{definition}[Converse quasi-specimen]
+Write $[S_L]$ and $[S_R]$ for the endpoint classes of an original concrete specimen $S$. A converse quasi-specimen from $s$ to $t$, up to relations $A,R$, requires that $s$ is not in rewrite mode and that there exists an original specimen $S$ whose mode agrees with both endpoint modes. If $s,t$ are rooted, require rootedness of $S_R,S_L$ and comparisons
+\[
+ A(s,[S_R])\quad\hbox{and}\quad R([S_L],t).
+\]
+The context, its allowed-membership proof, hole inventory, and related filling vectors are those of the original specimen. Exchanging the roles of the vectors represents a converse specimen without assuming symmetry of the template. The witness and mode agreement are unconditional; only the rooted comparisons are conditional.
+\end{definition}
+\lean{Graph/ClassConverse}{12}{19}{ConverseQuasi}
+
+\Needspace{10\baselineskip}
+\begin{lemma}[Characterisation by reversed comparisons]
+The converse predicate on $(s,t)$ is equivalent to the original non-rewrite quasi predicate on $(t,s)$ with comparisons $(x,y)\mapsto R(y,x)$ and $(x,y)\mapsto A(y,x)$.
+\end{lemma}
+\begin{proof}
+Use the same specimen in each direction. Exchange its mode equalities, its rootedness premises, its two rootedness conclusions, and its comparisons. Both endpoint modes equal the specimen mode, so non-rewrite status transfers between them. Repeating these exchanges gives the inverse implication.
+\end{proof}
+\lean{Graph/ClassConverse}{23}{36}{converseQuasi_iff}
+
+\Needspace{10\baselineskip}
+\begin{lemma}[Preserving equivalence in safety III]
+An original non-rewrite quasi-specimen from $s$ to $t$ with equivalence comparisons at cost order $P$ gives a converse quasi-specimen from $t$ to $s$ with the same equivalence comparisons and the same order $P$.
+\end{lemma}
+\begin{proof}
+Apply the preceding characterisation. Each equivalence consists of two refinements; exchange these two components on both sides of the witness. No symmetry of the numerical cost relation is used, and neither refinement direction is discarded.
+\end{proof}
+\lean{Graph/ClassConverse}{40}{50}{converseQuasi_equiv}
+
+\Needspace{10\baselineskip}
+\termdef{converse-class-robustness}
+\begin{definition}[Concrete converse robustness]
+For every original specimen $S$ with remote rewrite focus and every full-class successor $[S_R]\to u$, require one of the following alternatives. A source endpoint is unrooted; or $u$ runs to a stuck class; or there are runs $u\to^k s$ and $[S_L]\to^l t$ with $Q(1+k,l)$ and a converse quasi-specimen from $s$ to $t$ up to refinements at orders $P,R$. All successors are quantified, regardless of the names of representatives witnessing the class step. This is the concrete converse robustness obligation; it is not inferred from forward robustness.
+\end{definition}
+\lean{Graph/ClassConverse}{54}{62}{ConverseRobust}
+
+\Needspace{10\baselineskip}
+\begin{lemma}[Bridge for converse quasi-specimens]
+A concrete converse quasi-specimen implies the quasi law of the opposite class-valued specimen interface.
+\end{lemma}
+\begin{proof}
+Given rootedness of the endpoint classes, apply the conditional part of the concrete witness. Its comparison endpoints are exactly the opposite interface's left and right endpoints. The equality between specimen mode and source mode transfers the non-rewrite condition. Thus every field of the abstract witness is supplied.
+\end{proof}
+\lean{Graph/ClassConverse}{68}{72}{converseQuasi_bridge}
+
+\Needspace{10\baselineskip}
+\begin{lemma}[Bridge for converse robustness]
+Concrete converse robustness implies robustness of the opposite constructed class-valued interface.
+\end{lemma}
+\begin{proof}
+The interface supplies rootedness of the right and left source endpoints. These contradict either unrooted alternative. Keep the stuck alternative unchanged. In the matching alternative retain the run lengths, costs, and executions and apply the converse quasi bridge. There is no additional locality assumption.
+\end{proof}
+\lean{Graph/ClassConverse}{75}{82}{converseRobust_bridge}
+
+\Needspace{10\baselineskip}
+\begin{theorem}[Concrete converse counting simulation]
+Assume allowed-context invariance, output closure, behaviour refocusing and invariance under recursive isomorphism, behaviour determinism modulo isomorphism, and reasonable cost orders $Q,P,R$. Input safety of the original template at $Q^{\mathrm{op}},P$, together with concrete converse robustness at $Q,P,R$, makes the opposite concrete lifting a counting simulation at $Q,P,R$.
+\end{theorem}
+\begin{proof}
+Instantiate the previously proved reverse Proposition~40 with the constructed class specimen system. Literal class determinism supplies determinism. The original input-safety bridge preserves all three alternatives and both equivalence directions; the converse robustness bridge supplies the other hypothesis. The existing reverse argument handles safety II with a zero-length right run by an additional context traversal, whose locality is now a proved concrete theorem. In safety III it uses the reverse refinement from each equivalence. Thus this instantiation retains precisely the cost and direction choices that a naive exchange of forward safety would lose.
+\end{proof}
+\lean{Graph/ClassConverse}{86}{94}{countingSimulation_converse}
+
+\Needspace{10\baselineskip}
+\begin{theorem}[Reverse quantitative refinement]
+Under the preceding assumptions, every remote jointly rooted original specimen satisfies $[S_R]\preceq_Q[S_L]$.
+\end{theorem}
+\begin{proof}
+The specimen, with its rootedness proofs exchanged, witnesses opposite lifting. Apply counting-simulation soundness using literal class determinism and the reasonable cost orders.
+\end{proof}
+\lean{Graph/ClassConverse}{98}{105}{sufficiency_converse}
+
+\Needspace{10\baselineskip}
+\begin{theorem}[Two-sided concrete refinement]
+Assume the common behaviour, context, and cost hypotheses; input safety at both $Q,P$ and $Q^{\mathrm{op}},P$; forward robustness and converse robustness at $Q,P,R$. Then every remote jointly rooted specimen satisfies $[S_L]\simeq_Q[S_R]$.
+\end{theorem}
+\begin{proof}
+The previously proved forward sufficiency theorem supplies the first refinement. The new converse sufficiency theorem supplies the second. Their conjunction is the definition of quantitative equivalence. This theorem is about actual specimen endpoints; it does not yet quantify over arbitrary fragment observations.
+\end{proof}
+\lean{Graph/ClassConverse}{109}{132}{equivalence}
+
+\Needspace{10\baselineskip}
+\begin{corollary}[Equivalence of constructed initial specimens]
+Under the same global hypotheses, let $D$ be the initial relocation of any concrete specimen $S$. Then $[D_L]\simeq_Q[D_R]$, without separate remoteness or rootedness assumptions.
+\end{corollary}
+\begin{proof}
+The relocation theorem makes both endpoints initial. Initial states are rooted. The relocated focus is in search mode and therefore cannot be in rewrite mode, which proves remoteness. Apply two-sided concrete refinement. The input remains an existing concrete specimen; construction of such a witness from arbitrary related fragments and allowed observation contexts is still outstanding.
+\end{proof}
+\lean{Graph/ClassConverse}{122}{132}{initial_equivalence}
+
+\paragraph{Status.}
+Both concrete counting simulations, both remote-specimen refinements, and
+their initial-relocation corollary are checked. Appendix~\ref{app:remaining-work}
+now retains only the general observation construction and the final contextual
+assembly. Completion is estimated at about 94\% of mathematical effort
+(plausible range 82--97\%), a subjective planning estimate rather than a
+count of declarations. This is not yet the full contextual Theorem~6.
