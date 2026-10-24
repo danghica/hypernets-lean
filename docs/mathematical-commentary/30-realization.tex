@@ -1,0 +1,267 @@
+\Needspace{32\baselineskip}
+\section{Explicit focus insertion and realization of typed search positions}
+\label{sec:realization}
+
+This section advances the operational obligation in the remaining-work list.
+A term-vertex coordinate now determines an actual focussed hypernet, and on a
+hole-free graph of type $*\to\epsilon$ it determines an actual state. The
+construction proves all incidence and typing laws, rather than assuming a
+realization interface. Contracting the inserted focus recovers the original
+ordered incidence lists. Search preserves the term-vertex condition, so every
+typed coordinate search step has two such state realizations.
+
+This is the insertion direction of the bridge. It does not yet erase an
+arbitrary pre-existing focussed state, establish inverse laws modulo graph
+isomorphism, or identify the coordinate relation with the paper's contextual
+interaction rules. The endpoint theorem below must not be read as a proof of
+those still-open adequacy statements. Substitution, compute transitions, and
+the concrete specimen interpretation also remain open.
+
+\Needspace{16\baselineskip}
+\subsection{Splitting a vertex}
+\begin{definition}[Focus insertion carriers and maps]\label{term:focus-insertion}
+Let $G$ be a hypernet and let $v$ be a term vertex that is not an output. Extend
+the internal-vertex carrier from $V$ to $V+1$ and the edge carrier from $E$ to
+$E+1$. Write $z$ for the fresh internal vertex, $\iota$ for the inclusion of old
+ports, and $f$ for the fresh edge. Boundaries are unchanged. Define
+\[
+ S_v(w)=\begin{cases}z&w=v,\\\iota(w)&w\ne v,\end{cases}
+ \qquad
+ C_v(\iota(w))=w,\quad C_v(z)=v.
+\]
+Here $S_v$ redirects old source occurrences of $v$, while $C_v$ contracts the
+new focus. Old internal vertices retain their wire labels and $z$ has label
+term. The use of a singleton carrier gives explicit finite enumerations.
+\end{definition}
+\lean{Graph/FocusInsertion}{10}{10}{Linear.FocusInsertion.Vertex}
+\lean{Graph/FocusInsertion}{12}{12}{Linear.FocusInsertion.host}
+\lean{Graph/FocusInsertion}{14}{14}{Linear.FocusInsertion.fresh}
+\lean{Graph/FocusInsertion}{16}{20}{Linear.FocusInsertion.collapse}
+\lean{Graph/FocusInsertion}{30}{32}{Linear.FocusInsertion.split}
+\lean{Graph/FocusInsertion}{63}{65}{Linear.FocusInsertion.internalLabel}
+
+\begin{lemma}[Map properties]
+The inclusion $\iota$ is injective and never reaches $z$. The contraction
+satisfies $C_v\iota=\mathrm{id}$ and $C_vS_v=\mathrm{id}$; consequently $S_v$
+is injective. No image of $S_v$ equals $\iota(v)$. Every new port is either an
+old port's image or $z$. Both inclusion and redirection preserve wire labels.
+\end{lemma}
+\begin{proof}
+Case analysis on internal, input, and output constructors proves the inclusion
+claims; on internals use injectivity and disjointness of sum tags. For
+$C_vS_v$, split on $w=v$: the fresh port contracts to $v$ in the equality case,
+and otherwise contraction undoes inclusion. Applying $C_v$ to equal redirection
+images proves injectivity. An image cannot equal $\iota(v)$: in the equality
+case it is fresh; otherwise inclusion injectivity would force $w=v$.
+The port classification uses the two internal sum cases and the boundary
+constructors; every inhabitant of the fresh singleton carrier equals its sole
+member. Inclusion preserves labels by cases. Redirection preserves labels
+because only $v$ changes image, and both $v$ and $z$ have term label.
+\end{proof}
+\lean{Graph/FocusInsertion}{22}{22}{Linear.FocusInsertion.collapse_host}
+\lean{Graph/FocusInsertion}{24}{24}{Linear.FocusInsertion.host_ne_fresh}
+\lean{Graph/FocusInsertion}{26}{27}{Linear.FocusInsertion.host_injective}
+\lean{Graph/FocusInsertion}{34}{38}{Linear.FocusInsertion.collapse_split}
+\lean{Graph/FocusInsertion}{40}{42}{Linear.FocusInsertion.split_injective}
+\lean{Graph/FocusInsertion}{44}{49}{Linear.FocusInsertion.split_ne_host}
+\lean{Graph/FocusInsertion}{51}{61}{Linear.FocusInsertion.vertex_cases}
+\lean{Graph/FocusInsertion}{67}{68}{Linear.FocusInsertion.host_label}
+\lean{Graph/FocusInsertion}{70}{75}{Linear.FocusInsertion.split_label}
+
+\begin{definition}[Inserted incidence lists]
+For every old edge $e$, use $S_v(\mathsf{source}_G(e))$ for its source list and
+$\iota(\mathsf{target}_G(e))$ for its target list, mapping entry by entry.
+The fresh edge has source $[\iota(v)]$, target $[z]$, and the chosen focus mode
+as label. Old edge labels, including whole boxed bodies, are unchanged.
+\end{definition}
+\lean{Graph/FocusInsertion}{77}{79}{Linear.FocusInsertion.source}
+\lean{Graph/FocusInsertion}{81}{83}{Linear.FocusInsertion.target}
+
+\begin{lemma}[Incidence uniqueness and coverage]
+The inserted incidence lists satisfy source and target uniqueness. A port
+occurs in a source list exactly when it is not an output, and in a target list
+exactly when it is not an input.
+\end{lemma}
+\begin{proof}
+For two old source edges, pull equality of mapped vertices back along the
+injective $S_v$ and apply source uniqueness in $G$. An old source cannot meet
+the fresh edge's source because $S_v$ avoids $\iota(v)$. There is only one
+fresh edge. The target proof is identical with inclusion in place of
+redirection and disjointness from $z$ in place of avoidance of $\iota(v)$.
+
+For source coverage, all mapped old sources are non-outputs: a redirected one
+is internal, and any other one retains its old boundary kind. The fresh edge's
+source is a non-output by the hypothesis on $v$. Conversely, an old image
+$\iota(w)$ with $w=v$ is sourced by the fresh edge. If $w\ne v$, use coverage
+in $G$ and its retained source edge. The fresh port $z$ is sourced by the old
+edge that sourced $v$, which exists because $v$ was not an output.
+For target coverage, retained targets remain non-inputs and the fresh target
+is internal. Conversely an old non-input image inherits a target edge from
+$G$, and $z$ is targeted by the fresh focus edge.
+\end{proof}
+\lean{Graph/FocusInsertion}{85}{104}{Linear.FocusInsertion.source_unique}
+\lean{Graph/FocusInsertion}{106}{125}{Linear.FocusInsertion.target_unique}
+\lean{Graph/FocusInsertion}{127}{154}{Linear.FocusInsertion.source_coverage}
+\lean{Graph/FocusInsertion}{156}{174}{Linear.FocusInsertion.target_coverage}
+
+\begin{theorem}[Well-formed explicit focus insertion]
+The construction gives a finite typed hypernet with the same external
+interface as $G$.
+\end{theorem}
+\begin{proof}
+Enumerate each extended carrier by the sum of the old enumeration and the
+singleton enumeration. Old incidence lists retain their no-repetition property
+because both maps are injective; the new lists are singletons. Use the proved
+uniqueness and coverage lemmas. For typing, mapping a port list and then reading
+labels is the same as reading the old labels, by the label-preservation laws.
+The new source and target both have term label, exactly the focus signature.
+These checks populate every field of the concrete net record.
+\end{proof}
+\lean{Graph/FocusInsertion}{177}{226}{Linear.FocusInsertion.insert}
+
+\Needspace{16\baselineskip}
+\subsection{Focus certification, contraction, and holes}
+\begin{theorem}[Unique focus and contraction]
+If $G$ is globally focus-free, the inserted graph is focussed in the sense of
+\S6.2. Contracting the new focus restores each original source and target list.
+\end{theorem}
+\begin{proof}
+Choose the fresh edge as focus. Every old label remains globally focus-free;
+the singleton fresh-edge carrier has no second member. The focus endpoints are
+$\iota(v)$ and $z$, which are distinct. Its target is internal, so the focus is
+not exposed. Its incidence lists and mode are those specified by construction.
+To recover source lists, compose their map by $S_v$ with the map by $C_v$ and
+use $C_vS_v=\mathrm{id}$. For target lists use $C_v\iota=\mathrm{id}$.
+These statements concern the retained edges; the focus itself is deleted when
+interpreting contraction. They establish recovery for the constructed family,
+not a general erasure operation on arbitrary focussed graphs.
+\end{proof}
+\lean{Graph/FocusInsertion}{229}{245}{Linear.FocusInsertion.focussed}
+\lean{Graph/FocusInsertion}{248}{255}{Linear.FocusInsertion.collapse_sources}
+\lean{Graph/FocusInsertion}{257}{264}{Linear.FocusInsertion.collapse_targets}
+
+\begin{lemma}[Hole freedom and boundary observations]
+If $G$ is hole-free at every depth, so is its focus insertion. The explicit
+focus is initial exactly when its mode is search and $v$ is an input; it is
+final exactly when its mode is backtrack and $v$ is an input.
+\end{lemma}
+\begin{proof}
+Represent a hypothetical hole occurrence by an outer edge and a label-local
+position. If the edge is retained, its unchanged label gives a hole occurrence
+in $G$, a contradiction. If it is the fresh edge, its focus label is not a hole
+and has no children. This covers zero and successor depth alphabets.
+For boundary observations, the mode is unchanged and the source is
+$\iota(v)$. Inclusion preserves input status, by cases on the port constructor.
+\end{proof}
+\lean{Graph/FocusInsertion}{267}{286}{Linear.FocusInsertion.holeFree}
+\lean{Graph/FocusInsertion}{289}{293}{Linear.FocusInsertion.boundary_iff}
+
+\Needspace{16\baselineskip}
+\subsection{Search preserves term typing}
+\begin{lemma}[Typed operation data]
+An operation view's source has term label. Mapping its argument list through
+vertex labels gives exactly the list of arity-many term labels. Consequently
+every argument vertex has term label.
+\end{lemma}
+\begin{proof}
+Rewrite the operation's source-typing certificate by its singleton source and
+operation label; the singleton signature forces the source label to be term.
+For arguments, rewrite the target-typing certificate using the argument/thunk
+append decomposition. Take an argument-length prefix on both sides. The
+arity certificate ensures that this is exactly the entire argument-label list
+on one side and the term prefix of the signature on the other. Finally map
+membership of an argument into this repeated-term list: every member equals
+term.
+\end{proof}
+\lean{Graph/SearchRealization}{14}{18}{Linear.SearchOperation.source_term}
+\lean{Graph/SearchRealization}{21}{35}{Linear.SearchOperation.arguments_typed}
+\lean{Graph/SearchRealization}{37}{41}{Linear.SearchOperation.argument_term}
+
+\begin{theorem}[Term typing preservation]
+If a search step starts at a term vertex, its result is at a term vertex.
+\end{theorem}
+\begin{proof}
+A variable trigger does not move, so inherits the premise. Operation entry
+selects either the first argument or the source when there are no arguments.
+Operation return selects either the next argument or the source on completion.
+Apply the operation data lemmas in each case. Neither operation case needs the
+premise on the old vertex; its result's type follows from graph typing alone.
+\end{proof}
+\lean{Graph/SearchRealization}{46}{60}{Linear.SearchStep.preserves_term}
+
+\Needspace{16\baselineskip}
+\subsection{Actual states from typed coordinates}
+\begin{definition}[Typed position and realization]\label{term:typed-position}
+For a graph $G:*\to\epsilon$, a typed position is a search coordinate whose
+vertex is certified to have term label. Such a vertex cannot be an output,
+since the output index type is empty. If $G$ is globally focus-free and
+hole-free, realize a typed position by inserting its mode at its vertex and
+packaging the resulting graph, unique-focus certificate, and hole-freedom
+certificate into the concrete state record.
+\end{definition}
+\lean{Graph/SearchRealization}{63}{64}{Linear.TypedPosition}
+\lean{Graph/SearchRealization}{70}{74}{Linear.TypedPosition.not_output}
+\lean{Graph/SearchRealization}{77}{81}{Linear.TypedPosition.realize}
+
+\begin{definition}[Initial attachment]\label{term:initial-attachment}
+The initial typed position is search at the sole input, whose wire label is
+term by the interface. Realizing it is an initial state: the constructed focus
+has search mode and its source is that input. More generally, the realized
+state's initial and final predicates coincide with their coordinate boundary
+predicates, by the insertion boundary lemma.
+\end{definition}
+\lean{Graph/SearchRealization}{84}{85}{Linear.TypedPosition.initial}
+\lean{Graph/SearchRealization}{88}{89}{Linear.TypedPosition.initial_realize}
+\lean{Graph/SearchRealization}{92}{95}{Linear.TypedPosition.realize_boundary}
+This discharges the graph-construction part of initial attachment. Proposition~38
+still needs the concrete observation interface and specimen witnesses required
+by \texttt{initial\_lift}.
+
+\begin{definition}[Advancing a typed position]
+Given a search step from a typed position, equip its result coordinate with
+the term-typing proof supplied by preservation. This gives the next typed
+position on the same underlying graph.
+\end{definition}
+\lean{Graph/SearchRealization}{98}{100}{Linear.TypedPosition.advance}
+
+\begin{theorem}[Realization of search endpoints]
+For every search step from a typed position on a focus-free, hole-free graph
+$G:*\to\epsilon$, realize the initial position and its typed successor as
+states $s,t$. Their explicit focus modes are the corresponding coordinate
+modes. At each endpoint, collapsing the inserted focus recovers every
+original edge's source and target list in $G$.
+\end{theorem}
+\begin{proof}
+Use the realization constructor for the input and for the typed successor.
+Their focus modes are correct by the definition of insertion. Apply the two
+incidence-recovery theorems at each coordinate. The common underlying graph
+is unchanged; only the position and mode of the inserted focus may differ.
+The statement supplies actual state endpoints and recovery certificates, not
+a new definition of a contextual graph-rewrite step between arbitrary states.
+\end{proof}
+\lean{Graph/SearchRealization}{104}{122}{Linear.TypedPosition.step_realizes}
+
+\Needspace{22\baselineskip}
+\Needspace{16\baselineskip}
+\subsection{Boundary and interior regression checks}
+The existing value corolla is focus-free because its operation label cannot
+be a focus label. Realizing its initial typed position gives the explicit
+state \texttt{initialValue}. Advancing by its passive nullary search step and
+realizing the result gives \texttt{finalValue}. Their initial and final
+certificates follow from their modes and common input source. The initial
+state's distinct focus endpoints are guaranteed by its focussed certificate.
+\lean{Graph/RealizationExamples}{8}{10}{Linear.Examples.value_focusFree}
+\lean{Graph/RealizationExamples}{13}{14}{Linear.Examples.initialValue}
+\lean{Graph/RealizationExamples}{17}{19}{Linear.Examples.finalValue}
+\lean{Graph/RealizationExamples}{21}{22}{Linear.Examples.value_boundary_states}
+\lean{Graph/RealizationExamples}{25}{27}{Linear.Examples.initial_value_has_distinct_endpoints}
+The two-hole chain is also globally focus-free, because neither hole label can
+be a focus. Insert search at its internal vertex: the first edge still targets
+the old vertex, the second edge now starts at the fresh vertex, and the new
+focus connects the old vertex to the fresh one. Unfolding the incidence maps
+proves all four equalities. This focus is not initial because its source is
+internal. Unlike the value example, this test deliberately retains holes and
+therefore tests focussed hypernets rather than closed states.
+\lean{Graph/RealizationExamples}{29}{31}{Linear.Examples.twoHoles_focusFree}
+\lean{Graph/RealizationExamples}{35}{42}{Linear.Examples.interior_insertion}
+\lean{Graph/RealizationExamples}{45}{49}{Linear.Examples.interior_not_initial}
