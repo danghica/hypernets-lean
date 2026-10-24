@@ -1,0 +1,260 @@
+\Needspace{18\baselineskip}
+\section{Sequential realization of simultaneous substitution}
+\label{sec:sequential-expansion}
+The simultaneous construction is now connected to the existing addressed
+replacement operation. Every finite filling family can be performed by
+ordinary shallow substitutions, and every completed schedule described below
+has the same result up to explicit graph isomorphism. This supplies the
+shallow compatibility obligation in Appendix~\ref{app:remaining-work}.
+It does not identify these structural substitutions with UAM transitions,
+nor prove interchange for arbitrary deep sites.
+
+\subsection{Peeling one filling}
+\begin{definition}[Residual filling family]\label{term:residual-family}
+Fix a finite typed graph $C$ and a family $H=(H_f)_{f\in E_C}$ of
+interface-compatible fillings. Select $e\in E_C$ and put $C'=C[e:=H_e]$,
+using ordinary replacement. A retained edge of $C'$ is an original edge
+$f\ne e$, and an inserted edge is an edge $x$ of $H_e$.
+The residual family $R$ assigns $H_f$ to the former and the identity corolla
+with label $\ell(x)$ to the latter. Thus subsequent expansion completes the
+original assignments without replacing the newly inserted edges nontrivially.
+\end{definition}
+\lean{Graph/ExpansionPeel}{15}{19}{Graph.Net.ExpansionPeel.rest}
+
+\begin{lemma}[Peeling isomorphism]
+There is an explicit interface-preserving isomorphism
+\[
+             C'[R]\ \cong\ C[H].
+\]
+No acyclicity, absence of self-loops, or restriction on edge labels is needed.
+\end{lemma}
+\begin{proof}
+First construct the bijection of internal vertices. An original host
+vertex becomes its host copy. An internal vertex already inserted from
+$H_e$ becomes the copy tagged by $e$ in $C[H]$. An internal vertex subsequently
+inserted from $H_f$, with $f\ne e$, becomes the copy tagged by $f$.
+A corolla has no internal vertices, so there is no fourth case.
+The inverse retains host vertices and splits a filling tag $f$ according
+to whether $f=e$. In the equality case, transporting along that equality
+places the vertex in the already inserted $H_e$ carrier; otherwise it is
+placed in the still-pending $H_f$ carrier. Case analysis proves both inverse
+identities.
+\lean{Graph/ExpansionPeel}{22}{26}{Graph.Net.ExpansionPeel.vertexTo}
+\lean{Graph/ExpansionPeel}{28}{32}{Graph.Net.ExpansionPeel.vertexFrom}
+\lean{Graph/ExpansionPeel}{34}{51}{Graph.Net.ExpansionPeel.vertices}
+
+The edge bijection sends an edge of a pending $H_f$ to the pair $(f,x)$
+and the sole edge of the corolla for an inserted $x\in E_{H_e}$ to $(e,x)$.
+Its inverse again splits on equality with $e$. The only extra inverse
+equation says that every element of $\mathrm{Fin}(1)$ is zero.
+\lean{Graph/ExpansionPeel}{53}{55}{Graph.Net.ExpansionPeel.edgeTo}
+\lean{Graph/ExpansionPeel}{57}{59}{Graph.Net.ExpansionPeel.edgeFrom}
+\lean{Graph/ExpansionPeel}{61}{77}{Graph.Net.ExpansionPeel.edges}
+
+It remains to verify incidence, rather than merely count vertices and edges.
+The composite inclusion of an original host vertex agrees with its
+simultaneous inclusion. The corresponding assertion for a vertex of $H_e$
+holds directly for internal vertices; for boundary vertices it reduces to
+the host assertion at the appropriate attachment port.
+\lean{Graph/ExpansionPeel}{79}{81}{Graph.Net.ExpansionPeel.map_host}
+\lean{Graph/ExpansionPeel}{83}{89}{Graph.Net.ExpansionPeel.map_filled}
+
+For a retained edge $f$, each source or target port after the first
+replacement is the host inclusion of its original port. This follows by
+taking the indexed element of the mapped incidence list.
+Consequently inclusion of any vertex of a pending $H_f$ commutes with the
+vertex bijection: the internal case is definitional, and each boundary
+case uses the appropriate retained-port identity followed by the host
+identity.
+\lean{Graph/ExpansionPeel}{91}{93}{Graph.Net.ExpansionPeel.sourcePort_retained}
+\lean{Graph/ExpansionPeel}{95}{97}{Graph.Net.ExpansionPeel.targetPort_retained}
+\lean{Graph/ExpansionPeel}{99}{113}{Graph.Net.ExpansionPeel.map_other}
+
+For an inserted edge $x$ of $H_e$, the input of its residual corolla maps
+to the simultaneous inclusion of the corresponding source port of $x$;
+the output maps to the corresponding target port. These identities use
+the already proved port formulas for an inserted edge of an ordinary plug,
+followed by the filled-vertex identity above.
+\lean{Graph/ExpansionPeel}{115}{120}{Graph.Net.ExpansionPeel.map_corolla_input}
+\lean{Graph/ExpansionPeel}{122}{127}{Graph.Net.ExpansionPeel.map_corolla_output}
+
+These bijections and incidence identities form the promised isomorphism.
+Vertex and edge labels are preserved by inspection of the tags.
+For a pending filling, preservation of its source and target lists follows
+by composing list maps and applying the vertex identity pointwise.
+For a corolla, its ordered list of inputs or outputs enumerates all port
+indices. Mapping this list through the corresponding port function
+recovers exactly the incidence list of $x$ in $H_e$.
+This completes the proof of the lemma, including the ordering of incidence.
+\end{proof}
+\lean{Graph/ExpansionPeel}{131}{162}{Graph.Net.ExpansionPeel.iso}
+
+\subsection{Stopping at arbitrary identity copies}
+The termination condition must permit arbitrary graphs certified as
+corolla copies, rather than require the literal corolla constructor.
+The existing copy record specifies a sole edge with the original label
+and the full ordered input and output lists.
+
+\begin{lemma}[A corolla copy has no internal vertices]
+If $H_e$ is a corolla copy, its internal carrier is empty.
+\end{lemma}
+\begin{proof}
+If $v$ were internal, source coverage would place it in the source list of
+some edge. That edge must be the sole edge of the copy, whose source list
+contains only input vertices. The disjointness of input and internal
+constructors gives a contradiction.
+\end{proof}
+\lean{Graph/ExpansionCopies}{13}{17}{Linear.ExpansionPaths.copy_no_internal}
+
+\begin{lemma}[Restoring a host from copies]
+If every $H_e$ is a corolla copy, then $C[H]\cong C$.
+\end{lemma}
+\begin{proof}
+The internal-vertex bijection drops the host tag; its putative filling
+cases are impossible by the preceding lemma. Its inverse inserts the host
+tag. The edge bijection forgets the owning tag's unique filling edge,
+sending $(e,x)$ to $e$; the inverse chooses the sole edge of the copy.
+Uniqueness proves the inverse equations. Labels are the original labels
+by the copy certificate. For each incidence list, expansion of the copy
+gives the original host list mapped through host inclusion. The
+internal-vertex bijection cancels that inclusion, including at boundary
+vertices, so mapping back restores the original list.
+\end{proof}
+\lean{Graph/ExpansionCopies}{20}{27}{Linear.ExpansionPaths.copiesVertices}
+\lean{Graph/ExpansionCopies}{30}{34}{Linear.ExpansionPaths.copiesEdges}
+\lean{Graph/ExpansionCopies}{37}{62}{Linear.ExpansionPaths.copiesIso}
+
+\subsection{Certified executions and order independence}
+Fix a hypernet alphabet, a depth bound, and an outer interface.
+\begin{definition}[Shallow substitution run]\label{term:shallow-run}
+A shallow substitution run from $C$ to $D$ of length $n$ is either the
+empty run ($n=0$, $D=C$), or an ordinary addressed replacement at a shallow
+edge of $C$, followed by a run of length $n-1$ from the resulting graph.
+Each step uses the existing operation $\operatorname{plugAt}$.
+These are structural graph replacements, not machine evaluation steps.
+\end{definition}
+\lean{Graph/ExpansionSequential}{11}{18}{Linear.ShallowRun}
+
+\begin{definition}[Certified filling execution]\label{term:filling-execution}
+An execution is indexed by the current host $C$, its prescribed family
+$H$, a length $n$, and a final graph $D$. It may stop with $n=0$ and $D=C$
+when every assignment is certified as a corolla copy. Otherwise it selects
+an edge $e$, performs $C[e:=H_e]$, and continues with the residual family
+defined above. The length increases by one.
+The definition records the actual steps and a legitimate stopping
+condition; it does not assume any isomorphism of the final result.
+\end{definition}
+\lean{Graph/ExpansionSequential}{27}{32}{Linear.ExpansionSequential.Execution}
+
+Every certified execution yields a shallow substitution run. Induction
+sends the stopping constructor to the empty run, and each peeling
+constructor to the corresponding addressed replacement followed by the
+inductively obtained run.
+\lean{Graph/ExpansionSequential}{35}{39}{Linear.ExpansionSequential.Execution.ordinary}
+
+\begin{theorem}[Correctness of a completed execution]
+An execution from $(C,H)$ to $D$ gives $D\cong C[H]$.
+\end{theorem}
+\begin{proof}
+Induct on the execution. At termination, choose the certified corolla
+copies and invert the host-restoration isomorphism.
+At a step selecting $e$, the induction hypothesis identifies $D$ with
+$C'[R]$. Compose this isomorphism with the peeling isomorphism
+$C'[R]\cong C[H]$.
+\end{proof}
+\lean{Graph/ExpansionSequential}{43}{50}{Linear.ExpansionSequential.Execution.iso}
+
+\begin{theorem}[Order independence]
+Any two completed executions of the same prescribed family have
+isomorphic final graphs, even if their lengths differ. They also
+represent the same recursive graph class.
+\end{theorem}
+\begin{proof}
+If their results are $D$ and $E$, correctness gives isomorphisms
+$D\cong C[H]$ and $E\cong C[H]$. Compose the first with the inverse of
+the second. An ordinary graph isomorphism lifts to a recursive graph
+isomorphism, which implies equality in the recursive quotient.
+This does not assert confluence for runs that change the prescribed
+fillings, or for arbitrary UAM transitions.
+\end{proof}
+\lean{Graph/ExpansionSequential}{54}{59}{Linear.ExpansionSequential.Execution.order_independent}
+\lean{Graph/ExpansionSequential}{62}{67}{Linear.ExpansionSequential.Execution.order_independent_modulo}
+
+\subsection{Existence and a finite length bound}
+\begin{definition}[Pending list]
+A list $L$ of host edges is sufficient if every edge absent from it has
+a corolla-copy assignment. Repetitions are allowed.
+After selecting $e$, filter the tail of $L$: remove every occurrence of
+$e$, and send each other edge $f$ to its retained copy in $C[e:=H_e]$.
+Call the resulting list $L'$.
+\end{definition}
+\lean{Graph/ExpansionSequential}{71}{73}{Linear.ExpansionSequential.remaining}
+
+Filtering cannot increase length. Furthermore, every retained edge whose
+original lies in the tail appears in $L'$. The first claim is the standard
+length bound for filtering with a partial map; for the second, the
+original edge is a witness in the membership characterization of that map.
+\lean{Graph/ExpansionSequential}{75}{76}{Linear.ExpansionSequential.remaining_length}
+\lean{Graph/ExpansionSequential}{78}{81}{Linear.ExpansionSequential.remaining_mem}
+
+Every edge outside $L'$ has a corolla-copy assignment in the residual
+family. For a retained $f$, absence from $L'$ and the membership lemma
+imply absence from the original pending list: $f\ne e$ excludes its head.
+Use the original copy certificate. An inserted edge has a literal
+corolla assignment, whose certificate uses its unique element of
+$\mathrm{Fin}(1)$ and its defining incidence lists.
+\lean{Graph/ExpansionSequential}{84}{109}{Linear.ExpansionSequential.remaining_copies}
+
+\begin{theorem}[Finite sequential realization]
+For every sufficient list $L$, there are $n\le |L|$ and a final graph $D$
+with a certified execution of $(C,H)$ of length $n$ ending at $D$.
+Consequently every finite family has an ordinary shallow substitution
+run with final graph isomorphic to $C[H]$. Its length is at most the
+length of the host's finite edge enumeration.
+\end{theorem}
+\begin{proof}
+Use strong induction on the pending-list length, allowing both the host
+and family to vary. An empty list certifies every assignment as an
+identity copy, so stop. For $e::L$, first replace $e$ with $H_e$.
+The residual list has length at most $|L|$, strictly less than the original
+length, and the preceding lemma supplies the required certificates
+outside it. Apply the induction hypothesis and prepend the selected
+step. Its total length is at most $|L|+1$.
+For an arbitrary finite family, use the host's complete edge enumeration;
+there are no edges outside it. Forget the resulting execution to obtain
+an ordinary run, and apply correctness. The enumeration may contain
+repetitions, so the stated bound is its list length, not an asserted
+minimal number of substitutions.
+\end{proof}
+\lean{Graph/ExpansionSequential}{114}{142}{Linear.ExpansionSequential.realize_list}
+\lean{Graph/ExpansionSequential}{146}{150}{Linear.ExpansionSequential.realize}
+
+The same witness supplies equality of the final result and simultaneous
+expansion in the recursive graph quotient: lift the constructed graph
+isomorphism and use quotient soundness.
+\lean{Graph/ExpansionSequential}{153}{156}{Linear.ExpansionSequential.realize_modulo}
+
+\subsection{Two-hole examples and scope}
+Both filling families in the alternating one-way example admit ordinary
+runs of length at most two. Apply finite realization to each family;
+the explicit context enumeration has length two.
+\lean{Graph/SequentialExamples}{10}{17}{Linear.AlternatingFillings.sequential_realizations}
+
+For any filling family on this context, there are completed executions
+starting by replacing hole $0$ and by replacing hole $1$. Each requires
+at most one further step, and their endpoints are isomorphic. To prove
+this, verify that the two-element list contains every context edge.
+After either initial choice, the residual-list certificate permits
+finite realization on the remaining list of length at most one.
+Prepend the chosen step to each execution and apply order independence.
+The statement retains the residual execution witnesses after each
+distinct first choice, so it records which hole was filled first.
+\lean{Graph/SequentialExamples}{21}{54}{Linear.AlternatingFillings.reverse_schedule}
+
+The dependency chain is now: explicit peeling and identity-copy
+isomorphisms, then correctness of executions, then finite realization
+and schedule independence. These results remove a representation gap
+between simultaneous shallow specimens and ordinary graph replacement.
+They do not yet supply deep specimen substitution, a quotient of
+host/site pairs, or transport of the entire focused-state and UAM
+structure along arbitrary deep replacement schedules.

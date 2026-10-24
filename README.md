@@ -153,11 +153,23 @@ output-closure, and shallow specimens, constructs their actual states, and
 proves the shallow cases of Lemma 26(3) and Lemma 39(1), plus the jointly rooted
 context-path consequence used by Lemma 39(2). The regressions include a genuine
 two-hole focussed specimen and alternating one-way choices with no global
-one-way side. Deep specimens, compatibility with addressed substitution, and
+one-way side.
+
+The sequential-realization milestone now connects every finite simultaneous
+shallow family to an ordinary addressed-substitution run. ExpansionPeel.lean
+constructs the one-step peeling isomorphism, and ExpansionCopies.lean restores
+a host from arbitrary identity copies. ExpansionSequential.lean proves that
+certified schedules constructed from finite covering lists yield the
+simultaneous graph up to explicit isomorphism and are independent of order,
+including in the recursive graph quotient. Their length is bounded by the
+covering-list length. SequentialExamples.lean checks both alternating families
+and schedules beginning at either of the two holes. These are graph
+replacement results; deep specimens, arbitrary deep-site interchange, and
 the full UAM interface remain open.
 
 Estimated completion by mathematical effort: **about 60%**, with a plausible
 range of **50–70%**, up from about 55% before the shallow multi-hole milestone.
+The sequential-realization bridge leaves this rounded estimate unchanged.
 This is a planning judgment, not a declaration count. The remaining operational
 and specimen-locality proofs may expose substantial additional work.
 
@@ -375,7 +387,7 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
 all 1018 definitions and proved statements in the abstract and concrete graph
 development, including regression examples, in mathematical English. Its 1034
-source-fragment links point to immutable code revision `b850e7a`. It distinguishes
+source-fragment links point to immutable code revision `2dd3e91`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
 glossary of 172 technical terms, with short descriptions and internal PDF links
@@ -414,8 +426,8 @@ logical axioms, if used, are shown explicitly.
 ## Remaining work toward the milestone
 
 1. Prove representation adequacy and compatibility across depth bounds.
-2. Relate simultaneous expansion to addressed substitution, quotient host/site
-   pairs, and prove interchange for independent sites.
+2. Construct a quotient of host/site pairs and prove interchange at arbitrary
+   independent deep sites.
 3. Prove equivalence of state search with the paper's contextual local rewrites.
 4. Define substitution and compute transitions and assemble the full UAM.
 5. Prove substitution preserves rootedness, establish the required full-UAM
