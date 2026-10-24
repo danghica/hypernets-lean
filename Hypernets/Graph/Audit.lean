@@ -1,4 +1,4 @@
-import Hypernets.Graph.InterchangeExamples
+import Hypernets.Graph.DeepSpecimenExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -243,3 +243,23 @@ import Hypernets.Graph.InterchangeExamples
 #print axioms Hypernets.Linear.Examples.twin_interchange
 #print axioms Hypernets.Linear.Examples.pointed_renamed_first
 #print axioms Hypernets.Linear.Examples.pointed_wrong_address
+
+#print axioms Hypernets.Linear.LabelCopy.oneWay
+#print axioms Hypernets.Linear.DeepFilling.focusFree
+#print axioms Hypernets.Linear.DeepFillingEdge.focusFree
+#print axioms Hypernets.Linear.DeepFillingEdge.focus_copies
+#print axioms Hypernets.Linear.DeepFillingEdge.outputClosed
+#print axioms Hypernets.Linear.DeepSpecimen.other_free
+#print axioms Hypernets.Linear.DeepSpecimen.outputClosedPair
+#print axioms Hypernets.Linear.DeepSpecimen.not_both_rooted
+#print axioms Hypernets.Linear.DeepSpecimen.rooted_context_path
+#print axioms Hypernets.Linear.DeepSpecimen.boundary_agreement
+#print axioms Hypernets.Linear.DeepSpecimen.outer_realizations
+#print axioms Hypernets.Linear.ShallowSpecimen.toDeep
+#print axioms Hypernets.Linear.DeepSpecimenExamples.body_filling
+#print axioms Hypernets.Linear.DeepSpecimenExamples.context_unique
+#print axioms Hypernets.Linear.DeepSpecimenExamples.filling_edges
+#print axioms Hypernets.Linear.DeepSpecimenExamples.filling_closed
+#print axioms Hypernets.Linear.DeepSpecimenExamples.specimen_not_rooted
+#print axioms Hypernets.Linear.DeepSpecimenExamples.specimen_boundary
+#print axioms Hypernets.Linear.DeepSpecimenExamples.no_shallow_closed_filling

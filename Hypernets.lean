@@ -16,3 +16,4 @@ import Hypernets.Graph.OneWayExamples
 import Hypernets.Graph.AlternatingFillings
 import Hypernets.Graph.SequentialExamples
 import Hypernets.Graph.InterchangeExamples
+import Hypernets.Graph.DeepSpecimenExamples
