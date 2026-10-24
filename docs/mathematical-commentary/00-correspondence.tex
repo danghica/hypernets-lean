@@ -1,0 +1,230 @@
+\section{The paper and the formal theorem: correspondence and differences}
+\label{sec:paper-correspondence}
+
+The principal result formalized here is the general sufficiency-of-robustness
+argument. Its reference in the
+\href{https://arxiv.org/pdf/1907.01257v5\#page=30}{version~5 PDF of the paper}
+is \emph{Theorem~8.11}. The
+\href{https://arxiv.org/html/1907.01257v5\#S8.SS4}{HTML rendering}
+numbers the same result Theorem~6. The Lean name \texttt{Unbounded.theorem6}
+and many references in this commentary follow the HTML numbering. They do not
+identify a different mathematical result. This section uses the PDF numbering
+when discussing the original statement.
+
+The Lean theorem proves the two corresponding contextual-refinement
+implications for the definitions constructed in this repository. It is not a
+literal transcription of the paper. Some changes are representation choices
+with proved comparison lemmas; others require a further audit of the
+correspondence with the paper. In particular, the missing plugging-closure
+premise and the treatment of substitution stability, discussed below, should
+not be silently described as harmless changes or established strengthenings.
+A kernel-checked proof establishes the formal proposition; it does not by
+itself establish that the proposition expresses every condition intended in
+the paper.
+
+\Needspace{14\baselineskip}
+\subsection{The statement and its quantitative conclusion}
+
+Write $T(G,H)$ for the pre-template relation and $G\preceq_Q^{\mathcal C}H$
+for contextual refinement with cost comparison $Q$. The forward conclusion
+has the form
+\[
+ T(G,H)\quad\Longrightarrow\quad G\preceq_Q^{\mathcal C}H,
+\]
+under input safety and robustness. The second implication reverses $G,H$;
+it uses input safety with the converse cost relation and the corresponding
+converse robustness condition. Both clauses share output closure,
+deterministic and refocusing behaviour, and a reasonable triple of cost
+preorders. In the final Lean declaration the paper's $(Q,Q',Q'')$ are named
+$(Q,P,R)$. These are parameters, not specific numerical inequalities.
+\lean{Graph/UnboundedTheorem}{110}{124}{Unbounded.theorem6}
+
+State refinement compares successful termination and exact numbers of machine
+steps: a terminating execution on the source must have a terminating matching
+execution on the target whose lengths satisfy the chosen preorder. The
+conclusion does not assert equality of final graphs or values. Contextual
+refinement makes this comparison after observation contexts are filled.
+Consequently the meaning of the conclusion depends on the definitions of
+admissible observations, as well as on the transition relation.
+
+\Needspace{14\baselineskip}
+\subsection{Hypernets, labels, and equality}
+
+The paper presents finite typed hypergraphs with interfaces and recursively
+boxed graphs. Lean separates internal vertices from indexed input and output
+ports, makes the ordered interface types explicit, and carries finiteness and
+incidence laws in the graph structure. This replaces informal choices of
+names and boundary identifications with functions, finite indices, and proof
+fields. Plugging therefore requires explicit interface transport, even when
+its graphical meaning is immediate.
+
+A finite allowance for nesting makes the recursive construction of boxed
+labels well founded. The allowance is not the intrinsic depth of the graph:
+the same graph can be represented at larger allowances. Global graph classes
+identify recursive graph isomorphism and such padding. Recursive isomorphism
+also permits independent renaming inside boxes. The relevant equality is thus
+structural equality up to these identifications, rather than literal equality
+of the chosen vertex and edge carriers.
+
+There is a further, substantive label issue. The internal typed representation
+records box-boundary information that cannot simply be erased: the paper
+requires equal labels to have equal signatures. The development gives a
+freshening encoding into actual graph-valued labels, with encoding/decoding
+round trips on recursive graph classes. These are proved representation
+results; the earlier counterexample to naive erasure explains why a direct
+forgetful translation would not have sufficed.
+See \leanfile{Hypernets/Graph/PaperEncoding.lean}{PaperEncoding.lean} and
+\leanfile{Hypernets/Graph/PaperRelations.lean}{PaperRelations.lean}.
+
+\Needspace{14\baselineskip}
+\subsection{States and genuinely unbounded execution}
+
+A state is a suitably focussed closed graph. Focus insertion and erasure let
+the development reason using a focus-free graph and a distinguished coordinate,
+then reconstruct the actual focussed graph. Search is first expressed in
+these coordinates. Separate adequacy proofs compare it in both directions
+with adjacency equations and with the finite interaction fragments in simple
+hole contexts. Coordinates are a proof device, not an additional machine
+operation. The word \emph{corolla} denotes retained-edge bookkeeping used in
+this construction; it introduces no additional semantic rule from the paper.
+See \leanfile{Hypernets/Graph/HoleContextSearch.lean}{HoleContextSearch.lean}.
+
+The earlier fixed-allowance machines were intermediate results. The final
+machine uses the union of all finite allowances, quotiented by renaming and
+padding. A finite run can be represented at a sufficiently large common
+allowance with exactly the same length. No single allowance bounds all runs,
+and computation may increase the necessary allowance. Finality and the
+full transition relation are transferred, not just search.
+See \leanfile{Hypernets/Graph/UnboundedUAM.lean}{UnboundedUAM.lean}.
+
+Rootedness means reachability by search from an initial state; it does not
+mean arbitrary reachability by the full machine. The global rooted predicate
+is proved equivalent to this search-reachability formulation. Refocusing of
+extrinsic behaviour means preservation of rootedness by its compute steps;
+the full-machine preservation theorem combines this assumption with the
+intrinsic search and substitution results.
+See \leanfile{Hypernets/Graph/UnboundedRoots.lean}{UnboundedRoots.lean}.
+
+The parameter \texttt{Behaviour} supplies the extrinsic compute relation.
+Determinism and refocusing of that behaviour remain assumptions of the general
+theorem, as do the semantic conditions on a proposed template. The development
+proves the required structural results for the assembled machine. Equality of
+successors in its determinism theorem is equality of state classes, expressing
+determinism modulo the chosen structural identifications.
+
+\Needspace{14\baselineskip}
+\subsection{Templates, specimens, and robustness}
+
+A global pre-template is a relation between focus-free graph classes with
+matching interfaces. Its interpretation at every finite allowance gives the
+layered pre-template used by the concrete constructions. What the paper groups
+as template conditions is supplied through separate Lean premises: in
+particular, output closure and input safety are not consequences of an
+arbitrary pre-template relation.
+
+A specimen consists of an actual context together with two related fillings.
+The two resulting states share the distinguished context focus. The formal
+representation uses named, typed slots and recursively fills the original
+holes. Inserted fragments are not recursively substituted again during the
+same filling operation. Although the slot environment can declare unused
+slots, a finite graph has only finitely many actual hole occurrences. Tuple
+representation lemmas connect these fillings with finite families of original
+holes; the slot environment itself should not be confused with an infinite
+graph or an infinite simultaneous rewrite.
+See \leanfile{Hypernets/Graph/ObservationFillings.lean}{ObservationFillings.lean}.
+
+Quasi-specimens retain an unconditional specimen witness and agreement of
+focus modes. Only the rootedness and comparison obligations are conditional
+on the two endpoint states being rooted. Input safety retains its three
+alternatives. Robustness likewise allows an unrooted case, a stuck continuation,
+or a matching continuation through a non-rewrite quasi-specimen, with the
+specified costs and up-to comparisons. In the final definitions, stuckness
+means stuckness in the unbounded machine. It is not inferred merely from
+being stuck at one finite allowance.
+\lean{Graph/UnboundedSafety}{25}{59}{Safety.Quasi, InputSafe, Robust}
+
+\Needspace{14\baselineskip}
+\subsection{Observations and the context-closure discrepancy}
+\label{sec:context-correspondence-audit}
+
+The formal predicate \texttt{PaperRefines} quantifies over every pair of finite
+representatives of the two global graphs, every hole name, and the observation
+contexts specified independently of the template. The graph interfaces must
+match, and the observation construction imposes its own well-formedness and
+closure requirements. A proved common-representatives lemma ensures that the
+universal quantification over representatives is not vacuous. This lemma does
+not, on its own, prove that every observation intended by the paper is covered.
+\lean{Graph/UnboundedTheorem}{9}{17}{PaperRefines}
+\lean{Graph/UnboundedTheorem}{30}{41}{common_representatives}
+
+There is an explicit difference in hypotheses. The paper's contextual setup
+in Section~7.1, and Theorem~8.11 itself, require the context set $\mathcal C$
+to be closed under plugging: whenever the relevant composite of allowed
+contexts is defined, it is again allowed. The final Lean theorem instead
+takes an arbitrary predicate $C$ on global context classes. It induces
+membership at each finite allowance by interpreting the finite graph in the
+global class. The resulting membership is invariant under graph isomorphism
+and padding.
+\lean{Graph/UnboundedTheorem}{89}{105}{globalAllowed, globalAllowed_iso, globalAllowed_padding}
+
+\emph{Invariance under renaming or padding is not closure under plugging.}
+The latter is not a premise of \texttt{theorem6}. Its absence does not invalidate
+the proved Lean implication, but it prevents treating the two statements as
+identical without further analysis. A stronger theorem for arbitrary context
+sets would imply the instance for plugging-closed sets \emph{if} the observation
+predicates agree. The remaining audit is to establish that agreement and
+explain exactly where the paper's closure condition is used, or to adjust the
+formal setup if its observation quantification differs. This commentary does
+not claim that this audit has already been completed.
+
+\Needspace{14\baselineskip}
+\subsection{Substitution and the stability discrepancy}
+\label{sec:stability-correspondence-audit}
+
+The paper's Lemma~7.6 uses stability of the substituted graph in its argument
+reducing full-machine refocusing to the extrinsic behaviour. The Lean
+substitution-rootedness theorem has no explicit stability premise for that
+graph. Its proof instead verifies a stationary-plugging criterion using the
+actual variable-prefix geometry: the variable prefix blocks an operation path
+from the sole input, and the condition concerning other inputs is vacuous
+for a unary interface.
+\lean{Graph/SubstitutionRefocusing}{25}{39}{Substitution.prefix_oneWay}
+\lean{Graph/SubstitutionRefocusing}{76}{104}{State.substitution_rooted}
+
+This is a proved result about the encoded substitution rule. It is not yet a
+justification for dropping the paper's stability condition. The correspondence
+audit must compare the admissible instances of Figure~9(f), the definition of
+rootedness, and the stationary-plugging criterion with the paper's argument.
+Only after that comparison can the difference be classified as a valid
+strengthening, a condition supplied elsewhere, or a modelling discrepancy.
+The final theorem's use of the formal refocusing result makes this comparison
+material to its relation with Theorem~8.11.
+
+\Needspace{14\baselineskip}
+\subsection{Proof organization and the boundary of the claim}
+
+The proof retains the paper's main route: local specimen analysis yields a
+counting simulation; soundness of that simulation yields state refinement;
+initial observation lifting yields contextual refinement. Lean factors the
+first part through abstract machine and specimen-system interfaces, then
+constructs concrete instances and proves their laws. The abstraction does not
+leave those concrete laws as unproved axioms. Additional transport, quotient,
+freshness, and common-allowance lemmas account for much of the formal proof's
+length; they make representation choices explicit rather than replace the
+central simulation argument.
+
+The kernel checks the final propositions and their dependencies. The recorded
+axiom audits exclude project-specific axioms and unfinished proofs; use of
+Lean's standard classical and quotient principles is part of the foundation.
+None of these checks automatically validates the translation of informal
+mathematics into definitions.
+
+Accordingly, the completed milestone is the unbounded contextual sufficiency
+theorem \emph{in the repository's concrete encoding}. The two correspondence
+questions above remain distinct from missing Lean proof terms and are recorded
+in Appendix~\ref{app:remaining-work}. The copying UAM, translations of specific
+languages, and application-specific equivalences are outside this milestone.
+Earlier statements that no work remained for the paper's theorem should be
+read with this qualification: completion of the formal construction does not
+settle these external correspondence questions.
+\clearpage

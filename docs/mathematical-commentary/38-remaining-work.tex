@@ -1,14 +1,27 @@
 \Needspace{18\baselineskip}
 \section{What remains for the paper's concrete theorem}
 \label{app:remaining-work}
-There are no outstanding to-do items for the selected general
-sufficiency-of-robustness theorem in this concrete encoding.
-Section~\ref{sec:unbounded-theorem} discharges the final full-UAM depth-transfer
-obligation and proves both implications on the unbounded carrier.
+The unbounded contextual sufficiency theorem in the concrete encoding is
+proved: Section~\ref{sec:unbounded-theorem} discharges the full-UAM depth-transfer
+obligation and proves both implications. No unfinished Lean proof obligation
+remains in that construction. The following paper-correspondence audits remain;
+they qualify the earlier claim that the paper's theorem was fully settled.
 
-The theorem retains its stated semantic hypotheses: output closure,
-input safety, robustness, deterministic and refocusing behaviour, and a
-reasonable cost triple. These are conditions on a proposed application,
-not unfinished proofs of the general sufficiency theorem. The copying UAM,
-lambda-term translations and the paper's application-specific equivalences
-are outside this milestone.
+\begin{enumerate}
+\item \textbf{Context closure and observations.} Compare the paper's contextual
+refinement with \texttt{PaperRefines} and the concrete observation construction.
+Explain the absence of plugging closure from the final Lean premises, and
+establish the paper's plugging-closed instance with matching observation
+quantification, or correct the encoding if necessary.
+See Section~\ref{sec:context-correspondence-audit}.
+\item \textbf{Substitution stability and refocusing.} Audit the correspondence
+between Figure~9(f), Lemma~7.6, and the formal substitution/rootedness argument.
+Determine why the formal theorem needs no explicit stability premise and
+whether the encoded rule and rootedness justify that difference.
+See Section~\ref{sec:stability-correspondence-audit}.
+\end{enumerate}
+
+Output closure, input safety, robustness, deterministic and refocusing
+behaviour, and a reasonable cost triple remain semantic hypotheses on an
+application. The copying UAM, language translations, and application-specific
+equivalences are outside the selected general-theorem milestone.

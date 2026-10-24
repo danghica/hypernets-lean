@@ -6,9 +6,14 @@ The reference version is [arXiv:1907.01257v5](https://arxiv.org/abs/1907.01257v5
 23 April 2025, published in LMCS 21(2:8), 2025.
 
 The target milestone is the general sufficiency-of-robustness theorem
-(Theorem 6), including both its forward and converse clauses.
+(Theorem 8.11 in the PDF; Theorem 6 in the HTML), including both its forward and converse clauses.
 
 ## Current status
+
+The commentary now begins with a comparison of the paper and the formal theorem.
+Two correspondence audits remain: the absent plugging-closure premise and the
+substitution-rootedness proof without an explicit stability premise. Appendix B
+records these questions. Completion of the Lean proof does not settle them.
 
 **The general Theorem 6 milestone is complete in the concrete encoding.**
 `Unbounded.theorem6` proves both contextual sufficiency implications for a
@@ -652,8 +657,8 @@ lifting premise is left unproved. `single_sufficiency` and its converse cover
 arbitrary single graphs. A nested-hole regression proves observation existence
 and initial lifting through an original box body.
 
-This section completes the intermediate fixed-depth result. Section 49 explains
-its declarations; Sections 50 and 51 supply the union construction and the
+This section completes the intermediate fixed-depth result. Section 50 explains
+its declarations; Sections 51 and 52 supply the union construction and the
 completed full-UAM transfer and contextual theorem.
 
 ## Unbounded carrier and exact search runs
@@ -688,6 +693,6 @@ proves independent initial lifting and both contextual clauses.
 classes and contexts, and `common_representatives` proves that every global
 fragment pair has representatives at every sufficiently large depth.
 
-Section 51 of the PDF explains every new definition and proof. Appendix B is
-clear for the selected milestone; the copying UAM and application-specific
+Section 52 of the PDF explains every new definition and proof. Appendix B
+records the remaining paper-correspondence audits; the copying UAM and application-specific
 results remain separate projects.
