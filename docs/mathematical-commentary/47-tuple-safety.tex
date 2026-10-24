@@ -7,7 +7,7 @@ finite tuple substitution, and definitions of the concrete quasi-specimen,
 input-safety, and robustness predicates in paper \S\S8.1--8.3.
 The compatibility theorem concerns the existing finite-depth representation.
 The separate comparison with set-based hypernets and changes of depth bound
-remains the first adequacy obligation.
+is now proved in Section~\ref{sec:paper-encoding}.
 
 The tuple semantics uses simultaneous graph expansion at each original graph
 layer. Its recursive calls visit original box bodies; a hole replacement is a
@@ -400,7 +400,7 @@ focus constructors.
 \lean{Graph/TupleSafetyExamples}{51}{59}{Linear.TupleSafetyExamples.different_modes_not_quasi}
 
 The tuple and concrete-definition obligation is now removed from
-Appendix~\ref{app:remaining-work}, leaving four items. This does not assert that
+Appendix~\ref{app:remaining-work}. This does not assert that
 a particular nontrivial pre-template is input-safe or robust, nor does it
 construct the abstract specimen interface. Its successor packaging,
 context-membership transports, full-UAM context-step law, and initial-lifting

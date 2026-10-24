@@ -50,7 +50,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/5771191f71b30c7395c6f9c4b9998fbf721b0c57}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/fb0fee3db194c07fb0d34cb11d656b939b478c22}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -58,7 +58,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{24 October 2026\\\small Source snapshot: \texttt{5771191}; Lean \texttt{4.35.0}}
+\date{24 October 2026\\\small Source snapshot: \texttt{fb0fee3}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -89,10 +89,12 @@ relation, with proved mode discipline, disjointness, and final normality.
 Actual executions test variable removal and compute behaviour.
 
 Every finite simultaneous shallow expansion is now realized by ordinary addressed substitutions, with a proved finite length bound and order independence up to graph isomorphism. Independent substitutions now commute at arbitrary depth with constructed residual addresses. Hosts with selected sites are quotiented by structural renaming, and substitution and exact freshness descend to these classes. The dependency map distinguishes these checked results from the remaining obligations. Recursive specimens now have complete finite original-hole tuples, with distinct names and closed related replacements. Concrete quasi-specimens, input-safety, and robustness retain the full paper clauses. Full-UAM structural laws and the complete specimen-interface interpretation, including its safety and robustness bridges, remain open. This is therefore not yet a formalization of the paper's full Theorem~6.
-Outer set-presentation normalization, recursive annotated round trips, and
-coherence across depth bounds are now proved. A checked counterexample shows
-that simply erasing box binder annotations does not preserve the paper's
-equal-label/equal-signature condition; that correspondence remains open.
+Outer set-presentation normalization and depth coherence are proved. A checked
+freshening translation now resolves the box-label correspondence: its labels are
+actual graphs, it satisfies the paper's equal-label/equal-signature condition,
+and encoding and decoding are inverse on recursive graph classes. The earlier
+counterexample to naive binder erasure is repaired without restricting the
+original typed graphs.
 \end{abstract}
 \clearpage
 \begingroup
@@ -150,6 +152,7 @@ equal-label/equal-signature condition; that correspondence remains open.
 \input{46-full-uam}
 \input{47-tuple-safety}
 \input{48-set-presentations}
+\input{49-paper-encoding}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -160,7 +163,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/5771191f71b30c7395c6f9c4b9998fbf721b0c57}{Repository at revision \texttt{5771191}}.
+\href{https://github.com/danghica/hypernets-lean/tree/fb0fee3db194c07fb0d34cb11d656b939b478c22}{Repository at revision \texttt{fb0fee3}}.
 \end{thebibliography}
 \clearpage
 \appendix

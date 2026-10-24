@@ -148,9 +148,10 @@ prove arbitrary extrinsic rewrite systems deterministic.
 The typed finite-depth hierarchy and explicit renaming bijections are
 representation choices. Outer set-presentation normalization, recursive annotated round trips, and
 compatibility across depth bounds are now checked in
-Section~\ref{sec:set-presentations}. The correspondence with undecorated box
-labels remains open: naive binder erasure violates the paper's equal-label/
-equal-signature condition on a checked two-box example. The existing plugging,
+Section~\ref{sec:set-presentations}. Section~\ref{sec:paper-encoding} resolves the remaining box-label correspondence
+by fresh naming of actual contents, with inverse class maps and exact depth
+coherence. The checked counterexample to naive erasure is repaired without
+restricting the typed graph class. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
 not replace the operational proofs in Appendix~F. The contextual-search dependency is now discharged:
 Section~\ref{sec:contextual-search} identifies erasure-based state search with
@@ -164,13 +165,11 @@ These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 83\% of the mathematical effort toward
+As a planning estimate, approximately 85\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-68--90\%). This increases the previous estimate of 80\% after proving finite
-original-hole tuple compatibility and defining the full concrete safety
-and robustness predicates. The estimate remains unchanged after the new
-representation proofs: the explicit binder-erasure obstruction warrants caution
-until the remaining correspondence is resolved.
+70--91\%). This increases the previous estimate of 83\% after resolving the
+representation obligation by a checked freshening translation and its
+class-level and depth compatibility theorems.
 It is a subjective estimate, not a ratio of declarations or discharged
 checklist entries. The full-UAM structural proofs and deep specimen
 locality, safety, and robustness remain substantial obligations.

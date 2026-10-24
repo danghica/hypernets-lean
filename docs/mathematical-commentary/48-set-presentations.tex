@@ -7,8 +7,8 @@ So is recursively making that change inside binder-annotated boxes, and
 normalizing a finite family of different depth allowances to one common bound.
 However, these results do not yet justify forgetting the binder annotations
 from box labels. The final subsection gives a checked counterexample to that
-particular proposed forgetful translation. Consequently the representation
-item in Appendix~\ref{app:remaining-work} is narrowed, not removed.
+particular proposed forgetful translation. Section~\ref{sec:paper-encoding} supplies the freshening translation that
+resolves this obstruction and completes the representation obligation.
 
 \subsection{Arbitrary vertex sets and ordered boundaries}
 \termdef{set-presentation}
@@ -338,7 +338,7 @@ be represented at a common bound. It does not yet formalize a translation of
 an undecorated graph-label alphabet from the paper; the distinction below is
 independent of finite-depth padding.
 
-\subsection{Why the representation item remains open}
+\subsection{The obstruction to naive binder erasure}
 \termdef{body-consistency}
 \begin{definition}[Body consistency for binder erasure]
 A successor-depth typed graph is body-consistent when any two box edges whose
@@ -387,16 +387,11 @@ none silently assumes body consistency.
 
 \lean{Graph/SetHierarchyExamples}{94}{100}{Linear.SetHierarchyExamples.promoted_box}
 
-\paragraph{Status and next obligation.}
-The results above discharge arbitrary-vertex boundary normalization, recursive
+\paragraph{Relation to the completed representation theorem.}
+The results above prove arbitrary-vertex boundary normalization, recursive
 round trips for the annotated hierarchy, isomorphism transport, and finite
-mixed-depth uniformization. They do not prove the full representation claim
-for the paper's undecorated box labels. The counterexample refutes only the
-naive forgetful translation, not the existence of a more careful representation:
-a restriction to an appropriate class or a proved freshening translation may
-resolve it. Such a translation must also support the uses required by the
-concrete theorem. Appendix~\ref{app:remaining-work} therefore still contains
-four items, with the first replaced by this precise remaining obligation.
-The mathematical-effort planning estimate stays at about 83\%; the new proofs
-are substantial, but the newly explicit correspondence issue offsets a
-confident increase in that estimate.
+mixed-depth uniformization. The counterexample refutes only naive binder erasure.
+Section~\ref{sec:paper-encoding} now gives the required freshening translation:
+it changes actual vertex names inside contents, proves both recursive round
+trips and quotient inverse laws, and satisfies the literal graph-label signature
+condition. No body-consistency restriction is imposed on the typed graphs.

@@ -1,0 +1,641 @@
+\Needspace{20\baselineskip}
+\section{Actual graph labels by fresh vertex naming}
+\label{sec:paper-encoding}
+
+This section resolves the representation item that was left open by
+Section~\ref{sec:set-presentations}. The repair changes the names of vertices
+inside box contents, rather than discarding their binder counts while leaving
+the contents literally unchanged. The translated box label is an actual graph.
+Its sole input has a name from which its external signature can be read.
+Equal graph labels therefore have equal signatures, as required by the paper.
+
+There are no added vertices or edges. All old incidence, wire types, primitive
+labels, and ordered boundaries are preserved by explicit bijections, recursively
+inside every box. Both representation round trips are proved. Encoding preserves
+and reflects recursive isomorphism; encoding and decoding are mutually inverse
+on graph classes. The construction accepts every typed hypernet, including the
+previous counterexample, and commutes with increasing the depth allowance.
+
+\subsection{Finite sets of actual vertex names}
+\termdef{vertex-name}
+\termdef{named-graph}
+\begin{definition}[Named graph]
+Take $\mathbb N^3$ as a common set of vertex names. A named graph stores a finite
+list of such names, with vertex carrier the subtype of names occurring in the
+list. Thus a name occurring twice in the enumeration is still only one vertex.
+The edge carrier is an arbitrary finite carrier. Vertex labels, edge labels,
+ordered incidence, and ordered boundary maps satisfy the same conditions as
+\texttt{SetNet}. All boundary vertices have ordinary names in this common space.
+The operation \texttt{toSet} exposes this subtype as the graph's vertex carrier.
+\end{definition}
+Its finite enumeration is the list of names equipped with their membership
+proofs. Every vertex is in that enumeration by its defining membership proof.
+All other fields of the set presentation are inherited unchanged.
+\lean{Graph/NamedPresentation}{8}{8}{Graph.VertexName}
+
+\lean{Graph/NamedPresentation}{12}{34}{Graph.NamedNet}
+
+\lean{Graph/NamedPresentation}{41}{64}{Graph.NamedNet.toSet}
+
+\termdef{fresh-naming}
+\begin{definition}[Fresh naming]
+Given an exhaustive enumeration of a finite carrier, assign each vertex the
+position of its first occurrence. For chosen natural numbers $a,b$, give it the
+name $(a,b,\mathsf{index}(v))$. The finite name list is the image of the old
+enumeration under this function. The map \texttt{naming} sends a vertex to this
+name with its membership proof; its inverse chooses a preimage.
+\end{definition}
+\begin{proof}[Injectivity and inverse laws]
+If two first-occurrence indices coincide, looking up the enumeration at that
+index returns both vertices, so the vertices coincide. Equality of names implies
+equality of their third coordinates, hence equality of vertices. Every member
+of the finite name list has a preimage by membership in a mapped list. Choosing
+one gives a right inverse; injectivity makes it a left inverse as well.
+These facts prove \texttt{index\_injective} and every field of the naming
+bijection. Exhaustiveness is essential; duplicate enumeration entries are harmless.
+\end{proof}
+\lean{Graph/NamedPresentation}{67}{69}{Graph.NamedNet.index}
+
+\lean{Graph/NamedPresentation}{71}{76}{Graph.NamedNet.index_injective}
+
+\lean{Graph/NamedPresentation}{79}{80}{Graph.NamedNet.name}
+
+\lean{Graph/NamedPresentation}{82}{83}{Graph.NamedNet.freshNames}
+
+\lean{Graph/NamedPresentation}{86}{99}{Graph.NamedNet.naming}
+
+\begin{definition}[Freshened set graph]
+The operation \texttt{ofSet} changes a set graph's vertex carrier to its fresh
+name set. It keeps the edge carrier and edge labels, maps the naming bijection
+over every incidence list and boundary vertex, and reads the new vertex labels
+through the inverse bijection.
+\end{definition}
+\begin{proof}[Verification of the graph laws]
+Injectivity transfers boundary injectivity, disjointness, and duplicate-free
+incidence. Equal named occurrences decode to equal old occurrences, so old
+incidence uniqueness identifies their edges. A named vertex belongs to a mapped
+incidence list exactly when its inverse belongs to the old list. Combined with
+the inverse laws for the boundary maps, this transfers both coverage equivalences.
+For typing, composing vertex labels with the naming map cancels the inverse
+bijection; the old signature equations then apply.
+\end{proof}
+\lean{Graph/NamedPresentation}{103}{157}{Graph.NamedNet.ofSet}
+
+\begin{lemma}[Freshening changes only names]
+The original set graph and its freshening are label-preservingly isomorphic.
+Every freshened input has the chosen first two name coordinates. Starting with
+a tagged graph, fresh naming followed by boundary normalization also returns an
+ordinary isomorphic graph.
+\end{lemma}
+\begin{proof}
+Use the naming bijection and the identity edge map for the first isomorphism;
+all incidence equations hold by construction and labels by the inverse law.
+The input-prefix statement is definitional. For the typed round trip, compose
+the old tagged-to-set normalization isomorphism with the normalization of the
+freshening isomorphism. Literal label equality is reversed where the ordinary
+\texttt{Net.Iso} convention requires it.
+\end{proof}
+\lean{Graph/NamedPresentation}{160}{168}{Graph.NamedNet.ofSet_iso}
+
+\lean{Graph/NamedPresentation}{171}{172}{Graph.NamedNet.input_prefix}
+
+\lean{Graph/NamedPresentation}{174}{184}{Graph.NamedNet.typed_roundtrip}
+
+\subsection{Isomorphism infrastructure for transported boundaries}
+\termdef{boundary-list-iso}
+\begin{definition}[Boundary-list isomorphism]
+\texttt{HRelIso} relates set presentations whose interface indices may have
+different presentations. It has bijections of full vertex and edge carriers,
+preserves vertex labels and ordered incidence, and relates edge labels by a
+supplied relation $R$. It compares the lists enumerated by the boundary maps:
+mapping the vertex bijection over each original boundary list gives the new
+boundary list. This avoids a premature cast between finite index types.
+\end{definition}
+\lean{Graph/NamedPresentation}{194}{203}{Graph.SetNet.HRelIso}
+
+\begin{lemma}[Indexed and list formulations]
+An indexed related-label isomorphism gives a boundary-list isomorphism. A
+literal-label isomorphism is a special case. Conversely, for identical interface
+types, a boundary-list isomorphism gives an indexed one.
+\end{lemma}
+\begin{proof}
+For the forward map, mapping a function over a list generated by finite indices
+is the list generated by the composite function; use the indexed boundary
+equations pointwise. Literal equality supplies the special-case label relation.
+For the converse, look up each index in the preserved boundary list. The two
+lookups agree, giving exactly the indexed boundary equation. Carrier maps and
+incidence fields are unchanged in all three constructions.
+\end{proof}
+\lean{Graph/NamedPresentation}{209}{217}{Graph.SetNet.HRelIso.ofRelIso}
+
+\lean{Graph/NamedPresentation}{219}{228}{Graph.SetNet.HRelIso.ofIso}
+\lean{Graph/NamedPresentation}{322}{334}{Graph.SetNet.HRelIso.same}
+
+\begin{lemma}[Identity, composition, inversion, and relabelling]
+Boundary-list isomorphisms have identities for reflexive label relations,
+compose for transitive relations, and invert for symmetric relations. More
+generally, label relations $R,S$ can compose to $T$ whenever
+$R(x,y)\wedge S(y,z)\Rightarrow T(x,z)$. A signature-preserving translation of
+labels transports an isomorphism whenever it transports the label relation.
+\end{lemma}
+\begin{proof}
+Identity uses identity carrier maps. Composition composes carrier bijections;
+the list equations follow by mapping twice and composing the vertex functions.
+The edge-label proof is precisely the specified relational implication.
+For inversion, map the inverse vertex function over each original list equation
+and cancel the forward map; inverse edge indices cancel by the edge bijection
+law. Apply symmetry to the edge-label comparison. Relabelling retains all
+carrier and incidence fields and applies its supplied implication to each
+edge-label proof. The two composition declarations are the same argument,
+first for one relation and then for three potentially different relations.
+\end{proof}
+\lean{Graph/NamedPresentation}{230}{247}{Graph.SetNet.HRelIso.trans}
+\lean{Graph/NamedPresentation}{268}{285}{Graph.SetNet.HRelIso.comp}
+
+\lean{Graph/NamedPresentation}{288}{304}{Graph.SetNet.HRelIso.symm}
+
+\lean{Graph/NamedPresentation}{307}{319}{Graph.SetNet.HRelIso.relabel}
+\lean{Graph/NamedPresentation}{374}{382}{Graph.SetNet.HRelIso.refl}
+
+\begin{lemma}[Round trips and independent fresh names]
+A named graph is isomorphic to its normalization followed by fresh naming.
+Exposing a typed related-label isomorphism gives a full-vertex boundary-list
+isomorphism. Independently freshening both sides preserves such an isomorphism.
+\end{lemma}
+\begin{proof}
+The first statement composes the outer set round trip with freshening. For
+exposure, map internal vertices by the original bijection and fix every boundary
+index; the three port constructors verify labels and boundaries. For independent
+freshening, compose the inverse freshening on the left, the given isomorphism,
+and the forward freshening on the right. The mixed-relation composition law
+uses equality to discharge the two new label comparisons.
+\end{proof}
+\lean{Graph/NamedPresentation}{255}{258}{Graph.NamedNet.roundtrip}
+\lean{Graph/NamedPresentation}{342}{354}{Graph.Net.RelIso.toSet}
+\lean{Graph/NamedPresentation}{362}{367}{Graph.NamedNet.map_iso}
+
+\begin{lemma}[Relabelling coherence]
+Signature-preserving relabelling of a named graph retains all actual vertex
+names. Fresh naming commutes with relabelling. Pointwise equal label translations
+induce equal relabelled set graphs.
+\end{lemma}
+\begin{proof}
+Relabelling copies every field except the edge labels and their typing proofs;
+the new typing equation composes the old equation with signature preservation.
+The fresh name list and naming bijection depend only on the old vertex carrier
+and its enumeration, so the commuting equation is definitional. Finally,
+function extensionality identifies pointwise equal label maps, after which the
+graph records agree by proof irrelevance.
+\end{proof}
+\lean{Graph/NamedPresentation}{389}{413}{Graph.NamedNet.relabel}
+\lean{Graph/NamedPresentation}{420}{423}{Graph.NamedNet.ofSet_relabel}
+\lean{Graph/NamedPresentation}{430}{438}{Graph.SetNet.relabel_congr}
+
+\subsection{Boxes labelled solely by actual contents}
+\termdef{graph-body-package}
+\begin{definition}[Body package]
+A body package is a named graph with input type $\star$ and output type
+$\star^r$, together with the actual output count $r$. This count describes the
+graph's own interface. It is not the bound count or free count of an enclosing
+box. Indeed, \texttt{body\_output\_length} proves that it equals the length of
+the body's ordered output list, simply by the length of a finite-index list.
+\end{definition}
+\lean{Graph/PaperEncoding}{13}{13}{Linear.PaperEncoding.Body}
+\lean{Graph/PaperEncoding}{358}{359}{Linear.PaperEncoding.body_output_length}
+
+\termdef{actual-content-label}
+\begin{definition}[Actual-content label]
+For a body package $C$, read numbers $b(C),f(C)$ from the first two coordinates
+of the name of its sole input vertex. A content label consists of $C$ and a
+proof that $b(C)+f(C)=r$. There are no separately stored binder fields.
+Its external signature is $T^{b(C)}(\star)\Rightarrow\star^{f(C)}$.
+The base alphabet is the primitive alphabet; a successor alphabet adds these
+actual-content labels. A hypernet is a named graph over that alphabet.
+\end{definition}
+The displayed name format chooses convenient representatives. It does not
+restrict the old typed graph classes: arbitrary finite carriers admit the proved
+naming bijection, and the encoder below chooses the needed prefix separately
+for each box. Wire labels and incidence are untouched by that choice.
+\lean{Graph/PaperEncoding}{16}{16}{Linear.PaperEncoding.bound}
+
+\lean{Graph/PaperEncoding}{17}{17}{Linear.PaperEncoding.free}
+
+\lean{Graph/PaperEncoding}{21}{21}{Linear.PaperEncoding.Content}
+
+\lean{Graph/PaperEncoding}{24}{29}{Linear.PaperEncoding.nextAlphabet}
+
+\lean{Graph/PaperEncoding}{31}{33}{Linear.PaperEncoding.alphabet}
+
+\lean{Graph/PaperEncoding}{35}{35}{Linear.PaperEncoding.Hypernet}
+
+\begin{lemma}[Equal contents have equal signatures]
+If two content labels have literally equal body packages, their complete external
+signatures agree. Forgetting their admissibility proofs adds no label information.
+For any graph in the presentation, equal literal labels give equal mapped vertex
+labels on both source lists and both target lists.
+\end{lemma}
+\begin{proof}
+Subtype extensionality identifies content labels with equal underlying packages;
+substitution proves both signature equalities. Define \texttt{bareLabel} to keep
+a primitive or the actual body package and omit the proof. It is injective:
+equal primitives are handled by constructor injectivity, mixed constructors
+cannot agree, and equal body packages identify their content subtypes.
+For two edges, injectivity therefore identifies their original labels.
+Rewrite the two incidence-typing equations with that equality. This is the
+paper's literal equal-label/equal-signature condition, now checked directly for
+graph-valued box labels. It is not a claim that arbitrary isomorphic contents
+must give the same enclosing type.
+\end{proof}
+\lean{Graph/PaperEncoding}{39}{44}{Linear.PaperEncoding.same_content_signature}
+\lean{Graph/PaperEncoding}{330}{332}{Linear.PaperEncoding.bareLabel}
+
+\lean{Graph/PaperEncoding}{335}{343}{Linear.PaperEncoding.bareLabel_injective}
+
+\lean{Graph/PaperEncoding}{347}{354}{Linear.PaperEncoding.equal_labels_same_types}
+
+\subsection{Encoding, decoding, and recursive round trips}
+\begin{definition}[Signature-preserving alphabet map]
+An alphabet map consists of a function on symbols and proofs that it preserves
+the complete ordered input and output signatures. These proofs make relabelling
+of well-typed graphs possible without changing their incidence.
+\end{definition}
+\lean{Graph/PaperEncoding}{47}{50}{Linear.PaperEncoding.AlphabetMap}
+
+\begin{definition}[Encoding]
+The base alphabet map is the identity. At a successor level a primitive remains
+unchanged. An annotated box with counts $b,f$ becomes the actual recursively
+translated body, freshly named with prefix $(b,f)$, and with output count $b+f$.
+The prefix equation supplies its content-label admissibility proof. Encoding a
+whole graph translates its labels and then freshly names its outer vertices
+with any chosen prefix $(a,b)$. The prefix of an outer graph is arbitrary;
+when the graph is used as box contents, the enclosing box chooses its prefix.
+\end{definition}
+The input-prefix theorem is definitional. The alphabet-map signature proofs
+are also by the primitive/box cases: in the box case, reading the fresh input
+name returns exactly the old bound and free counts.
+\lean{Graph/PaperEncoding}{53}{63}{Linear.PaperEncoding.encodeMap}
+
+\lean{Graph/PaperEncoding}{67}{69}{Linear.PaperEncoding.encode}
+\lean{Graph/PaperEncoding}{90}{92}{Linear.PaperEncoding.encode_prefix}
+
+\begin{definition}[Decoding]
+Decoding at depth zero normalizes the named vertex carrier. At a successor it
+also translates each content label to an annotated box whose counts are read
+from the body's input name. Recursively decode the body, and transport its
+output interface along the content proof $b+f=r$. The primitive case remains
+unchanged. The resulting alphabet map preserves signatures by construction.
+\end{definition}
+\lean{Graph/PaperEncoding}{74}{84}{Linear.PaperEncoding.decodeMap}
+
+\lean{Graph/PaperEncoding}{86}{87}{Linear.PaperEncoding.decode}
+
+\begin{theorem}[Typed round trip]
+For every typed hypernet $G$, every depth, and every chosen outer prefix,
+$G$ is recursively isomorphic to $\mathsf{decode}(\mathsf{encode}(G))$.
+Every typed hypernet therefore has an actual-content representative.
+\end{theorem}
+\begin{proof}
+Induct on depth. The base is fresh naming followed by outer normalization.
+At a successor use that same outer isomorphism for carriers, incidence, and
+vertex labels. A primitive edge label is unchanged. For a box, decoding reads
+back exactly the prefix used by encoding, hence recovers both counts. The
+body-interface transport is along reflexivity, and induction supplies the
+recursive body isomorphism. For representability choose the encoder with outer
+prefix $(0,0)$ and this round-trip witness. No body-consistency hypothesis occurs.
+\end{proof}
+\lean{Graph/PaperEncoding}{96}{112}{Linear.PaperEncoding.roundtrip}
+\lean{Graph/PaperEncoding}{363}{365}{Linear.PaperEncoding.representable}
+
+\begin{lemma}[Transport of an invariant property]
+Any typed-graph predicate invariant under recursive isomorphism has the same
+truth value before and after the decoded encoding.
+\end{lemma}
+\begin{proof}
+Apply the stated invariance hypothesis to the proved typed round-trip
+isomorphism. This lemma transports an invariance theorem; it does not assert
+invariance for an arbitrary predicate on raw representatives.
+\end{proof}
+\lean{Graph/PaperEncoding}{116}{119}{Linear.PaperEncoding.roundtrip_property}
+
+\begin{definition}[Recursive actual-content isomorphism]
+Primitive labels are compared literally. Two content labels are related when
+their derived external counts agree and their actual bodies are related by a
+boundary-list isomorphism with recursively related labels. A recursive graph
+isomorphism uses this relation for its outer edge labels. Boundary-list
+isomorphisms allow the body interface expressions to differ before the
+admissibility equations have been used.
+\end{definition}
+The comparison of counts preserves the enclosing external types. It does not
+identify boxes of different external types merely because their contents are
+isomorphic as standalone graphs.
+\lean{Graph/PaperEncoding}{123}{128}{Linear.PaperEncoding.LabelEquiv}
+
+\lean{Graph/PaperEncoding}{130}{131}{Linear.PaperEncoding.DeepIso}
+
+\begin{theorem}[Named round trip]
+Every graph in the actual-content presentation is recursively isomorphic to
+its decoding followed by encoding, for any chosen outer prefix.
+\end{theorem}
+\begin{proof}
+At the outer level use normalization followed by fresh naming. Induct on depth
+for labels. A primitive returns unchanged. For a content label $C$, the new
+body is named with the original derived counts $b(C),f(C)$, so both external
+counts agree. Its output interface is transported from $r$ to $b(C)+f(C)$.
+A local equality-elimination lemma first handles an arbitrary equation between
+these output counts, then invokes induction at the common interface. Thus
+neither the cast nor the recursively renamed body is assumed harmless.
+\end{proof}
+\lean{Graph/PaperEncoding}{135}{160}{Linear.PaperEncoding.named_roundtrip}
+
+\subsection{Faithfulness and equivalence of graph classes}
+\begin{theorem}[Isomorphism transport and reflection]
+Encoding transports recursive isomorphisms, even with independent outer
+prefixes on the two sides. Decoding also transports recursive isomorphisms.
+Consequently two encoded typed graphs are recursively isomorphic exactly when
+the original typed graphs are recursively isomorphic.
+\end{theorem}
+\begin{proof}
+For encoding, expose the original isomorphism, translate its labels, then apply
+independent fresh naming on the two sides. Induct on depth to prove the label
+translation respects related labels. Primitive cases are literal equality;
+related boxes have equal counts and an induction hypothesis for their bodies.
+For decoding, normalize the boundary-list isomorphism at equal outer interfaces.
+In its box case, the relation supplies equal bound and free counts. A helper
+lemma eliminates these count equalities and both body-interface equations,
+leaving the recursive body isomorphism at a common typed interface. Apply
+induction there. Reflection now follows by decoding an encoded isomorphism
+and composing with the typed round trip on the left and its inverse on the
+right; the converse is encoding transport.
+\end{proof}
+\lean{Graph/PaperEncoding}{164}{183}{Linear.PaperEncoding.encode_iso}
+
+\lean{Graph/PaperEncoding}{187}{223}{Linear.PaperEncoding.decode_iso}
+
+\lean{Graph/PaperEncoding}{226}{231}{Linear.PaperEncoding.encode_iso_iff}
+
+\termdef{representation-class}
+\begin{definition}[Representation class]
+A representation class is a named actual-content hypernet modulo recursive,
+type-preserving graph isomorphism. The equivalence relation uses existence of
+such an isomorphism. Encoding and decoding descend to maps between these
+classes and the existing typed recursive-isomorphism classes.
+\end{definition}
+\begin{proof}[Equivalence laws and well-definedness]
+Induct on depth for reflexivity, symmetry, and transitivity of label equivalence.
+Primitives use the corresponding equality laws. Boxes retain or compose their
+derived-count equalities, and their body isomorphisms use identity, inverse,
+or composition with the induction hypothesis on labels. These laws supply
+the setoid. The quotient maps use the proved encoding and decoding transport
+lemmas, so changing a representative cannot change the resulting class.
+\end{proof}
+\lean{Graph/PaperEncoding}{234}{240}{Linear.PaperEncoding.label_refl}
+
+\lean{Graph/PaperEncoding}{242}{255}{Linear.PaperEncoding.label_symm}
+
+\lean{Graph/PaperEncoding}{257}{275}{Linear.PaperEncoding.label_trans}
+
+\lean{Graph/PaperEncoding}{278}{284}{Linear.PaperEncoding.setoid}
+
+\lean{Graph/PaperEncoding}{286}{286}{Linear.PaperEncoding.Class}
+
+\lean{Graph/PaperEncoding}{289}{292}{Linear.PaperEncoding.encodeClass}
+
+\lean{Graph/PaperEncoding}{295}{298}{Linear.PaperEncoding.decodeClass}
+
+\begin{theorem}[Mutually inverse class maps]
+Decoding after encoding is the identity on typed graph classes, and encoding
+after decoding is the identity on actual-content graph classes.
+\end{theorem}
+\begin{proof}
+Use quotient induction to choose a representative. The corresponding recursive
+round trip supplies the isomorphism witnessing equality of the two quotient
+classes. Reverse that equality to obtain the stated inverse law.
+\end{proof}
+\lean{Graph/PaperEncoding}{301}{305}{Linear.PaperEncoding.decode_encodeClass}
+
+\lean{Graph/PaperEncoding}{308}{311}{Linear.PaperEncoding.encode_decodeClass}
+
+\begin{lemma}[Transport of class predicates and relations]
+For every predicate $P$ on typed graph classes, and every binary relation $R$
+on those classes, evaluating on decoded encodings has exactly the original
+truth value.
+\end{lemma}
+\begin{proof}
+Rewrite each decoded encoding by the first inverse law. For a binary relation
+do this at both arguments. No special property of $P$ or $R$ is needed because
+they are already defined on classes. A raw context-membership or transition
+predicate must first be proved to descend to classes; this result does not
+supply an unproved invariance or operational locality law.
+\end{proof}
+\lean{Graph/PaperEncoding}{315}{318}{Linear.PaperEncoding.class_property}
+
+\lean{Graph/PaperEncoding}{322}{326}{Linear.PaperEncoding.class_relation}
+
+\subsection{Compatibility with larger depth allowances}
+\begin{definition}[Promotion of actual contents]
+At depth zero promotion moves each primitive to the primitive summand. At a
+successor it recursively promotes each actual body while retaining every
+vertex name. The input prefix and output count are consequently unchanged,
+so the old admissibility proof gives a valid new content label. Relabelling
+by this alphabet map promotes a whole graph. Repeated promotion iterates it.
+\end{definition}
+\lean{Graph/PaperEncodingDepth}{10}{19}{Linear.PaperEncoding.raiseMap}
+
+\lean{Graph/PaperEncodingDepth}{22}{23}{Linear.PaperEncoding.raise}
+\lean{Graph/PaperEncodingDepth}{63}{65}{Linear.PaperEncoding.raiseBy}
+
+\begin{theorem}[Exact depth coherence]
+Encoding after promotion of a typed graph equals direct promotion of its
+encoding. The same equality holds for every finite number of promotions.
+\end{theorem}
+\begin{proof}
+Induct on depth for the one-step assertion. The base is definitional equality.
+At a successor isolate the two composed label maps. Fresh naming commutes with
+relabelling, so it suffices to prove those maps pointwise equal. Primitive
+labels agree immediately. For a box, subtype extensionality removes the proof
+field, equality of the output-count package reduces to equality of the actual
+bodies, and the induction hypothesis supplies that equality. This proof avoids
+expanding the entire naming bijection in each graph field.
+Induct on the number of promotions for the iterated statement, applying the
+one-step result at the current depth and then the induction hypothesis.
+\end{proof}
+\lean{Graph/PaperEncodingDepth}{26}{60}{Linear.PaperEncoding.encode_raise}
+\lean{Graph/PaperEncodingDepth}{68}{75}{Linear.PaperEncoding.encode_raiseBy}
+Together with the common-bound theorem for finite families in
+Section~\ref{sec:set-presentations}, this accounts for box contents initially
+presented at different finite depth allowances. The equality is for the encoded
+graphs themselves, not just their isomorphism classes.
+
+\subsection{Relations on the finite union of depth bounds}
+\termdef{global-class}
+\begin{definition}[Depth-independent graph class]
+A bounded graph is a pair $(n,G)$ where $G$ has depth allowance $n$ and a fixed
+ordered outer interface. Define global renaming as the equivalence relation
+generated by recursive isomorphism at a fixed bound and the pairs
+$(n,G)\sim(n+1,\mathsf{raise}(G))$. Its constructors give these two generators,
+reflexivity, symmetry, and transitivity. The global setoid uses exactly these
+constructors for its equivalence laws. A depth-independent graph class is a
+quotient by this setoid; $\mathsf{global}(G)$ denotes its canonical class.
+Operational transitions are not generators of this equivalence.
+\end{definition}
+\lean{Graph/PaperRelations}{10}{10}{Linear.PaperEncoding.Bounded}
+
+\lean{Graph/PaperRelations}{14}{19}{Linear.PaperEncoding.GlobalRenaming}
+
+\lean{Graph/PaperRelations}{22}{24}{Linear.PaperEncoding.globalSetoid}
+
+\lean{Graph/PaperRelations}{26}{26}{Linear.PaperEncoding.GlobalClass}
+
+\lean{Graph/PaperRelations}{28}{29}{Linear.PaperEncoding.global}
+
+\begin{lemma}[Class invariance]
+Recursively isomorphic graphs have equal global classes, and increasing a
+graph's depth allowance preserves its class.
+\end{lemma}
+\begin{proof}
+Apply quotient soundness to the isomorphism and promotion generators,
+respectively.
+\end{proof}
+\lean{Graph/PaperRelations}{32}{33}{Linear.PaperEncoding.global_iso}
+
+\lean{Graph/PaperRelations}{36}{37}{Linear.PaperEncoding.global_raise}
+
+\begin{definition}[Interpretation]
+Interpret a typed graph by encoding it with outer prefix $(0,0)$ and taking
+its global class.
+\end{definition}
+\lean{Graph/PaperRelations}{40}{41}{Linear.PaperEncoding.interpret}
+
+\begin{proposition}[Interpretation is invariant and surjective]
+Interpretation preserves recursive isomorphism and depth promotion. Every
+global graph class is the interpretation of a typed graph at some finite bound.
+\end{proposition}
+\begin{proof}
+For isomorphism invariance, encode the given isomorphism and apply class
+invariance. For promotion invariance, use the exact encoding--promotion
+commuting square, followed by global promotion invariance. For surjectivity,
+choose a representative $(n,H)$ by quotient induction and decode $H$.
+The named round trip gives an isomorphism from $H$ to its decoded re-encoding;
+class invariance and symmetry give the required equality.
+\end{proof}
+\lean{Graph/PaperRelations}{43}{44}{Linear.PaperEncoding.interpret_iso}
+
+\lean{Graph/PaperRelations}{47}{51}{Linear.PaperEncoding.interpret_raise}
+
+\lean{Graph/PaperRelations}{54}{59}{Linear.PaperEncoding.interpret_surjective}
+
+\termdef{relation-pullback}
+\begin{definition}[Relation pullback]
+For any relation $R$ on depth-independent classes, define its relation at bound
+$n$ by $R_n(G,H)\iff R(\mathsf{interpret}(G),\mathsf{interpret}(H))$.
+\end{definition}
+\lean{Graph/PaperRelations}{62}{64}{Linear.PaperEncoding.relation}
+
+\begin{proposition}[Relation coherence]
+The pulled-back relation is unchanged by independent recursive renaming of
+its arguments. It is also unchanged by promoting both arguments once, or by
+any common finite number of promotions.
+\end{proposition}
+\begin{proof}
+Unfold the pullback and substitute the equal interpretations supplied by
+isomorphism invariance or promotion invariance. For an arbitrary number of
+promotions, induct on that number. The zero case is reflexivity; the successor
+case composes the induction hypothesis with the one-step equivalence at the
+current bound.
+\end{proof}
+\lean{Graph/PaperRelations}{67}{72}{Linear.PaperEncoding.relation_iso}
+
+\lean{Graph/PaperRelations}{76}{80}{Linear.PaperEncoding.relation_raise}
+
+\lean{Graph/PaperRelations}{83}{90}{Linear.PaperEncoding.relation_raiseBy}
+
+\termdef{global-pretemplate}
+\begin{definition}[Global pre-template]
+A global pre-template consists of a relation on global classes at each outer
+interface, with the requirement that any related typed representatives are
+focus-free. This is the defining focus-freedom condition on a pre-template;
+it does not supply an operational safety or robustness hypothesis.
+Its layered interpretation takes the relation pullback at every depth and
+uses the given focus-freedom proof for the existing pre-template interface.
+\end{definition}
+\lean{Graph/PaperRelations}{93}{96}{Linear.PaperEncoding.GlobalPreTemplate}
+
+\lean{Graph/PaperRelations}{99}{100}{Linear.PaperEncoding.GlobalPreTemplate.toLayered}
+
+\begin{proposition}[Coherent layered interpretation]
+The layered interpretation of a global pre-template respects simultaneous
+depth promotion and independent recursive renaming.
+\end{proposition}
+\begin{proof}
+Apply relation coherence to its class relation. The layered interpretation
+unfolds to precisely that pullback.
+\end{proof}
+An arbitrary family of unrelated depth-indexed relations is not claimed to
+satisfy these properties. This construction supplies a coherent family from
+one relation on graph classes; the remaining operational bridges must still
+establish their own invariance and transition hypotheses.
+\lean{Graph/PaperRelations}{103}{106}{Linear.PaperEncoding.GlobalPreTemplate.coherent}
+
+\lean{Graph/PaperRelations}{109}{112}{Linear.PaperEncoding.GlobalPreTemplate.rename}
+
+\subsection{The repaired counterexample and the remaining theorem}
+\begin{proposition}[The two-box obstruction is repaired]
+The previous two-box graph admits an actual-content representation without any
+restriction on the original graph. The two encoded box labels have different
+actual contents, while decoding recovers the old graph up to recursive
+isomorphism.
+\end{proposition}
+\begin{proof}
+Encode the unary variable body once with prefix $(0,1)$ and once with prefix
+$(1,0)$. If the actual body packages were equal, applying the input-name
+bound-coordinate function would give $0=1$. Thus they are distinct graphs.
+The first and second edges of the encoded two-box graph carry precisely these
+labels by construction. Pair the old negative body-consistency theorem with
+the new typed round trip to obtain the repaired-counterexample statement.
+The old counterexample remains correct for naive erasure; it is not a
+counterexample to freshening.
+\end{proof}
+\lean{Graph/PaperEncodingExamples}{11}{12}{Linear.PaperEncodingExamples.exposedContent}
+
+\lean{Graph/PaperEncodingExamples}{15}{16}{Linear.PaperEncodingExamples.boundContent}
+
+\lean{Graph/PaperEncodingExamples}{19}{23}{Linear.PaperEncodingExamples.distinct_contents}
+
+\lean{Graph/PaperEncodingExamples}{26}{27}{Linear.PaperEncodingExamples.first_label}
+
+\lean{Graph/PaperEncodingExamples}{29}{30}{Linear.PaperEncodingExamples.second_label}
+
+\lean{Graph/PaperEncodingExamples}{34}{37}{Linear.PaperEncodingExamples.repaired_counterexample}
+
+Further regressions check that a boxed two-hole graph encoded with prefixes
+$(2,3)$ and $(7,11)$ gives the same recursive graph class, by applying encoding
+transport to the identity isomorphism. The quotient inverse law is instantiated
+on that graph. Promoting the repaired two-box graph by two layers commutes with
+encoding by the iterated depth theorem. Finally, focus freedom, hole freedom,
+and unique-hole contexts are all preserved and reflected by decoded encoding,
+using their existing recursive-isomorphism invariance theorems and the new
+round-trip isomorphism.
+\lean{Graph/PaperEncodingExamples}{40}{44}{Linear.PaperEncodingExamples.prefix_independent}
+
+\lean{Graph/PaperEncodingExamples}{47}{52}{Linear.PaperEncodingExamples.quotient_roundtrip}
+
+\lean{Graph/PaperEncodingExamples}{54}{57}{Linear.PaperEncodingExamples.promoted_repair}
+
+\lean{Graph/PaperEncodingExamples}{61}{66}{Linear.PaperEncodingExamples.context_properties}
+
+\paragraph{Scope of the completed obligation.}
+The construction supplies freshly named representatives for the typed UAM
+signature of the paper, using its literal graph-label equality in
+\S3.1(3). It does not claim a representation theorem for unrelated arbitrary
+signatures outside the UAM discipline. Naming is a choice of representative;
+no vertices, edges, or operations are added. Box counts are no longer separate
+label fields, but can be recovered from names in the actual contents. All typed
+graph classes are covered, including graphs rejected by naive binder erasure.
+
+Appendix~\ref{app:remaining-work} removes the representation item and now has
+three items. The full-UAM structural results, the concrete specimen interface
+with safety/robustness and initial-lifting bridges, and the final application
+of Theorem~6 remain. The class-transport lemmas preserve established hypotheses;
+they do not prove those outstanding operational hypotheses. The subjective
+mathematical-effort estimate is now about 85\%, with a plausible range of
+70--91\%, rather than a percentage computed from declaration or to-do counts.

@@ -46,7 +46,8 @@ to be an operation. Its label equality contradicts the hypothesis.
 A layered pre-template chooses a concrete, interface-indexed pre-template
 $T_d$ for every depth bound $d$. Each related pair is globally focus-free.
 This definition does not identify graphs or relations at different
-depth bounds; that compatibility remains a representation obligation.
+depth bounds. Section~\ref{sec:paper-encoding} constructs coherent families
+from a single global pre-template; arbitrary families need not be coherent.
 \end{definition}
 \lean{Graph/DeepFillings}{44}{46}{Linear.LayeredPreTemplate}
 
@@ -205,9 +206,9 @@ Each result graph also admits a finite ordinary shallow-substitution
 realization of its outer filling family, up to graph isomorphism.
 Apply finite sequential realization to the left family and then the
 right. These runs may rebuild a whole outer box edge from its already
-filled body. Consequently this is a graph realization result, not yet
-an adequacy theorem equating the recursive representation with the
-paper's original-hole-only tuple substitution.
+filled body. Consequently this result alone does not identify the recursive
+representation with the paper's original-hole-only tuple substitution. That
+separate adequacy theorem is proved in Section~\ref{sec:tuple-safety}.
 \lean{Graph/DeepSpecimens}{87}{94}{Linear.DeepSpecimen.outer_realizations}
 
 To embed an earlier shallow specimen, retain its context, focus,

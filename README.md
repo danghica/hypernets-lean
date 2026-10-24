@@ -72,7 +72,8 @@ complete. The next dependencies are substitution rootedness, full-UAM structural
 laws and the remaining specimen-interface laws.
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices. Their annotated set-presentation round trips and depth coherence are
-now proved; correspondence with the paper's undecorated box labels remains open.
+now proved. Fresh vertex naming also resolves the paper's graph-valued box-label
+correspondence, with mutually inverse graph-class maps and depth coherence.
 
 `Hypernets/Graph/Focused.lean` now defines global focus freedom, the unique
 shallow non-exposed self-acyclic focus, and hole-free states of type `* → ε`.
@@ -135,7 +136,7 @@ the value execution rooted and the valid interior-focus state behind a variable
 not rooted. These use the current erasure-based search semantics; contextual
 local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 
-The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains four unfinished tasks. Search adequacy and the full UAM transition
+The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains three unfinished tasks. Search adequacy and the full UAM transition
 definition are discharged; structural laws and the concrete robustness bridge remain open.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
@@ -209,7 +210,7 @@ contexts, preserving plugging. `HoleContextSearch.lean` proves
 `State.search_iff_holeContext` and covers arbitrary simple contexts without
 extra assumptions on interaction labels. Regressions include output fragments
 and a self-loop whose input and output attachments coincide. **Appendix B now
-has four unfinished items after the milestones below.**
+has three unfinished items after the milestones below.**
 
 The full-UAM milestone clears the transition-definition obligation.
 `Substitution.lean` constructs both fragments of Figure 9(f), defines their
@@ -231,8 +232,8 @@ unrooted robustness alternative. Rooted consequences are derived, not assumed.
 The nested-box example yields exactly one recorded hole; a mode-mismatched
 pair is rejected even with universally true up-to relations.
 
-Estimated completion by mathematical effort: **about 83%**, with a plausible
-range of **68–90%**, up from 80% after tuple compatibility and concrete safety definitions.
+Estimated completion by mathematical effort: **about 85%**, with a plausible
+range of **70–91%**, up from 83% after the freshening representation theorem.
 This is a planning judgment, not a declaration count. Full-UAM structural proofs, specimen packaging, safety, and robustness remain substantial.
 
 ## Concrete graph milestone
@@ -278,10 +279,9 @@ The new `DeepIso` extends this to independently renamed box contents, as describ
 below. The context calculus proves preservation of unique hole labels under
 explicit freshness conditions at arbitrary depth. Nested plugging associativity
 and corolla unit laws are now proved. The typed, depth-indexed hierarchy includes explicit binder
-metadata on box labels. Annotated set-presentation conversion is now proved,
-but a checked binder-erasure obstruction leaves the undecorated graph-label
-correspondence open. These
-distinctions are part of the remaining work below.
+metadata on box labels. The new freshening translation replaces them by actual
+graph contents and recovers all typed graph classes. The earlier counterexample
+remains valid for naive erasure, but is repaired by the proved naming translation.
 
 ## Context calculus milestone
 
@@ -357,7 +357,7 @@ Transport chooses inner isomorphisms classically; no canonical choice or round-t
 law is asserted for the chosen transport function. The pointed-host quotient
 below identifies structural renaming zigzags. Comparison across
 different depth bounds now has a checked normalization-coherence theorem.
-The remaining representation issue is undecorated box-label correspondence. The full-UAM structural laws and its
+Fresh naming now resolves the graph-valued box-label correspondence. The full-UAM structural laws and its
 bridge to Theorem 6 remain the main later work.
 
 ## Composition and unit milestone
@@ -508,18 +508,14 @@ logical axioms, if used, are shown explicitly.
 
 ## Remaining work toward the milestone
 
-1. Resolve the correspondence between binder-annotated boxes and the paper's
-   undecorated graph labels. Naive binder erasure fails the same-label/same-signature
-   condition in a checked example; supply an appropriate restriction or proved
-   freshening translation and the compatibility needed by the concrete theorem.
-2. Prove substitution preserves rootedness, establish the required full-UAM
+1. Prove substitution preserves rootedness, establish the required full-UAM
    consequences of refocusing, and prove the stationary rewrite criterion.
-3. Package synchronized successor coordinates as allowed concrete specimens,
+2. Package synchronized successor coordinates as allowed concrete specimens,
    preserving unique holes and context membership under isomorphism. Construct
    the abstract specimen interface using the checked boundary, non-exiting, and
    settled-search results, and connect its context-step law to the full UAM.
    Prove safety/robustness bridges and initial lifting.
-4. Instantiate the checked sufficiency results with all concrete obligations
+3. Instantiate the checked sufficiency results with all concrete obligations
    discharged to obtain Theorem 6.
 
 The copying UAM, lambda-term translation, and example program equivalences
@@ -536,12 +532,40 @@ isomorphisms, reflects isomorphism of exposed typed graphs, and proves that
 normalization commutes with arbitrary depth promotion. Finite mixed-depth box
 families can be padded to a common maximum bound.
 
-**The full paper representation item is not closed.** `SetHierarchyExamples.lean`
+**The obstruction below is now resolved by the freshening milestone that follows.** `SetHierarchyExamples.lean`
 contains a verified obstruction to simply dropping binder metadata: two boxes
 can have the same unary variable body but external types `T⁰(*) → *` and
 `T¹(*) → ε`. Both coexist in a valid typed graph. Forgetting their annotations
 would give equal labels with different signatures, contrary to paper §3.1(3).
 This refutes that forgetful map, not every possible adequate representation.
-Appendix B retains four items, with representation narrowed to this correspondence.
-The mathematical-effort estimate remains about 83% (68–90%). Section 43 of the
-PDF explains all new definitions and proofs, including the counterexample.
+Section 43 of the PDF explains the annotated results and the counterexample.
+Section 44 proves the repair.
+
+
+## Actual graph-valued box labels: representation item completed
+
+`NamedPresentation.lean` assigns actual vertex names by a proved bijection,
+including at the ordered boundaries. `PaperEncoding.lean` recursively names
+contents so the enclosing binder split is recoverable from the sole input's
+name. Box labels contain actual graphs, with no separately stored binder counts.
+Equal literal graph labels have equal source and target types, as required by
+paper §3.1(3).
+
+Both recursive round trips are proved. Encoding preserves and reflects recursive
+isomorphism, and encoding and decoding are inverse on graph classes. Arbitrary
+class predicates and relations transport through these inverse maps; predicates
+on raw representatives still require their own isomorphism-invariance proofs.
+`PaperEncodingDepth.lean` proves that encoding commutes exactly with arbitrary
+finite depth promotion. `PaperEncodingExamples.lean` repairs the prior two-box
+counterexample without imposing body consistency and checks context properties.
+
+Appendix B now has **three unfinished items**: full-UAM structural laws, the
+concrete specimen interface and bridges, and the final concrete Theorem 6.
+The representation result concerns the paper's typed UAM discipline; it does
+not claim to finish those operational obligations or cover unrelated signatures.
+
+`PaperRelations.lean` also interprets relations on graph classes independently
+of depth bounds. Its finite-union quotient identifies recursive isomorphism and
+depth promotion. Every class has a typed representative, and global pre-templates
+produce layered pre-templates proved coherent under promotion and renaming.
+Arbitrary layered relations are not assumed to have this compatibility.

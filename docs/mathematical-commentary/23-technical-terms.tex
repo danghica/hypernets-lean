@@ -6,6 +6,8 @@ definition in this PDF. Related terms may share a definition. Descriptions of
 abstract interface predicates state what the interface supplies; they do not
 claim that a concrete UAM interpretation has already been constructed.
 
+\glossaryentry{actual-content-label}{Actual-content label}{An actual named box body with a typing proof; its external counts are read from the name of its sole input rather than stored as separate label fields.}
+
 \glossaryentry{path}{Adjacency}{Edges $e,f$ are adjacent when a vertex occurs in both the target list of $e$ and the source list of $f$.}
 
 \glossaryentry{uam-behaviour}{Admissible behaviour}{A relation on actual states certified to contain only pairs of compute shape; determinism is a separate property.}
@@ -33,6 +35,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{ports}{Boundary port}{An input or output constructor carrying an index in the corresponding ordered boundary list; input and output constructors are disjoint.}
 
 \glossaryentry{boundary-transport}{Boundary transport}{Reindexing boundary ports along equal ordered interfaces while preserving internal and edge carriers.}
+
+\glossaryentry{boundary-list-iso}{Boundary-list isomorphism}{An isomorphism preserving ordered input and output lists, allowing interface indices to have different presentations before transport.}
 
 \glossaryentry{box}{Box}{A label storing bound/free counts $n,m$ and a body of type $*\to *^{n+m}$; its outer edge has type $T^n(*)\to *^m$.}
 
@@ -130,6 +134,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{depth-promotion}{Depth promotion}{Increasing an allowed nesting depth while preserving incidence and recursively promoting box contents.}
 
+\glossaryentry{global-class}{Depth-independent graph class}{A finite-depth actual-content graph modulo recursive isomorphism and depth promotion.}
+
 \glossaryentry{determinism}{Determinism}{The property that any two one-step successors of the same state are equal.}
 
 \glossaryentry{hole-presence}{Disjoint hole inventories}{The condition that no complete typed hole label occurs in both graphs, including occurrences inside boxes.}
@@ -184,11 +190,17 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{observations}{Fragment}{An element of the family $F_i$ in an observation interface, matched with contexts of the same interface index $i$.}
 
+\glossaryentry{fresh-naming}{Fresh naming}{A bijective assignment of names consisting of two chosen prefix coordinates and a distinct enumeration index.}
+
 \glossaryentry{full-uam}{Full UAM}{The concrete machine whose steps are search, substitution, or admissible extrinsic behaviour, with proved final normality.}
 
 \glossaryentry{pointed-plug}{Fully quotiented substitution}{Substitution whose arguments are a host-with-site class and a replacement class, and whose result is a recursive graph class.}
 
+\glossaryentry{global-pretemplate}{Global pre-template}{A relation on depth-independent graph classes whose related typed representatives are focus-free.}
+
 \glossaryentry{ports}{Graph signature}{The assignment of an ordered input-label list and output-label list to each operation label.}
+
+\glossaryentry{graph-body-package}{Graph-body package}{A named body graph and its actual output count, determined by its own ordered interface.}
 
 \glossaryentry{hole-boundary}{Hole boundary}{A searching coordinate at an original shallow hole source, or a backtracking coordinate at one of its targets.}
 
@@ -242,7 +254,7 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{recursive-quotient}{Isomorphism class}{A hypernet modulo recursive isomorphism at a fixed depth bound and ordered interface.}
 
-\glossaryentry{layered-template}{Layered pre-template}{A choice of an interface-indexed focus-free relation at each depth bound; cross-bound compatibility is a separate obligation.}
+\glossaryentry{layered-template}{Layered pre-template}{A choice of an interface-indexed focus-free relation at each depth bound; compatibility is not automatic, but holds for the interpretation of a global pre-template.}
 
 \glossaryentry{lifting}{Lifted state relation}{The relation witnessed by a remote specimen with rooted endpoints equal to the two states being compared.}
 
@@ -251,6 +263,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{local-rewiring}{Local rewiring}{Carrier bijections preserving non-focus labels and target incidences, with explicit equations for moving the focus and redirecting sources.}
 
 \glossaryentry{machine}{Machine}{A transition relation on states, a successful-finality predicate, and a proof that final states cannot step.}
+
+\glossaryentry{named-graph}{Named graph}{A set graph whose vertices are elements of a finite subset of a common space of names, including its boundary vertices.}
 
 \glossaryentry{named-tuple-application}{Named tuple application}{A tuple-filling certificate modulo simultaneous permutation of its aligned entries; this is parallel application, not a sequential schedule.}
 
@@ -346,6 +360,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{related-boxes}{Related boxes}{Boxes with the same bound/free metadata and bodies satisfying a specified relation at that exact interface.}
 
+\glossaryentry{relation-pullback}{Relation pullback}{The relation on typed graphs obtained by interpreting both arguments as depth-independent graph classes.}
+
 \glossaryentry{relational-isomorphism}{Relational isomorphism}{Boundary-preserving carrier bijections preserving ordered incidence and vertex labels, with corresponding edge labels related by a supplied relation.}
 
 \glossaryentry{relational-plugging}{Relational plugging congruence}{The construction extending a replacement isomorphism for a reflexive label relation by identity on the surviving host.}
@@ -355,6 +371,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{lifting}{Remote specimen}{A specimen whose mode is not rewrite or which is not entering; only an entering rewrite focus is excluded.}
 
 \glossaryentry{replacement-carriers}{Replacement carriers}{The disjoint union of host and replacement internal names, and the union of surviving host edges with inserted replacement edges.}
+
+\glossaryentry{representation-class}{Representation class}{An actual-content hypernet modulo recursive type-preserving graph isomorphism; these classes are equivalent to the existing typed graph classes.}
 
 \glossaryentry{residual-family}{Residual filling family}{The assignments left after one filling: original assignments on retained edges, identity corollas on inserted edges.}
 
@@ -463,5 +481,7 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{variable-prefix}{Variable prefix}{A new unary variable edge placed before the sole input of a bound computation, preserving its original edges and boxes.}
 
 \glossaryentry{vertex-label}{Vertex label}{The internal vertex's assigned label, or the wire label at the indexed position in the relevant boundary list.}
+
+\glossaryentry{vertex-name}{Vertex name}{A triple of natural numbers used as an ordinary vertex identifier in the freshened presentation.}
 
 \glossaryentry{wire}{Wire type}{Either the term type $*$ or a thunk type $T^n(*)$ with its binding count.}
