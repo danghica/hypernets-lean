@@ -265,9 +265,9 @@ from the corresponding isomorphism constructions. A state class is the
 quotient by this equivalence; write $[s]$ for the class of $s$.
 \end{definition}
 This quotient preserves full edge labels literally, including box bodies.
-It does not yet identify independently renamed contents of nested boxes;
-connecting state dynamics with the earlier recursive isomorphisms is a
-further representation obligation.
+It does not identify independently renamed contents of nested boxes.
+Section~\ref{sec:recursive-state-search} constructs the recursive state quotient
+and proves projection and exact-length search lifting between the two quotients.
 \lean{Graph/StateQuotient}{10}{13}{Linear.stateSetoid}
 \lean{Graph/StateQuotient}{16}{16}{Linear.StateClass}
 \lean{Graph/StateQuotient}{22}{22}{Linear.StateClass.ofState}

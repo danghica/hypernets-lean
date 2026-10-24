@@ -34,7 +34,10 @@ states is deterministic up to focussed isomorphism and has the expected search
 boundary laws (Section~\ref{sec:erasure}). Both focus round trips and
 source/target renaming invariance are proved; search and boundary observations
 descend to literal-label state isomorphism classes, with equality-based search
-determinism. Graph-rewrite adequacy, substitution and compute transitions,
+determinism. Search also respects recursive renaming inside boxes and descends
+to recursive state classes. The map from literal to recursive classes preserves
+and lifts search executions with exact lengths, including successful search
+termination. Graph-rewrite adequacy, substitution and compute transitions,
 and the full specimen interpretation remain open.
 
 \Needspace{18\baselineskip}
@@ -94,6 +97,14 @@ partition and all five coordinate search rules are now defined. These then suppo
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
+As a planning estimate, approximately 45\% of the mathematical effort toward
+the concrete general robustness theorem is complete (a plausible range is
+35--55\%). This revises the preceding estimate of about 40\% after completing
+recursive state search and the quotient execution bridge. It is a subjective
+estimate, not a ratio of declarations or discharged checklist entries. The
+remaining operational adequacy, full UAM, and specimen locality arguments are
+substantial and may reveal further missing infrastructure.
+
 There are three distinct kinds of assertion below. A \emph{definition} specifies
 a mathematical object or predicate. A \emph{proved statement} is established by
 a Lean proof term. An \emph{interface law} is a hypothesis carried by a
@@ -101,7 +112,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{ab67d25}, rather than to the moving
+All code links point to revision \texttt{424f3b7}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

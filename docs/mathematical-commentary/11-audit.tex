@@ -61,6 +61,11 @@ transport and realization, erasure naturality, source invariance, quotient
 search determinism and boundaries, and the concrete quotient regressions.
 \lean{Graph/Audit}{122}{136}{Graph.Audit: round trips and quotient search dependencies}
 
+Fourteen further commands inspect recursive focus freedom, coordinate search,
+insertion and erasure, recursive state search and quotient determinism, the
+quotient projection and lifting laws, exact-length executions, and regressions.
+\lean{Graph/Audit}{138}{151}{Graph.Audit: recursive state search and execution dependencies}
+
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
 isomorphism invariance of unique holes, and uniqueness of the two-hole example
@@ -79,6 +84,9 @@ All new general-erasure and state-search audit entries use those three
 standard axioms. The round-trip and quotient-search audits do too, except
 coordinate search renaming, which uses only \texttt{propext} and
 \texttt{Quot.sound}. The remaining audited declarations additionally report \texttt{Classical.choice}.
+The recursive-search audits use all three axioms, except label and graph
+focus-freedom invariance, coordinate search transport, and the renamed-box
+focus-freedom example, which use only \texttt{propext} and \texttt{Quot.sound}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
 \texttt{sorryAx} or a project-specific axiom.
@@ -136,9 +144,7 @@ hypernets, including compatibility across different depth bounds.
 \item Construct a quotient of host/site pairs and prove interchange of
 substitutions at independent sites.
 \item Identify erasure-based state search with the paper's contextual local
-graph rewrites in both directions. Extend the state-level renaming results
-from literal-label isomorphisms to recursive renaming inside box bodies, and
-connect the corresponding state quotients.
+graph rewrites in both directions.
 \item Define the concrete substitution and compute transitions, with their
 typing and context restrictions, and assemble the full UAM transition relation.
 \item Define concrete rootedness and refocusing. Prove the required structural

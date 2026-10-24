@@ -60,8 +60,7 @@ consequences are currently requirements of the specimen interface.
   Determinism and refocusing are hypotheses of the paper's theorem, not claims
   to prove for arbitrary extrinsic rewrite rules.
 
-The next dependencies are adequacy for contextual graph rewriting and
-extension of state dynamics to recursive box renaming, together with §6.4's
+The next dependencies are adequacy for contextual graph rewriting and §6.4's
 substitution and compute transitions, then
 rootedness, Lemma 26(3), and Lemma 39(2–3).
 The finite-depth typed representation and explicit isomorphisms are implementation
@@ -104,9 +103,24 @@ literal-label state isomorphism classes and proves equality of successor classes
 `QuotientSearchExamples.lean` checks the specific initial-to-final value execution,
 a reconstructed source, and uniqueness of its successor class.
 
-The PDF's §30.3 now contains only unfinished tasks. Contextual-rewrite adequacy,
-recursive box-renaming compatibility for states, the full UAM, and the concrete
-robustness theorem remain open.
+`DeepFocus.lean`, `DeepSearchRenaming.lean`, `DeepInsertionRenaming.lean`, and
+`DeepErasureRenaming.lean` extend focus and search transport to independent
+renaming inside nested boxes. `DeepStateSearch.lean` and `DeepStateQuotient.lean`
+construct recursively renamed state search and its deterministic quotient.
+`StateQuotientBridge.lean` projects literal classes onto recursive classes and
+lifts every recursive step from any specified literal source class.
+`SearchQuotientExecutions.lean` proves exact-length execution lifting and
+preservation/reflection of search termination. Its machine instances contain
+search only; they are not the full UAM. `DeepSearchExamples.lean` checks recursive
+box focus freedom and the exact-length execution bridge on the value example.
+
+The PDF's §30.3 contains only unfinished tasks. Contextual-rewrite adequacy,
+the full UAM, and the concrete robustness theorem remain open.
+
+Estimated completion by mathematical effort: **about 45%**, with a plausible
+range of **35–55%**, up from about 40% before the recursive-search milestone.
+This is a planning judgment, not a declaration count. The remaining operational
+and specimen-locality proofs may expose substantial additional work.
 
 ## Concrete graph milestone
 
@@ -320,12 +334,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 766 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 778
-source-fragment links point to immutable code revision `ab67d25`. It distinguishes
+all 844 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 857
+source-fragment links point to immutable code revision `424f3b7`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 155 technical terms, with short descriptions and internal PDF links
+glossary of 160 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -362,8 +376,7 @@ logical axioms, if used, are shown explicitly.
 
 1. Prove representation adequacy and compatibility across depth bounds.
 2. Quotient host/site pairs and prove interchange for independent sites.
-3. Prove equivalence of state search with the paper's contextual local rewrites;
-   extend state dynamics and quotients to recursive renaming of box contents.
+3. Prove equivalence of state search with the paper's contextual local rewrites.
 4. Define substitution and compute transitions and assemble the full UAM.
 5. Define rootedness and refocusing; prove structural consequences under the
    paper's hypotheses, including the required parts of Lemma 26(3).

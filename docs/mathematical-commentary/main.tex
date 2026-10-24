@@ -50,7 +50,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/ab67d2595db833090b9907ebff799325f09ab836}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/424f3b72da282ac6825dbc001befdc1a9b40950e}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -58,11 +58,11 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{24 October 2026\\\small Source snapshot: \texttt{ab67d25}; Lean \texttt{4.35.0}}
+\date{24 October 2026\\\small Source snapshot: \texttt{424f3b7}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
-This document explains every definition and proved statement in the current Lean development, including its regression examples. It gives proofs in mathematical English and links each declaration to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright. The forward and converse robustness arguments are proved relative to an explicit specimen interface. The concrete development constructs finite typed graphs, proves well-formed shallow plugging, path and isomorphism results, operation-path uniqueness, finite boxed hierarchies, addressed deep replacement, and globally unique-hole context closure under explicit freshness conditions. Plugging at every finite box depth has an exact syntactic hole inventory and a necessary-and-sufficient freshness criterion, including exact consumption of the selected hole label. Recursive isomorphism now permits independent renaming inside boxes, preserves operation paths and context validity, and makes substitution well-defined on replacement isomorphism classes. Sites now transport across recursively isomorphic hosts, with simultaneous host/replacement congruence and invariance of exact freshness. Nested substitutions now associate at arbitrary box depth, corollas satisfy unit laws, and exact composite context closure permits repair of intermediate hole collisions. The focussed state space is now defined, and the boundary argument of Lemma~39(1) is proved for finite sequences of deep focus-free fillings. The five search rules are now defined on underlying graph coordinates, with proofs of search determinism, boundary laws, and preservation of context steps under shallow filling. Typed search coordinates now have explicit focus-edge state realizations, with proved incidence recovery and initial attachment. General erasure now applies to arbitrary closed focussed states, with a focus-preserving reinsertion isomorphism. Search on explicit states is defined through erasure, proved deterministic up to focussed isomorphism, and satisfies the initial/final search boundary laws. Both focus round trips and renaming invariance are now proved. Search descends to literal-label state isomorphism classes, where successor classes are unique and the search boundary laws hold. Adequacy for contextual local rewriting and the full UAM remain open. An explicit dependency map distinguishes these checked results from the remaining operational obligations. The connection to a concrete universal abstract machine and the verification of the specimen interface remain outstanding; the development is therefore not yet a formalization of the paper's full Theorem~6.
+This document explains every definition and proved statement in the current Lean development, including its regression examples. It gives proofs in mathematical English and links each declaration to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright. The forward and converse robustness arguments are proved relative to an explicit specimen interface. The concrete development constructs finite typed graphs, proves well-formed shallow plugging, path and isomorphism results, operation-path uniqueness, finite boxed hierarchies, addressed deep replacement, and globally unique-hole context closure under explicit freshness conditions. Plugging at every finite box depth has an exact syntactic hole inventory and a necessary-and-sufficient freshness criterion, including exact consumption of the selected hole label. Recursive isomorphism now permits independent renaming inside boxes, preserves operation paths and context validity, and makes substitution well-defined on replacement isomorphism classes. Sites now transport across recursively isomorphic hosts, with simultaneous host/replacement congruence and invariance of exact freshness. Nested substitutions now associate at arbitrary box depth, corollas satisfy unit laws, and exact composite context closure permits repair of intermediate hole collisions. The focussed state space is now defined, and the boundary argument of Lemma~39(1) is proved for finite sequences of deep focus-free fillings. The five search rules are now defined on underlying graph coordinates, with proofs of search determinism, boundary laws, and preservation of context steps under shallow filling. Typed search coordinates now have explicit focus-edge state realizations, with proved incidence recovery and initial attachment. General erasure now applies to arbitrary closed focussed states, with a focus-preserving reinsertion isomorphism. Search on explicit states is defined through erasure, proved deterministic up to focussed isomorphism, and satisfies the initial/final search boundary laws. Both focus round trips and renaming invariance are now proved. Search descends to literal-label state isomorphism classes, where successor classes are unique and the search boundary laws hold. Search now also descends to recursive state classes, allowing independent renaming inside every box. Projection between the two quotients preserves and lifts search executions with exact lengths and reflects search termination. Adequacy for contextual local rewriting and the full UAM remain open. An explicit dependency map distinguishes these checked results from the remaining operational obligations. The connection to a concrete universal abstract machine and the verification of the specimen interface remain outstanding; the development is therefore not yet a formalization of the paper's full Theorem~6.
 \end{abstract}
 \clearpage
 \begingroup
@@ -101,8 +101,10 @@ This document explains every definition and proved statement in the current Lean
 \input{28-focused}
 \input{29-search}
 \input{30-realization}
+\addtocontents{toc}{\protect\newpage}
 \input{31-erasure}
 \input{32-quotient-search}
+\input{33-recursive-search}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -113,7 +115,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/ab67d2595db833090b9907ebff799325f09ab836}{Repository at revision \texttt{ab67d25}}.
+\href{https://github.com/danghica/hypernets-lean/tree/424f3b72da282ac6825dbc001befdc1a9b40950e}{Repository at revision \texttt{424f3b7}}.
 \end{thebibliography}
 \clearpage
 \appendix

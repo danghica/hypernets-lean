@@ -1,0 +1,391 @@
+\Needspace{20\baselineskip}
+\subsection{Recursive renaming of focussed states}
+\label{sec:recursive-state-search}
+The preceding quotient fixes box-body labels literally. We now extend search
+to the recursive graph isomorphisms of Section~23, allowing independent changes
+of carrier names inside every nested box. All constructions stay at one fixed
+finite depth bound. Compatibility across depth bounds and with the paper's
+set-based representation remains a separate obligation.
+
+\begin{lemma}[Primitive labels and focus freedom]
+Recursive label equivalence preserves each specified primitive symbol exactly.
+It also preserves and reflects absence of focuses throughout a label, and
+recursive graph isomorphisms preserve and reflect global focus freedom.
+\end{lemma}
+\begin{proof}
+At depth zero label equivalence is equality. At positive depth a primitive can
+only relate to the same primitive: the primitive--box alternatives are false.
+This proves the first assertion, including the variable and operation symbols
+needed by search.
+
+For focus freedom, induct on depth. Primitive cases again reduce to equality;
+mixed cases are impossible. For related boxes, take the supplied recursive
+isomorphism of their bodies. In the forward direction, choose the inverse
+image of each target edge under its edge bijection, apply the induction
+hypothesis to the related labels, and cancel the bijection with its inverse.
+In the reverse direction, apply the induction hypothesis to the image of each
+source edge. Applying this label result edgewise, with the same inverse-image
+argument, gives the graph-level equivalence.
+\end{proof}
+\lean{Graph/DeepFocus}{10}{19}{Linear.labelEquiv_primitive}
+\lean{Graph/DeepFocus}{22}{43}{Linear.labelEquiv_focusFree}
+\lean{Graph/DeepFocus}{45}{52}{Linear.DeepIso.focusFree_iff}
+
+\begin{definition}[Focussed recursive isomorphism]
+\termdef{focussed-recursive-isomorphism}
+A focussed recursive isomorphism consists of a recursive graph isomorphism,
+equality of the modes, and an equation carrying the distinguished focus edge
+to the distinguished focus edge. Literal-label focussed isomorphisms embed
+by treating equality of labels as recursive label equivalence.
+\end{definition}
+Identity uses recursive identity; inversion uses the inverse graph bijections
+and the reversed mode equation; composition composes the graph maps and both
+focus equations. Thus these constructions retain the distinguished data,
+not only the unpointed graph.
+\lean{Graph/DeepFocus}{57}{60}{Linear.Focussed.DeepIso}
+\lean{Graph/DeepFocus}{65}{65}{Linear.Focussed.DeepIso.refl}
+\lean{Graph/DeepFocus}{67}{72}{Linear.Focussed.DeepIso.symm}
+\lean{Graph/DeepFocus}{74}{79}{Linear.Focussed.DeepIso.trans}
+\lean{Graph/DeepFocus}{82}{82}{Linear.Focussed.DeepIso.ofIso}
+
+The focus source and target correspond: apply the ordered incidence equations
+to the distinguished edge and use its singleton source and target lists.
+The port maps preserve input status, so these endpoint equations and mode
+equality preserve and reflect both initiality and finality.
+\lean{Graph/DeepFocus}{84}{87}{Linear.Focussed.DeepIso.source}
+\lean{Graph/DeepFocus}{89}{92}{Linear.Focussed.DeepIso.target}
+\lean{Graph/DeepFocus}{94}{97}{Linear.Focussed.DeepIso.initial_iff}
+\lean{Graph/DeepFocus}{99}{102}{Linear.Focussed.DeepIso.final_iff}
+
+\Needspace{18\baselineskip}
+\subsection{Search and insertion under recursive renaming}
+Let $a:G\cong_d H$ be a recursive graph isomorphism and $a_*$ its outer port
+map. Wire labels still agree: internal labels agree by the graph-isomorphism
+field, and boundary labels agree because boundary positions are fixed.
+\lean{Graph/DeepSearchRenaming}{11}{16}{Linear.deepIso_vertexLabel}
+
+Transport an operation view by the outer edge bijection and port map, retaining
+its operation symbol. The primitive-label lemma proves the operation-label
+certificate even when other edges carry independently renamed boxes. Ordered
+incidence certificates follow from the graph equations, and arity follows
+from preservation of list length. Transport a typed coordinate by keeping
+its mode and applying $a_*$ to its vertex; wire-label preservation proves
+the new typing certificate.
+\lean{Graph/DeepSearchRenaming}{21}{30}{Linear.SearchOperation.deepRename}
+\lean{Graph/DeepSearchRenaming}{86}{87}{Linear.TypedPosition.deepRename}
+
+\begin{lemma}[Recursive transport of coordinate search]
+Operation entry and return commute with recursive transport. A search step
+between transported coordinates exists exactly when the original step does.
+Transporting a typed coordinate forwards and then backwards returns it.
+\end{lemma}
+\begin{proof}
+Entry examines the empty/nonempty argument-list alternatives, which mapping
+preserves. Return uses optional lookup at index $i+1$, which commutes with
+mapping. For search, induct on the rule: the variable case uses exact
+preservation of the variable label and singleton source; entry uses its
+commutation equation; return also maps the certified lookup at index $i$.
+This proves forward transport. Apply it to the inverse recursive isomorphism
+and cancel its port bijection to reflect steps. The same cancellation proves
+the typed-coordinate inverse law, by equality of the mode and vertex and
+then subtype extensionality.
+\end{proof}
+\lean{Graph/DeepSearchRenaming}{32}{35}{Linear.SearchOperation.deepRename_enter}
+\lean{Graph/DeepSearchRenaming}{37}{40}{Linear.SearchOperation.deepRename_resume}
+\lean{Graph/DeepSearchRenaming}{47}{62}{Linear.SearchStep.deepRename}
+\lean{Graph/DeepSearchRenaming}{65}{78}{Linear.SearchStep.deepRename_iff}
+\lean{Graph/DeepSearchRenaming}{90}{95}{Linear.TypedPosition.deepRename_symm}
+
+\begin{theorem}[Recursive naturality of insertion]
+Inserting a focus at $(m,v)$ in $G$ is recursively focus-preservingly
+isomorphic to inserting it at $(m,a_*v)$ in $H$. Realization of typed
+coordinates respects this isomorphism.
+\end{theorem}
+\begin{proof}
+Extend the outer vertex and edge bijections by fixing the inserted singleton
+names. Hosted vertices map to hosted images, and the fresh vertex is fixed.
+Splitting commutes with this map because injectivity says $a_*w=a_*v$ exactly
+when $w=v$; hence both sides take the fresh branch in the same case.
+
+Retained edge labels inherit their recursive equivalence from $a$. The fresh
+focus labels agree literally, so reflexivity supplies their recursive
+equivalence. Retained source lists use commutation with splitting, retained
+target lists use commutation with hosting, and the fresh focus equations use
+the hosted and fresh port identities directly. The mode and fresh focus edge
+are fixed. These fields give the focussed recursive isomorphism, and the
+state-realization specialization follows by supplying its focus-free and
+hole-free certificates.
+\end{proof}
+\lean{Graph/DeepInsertionRenaming}{10}{12}{Linear.FocusInsertion.deepRename_host}
+\lean{Graph/DeepInsertionRenaming}{14}{15}{Linear.FocusInsertion.deepRename_fresh}
+\lean{Graph/DeepInsertionRenaming}{17}{25}{Linear.FocusInsertion.deepRename_split}
+\lean{Graph/DeepInsertionRenaming}{28}{67}{Linear.FocusInsertion.deepRename_iso}
+\lean{Graph/DeepInsertionRenaming}{70}{77}{Linear.FocusInsertion.deepRename_focussed}
+\lean{Graph/DeepInsertionRenaming}{86}{89}{Linear.TypedPosition.realize_deepRename}
+
+\Needspace{18\baselineskip}
+\subsection{Erasure under recursive renaming}
+Let $a:f\cong_{f,d}g$ be a focussed recursive isomorphism. Its outer vertex
+bijection carries the selected internal target to the selected internal target:
+use target preservation, rewrite both selection certificates, and cancel the
+internal-port constructor. Restrict this bijection to the undeleted vertices
+and restrict the edge bijection to the non-focus edges, using the existing
+complement-bijection construction.
+\lean{Graph/DeepErasureRenaming}{13}{16}{Linear.Focussed.DeepIso.targetVertex}
+\lean{Graph/DeepErasureRenaming}{19}{20}{Linear.Focussed.DeepIso.erasedVertices}
+\lean{Graph/DeepErasureRenaming}{23}{24}{Linear.Focussed.DeepIso.erasedEdges}
+
+\begin{lemma}[Retained ports and contraction]
+Inclusion of retained ports commutes with these restricted maps. The joined
+vertices correspond, and contraction commutes with recursive renaming.
+\end{lemma}
+\begin{proof}
+The inclusion equation holds by cases on ports. Apply the injective inclusion
+on the target side to compare joined vertices: their images are the focus
+sources, already identified by $a$. For contraction, if the port is the
+deleted target, both sides are corresponding joined vertices. Otherwise
+injectivity ensures that its image is also not deleted. Apply inclusion and
+use the contraction--inclusion identities on both sides to reduce to the
+inclusion commutation equation.
+\end{proof}
+\lean{Graph/DeepErasureRenaming}{26}{29}{Linear.Focussed.DeepIso.erased_lift}
+\lean{Graph/DeepErasureRenaming}{32}{37}{Linear.Focussed.DeepIso.erased_position}
+\lean{Graph/DeepErasureRenaming}{40}{55}{Linear.Focussed.DeepIso.erased_contract}
+
+The restricted maps form a recursive isomorphism of the erased graphs.
+Internal wire labels and retained recursive edge-label relations are inherited
+from $a$. For sources and targets, rewrite the original incidence equation
+and commute contraction with the port map pointwise along its ordered list.
+Nothing requires literal equality of boxed bodies.
+\lean{Graph/DeepErasureRenaming}{58}{78}{Linear.Focussed.DeepIso.erased}
+
+\Needspace{20\baselineskip}
+\subsection{State search modulo recursive endpoint renaming}
+\begin{definition}[Recursively renamed state search]
+\termdef{recursive-state-search}
+Write $s\longrightarrow_d t$ when a typed coordinate $q$ on the erased
+underlying graph of $s$ satisfies the coordinate search rule from the extracted
+coordinate of $s$, and the realization of $q$ is recursively
+focus-preservingly isomorphic to $t$.
+\end{definition}
+Taking the actual realization as target gives a step by the identity
+isomorphism. Composing the supplied endpoint isomorphism with another proves
+closure under recursive target renaming.
+\lean{Graph/DeepStateSearch}{12}{16}{Linear.State.DeepSearch}
+\lean{Graph/DeepStateSearch}{19}{24}{Linear.State.deepSearch_realize}
+\lean{Graph/DeepStateSearch}{27}{30}{Linear.State.deepSearch_target_iso}
+
+\begin{theorem}[Recursive search invariance, determinism, and boundaries]
+Two recursive-search successors of the same state are focussed recursively
+isomorphic. Recursive search respects recursive isomorphisms in both arguments.
+Final states have no such search step, and no such step reaches an initial
+state.
+\end{theorem}
+\begin{proof}
+For determinism, compare the two witnessing coordinate steps on the identical
+erased source graph. Coordinate determinism identifies their results; subtype
+extensionality identifies their typed coordinates. Compose the inverse of
+one endpoint isomorphism with the other.
+
+For source invariance, erasure naturality identifies the extracted coordinates:
+the mode equation gives the first component and the joined-position equation
+the second. Transport the successor coordinate and step through the erased
+recursive isomorphism. Naturality of realization identifies the transported
+realization with the old one, so compose its inverse with the old endpoint
+isomorphism. Combine this with target closure; apply inverse isomorphisms to
+obtain the converse and hence invariance in both arguments.
+
+For a final source, its extracted coordinate is backtrack at an input, which
+has no coordinate search successor. For an initial target, transport its
+initiality backwards through the endpoint isomorphism and then through the
+realization boundary law. The successor coordinate would be search at an
+input, excluded by the coordinate no-initial-target theorem.
+\end{proof}
+\lean{Graph/DeepStateSearch}{33}{39}{Linear.State.deepSearch_deterministic}
+\lean{Graph/DeepStateSearch}{62}{67}{Linear.State.coordinate_deepIso}
+\lean{Graph/DeepStateSearch}{70}{80}{Linear.State.deepSearch_source_iso}
+\lean{Graph/DeepStateSearch}{83}{90}{Linear.State.deepSearch_iso_iff}
+\lean{Graph/DeepStateSearch}{42}{48}{Linear.State.final_no_deepSearch}
+\lean{Graph/DeepStateSearch}{51}{59}{Linear.State.no_deepSearch_initial}
+
+\begin{theorem}[Exact relation to literal-label state search]
+Every literal-label state-search step is a recursive step. More precisely,
+\[
+ s\longrightarrow_d t\quad\Longleftrightarrow\quad
+ \exists u,\ s\longrightarrow u\ \land\ u\cong_{f,d}t.
+\]
+\end{theorem}
+\begin{proof}
+A literal endpoint isomorphism embeds into a recursive one, giving the first
+claim. For the forward implication of the equivalence, choose $u$ to be the
+actual realization of the witnessing successor coordinate. This is a literal
+state-search successor by identity, and the supplied recursive endpoint
+isomorphism identifies it with $t$. Conversely, embed the literal step and
+compose its endpoint witness with the supplied recursive isomorphism.
+\end{proof}
+\lean{Graph/DeepStateSearch}{93}{96}{Linear.State.search_deepSearch}
+\lean{Graph/DeepStateSearch}{99}{106}{Linear.State.deepSearch_iff}
+Thus the new relation changes the permitted endpoint representatives; it does
+not introduce another local search rule. It is not a claim that literal-label
+search between two fixed representatives is itself invariant under arbitrary
+changes of box-body labels.
+
+\Needspace{18\baselineskip}
+\subsection{Recursive state classes and their search relation}
+\begin{definition}[Recursive state class]
+\termdef{recursive-state-class}
+Quotient states by existence of a focussed recursive isomorphism. The identity,
+inverse, and composition constructions prove this is an equivalence relation.
+Write $[s]_d$ for the class of $s$. Descend recursive search to pairs of classes
+using its proved two-argument invariance. Descend initiality and finality using
+their recursive-isomorphism invariance.
+\end{definition}
+\lean{Graph/DeepStateQuotient}{10}{13}{Linear.deepStateSetoid}
+\lean{Graph/DeepStateQuotient}{16}{16}{Linear.DeepStateClass}
+\lean{Graph/DeepStateQuotient}{22}{22}{Linear.DeepStateClass.ofState}
+\lean{Graph/DeepStateQuotient}{25}{27}{Linear.DeepStateClass.Search}
+\lean{Graph/DeepStateQuotient}{39}{41}{Linear.DeepStateClass.Initial}
+\lean{Graph/DeepStateQuotient}{44}{46}{Linear.DeepStateClass.Final}
+Each descended proposition reduces to its representative proposition by
+definition, giving the three representative equivalences.
+\lean{Graph/DeepStateQuotient}{29}{30}{Linear.DeepStateClass.search_iff}
+\lean{Graph/DeepStateQuotient}{48}{48}{Linear.DeepStateClass.initial_iff}
+\lean{Graph/DeepStateQuotient}{50}{50}{Linear.DeepStateClass.final_iff}
+
+\begin{theorem}[Deterministic search on recursive classes]
+Recursive quotient search has at most one successor class. Final classes have
+no search successor, and no search step reaches an initial class.
+\end{theorem}
+\begin{proof}
+Eliminate the quotient arguments to representatives. Two steps from a common
+representative have recursively isomorphic targets by state-level determinism;
+quotient soundness equates their classes. Each boundary assertion reduces to
+the corresponding representative-level boundary theorem.
+\end{proof}
+\lean{Graph/DeepStateQuotient}{33}{36}{Linear.DeepStateClass.search_deterministic}
+\lean{Graph/DeepStateQuotient}{53}{56}{Linear.DeepStateClass.final_no_search}
+\lean{Graph/DeepStateQuotient}{59}{62}{Linear.DeepStateClass.no_search_initial}
+
+\Needspace{20\baselineskip}
+\subsection{Projection and lifting between the two state quotients}
+\begin{definition}[Forgetting literal body representatives]
+\termdef{state-quotient-projection}
+Define $\pi([s])=[s]_d$, mapping literal-label state classes to recursive state
+classes. This is well-defined because every literal focussed isomorphism
+embeds into a recursive one. On a specified representative the equation is
+reflexive. The map is surjective: choose the literal class of any representative
+of a recursive class.
+\end{definition}
+\lean{Graph/StateQuotientBridge}{10}{12}{Linear.StateClass.toDeep}
+\lean{Graph/StateQuotientBridge}{14}{15}{Linear.StateClass.toDeep_ofState}
+\lean{Graph/StateQuotientBridge}{18}{20}{Linear.StateClass.toDeep_surjective}
+
+\begin{theorem}[Search projection and lifting]
+A literal-class step $S\longrightarrow U$ gives
+$\pi(S)\longrightarrow_d\pi(U)$. Conversely, for every specified literal
+class $S$, a step $\pi(S)\longrightarrow_d T$ lifts to some step
+$S\longrightarrow U$ with $\pi(U)=T$. Consequently,
+\[
+ \pi(S)\longrightarrow_d T\quad\Longleftrightarrow\quad
+ \exists U,\ S\longrightarrow U\ \land\ \pi(U)=T.
+\]
+\end{theorem}
+\begin{proof}
+For projection, eliminate both literal classes to representatives and embed
+the literal state-search step. For lifting, eliminate the source literal class
+and target recursive class. The exact endpoint characterization supplies a
+literal successor $u$ of the fixed source representative together with a
+recursive isomorphism to the chosen target representative. Its literal class
+is the desired $U$, and quotient soundness proves the projection equation.
+The displayed equivalence combines projection and lifting.
+\end{proof}
+\lean{Graph/StateQuotientBridge}{23}{26}{Linear.StateClass.search_toDeep}
+\lean{Graph/StateQuotientBridge}{30}{36}{Linear.StateClass.search_lift}
+\lean{Graph/StateQuotientBridge}{39}{46}{Linear.StateClass.search_toDeep_iff}
+
+Initiality and finality agree before and after projection, by quotient
+elimination and their representative definitions. Absence of search successors
+also agrees: a literal successor projects to a recursive successor, and a
+recursive successor lifts to a literal successor. Taking the contrapositive
+in each direction proves the normal-form equivalence.
+\lean{Graph/StateQuotientBridge}{48}{50}{Linear.StateClass.initial_toDeep}
+\lean{Graph/StateQuotientBridge}{52}{54}{Linear.StateClass.final_toDeep}
+\lean{Graph/StateQuotientBridge}{57}{64}{Linear.StateClass.no_search_toDeep}
+
+\Needspace{20\baselineskip}
+\subsection{Exact-length executions across the quotients}
+\begin{definition}[Search-only machines]
+\termdef{search-only-machine}
+On each state quotient, form a \texttt{Machine} whose step relation is its
+search relation and whose final predicate is its boundary finality predicate.
+The search boundary theorem proves the required final-normal law. Its
+search-determinism theorem proves determinism of this machine.
+\end{definition}
+These machines deliberately contain only search. They are not the full UAM:
+substitution and computation are absent. Their finite executions use the
+already defined \texttt{Machine.Steps} relation, so the length counts search
+steps exactly, without introducing a second execution datatype.
+\lean{Graph/SearchQuotientExecutions}{10}{13}{Linear.StateClass.searchMachine}
+\lean{Graph/SearchQuotientExecutions}{16}{19}{Linear.DeepStateClass.searchMachine}
+\lean{Graph/SearchQuotientExecutions}{21}{24}{Linear.StateClass.searchMachine_deterministic}
+\lean{Graph/SearchQuotientExecutions}{26}{29}{Linear.DeepStateClass.searchMachine_deterministic}
+
+\begin{theorem}[Exact-length projection and lifting]
+For every $n\in\mathbb N$, literal executions project with length unchanged,
+and every recursive execution of length $n$ from $\pi(S)$ lifts from the
+specified literal class $S$ with length unchanged. Thus
+\[
+ \pi(S)\longrightarrow_d^{n} T\quad\Longleftrightarrow\quad
+ \exists U,\ S\longrightarrow^{n}U\ \land\ \pi(U)=T.
+\]
+\end{theorem}
+\begin{proof}
+Projection is induction on the execution: the zero-step execution remains
+zero, and a step followed by a shorter run maps to its projected step followed
+by the projected shorter run.
+
+For lifting, induct on $n$, allowing arbitrary source and target classes.
+At zero, the execution identifies the target with $\pi(S)$, so take $U=S$.
+At $n+1$, lift the first recursive step from the specified source to a literal
+successor $V$. Rewrite the recursive tail's source using $\pi(V)$, apply the
+induction hypothesis from $V$, and prepend the lifted first step. The endpoint
+equality and the exact length are retained. The equivalence combines both
+constructions.
+\end{proof}
+\lean{Graph/SearchQuotientExecutions}{35}{40}{Linear.StateClass.steps_toDeep}
+\lean{Graph/SearchQuotientExecutions}{43}{56}{Linear.StateClass.steps_lift}
+\lean{Graph/SearchQuotientExecutions}{59}{65}{Linear.StateClass.steps_toDeep_iff}
+
+\begin{theorem}[Exact-length search termination]
+For each prescribed $n$, a successful search run of length $n$ exists from
+$S$ if and only if one exists from $\pi(S)$.
+\end{theorem}
+\begin{proof}
+Project or lift the run using the previous theorem. In the lifting direction,
+rewrite finality along the endpoint projection equality and use reflection
+of finality. In the projection direction, use preservation of finality.
+\end{proof}
+\lean{Graph/SearchQuotientExecutions}{68}{76}{Linear.StateClass.final_run_toDeep_iff}
+
+\Needspace{18\baselineskip}
+\subsection{Recursive-renaming and execution regression proofs}
+The concrete two-hole box is globally focus-free because every edge in its
+body is a hole rather than a focus. The established recursive isomorphism to
+the box with its body's edge names exchanged transports this focus freedom.
+These two boxed graphs were already proved to admit no literal-label
+isomorphism, so the test exercises genuinely recursive label comparison.
+\lean{Graph/DeepSearchExamples}{10}{12}{Linear.Examples.boxedTwoHoles_focusFree}
+\lean{Graph/DeepSearchExamples}{16}{17}{Linear.Examples.renamedBoxedTwoHoles_focusFree}
+
+The earlier concrete value step embeds into recursive search. Prepending that
+step to the zero-step execution gives an execution of exactly one step from
+its initial recursive class to its final recursive class. To test lifting from
+a reconstructed source, identify its literal class with the original initial
+class, use this recursive execution, and apply the exact-length termination
+equivalence backwards. The result is a successful literal search run of exactly
+one step from the reconstructed source. Finally, the final value's boundary
+finality and the recursive no-search-from-final theorem exclude every recursive
+search successor.
+\lean{Graph/DeepSearchExamples}{20}{23}{Linear.Examples.value_deep_run}
+\lean{Graph/DeepSearchExamples}{27}{33}{Linear.Examples.recovered_value_lift}
+\lean{Graph/DeepSearchExamples}{36}{39}{Linear.Examples.final_value_deep_normal}
