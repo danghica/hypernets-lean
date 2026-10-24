@@ -1,6 +1,7 @@
 import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.PaperEncodingExamples
 import Hypernets.Graph.UAMStructureExamples
+import Hypernets.Graph.SpecimenRelocationExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -428,3 +429,18 @@ import Hypernets.Graph.UAMStructureExamples
 #print axioms Hypernets.Linear.UAMStructureExamples.source_rooted
 #print axioms Hypernets.Linear.UAMStructureExamples.source_revisit
 #print axioms Hypernets.Linear.UAMStructureExamples.full_structural
+
+#print axioms Hypernets.Linear.FocusInsertion.uniqueHoles_iff
+#print axioms Hypernets.Linear.Focussed.underlying_hasHole_iff
+#print axioms Hypernets.Linear.DeepSpecimen.contextAt_allowed
+#print axioms Hypernets.Linear.FocusExpansion.iso
+#print axioms Hypernets.Linear.DeepSpecimen.relocate
+#print axioms Hypernets.Linear.DeepSpecimen.relocate_left_iso
+#print axioms Hypernets.Linear.DeepSpecimen.full_context_step
+#print axioms Hypernets.Linear.DeepSpecimen.initial_witness
+#print axioms Hypernets.Linear.ConcreteSafety.system
+#print axioms Hypernets.Linear.ConcreteSafety.inputSafe_bridge
+#print axioms Hypernets.Linear.ConcreteSafety.robust_bridge
+#print axioms Hypernets.Linear.SpecimenRelocationExamples.paired_steps
+#print axioms Hypernets.Linear.SpecimenRelocationExamples.initial_rooted
+#print axioms Hypernets.Linear.SpecimenRelocationExamples.interface_nonempty
