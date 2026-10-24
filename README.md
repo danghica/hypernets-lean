@@ -63,7 +63,7 @@ still assumes the required locality consequences.
 
 The next dependencies are adequacy for contextual graph rewriting and §6.4's
 substitution and compute transitions, then
-full-UAM refocusing, Lemma 26(2–3), and Lemma 39(2–3).
+full-UAM refocusing, the general specimen case of Lemma 26(3), and Lemma 39(2–3).
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices whose adequacy for the paper remains a separate obligation.
 
@@ -131,8 +131,18 @@ local-rewrite adequacy is still open.
 The PDF's §30.3 contains only unfinished tasks. Contextual-rewrite adequacy,
 the full UAM, and the concrete robustness theorem remain open.
 
-Estimated completion by mathematical effort: **about 50%**, with a plausible
-range of **40–60%**, up from about 45% before the rooted-path milestone.
+`OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
+invariance under recursive renaming and closure under one-way shallow filling,
+and extracts operation paths from actual filled graphs. The resulting host
+reachability reflection supports `OneWayObstruction.lean`: concrete Lemma 26(2)
+now holds even for self-looping holes and host paths containing the hole.
+The paired single-hole corollary is checked; the general multi-hole specimen
+case of Lemma 26(3) remains open. `OneWayExamples.lean` includes a genuine
+hole-containing context path whose one-way filling produces a non-rooted state,
+and checks that operation paths to thunk outputs are permitted by one-wayness.
+
+Estimated completion by mathematical effort: **about 55%**, with a plausible
+range of **45–65%**, up from about 50% before the one-way filling milestone.
 This is a planning judgment, not a declaration count. The remaining operational
 and specimen-locality proofs may expose substantial additional work.
 
@@ -348,12 +358,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 903 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 917
-source-fragment links point to immutable code revision `bc502dd`. It distinguishes
+all 928 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 943
+source-fragment links point to immutable code revision `fe1b890`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 165 technical terms, with short descriptions and internal PDF links
+glossary of 166 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -393,8 +403,8 @@ logical axioms, if used, are shown explicitly.
 3. Prove equivalence of state search with the paper's contextual local rewrites.
 4. Define substitution and compute transitions and assemble the full UAM.
 5. Prove substitution preserves rootedness, establish the required full-UAM
-   consequences of refocusing, and prove the one-way and output-closed specimen
-   cases of Lemma 26(2–3) and the stationary rewrite criterion.
+   consequences of refocusing, and prove the general output-closed specimen
+   case of Lemma 26(3) and the stationary rewrite criterion.
 6. Define concrete pre-templates, specimens, quasi-specimens, output-closure,
    input-safety, and robustness.
 7. Construct the concrete `SpecimenSystem`, connect specimen substitution to

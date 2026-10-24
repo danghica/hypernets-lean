@@ -41,7 +41,10 @@ termination. Canonical roots and concrete rootedness are now defined; search
 preserves rootedness, and concrete rooted focus sources have operation paths
 from the unique input. An incoming path containing a non-operation edge rules
 out rootedness (Section~\ref{sec:rooted-path-obstruction}). Concrete refocusing
-is defined and proved for search. Graph-rewrite adequacy, substitution and compute transitions,
+is defined and proved for search. One-way hypernets and the single-hole
+obstruction of Lemma~26(2) are now proved, using extraction of actual operation
+paths through shallow substitution (Section~\ref{sec:one-way-obstruction}).
+Graph-rewrite adequacy, substitution and compute transitions,
 and the full specimen interpretation remain open.
 
 \Needspace{18\baselineskip}
@@ -69,8 +72,10 @@ and tuple-substitution definitions.
 Point~(2) uses the contrapositive of Lemma~26(3), requiring concrete rooted
 states and output-closure. Concrete rootedness, its search invariant, the
 operation-path conclusion of Lemma~23, and the obstruction in Lemma~26(1) are
-now checked. Lemma~26(2--3), involving one-way fillings and specimens, remains
-open. Point~(3) requires the entering/exiting classifications and context-only traversal
+now checked. Lemma~26(2) is also checked for one-way shallow fillings,
+including self-looping holes. The general multi-hole specimen case of
+Lemma~26(3) remains open; the checked paired single-hole corollary does not
+discharge it. Point~(3) requires the entering/exiting classifications and context-only traversal
 argument. The Fig.~9 search rules are now checked in underlying-graph coordinates,
 and existing context steps survive shallow hole filling. Extracting a context
 step from a filled specimen and proving adequacy for local graph rewriting remain
@@ -98,16 +103,16 @@ across depth bounds is a separate adequacy obligation. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
 not replace the operational proofs in Appendix~F. The next proof dependency
 is adequacy of erasure-based search for local graph rewriting,
-together with the remaining transitions of \S6.4. The one-way and specimen cases of Lemma~26(2--3), full-UAM refocusing, and
+together with the remaining transitions of \S6.4. The general specimen case of Lemma~26(3), full-UAM refocusing, and
 Lemma~39(2--3) remain subsequent obligations. The active/passive operation
 partition and all five coordinate search rules are now defined. These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 50\% of the mathematical effort toward
+As a planning estimate, approximately 55\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-40--60\%). This revises the preceding estimate of about 45\% after establishing
-concrete rootedness and the rooted-path obstruction. It is a subjective
+45--65\%). This revises the preceding estimate of about 50\% after proving
+the one-way filling obstruction of Lemma~26(2). It is a subjective
 estimate, not a ratio of declarations or discharged checklist entries. The
 remaining operational adequacy, full UAM, and specimen locality arguments are
 substantial and may reveal further missing infrastructure.
@@ -119,7 +124,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{bc502dd}, rather than to the moving
+All code links point to revision \texttt{fe1b890}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

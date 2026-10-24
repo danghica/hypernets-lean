@@ -1,0 +1,249 @@
+\Needspace{18\baselineskip}
+\subsection{One-way hypernets and the term-boundary restriction}
+\label{sec:one-way}
+This milestone proves the single-hole case of Appendix~C, Lemma~26(2), for
+actual shallow substitution and the concrete rooted-state predicate. The
+proof follows the paper's reason for introducing one-way hypernets: an
+operation path from the global input cannot pass through such a filling and
+emerge at a term output. We make the path-extraction argument explicit and
+allow the replaced edge to have a self-loop.
+
+\begin{lemma}[Sources of operation paths have term type]
+Every source vertex of an actual operation edge has type $\star$. If a
+nonempty reverse operation trace ends at an input, that input has type
+$\star$.
+\end{lemma}
+\begin{proof}
+The signature of every primitive operation has exactly one source, of type
+$\star$. Apply the source-typing equation to any member of its source list.
+For the second assertion, induct on the trace's edge list. If its tail is
+empty, its endpoint is the source of the first operation and the first
+assertion applies. Otherwise apply the induction hypothesis to the tail.
+Boxes, variables, focuses, and holes are excluded by the operation predicate.
+\end{proof}
+\lean{Graph/OneWay}{10}{22}{Linear.operation_source_term}
+\lean{Graph/OneWay}{26}{36}{Linear.operationTrace_input_term}
+
+\begin{definition}[One-way hypernet]\label{term:one-way}
+A hypernet $H:I\to O$ is \emph{one-way} if, for every term input $i$ and term
+output $j$, there is no operation path from $i$ to $j$. Paths to thunk outputs
+are deliberately not excluded. This is the restriction in the paper's
+Section~6.1, expressed using our existing operation-path datatype.
+\end{definition}
+\lean{Graph/OneWay}{40}{43}{Linear.OneWay}
+
+\begin{theorem}[Reachability characterization]
+A hypernet is one-way if and only if none of its term outputs is
+operation-reachable from an input.
+\end{theorem}
+\begin{proof}
+A reverse trace from an output to an input cannot be empty: the boundary
+constructors are disjoint. Its input therefore has term type by the preceding
+lemma. Reverse its recorded edge list to obtain the forbidden forward
+operation path. Conversely any forbidden forward path supplies precisely a
+reverse trace witnessing operation reachability of its term output.
+\end{proof}
+\lean{Graph/OneWay}{46}{54}{Linear.oneWay_iff}
+
+One-wayness is invariant under recursive graph isomorphism. Such an
+isomorphism fixes the ordered boundary and preserves and reflects operation
+reachability, so the characterization applies in both directions. A graph
+with no outputs is one-way vacuously, since its output index type is empty.
+\lean{Graph/OneWay}{66}{73}{Linear.DeepIso.oneWay_iff}
+\lean{Graph/OneWay}{76}{78}{Linear.oneWay_no_outputs}
+
+\Needspace{18\baselineskip}
+\subsection{Extracting an operation path from a filling}
+Fix a host $C$, a selected edge $h$, and a filling $H$ with the interface of
+$h$. Write $P=C[H]$, $\iota_C$ for the retained-host vertex map, and
+$\iota_H$ for the filling map. These are the existing maps of shallow
+replacement; $\iota_H$ need not be injective when $h$ has a self-loop.
+
+The elementary decomposition used in the induction says that a nonempty
+reverse operation trace with edge list $e::E$, from $v$ to $z$, consists
+exactly of an intermediate vertex $w$, an operation label on $e$, incidences
+$v\in\operatorname{target}(e)$ and $w\in\operatorname{source}(e)$, and a
+trace with edge list $E$ from $w$ to $z$. Both directions follow directly
+from the trace constructor.
+\lean{Graph/OneWay}{57}{63}{Linear.operationTrace_cons_iff}
+
+\begin{lemma}[An inserted non-input stays a non-input]
+If a vertex $v$ of $H$ is not an input, its image $\iota_H(v)$ is not an
+input of $P$.
+\end{lemma}
+\begin{proof}
+Target coverage in $H$ supplies an edge targeting $v$. Its inserted copy
+targets $\iota_H(v)$ in $P$. Inputs of a well-formed graph have no incoming
+edge, which proves the claim, including when $v$ is a filling output.
+\end{proof}
+\lean{Graph/OneWay}{88}{92}{Linear.OneWayReplacement.insert_not_input}
+
+\begin{theorem}[Extraction of a filling-local input path]
+If $\iota_H(v)$ is operation-reachable in $P$, then $v$ is
+operation-reachable inside $H$.
+\end{theorem}
+\begin{proof}
+Choose a reverse operation trace from $\iota_H(v)$ to a global input and
+induct on its length, generalizing $v$. If $v$ is already an input of $H$,
+the empty local trace is the required witness. Otherwise, in the zero-length
+case, $\iota_H(v)$ would be a global input, contradicting the previous lemma.
+
+In the nonempty case, target coverage supplies an edge $f$ of $H$ targeting
+$v$. Its inserted copy and the first edge of the global trace target the
+same vertex. Unique incoming incidence identifies these two edges. The
+first edge is consequently a filling edge and retains its operation label.
+Its chosen source is the image of some source $w$ of $f$. Apply the induction
+hypothesis to the shorter global trace from that image; this yields a local
+operation trace from $w$ to an input of $H$. Prepending $f$ yields the desired
+local trace from $v$.
+
+The induction stops on first reaching a filling input. It neither reflects
+an arbitrary whole edge path through $\iota_H$ nor assumes injectivity of
+that map. This is why the proof remains valid for self-looping holes, unlike
+unrestricted path reflection discussed earlier.
+\end{proof}
+\lean{Graph/OneWay}{98}{124}{Linear.OneWayReplacement.extract}
+
+\Needspace{18\baselineskip}
+\subsection{Reflecting host reachability through a one-way filling}
+\begin{theorem}[Host term reachability reflects]
+Suppose $H$ is one-way and $v$ is a term vertex of $C$. If $\iota_C(v)$ is
+operation-reachable in $C[H]$, then $v$ is operation-reachable in $C$.
+\end{theorem}
+\begin{proof}
+Induct on the edge list of a reverse operation trace from $\iota_C(v)$ to
+a global input. In the empty case injectivity of the retained-host map
+identifies $v$ with that same input.
+
+For a nonempty trace, inspect its first edge. If it is a surviving host
+edge, reflect its target incidence by injectivity of $\iota_C$ and express
+its source as $\iota_C(w)$. The corresponding host edge is an operation,
+so $w$ has term type. Apply the induction hypothesis to the shorter trace
+and prepend the host edge.
+
+If the first edge is inserted from $H$, its target is some
+$\iota_H(x)=\iota_C(v)$. A filling target cannot be an input. The boundary
+classification of replacement therefore forces $x$ to be an output of $H$.
+Both replacement maps preserve vertex labels, so this output has term type.
+Extraction applied to the original trace now makes it operation-reachable
+inside $H$, contradicting one-wayness. Thus only the retained-host case
+can occur.
+\end{proof}
+\lean{Graph/OneWay}{128}{158}{Linear.OneWayReplacement.reflect}
+
+\begin{theorem}[Incoming host paths consist of operations]
+Under the same hypotheses, every edge of any host path ending at $v$ is an
+operation. The given host path is allowed to contain the replaced edge.
+\end{theorem}
+\begin{proof}
+Reflect operation reachability to $C$, then apply the earlier theorem that
+all edges of any path ending at an operation-reachable vertex are operations.
+That theorem uses the existing nonempty edge-path representation and allows
+repeated edges. No assertion that the supplied host path itself survives
+filling is needed.
+\end{proof}
+\lean{Graph/OneWay}{162}{168}{Linear.OneWayReplacement.path_operations}
+
+\begin{theorem}[One-way filling closure]
+If both $C$ and $H$ are one-way, then $C[H]$ is one-way.
+\end{theorem}
+\begin{proof}
+Suppose a term output of $C[H]$ were operation-reachable. It is the retained
+copy of the corresponding term output of $C$. Reflection would make that
+output operation-reachable in $C$, contradicting the host's one-wayness.
+\end{proof}
+\lean{Graph/OneWay}{171}{176}{Linear.OneWayReplacement.oneWay_plug}
+
+\Needspace{18\baselineskip}
+\subsection{The concrete one-way obstruction: Lemma 26(2)}
+\label{sec:one-way-obstruction}
+For a focussed host $C:\star\to\epsilon$, replace an edge other than its
+focus by a globally focus-free filling $H$. Once the resulting graph is
+proved globally hole-free, package it with its retained focus as an actual
+state. The constructor requires these focus-freedom and hole-freedom proofs;
+it does not infer them merely from the interfaces. Its focus source is
+$\iota_C(s)$, where $s$ is the host's focus source.
+\lean{Graph/OneWayObstruction}{12}{16}{Linear.Focussed.filledState}
+
+\begin{theorem}[Concrete Lemma 26(2)]
+Suppose the focussed host has a path ending at its focus source and that
+path contains a non-operation edge. If the filling $H$ is one-way, the
+resulting actual state is not rooted.
+\end{theorem}
+\begin{proof}
+Assume the filled state is rooted. The concrete Lemma~23 gives operation
+reachability of its focus source $\iota_C(s)$ in the actual filled graph.
+The source $s$ of the host focus has term type. Apply the preceding host-path
+theorem: every edge of the supplied host path must be an operation. This
+contradicts its specified non-operation edge.
+\end{proof}
+\lean{Graph/OneWayObstruction}{21}{32}{Linear.Focussed.oneWay_not_rooted}
+
+This proves the single-hole one-way obstruction for the current concrete
+search semantics. It follows the uniqueness-and-extraction argument of
+Proof~C.8, packaged as a reflection lemma rather than a split on whether the
+supplied path contains the hole. In fact the Lean result permits replacement
+at any non-focus edge with the right interface, so it includes the paper's
+hole-labelled context case. The example below uses a genuine hole label.
+
+\begin{theorem}[Paired single-hole obstruction]
+If $H$ and $K$ are two admissible fillings of the same focussed host and at
+least one is one-way, then at least one of the two filled states is not rooted,
+provided the host has the same non-operation path to its focus source.
+\end{theorem}
+\begin{proof}
+Split the hypothesis that $H$ or $K$ is one-way. Apply the preceding theorem
+to that filling and introduce the corresponding side of the conclusion.
+\end{proof}
+\lean{Graph/OneWayObstruction}{37}{50}{Linear.Focussed.oneWay_pair_not_rooted}
+This is a single-hole instance of the output-closure argument. It does not
+supply the general multi-hole specimen case of Lemma~26(3), nor define concrete
+pre-templates, specimens, or their output-closure predicate.
+
+\Needspace{18\baselineskip}
+\subsection{One-way examples and a filled-state obstruction}
+The variable corolla is one-way. Its term output is targeted by a variable
+edge. If that output were operation-reachable, the incoming-edge theorem
+would force this variable edge to be an operation, a contradiction. By
+contrast, the existing operation corolla with two term arguments is not
+one-way: its sole edge is a one-step operation path from the input to the
+first term output.
+\lean{Graph/OneWayExamples}{9}{17}{Linear.Examples.variable_oneWay}
+\lean{Graph/OneWayExamples}{21}{24}{Linear.Examples.operation_not_oneWay}
+
+Define an operation signature with no term arguments and one thunk argument,
+and take its one-edge corolla. This graph has a term input and only a thunk
+output. It is one-way because no output has term type, yet its sole operation
+edge explicitly witnesses reachability of its thunk output. Together these
+examples verify both the nontriviality of the predicate and the importance
+of retaining the paper's term-output restriction.
+\lean{Graph/OneWayExamples}{27}{27}{Linear.Examples.thunkOnlyOperations}
+\lean{Graph/OneWayExamples}{29}{31}{Linear.Examples.thunkOnlyGraph}
+\lean{Graph/OneWayExamples}{34}{39}{Linear.Examples.thunk_only_oneWay}
+\lean{Graph/OneWayExamples}{42}{43}{Linear.Examples.thunk_output_reachable}
+
+For a nonvacuous state-level application, start with the earlier closed chain
+whose interior focus follows a variable and precedes a value. Relabel that
+variable by a hole with one term input and one term output, preserving all
+incidences. The other labels remain the focus and the value operation. Their
+signatures are unchanged, so the relabelled graph is well formed. Retain the
+same distinguished focus, mode, and endpoints. The only other edges are a
+hole and an operation, both focus-free; the focus therefore remains globally
+unique and satisfies its original endpoint conditions.
+\lean{Graph/OneWayExamples}{47}{58}{Linear.Examples.oneWayContext}
+\lean{Graph/OneWayExamples}{61}{77}{Linear.Examples.oneWayContext_focus}
+
+Fill the genuine hole by the variable corolla. The exact hole inventory of
+shallow substitution shows the resulting graph is hole-free: the filling is
+hole-free and no hole survives in the host. Indeed the only host edge that
+could carry a hole is exactly the removed edge. Global focus freedom of the
+variable filling was already checked.
+\lean{Graph/OneWayExamples}{80}{97}{Linear.Examples.oneWayContext_filled_closed}
+
+Finally, take the host path consisting only of its hole edge. Its target is
+the focus source, and its label is not an operation. The variable filling is
+one-way, so the concrete Lemma~26(2) theorem proves that this actual filled
+state is not rooted, for every operation classification. The offending host
+edge is removed by substitution: this exercises the new extraction argument,
+not merely preservation of a path of retained host edges.
+\lean{Graph/OneWayExamples}{101}{109}{Linear.Examples.oneWay_filled_not_rooted}

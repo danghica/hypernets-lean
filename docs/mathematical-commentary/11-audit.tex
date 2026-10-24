@@ -71,6 +71,12 @@ rootedness, operation reachability, insertion of rooted paths, the concrete
 path obstruction, refocusing, and the positive and negative state examples.
 \lean{Graph/Audit}{153}{168}{Graph.Audit: rooted-state and path-obstruction dependencies}
 
+Sixteen further commands inspect operation-source typing, one-wayness and
+recursive renaming, path extraction and host reflection through fillings,
+one-way filling closure, the concrete Lemma~26(2) obstruction, its paired
+single-hole corollary, and the positive and negative examples.
+\lean{Graph/Audit}{170}{185}{Graph.Audit: one-way filling dependencies}
+
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
 isomorphism invariance of unique holes, and uniqueness of the two-hole example
@@ -88,13 +94,18 @@ preservation, which uses only propositional extensionality and quotient soundnes
 All new general-erasure and state-search audit entries use those three
 standard axioms. The round-trip and quotient-search audits do too, except
 coordinate search renaming, which uses only \texttt{propext} and
-\texttt{Quot.sound}. The remaining audited declarations additionally report \texttt{Classical.choice}.
+\texttt{Quot.sound}.
 The recursive-search audits use all three axioms, except label and graph
 focus-freedom invariance, coordinate search transport, and the renamed-box
 focus-freedom example, which use only \texttt{propext} and \texttt{Quot.sound}.
 The rooted-state audit entries use all three axioms, except coordinate
 operation-reachability preservation and the incoming-trace operation theorem,
 which use only \texttt{propext} and \texttt{Quot.sound}.
+In the one-way audit group, source typing, the input-type lemma, the
+reachability characterization, recursive renaming, and the four basic corolla
+checks use only \texttt{propext} and \texttt{Quot.sound}. The extraction,
+reflection, filling-closure, obstruction, and filled-state example entries
+also use classical choice.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
 \texttt{sorryAx} or a project-specific axiom.
@@ -157,7 +168,7 @@ graph rewrites in both directions.
 typing and context restrictions, and assemble the full UAM transition relation.
 \item Prove rootedness preservation for substitution and the required
 full-UAM structural consequences of determinism and refocusing. Establish the
-one-way and output-closed specimen cases of Lemma~26(2--3), and the stationary
+general output-closed specimen case of Lemma~26(3), and the stationary
 rewrite criterion where needed.
 \item Define concrete pre-templates, specimens, quasi-specimens, output-closure,
 input-safety, and robustness with the paper's restrictions.
