@@ -1,4 +1,4 @@
-import Hypernets.Graph.FocusedExamples
+import Hypernets.Graph.SearchExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -85,3 +85,12 @@ import Hypernets.Graph.FocusedExamples
 #print axioms Hypernets.Linear.Focussed.fillings_boundary_agreement
 #print axioms Hypernets.Linear.Examples.search_filling_initial
 #print axioms Hypernets.Linear.Examples.boxed_focus_not_free
+
+#print axioms Hypernets.Linear.SearchOperation.exists_view
+#print axioms Hypernets.Linear.SearchStep.deterministic
+#print axioms Hypernets.Linear.SearchStep.final_no_step
+#print axioms Hypernets.Linear.SearchStep.no_initial_target
+#print axioms Hypernets.Linear.SearchStep.plug
+#print axioms Hypernets.Linear.SearchExamples.cannot_search_thunk
+#print axioms Hypernets.Linear.SearchExamples.value_finishes
+#print axioms Hypernets.Linear.SearchExamples.variable_triggers

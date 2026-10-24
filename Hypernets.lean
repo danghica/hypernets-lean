@@ -6,3 +6,4 @@ import Hypernets.LocalReasoning
 import Hypernets.Examples
 import Hypernets.Graph.CompositionExamples
 import Hypernets.Graph.FocusedExamples
+import Hypernets.Graph.SearchExamples
