@@ -145,8 +145,9 @@ focus. The constructors are the empty sequence and extension by one filling.
 Sites may occur at any box depth. Each intermediate focus is the certified
 focus transported by the preceding construction. In particular, successive
 fillings of a context's holes are included whenever their sites are supplied.
-This representation does not yet define a simultaneous tuple-substitution API
-or identify all such sequences modulo permutation.
+This sequence representation does not by itself identify all schedules modulo
+permutation. Finite original-hole tuple application is defined separately in
+Section~\ref{sec:tuple-safety}.
 \end{definition}
 \lean{Graph/Focused}{215}{221}{Linear.Focussed.Fillings}
 

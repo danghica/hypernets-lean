@@ -66,8 +66,9 @@ expansion, identifying these realizations with the original deep specimen
 states. Concrete entering/exiting predicates agree with the coordinate boundary
 test, output closure and joint rootedness imply non-exiting, and settled
 specimens have synchronized actual search transitions to rooted endpoints at
-a remote coordinate (Section~\ref{sec:specimen-traversal}). Adequacy for paper tuple
-substitution and the full specimen interpretation remain open.
+a remote coordinate (Section~\ref{sec:specimen-traversal}). The full specimen-interface interpretation remains open.
+Section~\ref{sec:tuple-safety} proves compatibility with finite original-hole
+tuples and defines concrete quasi-specimens, input-safety, and robustness.
 Contextual search adequacy is proved below. Concrete substitution and compute
 transitions now assemble into the full UAM, with mode discipline, disjoint
 transition families, and final normality proved (Section~\ref{sec:full-uam}).
@@ -90,8 +91,8 @@ are parameters, not established concrete UAM facts.
 \item \textbf{Lemma~39(1), Proof~F.4: boundary argument checked.}\par
 \texttt{Focussed.fillings\_boundary\_agreement} proves initial/final agreement
 for two finite filling sequences of one focussed hypernet. The proof preserves
-the focus mode and input status of its source, as in the paper. The remaining
-connection with paper tuple substitution remains an adequacy obligation.
+the focus mode and input status of its source, as in the paper. Finite original-hole tuples and the recursive representation are now
+related in both directions in Section~\ref{sec:tuple-safety}.
 Both the shallow and recursive deep specimen representations now have direct
 proofs of this boundary conclusion for their actual filled states.
 \item \textbf{Lemma~39(2): checked for recursive specimens; point~(3): search core checked.}\par
@@ -112,8 +113,8 @@ and uses output closure to exclude exiting backtracking focuses.
 The remaining work is to package that coordinate as a new allowed specimen,
 including unique-hole and context-membership witnesses, and to connect the
 search theorem to the full UAM. The abstract \texttt{context\_step} field is
-therefore not yet instantiated. Adequacy for original-hole-only paper tuple
-substitution remains open. Contextual search adequacy is now established
+therefore not yet instantiated. Original-hole tuple compatibility is proved in
+Section~\ref{sec:tuple-safety}. Contextual search adequacy is now established
 in Section~\ref{sec:contextual-search}.
 \item \textbf{Paper \S6.4: concrete transition definition checked.}\par
 \texttt{State.Substitution} applies the explicit Fig.~9(f) fragments in a
@@ -123,6 +124,14 @@ to this shape. \texttt{UAM.machine} assembles all three families, with proved
 final normality and transition-family exclusion. This removes the transition
 definition obligation, but does not discharge the full-UAM determinism,
 rootedness, or refocusing proofs.
+\item \textbf{Paper \S\S8.1--8.3: tuple compatibility and definitions checked.}\par
+\texttt{DeepSpecimen.substitutionTuple} constructs distinct, complete finite
+original-hole tuples with related closed entries. \texttt{TupleFilling.specimen}
+reconstructs a recursive specimen with the same filled graphs. Concrete
+quasi-specimens retain unconditional witness existence and mode equality;
+input-safety is unrestricted by rootedness, and robustness retains its
+unrooted alternative. The rooted quasi and robustness consequences are proved.
+The full bridge to \texttt{SpecimenSystem} still requires its concrete laws.
 \item \textbf{Proposition~38: logical lifting checked; initial bridge open.}\par
 \texttt{Observations.contextual\_of\_lifting} proves the logical implication
 once initial pairs belong to the lifting. Concrete initial focus attachment is
@@ -152,10 +161,11 @@ These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 80\% of the mathematical effort toward
+As a planning estimate, approximately 83\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-65--88\%). This increases the previous estimate of 78\% after defining the remaining
-transition families and assembling the full UAM with final normality.
+68--90\%). This increases the previous estimate of 80\% after proving finite
+original-hole tuple compatibility and defining the full concrete safety
+and robustness predicates.
 It is a subjective estimate, not a ratio of declarations or discharged
 checklist entries. The full-UAM structural proofs and deep specimen
 locality, safety, and robustness remain substantial obligations.
@@ -168,7 +178,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{53b0f37}, rather than to the moving
+All code links point to revision \texttt{c51f5a5}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

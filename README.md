@@ -69,7 +69,7 @@ still assumes the required locality consequences.
 
 Contextual search adequacy and §6.4's concrete transition definitions are now
 complete. The next dependencies are substitution rootedness, full-UAM structural
-laws, paper tuple-substitution adequacy, and the remaining specimen laws.
+laws and the remaining specimen-interface laws.
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices whose adequacy for the paper remains a separate obligation.
 
@@ -134,7 +134,7 @@ the value execution rooted and the valid interior-focus state behind a variable
 not rooted. These use the current erasure-based search semantics; contextual
 local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 
-The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains five unfinished tasks. Search adequacy and the full UAM transition
+The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains four unfinished tasks. Search adequacy and the full UAM transition
 definition are discharged; structural laws and the concrete robustness bridge remain open.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
@@ -173,8 +173,8 @@ bodies and proves global focus freedom. DeepSpecimens.lean constructs actual
 deep-filled states and proves the Lemma 26(3) obstruction, the jointly rooted
 context-path conclusion, and initial/final agreement. DeepSpecimenExamples.lean
 constructs a closed specimen whose sole hole is inside a box, and proves that
-the old shallow rules cannot close this same context. Compatibility with the
-paper's tuple substitution and the full UAM interface remain open.
+the old shallow rules cannot close this same context. Finite original-hole tuple compatibility is now proved in TupleFillings.lean;
+the full specimen interface remains open.
 
 ExpansionSearch.lean now proves exact context search transport through recursive
 fillings and reflection away from shallow hole boundaries. Entire executions
@@ -208,7 +208,7 @@ contexts, preserving plugging. `HoleContextSearch.lean` proves
 `State.search_iff_holeContext` and covers arbitrary simple contexts without
 extra assumptions on interaction labels. Regressions include output fragments
 and a self-loop whose input and output attachments coincide. **Appendix B now
-has five unfinished items after the full-UAM milestone below.**
+has four unfinished items after the milestones below.**
 
 The full-UAM milestone clears the transition-definition obligation.
 `Substitution.lean` constructs both fragments of Figure 9(f), defines their
@@ -220,8 +220,18 @@ Search/rewrite and intrinsic/extrinsic exclusion and final normality are proved.
 and a genuine compute transition. Stability of the bound computation belongs
 to the remaining rootedness/refocusing proofs, not to the transition definition.
 
-Estimated completion by mathematical effort: **about 80%**, with a plausible
-range of **65–88%**, up from 78% after assembling the full UAM.
+The tuple/safety milestone clears another complete Appendix B item.
+`TupleFillings.lean` extracts finite aligned original-hole tuples, proves
+pointwise relatedness, distinct names, exact hole coverage, and closed
+replacements, and reconstructs recursive specimens from tuple applications.
+`ConcreteSafety.lean` defines the full paper quasi-specimen, input-safety,
+and robustness predicates, preserving unconditional mode agreement and the
+unrooted robustness alternative. Rooted consequences are derived, not assumed.
+The nested-box example yields exactly one recorded hole; a mode-mismatched
+pair is rejected even with universally true up-to relations.
+
+Estimated completion by mathematical effort: **about 83%**, with a plausible
+range of **68–90%**, up from 80% after tuple compatibility and concrete safety definitions.
 This is a planning judgment, not a declaration count. Full-UAM structural proofs, specimen packaging, safety, and robustness remain substantial.
 
 ## Concrete graph milestone
@@ -498,14 +508,12 @@ logical axioms, if used, are shown explicitly.
 1. Prove representation adequacy and compatibility across depth bounds.
 2. Prove substitution preserves rootedness, establish the required full-UAM
    consequences of refocusing, and prove the stationary rewrite criterion.
-3. Prove compatibility of recursive deep specimens with paper tuple substitution.
-   Define concrete quasi-specimens, input-safety, and robustness.
-4. Package synchronized successor coordinates as allowed concrete specimens,
+3. Package synchronized successor coordinates as allowed concrete specimens,
    preserving unique holes and context membership under isomorphism. Construct
    the abstract specimen interface using the checked boundary, non-exiting, and
    settled-search results, and connect its context-step law to the full UAM.
    Prove safety/robustness bridges and initial lifting.
-5. Instantiate the checked sufficiency results with all concrete obligations
+4. Instantiate the checked sufficiency results with all concrete obligations
    discharged to obtain Theorem 6.
 
 The copying UAM, lambda-term translation, and example program equivalences

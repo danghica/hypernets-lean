@@ -308,8 +308,9 @@ The singleton path consisting of this edge ends at the focus source and
 contains a non-operation edge, because a hole is not an operation. The proved
 recursive-specimen form of Lemma~26(3) says that one of the actual states is
 not rooted, contradicting joint rootedness. The argument concerns the current
-recursive representation; its adequacy for the paper's tuple notation remains
-part of the separate representation obligation.
+recursive representation; its finite tuple compatibility is now proved in
+Section~\ref{sec:tuple-safety}. The separate comparison with set-based
+hypernets remains a representation obligation.
 \end{proof}
 \lean{Graph/SpecimenTraversal}{307}{318}{Linear.DeepSpecimen.not_exiting}
 If the focus is backtracking, or is searching without entering, then joint

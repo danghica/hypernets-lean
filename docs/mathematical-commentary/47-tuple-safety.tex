@@ -1,0 +1,408 @@
+\Needspace{18\baselineskip}
+\section{Original-hole tuples and concrete safety predicates}
+\label{sec:tuple-safety}
+This section discharges the former third item in
+Appendix~\ref{app:remaining-work}: compatibility of recursive specimens with
+finite tuple substitution, and definitions of the concrete quasi-specimen,
+input-safety, and robustness predicates in paper \S\S8.1--8.3.
+The compatibility theorem concerns the existing finite-depth representation.
+The separate comparison with set-based hypernets and changes of depth bound
+remains the first adequacy obligation.
+
+The tuple semantics uses simultaneous graph expansion at each original graph
+layer. Its recursive calls visit original box bodies; a hole replacement is a
+leaf, never a fresh context to be traversed. This is a direct semantics for
+parallel application at named holes, with retained edges represented by
+one-edge copies. It is not a new claim about arbitrary sequential schedules.
+The earlier ordinary-substitution and interchange theorems concern those
+schedules. Here the substantive checks are that the tuple is finite and
+aligned, that its names are distinct original holes, that no original hole is
+omitted when the result is closed, and that both representations produce the
+same filled graphs.
+
+The concrete safety predicates below are definitions, not proofs that arbitrary
+pre-templates satisfy them. They retain the clauses that the abstract interface
+specialized away. Two lemmas then derive the rooted consequences needed by the
+abstract proof. Constructing that interface, its full-UAM context-step law,
+and the final sufficiency instantiation remains unfinished.
+
+\Needspace{18\baselineskip}
+\subsection{Finite tuples and their application}
+\termdef{tuple-entry}
+\begin{definition}[Aligned substitution entry]
+An entry records a depth $r$, ordered interfaces $I,O$, a hole name $h$,
+equalities $I=h.\mathsf{input}$ and $O=h.\mathsf{output}$, and two graphs
+$H,K:I\to O$ at depth $r$. A finite list of entries therefore represents the
+three equally long vectors of names, left replacements, and right replacements.
+The varying depth and interface of an entry are stored with its two graphs.
+\end{definition}
+The constructor at an actual primitive hole reads its interface from the
+selected edge. Rewriting its label to the hole label proves the two interface
+equalities. An entry is related when its two graphs satisfy the pre-template
+at its recorded depth and interface; this is exactly the pointwise condition
+on the two vectors.
+\lean{Graph/TupleFillings}{9}{17}{Linear.TupleEntry}
+\lean{Graph/TupleFillings}{20}{31}{Linear.TupleEntry.at}
+\lean{Graph/TupleFillings}{34}{35}{Linear.TupleEntry.Related}
+
+\begin{definition}[Distinct traversal enumeration]
+Remove repetitions from a finite enumeration by recursively processing the
+tail and retaining the head only when it is absent from the processed tail.
+Apply this operation to the graph's finite edge enumeration.
+\end{definition}
+\begin{lemma}[Enumeration laws]
+Removing repetitions preserves membership and gives a list with no duplicates.
+Consequently every original shallow edge occurs exactly once in the traversal.
+\end{lemma}
+\begin{proof}
+Induct on the input list. If the head is already in the processed tail, removing
+it does not change membership; otherwise prepend it. The same cases preserve
+no-duplicates, using the tested absence in the second case. Completeness of
+the graph's supplied enumeration now gives membership of each edge in the
+distinct traversal list. This matters because the underlying finite-carrier
+structure permits repeated enumeration entries.
+\end{proof}
+\lean{Graph/TupleFillings}{38}{42}{Linear.tupleDistinct}
+\lean{Graph/TupleFillings}{44}{56}{Linear.mem_tupleDistinct}
+\lean{Graph/TupleFillings}{58}{66}{Linear.tupleDistinct_nodup}
+\lean{Graph/TupleFillings}{69}{70}{Linear.tupleEdges}
+\lean{Graph/TupleFillings}{72}{75}{Linear.mem_tupleEdges}
+
+\termdef{tuple-filling}
+\begin{definition}[Tuple application in traversal order]
+A tuple-filling certificate simultaneously describes two filled graphs and an
+aligned list of entries. At a graph $C$, choose a left and right replacement
+for each shallow edge, expand both families, and concatenate the local entry
+lists in the distinct edge traversal order. Each original edge has one of
+three local certificates:
+\begin{enumerate}
+\item Retain its label and ordered boundary as one-edge copies on both sides;
+its entry list is empty.
+\item At an actual hole, insert a pointwise related pair and record the one
+corresponding entry. Do not recurse into either inserted graph.
+\item At a box, recursively apply tuples to the original body, retain its
+binder metadata and external interface, and install one-edge copies of the
+boxes with those two resulting bodies. Its entry list is the body's list.
+\end{enumerate}
+\end{definition}
+The clauses allow partial filling of an open context. The completeness theorem
+below proves that a closed result forces all original holes to have been
+filled. Thus the general certificate is also useful before the state
+restriction is imposed.
+\lean{Graph/TupleFillings}{79}{86}{Linear.TupleFilling}
+\lean{Graph/TupleFillings}{89}{109}{Linear.TupleFillingEdge}
+
+\begin{theorem}[Compatibility with recursive filling]
+There exists a finite tuple-filling certificate from $C$ to $L,R$ if and only
+if there is a recursive deep-filling certificate with those same three graphs.
+\end{theorem}
+\begin{proof}
+For the forward direction, forget the entry lists and induct on the depth.
+The retained and filled clauses give their original certificates directly;
+apply the induction hypothesis to a boxed body. For the reverse direction,
+induct on depth again. At each edge record the empty list, the singleton
+replacement entry, or the recursively obtained body's list. Choose those
+local witnesses and concatenate them over the finite distinct traversal.
+The two expansions have exactly the original carriers, incidences, and labels,
+so neither endpoint graph is changed by extracting the tuple.
+\end{proof}
+\lean{Graph/TupleFillings}{112}{136}{Linear.TupleFilling.forget}
+\lean{Graph/TupleFillings}{139}{162}{Linear.DeepFilling.tuple}
+\lean{Graph/TupleFillings}{165}{168}{Linear.tupleFilling_iff}
+
+\begin{lemma}[Pointwise relatedness]
+Every recorded entry satisfies the pre-template relation at its own depth.
+\end{lemma}
+\begin{proof}
+Membership in a concatenated list selects one original edge and one entry in
+its local list. A retained edge contributes no entries. A filled edge carries
+the required relation. For a box use induction on its original body's depth.
+\end{proof}
+\lean{Graph/TupleFillings}{171}{201}{Linear.TupleFilling.related}
+
+\subsection{Exact original-hole inventory}
+\begin{lemma}[Provenance]
+Every recorded name is a hole of the original context. More precisely, an
+entry in the local list for edge $e$ comes from a hole in the occurrence fibre
+owned by $e$.
+\end{lemma}
+\begin{proof}
+A filled edge is itself the named hole. A box's entries come, by induction,
+from holes in its original body; these are exactly its child occurrences in
+the outer graph. A retained edge contributes nothing. The graph-level result
+selects the owning edge using membership in the concatenation. No step of
+this argument looks for a name inside a replacement graph.
+\end{proof}
+\lean{Graph/TupleFillings}{204}{239}{Linear.TupleFilling.provenance}
+\lean{Graph/TupleFillings}{242}{255}{Linear.TupleFillingEdge.provenance}
+
+\begin{theorem}[Distinct tuple names]
+If the original context has unique hole labels, the list of tuple names has
+no duplicates.
+\end{theorem}
+\begin{proof}
+Within one local list, the retained and filled cases are empty and singleton.
+For a box, uniqueness of holes in the original outer context implies
+uniqueness in its body; apply induction there. Between different original
+edges, two entries with the same name would give occurrences with that name
+in both fibres, by local provenance. Original hole uniqueness identifies the
+occurrences and hence their owning edges, a contradiction. Finally the edge
+traversal itself has no duplicates. These within-list and between-list facts
+prove pairwise distinctness of the concatenation and therefore of its names.
+\end{proof}
+\lean{Graph/TupleFillings}{258}{298}{Linear.TupleFilling.unique}
+
+\begin{lemma}[Reflecting closedness]
+If a simultaneous expansion is hole-free, every graph inserted by that
+expansion is hole-free. A hole-free one-edge copy of a box has a hole-free body.
+\end{lemma}
+\begin{proof}
+An occurrence of a hole in an inserted graph lifts to the expansion by tagging
+its outer edge with the owning original edge; the label-local occurrence is
+unchanged. This contradicts closedness. For a copied box, a body hole lifts to
+a child occurrence of its unique edge, using the equality of the box label.
+\end{proof}
+\lean{Graph/TupleFillings}{301}{307}{Linear.tuple_component_closed}
+\lean{Graph/TupleFillings}{310}{315}{Linear.LabelCopy.body_closed}
+
+\begin{theorem}[Completeness of the tuple]
+If the left filled graph is hole-free, every original hole name occurs in
+the tuple. If the context also has unique holes, its holes are enumerated
+exactly once by the tuple names.
+\end{theorem}
+\begin{proof}
+Choose an occurrence of the original hole and its owning edge. If that edge
+were retained, its one-edge copy would retain the same hole occurrence,
+contradicting the reflected closedness of its inserted graph. If the edge was
+filled, the primitive hole label has only its shallow occurrence, so the
+recorded name is exactly the given name. If it is a box, reflect closedness to
+the resulting body and apply induction to the original body occurrence.
+Membership of the owning edge in the traversal puts the entry in the full
+list. Combining completeness, provenance, and distinctness gives the exact
+inventory statement.
+\end{proof}
+\lean{Graph/TupleFillings}{318}{376}{Linear.TupleFilling.complete}
+\lean{Graph/TupleFillings}{380}{394}{Linear.TupleFilling.inventory}
+For an actual recursive specimen, its context already has unique holes and
+both expanded graphs are closed. Tuple extraction therefore supplies the same
+left and right state graphs, pointwise related entries, distinct names, and
+the exact original-hole inventory.
+\lean{Graph/TupleFillings}{398}{405}{Linear.DeepSpecimen.tuple}
+
+\begin{lemma}[Closed replacement entries]
+When both filled results are hole-free, both graphs in every recorded entry
+are hole-free.
+\end{lemma}
+\begin{proof}
+Reflect closedness through expansion to each selected local graph. In the
+filled case these are exactly the entry's two replacements. In the box case
+reflect through the two copied box labels to their bodies, then apply
+induction. There are no entries in a retained case.
+\end{proof}
+This also rules out holes hidden inside replacement graphs in a successful
+state-producing tuple; they cannot have disappeared through later recursive
+visits, because such visits are absent from the application clauses.
+\lean{Graph/TupleFillings}{408}{441}{Linear.TupleFilling.entries_closed}
+
+\termdef{named-tuple-application}
+\begin{definition}[Named tuple application]
+An arbitrarily ordered aligned tuple applies when it is a permutation of a
+traversal-order tuple-filling certificate with the required endpoints.
+All components of an entry move together. Naming by distinct original holes
+makes the order of the displayed vectors immaterial.
+\end{definition}
+Existence of such an application is equivalent to recursive filling: erase
+the permutation witness and forget the tuple in one direction; use the
+identity permutation on an extracted tuple in the other. Permuting an
+application again preserves it by composition of list permutations. This is
+order invariance of the parallel named-tuple presentation, not a separate
+sequential-scheduling theorem.
+\lean{Graph/TupleFillings}{445}{447}{Linear.AppliesTuple}
+\lean{Graph/TupleFillings}{450}{456}{Linear.appliesTuple_iff}
+\lean{Graph/TupleFillings}{459}{463}{Linear.AppliesTuple.permute}
+
+\termdef{specimen-tuple}
+\begin{definition}[Complete tuple of a specimen]
+A specimen tuple packages its entry list, named application to its actual
+filled state graphs, pointwise relatedness, closed replacements, distinct
+names, and exact coverage of the context's original holes.
+\end{definition}
+Every recursive specimen supplies this package: choose its extracted list,
+use identity permutation for application, and apply the relatedness,
+closedness, and inventory theorems. No compatibility assertion is postulated
+as a field without constructing its proof.
+\lean{Graph/TupleFillings}{466}{473}{Linear.SpecimenTuple}
+\lean{Graph/TupleFillings}{476}{481}{Linear.DeepSpecimen.substitutionTuple}
+
+\begin{theorem}[Reconstructing a specimen]
+Conversely, tuple application in an allowed focussed unique-hole context,
+with closed left and right results, constructs a recursive specimen with that
+context, the same focus mode, and exactly those two result graphs.
+\end{theorem}
+\begin{proof}
+Forget each local tuple certificate, using the already proved graph-level
+forgetting theorem for boxed bodies. The outer tuple constructor supplies its
+two replacement families. Put those families and the forgotten local
+certificates in the specimen record, together with the given context, focus,
+allowedness, and closedness proofs. Its left and right state graph projections
+are definitionally the supplied expansions. For an arbitrarily ordered named
+tuple, first take its traversal-order application witness.
+\end{proof}
+\lean{Graph/TupleFillings}{484}{490}{Linear.TupleFillingEdge.forget}
+\lean{Graph/TupleFillings}{494}{513}{Linear.TupleFilling.specimen}
+
+\Needspace{18\baselineskip}
+\subsection{The full quasi-specimen predicate}
+In the remaining definitions, fix a layered pre-template $T$, an allowed
+class $\mathbb C$ of erased focus-free contexts, an operation partition, and
+an admissible behaviour $B$. Let $M$ be the concrete full UAM of
+Section~\ref{sec:full-uam}. All executions below are executions of $M$, not
+search-only executions. A concrete specimen is the existing recursive
+specimen, whose tuple interpretation was just established.
+
+\begin{definition}[Settled and remote concrete specimens]
+A specimen is settled when its context focus is backtracking, or searching
+without entering a hole. It is remote when its focus is not a rewrite focus
+or is not entering a hole. Settled implies remote, by distinguishing the two
+settled modes from rewrite mode.
+\end{definition}
+\lean{Graph/ConcreteSafety}{14}{15}{Linear.ConcreteSafety.Settled}
+\lean{Graph/ConcreteSafety}{18}{19}{Linear.ConcreteSafety.Remote}
+\lean{Graph/ConcreteSafety}{113}{116}{Linear.ConcreteSafety.settled_remote}
+
+\termdef{concrete-quasi}
+\begin{definition}[Concrete quasi-specimen]
+For relations $A,D$ on actual states, a pair $s,t$ is a quasi-specimen up to
+$(A,D)$ when there exists an allowed specimen $S$ satisfying:
+\begin{enumerate}
+\item The focus modes of $S$, $s$, and $t$ agree.
+\item If $s$ and $t$ are both rooted, then both filled states $S_L,S_R$ are
+rooted, $A(s,S_L)$, and $D(S_R,t)$.
+\end{enumerate}
+The existence of $S$ and the mode equalities are unconditional. Only the
+second clause is conditional on rootedness. A non-rewrite quasi-specimen
+additionally requires that the common mode is not rewrite.
+\end{definition}
+These are the clauses of paper \S8.1. In particular, an unrooted pair does
+not satisfy the definition merely by making a rootedness implication vacuous:
+a mode-compatible specimen must still exist.
+\lean{Graph/ConcreteSafety}{23}{28}{Linear.ConcreteSafety.Quasi}
+\lean{Graph/ConcreteSafety}{31}{32}{Linear.ConcreteSafety.NonRewriteQuasi}
+
+\begin{lemma}[Elementary quasi-specimen laws]
+Every actual specimen yields a quasi-specimen of its two filled states up to
+equality. Every quasi-specimen has equal endpoint modes. Weakening either
+up-to relation preserves quasi-specimens.
+\end{lemma}
+\begin{proof}
+For the first claim use the specimen itself: focus preservation gives the
+mode equalities, and the conditional conclusions are the supplied rootedness
+hypotheses and reflexive equalities. For the second, compose the two mode
+equalities through the witness's mode. For weakening, retain that same
+witness and compose its two conditional comparison facts with the supplied
+implications of relations.
+\end{proof}
+\lean{Graph/ConcreteSafety}{35}{37}{Linear.ConcreteSafety.specimen_quasi}
+\lean{Graph/ConcreteSafety}{40}{43}{Linear.ConcreteSafety.Quasi.modes}
+\lean{Graph/ConcreteSafety}{46}{52}{Linear.ConcreteSafety.Quasi.mono}
+
+\begin{lemma}[Rooted non-rewrite consequence]
+Given a concrete non-rewrite quasi-specimen and rooted endpoints, there is a
+specimen whose mode is not rewrite, whose two filled states are rooted, and
+which provides the two up-to comparisons.
+\end{lemma}
+\begin{proof}
+Take the unconditional witness. Its mode equality transfers the endpoint's
+non-rewrite property to it. Apply its conditional clause to the two rootedness
+hypotheses. This derives the consequence used by the abstract proof; it does
+not identify the stronger concrete definition with the weaker abstract one.
+\end{proof}
+\lean{Graph/ConcreteSafety}{56}{65}{Linear.ConcreteSafety.NonRewriteQuasi.rooted_witness}
+
+\Needspace{18\baselineskip}
+\subsection{Input-safety and robustness with the paper's clauses}
+\termdef{concrete-input-safety}
+\begin{definition}[Concrete input-safety]
+For every allowed specimen $S$ with an entering search focus, at least one of
+the following holds. There is no rootedness restriction on $S$.
+\begin{enumerate}
+\item Both filled states reach stuck states in finitely many full-UAM steps.
+\item For some settled specimen $D$ and $k,l\in\mathbb N$,
+$(1+k)\,Q\,l$, $S_L\steps{1+k}D_L$, and $S_R\steps{l}D_R$.
+\item For some $k,l\in\mathbb N$ and non-rewrite quasi-specimen $s,t$ up to
+$(\simeq_P,\simeq_P)$,
+$(1+k)\,Q\,(1+l)$, $S_L\steps{1+k}s$, and $S_R\steps{1+l}t$.
+\end{enumerate}
+\end{definition}
+Here stuckness and the state equivalences use $M$. In the third alternative
+both up-to relations are equivalences, as in the paper, not only refinements.
+\lean{Graph/ConcreteSafety}{68}{77}{Linear.ConcreteSafety.InputSafe}
+
+\termdef{concrete-robustness}
+\begin{definition}[Concrete robustness relative to a rewrite]
+For a rewrite pair $x\to x'$, consider every allowed specimen $S$ with
+$S_L=x$ and a non-entering rewrite focus. At least one of these holds:
+\begin{enumerate}
+\item $S_L$ or $S_R$ is not rooted.
+\item $x'$ reaches a stuck state in finitely many full-UAM steps.
+\item For some $k,l\in\mathbb N$ and non-rewrite quasi-specimen $s,t$ up to
+$(\preceq_P,\preceq_R)$,
+$(1+k)\,Q\,l$, $x'\steps{k}s$, and $S_R\steps{l}t$.
+\end{enumerate}
+Robustness for the UAM requires this property for every substitution or
+extrinsic rewrite transition of the supplied behaviour.
+\end{definition}
+The relative predicate is stated on a pair; the global predicate restricts
+its quantified pairs to actual rewrites. This preserves the paper's unrooted
+alternative and its asymmetric step counts, including the one already taken
+on the left.
+\lean{Graph/ConcreteSafety}{81}{88}{Linear.ConcreteSafety.RobustRelative}
+\lean{Graph/ConcreteSafety}{91}{92}{Linear.ConcreteSafety.Robust}
+\termdef{concrete-template}
+\begin{definition}[Concrete template]
+A template is input-safe and output-closed. In the depth-indexed presentation,
+output closure is required at every available layer of the pre-template.
+\end{definition}
+\lean{Graph/ConcreteSafety}{95}{96}{Linear.ConcreteSafety.Template}
+
+\begin{lemma}[Restricting robustness to rooted specimens]
+For a robust pre-template and a non-entering rewrite specimen with two rooted
+filled states, every rewrite of its left state has either the stuck-tail
+alternative or the matching non-rewrite quasi-specimen alternative above.
+\end{lemma}
+\begin{proof}
+Apply concrete robustness to that actual rewrite and specimen. Its first
+alternative contradicts one of the two supplied rootedness hypotheses; the
+remaining disjunction is exactly the claimed result. This is the legitimate
+reason the abstract rooted interface can omit the unrooted alternative.
+\end{proof}
+\lean{Graph/ConcreteSafety}{100}{110}{Linear.ConcreteSafety.Robust.rooted}
+
+\subsection{Regression examples and scope}
+The existing example has one hole strictly inside a box and no shallow hole.
+Its complete substitution tuple contains that deep hole. In fact its list of
+names is exactly the singleton containing that name: completeness proves
+membership, provenance and the example's occurrence classification exclude
+any other name, and no-duplicates excludes a second entry. Every recorded
+replacement is closed by the general reflected-closedness theorem. These
+checks exercise genuine recursion through a box, not just shallow filling.
+\lean{Graph/TupleSafetyExamples}{9}{10}{Linear.TupleSafetyExamples.nested_hole_recorded}
+\lean{Graph/TupleSafetyExamples}{13}{37}{Linear.TupleSafetyExamples.nested_tuple_singleton}
+\lean{Graph/TupleSafetyExamples}{40}{41}{Linear.TupleSafetyExamples.nested_entries_closed}
+The same example gives a quasi-specimen up to equality although at least one
+of its filled states is not rooted, by the previously proved path obstruction.
+Thus the definition has not accidentally required unconditional rootedness.
+Conversely, an initial search-mode value and a final backtrack-mode value
+cannot form a quasi-specimen, even if both up-to relations are universally
+true: the unconditional endpoint-mode equality would equate two distinct
+focus constructors.
+\lean{Graph/TupleSafetyExamples}{44}{47}{Linear.TupleSafetyExamples.unrooted_quasi}
+\lean{Graph/TupleSafetyExamples}{51}{59}{Linear.TupleSafetyExamples.different_modes_not_quasi}
+
+The tuple and concrete-definition obligation is now removed from
+Appendix~\ref{app:remaining-work}, leaving four items. This does not assert that
+a particular nontrivial pre-template is input-safe or robust, nor does it
+construct the abstract specimen interface. Its successor packaging,
+context-membership transports, full-UAM context-step law, and initial-lifting
+witnesses still need proofs. The final general robustness theorem therefore
+remains conditional.
