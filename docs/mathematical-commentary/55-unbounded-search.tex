@@ -1,0 +1,542 @@
+\Needspace{20\baselineskip}
+\section{Depth padding and finite executions in the unbounded carrier}
+\label{sec:unbounded-search}
+This section constructs a union of the concrete state spaces at all finite
+depths and proves exact finite-run adequacy for search. The construction is
+faithful: two different recursive state classes at a fixed depth never become
+equal merely by passing to the union. Padding is a change of representation,
+not a transition and not a unit of execution cost.
+
+The general finite-run theorem requires preservation of the transition
+relation under padding. That premise is proved below for the five search
+rules. It has not yet been proved for the full UAM, and the theorem does not
+supply the missing transfer of robustness, safety, determinism or refocusing.
+In particular, this section does not assert the unbounded Theorem~6.
+
+\subsection{Padding graphs, inventories and state classes}
+
+\Needspace{10\baselineskip}
+
+\termdef{depth-padding}
+
+\begin{lemma}[One additional depth allowance]
+Padding fixes every primitive label and sends a box body to its existing recursive raised representation. Its input and output lists are unchanged. Applying this label map to a graph leaves every outer carrier, port and incidence list unchanged; it equals the previously defined operation $\mathsf{raise}$. Focus labels in particular are fixed.
+\end{lemma}
+
+\begin{proof}
+Inspect the depth and the label constructor. At depth zero the primitive is unwrapped; at positive depth inspect primitive versus box. The two graph constructions use the same relabelling function, proved pointwise equal.
+\end{proof}
+
+\lean{Graph/DepthPadding}{10}{14}{label}
+
+\lean{Graph/DepthPadding}{15}{20}{label_input}
+
+\lean{Graph/DepthPadding}{21}{27}{label_output}
+
+\lean{Graph/DepthPadding}{28}{30}{graph}
+
+\lean{Graph/DepthPadding}{31}{39}{graph_eq_raise}
+
+\lean{Graph/DepthPadding}{40}{42}{label_primitive}
+
+\lean{Graph/DepthPadding}{43}{46}{label_focus}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Preservation and reflection of focus freedom]
+A label, and hence a graph, is focus-free exactly when its padding is focus-free.
+\end{lemma}
+
+\begin{proof}
+Induct on the depth. Primitive labels are unchanged. For a box, rewrite raising as graph padding and apply the induction hypothesis to each edge of its body. The graph statement applies the label equivalence edgewise.
+\end{proof}
+
+\lean{Graph/DepthPadding}{47}{58}{label_free}
+
+\lean{Graph/DepthPadding}{59}{62}{focusFree_iff}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Padding a distinguished focus]
+Keep the distinguished edge, mode, source and target ports. Its label is still the required focus label, and all other labels remain focus-free. The initial and final predicates are unchanged.
+\end{lemma}
+
+\begin{proof}
+Transport the distinguished label equality by the padding map and use its focus-label equation. Transport other-edge freedom by the preceding equivalence. Incidence and boundary conditions are definitionally unchanged.
+\end{proof}
+
+\lean{Graph/DepthPadding}{63}{75}{focussed}
+
+\lean{Graph/DepthPadding}{76}{78}{focussed_initial_iff}
+
+\lean{Graph/DepthPadding}{79}{80}{focussed_final_iff}
+
+\Needspace{10\baselineskip}
+
+\termdef{depth-inventory}
+
+\begin{definition}[Exact inventories across depths]
+An inventory isomorphism is a bijection of all recursive edge addresses preserving the optional hole label. Its local version is a bijection of the occurrence fibre of one label. Local fibre isomorphisms assemble into a graph inventory isomorphism by keeping the outer edge and applying its fibre bijection; conjugate by the existing occurrence-address bijections.
+\end{definition}
+
+\lean{Graph/DepthInventory}{9}{13}{InventoryIso}
+
+\lean{Graph/DepthInventory}{14}{18}{FiberIso}
+
+\lean{Graph/DepthInventory}{19}{34}{assemble}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[The padding inventory]
+Every graph has an exact inventory isomorphism to its padding.
+\end{lemma}
+
+\begin{proof}
+Induct on depth. Primitive fibres are identical. For a box, retain its shallow unit occurrence and use the inductively obtained body inventory on its nested occurrences. Assemble these label-local bijections at the surrounding graph.
+\end{proof}
+
+\lean{Graph/DepthInventory}{35}{60}{inventory}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Hole predicates under inventory isomorphism]
+An inventory isomorphism preserves and reflects existence of each hole, absence of all holes, and uniqueness of occurrences of any given hole.
+\end{lemma}
+
+\begin{proof}
+Transport existence witnesses by the bijection or its inverse and the hole-label equation. Negate the existence equivalence for hole freedom. For uniqueness, transport the two occurrences to the other graph, use uniqueness there, and cancel the injective bijection.
+\end{proof}
+
+\lean{Graph/DepthInventory}{61}{67}{hasHole_iff}
+
+\lean{Graph/DepthInventory}{68}{70}{holeFree_iff}
+
+\lean{Graph/DepthInventory}{71}{83}{unique_iff}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Padding a closed state]
+Pad the graph and its distinguished focus, and obtain hole freedom from the exact inventory. This produces an actual closed state at the next depth. Initiality and finality are unchanged.
+\end{lemma}
+
+\begin{proof}
+The state constructor uses the preceding inventory equivalence. The boundary predicates reduce to the same mode and ports.
+\end{proof}
+
+\lean{Graph/DepthInventory}{84}{88}{state}
+
+\lean{Graph/DepthInventory}{89}{91}{state_initial_iff}
+
+\lean{Graph/DepthInventory}{92}{93}{state_final_iff}
+
+\Needspace{10\baselineskip}
+
+\begin{definition}[Transport of recursive graph isomorphisms]
+Given preservation, or reflection, of the recursive label relation by padding, keep the vertex and edge bijections of a graph isomorphism and transport its edge-label certificates. All remaining fields retain their original proofs.
+\end{definition}
+
+\lean{Graph/DepthStateClasses}{9}{19}{mapIso}
+
+\lean{Graph/DepthStateClasses}{20}{30}{unmapIso}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Exact recursive label and graph equivalence]
+Two padded labels are recursively equivalent precisely when their original labels are. Consequently recursive graph isomorphisms can be padded and reflected.
+\end{lemma}
+
+\begin{proof}
+Induct on depth and split the label constructors. Primitive equality is unchanged and mixed constructors cannot be related. Two boxes are related by an isomorphism of their bodies; apply the induction hypothesis through the preceding isomorphism transports, rewriting graph padding as raising.
+\end{proof}
+
+\lean{Graph/DepthStateClasses}{31}{60}{label_equiv_iff}
+
+\lean{Graph/DepthStateClasses}{61}{63}{deepIso}
+
+\lean{Graph/DepthStateClasses}{64}{67}{reflectIso}
+
+\Needspace{10\baselineskip}
+
+\termdef{depth-class-embedding}
+
+\begin{lemma}[Faithful embedding of state classes]
+Padding preserves and reflects focus-preserving recursive isomorphisms and therefore defines an injective function on recursive state classes.
+\end{lemma}
+
+\begin{proof}
+The graph component uses the preceding transports, while the distinguished edge and mode remain unchanged. Quotient elimination defines the map. Equality of two padded classes yields a focussed isomorphism; reflect it and use quotient soundness to recover equality of the original classes.
+\end{proof}
+
+\lean{Graph/DepthStateClasses}{68}{71}{stateIso}
+
+\lean{Graph/DepthStateClasses}{72}{76}{reflectStateIso}
+
+\lean{Graph/DepthStateClasses}{77}{80}{stateClass}
+
+\lean{Graph/DepthStateClasses}{81}{86}{stateClass_injective}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Boundary predicates on padded classes]
+Initiality and finality are preserved and reflected by the class embedding.
+\end{lemma}
+
+\begin{proof}
+Choose representatives by quotient induction and apply the corresponding actual-state equivalences.
+\end{proof}
+
+\lean{Graph/DepthStateClasses}{87}{90}{class_initial_iff}
+
+\lean{Graph/DepthStateClasses}{91}{93}{class_final_iff}
+
+\subsection{Exact compatibility of concrete search}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Operation views and resumption]
+An operation view pads by retaining its edge and ordered argument data; the view also reflects from a padded graph. Padding equals a specified primitive label exactly when the original label does. The next resume position of either transported view is unchanged.
+\end{lemma}
+
+\begin{proof}
+The primitive-label equivalence follows by cases on depth and label. Transport the view label equation by that equivalence. For resumption, split on whether the next argument-list entry exists; the argument ports and mode in either result are identical.
+\end{proof}
+
+\lean{Graph/DepthSearch}{10}{20}{operation}
+
+\lean{Graph/DepthSearch}{21}{28}{label_primitive_iff}
+
+\lean{Graph/DepthSearch}{29}{39}{reflectOperation}
+
+\lean{Graph/DepthSearch}{40}{44}{operation_resume}
+
+\lean{Graph/DepthSearch}{45}{50}{reflectOperation_resume}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Coordinate search is preserved and reflected]
+For any two search positions, a coordinate search step in the padded graph holds exactly when it holds in the original graph.
+\end{lemma}
+
+\begin{proof}
+Eliminate the search derivation in each direction. Variable triggering uses primitive-label preservation or reflection. Operation entry uses the transported view and the first argument, when present. Resumption uses the view-resume equations. These constructors cover the five coordinate rules.
+\end{proof}
+
+\lean{Graph/DepthSearch}{51}{72}{searchStep_iff}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Erasing a padded focus]
+Padding commutes with retaining an erased port, contracting the focus port, and forming the focus-free underlying graph. There is an explicit graph isomorphism between the two orders of erasure and padding.
+\end{lemma}
+
+\begin{proof}
+For retention, split on the port constructor. For contraction, split on the test selecting the contracted port, then apply retention. Graph equality follows edgewise on source and target lists. The explicit isomorphism uses identity carrier bijections and the same list equations; it avoids transporting dependent position types along graph equality.
+\end{proof}
+
+\lean{Graph/DepthSearch}{73}{77}{keep_padding}
+
+\lean{Graph/DepthSearch}{78}{85}{contract_padding}
+
+\lean{Graph/DepthSearch}{86}{93}{underlying}
+
+\lean{Graph/DepthSearch}{94}{113}{underlyingIso}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Inserting a focus commutes with padding]
+Padding a focus insertion is isomorphic to inserting the same focus at the same typed vertex in the padded graph.
+\end{lemma}
+
+\begin{proof}
+Use identity vertex and edge bijections. Retained labels map directly; the new edge uses the focus-label equation. Split on retained versus new edges and then on port constructors to verify the insertion source and target lists.
+\end{proof}
+
+\lean{Graph/DepthSearch}{114}{143}{insertion}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Coordinates and realised endpoints]
+A padded state has the same coordinate. A typed position on the erased original state therefore defines a typed position on the erased padded state. Padding the realised original endpoint is recursively focus-isomorphic to realising this transported position.
+\end{lemma}
+
+\begin{proof}
+The coordinate equation is the retention equation. For realisation, compose the insertion-padding isomorphism with the existing realisation-renaming isomorphism induced by the explicit erasure isomorphism. The transported position equals the intended position by subtype extensionality.
+\end{proof}
+
+\lean{Graph/DepthSearch}{144}{150}{coordinate}
+
+\lean{Graph/DepthSearch}{151}{154}{position}
+
+\lean{Graph/DepthSearch}{155}{174}{realizeIso}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Exact state-level search adequacy]
+Erased-graph coordinate search, actual recursive search, and recursive-class search all preserve and reflect padding.
+\end{lemma}
+
+\begin{proof}
+Rename coordinate search along the erasure isomorphism. For actual search, transport its witnessing position and coordinate transition, then compose the realisation isomorphism with the padded target isomorphism. For reflection, use the same port as an original position and reflect the composite endpoint isomorphism. Finally apply quotient induction to both endpoints.
+\end{proof}
+
+\lean{Graph/DepthSearch}{175}{181}{underlying_search_iff}
+
+\lean{Graph/DepthSearch}{182}{190}{deepSearch}
+
+\lean{Graph/DepthSearch}{191}{200}{deepSearch_reflect}
+
+\lean{Graph/DepthSearch}{201}{204}{class_search_iff}
+
+\subsection{The union of all finite state spaces}
+
+\Needspace{10\baselineskip}
+
+\termdef{depth-stage}
+
+\begin{definition}[Finite presentations and repeated padding]
+A stage is a pair $(n,s)$ with $s$ a recursive state class at depth $n$. The successor operation pads $s$ once and increments $n$. Write $A_k(s)$ for $k$ repetitions, with $A_0(s)=s$.
+\end{definition}
+
+\lean{Graph/UnboundedStates}{9}{11}{Stage}
+
+\lean{Graph/UnboundedStates}{12}{14}{next}
+
+\lean{Graph/UnboundedStates}{15}{18}{advance}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Arithmetic and injectivity of padding]
+$A_{i+j}(s)=A_j(A_i(s))$, repeated paddings commute, and the depth of $A_k(s)$ is the original depth plus $k$. Successor and every $A_k$ are injective.
+\end{lemma}
+
+\begin{proof}
+Induction on the iteration count proves composition and depth; commutation follows from commutativity of addition. Equality after successor first gives equality of depths by cancellation of successor, then equality of state classes by injectivity of class padding. Induction cancels any finite number of successors.
+\end{proof}
+
+\lean{Graph/UnboundedStates}{19}{24}{advance_add}
+
+\lean{Graph/UnboundedStates}{25}{28}{advance_comm}
+
+\lean{Graph/UnboundedStates}{29}{33}{advance_depth}
+
+\lean{Graph/UnboundedStates}{34}{42}{next_injective}
+
+\lean{Graph/UnboundedStates}{43}{48}{advance_injective}
+
+\Needspace{10\baselineskip}
+
+\termdef{depth-equivalence}
+
+\begin{lemma}[Equality of presentations at a common depth]
+Declare $s\sim t$ when $A_i(s)=A_j(t)$ for some $i,j$. This is an equivalence relation.
+\end{lemma}
+
+\begin{proof}
+Use zero paddings for reflexivity and exchange witnesses for symmetry. For transitivity, if $A_i(s)=A_j(t)$ and $A_k(t)=A_l(u)$, apply $k$ more paddings to the first equality and $j$ to the second. Commutation identifies the two middle presentations.
+\end{proof}
+
+\lean{Graph/UnboundedStates}{49}{50}{Same}
+
+\lean{Graph/UnboundedStates}{51}{52}{same_refl}
+
+\lean{Graph/UnboundedStates}{53}{56}{same_symm}
+
+\lean{Graph/UnboundedStates}{57}{62}{same_trans}
+
+\lean{Graph/UnboundedStates}{63}{66}{stageSetoid}
+
+\Needspace{10\baselineskip}
+
+\termdef{unbounded-state}
+
+\begin{lemma}[The unbounded carrier]
+Take the quotient of stages by common-depth equality. A stage, or a class at a specified depth, maps to its quotient class. Every padded presentation has the same image as its original.
+\end{lemma}
+
+\begin{proof}
+The quotient identifies precisely the declared equivalence. For padding invariance, its witnesses are zero on the padded presentation and $k$ on the original.
+\end{proof}
+
+\lean{Graph/UnboundedStates}{67}{68}{State}
+
+\lean{Graph/UnboundedStates}{69}{70}{ofStage}
+
+\lean{Graph/UnboundedStates}{71}{72}{ofClass}
+
+\lean{Graph/UnboundedStates}{73}{76}{ofStage_advance}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Fixed-depth classes remain distinct]
+The map from any one fixed-depth class space into the unbounded carrier is injective.
+\end{lemma}
+
+\begin{proof}
+Quotient equality supplies $A_i(n,s)=A_j(n,t)$. Comparing depths gives $n+i=n+j$, hence $i=j$. Cancel the common injective iteration and then the common depth component to obtain $s=t$.
+\end{proof}
+
+\lean{Graph/UnboundedStates}{77}{87}{ofClass_injective}
+
+\Needspace{10\baselineskip}
+
+\termdef{depth-invariant}
+
+\begin{lemma}[Invariant predicates on the union]
+A stage predicate is invariant when successor preserves and reflects it. It then has the same truth value after any iteration, on any two equivalent stages, and hence defines a predicate on the quotient.
+\end{lemma}
+
+\begin{proof}
+Induct on the iteration count. For equivalent stages, compare both predicates at their common padded representative. Propositional extensionality supplies the equality required by quotient elimination.
+\end{proof}
+
+\lean{Graph/UnboundedStates}{88}{89}{Invariant}
+
+\lean{Graph/UnboundedStates}{90}{95}{invariant_advance}
+
+\lean{Graph/UnboundedStates}{96}{101}{invariant_same}
+
+\lean{Graph/UnboundedStates}{102}{104}{predicate}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Unbounded initial and final states]
+Descend the existing class initiality and finality predicates using their proved padding invariance. On the image of a fixed-depth class these definitions recover exactly the original predicates.
+\end{lemma}
+
+\begin{proof}
+Apply the invariant-predicate construction; the comparison on a class image is definitional.
+\end{proof}
+
+\lean{Graph/UnboundedStates}{105}{107}{Initial}
+
+\lean{Graph/UnboundedStates}{108}{110}{Final}
+
+\lean{Graph/UnboundedStates}{111}{112}{initial_ofClass}
+
+\lean{Graph/UnboundedStates}{113}{113}{final_ofClass}
+
+\subsection{Finite runs and their exact costs}
+
+\Needspace{10\baselineskip}
+
+\termdef{padding-compatible-relation}
+
+\begin{definition}[Families of transition relations]
+A relation family supplies a transition relation $R_n$ at each depth. A staged edge is an $R_n$ edge with both endpoints explicitly at that depth. Preservation means every $R_n$ edge pads to an $R_{n+1}$ edge. This is an explicit proof obligation on a family; no global axiom asserts it.
+\end{definition}
+
+\lean{Graph/UnboundedRuns}{8}{10}{Relations}
+
+\lean{Graph/UnboundedRuns}{11}{14}{At}
+
+\lean{Graph/UnboundedRuns}{15}{17}{Preserved}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Padding edges]
+For a preserved family, one or any finite number of paddings preserves a staged edge.
+\end{lemma}
+
+\begin{proof}
+Eliminate the staged-edge certificate and apply the preservation premise for one step. Induct on the iteration count for repeated padding.
+\end{proof}
+
+\lean{Graph/UnboundedRuns}{18}{21}{at_next}
+
+\lean{Graph/UnboundedRuns}{22}{28}{at_advance}
+
+\Needspace{10\baselineskip}
+
+\termdef{unbounded-run}
+
+\begin{definition}[Unbounded steps and exact runs]
+An unbounded step has representatives joined by a staged edge. A run of length zero has identical endpoints; adjoining one transition to a run of length $k$ gives length $k+1$. Thus padding itself is never counted as a transition.
+\end{definition}
+
+\lean{Graph/UnboundedRuns}{29}{32}{Step}
+
+\lean{Graph/UnboundedRuns}{33}{36}{Run}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Mapping, padding and projecting runs]
+A relation-preserving function maps a run without changing its length. Consequently a staged run can be padded, or projected to the unbounded carrier, with the same number of transitions.
+\end{lemma}
+
+\begin{proof}
+Induct on the run, mapping the empty run to the empty run and its first edge together with the induction hypothesis in the successor case. Apply this to padding with the edge-preservation lemma, and to projection with the original staged edge as its witness.
+\end{proof}
+
+\lean{Graph/UnboundedRuns}{37}{43}{run_map}
+
+\lean{Graph/UnboundedRuns}{44}{48}{run_advance}
+
+\lean{Graph/UnboundedRuns}{49}{54}{project_run}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[A common finite presentation of an unbounded run]
+Every finite unbounded run for a preserved family lifts to a staged run of exactly the same length, whose endpoint images are the specified unbounded endpoints.
+\end{lemma}
+
+\begin{proof}
+Induct on the run. For an empty run choose a representative by quotient induction. For a nonempty run take the finite representatives of its first edge and the inductively lifted tail. Their two middle presentations have equal quotient images, hence coincide after possibly different numbers of paddings. Pad the first edge and the whole tail by those numbers. They now compose literally. Padding leaves endpoint images unchanged and adds no transitions.
+\end{proof}
+
+\lean{Graph/UnboundedRuns}{55}{72}{lift_run}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Recovering a single original relation]
+A staged edge, and every staged run, has equal endpoint depths. A staged edge at depth $n$ is an $R_n$ edge, and a staged run at that depth is an actual $R_n$ run with the same count.
+\end{lemma}
+
+\begin{proof}
+An edge certificate already has a common depth. Compose these depth equalities inductively along a run. To extract the original run, induct on the staged run; its first edge forces the next state to the same depth, so the induction hypothesis applies to its tail. In the empty case use equality of the paired presentations to identify their class components.
+\end{proof}
+
+\lean{Graph/UnboundedRuns}{73}{76}{at_depth}
+
+\lean{Graph/UnboundedRuns}{77}{82}{run_depth}
+
+\lean{Graph/UnboundedRuns}{83}{87}{at_same_depth}
+
+\lean{Graph/UnboundedRuns}{88}{105}{run_same_depth}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Exact finite-run adequacy]
+For a preserved family, an unbounded run of length $k$ from $x$ to $y$ exists exactly when, for some depth $n$, there are representatives $a,b$ of $x,y$ and an $R_n$ run of length $k$ from $a$ to $b$. The depth may depend on the entire run.
+\end{lemma}
+
+\begin{proof}
+Lift the unbounded run to stages, use equality of endpoint depths, and extract the original fixed-depth run. Conversely embed an original run as a staged run and project it.
+\end{proof}
+
+\lean{Graph/UnboundedRuns}{106}{119}{finite_run_iff}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Application to concrete search]
+The family of concrete recursive search relations satisfies padding preservation. Its unbounded finite runs therefore have exactly the common-depth representatives and counts described above.
+\end{lemma}
+
+\begin{proof}
+Use the already proved state-class search equivalence in its forward direction to discharge the preservation premise, then instantiate exact finite-run adequacy.
+\end{proof}
+
+\lean{Graph/UnboundedRuns}{120}{124}{search_preserved}
+
+\lean{Graph/UnboundedRuns}{125}{129}{search_run_iff}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Final observations with exact cost]
+For a preserved family, an unbounded run of length $k$ from $x$ to a final state exists exactly when some fixed-depth representative of $x$ runs in $k$ steps to a final class at that depth.
+\end{lemma}
+
+\begin{proof}
+Apply finite-run adequacy and rewrite finality along the final endpoint image. The descended finality predicate is definitionally the original class finality. Conversely project the run and its final endpoint.
+\end{proof}
+
+\lean{Graph/UnboundedRuns}{130}{140}{terminating_run_iff}

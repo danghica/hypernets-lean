@@ -659,3 +659,20 @@ This completes both previous Appendix B tasks **within the concrete fixed-depth
 model**. It does not establish operational equivalence with the paper's
 unbounded machine. Appendix B now records that transfer explicitly. Section 49
 explains every new declaration and its proof.
+
+## Unbounded carrier and exact search runs
+
+`DepthPadding`, `DepthInventory`, `DepthStateClasses`, and `DepthSearch`
+prove actual depth-padding compatibility, including exact recursive hole
+inventories, injective class embeddings, and preservation and reflection
+of concrete search. `UnboundedStates` constructs the directed union of the
+finite-depth state spaces. `UnboundedRuns.finite_run_iff` proves exact
+finite-run adequacy for padding-preserved relation families;
+`search_run_iff` discharges that premise for concrete search, and
+`terminating_run_iff` preserves finality and exact cost.
+
+This does **not** complete the last Appendix B item: substitution and genuinely
+unbounded extrinsic behaviour still need their full operational connection,
+and the semantic hypotheses and contextual construction must be transferred.
+The generic compatibility premise is explicit, not a proved fact about the
+full UAM. The PDF's new section explains every new declaration and this scope.
