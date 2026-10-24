@@ -1,3 +1,4 @@
+import Hypernets.Graph.UnboundedRuns
 import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.PaperEncodingExamples
 import Hypernets.Graph.UAMStructureExamples
@@ -495,3 +496,11 @@ import Hypernets.Graph.ObservationExamples
 #print axioms Hypernets.Linear.ObservationExamples.closed
 #print axioms Hypernets.Linear.ObservationExamples.observation_exists
 #print axioms Hypernets.Linear.ObservationExamples.initial_lifting
+
+-- Depth padding and the directed union: no operational compatibility is postulated.
+#print axioms Hypernets.Linear.DepthPadding.inventory
+#print axioms Hypernets.Linear.DepthPadding.class_search_iff
+#print axioms Hypernets.Linear.Unbounded.ofClass_injective
+#print axioms Hypernets.Linear.Unbounded.finite_run_iff
+#print axioms Hypernets.Linear.Unbounded.search_run_iff
+#print axioms Hypernets.Linear.Unbounded.terminating_run_iff
