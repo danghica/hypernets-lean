@@ -37,4 +37,4 @@ import Hypernets.Graph.ClassConverse
 
 import Hypernets.Graph.ObservationExamples
 
-import Hypernets.Graph.UnboundedRuns
+import Hypernets.Graph.UnboundedTheorem

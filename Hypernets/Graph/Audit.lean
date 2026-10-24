@@ -1,4 +1,4 @@
-import Hypernets.Graph.UnboundedRuns
+import Hypernets.Graph.UnboundedTheorem
 import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.PaperEncodingExamples
 import Hypernets.Graph.UAMStructureExamples
@@ -504,3 +504,24 @@ import Hypernets.Graph.ObservationExamples
 #print axioms Hypernets.Linear.Unbounded.finite_run_iff
 #print axioms Hypernets.Linear.Unbounded.search_run_iff
 #print axioms Hypernets.Linear.Unbounded.terminating_run_iff
+
+-- Complete unbounded full-UAM transfer and contextual sufficiency.
+#print axioms Hypernets.Linear.DepthPadding.substitution
+#print axioms Hypernets.Linear.DepthPadding.compute_iff
+#print axioms Hypernets.Linear.Unbounded.full_step_iff
+#print axioms Hypernets.Linear.Unbounded.full_termination_iff
+#print axioms Hypernets.Linear.Unbounded.machine_steps_iff
+#print axioms Hypernets.Linear.Unbounded.deterministic
+#print axioms Hypernets.Linear.DepthPadding.rooted_iff
+#print axioms Hypernets.Linear.Unbounded.rooted_iff_initial_run
+#print axioms Hypernets.Linear.Unbounded.rooted_step
+#print axioms Hypernets.Linear.Unbounded.full_of_nonrewrite
+#print axioms Hypernets.Linear.Unbounded.system
+#print axioms Hypernets.Linear.Unbounded.Safety.inputSafe_bridge
+#print axioms Hypernets.Linear.Unbounded.Safety.robust_bridge
+#print axioms Hypernets.Linear.Unbounded.Safety.converseRobust_bridge
+#print axioms Hypernets.Linear.Unbounded.initial_lifting
+#print axioms Hypernets.Linear.Unbounded.paper_sufficiency
+#print axioms Hypernets.Linear.Unbounded.paper_sufficiency_converse
+#print axioms Hypernets.Linear.Unbounded.common_representatives
+#print axioms Hypernets.Linear.Unbounded.theorem6
