@@ -41,7 +41,8 @@ termination. Canonical roots and concrete rootedness are now defined; search
 preserves rootedness, and concrete rooted focus sources have operation paths
 from the unique input. An incoming path containing a non-operation edge rules
 out rootedness (Section~\ref{sec:rooted-path-obstruction}). Concrete refocusing
-is defined and proved for search. One-way hypernets and the single-hole
+is defined and proved for search; Section~\ref{sec:uam-structure} now proves
+the complete UAM structural theorem. One-way hypernets and the single-hole
 obstruction of Lemma~26(2) are now proved, using extraction of actual operation
 paths through shallow substitution (Section~\ref{sec:one-way-obstruction}).
 Simultaneous shallow expansion now has proved graph invariants. Concrete
@@ -122,8 +123,12 @@ shallow simple context. \texttt{State.Compute} specifies the required active
 operation and focus modes; \texttt{Behaviour} restricts the extrinsic parameter
 to this shape. \texttt{UAM.machine} assembles all three families, with proved
 final normality and transition-family exclusion. This removes the transition
-definition obligation, but does not discharge the full-UAM determinism,
-rootedness, or refocusing proofs.
+definition obligation.
+\item \textbf{Lemma~24, Lemmas~27--28, and Lemma~3: structural theorem checked.}\par
+Section~\ref{sec:uam-structure} proves chronological search revisiting,
+stationary prefix replay, substitution rootedness and uniqueness, and
+full-UAM determinism and refocusing exactly under the corresponding extrinsic
+behaviour conditions. Full executions preserve rootedness.
 \item \textbf{Paper \S\S8.1--8.3: tuple compatibility and definitions checked.}\par
 \texttt{DeepSpecimen.substitutionTuple} constructs distinct, complete finite
 original-hole tuples with related closed entries. \texttt{TupleFilling.specimen}
@@ -139,10 +144,10 @@ now constructed. Allowed contexts, the observation interface, and specimen
 witnesses must still discharge the \texttt{initial\_lift} parameter.
 \item \textbf{Theorem~6: conditional, not complete.}\par
 The two \texttt{contextual\_sufficiency} theorems combine these abstract pieces.
-The paper itself assumes determinism and refocusing of the UAM. Those should
-remain the theorem's hypotheses: the missing work is to define their concrete
-meaning and prove the required structural consequences under them, not to
-prove arbitrary extrinsic rewrite systems deterministic.
+The paper itself assumes determinism and refocusing of the UAM. These remain
+the theorem's hypotheses. Section~\ref{sec:uam-structure} now defines their
+concrete meaning and proves the full-UAM structural theorem, reducing both
+properties exactly to the corresponding extrinsic behaviour conditions.
 \end{enumerate}
 
 The typed finite-depth hierarchy and explicit renaming bijections are
@@ -159,20 +164,21 @@ finite interaction patterns plugged into explicit simple contexts, in both
 directions. Opening and closing the selected slot covers arbitrary simple
 contexts; output fragments and self-looping attachments are included.
 The transitions of \S6.4 are now assembled into a concrete machine in
-Section~\ref{sec:full-uam}. The next operational dependencies are substitution
-rootedness, full-UAM structural laws, and specimen packaging for Lemma~39(3).
+Section~\ref{sec:full-uam}. Section~\ref{sec:uam-structure} proves substitution
+rootedness and uniqueness, stationary replay, and the full-UAM structural laws.
+The next operational dependency is specimen packaging for Lemma~39(3).
 These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 85\% of the mathematical effort toward
+As a planning estimate, approximately 88\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-70--91\%). This increases the previous estimate of 83\% after resolving the
-representation obligation by a checked freshening translation and its
-class-level and depth compatibility theorems.
+74--93\%). This increases the previous estimate of 85\% after proving
+stationary replay, substitution rootedness and uniqueness, and the full-UAM
+determinism and refocusing theorem.
 It is a subjective estimate, not a ratio of declarations or discharged
-checklist entries. The full-UAM structural proofs and deep specimen
-locality, safety, and robustness remain substantial obligations.
+checklist entries. Deep specimen locality, context membership, safety,
+robustness, and initial lifting remain substantial obligations.
 The active to-do list is maintained in Appendix~\ref{app:remaining-work}.
 
 There are three distinct kinds of assertion below. A \emph{definition} specifies
@@ -182,7 +188,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{c51f5a5}, rather than to the moving
+All code links point to revision \texttt{3ea0817}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

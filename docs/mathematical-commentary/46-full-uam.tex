@@ -10,10 +10,11 @@ behaviour is a parameter constrained by the compute shape in paper \S6.4.
 The assembled relation has successful final states as normal forms and gives
 an instance of the abstract machine interface used earlier in this document.
 
-This milestone does not establish determinism or refocusing of the full UAM,
-nor the concrete specimen laws. In particular, the extra stability assumption
-on $G_S$ in the paper's refocusing lemma is not silently imposed on the
-transition relation itself. The definitions here use the fixed-depth typed
+Section~\ref{sec:uam-structure} proves determinism and refocusing of the full
+UAM under the corresponding behaviour conditions; the concrete specimen laws
+remain separate. In this unary linear substitution rule, the variable prefix
+itself proves the required one-wayness, so no stability assumption on $G_S$
+is needed for substitution refocusing. The definitions here use the fixed-depth typed
 representation; its graph-valued presentation and depth compatibility are now
 proved in Section~\ref{sec:paper-encoding}.
 
@@ -253,8 +254,6 @@ injection. This tests the behaviour parameter independently of substitution.
 \lean{Graph/UAMExamples}{62}{63}{Linear.UAMExamples.compute_step}
 
 The following section discharges the tuple and concrete-definition obligation.
-The next
-operational proof obligation is substitution rootedness under the paper's
-stability hypothesis, followed by the structural results for the full UAM.
-The concrete specimen interpretation and the final robustness instantiation
-remain unproved.
+Section~\ref{sec:uam-structure} now supplies substitution rootedness and
+uniqueness and the full-UAM structural theorem. The concrete specimen
+interpretation and final robustness instantiation remain unproved.

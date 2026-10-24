@@ -8,6 +8,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{actual-content-label}{Actual-content label}{An actual named box body with a typing proof; its external counts are read from the name of its sole input rather than stored as separate label fields.}
 
+\glossaryentry{actual-refocusing}{Actual-state refocusing}{Preservation of the rooted predicate by a relation on named states, interpreted on recursive state classes.}
+
 \glossaryentry{path}{Adjacency}{Edges $e,f$ are adjacent when a vertex occurs in both the target list of $e$ and the source list of $f$.}
 
 \glossaryentry{uam-behaviour}{Admissible behaviour}{A relation on actual states certified to contain only pairs of compute shape; determinism is a separate property.}
@@ -23,6 +25,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{focus}{Backtracking mode}{The abstract focus mode $\mathsf{backtrack}$, one of the three constructors of the focus datatype.}
 
 \glossaryentry{bijection}{Bijection}{A pair of forward and inverse functions satisfying both inverse equations.}
+
+\glossaryentry{blocked-input}{Blocked input}{A term input from which no operation edge can leave; this suffices to exclude operation paths to outputs.}
 
 \glossaryentry{body-consistency}{Body consistency}{The condition that box edges with literally equal contents have equal external binder metadata; needed by naive binder erasure.}
 
@@ -82,7 +86,7 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{concrete-rootedness}{Concrete rootedness}{Existence of a finite search-only run from the canonical initial attachment to the state's recursive class.}
 
-\glossaryentry{concrete-state}{Concrete state}{A globally focussed, hole-free hypernet of type $*\to\epsilon$; the concrete transition relation remains to be defined.}
+\glossaryentry{concrete-state}{Concrete state}{A globally focussed, hole-free hypernet of type $*\to\epsilon$, with search, substitution, and extrinsic compute transitions.}
 
 \glossaryentry{concrete-substitution}{Concrete substitution transition}{Application of the substitution fragments at the same shallow hole of a focus-free simple context.}
 
@@ -93,6 +97,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{context}{Context}{A hypernet in which each complete typed hole label occurs at most once over all nesting depths.}
 
 \glossaryentry{specimen}{Context-only traversal}{The specimen-interface law supplying paired context steps for a rooted, settled specimen whenever either endpoint can step.}
+
+\glossaryentry{context-prefix-replay}{Context-prefix replay}{Extraction of a pre-rewrite search prefix in the unchanged context and its transport to a new filling.}
 
 \glossaryentry{contextual}{Contextual equivalence}{Mutual contextual refinement: both directions hold for every pair of observations in the same allowed context.}
 
@@ -137,6 +143,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{global-class}{Depth-independent graph class}{A finite-depth actual-content graph modulo recursive isomorphism and depth promotion.}
 
 \glossaryentry{determinism}{Determinism}{The property that any two one-step successors of the same state are equal.}
+
+\glossaryentry{determinism-modulo}{Determinism modulo isomorphism}{Uniqueness of transition targets up to recursive focus-preserving graph isomorphism.}
 
 \glossaryentry{hole-presence}{Disjoint hole inventories}{The condition that no complete typed hole label occurs in both graphs, including occurrences inside boxes.}
 
@@ -292,6 +300,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{wire}{Operation specification}{The assignment of a term-argument count and an ordered list of thunk binder counts to each operation.}
 
+\glossaryentry{operation-stack}{Operation stack}{A proof record of enclosing operation arguments, carrying chronological search visits to their sources.}
+
 \glossaryentry{unary}{Operation step}{A step through an edge selected by the operation predicate, from a vertex in its source list to one in its target list.}
 
 \glossaryentry{operation-trace}{Operation trace}{A reverse traversal recording each actual operation edge, starting at a target vertex and continuing from that edge's source.}
@@ -396,9 +406,13 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{search-outcomes}{Search outcome}{Entry selects the first argument or finishes; return selects the next argument or finishes after the last.}
 
-\glossaryentry{search-step}{Search position}{A mode and outer vertex of the underlying graph; the bridge to explicit focus edges remains open.}
+\glossaryentry{search-step}{Search position}{A mode and outer vertex of the underlying graph, realized by insertion of an explicit focus edge.}
+
+\glossaryentry{search-restart}{Search restart}{Replacement of the current focus mode by search at the same underlying vertex.}
 
 \glossaryentry{search-step}{Search step}{The coordinate relation implementing the five rules of Fig. 9(a--e), with no substitution or compute transitions.}
+
+\glossaryentry{search-visit}{Search visit}{An exact chronological split of an initial execution at a search-mode coordinate.}
 
 \glossaryentry{search-only-machine}{Search-only machine}{A machine on state classes containing search transitions and boundary finality, but no substitution or computation transitions.}
 
@@ -448,11 +462,17 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{refinement}{State refinement}{The requirement that each successful source execution has a successful target execution with counts related by the chosen cost preorder.}
 
+\glossaryentry{stationary-replay}{Stationary replay conditions}{One-way old fillings and immediate rewrite at other inputs, together with proved context search transport.}
+
+\glossaryentry{stationary-rewrite}{Stationary rewrite}{A context-preserving change from rewrite to search at the same designated input, satisfying the one-way and other-input conditions.}
+
 \glossaryentry{determinism}{Stuck state}{A normal state that is not successfully final; it cannot step and does not count as successful termination.}
 
 \glossaryentry{subdivision-exchange}{Subdivision vertex exchange}{The bijection exchanging an old internal attachment with the fresh focus vertex, identifying the two subdivision orientations.}
 
 \glossaryentry{substitution-fragments}{Substitution fragments}{The actual graphs consisting of a rewrite focus followed by a variable and a computation, and a search focus followed by the same computation.}
+
+\glossaryentry{substitution-presentation}{Substitution presentation}{An erased base graph with its selected variable and proved source and resumed-target isomorphisms.}
 
 \glossaryentry{substitution-unit}{Substitution unit}{A selected one-edge corolla: filling it returns the inserted graph, while restoring an edge's own corolla returns its host, up to isomorphism.}
 

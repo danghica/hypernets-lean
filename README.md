@@ -68,8 +68,9 @@ still assumes the required locality consequences.
   to prove for arbitrary extrinsic rewrite rules.
 
 Contextual search adequacy and §6.4's concrete transition definitions are now
-complete. The next dependencies are substitution rootedness, full-UAM structural
-laws and the remaining specimen-interface laws.
+complete. Stationary replay, substitution rootedness and uniqueness, and the
+full-UAM structural theorem are now proved. The next dependencies are the
+remaining specimen-interface laws and their safety/robustness bridges.
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices. Their annotated set-presentation round trips and depth coherence are
 now proved. Fresh vertex naming also resolves the paper's graph-valued box-label
@@ -136,8 +137,9 @@ the value execution rooted and the valid interior-focus state behind a variable
 not rooted. These use the current erasure-based search semantics; contextual
 local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 
-The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains three unfinished tasks. Search adequacy and the full UAM transition
-definition are discharged; structural laws and the concrete robustness bridge remain open.
+The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains two unfinished tasks. Search adequacy, the full UAM transition
+definition, and its structural theorem are discharged; the concrete specimen
+interface, robustness bridges, and final theorem instantiation remain open.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
 invariance under recursive renaming and closure under one-way shallow filling,
@@ -210,7 +212,7 @@ contexts, preserving plugging. `HoleContextSearch.lean` proves
 `State.search_iff_holeContext` and covers arbitrary simple contexts without
 extra assumptions on interaction labels. Regressions include output fragments
 and a self-loop whose input and output attachments coincide. **Appendix B now
-has three unfinished items after the milestones below.**
+has two unfinished items after the milestones below.**
 
 The full-UAM milestone clears the transition-definition obligation.
 `Substitution.lean` constructs both fragments of Figure 9(f), defines their
@@ -219,8 +221,9 @@ variable adjacency. `UAM.lean` constrains the extrinsic behaviour to compute
 shape and assembles all three transition families into `UAM.machine`.
 Search/rewrite and intrinsic/extrinsic exclusion and final normality are proved.
 `UAMExamples.lean` checks a two-step terminating execution with variable removal
-and a genuine compute transition. Stability of the bound computation belongs
-to the remaining rootedness/refocusing proofs, not to the transition definition.
+and a genuine compute transition. The later structural theorem proves
+substitution refocusing from the unary variable prefix alone, without adding
+stability to the transition definition.
 
 The tuple/safety milestone clears another complete Appendix B item.
 `TupleFillings.lean` extracts finite aligned original-hole tuples, proves
@@ -232,9 +235,10 @@ unrooted robustness alternative. Rooted consequences are derived, not assumed.
 The nested-box example yields exactly one recorded hole; a mode-mismatched
 pair is rejected even with universally true up-to relations.
 
-Estimated completion by mathematical effort: **about 85%**, with a plausible
-range of **70–91%**, up from 83% after the freshening representation theorem.
-This is a planning judgment, not a declaration count. Full-UAM structural proofs, specimen packaging, safety, and robustness remain substantial.
+Estimated completion by mathematical effort: **about 88%**, with a plausible
+range of **74–93%**, up from 85% after the full-UAM structural theorem.
+This is a planning judgment, not a declaration count. Specimen packaging,
+context membership, safety, robustness, and initial lifting remain substantial.
 
 ## Concrete graph milestone
 
@@ -357,8 +361,8 @@ Transport chooses inner isomorphisms classically; no canonical choice or round-t
 law is asserted for the chosen transport function. The pointed-host quotient
 below identifies structural renaming zigzags. Comparison across
 different depth bounds now has a checked normalization-coherence theorem.
-Fresh naming now resolves the graph-valued box-label correspondence. The full-UAM structural laws and its
-bridge to Theorem 6 remain the main later work.
+Fresh naming now resolves the graph-valued box-label correspondence. The full-UAM structural laws are now proved; its
+concrete specimen bridge to Theorem 6 remains the main later work.
 
 ## Composition and unit milestone
 
@@ -559,8 +563,8 @@ on raw representatives still require their own isomorphism-invariance proofs.
 finite depth promotion. `PaperEncodingExamples.lean` repairs the prior two-box
 counterexample without imposing body consistency and checks context properties.
 
-Appendix B now has **three unfinished items**: full-UAM structural laws, the
-concrete specimen interface and bridges, and the final concrete Theorem 6.
+Appendix B now has **two unfinished items**: the concrete specimen interface
+and bridges, and the final concrete Theorem 6.
 The representation result concerns the paper's typed UAM discipline; it does
 not claim to finish those operational obligations or cover unrelated signatures.
 
@@ -569,3 +573,24 @@ of depth bounds. Its finite-union quotient identifies recursive isomorphism and
 depth promotion. Every class has a typed representative, and global pre-templates
 produce layered pre-templates proved coherent under promotion and renaming.
 Arbitrary layered relations are not assumed to have this compatibility.
+
+## Full-UAM structural theorem: next Appendix B task completed
+
+- `SearchHistory.lean` proves paper Lemma 24 with an explicit chronological
+  search split; `SearchHistoryStates.lean` and `RootedCoordinates.lean` carry
+  it to actual states and reflect rootedness to specified graph coordinates.
+- `StationarySearch.lean` and `StationaryPlug.lean` prove stationary prefix
+  replay and rootedness preservation, following paper Lemmas 27–28.
+- `SubstitutionRefocusing.lean` proves rootedness preservation for the actual
+  substitution relation. The unary variable prefix is already one-way, so
+  stability of the bound computation is unnecessary for this result.
+- `SubstitutionDeterminism.lean` proves that different context decompositions
+  of one source give recursively isomorphic reducts.
+- `UAMStructure.lean` proves full-UAM determinism and refocusing if and only if
+  the extrinsic behaviour has the respective property, and rootedness of full
+  executions from initial states. It does not assume arbitrary behaviour has
+  these properties or equate raw carrier names.
+
+Section 45 of the PDF explains every new construction and proof. Regression
+examples exercise a reachable substitution source and a nonempty compute
+behaviour. Appendix B now retains only the two unfinished obligations.

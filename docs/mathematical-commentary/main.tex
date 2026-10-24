@@ -34,6 +34,7 @@
 \newtheorem{lemma}[definition]{Lemma}
 \newtheorem{proposition}[definition]{Proposition}
 \newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
 \theoremstyle{remark}
 \newtheorem{remark}[definition]{Remark}
 \newcommand{\steps}[1]{\mathrel{\longrightarrow^{#1}}}
@@ -50,7 +51,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/fb0fee3db194c07fb0d34cb11d656b939b478c22}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/3ea08176ed4b174989e3502d9e2efdfbd0682aa2}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -58,7 +59,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{24 October 2026\\\small Source snapshot: \texttt{fb0fee3}; Lean \texttt{4.35.0}}
+\date{24 October 2026\\\small Source snapshot: \texttt{3ea0817}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -88,7 +89,7 @@ simple context. Admissible compute behaviour completes the full UAM transition
 relation, with proved mode discipline, disjointness, and final normality.
 Actual executions test variable removal and compute behaviour.
 
-Every finite simultaneous shallow expansion is now realized by ordinary addressed substitutions, with a proved finite length bound and order independence up to graph isomorphism. Independent substitutions now commute at arbitrary depth with constructed residual addresses. Hosts with selected sites are quotiented by structural renaming, and substitution and exact freshness descend to these classes. The dependency map distinguishes these checked results from the remaining obligations. Recursive specimens now have complete finite original-hole tuples, with distinct names and closed related replacements. Concrete quasi-specimens, input-safety, and robustness retain the full paper clauses. Full-UAM structural laws and the complete specimen-interface interpretation, including its safety and robustness bridges, remain open. This is therefore not yet a formalization of the paper's full Theorem~6.
+Every finite simultaneous shallow expansion is now realized by ordinary addressed substitutions, with a proved finite length bound and order independence up to graph isomorphism. Independent substitutions now commute at arbitrary depth with constructed residual addresses. Hosts with selected sites are quotiented by structural renaming, and substitution and exact freshness descend to these classes. The dependency map distinguishes these checked results from the remaining obligations. Recursive specimens now have complete finite original-hole tuples, with distinct names and closed related replacements. Concrete quasi-specimens, input-safety, and robustness retain the full paper clauses. Full-UAM determinism and refocusing are now reduced to the corresponding behaviour properties, with substitution rootedness and uniqueness proved. The complete specimen-interface interpretation, including its safety and robustness bridges, remains open. This is therefore not yet a formalization of the paper's full Theorem~6.
 Outer set-presentation normalization and depth coherence are proved. A checked
 freshening translation now resolves the box-label correspondence: its labels are
 actual graphs, it satisfies the paper's equal-label/equal-signature condition,
@@ -153,6 +154,7 @@ original typed graphs.
 \input{47-tuple-safety}
 \input{48-set-presentations}
 \input{49-paper-encoding}
+\input{50-uam-structure}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -163,7 +165,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/fb0fee3db194c07fb0d34cb11d656b939b478c22}{Repository at revision \texttt{fb0fee3}}.
+\href{https://github.com/danghica/hypernets-lean/tree/3ea08176ed4b174989e3502d9e2efdfbd0682aa2}{Repository at revision \texttt{3ea0817}}.
 \end{thebibliography}
 \clearpage
 \appendix

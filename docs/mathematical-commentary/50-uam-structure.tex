@@ -1,0 +1,730 @@
+\Needspace{20\baselineskip}
+\section{Search history, stationary rewriting, and the full UAM}
+\label{sec:uam-structure}
+This section completes the first structural obligation previously listed in
+Appendix~\ref{app:remaining-work}. The argument follows the paper's
+Lemma~24, the stationary replay proof of Lemmas~27--28, and Lemma~3.
+The proof of Lemma~24 records an operation stack rather than repeating the
+paper's case analysis informally: each frame stores an actual earlier search
+visit with a chronological execution split. The stack is a proof device and
+adds no state or transition to the machine.
+
+The stationary theorem is proved first for simultaneous expansion and then
+for ordinary shallow plugging. The latter applies directly to the concrete
+substitution relation. Independently, the determinism proof identifies a
+canonical reduct by erasing the old focus and relabelling the selected variable
+as a search focus. It proves that different decompositions of one source have
+isomorphic reducts. Consequently the full UAM is deterministic and refocusing
+exactly when its extrinsic behaviour has the corresponding property.
+These remain conditions on the behaviour; arbitrary compute rules do not
+acquire them automatically.
+
+\Needspace{10\baselineskip}
+\subsection{Chronological search visits and the operation stack}
+
+
+\termdef{search-visit}
+\begin{definition}[Search visit]
+For a run of total length $n$ ending at coordinate $p$, a visit to vertex $v$
+is a pair of lengths $a,b$ with $n=a+b$, an initial run of length $a$ to
+$(?,v)$, and a suffix of length $b$ from $(?,v)$ to $p$. Thus this predicate
+records an occurrence on the actual run, not merely reachability in another run.
+\end{definition}
+\lean{Graph/SearchHistory}{10}{13}{Linear.SearchHistory.Visit}
+
+
+\termdef{operation-stack}
+\begin{definition}[Operation stack]
+For a predicate $P$ on vertices, a stack ends either at the unique input or at
+an argument of an operation. An argument frame carries the parent stack at
+the operation's source, evidence of $P$ at that source, and membership of the
+current vertex in the ordered argument list. In the history invariant, $P$
+is the search-visit predicate for the current execution.
+\end{definition}
+\begin{lemma}[Stack transport and parent recovery]
+A pointwise implication $P\Rightarrow Q$ transports a stack. If the current
+vertex is an argument of operation $a$, the stack supplies both the parent
+stack and the stored predicate at $a$'s source.
+\end{lemma}
+\begin{proof}
+Transport follows by induction on the stack. For parent recovery, the input
+case is impossible because an input cannot be an edge target. In an argument
+frame, both the stored operation and $a$ target the current vertex. Target
+uniqueness identifies their edges; uniqueness of operation views identifies
+their sources. Transport the stored parent and predicate along that equality.
+\end{proof}
+\lean{Graph/SearchHistory}{16}{19}{Linear.SearchHistory.Stack}
+\lean{Graph/SearchHistory}{22}{26}{Linear.SearchHistory.Stack.mono}
+\lean{Graph/SearchHistory}{29}{36}{Linear.SearchHistory.Stack.parent}
+
+
+\begin{lemma}[Extending visits]
+Appending one search step preserves every recorded visit, increasing its suffix
+length by one. A current search coordinate is a visit with empty suffix.
+\end{lemma}
+\begin{proof}
+Keep the initial prefix and append the new step to the old suffix. The length
+equation follows by addition. For a current visit, use the entire run as the
+prefix and the zero-step run as suffix.
+\end{proof}
+\begin{definition}[History invariant]
+At coordinate $p$ after $n$ steps, require a stack whose frame predicates are
+visits on that run, and a visit to the current vertex itself.
+\end{definition}
+\lean{Graph/SearchHistory}{39}{42}{Linear.SearchHistory.Visit.step}
+\lean{Graph/SearchHistory}{45}{47}{Linear.SearchHistory.Visit.current}
+\lean{Graph/SearchHistory}{50}{51}{Linear.SearchHistory.Invariant}
+
+
+\begin{lemma}[History preservation]
+Every search step preserves the history invariant. Hence every finite initial
+search execution has that invariant.
+\end{lemma}
+\begin{proof}
+First extend all stored visits by the new step. A variable trigger keeps the
+same stack and vertex. Entering an operation with no arguments also keeps the
+same vertex. Entering its first argument pushes a frame with the already
+recorded source visit; the new search position records itself. On return from
+an argument, recover the unique parent frame. Advancing to the next argument
+replaces the current frame and records the new search position. Finishing
+pops the frame and uses its stored source visit. Induct along an arbitrary
+suffix to propagate the invariant, adding execution lengths. At the unique
+input the stack is empty and the zero-step visit initializes the induction.
+\end{proof}
+\lean{Graph/SearchHistory}{54}{79}{Linear.SearchHistory.invariant_step}
+\lean{Graph/SearchHistory}{82}{87}{Linear.SearchHistory.invariant_steps}
+\lean{Graph/SearchHistory}{90}{94}{Linear.SearchHistory.history}
+
+
+\begin{theorem}[Lemma 24 in coordinates]
+If an initial search run of length $n$ ends at $p$ in a mode other than search,
+then there exist $a,b$ with $n=a+b$ and $b>0$, such that the run splits at
+$(?,p_2)$ into a prefix of length $a$ and suffix of length $b$.
+\end{theorem}
+\begin{proof}
+Take the current-vertex visit from the history invariant. If its suffix length
+were zero, its endpoints would coincide, forcing the final mode to be search.
+This contradicts the hypothesis.
+\end{proof}
+\lean{Graph/SearchHistory}{98}{107}{Linear.SearchHistory.revisit}
+
+
+\Needspace{10\baselineskip}
+\subsection{Actual states, restart, and coordinate reflection}
+
+\termdef{search-restart}
+\begin{definition}[Search restart]
+Restarting a typed coordinate keeps its vertex and changes only its mode to
+search. Restarting an actual state erases its focus, restarts its extracted
+coordinate, and realizes that coordinate again. This is the paper's change
+of focus mode, up to the already proved insertion--erasure isomorphisms.
+\end{definition}
+\lean{Graph/SearchHistoryStates}{11}{11}{Linear.TypedPosition.restart}
+\lean{Graph/SearchHistoryStates}{60}{62}{Linear.State.restart}
+
+
+\begin{lemma}[Lifting class executions]
+A recursively renamed successor of a realized coordinate has a coordinate on
+the same original graph. The same holds for every finite execution, preserving
+its exact length.
+\end{lemma}
+\begin{proof}
+For one step, factor recursive search into literal search followed by recursive
+endpoint isomorphism. Apply the existing coordinate characterization of literal
+search and compose the endpoint isomorphisms. Quotient soundness and exactness
+turn that isomorphism into equality of state classes. For a finite run, induct
+on its length. Lift its first step, rewrite the intermediate class using the
+resulting equality, and lift the suffix. Prepend the lifted coordinate step.
+\end{proof}
+\lean{Graph/SearchHistoryStates}{14}{25}{Linear.TypedPosition.deepSearch_realize_iff}
+\lean{Graph/SearchHistoryStates}{28}{39}{Linear.TypedPosition.class_search_iff}
+\lean{Graph/SearchHistoryStates}{42}{55}{Linear.TypedPosition.class_steps_lift}
+
+
+\begin{lemma}[Restart respects representation]
+Restart commutes with recursive state isomorphism and therefore descends to
+state classes. Restarting a realized coordinate yields the class of its
+coordinate restart.
+\end{lemma}
+\begin{proof}
+The erased isomorphism carries the extracted position to the other extracted
+position. Resetting both modes preserves this equality. Apply the theorem that
+realization commutes with recursive renaming. This proves well-definedness of
+the quotient operation. For an inserted focus, use coordinate recovery and
+literal realization transport to identify the restarted class.
+\end{proof}
+\lean{Graph/SearchHistoryStates}{65}{76}{Linear.State.restart_iso}
+\lean{Graph/SearchHistoryStates}{80}{82}{Linear.DeepStateClass.restart}
+\lean{Graph/SearchHistoryStates}{88}{101}{Linear.TypedPosition.restart_class}
+
+
+\begin{theorem}[Lemma 24 for actual rooted states]
+A rooted state in non-search mode admits an initial search run through its
+restart class, followed by a strictly positive search suffix to its own class.
+\end{theorem}
+\begin{proof}
+Lift its rooted execution to coordinates on its erased graph. The endpoint
+isomorphism preserves mode, so apply the coordinate revisit theorem. Realize
+both parts of the resulting split. Restart well-definedness identifies the
+intermediate class with the restart of the original state.
+\end{proof}
+\lean{Graph/SearchHistoryStates}{107}{129}{Linear.State.rooted_revisit}
+
+
+\begin{lemma}[Recovering specified coordinates]
+Coordinate renaming composes with graph isomorphisms. An isomorphism between
+two realized states induces an underlying-graph isomorphism carrying their
+specified coordinates to each other. The root class of a realized state is
+the class of initial insertion on its original graph. Coordinate executions
+commute with recursive renaming.
+\end{lemma}
+\begin{proof}
+For composition, compare the vertex maps on internal, input, and output ports.
+For recovery, compose the inverse insertion-recovery isomorphism, the erased
+state isomorphism, and the second insertion-recovery isomorphism. The extracted
+coordinate equations and inverse laws give the required coordinate equality.
+The root claim follows by transporting the initial input, which ordered
+boundary preservation fixes. Induction on an execution transports every step
+using search renaming.
+\end{proof}
+\lean{Graph/RootedCoordinates}{11}{18}{Linear.TypedPosition.deepRename_trans}
+\lean{Graph/RootedCoordinates}{22}{36}{Linear.TypedPosition.realization_coordinate_iso}
+\lean{Graph/RootedCoordinates}{39}{46}{Linear.TypedPosition.root_class}
+\lean{Graph/RootedCoordinates}{49}{55}{Linear.TypedPosition.steps_deepRename}
+
+
+\begin{theorem}[Exact coordinate characterization of rootedness]
+A realized state is rooted if and only if its specified coordinate is reachable
+by search from the unique input on its original graph.
+\end{theorem}
+\begin{proof}
+The reverse direction is realization of an initial coordinate run. For the
+forward direction, identify the root with initial insertion and lift the class
+run. Its endpoint may initially be another coordinate with an isomorphic
+realization. Recover the underlying isomorphism carrying that coordinate to
+the specified one, and transport the entire run. Its initial input is fixed.
+\end{proof}
+\lean{Graph/RootedCoordinates}{59}{73}{Linear.TypedPosition.rooted_iff}
+
+
+\Needspace{10\baselineskip}
+\subsection{Stationary replay for simultaneous expansion}
+
+\begin{lemma}[Uniqueness of normal runs]
+In a deterministic machine, two executions from the same source to normal
+forms have equal lengths and endpoints.
+\end{lemma}
+\begin{proof}
+Induct on the first execution. If it has length zero, normality forces the
+other run to be empty. Otherwise the other run cannot be empty; determinism
+identifies the first successors, and induction identifies the remaining
+lengths and endpoints. This uses normality, not successful finality.
+\end{proof}
+\begin{lemma}[Rooted coordinate properties]
+Initial coordinate runs preserve term typing and operation reachability.
+\end{lemma}
+\begin{proof}
+Both hold at the input. Propagate them together along the run using the already
+proved one-step typing and operation-reachability invariants.
+\end{proof}
+\lean{Graph/StationarySearch}{28}{37}{Linear.StationarySearch.run_properties}
+
+
+\lean{Graph/StationarySearch}{7}{21}{Machine.Steps.normal_unique}
+
+
+\termdef{stationary-replay}
+\begin{definition}[Stationary replay conditions]
+Fix a context, an old filling family, and a designated entry vertex. Every
+hole filling is one-way. At each other term-typed hole input, a search focus
+has an immediate search step to rewrite mode. The old family preserves and
+reflects context search away from boundaries; the new family preserves context
+search. These last conditions concern corolla copies and label origins, as
+defined earlier, rather than an assumed rootedness result.
+\end{definition}
+A rewrite coordinate is search-normal: replace its mode by its known rewrite
+value and apply the no-rewrite-source search theorem.
+\lean{Graph/StationarySearch}{44}{44}{Linear.StationarySearch.OneWayHoles}
+\lean{Graph/StationarySearch}{48}{51}{Linear.StationarySearch.OtherInputsTrigger}
+\lean{Graph/StationarySearch}{54}{59}{Linear.StationarySearch.rewrite_normal}
+
+
+\begin{lemma}[No boundary before the designated visit]
+Consider a rooted prefix ending at a host coordinate, a positive-length suffix
+to the designated search entry, and a further suffix to rewrite mode. The
+host coordinate is not a search-entry or backtrack-exit boundary of a hole.
+\end{lemma}
+\begin{proof}
+For entry at the designated vertex, the positive suffix would return to the
+same search coordinate. Appending the rewrite suffix then gives two runs from
+that coordinate to a normal form with different lengths, contradicting normal
+run uniqueness. At another input, the immediate-rewrite condition and
+search determinism force the next state to be rewrite-normal, so the run
+cannot continue to the designated search coordinate. For a backtrack exit,
+the rooted prefix supplies term typing and operation reachability. The one-way
+filling obstruction rules out that reachable hole output.
+\end{proof}
+\lean{Graph/StationarySearch}{64}{95}{Linear.StationarySearch.prefix_away}
+
+
+\termdef{context-prefix-replay}
+\begin{theorem}[Extracting and replaying the context prefix]
+The prefix preceding the designated search visit is a run in the unchanged
+context. It can therefore be replayed after replacing the old filling family.
+\end{theorem}
+\begin{proof}
+Induct on the length of the suffix to the designated visit, retaining the
+initial prefix and the eventual rewrite suffix as induction data. At length
+zero, injectivity of the host map identifies the context coordinates. At a
+successor, the preceding lemma excludes a boundary. Search reflection extracts
+one context step and identifies its image with the actual successor. Extend
+the initial prefix by that step and apply induction to the remaining suffix.
+For replay, apply Lemma~24 to the initial run ending at the designated rewrite
+coordinate. Extract its prefix in the context, then transport that prefix
+through the new filling family.
+\end{proof}
+\lean{Graph/StationarySearch}{98}{121}{Linear.StationarySearch.extract_prefix}
+\lean{Graph/StationarySearch}{125}{137}{Linear.StationarySearch.replay}
+
+
+\begin{theorem}[Rooted stationary endpoints]
+The actual search-focused replacement is rooted whenever the old
+rewrite-focused state is rooted and the stationary replay conditions hold.
+Independent recursive renaming of both endpoints preserves this conclusion.
+\end{theorem}
+\begin{proof}
+Reflect rootedness to the specified old coordinate, replay its prefix, and
+realize the resulting initial coordinate run on the replacement. For renamed
+endpoints, quotient soundness identifies each endpoint class with its realized
+representative; transport the rooted predicate along these equalities.
+\end{proof}
+\lean{Graph/StationarySearch}{142}{155}{Linear.StationarySearch.rooted}
+\lean{Graph/StationarySearch}{159}{183}{Linear.StationarySearch.rooted_iso}
+
+
+\Needspace{10\baselineskip}
+\subsection{Moving an inserted focus through ordinary plugging}
+
+\begin{definition}[Reassociation and focused fragments]
+The reassociation bijection sends $A+(B+D)$ to $(A+B)+D$ by preserving each
+summand; its inverse reverses this operation, with both inverse laws by cases.
+The fragment inserts a focus at a chosen input of a replacement graph. The
+whole construction inserts it at the corresponding port after plugging.
+\end{definition}
+\lean{Graph/PlugFocusInsertion}{9}{13}{Linear.PlugFocusInsertion.reassoc}
+\lean{Graph/PlugFocusInsertion}{21}{21}{Linear.PlugFocusInsertion.fragment}
+\lean{Graph/PlugFocusInsertion}{22}{25}{Linear.PlugFocusInsertion.whole}
+
+
+\begin{lemma}[Port identities]
+Reassociation carries retained host ports to their focused whole-graph ports,
+and inserted old ports to the same whole-graph ports. For a non-output port,
+it also commutes with splitting at the selected input.
+\end{lemma}
+\begin{proof}
+The first two claims are cases on the port constructors. For splitting, separate
+the selected input from all other ports. The selected input goes to the fresh
+singleton on both sides. For another non-output port, injectivity of insertion
+on source-side ports excludes equality with the selected whole-graph port;
+both splits then reduce to the old-port identity. This restriction avoids
+assuming that the complete insertion map is injective for self-looping holes.
+\end{proof}
+\lean{Graph/PlugFocusInsertion}{27}{30}{Linear.PlugFocusInsertion.host}
+\lean{Graph/PlugFocusInsertion}{32}{39}{Linear.PlugFocusInsertion.insert_host}
+\lean{Graph/PlugFocusInsertion}{41}{53}{Linear.PlugFocusInsertion.insert_split}
+
+
+\begin{theorem}[Focus insertion commutes with plugging]
+Plugging the input-focused replacement is isomorphic to inserting the focus
+at its attached port in the filled whole graph.
+\end{theorem}
+\begin{proof}
+Use reassociation for both the internal-vertex and edge carriers. Labels are
+unchanged. A retained context source cannot meet the selected input port:
+source uniqueness would identify its edge with the removed hole. Its source
+list therefore uses the host identity. Sources of inserted edges use the
+split identity; their ports are non-outputs by well-formedness. Targets use
+the old-port identities. The new focus's singleton source and target satisfy
+the same equations directly.
+\end{proof}
+\lean{Graph/PlugFocusInsertion}{57}{89}{Linear.PlugFocusInsertion.iso}
+
+
+\Needspace{10\baselineskip}
+\clearpage
+\subsection{Reflecting search through one shallow filling}
+
+\begin{definition}[Host coordinates and boundary]
+A host coordinate is mapped through the retained-vertex injection. Its boundary
+predicate means either search mode at a source of the selected hole, or
+backtrack mode at a target of that hole.
+\end{definition}
+\begin{lemma}[Reading back retained operations]
+An operation in the filled graph whose edge is retained has exactly the source
+and ordered arguments of an original context operation, mapped by the host
+injection.
+\end{lemma}
+\begin{proof}
+Its label supplies an operation view on the original edge. Plug that view back
+into the whole graph; it has the same edge as the given view. Uniqueness of
+operation data gives the source and argument equations.
+\end{proof}
+\lean{Graph/PlugSearchReflection}{12}{13}{Linear.PlugSearchReflection.position}
+\lean{Graph/PlugSearchReflection}{29}{30}{Linear.PlugSearchReflection.Boundary}
+\lean{Graph/PlugSearchReflection}{16}{26}{Linear.PlugSearchReflection.operation_readback}
+
+
+\begin{lemma}[Inserted incidence meets the boundary]
+An inserted source meeting a host vertex meets an input of the replacement;
+an inserted target meeting a host vertex meets an output.
+\end{lemma}
+\begin{proof}
+Unpack membership in the mapped incidence list. Source ports cannot be outputs,
+and target ports cannot be inputs. The existing insertion/host intersection
+lemmas identify the corresponding boundary index, whose attachment belongs to
+the hole's original source or target list.
+\end{proof}
+\lean{Graph/PlugSearchReflection}{33}{37}{Linear.PlugSearchReflection.source_boundary}
+\lean{Graph/PlugSearchReflection}{40}{44}{Linear.PlugSearchReflection.target_boundary}
+
+
+\begin{theorem}[Ordinary search reflection]
+Away from the selected hole's boundary, every search step of the filled graph
+comes from a context step, with exactly the corresponding successor coordinate.
+\end{theorem}
+\begin{proof}
+Inspect the variable-trigger, operation-entry, and operation-return rules.
+For a retained edge, recover its label and singleton source, or read back its
+operation view. In the return case, injectivity of the host map recovers the
+indexed argument lookup. These data construct a context step. Its plugged
+step and the original step have the same successor by search determinism.
+An inserted interacting edge instead forces the appropriate boundary case by
+the preceding incidence lemmas, contrary to the hypothesis.
+\end{proof}
+\lean{Graph/PlugSearchReflection}{47}{107}{Linear.PlugSearchReflection.reflect}
+
+
+\Needspace{10\baselineskip}
+\subsection{The stationary criterion for ordinary contexts}
+
+\begin{lemma}[Shallow transport and one-way exclusion]
+Every context search run survives filling its hole. A one-way filling rules
+out an operation-reachable term vertex at a hole output.
+\end{lemma}
+\begin{proof}
+Transport the run by induction, using preservation of a context search step
+under plugging. For exclusion, write the hole target as an indexed output
+port, extract its operation path inside the replacement, transfer the term
+type through the boundary signature, and apply one-wayness.
+\end{proof}
+The other-input condition for one hole requires immediate rewrite at every
+term-typed source distinct from the designated source.
+\lean{Graph/StationaryPlug}{14}{20}{Linear.StationaryPlug.steps}
+\lean{Graph/StationaryPlug}{23}{30}{Linear.StationaryPlug.oneWay_target}
+\lean{Graph/StationaryPlug}{33}{35}{Linear.StationaryPlug.OtherInputsTrigger}
+
+
+\begin{theorem}[Ordinary stationary prefix replay]
+For a one-way filling satisfying the other-input condition, the prefix leading
+to the designated search position before a rewrite is an unchanged-context
+run. It replays with any new filling of the same interface.
+\end{theorem}
+\begin{proof}
+Use the three boundary exclusions already described for simultaneous expansion:
+normal-run uniqueness at the same input, immediate rewrite at another input,
+and one-way exclusion at an output. The single-hole reflection theorem then
+extracts each context step by induction on the remaining prefix. Lemma~24
+supplies the chosen search visit, and ordinary plugging transports the
+extracted run to the new filling. No proof of rootedness of the reduct is
+included among these assumptions.
+\end{proof}
+\lean{Graph/StationaryPlug}{40}{71}{Linear.StationaryPlug.prefix_away}
+\lean{Graph/StationaryPlug}{74}{97}{Linear.StationaryPlug.extract_prefix}
+\lean{Graph/StationaryPlug}{101}{113}{Linear.StationaryPlug.replay}
+
+
+\begin{lemma}[Closing a simple context]
+A focus-free, hole-free replacement plugged into a focus-free simple context
+produces a focus-free, hole-free graph.
+\end{lemma}
+\begin{proof}
+Focus freedom is checked separately on retained and inserted edges. A hole
+occurrence either comes from the replacement, contradicting its hole freedom,
+or from a retained context edge. Simplicity forces that edge to be the selected
+hole, contradicting retention.
+\end{proof}
+\termdef{stationary-rewrite}
+\begin{theorem}[Stationary rewriting preserves rootedness]
+Let $C$ be a focus-free simple context and $H$ a focus-free, hole-free one-way
+filling. Fix an input $i$ of term type and impose the immediate-rewrite
+condition at other term inputs. Replacing $C[\mathsf{rewrite};_i H]$ by
+$C[?;_i K]$, for any focus-free, hole-free $K$ of the same interface, preserves
+rootedness, allowing arbitrary literal endpoint names.
+\end{theorem}
+\begin{proof}
+The preceding lemma certifies both erased whole graphs. Commutation of focus
+insertion with plugging identifies the actual endpoints with their specified
+whole-graph coordinates. Reflect the source's rootedness to a coordinate run,
+apply ordinary stationary replay, and realize the resulting target run.
+Transport both endpoint predicates through their focus-preserving isomorphisms.
+\end{proof}
+\lean{Graph/StationaryPlug}{117}{129}{Linear.StationaryPlug.filled_conditions}
+\lean{Graph/StationaryPlug}{134}{170}{Linear.StationaryPlug.rooted}
+
+
+\Needspace{10\baselineskip}
+\subsection{Rootedness of the concrete substitution rule}
+
+\termdef{blocked-input}
+\begin{lemma}[Blocked inputs imply one-wayness]
+If no operation edge can leave a term input, the graph is one-way.
+\end{lemma}
+\begin{proof}
+Induct on the length of a reverse operation trace ending at that input. An
+empty trace starts at the input. For a nonempty trace, induction identifies
+the source of its last relevant edge with the input, contradicting the blocked
+operation-source condition. Thus an operation path from that input to a
+boundary output would identify an input with an output, which is impossible.
+\end{proof}
+\begin{corollary}[The variable prefix is one-way]
+Prefixing any one-input graph by the unary variable edge produces a one-way graph.
+\end{corollary}
+\begin{proof}
+There is only one input index. The new variable edge owns that input's source
+incidence. Any operation leaving it would be the same edge by source
+uniqueness, contradicting its variable label.
+\end{proof}
+\lean{Graph/SubstitutionRefocusing}{11}{24}{Linear.oneWay_of_blocked_inputs}
+\lean{Graph/SubstitutionRefocusing}{29}{39}{Linear.Substitution.prefix_oneWay}
+
+
+\begin{lemma}[Interface and single-input facts]
+A one-input hole has no non-designated input, so its other-input condition is
+vacuous. Reindexing equal interfaces commutes with initial focus insertion
+and preserves one-wayness and hole freedom.
+\end{lemma}
+\begin{proof}
+For the first statement, recover the boundary index of a source occurrence;
+the input signature has length one, so that index is the designated one.
+For interface transport, eliminate the two interface equalities. The claims
+reduce to reflexive reboundary transport; focus insertion uses congruence of
+the graph-valued constructor. The same equality elimination proves preservation
+of one-wayness and closure.
+\end{proof}
+\lean{Graph/SubstitutionRefocusing}{42}{51}{Linear.Substitution.single_input}
+\lean{Graph/SubstitutionRefocusing}{54}{63}{Linear.Substitution.transport_insert}
+\lean{Graph/SubstitutionRefocusing}{66}{68}{Linear.Substitution.oneWay_transport}
+\lean{Graph/SubstitutionRefocusing}{71}{73}{Linear.Substitution.holeFree_transport}
+
+
+\begin{theorem}[Concrete substitution preserves rootedness]
+Every transition of the concrete substitution relation preserves rootedness.
+\end{theorem}
+\begin{proof}
+Unpack its simple context, bound graph $G_S$, and endpoint isomorphisms.
+Take the old filling to be the variable-prefixed $G_S$, and the new filling
+to be $G_S$, both transported to the hole's interface. The old filling is
+one-way by the variable-prefix corollary, and the single-input lemma supplies
+the other-input clause. Focus freedom and closure follow from the existing
+prefix theorems and interface transport. Transported focus insertion identifies
+the two original fragments with the stationary fragments. Apply the ordinary
+stationary rootedness theorem to the given endpoints.
+\end{proof}
+\paragraph{Relation to the paper's stability assumption.}
+Lemma~3 of the paper assumes that $G_S$ is stable for its refocusing conclusion.
+For the unary linear substitution rule formalized here, the argument above is
+stronger: the variable prefix itself is one-way, independently of $G_S$, and
+there are no other inputs to check. Stability is neither added to the
+transition definition nor replaced by an assumed refocusing field. This
+observation concerns this rule; it is not a statement about the copying UAM.
+\lean{Graph/SubstitutionRefocusing}{80}{104}{Linear.State.substitution_rooted}
+
+
+\Needspace{10\baselineskip}
+\subsection{Determinism despite different context decompositions}
+
+\begin{lemma}[Focus preservation from recursive graph isomorphism]
+A recursive graph isomorphism between uniquely focussed graphs preserves their
+distinguished focuses and modes.
+\end{lemma}
+\begin{proof}
+Primitive-label preservation carries the first focus label to the image edge.
+Uniqueness of the second focus identifies that image edge and its mode.
+\end{proof}
+\begin{definition}[Resuming a variable]
+On a graph with a selected variable edge, change only that edge's label to a
+search focus. The old and new signatures are both one term input and one term
+output, so the graph remains well-typed.
+\end{definition}
+\lean{Graph/SubstitutionDeterminism}{9}{13}{Linear.Focussed.deepIsoOfGraph}
+\lean{Graph/SubstitutionDeterminism}{17}{27}{Linear.Substitution.resumeVariable}
+
+
+\begin{lemma}[Resumption respects isomorphism]
+An isomorphism carrying one selected variable to another induces an isomorphism
+between their resumed graphs.
+\end{lemma}
+\begin{proof}
+Keep the vertex and edge bijections and all incidence equations. At the selected
+edge both new labels are the same search focus. At another edge, injectivity
+prevents its image being the selected target edge, so the original recursive
+label relation still applies.
+\end{proof}
+\termdef{substitution-presentation}
+\begin{definition}[Substitution presentation]
+A presentation consists of the erased base graph, focus freedom and closure,
+a rewrite-mode coordinate, its adjacent variable edge and singleton source
+equation, an isomorphism from realizing that coordinate to the actual source,
+and an isomorphism from the variable-resumed base to the actual target.
+These are proved data extracted from a substitution transition.
+\end{definition}
+\lean{Graph/SubstitutionDeterminism}{30}{52}{Linear.Substitution.resumeVariable_iso}
+\lean{Graph/SubstitutionDeterminism}{56}{66}{Linear.Substitution.Presentation}
+
+
+\begin{theorem}[Uniqueness from two presentations]
+Two presentations of the same source yield recursively isomorphic focussed targets.
+\end{theorem}
+\begin{proof}
+Compose their source isomorphisms and recover the underlying-graph isomorphism
+carrying the two selected coordinates to each other. The first variable's
+mapped singleton source is therefore the source of the second variable.
+Source uniqueness identifies the two edges. Resumption respects this
+isomorphism; compose it with the two target isomorphisms. The resulting graph
+isomorphism preserves focus by uniqueness.
+\end{proof}
+\lean{Graph/SubstitutionDeterminism}{70}{83}{Linear.Substitution.Presentation.deterministic}
+
+
+\begin{lemma}[Presentations are constructed from substitution]
+Relabelling the selected variable in a plugged variable prefix gives a graph
+isomorphic to the ordinary reduct. Every substitution transition consequently
+supplies a presentation.
+\end{lemma}
+\begin{proof}
+For the first claim use identity bijections: the two graphs have exactly the
+same carriers, vertex labels, and incidence lists. Only the selected variable
+label changes to a search focus. Inspect retained context edges, old filling
+edges, and the added singleton separately. Reboundary transport merely maps
+the same ports on both sides. For extraction, use the plugged variable prefix
+as base graph, certify its focus freedom and closure, and choose its new
+variable edge. Focus-insertion commutation and interface transport give the
+source isomorphism. The relabelling lemma gives the target isomorphism.
+\end{proof}
+\begin{theorem}[Substitution determinism]
+Two concrete substitutions from the same state have targets isomorphic at all
+box depths, preserving their focuses. Their contexts and fragment interfaces
+need not coincide.
+\end{theorem}
+\begin{proof}
+Extract both presentations and apply their uniqueness theorem.
+\end{proof}
+\lean{Graph/SubstitutionDeterminism}{87}{149}{Linear.Substitution.resume_prefix_iso}
+\lean{Graph/SubstitutionDeterminism}{153}{177}{Linear.Substitution.presentation}
+\lean{Graph/SubstitutionDeterminism}{183}{188}{Linear.State.substitution_deterministic}
+
+
+\Needspace{10\baselineskip}
+\subsection{The full UAM structural theorem}
+
+\termdef{determinism-modulo}
+\begin{definition}[Determinism modulo isomorphism]
+A relation on actual named states is deterministic when two successors of the
+same source are related by a recursive focus-preserving isomorphism.
+Raw carrier names are not required to be equal.
+\end{definition}
+\termdef{actual-refocusing}
+\begin{definition}[Refocusing of actual-state transitions]
+A relation is refocusing when it sends every rooted source to a rooted target,
+using the rooted predicate already defined on recursive state classes.
+\end{definition}
+\lean{Graph/UAMStructure}{8}{9}{Linear.DeterministicModulo}
+\lean{Graph/UAMStructure}{12}{13}{Linear.RefocusingStates}
+
+
+\begin{theorem}[Full-UAM determinism]
+The full UAM is deterministic modulo recursive isomorphism if and only if its
+extrinsic behaviour is deterministic in that sense.
+\end{theorem}
+\begin{proof}
+For sufficiency, inspect the two transitions. Two search steps agree by search
+determinism. Two substitutions agree by the new substitution theorem. Two
+extrinsic steps agree by the supplied behaviour condition. Search and rewrite
+cannot coexist at a source because their focus modes are exclusive. A
+substitution and computation cannot coexist because source uniqueness would
+identify a variable with an active operation. These exclusions discharge all
+mixed cases. Necessity follows because every behaviour step is a UAM step.
+\end{proof}
+\lean{Graph/UAMStructure}{27}{40}{Linear.UAM.deterministic}
+\lean{Graph/UAMStructure}{43}{47}{Linear.UAM.deterministic_iff}
+
+
+\begin{theorem}[Full-UAM refocusing]
+Intrinsic transitions preserve rootedness. The full UAM is refocusing if and
+only if its extrinsic behaviour preserves rootedness.
+\end{theorem}
+\begin{proof}
+Search preserves rootedness by appending its step to the rooted run.
+Substitution preserves it by the stationary argument. These are the two
+intrinsic cases. The full machine adds only extrinsic transitions, handled
+by the behaviour hypothesis. Conversely, restrict a full refocusing law to
+those extrinsic transitions.
+\end{proof}
+\lean{Graph/UAMStructure}{19}{23}{Linear.UAM.intrinsic_refocusing}
+\lean{Graph/UAMStructure}{50}{54}{Linear.UAM.refocusing}
+\lean{Graph/UAMStructure}{57}{61}{Linear.UAM.refocusing_iff}
+
+
+\begin{corollary}[Rooted execution invariant]
+Under the behaviour refocusing condition, every finite full-UAM execution
+preserves rootedness. Every execution from an initial state therefore ends
+in a rooted state. The empty-behaviour machine is both deterministic and
+refocusing without additional assumptions.
+\end{corollary}
+\begin{proof}
+Induct on the full execution and apply one-step refocusing at each successor.
+Initial states are rooted by the zero-step initial run. For empty behaviour,
+both required behaviour properties follow by elimination of its false step
+relation; apply the two structural theorems.
+\end{proof}
+\lean{Graph/UAMStructure}{64}{68}{Linear.UAM.rooted_execution}
+\lean{Graph/UAMStructure}{71}{73}{Linear.UAM.initial_execution_rooted}
+\lean{Graph/UAMStructure}{76}{79}{Linear.UAM.empty_structural}
+
+
+\Needspace{10\baselineskip}
+\subsection{Regression executions and the remaining work}
+
+The variable-prefix example has an actual one-step initial search run to its
+rewrite-focused substitution source, obtained by the variable trigger rule.
+Realization proves that source rooted. The concrete substitution theorem then
+proves its reduct rooted, and the determinism theorem identifies the reduct
+class of every alternative substitution decomposition. Applying Lemma~24 to
+the rooted source produces a strictly positive restart suffix; this exercises
+the theorem on an actual execution rather than an empty hypothesis.
+\lean{Graph/UAMStructureExamples}{9}{15}{Linear.UAMStructureExamples.source_rooted}
+\lean{Graph/UAMStructureExamples}{18}{19}{Linear.UAMStructureExamples.substitution_rooted}
+\lean{Graph/UAMStructureExamples}{22}{25}{Linear.UAMStructureExamples.substitution_unique}
+\lean{Graph/UAMStructureExamples}{28}{35}{Linear.UAMStructureExamples.source_revisit}
+
+
+The earlier singleton extrinsic behaviour has a genuine compute transition.
+Its two successor witnesses identify the same target, proving determinism.
+That target is initial, so it is rooted independently of the source, proving
+refocusing. Applying the full-UAM theorems supplies both structural properties
+for this nonempty behaviour.
+\lean{Graph/UAMStructureExamples}{38}{40}{Linear.UAMStructureExamples.behaviour_deterministic}
+\lean{Graph/UAMStructureExamples}{43}{45}{Linear.UAMStructureExamples.behaviour_refocusing}
+\lean{Graph/UAMStructureExamples}{48}{50}{Linear.UAMStructureExamples.full_structural}
+
+
+\paragraph{Completed obligation and honest scope.}
+Appendix~\ref{app:remaining-work} now has two items: constructing the complete
+concrete specimen interface and its observation, safety, robustness, and lifting
+bridges; and instantiating the final contextual robustness theorem. The present
+results prove actual transition properties, not the missing specimen laws.
+They do not assert that raw named-state successors are literally equal, or
+that arbitrary behaviour is deterministic or refocusing. The estimate of
+completed mathematical effort is about 88\%, with a plausible range of
+74--93\%; this is a subjective planning estimate, not a declaration count.
+
