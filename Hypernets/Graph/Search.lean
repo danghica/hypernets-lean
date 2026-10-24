@@ -1,7 +1,7 @@
 import Hypernets.Graph.Focused
 
 /-! The five search rules of Fig. 9(a–e), in coordinates on the underlying
-hypernet. Realization by explicit focus-edge insertion/removal is not yet proved. -/
+hypernet. StateSearch lifts these to explicit states; local-rewrite adequacy remains open. -/
 namespace Hypernets.Linear
 open Graph
 variable {Op : Type} {ops : Operations Op}

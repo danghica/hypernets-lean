@@ -8,3 +8,4 @@ import Hypernets.Graph.CompositionExamples
 import Hypernets.Graph.FocusedExamples
 import Hypernets.Graph.SearchExamples
 import Hypernets.Graph.RealizationExamples
+import Hypernets.Graph.ErasureExamples

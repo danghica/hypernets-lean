@@ -1,8 +1,8 @@
 import Hypernets.Graph.FocusInsertion
 
 /-! Typed search positions realized as actual hole-free focussed states.
-This supplies insertion and incidence recovery; adequacy for arbitrary focussed
-states and the local contextual rewrite presentation remains open. -/
+This supplies insertion and incidence recovery. FocusRoundTrip handles arbitrary
+closed focussed states; adequacy for contextual local rewrites remains open. -/
 namespace Hypernets.Linear
 open Graph
 variable {Op : Type} {ops : Operations Op}

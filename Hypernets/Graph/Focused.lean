@@ -243,7 +243,7 @@ theorem fillings_boundary_agreement {d I O} {C G H : Hypernet ops d I O}
 end Focussed
 
 /-- Concrete states have one term input, no outputs, no holes and a focus.
-This defines the state space only; Fig. 9 transitions remain to be supplied. -/
+StateSearch supplies erasure-based search; the full UAM remains to be supplied. -/
 structure State (ops : Operations Op) (d : Nat) where
   graph : Hypernet ops d [.term] []
   focussed : Focussed graph
