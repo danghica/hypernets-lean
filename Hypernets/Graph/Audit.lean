@@ -1,5 +1,5 @@
 import Hypernets.Graph.ExpansionSearchExamples
-import Hypernets.Graph.SetHierarchyExamples
+import Hypernets.Graph.PaperEncodingExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -387,3 +387,19 @@ import Hypernets.Graph.SetHierarchyExamples
 #print axioms Hypernets.Linear.SetHierarchy.normalize_raiseBy
 #print axioms Hypernets.Linear.SetHierarchy.BoxFamily.uniform_normalize
 #print axioms Hypernets.Linear.SetHierarchyExamples.forgetting_binders_fails
+
+#print axioms Hypernets.Graph.NamedNet.naming
+#print axioms Hypernets.Graph.NamedNet.ofSet_iso
+#print axioms Hypernets.Linear.PaperEncoding.same_content_signature
+#print axioms Hypernets.Linear.PaperEncoding.roundtrip
+#print axioms Hypernets.Linear.PaperEncoding.named_roundtrip
+#print axioms Hypernets.Linear.PaperEncoding.encode_iso_iff
+#print axioms Hypernets.Linear.PaperEncoding.decode_encodeClass
+#print axioms Hypernets.Linear.PaperEncoding.encode_decodeClass
+#print axioms Hypernets.Linear.PaperEncoding.class_relation
+#print axioms Hypernets.Linear.PaperEncoding.equal_labels_same_types
+#print axioms Hypernets.Linear.PaperEncoding.representable
+#print axioms Hypernets.Linear.PaperEncoding.encode_raiseBy
+#print axioms Hypernets.Linear.PaperEncodingExamples.distinct_contents
+#print axioms Hypernets.Linear.PaperEncodingExamples.repaired_counterexample
+#print axioms Hypernets.Linear.PaperEncodingExamples.context_properties
