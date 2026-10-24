@@ -17,3 +17,5 @@ import Hypernets.Graph.AlternatingFillings
 import Hypernets.Graph.SequentialExamples
 import Hypernets.Graph.InterchangeExamples
 import Hypernets.Graph.DeepSpecimenExamples
+import Hypernets.Graph.ExpansionSearch
+import Hypernets.Graph.ExpansionSearchExamples

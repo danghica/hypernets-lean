@@ -1,4 +1,4 @@
-import Hypernets.Graph.DeepSpecimenExamples
+import Hypernets.Graph.ExpansionSearchExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -263,3 +263,25 @@ import Hypernets.Graph.DeepSpecimenExamples
 #print axioms Hypernets.Linear.DeepSpecimenExamples.specimen_not_rooted
 #print axioms Hypernets.Linear.DeepSpecimenExamples.specimen_boundary
 #print axioms Hypernets.Linear.DeepSpecimenExamples.no_shallow_closed_filling
+
+#print axioms Hypernets.Linear.ExpansionSearch.step
+#print axioms Hypernets.Linear.ExpansionSearch.successor_unique
+#print axioms Hypernets.Linear.DeepFillingEdge.search_copies
+#print axioms Hypernets.Linear.ExpansionSearch.steps
+#print axioms Hypernets.Linear.ExpansionSearch.final_run_unique
+#print axioms Hypernets.Linear.TypedPosition.realize_steps
+#print axioms Hypernets.Linear.TypedPosition.realize_rooted
+#print axioms Hypernets.Linear.ExpansionSearch.operation_readback
+#print axioms Hypernets.Linear.ExpansionSearch.reflect_or_boundary
+#print axioms Hypernets.Linear.ExpansionSearch.step_iff
+#print axioms Hypernets.Linear.ExpansionSearch.steps_reflect
+#print axioms Hypernets.Linear.ExpansionSearch.final_runs_iff
+#print axioms Hypernets.Linear.deepFilling_searchOrigins
+#print axioms Hypernets.Linear.ExpansionSearch.paired_steps
+#print axioms Hypernets.Linear.ExpansionSearch.paired_rooted
+#print axioms Hypernets.Linear.ExpansionSearch.actual_run_endpoint
+#print axioms Hypernets.Linear.ExpansionSearchExamples.deep_return_rooted
+#print axioms Hypernets.Linear.ExpansionSearchExamples.deep_return_final
+#print axioms Hypernets.Linear.ExpansionSearchExamples.deep_return_cost
+#print axioms Hypernets.Linear.ExpansionSearchExamples.filled_hole_triggers
+#print axioms Hypernets.Linear.ExpansionSearchExamples.reflection_needs_boundary
