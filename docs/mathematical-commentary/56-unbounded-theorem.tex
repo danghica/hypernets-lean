@@ -1,0 +1,606 @@
+\Needspace{20\baselineskip}
+\section{The full unbounded UAM and contextual sufficiency}
+\label{sec:unbounded-theorem}
+The final depth-transfer obligation is discharged here. Both contextual
+sufficiency clauses hold on the union of all finite depths, with genuinely
+global extrinsic behaviour. An execution is not restricted by the depth of
+its initial presentation. Every finite execution has a common finite-depth
+presentation with exactly the same transition count.
+
+The proof retains the mathematical hypotheses of Theorem~6: deterministic
+and refocusing behaviour, output closure of the pre-template, the appropriate
+input-safety and robustness alternatives, and a reasonable cost triple.
+These are not asserted for every language or every relation. In particular,
+safety and robustness are evaluated on the \emph{unbounded} machine. We do
+not infer them from fixed-depth safety: a state stuck at one depth could have
+a successor at a larger depth. The bridges below start with the concrete
+paper predicates, not an assumed abstract specimen-system certificate.
+
+The final contextual relation uses all finite representatives of a global
+fragment class and all finite original contexts, including nested holes.
+Common representatives exist at every sufficiently large bound. This makes
+representation depth an implementation device, not a restriction on the
+contexts or executions being quantified. The copying UAM and the paper's
+language-specific examples remain outside this general-theorem milestone.
+
+\Needspace{20\baselineskip}
+\subsection{Substitution and extrinsic computation}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Renaming and interface transport]
+Padding an ordinary labelled isomorphism keeps its vertex and edge bijections and applies the label map to its label equation. An isomorphism also transports across equal ordered boundary lists on both sides.
+\end{lemma}
+
+\begin{proof}
+All incidence equations are unchanged by relabelling. For boundary transport, eliminate the two interface equalities, reducing the assertion to the original isomorphism.
+\end{proof}
+
+\lean{Graph/DepthSubstitution}{10}{18}{iso}
+
+\lean{Graph/DepthSubstitution}{64}{70}{reboundaryIso}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Padding commutes with plugging]
+Pad a plugged graph, or first pad its context and replacement and then plug with the transported interface equalities. The resulting graphs are isomorphic.
+\end{lemma}
+
+\begin{proof}
+Use identity maps on the sum carriers. A retained edge has the original context incidence; an inserted edge has the replacement incidence composed with boundary identification. In both cases compose the port maps, then inspect internal, input and output ports. Boundary casts keep the same index values, so the corresponding context source and target ports agree.
+\end{proof}
+
+\lean{Graph/DepthSubstitution}{19}{63}{plug}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[The substitution fragments commute with padding]
+The variable prefix and the before and after fragments of the concrete substitution rule each commute with depth padding up to labelled graph isomorphism.
+\end{lemma}
+
+\begin{proof}
+For the prefix, reuse the focus-insertion padding isomorphism, replacing its new-edge label equation by the variable-label equation. For the before fragment compose insertion-padding with insertion-renaming along the prefix isomorphism. The after fragment is directly the focus-insertion padding isomorphism.
+\end{proof}
+
+\lean{Graph/DepthSubstitution}{71}{85}{variablePrefix}
+
+\lean{Graph/DepthSubstitution}{86}{92}{before}
+
+\lean{Graph/DepthSubstitution}{93}{97}{after}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Simple contexts under padding]
+A local occurrence fibre has a bijection to its padded fibre. Hence a shallow simple context stays simple: its distinguished hole label is unchanged, it stays focus-free, and all holes still belong to its distinguished edge.
+\end{lemma}
+
+\begin{proof}
+Primitive fibres are identical. For a box, retain the shallow occurrence and apply the already proved nested-body inventory. To establish ownership, map any padded hole occurrence back through the fibre bijection, use the original ownership condition, and observe that the outer owner edge never changed.
+\end{proof}
+
+\lean{Graph/DepthSubstitution}{98}{113}{fiber}
+
+\lean{Graph/DepthSubstitution}{114}{128}{simple}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Preservation of concrete substitution]
+Each concrete substitution step pads to one concrete substitution step.
+\end{lemma}
+
+\begin{proof}
+Unpack its simple context, shared fragment and endpoint isomorphisms. Pad the context and fragment, transporting focus freedom and hole freedom. Use the two fragment-padding isomorphisms under plugging, followed by the plugging-padding isomorphism and the padded original endpoint isomorphisms. These construct the full witnesses of the concrete substitution definition; no rule compatibility is assumed.
+\end{proof}
+
+\lean{Graph/DepthSubstitution}{129}{140}{substitution}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Compute shape and full class transitions]
+Compute shape is preserved and reflected by padding. A full class transition pads whenever the chosen extrinsic behaviours preserve padding.
+\end{lemma}
+
+\begin{proof}
+Compute shape consists of rewrite and search modes, an active primitive operation and its adjacency to the focus. Modes and incidence are unchanged; the primitive-label equivalence gives both directions. For a full class step, split search, substitution and extrinsic computation. Use the proved search and substitution results, or the supplied extrinsic preservation map respectively.
+\end{proof}
+
+\lean{Graph/DepthSubstitution}{141}{149}{compute_iff}
+
+\lean{Graph/DepthSubstitution}{150}{158}{uamClass}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-behaviour}
+
+\begin{definition}[A genuinely global behaviour]
+Compute shape on two finite classes is witnessed by actual representatives with the prescribed active operation and modes. A global behaviour is a relation on unbounded states whose every edge admits such a finite compute-shape witness. No common depth is fixed for the relation, its sources, or its successors. Determinism and refocusing are separate hypotheses.
+\end{definition}
+
+\lean{Graph/UnboundedUAM}{8}{13}{ComputeAt}
+
+\lean{Graph/UnboundedUAM}{14}{18}{Behaviour}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Finite restrictions of global behaviour]
+The image of a finite class is unchanged by padding. Restrict a global behaviour at depth $n$ by requiring its global edge and actual compute shape of the chosen representatives. These finite restrictions preserve padding.
+\end{lemma}
+
+\begin{proof}
+The quotient image equation is one-step padding invariance. For an extrinsic edge, the two global endpoint images remain equal after padding and the concrete compute-shape equivalence supplies admissibility. Thus preservation is proved from the global definition, rather than required of an arbitrary family of behaviours.
+\end{proof}
+
+\lean{Graph/UnboundedUAM}{19}{23}{ofClass_padding}
+
+\lean{Graph/UnboundedUAM}{24}{29}{Behaviour.atDepth}
+
+\lean{Graph/UnboundedUAM}{30}{39}{Behaviour.padding}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[The compatible full-machine family]
+At each depth use the original full class machine with the restriction of the global behaviour. This whole family preserves depth padding.
+\end{lemma}
+
+\begin{proof}
+Apply full class transition preservation to the restrictions at successive depths and use the derived extrinsic padding theorem.
+\end{proof}
+
+\lean{Graph/UnboundedUAM}{40}{42}{RelationsOf}
+
+\lean{Graph/UnboundedUAM}{43}{46}{full_preserved}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-uam-step}
+
+\begin{definition}[The unbounded transition relation]
+The intrinsic relation is the union of the original empty-behaviour machines. A full unbounded step is either intrinsic or belongs to the given global extrinsic relation.
+\end{definition}
+
+\lean{Graph/UnboundedUAM}{47}{50}{Intrinsic}
+
+\lean{Graph/UnboundedUAM}{51}{53}{UAMStep}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Exact one-step operational adequacy]
+A union step of the finite restricted full machines is exactly a full unbounded UAM step.
+\end{lemma}
+
+\begin{proof}
+In the forward direction unpack its finite representatives. An intrinsic edge supplies an empty-behaviour witness; an extrinsic edge supplies the global edge from its restriction. Conversely an intrinsic witness is also a full-machine witness. For a global extrinsic edge, its compute-shape certificate supplies actual representatives; combine the same global edge with their shape to obtain an edge of the finite restriction.
+\end{proof}
+
+\lean{Graph/UnboundedUAM}{54}{90}{full_step_iff}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[The unbounded machine]
+Final unbounded states have no outgoing full-machine transition. Consequently the global relation and descended finality form a machine in the existing transition-system interface.
+\end{lemma}
+
+\begin{proof}
+Reflect a proposed transition to finite representatives and rewrite finality at its source. The fixed-depth class final-normal theorem contradicts that edge.
+\end{proof}
+
+\lean{Graph/UnboundedUAM}{91}{98}{final_normal}
+
+\lean{Graph/UnboundedUAM}{99}{104}{machine}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Exact full runs and termination]
+An unbounded full-machine run of length $k$ is precisely a run of length $k$ in some finite restricted class machine between representatives of its endpoints. Termination additionally agrees with finality of the finite target.
+\end{lemma}
+
+\begin{proof}
+Use the generic finite-run theorem with the proved full-family compatibility and convert edges using one-step adequacy. For termination rewrite the descended final predicate at the endpoint image. The common bound is chosen after the entire run, and can exceed the initial presentation depth.
+\end{proof}
+
+\lean{Graph/UnboundedUAM}{105}{116}{full_run_iff}
+
+\lean{Graph/UnboundedUAM}{117}{127}{full_termination_iff}
+
+\Needspace{20\baselineskip}
+\subsection{Determinism, rootedness and finite-source locality}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Renaming invariance of global behaviour restrictions]
+Compute shape survives recursive focus-preserving renaming. Each restricted behaviour therefore respects recursive isomorphisms of both endpoints.
+\end{lemma}
+
+\begin{proof}
+Transport the active operation label and its source list through the source graph isomorphism, using preservation of the focus target and both modes. The endpoint classes of renamed states are equal, so the global edge is unchanged; only its admissibility proof needs transport.
+\end{proof}
+
+\lean{Graph/UnboundedDeterminism}{9}{17}{compute_iso}
+
+\lean{Graph/UnboundedDeterminism}{18}{27}{Behaviour.respectsIso}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-determinism}
+
+\begin{lemma}[Global extrinsic determinism]
+Determinism of the global extrinsic relation means equal-source edges have equal targets as unbounded states. It implies determinism modulo recursive isomorphism of each finite restriction.
+\end{lemma}
+
+\begin{proof}
+Apply global determinism to the two projected extrinsic edges. Injectivity of the fixed-depth class embedding gives equality of target classes; quotient exactness gives their focussed recursive isomorphism.
+\end{proof}
+
+\lean{Graph/UnboundedDeterminism}{28}{31}{Behaviour.Deterministic}
+
+\lean{Graph/UnboundedDeterminism}{32}{38}{Behaviour.deterministicAt}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Determinism of the full unbounded UAM]
+If every relation in a padding-compatible family is deterministic, its union relation is deterministic. In particular, deterministic global extrinsic behaviour makes the whole unbounded UAM deterministic.
+\end{lemma}
+
+\begin{proof}
+Two staged edges at the same source reduce to determinism in that layer. For union edges, their source presentations agree after possibly different paddings. Pad both edges, apply staged determinism, and project the equal targets. For the full UAM, the existing finite class determinism theorem applies because both renaming invariance and finite extrinsic determinism have just been proved.
+\end{proof}
+
+\lean{Graph/UnboundedDeterminism}{39}{47}{at_deterministic}
+
+\lean{Graph/UnboundedDeterminism}{48}{61}{step_deterministic}
+
+\lean{Graph/UnboundedDeterminism}{62}{69}{deterministic}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Transfer in the original execution language]
+The auxiliary exact-run relation agrees with the existing machine execution relation. Full-UAM finite-run adequacy consequently holds for the same execution type used throughout the counting-simulation development.
+\end{lemma}
+
+\begin{proof}
+Convert either run presentation by induction, preserving the empty and successor cases. Apply these conversions on both sides of full-run adequacy.
+\end{proof}
+
+\lean{Graph/UnboundedDeterminism}{70}{82}{run_steps_iff}
+
+\lean{Graph/UnboundedDeterminism}{83}{92}{machine_steps_iff}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Roots and all search successors]
+Padding commutes with canonical initial attachment. Moreover every search successor of a padded class is itself the padding of an original search successor.
+\end{lemma}
+
+\begin{proof}
+For the root use the realisation-padding isomorphism at the initial position. For a successor, unpack its position on the padded erased graph, use the same coordinate as an original typed position, reflect its coordinate step, and realise it. The realisation isomorphism identifies the padded result with the supplied target.
+\end{proof}
+
+\lean{Graph/DepthRoots}{10}{15}{root}
+
+\lean{Graph/DepthRoots}{16}{30}{search_successor}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Exact rootedness under padding]
+Every search execution starting in the padding image remains in that image, with exactly the same length. A padded class is rooted exactly when its original class is rooted.
+\end{lemma}
+
+\begin{proof}
+Induct on the search run, using successor reflection to recover each original endpoint. For reflected rootedness, commute padding with the root, reflect its entire witnessing run and cancel the injective padding map at the target. For forward rootedness, pad every edge of the witnessing run.
+\end{proof}
+
+\lean{Graph/DepthRoots}{31}{43}{search_run_reflect}
+
+\lean{Graph/DepthRoots}{44}{57}{rooted_iff}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-rootedness}
+
+\begin{lemma}[Unbounded rootedness]
+Descend finite rootedness using its preservation and reflection. Its value at a class image is exactly finite rootedness. Equivalently, the unbounded state is reachable by search from an initial unbounded state.
+\end{lemma}
+
+\begin{proof}
+For the forward implication choose a representative, use its finite initial-search characterisation, and project the run. For the reverse implication use exact search-run adequacy, reflect initiality at the source, apply the finite characterisation, and project the rooted endpoint.
+\end{proof}
+
+\lean{Graph/UnboundedRoots}{8}{10}{Rooted}
+
+\lean{Graph/UnboundedRoots}{11}{14}{rooted_ofClass}
+
+\lean{Graph/UnboundedRoots}{15}{31}{rooted_iff_initial_run}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-refocusing}
+
+\begin{lemma}[Global refocusing]
+Global extrinsic refocusing is preservation of unbounded rootedness by extrinsic steps. It restricts to finite refocusing, extends to every full unbounded step, and hence makes all executions from an initial state rooted.
+\end{lemma}
+
+\begin{proof}
+Use the exact rootedness predicate at finite images to restrict the hypothesis. Reflect a full step to a finite machine and apply its existing full-UAM refocusing theorem. Finally induct on an execution, starting from the rootedness of an initial state.
+\end{proof}
+
+\lean{Graph/UnboundedRoots}{32}{35}{Behaviour.Refocusing}
+
+\lean{Graph/UnboundedRoots}{36}{41}{Behaviour.refocusingAt}
+
+\lean{Graph/UnboundedRoots}{42}{50}{rooted_step}
+
+\lean{Graph/UnboundedRoots}{51}{57}{initial_execution_rooted}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Non-rewrite global transitions are search]
+Mode is preserved by class padding, so non-rewrite mode descends to the union. Every full transition at such a source is a global search step.
+\end{lemma}
+
+\begin{proof}
+Mode preservation is quotient induction. Reflect the full step to finite actual representatives. Substitution and extrinsic computation both require rewrite mode, contradicting the source condition. The remaining search edge supplies the global search witness.
+\end{proof}
+
+\lean{Graph/UnboundedSearchLocality}{8}{12}{mode_padding}
+
+\lean{Graph/UnboundedSearchLocality}{13}{16}{NonRewrite}
+
+\lean{Graph/UnboundedSearchLocality}{17}{31}{nonrewrite_search}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Locality at a specified source depth]
+A global search successor can be represented at the depth of any specified finite source class. In particular, an enabled non-rewrite actual state admits an actual recursive search transition at its own depth.
+\end{lemma}
+
+\begin{proof}
+Lift the successor-image theorem to stages and then induct on the padding count. Given a global search witness, align its source presentation with the specified source, pad the edge to their common presentation, and reflect the iterations back. Projecting the resulting target gives the original global target. For a non-rewrite full edge first identify it as global search, then choose an actual representative of the recovered target.
+\end{proof}
+
+\lean{Graph/UnboundedSearchLocality}{32}{41}{search_next_reflect}
+
+\lean{Graph/UnboundedSearchLocality}{42}{52}{search_advance_reflect}
+
+\lean{Graph/UnboundedSearchLocality}{53}{65}{search_ofClass}
+
+\lean{Graph/UnboundedSearchLocality}{66}{71}{full_of_nonrewrite}
+
+\Needspace{20\baselineskip}
+\subsection{Concrete specimen systems and semantic hypotheses}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-specimen}
+
+\begin{definition}[Concrete unbounded specimens]
+A specimen is a finite depth paired with an existing concrete deep specimen: an original context, its focus, paired recursive fillings and closure proofs. Its two endpoints are the unbounded images of its actual filled states. The witnesses have real graph data; no locality law is stored in a specimen.
+\end{definition}
+
+\lean{Graph/UnboundedSpecimens}{8}{10}{Specimen}
+
+\lean{Graph/UnboundedSpecimens}{11}{13}{left}
+
+\lean{Graph/UnboundedSpecimens}{14}{17}{right}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[The proved unbounded specimen system]
+Finite class transitions project to full unbounded transitions. The concrete specimens form a specimen system on the unbounded machine, with every locality field proved.
+\end{lemma}
+
+\begin{proof}
+Rooted-step preservation is global refocusing and final agreement is the concrete boundary theorem. For an enabled settled specimen, its focus is non-rewrite. Reflect the enabled edge to an actual search edge at the specimen depth. The existing concrete settled-successor theorem then constructs a paired successor specimen at that depth; project its two search edges. The allowed-context, output-closure and refocusing hypotheses retain their original roles.
+\end{proof}
+
+\lean{Graph/UnboundedSpecimens}{18}{22}{project_step}
+
+\lean{Graph/UnboundedSpecimens}{23}{49}{system}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Mode on unbounded states]
+Repeated padding preserves mode, so quotient elimination defines the mode of an unbounded state. Its inequality to rewrite mode is exactly the earlier descended non-rewrite predicate.
+\end{lemma}
+
+\begin{proof}
+Induct on the padding count. For two equivalent presentations, compare their modes at their common padded representative. The predicate comparison is quotient induction.
+\end{proof}
+
+\lean{Graph/UnboundedSafety}{7}{12}{mode_advance}
+
+\lean{Graph/UnboundedSafety}{13}{17}{mode}
+
+\lean{Graph/UnboundedSafety}{18}{26}{nonrewrite_iff}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-quasi}
+
+\begin{definition}[Concrete global quasi-specimens and settledness]
+A quasi-specimen retains an unconditional concrete specimen witness and equality of its mode to both endpoint modes. When both endpoints are rooted, require rootedness of the witness endpoints and the prescribed two comparisons. The non-rewrite version additionally excludes rewrite mode. Settledness is the original backtrack-or-remote-search condition on the context focus.
+\end{definition}
+
+\lean{Graph/UnboundedSafety}{27}{31}{Quasi}
+
+\lean{Graph/UnboundedSafety}{32}{35}{NonRewriteQuasi}
+
+\lean{Graph/UnboundedSafety}{36}{39}{Settled}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-input-safety}
+
+\begin{definition}[Input safety on the unbounded machine]
+For every concrete specimen entering a hole in search mode, require one of the three paper alternatives: both sides reach globally stuck states; the sides reach a common settled specimen with costs $(1+k,l)$ related by $Q$; or both take positive runs of costs $(1+k,1+l)$ related by $Q$ to a non-rewrite quasi-specimen, whose two comparison relations are $P$-equivalences. All executions, stuckness and comparisons are evaluated on the full unbounded machine.
+\end{definition}
+
+\lean{Graph/UnboundedSafety}{40}{50}{InputSafe}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-robustness}
+
+\begin{definition}[Robustness on the unbounded machine]
+For every concrete remote rewrite specimen and every global successor $u$ of its left endpoint, require: at least one original endpoint is unrooted; or $u$ reaches a globally stuck state; or matching runs from $u$ and the right endpoint lead to a non-rewrite quasi-specimen. In the third case $Q$ relates costs $(1+k,l)$, and the two comparisons are refinements for $P$ and $R$. Global successors can require greater depth than the specimen.
+\end{definition}
+
+\lean{Graph/UnboundedSafety}{51}{61}{Robust}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[The concrete-to-abstract semantic bridges]
+The explicit global quasi, safety and robustness predicates supply the corresponding laws of the proved specimen system. Under deterministic behaviour and a reasonable triple they yield the unbounded forward counting simulation.
+\end{lemma}
+
+\begin{proof}
+For quasi witnesses, supply the conditional rooted conclusion and use mode agreement to exclude rewrite. Safety passes each alternative unchanged, applying the quasi bridge only to its third case. In robustness the system already supplies rooted endpoints, so only the unrooted alternative is impossible; pass the stuck alternative or bridge the matching quasi. Instantiate the existing counting-simulation theorem with these results.
+\end{proof}
+
+\lean{Graph/UnboundedSafety}{62}{68}{quasi_bridge}
+
+\lean{Graph/UnboundedSafety}{69}{78}{inputSafe_bridge}
+
+\lean{Graph/UnboundedSafety}{79}{88}{robust_bridge}
+
+\lean{Graph/UnboundedSafety}{89}{95}{countingSimulation}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-converse-robustness}
+
+\begin{definition}[The converse semantic hypotheses]
+A converse quasi-specimen uses the same original witness, with its right endpoint first and its left endpoint second. Converse robustness quantifies over successors of the original right endpoint, and uses the same three alternatives with the two witness endpoints exchanged. No symmetry of the pre-template or cost order is assumed.
+\end{definition}
+
+\lean{Graph/UnboundedConverse}{10}{16}{ConverseQuasi}
+
+\lean{Graph/UnboundedConverse}{17}{27}{ConverseRobust}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Converse bridges and counting simulation]
+The converse concrete predicates give the opposite specimen system its quasi and robustness laws. Together with input safety for $Q^{-1}$ they yield reverse counting simulation with the required original cost orientation.
+\end{lemma}
+
+\begin{proof}
+The witness is unchanged; exchange its endpoint roles in the rooted conclusion. Eliminate only the impossible unrooted robustness alternative. Apply the already proved converse counting-simulation theorem with the concrete safety and converse robustness bridges.
+\end{proof}
+
+\lean{Graph/UnboundedConverse}{28}{33}{converseQuasi_bridge}
+
+\lean{Graph/UnboundedConverse}{34}{43}{converseRobust_bridge}
+
+\lean{Graph/UnboundedConverse}{44}{51}{countingSimulation_converse}
+
+\Needspace{20\baselineskip}
+\subsection{Independent observations and the final theorem}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-observation}
+
+\begin{definition}[Unbounded independent observations]
+An observation context is an original independent context at any finite depth. To observe a fragment vector, independently fill and initialise that context using the previous construction, then take the image of the resulting finite state class in the union. Neither context membership nor observation mentions a pre-template or a specimen.
+\end{definition}
+
+\lean{Graph/UnboundedObservations}{9}{13}{ObservationContext}
+
+\lean{Graph/UnboundedObservations}{14}{24}{observations}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Concrete global initial lifting]
+Independent observations of related fragment vectors in an allowed context construct a remote rooted specimen whose unbounded endpoints are the observed states.
+\end{lemma}
+
+\begin{proof}
+Both observations provide actual finite class witnesses at the context depth. Apply the existing concrete initial-lifting theorem with the finite restriction of global behaviour and the derived finite refocusing property. Retain its specimen, remote and rooted proofs, and project the endpoint equalities into the union.
+\end{proof}
+
+\lean{Graph/UnboundedObservations}{25}{41}{initial_lifting}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Both contextual sufficiency clauses on the union]
+Under output closure, allowed-context invariance, refocusing, determinism and a reasonable triple, concrete global safety and robustness imply contextual refinement of related vectors. Safety for converse costs and converse robustness imply the reverse refinement. Supplying both sets of hypotheses gives contextual equivalence.
+\end{lemma}
+
+\begin{proof}
+Instantiate the abstract contextual theorems with the proved global specimen system, independent observations and the constructed initial-lifting proof. Global determinism and the concrete semantic bridges discharge every machine and interface premise. Pair the forward and reverse results for equivalence.
+\end{proof}
+
+\lean{Graph/UnboundedObservations}{42}{54}{sufficiency}
+
+\lean{Graph/UnboundedObservations}{55}{68}{sufficiency_converse}
+
+\lean{Graph/UnboundedObservations}{69}{76}{equivalence}
+
+\Needspace{10\baselineskip}
+
+\termdef{paper-refinement}
+
+\begin{definition}[Contextual refinement of depth-independent fragments]
+For global graph classes $G,H$ of the same ordered interface, quantify over every hole name, every finite depth and every pair of typed representatives interpreting to $G,H$. Require unbounded contextual refinement of their singleton fragment vectors in every original context of the independent observation interface. Quantifying over all representations permits as much unused depth as any context requires; no depth bound is imposed on execution.
+\end{definition}
+
+\lean{Graph/UnboundedTheorem}{12}{19}{PaperRefines}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Existence of common representations]
+A typed representative can be moved to every larger finite bound without changing its global interpretation. Every pair of global fragment classes therefore has typed representatives at a common bound and at every larger bound.
+\end{lemma}
+
+\begin{proof}
+Write the bound difference as a natural number and induct, applying interpretation invariance under raising at each successor. For a pair of global classes use interpretation surjectivity to choose representatives at bounds $n,k$, then raise each to any bound at least $n+k$. This prevents the universal representative formulation from holding merely because no representatives exist.
+\end{proof}
+
+\lean{Graph/UnboundedTheorem}{20}{31}{representative_at}
+
+\lean{Graph/UnboundedTheorem}{32}{48}{common_representatives}
+
+\Needspace{22\baselineskip}
+
+\begin{lemma}[The two clauses for global pre-templates]
+For a depth-independent pre-template, the forward and converse contextual sufficiency implications hold for its related global fragment classes. Both hypotheses together give the two directed contextual refinements.
+\end{lemma}
+
+\begin{proof}
+For arbitrary common-depth representatives, rewrite their interpretation equalities in the global pre-template relation. Its layered interpretation then relates the actual graphs. The singleton-vector relatedness equivalence supplies the premise of the unbounded contextual sufficiency theorem. Apply the converse theorem with endpoints reversed for the second clause, and pair the two results.
+\end{proof}
+
+\lean{Graph/UnboundedTheorem}{49}{63}{paper_sufficiency}
+
+\lean{Graph/UnboundedTheorem}{64}{79}{paper_sufficiency_converse}
+
+\lean{Graph/UnboundedTheorem}{80}{89}{paper_equivalence}
+
+\Needspace{10\baselineskip}
+
+\termdef{global-context-set}
+
+\begin{lemma}[A global set of contexts]
+A set of depth-independent context classes induces finite context membership by interpretation. Membership is automatically invariant under ordinary graph isomorphism and under increasing depth allowance.
+\end{lemma}
+
+\begin{proof}
+Interpretation maps a recursive graph isomorphism to equality of global classes, so ordinary isomorphism also preserves membership. Interpretation invariance under raising supplies padding invariance.
+\end{proof}
+
+\lean{Graph/UnboundedTheorem}{90}{93}{globalAllowed}
+
+\lean{Graph/UnboundedTheorem}{94}{101}{globalAllowed_iso}
+
+\lean{Graph/UnboundedTheorem}{102}{109}{globalAllowed_padding}
+
+\Needspace{10\baselineskip}
+
+\begin{lemma}[Unbounded sufficiency of robustness]
+For one global context set, one global pre-template, deterministic and refocusing global behaviour, output closure, and a reasonable triple $(Q,P,R)$, both implications hold: input safety for $(Q,P)$ and robustness for $(Q,P,R)$ imply forward contextual refinement; input safety for $(Q^{-1},P)$ and converse robustness imply reverse contextual refinement.
+\end{lemma}
+
+\begin{proof}
+Apply the two preceding global-pre-template theorems. The allowed-context invariance premise is now discharged by interpretation of the global context set. All operational compatibility, exact-cost transfer, rootedness, determinism extension, specimen locality, semantic bridges and initial lifting have been proved. Safety, output closure and robustness remain the actual mathematical hypotheses of sufficiency, not additional postulated locality certificates.
+\end{proof}
+
+\lean{Graph/UnboundedTheorem}{110}{124}{theorem6}

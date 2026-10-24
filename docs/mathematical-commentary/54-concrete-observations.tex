@@ -11,10 +11,7 @@ initial lifting or graph locality.
 The scope qualification matters. The operational carrier here is
 \texttt{DeepStateClass ops d}, with a fixed depth allowance $d$ throughout an
 execution. The paper states Theorem~6 on the union of all finite depths.
-The existing finite-union encoding concerns graphs and relations; an
-operational transfer theorem for computations that increase the required
-depth is not proved. The former Appendix~B tasks are discharged in the
-concrete model, but this does not by itself discharge that transfer.
+The graph-level finite-union encoding alone does not establish operational transfer. Sections~\ref{sec:unbounded-search} and~\ref{sec:unbounded-theorem} supply that transfer, culminating in both clauses on the unbounded machine.
 
 \subsection{Independent recursive substitution}
 \Needspace{9\baselineskip}
@@ -250,13 +247,9 @@ Paired-filling focus freedom and the preceding closure theorem construct an obse
 \lean{Graph/ObservationExamples}{58}{60}{observation_exists}
 \lean{Graph/ObservationExamples}{63}{70}{initial_lifting}
 
-\paragraph{Scope audit and remaining work.}
-The former Appendix~B obligations---independent observations, initial lifting,
-and both contextual clauses---are complete for the existing fixed-depth model.
-That theorem is checked without new axioms or proof holes. It is not a proof
-that the fixed-depth operational semantics equals the paper's unbounded
-semantics. A finite execution has some finite maximum depth, but invoking
-that fact informally does not prove preservation and reflection of steps,
-termination, or costs under the existing graph encoding. Appendix~B records
-this remaining obligation explicitly. The copying UAM and language examples
-remain outside the selected general-theorem milestone.
+\paragraph{Scope of this intermediate result.}
+This section completes the fixed-depth contextual theorem. The operational
+transfer requires further work: a common bound for finite runs, exact costs,
+finality and the semantic hypotheses must all be justified. That work is now
+completed in Section~\ref{sec:unbounded-theorem}. The copying UAM and the
+language-specific examples remain outside the general-theorem milestone.

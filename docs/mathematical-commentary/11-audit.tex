@@ -212,7 +212,7 @@ with \texttt{latexmk}, and exports the PDF to the repository's
 a TeX installation, and its editable sources and reproduction instructions are
 included alongside it.
 
-The remaining mathematical obligations are collected in Appendix~\ref{app:remaining-work}.
+Appendix~\ref{app:remaining-work} records completion of the selected general-theorem obligations.
 
 The concrete UAM audit checks the actual fragment constructors, substitution
 mode and adjacency theorems, transition exclusion, final normality, and
@@ -274,3 +274,11 @@ The audit checks initial endpoint representation, independent recursive pairing,
 finite exact tuples, constructed initial lifting, both contextual clauses,
 single-fragment specialisation, and a non-vacuous nested-hole regression.
 \lean{Graph/Audit}{481}{498}{Graph.Audit: concrete contextual theorem}
+
+\paragraph{Unbounded theorem audit.}
+The final audit checks the concrete substitution padding proof, full one-step
+and exact-run adequacy, global determinism and refocusing, finite-source
+search locality, the constructed specimen system, both semantic bridges,
+initial lifting and the final two-clause theorem. Its only logical axioms are
+Lean's standard \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+\lean{Graph/Audit}{509}{527}{Graph.Audit: complete unbounded theorem}

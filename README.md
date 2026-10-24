@@ -10,15 +10,19 @@ The target milestone is the general sufficiency-of-robustness theorem
 
 ## Current status
 
-**Both contextual robustness clauses are proved for the concrete fixed-depth
-class machine.** `ConcreteObservations.sufficiency` and its converse use
-independently defined observations and a proved initial-lifting theorem.
-The single-fragment specialisations cover arbitrary replacement graphs,
-including nested holes. There are no `sorry` proofs or project-specific axioms.
+**The general Theorem 6 milestone is complete in the concrete encoding.**
+`Unbounded.theorem6` proves both contextual sufficiency implications for a
+single depth-independent context set and pre-template, on the full unbounded
+UAM. Its extrinsic relation can increase required depth; no execution bound
+is fixed in advance. The proof retains the paper's output-closure, safety,
+robustness, determinism, refocusing and reasonable-cost hypotheses.
 
-**The literal paper theorem is not yet complete:** operational transfer to the
-union of all finite depths remains to be proved. The existing graph encoding
-does not establish preservation of executions or their step counts.
+Full one-step and finite-run adequacy, exact costs and finality, intrinsic
+substitution compatibility, rootedness, determinism, refocusing, specimen
+locality and independent initial lifting are all proved. Safety and robustness
+use concrete specimens and global execution/stuckness predicates; they are
+not inferred from fixed-depth safety. There are no `sorry` proofs or
+project-specific axioms.
 
 Theorems `SpecimenSystem.contextual_sufficiency` and
 `SpecimenSystem.contextual_sufficiency_converse` prove abstract counterparts of
@@ -35,7 +39,7 @@ isomorphism classes, with a concrete specimen interface and both counting
 simulations. Safety and robustness are evaluated directly on that class machine;
 no equivalence with the earlier named-state predicates is assumed. General
 initial observation lifting and both contextual clauses are now proved.
-Transfer to the paper's unbounded operational semantics remains open.
+The unbounded development now supplies the operational transfer and both contextual clauses.
 
 ## Paper proof dependency map
 
@@ -66,10 +70,9 @@ Transfer to the paper's unbounded operational semantics remains open.
 - **Proposition 38 — concrete initial bridge checked:** independent substitution
   of related vectors constructs a paired filling and an allowed remote rooted
   initial specimen. Observation contains no template or specimen premise.
-- **Theorem 6 — concrete fixed-depth clauses checked:** both contextual clauses
-  and their single-fragment specialisations are proved. Transfer to the paper's
-  unbounded operational semantics remains open. Determinism, refocusing, safety,
-  and robustness remain the stated semantic hypotheses.
+- **Theorem 6 — unbounded clauses checked:** `Unbounded.theorem6` uses the proved
+  full-UAM transfer, global specimen system, concrete semantic bridges and
+  independent observations. The original semantic hypotheses remain explicit.
 
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices. Their annotated set-presentation round trips and depth coherence are
@@ -138,9 +141,8 @@ not rooted. These use the current erasure-based search semantics; contextual
 local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 
 The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B)
-now records one unfinished obligation: operational transfer to the union of all
-finite depths. The previous observation-lifting and contextual-assembly tasks
-are discharged in the fixed-depth model.
+now has no outstanding tasks for the general-theorem milestone. The full
+operational and semantic transfer to the union of finite depths is complete.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
 invariance under recursive renaming and closure under one-way shallow filling,
@@ -236,10 +238,9 @@ unrooted robustness alternative. Rooted consequences are derived, not assumed.
 The nested-box example yields exactly one recorded hole; a mode-mismatched
 pair is rejected even with universally true up-to relations.
 
-The fixed-depth concrete theorem is complete. The earlier **94%** estimate was
-a planning judgment; the scope audit now separates the unproved operational
-transfer to the paper's union of all finite depths. A more precise overall
-percentage is not justified until that transfer is assessed.
+The selected general-theorem milestone is complete, including the unbounded
+transfer. This supersedes the earlier **94%** planning estimate. It is not a
+claim that every theorem or language-specific application in the paper is formalised.
 
 ## Concrete graph milestone
 
@@ -383,7 +384,7 @@ concrete specimen bridge to Theorem 6 remains the main later work.
 
 These are nested substitution laws. The independent-site and pointed-host
 milestone below complements them. The later milestones construct the concrete
-UAM and named-state specimen interface; final contextual integration remains open.
+UAM and specimen interfaces; the final unbounded development completes contextual integration.
 
 ## Independent deep substitution and pointed-host quotient
 
@@ -473,13 +474,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 1375 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 1399
-source-fragment links point to immutable code revision `3a196f1`. It distinguishes
-proved graph properties, conditional specimen results, and the remaining
-obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 210 technical terms, with short descriptions and internal PDF links
-to the definitions. The source checker also validates its definition destinations.
+all definitions and proved statements in the abstract and concrete graph
+development, including the final unbounded theorem, in mathematical English.
+Every source-fragment link points to an immutable code revision. Appendix A
+provides an alphabetical technical glossary with internal definition links;
+Appendix B records completion of the selected theorem milestone.
+The source checker validates declaration coverage and all definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
 the LaTeX project folder in the Codex editor. To reproduce both the source-link
@@ -513,11 +513,9 @@ logical axioms, if used, are shown explicitly.
 
 ## Remaining work toward the milestone
 
-The fixed-depth concrete theorem now has independently defined observations,
-proved initial lifting, and both contextual sufficiency clauses. The remaining
-obligation for the literal paper theorem is operational transfer to the union
-of all finite depths, including exact run counts, finality, and the semantic
-hypotheses. Existing graph-level encoding alone does not prove this transfer.
+No proof obligations remain for the selected general sufficiency-of-robustness
+theorem in the concrete encoding. `Unbounded.theorem6` closes both implications
+on the union carrier, retaining the actual theorem hypotheses.
 
 The copying UAM, lambda-term translation, and example program equivalences
 are later milestones; the current abstract and graph-level examples do not
@@ -629,8 +627,8 @@ assuming that projecting named runs preserves stuckness or refinement.
 The regressions include a two-step substitution execution, a genuine nonempty
 compute behaviour with literal class determinism, and a nested-hole initial
 lifting witness. Section 47 explains all new definitions and proofs. Appendix B
-now retains general observation lifting and final
-contextual assembly; the complete Theorem 6 is not yet claimed.
+formerly retained observation lifting and contextual assembly; both are now
+complete, including the later unbounded transfer.
 
 ## Concrete converse simulation milestone
 
@@ -641,8 +639,7 @@ comparisons retain both directions. It proves reverse refinement, combines
 both directions into quantitative equivalence, and discharges rootedness and
 remoteness for constructed initial specimens.
 
-Appendix B now leaves general observation construction/initial lifting and
-final contextual assembly. The full contextual Theorem 6 is still outstanding.
+The later observation and unbounded developments complete the contextual assembly.
 The Lean build and axiom audits pass without `sorry` or new axioms.
 
 ## Concrete contextual theorem
@@ -655,10 +652,9 @@ lifting premise is left unproved. `single_sufficiency` and its converse cover
 arbitrary single graphs. A nested-hole regression proves observation existence
 and initial lifting through an original box body.
 
-This completes both previous Appendix B tasks **within the concrete fixed-depth
-model**. It does not establish operational equivalence with the paper's
-unbounded machine. Appendix B now records that transfer explicitly. Section 49
-explains every new declaration and its proof.
+This section completes the intermediate fixed-depth result. Section 49 explains
+its declarations; Sections 50 and 51 supply the union construction and the
+completed full-UAM transfer and contextual theorem.
 
 ## Unbounded carrier and exact search runs
 
@@ -671,8 +667,27 @@ finite-run adequacy for padding-preserved relation families;
 `search_run_iff` discharges that premise for concrete search, and
 `terminating_run_iff` preserves finality and exact cost.
 
-This does **not** complete the last Appendix B item: substitution and genuinely
-unbounded extrinsic behaviour still need their full operational connection,
-and the semantic hypotheses and contextual construction must be transferred.
-The generic compatibility premise is explicit, not a proved fact about the
-full UAM. The PDF's new section explains every new declaration and this scope.
+The subsequent full-UAM development discharges the compatibility premise for
+substitution and global extrinsic behaviour, then proves the semantic and
+contextual bridges.
+
+## Complete unbounded theorem
+
+`DepthSubstitution` proves the actual substitution commuting construction.
+`UnboundedUAM` restricts a genuinely global extrinsic behaviour to finite
+presentations and proves exact full-step, run and finality adequacy.
+`UnboundedDeterminism`, `DepthRoots`, `UnboundedRoots` and
+`UnboundedSearchLocality` establish determinism, exact rootedness, refocusing
+and search reflection at a specified finite source.
+
+`UnboundedSpecimens` constructs every locality field. `UnboundedSafety` and
+`UnboundedConverse` define the concrete paper alternatives using global runs,
+stuckness and comparisons and prove their bridges. `UnboundedObservations`
+proves independent initial lifting and both contextual clauses.
+`UnboundedTheorem.theorem6` specialises these to depth-independent graph
+classes and contexts, and `common_representatives` proves that every global
+fragment pair has representatives at every sufficiently large depth.
+
+Section 51 of the PDF explains every new definition and proof. Appendix B is
+clear for the selected milestone; the copying UAM and application-specific
+results remain separate projects.
