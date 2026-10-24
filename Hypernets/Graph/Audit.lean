@@ -2,6 +2,7 @@ import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.PaperEncodingExamples
 import Hypernets.Graph.UAMStructureExamples
 import Hypernets.Graph.SpecimenRelocationExamples
+import Hypernets.Graph.UAMClassExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -444,3 +445,23 @@ import Hypernets.Graph.SpecimenRelocationExamples
 #print axioms Hypernets.Linear.SpecimenRelocationExamples.paired_steps
 #print axioms Hypernets.Linear.SpecimenRelocationExamples.initial_rooted
 #print axioms Hypernets.Linear.SpecimenRelocationExamples.interface_nonempty
+
+#print axioms Hypernets.Linear.State.substitution_iso_deterministic
+#print axioms Hypernets.Linear.State.substitution_compute_iso_exclusive
+#print axioms Hypernets.Linear.UAM.iso_deterministic
+#print axioms Hypernets.Linear.UAMClasses.deterministic
+#print axioms Hypernets.Linear.UAMClasses.final_normal
+#print axioms Hypernets.Linear.UAMClasses.rooted_step
+#print axioms Hypernets.Linear.UAMClasses.project_steps
+#print axioms Hypernets.Linear.UAMClasses.search_of_nonrewrite
+#print axioms Hypernets.Linear.ClassSpecimens.system
+#print axioms Hypernets.Linear.ClassSpecimens.initial_lifting
+#print axioms Hypernets.Linear.ClassSafety.inputSafe_bridge
+#print axioms Hypernets.Linear.ClassSafety.robust_bridge
+#print axioms Hypernets.Linear.ClassSafety.countingSimulation
+#print axioms Hypernets.Linear.ClassSafety.sufficiency
+#print axioms Hypernets.Linear.Behaviour.isoClosure_class_step
+#print axioms Hypernets.Linear.UAMClassExamples.two_step_execution
+#print axioms Hypernets.Linear.UAMClassExamples.deterministic
+#print axioms Hypernets.Linear.UAMClassExamples.compute_step
+#print axioms Hypernets.Linear.UAMClassExamples.initial_lifting

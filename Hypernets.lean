@@ -30,3 +30,5 @@ import Hypernets.Graph.PaperEncodingExamples
 import Hypernets.Graph.UAMStructureExamples
 
 import Hypernets.Graph.SpecimenRelocationExamples
+
+import Hypernets.Graph.UAMClassExamples
