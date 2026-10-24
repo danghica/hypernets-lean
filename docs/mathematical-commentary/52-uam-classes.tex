@@ -1,0 +1,409 @@
+\Needspace{20\baselineskip}
+\section{The full class machine and concrete forward simulation}
+\label{sec:uam-classes}
+The determinism required by the abstract counting-simulation theorem is
+literal equality of successors. Named hypernets instead have unique successors
+up to recursive focus-preserving isomorphism. This section constructs the full
+UAM on those isomorphism classes, proves its literal determinism, constructs
+its concrete specimen interface, and obtains the concrete forward counting
+simulation and quantitative refinement of remote rooted specimens.
+
+The behaviour is required to respect recursive endpoint isomorphism when
+using its named-state determinism hypothesis. A closure construction below
+shows that this invariance concerns representative names: closing compute
+rules under renaming leaves the entire class transition relation unchanged.
+No deterministic transition on raw carrier names is assumed.
+
+Safety and robustness here are evaluated directly on the full class machine,
+with all the concrete clauses retained. We do not infer class safety merely
+from the previously defined named-state safety: projection of finite runs
+alone would not justify preservation of stuckness or refinement. General
+initial observation lifting and the converse integration remain separate.
+
+\Needspace{14\baselineskip}
+\subsection{Comparing steps from isomorphic sources}
+\begin{definition}[Renaming a presentation's source]
+A substitution presentation can replace its source by any recursively
+isomorphic state while leaving its base graph, selected variable, and target
+unchanged. Compose the presentation's source isomorphism with the given one.
+\end{definition}
+\begin{theorem}[Substitution uniqueness across source classes]
+Two substitution steps whose sources are recursively isomorphic have
+recursively isomorphic targets.
+\end{theorem}
+\begin{proof}
+Extract a presentation of each substitution. Rename the first presentation's
+source to the second source, then apply the already proved uniqueness theorem
+for presentations of a common source. This comparison does not assert a
+new literal substitution transition at the renamed source; the presentation
+is sufficient to identify the two actual reducts.
+\end{proof}
+
+\lean{Graph/UAMClassDeterminism}{10}{12}{renameSource}
+
+\lean{Graph/UAMClassDeterminism}{17}{23}{substitution_iso_deterministic}
+
+\begin{lemma}[Substitution and compute remain exclusive under renaming]
+A substitution source cannot be recursively isomorphic to a compute source.
+\end{lemma}
+\begin{proof}
+The substitution exposes a variable with singleton source at the focus target.
+The source isomorphism transports its primitive variable label, ordered source
+list, and focus target to the other graph. Computation exposes an active
+operation with that same singleton source. Source uniqueness identifies the
+two edges, contradicting their different primitive labels.
+\end{proof}
+
+\lean{Graph/UAMClassDeterminism}{26}{38}{substitution_compute_iso_exclusive}
+
+\Needspace{10\baselineskip}
+\termdef{behaviour-iso-invariance}
+\begin{definition}[Behaviour invariance under names]
+An extrinsic behaviour respects isomorphism if independently renaming either
+endpoint recursively preserves every behaviour transition. Inverse
+isomorphisms also give reflection. This condition is distinct from determinism,
+refocusing, and locality of a compute rule.
+\end{definition}
+
+\lean{Graph/UAMClassDeterminism}{44}{46}{RespectsIso}
+
+\begin{theorem}[Full-UAM uniqueness across isomorphic sources]
+If the behaviour respects isomorphism and is deterministic modulo recursive
+isomorphism at each common named source, full-UAM steps from recursively
+isomorphic sources have recursively isomorphic targets.
+\end{theorem}
+\begin{proof}
+Inspect the two transition families. For two search steps, transport the first
+source recursively and use search determinism. For two substitutions, use
+uniqueness across source classes. For two extrinsic steps, transport the first
+source while fixing its target and apply behaviour determinism at the now
+common source. Search versus rewrite is impossible because source modes are
+preserved by isomorphism. Substitution versus compute is excluded by the
+preceding incidence lemma, in either direction. These cases exhaust the UAM.
+\end{proof}
+
+\lean{Graph/UAMClassDeterminism}{53}{73}{iso_deterministic}
+
+\Needspace{14\baselineskip}
+\subsection{The full UAM on recursive state classes}
+\Needspace{10\baselineskip}
+\termdef{full-class-step}
+\begin{definition}[Full class transition]
+A transition from class $s$ to class $t$ exists when there are named states
+$a,b$ representing those respective classes and an actual full-UAM step
+$a\to b$. No global representative is selected. The original named transition
+projects by taking its own endpoints as witnesses.
+\end{definition}
+
+\lean{Graph/UAMClasses}{11}{12}{Step}
+
+\lean{Graph/UAMClasses}{15}{16}{project}
+
+\begin{theorem}[Literal class determinism]
+Under the preceding behaviour hypotheses, two full transitions from the same
+class have equal target classes.
+\end{theorem}
+\begin{proof}
+Extract the two actual source and target pairs. Equality of their source
+classes yields a recursive focus-preserving source isomorphism by quotient
+exactness. The full-UAM comparison theorem supplies a target isomorphism.
+Quotient soundness identifies the two target classes, and their original
+endpoint equalities finish the proof.
+\end{proof}
+\begin{lemma}[Finality and the class machine]
+A final class has no full transition. The full class machine uses this
+transition relation and the existing class-invariant boundary finality.
+\end{lemma}
+\begin{proof}
+For a purported successor, extract its representative step. Transfer finality
+to that source representative and apply the concrete full-UAM final-normality
+theorem. This proves the machine's final-normality field.
+\end{proof}
+
+\lean{Graph/UAMClasses}{19}{24}{deterministic}
+
+\lean{Graph/UAMClasses}{27}{30}{final_normal}
+
+\lean{Graph/UAMClasses}{33}{36}{machine}
+
+\begin{lemma}[Rootedness and exact run projection]
+Refocusing of the extrinsic behaviour makes every full class step preserve
+rootedness. Every named finite run projects to a class run of exactly the same
+length. Every class run preserves rootedness.
+\end{lemma}
+\begin{proof}
+For a single class step, use its representative equalities to transfer the
+rooted premise, apply concrete full-UAM refocusing, and transfer the result
+back. For run projection, induct on the named run, mapping each transition and
+retaining its successor count. For the class-run invariant, induct on the run
+and apply the single-step rootedness theorem. The zero-step cases are identities.
+\end{proof}
+
+\lean{Graph/UAMClasses}{39}{45}{rooted_step}
+
+\lean{Graph/UAMClasses}{48}{52}{project_steps}
+
+\lean{Graph/UAMClasses}{73}{78}{rooted_steps}
+
+\begin{lemma}[Recursive search inclusion and fixed-source reflection]
+Recursive search gives a full class transition. Conversely, a class transition
+from the class of a specified non-rewrite state admits a recursively renamed
+search step from that very state to a representative of the target class.
+\end{lemma}
+\begin{proof}
+For inclusion, factor recursive search into literal search and a recursive
+target isomorphism. Project the literal transition and identify its target
+class with the required one. For reflection, extract the class transition's
+actual representatives and obtain a source isomorphism by quotient exactness.
+A rewrite representative would have rewrite mode and hence contradict the
+specified source mode. The step is therefore search. Transport its source
+along the inverse isomorphism, retaining its actual target and target-class
+equality. This reflection theorem concerns non-rewrite sources; it does not
+claim that arbitrary rewrite runs lift to every raw representative.
+\end{proof}
+
+\lean{Graph/UAMClasses}{55}{59}{search}
+
+\lean{Graph/UAMClasses}{63}{70}{search_of_nonrewrite}
+
+\Needspace{14\baselineskip}
+\subsection{The class-valued specimen interface}
+\Needspace{10\baselineskip}
+\termdef{class-specimen-system}
+\begin{definition}[Class-valued specimen system]
+Retain the actual allowed recursive specimens, their mode, and their entering
+predicate, but take the classes of their filled states as endpoints. Use the
+existing rooted predicate on classes. Supply rooted-step preservation from
+the class refocusing theorem and final agreement from the concrete boundary
+law.
+\end{definition}
+\begin{proof}[Construction of context traversal]
+For a settled specimen, either mode alternative excludes rewrite. Reflect an
+available class transition from either endpoint to recursive search at its
+specified actual representative. The concrete successor-specimen theorem
+constructs a remote allowed specimen with synchronized search transitions.
+Include these in the full class relation. This supplies the final interface
+field for arbitrary source representatives, without postulating a class
+locality law.
+\end{proof}
+
+\lean{Graph/ClassSpecimenSystem}{13}{34}{system}
+
+\begin{lemma}[Concrete class lifting]
+Class lifting is exactly existence of a remote concrete specimen with rooted
+endpoints and the specified endpoint classes. Named lifting projects into
+class lifting. The previously constructed initial relocation belongs to
+class lifting.
+\end{lemma}
+\begin{proof}
+The first statement is definitional. For projection, unpack a named lifting
+witness, keep its specimen and predicates, and apply the class constructor
+to its endpoint equalities. For initial relocation, both endpoints are initial
+by the constructed initiality theorem, hence rooted by zero-step runs.
+Its search mode makes it remote, and its endpoint-class equalities are reflexive.
+This last theorem starts with an existing specimen and is not yet the general
+observation-lifting theorem for arbitrary context and fragment observations.
+\end{proof}
+
+\lean{Graph/ClassSpecimenSystem}{38}{42}{lifting_iff}
+
+\lean{Graph/ClassSpecimenSystem}{45}{50}{lifting_project}
+
+\lean{Graph/ClassSpecimenSystem}{53}{59}{initial_lifting}
+
+\Needspace{14\baselineskip}
+\subsection{Class safety, robustness, and forward sufficiency}
+\begin{definition}[Mode of a state class]
+The focus mode of a class is the focus mode of any representative. Recursive
+focus-preserving isomorphisms prove the required equality of modes, so quotient
+lifting is well-defined.
+\end{definition}
+
+\lean{Graph/ClassSafety}{8}{9}{mode}
+
+\Needspace{10\baselineskip}
+\termdef{class-quasi-specimen}
+\begin{definition}[Class quasi-specimen]
+A quasi-specimen between two classes has an unconditional concrete specimen
+witness whose mode agrees with both endpoint modes. Conditional on rootedness
+of both classes, its filled endpoints are rooted and the two specified
+comparison relations hold. The non-rewrite variant additionally excludes
+rewrite mode at the first endpoint.
+\end{definition}
+This retains the full witness and mode clauses of the earlier concrete
+predicate, with comparisons evaluated on the class machine.
+
+\lean{Graph/ClassSafety}{18}{24}{Quasi}
+
+\lean{Graph/ClassSafety}{27}{28}{NonRewriteQuasi}
+
+\Needspace{10\baselineskip}
+\termdef{class-input-safety}
+\begin{definition}[Input safety on the class machine]
+Every entering search specimen satisfies one of the same three alternatives:
+both endpoint classes run to stuck states; or the two runs reach a settled
+specimen with lengths $1+k,l$ satisfying the cost relation; or lengths
+$1+k,1+l$ satisfy the cost relation and reach a non-rewrite quasi-specimen
+up to equivalence. No source-rootedness restriction is imposed.
+\end{definition}
+
+\lean{Graph/ClassSafety}{31}{42}{InputSafe}
+
+\Needspace{10\baselineskip}
+\termdef{class-robustness}
+\begin{definition}[Robustness on the class machine]
+For every non-entering rewrite specimen and every successor class of its left
+endpoint, either a source side is unrooted, the successor runs to a stuck
+class, or the two sides have appropriately cost-related runs to a non-rewrite
+quasi-specimen up to the specified refinements. Every successor class is
+quantified, independently of the names of the transition witnesses.
+\end{definition}
+Since the source mode is rewrite and mode is invariant under isomorphism,
+search cannot witness such a successor. Thus the full-step quantifier here
+ranges precisely over the applicable rewrite transitions.
+
+\lean{Graph/ClassSafety}{46}{53}{Robust}
+
+\begin{lemma}[The three class bridges]
+Class quasi-specimens yield the abstract rooted quasi predicate. Class input
+safety and robustness yield the corresponding laws of the constructed
+class-valued specimen system.
+\end{lemma}
+\begin{proof}
+For quasi-specimens, receive the two rootedness hypotheses, use the witness's
+conditional comparisons, and transport the endpoint's non-rewrite mode along
+its equality with the witness mode. For input safety, retain the stuck and
+direct alternatives unchanged; in the third alternative retain costs and runs
+and apply the quasi bridge, keeping equivalence on both sides. For robustness,
+the given rootedness contradicts exactly the unrooted disjunct. The stuck-tail
+case is unchanged. In the matching case retain both runs and the cost comparison
+and use the quasi bridge with the given refinement relations.
+\end{proof}
+
+\lean{Graph/ClassSafety}{59}{63}{quasi_bridge}
+
+\lean{Graph/ClassSafety}{66}{73}{inputSafe_bridge}
+
+\lean{Graph/ClassSafety}{76}{83}{robust_bridge}
+
+\begin{theorem}[Concrete forward counting simulation]
+Assume behaviour invariance, behaviour determinism modulo isomorphism,
+behaviour refocusing, allowed-context invariance, output closure, the reasonable
+cost-order hypotheses, and the class input-safety and robustness predicates.
+Then the concrete class lifting is a counting simulation for the full class UAM.
+\end{theorem}
+\begin{proof}
+Instantiate the abstract forward counting-simulation theorem with the constructed
+class specimen system. Class determinism supplies its literal determinism
+premise; the two concrete bridges supply safety and robustness. All locality
+fields have already been proved from the concrete hypernet semantics.
+\end{proof}
+\begin{corollary}[Quantitative refinement of concrete specimens]
+Under the same hypotheses, the left endpoint class of every remote jointly
+rooted concrete specimen refines its right endpoint class with the given
+cost order.
+\end{corollary}
+\begin{proof}
+The specimen, remoteness, rootedness, and reflexive class equalities form a
+lifting witness. Apply counting-simulation soundness using literal class
+determinism and the reasonable cost orders. The remaining contextual step is
+to show that arbitrary allowed initial observations give such witnesses.
+\end{proof}
+
+\lean{Graph/ClassSafety}{86}{94}{countingSimulation}
+
+\lean{Graph/ClassSafety}{99}{106}{sufficiency}
+
+\Needspace{14\baselineskip}
+\subsection{Behaviour closure and non-vacuous regressions}
+\begin{lemma}[Compute shape respects recursive renaming]
+Independent recursive renamings of the two endpoints preserve compute shape.
+\end{lemma}
+\begin{proof}
+Transport both focus modes. Carry the active-operation edge through the source
+edge bijection; primitive-label equivalence preserves its operation symbol and
+hence activity. Mapping its singleton source list gives the renamed focus
+target, because the isomorphism preserves that target.
+\end{proof}
+
+\lean{Graph/BehaviourIsoClosure}{9}{15}{State.Compute.rename}
+
+\Needspace{10\baselineskip}
+\termdef{behaviour-iso-closure}
+\begin{definition}[Behaviour closure under names]
+The isomorphism closure of a behaviour contains a transition when an original
+behaviour transition has recursively isomorphic endpoints. The preceding
+compute-shape lemma verifies that this is again an admissible behaviour.
+\end{definition}
+\begin{lemma}[Inclusion and invariance]
+The closure contains each original transition and respects independent
+recursive endpoint renaming.
+\end{lemma}
+\begin{proof}
+Use identity isomorphisms for inclusion. For invariance, compose each original
+witness isomorphism with the corresponding new endpoint isomorphism.
+\end{proof}
+
+\lean{Graph/BehaviourIsoClosure}{20}{25}{isoClosure}
+
+\lean{Graph/BehaviourIsoClosure}{28}{29}{into_isoClosure}
+
+\lean{Graph/BehaviourIsoClosure}{32}{34}{isoClosure_invariant}
+
+\begin{theorem}[Behaviour closure preserves the full class relation]
+Replacing the behaviour by its isomorphism closure leaves every full-UAM
+class transition unchanged.
+\end{theorem}
+\begin{proof}
+Extract a representative step. Intrinsic steps are unchanged. For an extrinsic
+closure step, take its original compute witnesses and compose the endpoint-class
+equalities with quotient soundness for their isomorphisms. This gives an original
+class step. Conversely, retain the representatives and include any original
+extrinsic step in the closure. Thus closing under names adds no new class
+computation. The theorem does not assert that an arbitrary behaviour becomes
+deterministic after closure.
+\end{proof}
+
+\lean{Graph/BehaviourIsoClosure}{37}{48}{isoClosure_class_step}
+
+The substitution regression projects its actual two-step terminating execution
+to an exactly two-step class execution. The compute regression closes the earlier
+nonempty singleton behaviour under recursive renaming. Every result is isomorphic
+to its one fixed initial result, so two results are isomorphic to each other;
+initiality also makes each result rooted. The general theorem therefore proves
+literal determinism of this nonempty full class machine. Projection supplies
+its genuine extrinsic transition, and the closure theorem checks equality with
+the original singleton's class relation.
+
+\lean{Graph/UAMClassExamples}{10}{15}{two_step_execution}
+
+\lean{Graph/UAMClassExamples}{18}{18}{behaviour}
+
+\lean{Graph/UAMClassExamples}{21}{23}{behaviour_deterministic}
+
+\lean{Graph/UAMClassExamples}{26}{28}{behaviour_refocusing}
+
+\lean{Graph/UAMClassExamples}{31}{33}{deterministic}
+
+\lean{Graph/UAMClassExamples}{36}{38}{compute_step}
+
+\lean{Graph/UAMClassExamples}{41}{43}{same_class_steps}
+
+Finally the nested-hole example instantiates the class-valued specimen system
+with empty behaviour and the previously proved output-closed template. Its
+constructed initial relocation is a concrete class-lifting witness. This checks
+that the interface is exercised on a real recursive specimen, not only an empty
+specimen type.
+
+\lean{Graph/UAMClassExamples}{46}{48}{specimenSystem}
+
+\lean{Graph/UAMClassExamples}{50}{55}{initial_lifting}
+
+\paragraph{Status.}
+The determinism mismatch, full class machine, class locality, and forward
+concrete counting simulation are now discharged. General observation lifting
+and the converse safety/robustness integration remain, followed by the complete
+contextual theorem. The named-state and class safety predicates are kept
+explicitly distinct; no unproved equivalence between them is used. The planning
+estimate is now about 93\% of mathematical effort, with a plausible range of
+80--96\%. Appendix~\ref{app:remaining-work} retains only unfinished obligations.

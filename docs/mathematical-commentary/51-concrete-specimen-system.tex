@@ -12,13 +12,11 @@ Output closure and refocusing of the extrinsic behaviour remain the paper's
 semantic hypotheses. No context-step law, successor-specimen existence,
 or safety bridge is supplied as a new hypothesis.
 
-There is still a distinction between this interface on named states and the
-final contextual theorem. The abstract simulation theorem requires literal
-state determinism, whereas the concrete structural theorem proves determinism
-modulo recursive isomorphism. A compatible state-class treatment, together
-with the concrete observation interface and its initial-lifting theorem,
-remains necessary. This section does not replace that obligation by a stronger
-determinism assumption on raw names.
+The interface in this section is on named states. The abstract simulation
+theorem requires literal determinism, whereas the concrete structural theorem
+proves determinism modulo recursive isomorphism. Section~\ref{sec:uam-classes}
+subsequently resolves this distinction with a deterministic class machine and
+its own concrete interface. General initial observation lifting remains open.
 
 \Needspace{14\baselineskip}
 \subsection{Exact hole inventories under focus movement}
@@ -415,9 +413,8 @@ that the constructed abstract specimen type is nonempty.
 The synchronized-coordinate packaging, unique-hole preservation,
 isomorphism-invariant membership transport, full-UAM context-step field, and
 concrete safety and robustness bridges are complete. Appendix~\ref{app:remaining-work}
-retains only the unfinished portions. Initial observation lifting still needs
-its general context and endpoint witnesses. The named-state interface must
-also be connected to a deterministic state-class machine before applying the
-abstract theorem under the paper's original determinism hypothesis. The
-planning estimate is now about 91\% of mathematical effort (plausible range
-78--95\%); it remains a judgment rather than a theorem or declaration count.
+retains only the unfinished portions. Initial observation lifting still needs its general context and endpoint
+witnesses. Section~\ref{sec:uam-classes} supplies the deterministic class machine,
+class safety/robustness bridges, and forward counting simulation, and updates
+the effort estimate. No raw-state determinism assumption is substituted for
+the paper's determinism modulo isomorphism.

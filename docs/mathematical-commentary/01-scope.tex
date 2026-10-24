@@ -85,9 +85,9 @@ part of that proof.
 \texttt{Machine.CountingSimulation.sound} proves counting-simulation soundness
 for a deterministic machine and a reasonable cost triple. Its proof follows
 the quantitative argument, including the eventual-stuck alternative.
-\item \textbf{Proposition~40: checked conditionally.}\par
+\item \textbf{Proposition~40: concrete forward simulation checked.}\par
 \texttt{SpecimenSystem.countingSimulation} and its converse construct counting
-simulations from the abstract specimen laws, safety, and robustness. The abstract laws now have a concrete named-state instance in Section~\ref{sec:concrete-specimen-system}. State-class and observation integration remain open.
+simulations from the abstract specimen laws, safety, and robustness. The abstract laws have concrete named-state and class-valued instances. Section~\ref{sec:uam-classes} proves literal full-class determinism and the concrete forward counting simulation using class safety and robustness. General observation lifting and the converse integration remain open.
 \item \textbf{Lemma~39(1), Proof~F.4: boundary argument checked.}\par
 \texttt{Focussed.fillings\_boundary\_agreement} proves initial/final agreement
 for two finite filling sequences of one focussed hypernet. The proof preserves
@@ -167,16 +167,18 @@ Section~\ref{sec:full-uam}. Section~\ref{sec:uam-structure} proves substitution
 rootedness and uniqueness, stationary replay, and the full-UAM structural laws.
 Section~\ref{sec:concrete-specimen-system} closes the successor packaging,
 full-UAM locality, and concrete safety/robustness bridges. The remaining
-operational connections are general initial observation lifting and the
-state-class treatment needed to use determinism modulo isomorphism.
+operational connections are general initial observation lifting and converse
+integration. Section~\ref{sec:uam-classes} constructs the deterministic full
+class machine and its concrete specimen system, class safety/robustness
+bridges, forward counting simulation, and remote-specimen refinement.
 
-As a planning estimate, approximately 91\% of the mathematical effort toward
+As a planning estimate, approximately 93\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-78--95\%). This increases the previous estimate of 88\% after constructing the
-concrete specimen interface and its operational bridges. It is a subjective
+80--96\%). This increases the previous estimate of 91\% after the deterministic
+class machine and concrete forward counting simulation. It is a subjective
 estimate, not a ratio of declarations or discharged checklist entries.
-Initial observation lifting, state-class compatibility, and final theorem
-integration remain substantial obligations.
+General observation lifting, converse integration, and final contextual
+assembly remain substantial obligations.
 The active to-do list is maintained in Appendix~\ref{app:remaining-work}.
 
 There are three distinct kinds of assertion below. A \emph{definition} specifies
@@ -186,7 +188,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{19a969b}, rather than to the moving
+All code links point to revision \texttt{6aa0f85}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}
