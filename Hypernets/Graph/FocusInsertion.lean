@@ -174,7 +174,7 @@ theorem target_coverage (x : Vertex G) : (∃ e, x ∈ target G e) ↔ ¬ x.IsIn
     | inr eq => subst x; exact ⟨.inr 0, by simp [target]⟩
 
 /-- Insert an actual focus edge, proving all finite typed-net invariants. -/
-noncomputable def insert (v : G.Vertex) (term : G.vertexLabel v = .term)
+@[reducible] noncomputable def insert (v : G.Vertex) (term : G.vertexLabel v = .term)
     (notOutput : ¬ v.IsOutput) (mode : Focus) : Hypernet ops d I O where
   Internal := G.Internal ⊕ Fin 1
   Edge := G.Edge ⊕ Fin 1
@@ -226,7 +226,7 @@ noncomputable def insert (v : G.Vertex) (term : G.vertexLabel v = .term)
     | inr i => cases d <;> rfl
 
 /-- Inserting into a globally focus-free graph gives a globally unique focus. -/
-noncomputable def focussed (v : G.Vertex) (term : G.vertexLabel v = .term)
+@[reducible] noncomputable def focussed (v : G.Vertex) (term : G.vertexLabel v = .term)
     (notOutput : ¬ v.IsOutput) (mode : Focus) (free : FocusFree G) :
     Focussed (insert G v term notOutput mode) where
   edge := .inr 0

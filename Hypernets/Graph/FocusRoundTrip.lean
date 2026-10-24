@@ -137,7 +137,7 @@ noncomputable def targetVertex : G.Internal := Classical.choose f.target_interna
 theorem targetVertex_spec : f.target = .internal f.targetVertex := Classical.choose_spec f.target_internal
 
 /-- Erasure for every focussed graph with a closed output interface. -/
-noncomputable def underlying : Hypernet ops d I [] :=
+@[reducible] noncomputable def underlying : Hypernet ops d I [] :=
   FocusErasure.erase f f.targetVertex f.targetVertex_spec
 
 theorem underlying_focusFree : FocusFree f.underlying :=

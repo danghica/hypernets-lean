@@ -1,4 +1,4 @@
-import Hypernets.Graph.ErasureExamples
+import Hypernets.Graph.QuotientSearchExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -118,3 +118,19 @@ import Hypernets.Graph.ErasureExamples
 #print axioms Hypernets.Linear.State.no_search_initial
 #print axioms Hypernets.Linear.Examples.value_state_search
 #print axioms Hypernets.Linear.Examples.interior_state_recovery
+
+#print axioms Hypernets.Linear.FocusInsertion.erase_iso
+#print axioms Hypernets.Linear.FocusInsertion.underlying_position_exists
+#print axioms Hypernets.Linear.SearchStep.rename_iff
+#print axioms Hypernets.Linear.FocusInsertion.rename_focussed
+#print axioms Hypernets.Linear.TypedPosition.coordinate_recovery
+#print axioms Hypernets.Linear.TypedPosition.search_realize_iff
+#print axioms Hypernets.Linear.Focussed.Iso.erased
+#print axioms Hypernets.Linear.State.search_source_iso
+#print axioms Hypernets.Linear.State.search_iso_iff
+#print axioms Hypernets.Linear.StateClass.search_deterministic
+#print axioms Hypernets.Linear.StateClass.final_no_search
+#print axioms Hypernets.Linear.StateClass.no_search_initial
+#print axioms Hypernets.Linear.Examples.value_search_final
+#print axioms Hypernets.Linear.Examples.recovered_value_search
+#print axioms Hypernets.Linear.Examples.value_class_successor

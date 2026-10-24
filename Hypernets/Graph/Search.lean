@@ -147,7 +147,7 @@ theorem plug_resume (kind : Op → OperationKind) (a : SearchOperation G)
 end SearchOperation
 
 /-- Token coordinates on the underlying graph; only outer vertices are used.
-A realization theorem relating these coordinates to Focussed is still required. -/
+RealizedSearch relates these coordinates to erasure-based state search. -/
 abbrev SearchPosition {d I O} (G : Hypernet ops d I O) := Focus × G.Vertex
 
 /-- Fig. 9(a–e), with operation-entry and operation-return cases grouped.
