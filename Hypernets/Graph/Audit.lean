@@ -1,5 +1,6 @@
 import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.PaperEncodingExamples
+import Hypernets.Graph.UAMStructureExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -408,3 +409,22 @@ import Hypernets.Graph.PaperEncodingExamples
 #print axioms Hypernets.Linear.PaperEncoding.relation_raiseBy
 #print axioms Hypernets.Linear.PaperEncoding.GlobalPreTemplate.coherent
 #print axioms Hypernets.Linear.PaperEncoding.GlobalPreTemplate.rename
+
+-- Search history, stationary replay, and the complete UAM structural theorem.
+#print axioms Hypernets.Linear.SearchHistory.revisit
+#print axioms Hypernets.Linear.State.rooted_revisit
+#print axioms Hypernets.Linear.TypedPosition.rooted_iff
+#print axioms Hypernets.Linear.StationarySearch.rooted_iso
+#print axioms Hypernets.Linear.PlugFocusInsertion.iso
+#print axioms Hypernets.Linear.PlugSearchReflection.reflect
+#print axioms Hypernets.Linear.StationaryPlug.rooted
+#print axioms Hypernets.Linear.Substitution.prefix_oneWay
+#print axioms Hypernets.Linear.State.substitution_rooted
+#print axioms Hypernets.Linear.Substitution.Presentation.deterministic
+#print axioms Hypernets.Linear.State.substitution_deterministic
+#print axioms Hypernets.Linear.UAM.deterministic_iff
+#print axioms Hypernets.Linear.UAM.refocusing_iff
+#print axioms Hypernets.Linear.UAM.initial_execution_rooted
+#print axioms Hypernets.Linear.UAMStructureExamples.source_rooted
+#print axioms Hypernets.Linear.UAMStructureExamples.source_revisit
+#print axioms Hypernets.Linear.UAMStructureExamples.full_structural

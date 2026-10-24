@@ -27,3 +27,4 @@ import Hypernets.Graph.TupleSafetyExamples
 
 import Hypernets.Graph.SetHierarchyExamples
 import Hypernets.Graph.PaperEncodingExamples
+import Hypernets.Graph.UAMStructureExamples
