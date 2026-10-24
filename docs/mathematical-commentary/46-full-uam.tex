@@ -1,0 +1,258 @@
+\Needspace{18\baselineskip}
+\section{Concrete substitution, compute behaviour, and the full UAM}
+\label{sec:full-uam}
+This section discharges the transition-definition item in
+Appendix~\ref{app:remaining-work}. All three transition families of the linear
+UAM are now defined on actual typed states. Search has the contextual adequacy
+proved in the preceding section. Substitution is defined by the two actual
+graphs in Fig.~9(f), plugged into one focus-free simple context. Extrinsic
+behaviour is a parameter constrained by the compute shape in paper \S6.4.
+The assembled relation has successful final states as normal forms and gives
+an instance of the abstract machine interface used earlier in this document.
+
+This milestone does not establish determinism or refocusing of the full UAM,
+nor the concrete specimen laws. In particular, the extra stability assumption
+on $G_S$ in the paper's refocusing lemma is not silently imposed on the
+transition relation itself. The definitions here use the fixed-depth typed
+representation; its independent representation-adequacy obligation remains.
+
+\subsection{Constructing the substitution fragments}
+\termdef{variable-prefix}
+\begin{definition}[Variable prefix]
+Let $G:\star\to O$ be a hypernet. Construct $V;G$ by splitting its sole input:
+add an internal term vertex $z$ and a unary variable edge from the original
+input to $z$, and redirect all original source incidences at the input to $z$.
+All other edges, labels, target incidences, and box bodies are retained.
+\end{definition}
+The implementation reuses the certified incidence construction for focus
+insertion and replaces the new label by $V$. A variable and a focus have the
+same singleton term source and target signatures, so the two new typing
+obligations are immediate; all incidence invariants are inherited.
+\lean{Graph/Substitution}{11}{26}{Linear.Substitution.prefixVariable}
+\begin{lemma}[Freedom from focuses and holes]
+If $G$ is focus-free, then $V;G$ is focus-free. If $G$ is hole-free, then
+$V;G$ is hole-free.
+\end{lemma}
+\begin{proof}
+Every edge is either retained from $G$ or is the new variable. In the first
+case use the hypothesis, including its recursive assertions inside boxes.
+The variable label is neither a focus nor a hole and has no children.
+For hole freedom, extract an occurrence from a proposed hole and apply this
+case distinction to its owning edge and occurrence fibre.
+\end{proof}
+\lean{Graph/Substitution}{29}{34}{Linear.Substitution.variable_free}
+\lean{Graph/Substitution}{37}{46}{Linear.Substitution.variable_closed}
+\termdef{substitution-fragments}
+\begin{definition}[Substitution fragments]
+For the same $G:\star\to O$, define
+\[
+  L(G)=\mathsf{rewrite};(V;G),\qquad R(G)=\mathsf{search};G.
+\]
+Both prefixes are the certified input focus insertion. These are precisely
+the two shapes in Fig.~9(f), with $G$ playing the role of $G_S$ and $O$ the
+ordered output list denoted by $\vec\ell$ there. No copy of $G$ is modified.
+\end{definition}
+\lean{Graph/Substitution}{49}{50}{Linear.Substitution.before}
+\lean{Graph/Substitution}{53}{54}{Linear.Substitution.after}
+\begin{lemma}[Adjacency and unique focus]
+In $L(G)$ the variable source list equals the focus target list.
+If $G$ is focus-free, each fragment has a unique shallow focus, with its
+prescribed mode and no focus hidden in a box.
+\end{lemma}
+\begin{proof}
+The second splitting replaces the variable's input source by the new focus
+target. Both lists therefore consist of that one fresh vertex. The certified
+focus-insertion theorem applies to $V;G$ using variable-prefix focus freedom,
+and directly to $G$ on the right.
+\end{proof}
+\lean{Graph/Substitution}{57}{61}{Linear.Substitution.before_adjacent}
+\lean{Graph/Substitution}{64}{67}{Linear.Substitution.before_focussed}
+\lean{Graph/Substitution}{69}{71}{Linear.Substitution.after_focussed}
+When $O$ is empty and $G$ is also hole-free, both fragments are actual states.
+Their state constructors use the preceding focus certificates and the theorem
+that focus insertion preserves hole freedom. On the left this theorem is
+applied after variable-prefix hole freedom. On the right the search focus
+starts at the sole input, so the resulting state is initial.
+\lean{Graph/Substitution}{73}{76}{Linear.Substitution.beforeState}
+\lean{Graph/Substitution}{79}{83}{Linear.Substitution.afterState}
+
+\subsection{Context application and its consequences}
+\begin{lemma}[Recognizing the unique focus]
+If a labelled edge of a focussed graph has focus label $m$, it is the
+distinguished focus and its mode is $m$.
+\end{lemma}
+\begin{proof}
+A different edge would be focus-free by the focussed certificate, contradicting
+its label. Having identified the edge, injectivity of the primitive focus
+constructor identifies the modes. This argument works at every depth bound.
+\end{proof}
+\lean{Graph/Substitution}{86}{92}{Linear.Focussed.edge_of_label}
+\lean{Graph/Substitution}{95}{102}{Linear.Focussed.mode_of_label}
+\termdef{concrete-substitution}
+\begin{definition}[Concrete substitution transition]
+States $s,t$ satisfy $s\to_V t$ if there exist a closed-interface context
+$C:\star\to\epsilon$, a selected shallow edge $e$ certified as its unique
+hole, and a focus-free, hole-free graph $G:\star\to O$, such that the hole's
+ordered signature is $\star\to O$ and
+\[
+ C[L(G)]\cong s,\qquad C[R(G)]\cong t.
+\]
+Here $C$ is focus-free, and the two substitutions use the same $C$, $e$, and
+$G$. Equalities of the ordered boundary lists provide the explicit interface
+transports. The isomorphisms preserve graph labels and incidences.
+\end{definition}
+This is application outside boxes at one place, as required in paper \S6.4.
+The witnesses are concrete graphs and plugging operations, not an abstract
+transition axiom. The endpoint state certificates enforce all global focussed
+and hole-free restrictions.
+\lean{Graph/Substitution}{106}{112}{Linear.State.Substitution}
+\begin{lemma}[Modes and adjacent variable]
+Every substitution starts in rewrite mode and ends in search mode. Its source
+has a variable edge whose unique source is the focus target.
+\end{lemma}
+\begin{proof}
+Transport each fragment's explicit focus label through plugging and its
+endpoint isomorphism. Recognition of the unique focus proves the mode claim.
+For adjacency, transport the left fragment's equality of the variable source
+and focus target lists, first through boundary casts, then through the common
+context attachment, and finally through the isomorphism. Recognition identifies
+the transported focus with the source state's distinguished focus. Its target
+list is the singleton containing the distinguished target vertex.
+\end{proof}
+\lean{Graph/Substitution}{115}{122}{Linear.State.substitution_modes}
+\lean{Graph/Substitution}{126}{141}{Linear.State.substitution_variable}
+\begin{lemma}[Endpoint renaming]
+Substitution is preserved when either endpoint is replaced by a graph-isomorphic
+state.
+\end{lemma}
+\begin{proof}
+Keep the context, slot, bound computation, and boundary equalities; compose
+the two witness isomorphisms with the supplied endpoint isomorphisms.
+\end{proof}
+\lean{Graph/Substitution}{144}{147}{Linear.State.substitution_iso}
+
+\Needspace{18\baselineskip}
+\subsection{Extrinsic behaviour and assembly}
+\termdef{concrete-compute}
+\begin{definition}[Compute shape]
+A pair $s,t$ has compute shape if $s$ is in rewrite mode, $t$ is in search
+mode, and an active operation edge of $s$ has source list consisting of the
+focus target. The operation partition is a parameter. The target graph is
+otherwise unrestricted beyond being a state.
+\end{definition}
+This follows the paper's decision to allow arbitrary effects: compute rules
+need not be local graph replacements.
+\lean{Graph/UAM}{11}{15}{Linear.State.Compute}
+\begin{lemma}[Substitution excludes compute]
+A substitution and a compute transition cannot have the same source, even if
+their targets differ.
+\end{lemma}
+\begin{proof}
+The substitution variable and the compute operation would have the same source
+vertex. Source uniqueness forces their edges to coincide. Their labels would
+then be equal, contradicting the distinct variable and operation constructors.
+\end{proof}
+\lean{Graph/UAM}{18}{24}{Linear.State.substitution_not_compute}
+\begin{lemma}[Search excludes rewrite mode]
+The source of a search transition is not in rewrite mode.
+\end{lemma}
+\begin{proof}
+Extract its underlying coordinate-search witness. If the source mode were
+rewrite, its starting coordinate would have rewrite mode, contradicting the
+already proved absence of coordinate-search rules from that mode.
+\end{proof}
+\lean{Graph/UAM}{27}{37}{Linear.State.search_not_rewrite}
+\termdef{uam-behaviour}
+\begin{definition}[Admissible behaviour]
+A behaviour $B$ is a relation on states together with a proof that every pair
+it relates has compute shape. This is the paper's extrinsic parameter
+$B_{\mathbb O}$. Its shape law is a requirement on the supplied parameter;
+it is not an assertion that arbitrary relations satisfy that law.
+Neither determinism nor locality is part of this definition.
+\end{definition}
+\lean{Graph/UAM}{41}{46}{Linear.Behaviour}
+\termdef{full-uam}
+\begin{definition}[Intrinsic, rewrite, and full transitions]
+Write $\to_\bullet$ for the checked search relation and $\to_V$ for concrete
+substitution. Define
+\[
+ \to_{\rm int}=(\to_\bullet)\cup(\to_V),\qquad
+ \to_{\rm rw}=(\to_V)\cup B,\qquad
+ \to=(\to_{\rm int})\cup B.
+\]
+\end{definition}
+\lean{Graph/UAM}{49}{50}{Linear.UAM.Intrinsic}
+\lean{Graph/UAM}{53}{54}{Linear.UAM.Step}
+\lean{Graph/UAM}{57}{57}{Linear.UAM.Rewrite}
+\begin{proposition}[Mode discipline and disjointness]
+Every rewrite changes rewrite mode to search mode. Every full step is a search
+or a rewrite. Search and rewrite cannot start at the same state. Intrinsic
+and extrinsic transitions cannot start at the same state either.
+\end{proposition}
+\begin{proof}
+For the rewrite-mode claim, use substitution's proved modes or the behaviour's
+compute-shape certificate. Associativity of disjunction gives the search/rewrite
+partition. Search excludes rewrite mode, proving the first disjointness claim.
+For the second, split an intrinsic step into search or substitution: the former
+is excluded by mode, and the latter by the distinct adjacent edge labels.
+\end{proof}
+\lean{Graph/UAM}{60}{64}{Linear.UAM.rewrite_modes}
+\lean{Graph/UAM}{67}{68}{Linear.UAM.step_iff}
+\lean{Graph/UAM}{71}{73}{Linear.UAM.search_rewrite_exclusive}
+\lean{Graph/UAM}{76}{80}{Linear.UAM.intrinsic_extrinsic_exclusive}
+\begin{theorem}[Final normality and the concrete machine]
+For every admissible behaviour, successful final states have no full-UAM
+successor. Hence the full transition relation and the original successful
+finality predicate form a machine in the abstract sense of Section~2.
+\end{theorem}
+\begin{proof}
+Search from a final state is impossible by the previously established search
+boundary theorem. A rewrite would require rewrite mode, whereas finality
+requires backtrack mode. These cases exhaust full transitions. The concrete
+machine record contains exactly this relation, this finality predicate, and
+this proved normality law; it carries no unproved determinism field.
+\end{proof}
+\lean{Graph/UAM}{83}{88}{Linear.UAM.final_normal}
+\lean{Graph/UAM}{92}{95}{Linear.UAM.machine}
+The empty relation is an admissible behaviour because it has no transitions
+whose shape needs checking. With this parameter, a full step is equivalent to
+an intrinsic step, by eliminating the false extrinsic disjunct.
+\lean{Graph/UAM}{98}{99}{Linear.UAM.emptyBehaviour}
+\lean{Graph/UAM}{102}{104}{Linear.UAM.empty_step}
+
+\subsection{Actual executions and non-vacuity}
+The substitution example prefixes a closed passive value by a variable and a
+rewrite focus, obtaining an actual source state. A one-edge hole corolla is
+its context witness. It is focus-free and has exactly its sole hole. The
+corolla plugging unit isomorphisms identify the two plugged fragments with
+that source and the existing initial value state. This proves an actual
+substitution, not merely a conditional statement about one.
+Here and elsewhere, \emph{corolla} is terminology introduced by this
+formalization for a one-edge graph with its ordered boundary; it is not a term
+used in the paper.
+\lean{Graph/UAMExamples}{9}{10}{Linear.UAMExamples.source}
+\lean{Graph/UAMExamples}{13}{29}{Linear.UAMExamples.substitute}
+With empty behaviour and the passive partition, this substitution followed by
+the already checked value-search transition gives exactly two full-machine
+steps to a final state. The counted execution is built by two applications of
+the execution constructor and its zero-step base case. The source cannot have
+compute shape for any operation partition, by the general exclusion theorem.
+\lean{Graph/UAMExamples}{33}{38}{Linear.UAMExamples.terminates}
+\lean{Graph/UAMExamples}{41}{42}{Linear.UAMExamples.source_not_compute}
+A separate example changes the operation partition to active and places a
+rewrite focus before the value symbol. Directly unfolding the incidence lists
+proves compute shape for the pair consisting of this state and the initial
+value state. The singleton relation containing that pair is therefore an
+admissible behaviour; equality substitution reduces its shape certificate to
+the checked example. Its pair is an actual full-UAM step by the extrinsic
+injection. This tests the behaviour parameter independently of substitution.
+\lean{Graph/UAMExamples}{45}{47}{Linear.UAMExamples.activeSource}
+\lean{Graph/UAMExamples}{51}{55}{Linear.UAMExamples.compute_shape}
+\lean{Graph/UAMExamples}{58}{60}{Linear.UAMExamples.behaviour}
+\lean{Graph/UAMExamples}{62}{63}{Linear.UAMExamples.compute_step}
+
+Appendix~\ref{app:remaining-work} now has five unfinished items. The next
+operational proof obligation is substitution rootedness under the paper's
+stability hypothesis, followed by the structural results for the full UAM.
+The concrete specimen interpretation and the final robustness instantiation
+remain unproved.

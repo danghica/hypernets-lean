@@ -67,9 +67,9 @@ still assumes the required locality consequences.
   Determinism and refocusing are hypotheses of the paper's theorem, not claims
   to prove for arbitrary extrinsic rewrite rules.
 
-The next dependencies are adequacy for contextual graph rewriting and §6.4's
-substitution and compute transitions, then
-full-UAM refocusing, paper tuple-substitution adequacy, and the remaining Lemma 39(2–3) laws.
+Contextual search adequacy and §6.4's concrete transition definitions are now
+complete. The next dependencies are substitution rootedness, full-UAM structural
+laws, paper tuple-substitution adequacy, and the remaining specimen laws.
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices whose adequacy for the paper remains a separate obligation.
 
@@ -134,8 +134,8 @@ the value execution rooted and the valid interior-focus state behind a variable
 not rooted. These use the current erasure-based search semantics; contextual
 local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 
-The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains six unfinished tasks. Search adequacy has been discharged;
-the full UAM and the concrete robustness theorem remain open.
+The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains five unfinished tasks. Search adequacy and the full UAM transition
+definition are discharged; structural laws and the concrete robustness bridge remain open.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
 invariance under recursive renaming and closure under one-way shallow filling,
@@ -208,12 +208,21 @@ contexts, preserving plugging. `HoleContextSearch.lean` proves
 `State.search_iff_holeContext` and covers arbitrary simple contexts without
 extra assumptions on interaction labels. Regressions include output fragments
 and a self-loop whose input and output attachments coincide. **Appendix B now
-has six items.**
+has five unfinished items after the full-UAM milestone below.**
 
-Estimated completion by mathematical effort: **about 78%**, with a plausible
-range of **63–87%**, up from 75% after completing search adequacy.
-This is a planning judgment, not a declaration count. The remaining UAM
-transitions, specimen packaging, safety, and robustness remain substantial.
+The full-UAM milestone clears the transition-definition obligation.
+`Substitution.lean` constructs both fragments of Figure 9(f), defines their
+application in an actual shallow simple context, and proves mode change and
+variable adjacency. `UAM.lean` constrains the extrinsic behaviour to compute
+shape and assembles all three transition families into `UAM.machine`.
+Search/rewrite and intrinsic/extrinsic exclusion and final normality are proved.
+`UAMExamples.lean` checks a two-step terminating execution with variable removal
+and a genuine compute transition. Stability of the bound computation belongs
+to the remaining rootedness/refocusing proofs, not to the transition definition.
+
+Estimated completion by mathematical effort: **about 80%**, with a plausible
+range of **65–88%**, up from 78% after assembling the full UAM.
+This is a planning judgment, not a declaration count. Full-UAM structural proofs, specimen packaging, safety, and robustness remain substantial.
 
 ## Concrete graph milestone
 
@@ -335,7 +344,7 @@ vertex and edge renaming in each box body:
 Transport chooses inner isomorphisms classically; no canonical choice or round-trip
 law is asserted for the chosen transport function. The pointed-host quotient
 below identifies structural renaming zigzags. Comparison across
-different depth bounds and representation adequacy remain open. The concrete UAM and its
+different depth bounds and representation adequacy remain open. The full-UAM structural laws and its
 bridge to Theorem 6 remain the main later work.
 
 ## Composition and unit milestone
@@ -487,17 +496,16 @@ logical axioms, if used, are shown explicitly.
 ## Remaining work toward the milestone
 
 1. Prove representation adequacy and compatibility across depth bounds.
-2. Define substitution and compute transitions and assemble the full UAM.
-3. Prove substitution preserves rootedness, establish the required full-UAM
+2. Prove substitution preserves rootedness, establish the required full-UAM
    consequences of refocusing, and prove the stationary rewrite criterion.
-4. Prove compatibility of recursive deep specimens with paper tuple substitution.
+3. Prove compatibility of recursive deep specimens with paper tuple substitution.
    Define concrete quasi-specimens, input-safety, and robustness.
-5. Package synchronized successor coordinates as allowed concrete specimens,
+4. Package synchronized successor coordinates as allowed concrete specimens,
    preserving unique holes and context membership under isomorphism. Construct
    the abstract specimen interface using the checked boundary, non-exiting, and
    settled-search results, and connect its context-step law to the full UAM.
    Prove safety/robustness bridges and initial lifting.
-6. Instantiate the checked sufficiency results with all concrete obligations
+5. Instantiate the checked sufficiency results with all concrete obligations
    discharged to obtain Theorem 6.
 
 The copying UAM, lambda-term translation, and example program equivalences

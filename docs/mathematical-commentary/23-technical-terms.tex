@@ -8,6 +8,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{path}{Adjacency}{Edges $e,f$ are adjacent when a vertex occurs in both the target list of $e$ and the source list of $f$.}
 
+\glossaryentry{uam-behaviour}{Admissible behaviour}{A relation on actual states certified to contain only pairs of compute shape; determinism is a separate property.}
+
 \glossaryentry{observations}{Allowed context}{A context satisfying the supplied predicate $\mathsf{Allowed}$ in an observation interface.}
 
 \glossaryentry{box}{Alphabet}{A type of edge labels equipped with a signature assigning their input and output wire types.}
@@ -44,6 +46,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{composed-site}{Composed site}{The address of an inner selected occurrence after inserting its host at an outer site.}
 
+\glossaryentry{concrete-compute}{Compute shape}{Rewrite mode entering an active operation at the source, and search mode at the target; the effect itself is supplied by behaviour.}
+
 \glossaryentry{concrete-entering}{Concrete entering focus}{A focus whose target is a source of a shallow hole-labelled edge in its original context.}
 
 \glossaryentry{concrete-exiting}{Concrete exiting focus}{A focus whose source is a target of a shallow hole-labelled edge in its original context.}
@@ -59,6 +63,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{concrete-rootedness}{Concrete rootedness}{Existence of a finite search-only run from the canonical initial attachment to the state's recursive class.}
 
 \glossaryentry{concrete-state}{Concrete state}{A globally focussed, hole-free hypernet of type $*\to\epsilon$; the concrete transition relation remains to be defined.}
+
+\glossaryentry{concrete-substitution}{Concrete substitution transition}{Application of the substitution fragments at the same shallow hole of a focus-free simple context.}
 
 \glossaryentry{net}{Concrete typed net}{A finite labelled hypergraph with ordered boundaries and certified distinctness, incidence uniqueness, coverage, and signature typing.}
 
@@ -157,6 +163,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{context-coordinate}{Focussed-context coordinate}{The mode and joined term vertex of a focussed context after erasure; the context may still contain holes.}
 
 \glossaryentry{observations}{Fragment}{An element of the family $F_i$ in an observation interface, matched with contexts of the same interface index $i$.}
+
+\glossaryentry{full-uam}{Full UAM}{The concrete machine whose steps are search, substitution, or admissible extrinsic behaviour, with proved final normality.}
 
 \glossaryentry{pointed-plug}{Fully quotiented substitution}{Substitution whose arguments are a host-with-site class and a replacement class, and whose result is a recursive graph class.}
 
@@ -402,6 +410,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{subdivision-exchange}{Subdivision vertex exchange}{The bijection exchanging an old internal attachment with the fresh focus vertex, identifying the two subdivision orientations.}
 
+\glossaryentry{substitution-fragments}{Substitution fragments}{The actual graphs consisting of a rewrite focus followed by a variable and a computation, and a search focus followed by the same computation.}
+
 \glossaryentry{substitution-unit}{Substitution unit}{A selected one-edge corolla: filling it returns the inserted graph, while restoring an edge's own corolla returns its host, up to isomorphism.}
 
 \glossaryentry{indexed-port}{Target port}{A target-list vertex selected by a finite index in the edge label's output signature.}
@@ -421,6 +431,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{cost-orders}{Universal cost order}{The preorder $U$ relating every pair of natural-number counts, so refinement ignores quantitative cost.}
 
 \glossaryentry{up-to}{Up-to closure}{The relation obtained by placing a candidate relation between a left auxiliary state refinement and a right auxiliary state refinement.}
+
+\glossaryentry{variable-prefix}{Variable prefix}{A new unary variable edge placed before the sole input of a bound computation, preserving its original edges and boxes.}
 
 \glossaryentry{vertex-label}{Vertex label}{The internal vertex's assigned label, or the wire label at the indexed position in the relevant boundary list.}
 

@@ -67,8 +67,10 @@ states. Concrete entering/exiting predicates agree with the coordinate boundary
 test, output closure and joint rootedness imply non-exiting, and settled
 specimens have synchronized actual search transitions to rooted endpoints at
 a remote coordinate (Section~\ref{sec:specimen-traversal}). Adequacy for paper tuple
-substitution, graph-rewrite adequacy, substitution and compute transitions,
-and the full specimen interpretation remain open.
+substitution and the full specimen interpretation remain open.
+Contextual search adequacy is proved below. Concrete substitution and compute
+transitions now assemble into the full UAM, with mode discipline, disjoint
+transition families, and final normality proved (Section~\ref{sec:full-uam}).
 
 \Needspace{18\baselineskip}
 \subsection{Paper-to-Lean proof dependency map}
@@ -113,6 +115,14 @@ search theorem to the full UAM. The abstract \texttt{context\_step} field is
 therefore not yet instantiated. Adequacy for original-hole-only paper tuple
 substitution remains open. Contextual search adequacy is now established
 in Section~\ref{sec:contextual-search}.
+\item \textbf{Paper \S6.4: concrete transition definition checked.}\par
+\texttt{State.Substitution} applies the explicit Fig.~9(f) fragments in a
+shallow simple context. \texttt{State.Compute} specifies the required active
+operation and focus modes; \texttt{Behaviour} restricts the extrinsic parameter
+to this shape. \texttt{UAM.machine} assembles all three families, with proved
+final normality and transition-family exclusion. This removes the transition
+definition obligation, but does not discharge the full-UAM determinism,
+rootedness, or refocusing proofs.
 \item \textbf{Proposition~38: logical lifting checked; initial bridge open.}\par
 \texttt{Observations.contextual\_of\_lifting} proves the logical implication
 once initial pairs belong to the lifting. Concrete initial focus attachment is
@@ -135,18 +145,19 @@ Section~\ref{sec:contextual-search} identifies erasure-based state search with
 finite interaction patterns plugged into explicit simple contexts, in both
 directions. Opening and closing the selected slot covers arbitrary simple
 contexts; output fragments and self-looping attachments are included.
-The next operational dependencies are the remaining transitions of \S6.4,
-full-UAM refocusing, and specimen packaging for Lemma~39(3).
+The transitions of \S6.4 are now assembled into a concrete machine in
+Section~\ref{sec:full-uam}. The next operational dependencies are substitution
+rootedness, full-UAM structural laws, and specimen packaging for Lemma~39(3).
 These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 78\% of the mathematical effort toward
+As a planning estimate, approximately 80\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-63--87\%). This increases the previous estimate of 75\% after completing the
-finite-pattern and simple-context search adequacy obligation.
+65--88\%). This increases the previous estimate of 78\% after defining the remaining
+transition families and assembling the full UAM with final normality.
 It is a subjective estimate, not a ratio of declarations or discharged
-checklist entries. The remaining UAM transitions and deep specimen
+checklist entries. The full-UAM structural proofs and deep specimen
 locality, safety, and robustness remain substantial obligations.
 The active to-do list is maintained in Appendix~\ref{app:remaining-work}.
 
@@ -157,7 +168,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{3a196f1}, rather than to the moving
+All code links point to revision \texttt{53b0f37}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}
