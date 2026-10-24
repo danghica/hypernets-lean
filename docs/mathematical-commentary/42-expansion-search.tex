@@ -1,0 +1,323 @@
+\Needspace{18\baselineskip}
+\section{Exact search transport and reflection through recursive fillings}
+\label{sec:expansion-search}
+The preceding section constructs recursive fillings and actual specimen states.
+We now prove a complementary operational result: context search survives those
+fillings with its exact length, and a filled-graph search step at an original
+vertex either comes from the context or touches an original shallow hole.
+This is a concrete traversal theorem for the coordinate search relation.
+It also yields executions and rootedness of actual states obtained by inserting
+a focus after filling. No output-closure hypothesis is needed for these results.
+
+The scope of this milestone is precise. The state construction here first fills
+a focus-free context and then inserts a focus at a transported coordinate.
+The earlier deep specimen construction expands an already focussed context.
+Their compatibility, and the identification of the boundary predicate below
+with the paper's entering/exiting specimen predicates, remain to be proved.
+Consequently these results do not yet discharge the abstract
+\texttt{context\_step} field or all of Lemma~39(2--3).
+
+\Needspace{14\baselineskip}
+\subsection{Transporting individual search rules}
+Fix a graph $C:I\to O$ at depth $d$ and a family $H$ of replacements for its
+outer edges. Write $E=C[H]$ for simultaneous expansion and
+$j_H:V_C\to V_E$ for its injective host-vertex map.
+\begin{definition}[Search-preserving family]\label{term:search-preserving}
+A family preserves search when every original operation edge and every original
+variable edge is replaced by a literal corolla copy. No restriction is imposed
+here on replacements of other labels. In particular, this predicate alone does
+not assert that newly available steps can be reflected back to the context.
+\end{definition}
+\lean{Graph/ExpansionSearch}{15}{18}{Linear.ExpansionSearch.PreservesSearch}
+For a search coordinate $p=(m,v)$, define $j_Hp=(m,j_Hv)$: the mode is unchanged.
+\lean{Graph/ExpansionSearch}{19}{22}{Linear.ExpansionSearch.position}
+An operation view consists of its edge, operation symbol, singleton source,
+ordered argument list, and ordered thunk list. Given a copy of that edge, its
+expanded view uses the copy edge and maps its source, arguments, and thunks
+through $j_H$. The copy-incidence equalities prove the required source and
+target equations; mapping preserves the argument-list length.
+\lean{Graph/ExpansionSearch}{23}{34}{Linear.ExpansionSearch.operation}
+\begin{lemma}[Entry and return commute with expansion]
+The expanded operation's entry coordinate is $j_H$ of the original entry
+coordinate. Its return coordinate after argument $i$ is likewise $j_H$ of the
+original return coordinate.
+\end{lemma}
+\begin{proof}
+For entry, split the argument list into the empty and nonempty cases. The empty
+case keeps the source and uses the operation's finish mode; the nonempty case
+selects its first mapped argument. For return, lookup at $i+1$ commutes with
+list mapping. A successful lookup selects the mapped argument; a failed lookup
+keeps the mapped source with the same finish mode.
+\end{proof}
+\lean{Graph/ExpansionSearch}{35}{39}{Linear.ExpansionSearch.operation_enter}
+\lean{Graph/ExpansionSearch}{40}{46}{Linear.ExpansionSearch.operation_resume}
+\begin{theorem}[Forward search transport]
+If $H$ preserves search and $p\longrightarrow_C q$, then
+$j_Hp\longrightarrow_E j_Hq$.
+\end{theorem}
+\begin{proof}
+Consider the three constructors grouping the five search rules. A variable
+trigger uses its retained copy and the copied singleton source. Operation entry
+uses the expanded operation view and the entry lemma. Operation return maps the
+witnessed argument lookup and applies the return lemma. The argument order and
+the exclusion of thunk targets are preserved in each case.
+\end{proof}
+\lean{Graph/ExpansionSearch}{47}{67}{Linear.ExpansionSearch.step}
+If a context step exists, determinism on $E$ forces every successor of $j_Hp$
+to equal its transported result. This conclusion does not require reflection
+of arbitrary steps at a hole boundary.
+\lean{Graph/ExpansionSearch}{68}{75}{Linear.ExpansionSearch.successor_unique}
+
+For a recursive paired edge certificate, an original operation or variable
+cannot be a filled-hole edge and cannot be a box. Its certificate must therefore
+be retained, supplying copies on both sides. Applying this argument at each
+outer edge proves that both filling families preserve search. Changes inside
+box bodies are allowed throughout this argument.
+\lean{Graph/ExpansionSearch}{76}{88}{Linear.DeepFillingEdge.search_copies}
+\lean{Graph/ExpansionSearch}{89}{95}{Linear.deepFilling_preservesSearch}
+
+\Needspace{14\baselineskip}
+\subsection{Exact executions and successful search costs}
+\begin{definition}[Coordinate search machine]\label{term:coordinate-machine}
+The states are all mode--vertex pairs of $C$, and the transition relation is
+coordinate search. A successful final coordinate has backtrack mode at an input
+vertex. This machine may be defined on a context containing holes; it is not
+asserted to be a closed UAM state. No edge targets an input, so a final coordinate
+has no successor. Search determinism gives determinism of this machine.
+\end{definition}
+\lean{Graph/ExpansionSearch}{96}{106}{Linear.coordinateMachine}
+\lean{Graph/ExpansionSearch}{107}{117}{Linear.coordinateMachine_deterministic}
+\begin{theorem}[Exact execution transport]
+Every $n$-step context execution $p\longrightarrow_C^n q$ yields
+$j_Hp\longrightarrow_E^n j_Hq$ for a search-preserving family.
+\end{theorem}
+\begin{proof}
+Induct on the execution. The empty execution maps to the empty execution.
+For a nonempty execution, transport its first step and prepend it to the
+inductively transported tail. No extra step is inserted and no step is deleted.
+\end{proof}
+\lean{Graph/ExpansionSearch}{118}{125}{Linear.ExpansionSearch.steps}
+The host map retains the mode and whether a vertex is an input; hence finality
+of $j_Hp$ is equivalent to finality of $p$. This is checked for each of the
+internal, input, and output vertex constructors.
+\lean{Graph/ExpansionSearch}{126}{133}{Linear.ExpansionSearch.final_iff}
+\begin{theorem}[Uniqueness of the successful cost]
+Suppose a context execution from $p$ finishes successfully after $n$ steps.
+Every successful expanded execution from $j_Hp$ has length $n$ and ends at the
+transported context result.
+\end{theorem}
+\begin{proof}
+Transport the context run and its finality. Compare the supplied successful run
+with this run in the deterministic coordinate machine. The previously proved
+uniqueness theorem for successful executions gives equality both of lengths
+and of endpoints. A separate exclusion of hole boundaries is unnecessary
+because a complete successful context run has already been supplied.
+\end{proof}
+\lean{Graph/ExpansionSearch}{134}{148}{Linear.ExpansionSearch.final_run_unique}
+
+\Needspace{14\baselineskip}
+\subsection{Realizing executions as actual states}
+A typed coordinate of a closed-interface context is sent through $j_H$ with its
+term-typing proof: host expansion preserves vertex labels. The initial search
+coordinate remains the initial coordinate at the unique input.
+\lean{Graph/ExpansionSearch}{149}{154}{Linear.TypedPosition.expand}
+\lean{Graph/ExpansionSearch}{155}{161}{Linear.TypedPosition.expand_initial}
+\begin{theorem}[Execution realization]
+On a focus-free, hole-free graph, an $n$-step execution between typed coordinates
+induces an $n$-step search execution between the recursive isomorphism classes
+of their actual focussed realizations.
+\end{theorem}
+\begin{proof}
+Induct on the coordinate execution. In the empty case the two typed coordinates
+are equal by equality of their underlying pairs. In the successor case, search
+preserves term typing, so the intermediate coordinate can be realized as an
+actual state. The established coordinate-to-state search theorem supplies the
+first state step, and the induction hypothesis supplies the tail. Literal
+state search embeds into recursive state search, which is the relation on the
+classes used here.
+\end{proof}
+\lean{Graph/ExpansionSearch}{162}{182}{Linear.TypedPosition.realize_steps}
+An execution beginning at the initial coordinate consequently proves rootedness
+of the realized endpoint. Its first realized state is initial; the concrete
+characterization of rootedness by a run from an initial class applies.
+\lean{Graph/ExpansionSearch}{183}{197}{Linear.TypedPosition.realize_rooted}
+
+\Needspace{14\baselineskip}
+\subsection{Reading a step back from the expanded graph}
+\begin{definition}[Hole boundary]\label{term:hole-boundary}
+A context coordinate $(m,v)$ is at a hole boundary if some original shallow
+edge has a hole label and either $m$ is search and $v$ is one of that edge's
+sources, or $m$ is backtrack and $v$ is one of its targets. This is a predicate
+on the outer context graph. A hole strictly inside a box does not by itself
+satisfy this predicate.
+\end{definition}
+\lean{Graph/ExpansionSearch}{198}{203}{Linear.ExpansionSearch.HoleBoundary}
+\begin{lemma}[Incident host vertices determine incident owners]
+If an expanded edge owned by $e$ has source $j_Hv$, then $v$ is a source of $e$.
+The analogous statement holds for targets.
+\end{lemma}
+\begin{proof}
+Unpack membership in the mapped incidence list of the inserted edge. An internal
+vertex of the replacement cannot equal a host vertex because their carriers
+are disjoint. An output cannot occur in a source list, and an input cannot
+occur in a target list. In the remaining boundary case, injectivity of $j_H$
+identifies $v$ with the corresponding original source or target port.
+\end{proof}
+\lean{Graph/ExpansionSearch}{204}{212}{Linear.ExpansionSearch.source_owner_mem}
+\lean{Graph/ExpansionSearch}{213}{221}{Linear.ExpansionSearch.target_owner_mem}
+\begin{lemma}[Reading back an operation copy]
+An operation view whose edge belongs to a retained corolla has an original
+operation view with matching source and ordered arguments under $j_H$.
+\end{lemma}
+\begin{proof}
+The copy has only one edge, so its label identifies the original label as the
+same operation. The existence-of-view theorem constructs an original view.
+Transport that view through the copy. It and the supplied expanded view name
+the same edge; uniqueness of operation data therefore identifies their sources
+and argument lists. The proof normalizes the edge equality explicitly, so the
+dependent copy types are not silently identified.
+\end{proof}
+\lean{Graph/ExpansionSearch}{222}{244}{Linear.ExpansionSearch.operation_readback}
+\begin{definition}[Search origins]\label{term:search-origins}
+A family has search origins if every operation or variable edge in a replacement
+either belongs to a retained corolla copy or is owned by an original hole edge.
+This supplements forward search preservation with the origin information needed
+for reflection.
+\end{definition}
+\lean{Graph/ExpansionSearch}{266}{273}{Linear.ExpansionSearch.SearchOrigins}
+Every recursive edge certificate has this origin property. A retained certificate
+supplies a copy; a filled certificate supplies the original hole label. In the
+boxed case, the single replacement edge still has a box label, so it cannot be
+an operation or variable. The same argument on the right side proves the origin
+property for both families of every recursive paired filling.
+\lean{Graph/ExpansionSearch}{245}{265}{Linear.DeepFillingEdge.search_origin}
+\lean{Graph/ExpansionSearch}{386}{405}{Linear.deepFilling_searchOrigins}
+
+\begin{theorem}[Reflection or a hole boundary]
+Assume search preservation and search origins. If $j_Hp\longrightarrow_E q$,
+then either there is a context step $p\longrightarrow_C r$ with $q=j_Hr$, or
+$p$ is at a hole boundary.
+\end{theorem}
+\begin{proof}
+Inspect the interacting variable or operation edge. If its owner is a hole,
+source-incidence reflection in the search cases, or target-incidence reflection
+in the return case, gives the required boundary witness with its mode.
+Otherwise the owner is retained. For a variable trigger, the original variable
+has a singleton source, and the reflected source membership identifies it with
+the original coordinate. For operation entry, read back the operation view and
+use injectivity of the host map to recover the original source. For return,
+read back the argument list; injectivity of the mapped optional lookup recovers
+the same argument index in the original list. These cases produce an original
+search step. Forward transport and determinism identify its image with the
+supplied successor $q$.
+\end{proof}
+\lean{Graph/ExpansionSearch}{274}{332}{Linear.ExpansionSearch.reflect_or_boundary}
+As an immediate corollary, away from hole boundaries, search on expanded graphs
+is exactly the transported context relation. The forward implication rules out
+the boundary alternative; the reverse implication is forward search transport.
+\lean{Graph/ExpansionSearch}{333}{346}{Linear.ExpansionSearch.step_iff}
+
+\Needspace{14\baselineskip}
+\subsection{Reflection of entire executions}
+Let $R$ be a predicate on context coordinates such that every coordinate in $R$
+avoids hole boundaries and every context step from $R$ stays in $R$.
+\begin{theorem}[Execution reflection in an invariant region]
+Every $n$-step expanded execution starting at $j_Hp$ with $R(p)$ is the image
+of an $n$-step context execution ending at a coordinate still in $R$.
+\end{theorem}
+\begin{proof}
+Induct on $n$. For zero steps use equality of the endpoints. Otherwise reflect
+the first step using the boundary exclusion, obtain its original successor,
+and use closure of $R$ to apply the induction hypothesis to the tail. The
+result retains the exact length and equality of the expanded endpoint with
+the transported context endpoint.
+\end{proof}
+\lean{Graph/ExpansionSearch}{347}{365}{Linear.ExpansionSearch.steps_reflect}
+\begin{theorem}[Exact successful costs when no hole is shallow]
+If $C$ has no outer hole-labelled edge, then an $n$-step successful expanded
+execution from $j_Hp$ exists if and only if an $n$-step successful context
+execution from $p$ exists. Holes inside boxes are permitted.
+\end{theorem}
+\begin{proof}
+Use the entire coordinate space for $R$: a boundary witness would exhibit a
+forbidden shallow hole, and closure is automatic. Reflect the run and then
+reflect finality. Conversely transport the given context run and its finality.
+This is an equivalence for search-only executions; it says nothing about
+compute or substitution transitions that might subsequently open or copy boxes.
+\end{proof}
+\lean{Graph/ExpansionSearch}{366}{385}{Linear.ExpansionSearch.final_runs_iff}
+
+\Needspace{14\baselineskip}
+\subsection{Paired actual executions and rooted endpoints}
+Fix a focus-free context $C:[\mathsf{term}]\to[]$, recursive paired edge
+certificates for $H,K$, and hole-free expanded results. For a typed context
+coordinate $p$, define its left filled state by realizing $j_Hp$ on $C[H]$.
+Recursive filling supplies global focus freedom, and the stated hole-freedom
+certificate supplies closedness. The right construction uses $K$ in the same
+way. Uniqueness of hole names and allowed-context membership are not needed
+for these search theorems, so they are not required by this construction.
+\lean{Graph/ExpansionSearch}{406}{410}{Linear.ExpansionSearch.filledState}
+\begin{theorem}[Paired exact traversal]
+An $n$-step context execution between typed coordinates yields $n$-step
+executions between the corresponding actual state classes on both sides.
+If the context execution starts at the initial coordinate, both endpoint
+states are rooted.
+\end{theorem}
+\begin{proof}
+The recursive certificates supply search preservation separately for $H$ and
+$K$. Transport the same context execution through each family, then apply
+execution realization. For rootedness apply the initial-run characterization
+on each expanded graph; the host map retains the initial input. This does not
+assert rootedness preservation for arbitrary UAM rewrite transitions.
+\end{proof}
+\lean{Graph/ExpansionSearch}{411}{425}{Linear.ExpansionSearch.paired_steps}
+\lean{Graph/ExpansionSearch}{426}{437}{Linear.ExpansionSearch.paired_rooted}
+Two executions of the same length from the same recursive state class have
+the same endpoint: induction on the length uses search determinism to equate
+the first successors, then compares the tails. Therefore an independently
+supplied actual-state execution, of the length of a given context trace and
+starting at its left filled state, must finish at the constructed left endpoint.
+The result is about equality of state classes, not equality of chosen carriers.
+\lean{Graph/ExpansionSearch}{438}{451}{Linear.ExpansionSearch.state_run_unique}
+\lean{Graph/ExpansionSearch}{452}{461}{Linear.ExpansionSearch.actual_run_endpoint}
+
+\Needspace{14\baselineskip}
+\subsection{A deep example and the necessary boundary restriction}
+Reuse the three-edge graph of Section~\ref{sec:deep-specimens}: a nullary
+operation produces a thunk, a box contains the only hole, and a final operation
+consumes the box's term output. This time start from its focus-free outer graph.
+The filling retains both operations and replaces the box by the box containing
+the previously constructed filled body. The edge certificates are retained at
+the two operations and recursive at the box. Hole freedom follows from the
+closed filled body and the absence of holes in the operation corollas.
+\lean{Graph/ExpansionSearchExamples}{9}{16}{Linear.ExpansionSearchExamples.fillings}
+\lean{Graph/ExpansionSearchExamples}{17}{26}{Linear.ExpansionSearchExamples.edges}
+\lean{Graph/ExpansionSearchExamples}{27}{41}{Linear.ExpansionSearchExamples.closed}
+The maker's operation view has no term arguments and one thunk target.
+Let the returned coordinate be backtrack at the input. With passive operation
+kinds, the nullary rule gives a one-step execution from the initial coordinate
+to this returned coordinate; the thunk is not searched.
+\lean{Graph/ExpansionSearchExamples}{42}{52}{Linear.ExpansionSearchExamples.maker}
+\lean{Graph/ExpansionSearchExamples}{53}{54}{Linear.ExpansionSearchExamples.returned}
+\lean{Graph/ExpansionSearchExamples}{55}{59}{Linear.ExpansionSearchExamples.context_run}
+The paired-rootedness theorem gives a rooted actual state with the deep-filled
+box still present. Its mode and input position prove finality directly. The
+successful-cost uniqueness theorem shows that every successful coordinate run
+from the expanded initial position has exactly one step and this endpoint.
+\lean{Graph/ExpansionSearchExamples}{60}{63}{Linear.ExpansionSearchExamples.deep_return_rooted}
+\lean{Graph/ExpansionSearchExamples}{64}{68}{Linear.ExpansionSearchExamples.deep_return_final}
+\lean{Graph/ExpansionSearchExamples}{69}{77}{Linear.ExpansionSearchExamples.deep_return_cost}
+
+For the negative example, take the one-hole corolla used as that box body.
+Before filling, no search constructor applies: the sole label is neither a
+variable nor an operation. After filling with the variable corolla, the inserted
+variable triggers rewrite mode at the same host input. There is a hole-boundary
+witness there, namely the original hole and its input source. There cannot be a
+context step whose transport is this trigger, because the context has no search
+step at all. Thus the boundary exception in reflection is essential, even for
+a single linear hole. The example concerns triggering substitution; it does
+not implement the substitution transition itself.
+\lean{Graph/ExpansionSearchExamples}{78}{85}{Linear.ExpansionSearchExamples.hole_no_search}
+\lean{Graph/ExpansionSearchExamples}{86}{92}{Linear.ExpansionSearchExamples.filled_hole_triggers}
+\lean{Graph/ExpansionSearchExamples}{93}{96}{Linear.ExpansionSearchExamples.entering_hole}
+\lean{Graph/ExpansionSearchExamples}{97}{103}{Linear.ExpansionSearchExamples.reflection_needs_boundary}

@@ -50,7 +50,7 @@ still assumes the required locality consequences.
   still an adequacy obligation; both shallow and recursive deep specimens now
   have direct initial/final agreement for their actual filled states.
 - **Lemma 39(2–3) — open:** point (2) depends on Lemma 26(3), rootedness, and
-  output-closure; point (3) needs context-only traversal. The five coordinate search rules
+  output-closure; point (3) still needs the specimen-level traversal bridge. The five coordinate search rules
   and preservation of existing context steps under shallow filling are proved.
   Concrete shallow and recursive deep specimens now satisfy the multi-hole
   Lemma 26(3) obstruction and its jointly rooted context-path consequence;
@@ -174,8 +174,18 @@ constructs a closed specimen whose sole hole is inside a box, and proves that
 the old shallow rules cannot close this same context. Compatibility with the
 paper's tuple substitution and the full UAM interface remain open.
 
-Estimated completion by mathematical effort: **about 70%**, with a plausible
-range of **60–80%**, up from about 65% before the recursive deep-specimen
+ExpansionSearch.lean now proves exact context search transport through recursive
+fillings and reflection away from shallow hole boundaries. Entire executions
+reflect in invariant regions; when all holes are strictly inside boxes, exact
+successful coordinate-search costs are preserved and reflected. The same context
+traces yield paired actual-state executions and rooted endpoints after focus
+insertion. ExpansionSearchExamples.lean checks a rooted final state with a
+deep-filled box and proves that unrestricted reflection fails at a shallow hole.
+Compatibility with expansion of an already focussed specimen and the paper's
+entering/exiting predicates remains open.
+
+Estimated completion by mathematical effort: **about 72%**, with a plausible
+range of **60–80%**, up from about 70% before the recursive search-transport
 milestone. This is a planning judgment, not a declaration
 count. The remaining operational and specimen-locality proofs may expose
 substantial additional work.
@@ -411,12 +421,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 1018 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 1034
-source-fragment links point to immutable code revision `b0c4c09`. It distinguishes
+all 1199 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 1219
+source-fragment links point to immutable code revision `22fe048`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 172 technical terms, with short descriptions and internal PDF links
+glossary of 191 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -459,7 +469,9 @@ logical axioms, if used, are shown explicitly.
 5. Prove compatibility of recursive deep specimens with paper tuple substitution.
    Define concrete quasi-specimens, input-safety, and robustness.
 6. Construct the concrete `SpecimenSystem` and prove the remaining Lemma 39
-   classifications and traversal laws, safety/robustness bridges, and initial lifting.
+   classifications; identify filling-then-focus insertion with focussed expansion
+   and connect the coordinate traversal laws to specimen predicates. Prove the
+   safety/robustness bridges and initial lifting.
 7. Instantiate the checked sufficiency results with all concrete obligations
    discharged to obtain Theorem 6.
 
