@@ -1,0 +1,229 @@
+\Needspace{18\baselineskip}
+\section{Independent local incidence semantics for search}
+\label{sec:local-incidence}
+This section proves that erasure-based state search coincides with a presentation
+that inspects adjacency in the original graph and specifies the target by explicit
+incidence equations. Neither the local interaction predicate nor the rewiring
+structure mentions erasure or coordinate search. The result applies to arbitrary
+states, including states with cycles, and preserves ordered arguments and complete
+non-focus labels.
+
+This does \emph{not} complete contextual-rewrite adequacy. The paper defines
+search by plugging finite interaction patterns into focus-free simple contexts.
+Constructing those patterns and proving their factorization and plugging
+correspondence with the incidence presentation remain necessary. In particular,
+we do not treat the following correspondence as a substitute for that last proof.
+
+\subsection{Interactions in the original graph}
+\begin{definition}[Local interaction]\label{term:local-interaction}
+Let $f$ be a focus of a graph $C$ with no output boundary. A local interaction
+selects a pair $(m,w)$ consisting of the next mode and an original graph port.
+The variable rule requires search mode, a variable-labelled edge, and that
+edge's source list to be exactly $[f.\mathsf{target}]$; it selects rewrite mode
+at $f.\mathsf{source}$. Entry requires search mode and an operation whose
+source equals $f.\mathsf{target}$, and uses its ordered entry selection.
+Return requires backtracking mode and an argument index $i$ whose lookup is
+$f.\mathsf{source}$, and uses the operation's ordered return selection.
+Entry and return include both the next-argument and finished-operation cases.
+\end{definition}
+The selected port is not required to differ from the old focus target. For
+example a nullary operation immediately adjacent to the focus selects its own
+source, which is that target. The joining operation below handles this case.
+\lean{Graph/LocalInteraction}{10}{19}{Linear.LocalInteraction}
+
+\begin{lemma}[Erasure and operation views]
+An operation edge differs from the focus edge. Its erasure retains its label,
+contracts its source and all argument and thunk ports, and is again an operation
+view. Erasure commutes with entry and return selection. Conversely every erased
+operation has an original operation view with the same edge and operation label,
+and with precisely those contracted source and argument data.
+\end{lemma}
+\begin{proof}
+Operation and focus labels are disjoint at every depth, proving the edge
+inequality. Mapping contraction over the singleton source and concatenated target
+lists proves the erased view's incidence equations; list length is unchanged.
+For entry, split on whether the argument list is empty. For return, commute
+lookup with list mapping and split on the next-argument lookup. Finally, recover
+an original operation view from the surviving edge's label. Uniqueness of the
+source and ordered argument data for a given edge identifies its erasure with
+the supplied view.
+\end{proof}
+\lean{Graph/LocalInteraction}{24}{27}{Linear.SearchOperation.ne_focus}
+\lean{Graph/LocalInteraction}{30}{39}{Linear.SearchOperation.erase}
+\lean{Graph/LocalInteraction}{41}{43}{Linear.SearchOperation.erase_enter}
+\lean{Graph/LocalInteraction}{45}{49}{Linear.SearchOperation.erase_resume}
+\lean{Graph/LocalInteraction}{51}{59}{Linear.SearchOperation.unerase}
+
+\begin{theorem}[Adjacency correspondence]
+A coordinate step from the erased focus coordinate to $q$ exists exactly when
+an original-graph local interaction selects $(m,w)$ and
+$q=(m,\mathsf{contract}(w))$.
+\end{theorem}
+\begin{proof}
+For the forward construction from local interactions, erase the interacting
+edge. A variable or operation source adjacent to the focus target contracts to
+the erased focus position. A returning argument equal to the focus source
+contracts to that same position. Apply the corresponding coordinate rule and
+the operation-selection commutation equations.
+
+For the converse, analyze the coordinate rule. In the variable case,
+erased-source membership reflects to adjacency at the original focus target;
+the variable signature makes the original source list a singleton. In the entry
+case, recover the original operation view and use the same source-membership
+reflection. In the return case, invert lookup in the mapped argument list to
+recover the original argument at the same index. A non-focus target incidence
+cannot equal the deleted focus target. Thus lifting its contraction recovers
+the original argument, and the coordinate equality forces this argument to be
+the focus source. Uniqueness of operation selections gives the required target
+coordinate in both operation cases.
+\end{proof}
+\lean{Graph/LocalInteraction}{66}{96}{Linear.LocalInteraction.sound}
+\lean{Graph/LocalInteraction}{100}{147}{Linear.LocalInteraction.complete}
+\lean{Graph/LocalInteraction}{150}{157}{Linear.LocalInteraction.iff_search}
+
+\subsection{Independent equations for the target graph}
+\begin{definition}[Joining and moving ports]\label{term:local-port-movement}
+Write $a$ and $b$ for the old focus source and target. Define functions on the
+original graph's ports by
+\[
+ J(v)=\begin{cases}a&v=b,\\v&v\ne b,\end{cases}
+ \qquad
+ M_w(v)=\begin{cases}b&J(v)=J(w),\\J(v)&J(v)\ne J(w).\end{cases}
+\]
+The first joins the old focus endpoints. The second redirects source incidences
+at the selected joined port to the reusable focus target. These equations use
+only original ports and equality, without constructing an erased graph.
+\end{definition}
+\lean{Graph/LocalRewiring}{12}{14}{Linear.Focussed.joinPort}
+\lean{Graph/LocalRewiring}{17}{19}{Linear.Focussed.movePort}
+Joining a port equals contracting it and then lifting the retained port back to
+original names. If it is the focus target, both sides yield the focus source;
+otherwise contraction followed by lifting fixes it. Moreover $M_w(v)=v$ when
+$v\ne b$ and $v\ne J(w)$: both tests in the displayed definitions are false.
+\lean{Graph/LocalRewiring}{21}{31}{Linear.Focussed.joinPort_eq_lift_contract}
+\lean{Graph/LocalRewiring}{34}{39}{Linear.Focussed.movePort_unchanged}
+
+\begin{definition}[Local rewiring]\label{term:local-rewiring}
+For states $s,t$ and a selected pair $(m,w)$, a local rewiring comprises
+bijections $V$ and $E$ of their internal vertex and edge carriers. Extend $V$
+to ports by fixing the ordered boundary. The bijections preserve internal
+vertex labels and identify the distinguished focus edges. The target focus mode
+is $m$, and every non-focus edge retains its entire label, including box bodies.
+The target incidence lists obey
+\begin{align*}
+ t.\mathsf{source}(E(f))&=[V(J(w))],\\
+ t.\mathsf{source}(E(e))&=\mathsf{map}(V\circ M_w,s.\mathsf{source}(e))
+       &&(e\ne f),\\
+ t.\mathsf{target}(E(e))&=\mathsf{map}(V,s.\mathsf{target}(e))
+       &&\text{for every }e.
+\end{align*}
+Here $f$ is the source state's focus edge. The focus label follows from the
+target state's focus certificate and its mode equation. Well-formedness of
+both states is part of their types; these equations do not postulate that an
+arbitrary raw graph patch is well formed.
+\end{definition}
+\lean{Graph/LocalRewiring}{46}{60}{Linear.LocalRewiring}
+The private port-composition lemma says that extending a composite vertex
+bijection to ports equals composing its two extensions. Check the internal,
+input, and output constructors separately; each equality is immediate.
+\lean{Graph/LocalRewiring}{64}{68}{Linear.LocalRewiring.port_trans}
+
+\subsection{Canonical construction and uniqueness}
+Fix a typed erased coordinate $q=(m,\mathsf{contract}(w))$. Reinsertion at $q$
+introduces a singleton vertex and edge. The restoration bijections send those
+fresh elements to the old focus target and old focus edge, and retain all
+other names.
+\begin{lemma}[Restoration implements port movement]
+For every original port $v$, restoring the names of the split contracted port
+at $q$ yields $M_w(v)$.
+\end{lemma}
+\begin{proof}
+Injectivity of lifting shows that the contracted ports of $v$ and $w$ agree
+exactly when $J(v)=J(w)$. In that case insertion splits to the fresh vertex,
+which restoration sends to the old focus target. Otherwise insertion retains
+the contracted port; restoring that host port yields its lift, namely $J(v)$.
+These are precisely the two defining cases of $M_w$.
+\end{proof}
+\lean{Graph/LocalRewiring}{75}{96}{Linear.LocalRewiring.restore_move}
+
+\begin{theorem}[Characterization of a rewired target]
+Every target satisfying the local equations is focus-preservingly isomorphic
+to the canonical state realized from $q$. Conversely the canonical state
+satisfies the local equations. Replacing a target by a focus-preservingly
+isomorphic state preserves local rewiring.
+\end{theorem}
+\begin{proof}
+For the first direction compose restoration with the given carrier bijections.
+On a retained vertex its label equation is the supplied one; on the fresh
+vertex use that the old focus target has term type. Retained edge labels use
+the non-focus label equation; the fresh edge uses the target focus's label
+and the selected mode. For retained sources apply the restoration lemma
+pointwise. For the focus source use joining equals lifted contraction.
+For retained targets, contraction followed by lifting is the identity since
+no non-focus edge targets the deleted focus target. The fresh target restores
+to that target. These equations provide every field of the focussed isomorphism.
+
+For the converse use the inverse restoration bijections. The existing
+reinsertion isomorphism supplies internal-label and target equations, which
+are independent of the new coordinate and mode. Non-focus labels are unchanged
+by construction. Apply injectivity of the forward restoration port map to the
+source equations: the retained-source equation becomes the restoration lemma,
+and the focus-source equation becomes joining equals lifted contraction.
+The focus edge and mode equations follow from the definitions.
+
+Finally compose carrier bijections with a target isomorphism. Its incidence
+preservation, list-map composition, and the port-composition lemma prove all
+new source and target equations. Labels, mode, and focus identity compose
+in the same order.
+\end{proof}
+\lean{Graph/LocalRewiring}{100}{160}{Linear.LocalRewiring.iso}
+\lean{Graph/LocalRewiring}{163}{207}{Linear.LocalRewiring.canonical}
+\lean{Graph/LocalRewiring}{210}{231}{Linear.LocalRewiring.transport}
+
+\subsection{State-level equivalence and regression examples}
+\begin{definition}[Incidence search]\label{term:incidence-search}
+An incidence-search step $s\to t$ consists of a selected pair $(m,w)$, an
+original-graph local interaction selecting it, and a local rewiring from $s$
+to $t$ at that pair. This definition contains no coordinate-search premise.
+\end{definition}
+\lean{Graph/LocalRewiring}{237}{238}{Linear.State.IncidenceSearch}
+\begin{theorem}[Exact correspondence on actual states]
+Erasure-based state search is equivalent to incidence search. Recursive state
+search is equivalent to an incidence step followed by recursive focussed
+isomorphism. Incidence search is deterministic up to literal-label focussed
+isomorphism.
+\end{theorem}
+\begin{proof}
+From erasure-based search, recover an original local interaction, construct the
+canonical rewiring, and transport it through the supplied target isomorphism.
+Conversely a local interaction gives a coordinate step. Type preservation of
+coordinate search certifies its target as a typed position; the rewiring
+characterization supplies the required target isomorphism. The recursive
+statement follows by substituting this equivalence into the existing
+characterization of recursive search as literal search plus recursive endpoint
+renaming. Determinism follows by converting two incidence steps to state
+search and applying state-search determinism.
+\end{proof}
+\lean{Graph/LocalRewiring}{241}{250}{Linear.State.search_iff_incidence}
+\lean{Graph/LocalRewiring}{252}{256}{Linear.State.deepSearch_iff_incidence}
+\lean{Graph/LocalRewiring}{259}{263}{Linear.State.incidenceSearch_deterministic}
+
+The examples recover the actual nullary value edge in the initial value state.
+Its source is the focus target and its argument and thunk lists are empty;
+the source incidence follows by splitting the unique input port. Direct entry
+therefore selects backtracking at the old target. This exercises the joining
+case $J(b)=a$, not merely an unaffected port. The known terminating value step
+converts to an incidence step whose target is final.
+\lean{Graph/LocalSearchExamples}{9}{21}{Linear.LocalSearchExamples.valueOperation}
+\lean{Graph/LocalSearchExamples}{25}{28}{Linear.LocalSearchExamples.value_interaction}
+\lean{Graph/LocalSearchExamples}{31}{34}{Linear.LocalSearchExamples.value_terminates}
+
+A second example inserts an initial search focus before the variable in the
+closed variable/value chain. Its variable source list is checked directly to
+be the singleton focus target, so the local variable rule selects rewrite
+mode at the old source. Type preservation and canonical rewiring construct
+an actual incidence successor in rewrite mode. This proves only the trigger,
+not a substitution transition.
+\lean{Graph/LocalSearchExamples}{37}{39}{Linear.LocalSearchExamples.initialChain}
+\lean{Graph/LocalSearchExamples}{42}{48}{Linear.LocalSearchExamples.variable_interaction}
+\lean{Graph/LocalSearchExamples}{52}{60}{Linear.LocalSearchExamples.variable_successor}

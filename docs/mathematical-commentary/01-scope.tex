@@ -130,18 +130,22 @@ representation choices. Relating them to the paper's set-based hypernets and
 across depth bounds is a separate adequacy obligation. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
 not replace the operational proofs in Appendix~F. The next proof dependency
-is adequacy of erasure-based search for local graph rewriting,
+is factorization of independent local incidence search through the paper's
+interaction patterns and focus-free simple contexts,
 together with the remaining transitions of \S6.4. Full-UAM refocusing and
 the remaining specimen packaging for Lemma~39(3) remain obligations. The active/passive operation
-partition and all five coordinate search rules are now defined. These then support the concrete Proposition~40 bridge;
+partition and all five coordinate search rules are now defined.
+Section~\ref{sec:local-incidence} proves their exact correspondence with
+independent original-graph interactions and incidence equations, including
+recursive endpoint renaming. It does not discharge the simple-context
+factorization obligation. These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
 As a planning estimate, approximately 75\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-60--85\%). This revises the preceding estimate of about 72\% after proving
-erasure commutation, concrete non-exiting, and synchronized settled traversal
-from the original recursive specimen states.
+60--85\%). The estimate remains unchanged after the incidence-search correspondence:
+the full contextual-rewrite obligation has not yet been discharged.
 It is a subjective estimate, not a ratio of declarations or discharged
 checklist entries. Operational adequacy, the full UAM, and deep specimen
 locality, safety, and robustness remain substantial obligations.
@@ -154,7 +158,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{8a8844e}, rather than to the moving
+All code links point to revision \texttt{e08bdb5}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

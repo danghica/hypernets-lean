@@ -180,6 +180,12 @@ the workspace-local
 macOS ARM compiler if present, and otherwise uses \texttt{lake} from the environment.
 The audits are checked separately from the root import.
 
+The additional local-search audit checks both adjacency directions, canonical
+rewiring and its uniqueness characterization, both state-level correspondences,
+determinism, and actual variable and value successors. Only the standard
+logical axioms occur; no project axiom or \texttt{sorryAx} is used.
+\lean{Graph/Audit}{311}{320}{Graph.Audit: independent incidence-search correspondence}
+
 The commentary's source checker recursively scans all Lean modules under
 \texttt{Hypernets/}, including nested graph modules, attributed declarations,
 noncomputable definitions, abbreviations, and anonymous examples. It verifies

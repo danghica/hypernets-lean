@@ -192,8 +192,17 @@ is successor-specimen packaging, allowed-context membership, and the full-UAM
 connection. The deep example tests actual traversal and preserves the earlier
 non-rootedness obstruction.
 
+`LocalInteraction.lean` and `LocalRewiring.lean` now give an independent
+original-graph adjacency and rewiring presentation, proved equivalent to
+erasure-based state search in both directions. Recursive endpoint renaming and
+determinism are included. `LocalSearchExamples.lean` checks actual variable and
+nullary-operation successors. **This narrows item 2 but does not remove it:**
+factorization through finite interaction patterns in simple contexts remains
+unproved. Appendix B still has seven items.
+
 Estimated completion by mathematical effort: **about 75%**, with a plausible
-range of **60–85%**, up from about 72% before the focussed-specimen bridge.
+range of **60–85%**. This estimate is unchanged after the incidence-search
+correspondence, since the complete contextual-rewrite obligation remains open.
 This is a planning judgment, not a declaration count. Operational adequacy,
 the full UAM, specimen packaging, safety, and robustness remain substantial.
 
@@ -428,12 +437,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 1253 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 1274
-source-fragment links point to immutable code revision `8a8844e`. It distinguishes
+all 1281 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 1304
+source-fragment links point to immutable code revision `e08bdb5`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 196 technical terms, with short descriptions and internal PDF links
+glossary of 200 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -469,7 +478,8 @@ logical axioms, if used, are shown explicitly.
 ## Remaining work toward the milestone
 
 1. Prove representation adequacy and compatibility across depth bounds.
-2. Prove equivalence of state search with the paper's contextual local rewrites.
+2. Construct the finite search interaction patterns and prove their simple-context
+   plugging equivalent to the independent local incidence semantics in both directions.
 3. Define substitution and compute transitions and assemble the full UAM.
 4. Prove substitution preserves rootedness, establish the required full-UAM
    consequences of refocusing, and prove the stationary rewrite criterion.

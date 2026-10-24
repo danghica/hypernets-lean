@@ -50,7 +50,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/8a8844e38cff62a50f69925cc3835c9c09ae2055}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/e08bdb50644af00376997ebc153ced69d4412c2e}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -58,7 +58,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{24 October 2026\\\small Source snapshot: \texttt{8a8844e}; Lean \texttt{4.35.0}}
+\date{24 October 2026\\\small Source snapshot: \texttt{e08bdb5}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -75,6 +75,11 @@ Concrete entering/exiting classification and the non-exiting conclusion of
 Lemma~39(2) are proved. Settled rooted specimens admit synchronized actual search
 steps to rooted endpoints at a remote coordinate. Repackaging this successor as
 an allowed specimen and connecting search to the full UAM remain open.
+
+Independent original-graph adjacency and incidence equations now characterize
+erasure-based state search in both directions. The equivalence also identifies
+recursive endpoint renaming, but factorization through the paper's finite
+interaction patterns and simple contexts remains open.
 
 Every finite simultaneous shallow expansion is now realized by ordinary addressed substitutions, with a proved finite length bound and order independence up to graph isomorphism. Independent substitutions now commute at arbitrary depth with constructed residual addresses. Hosts with selected sites are quotiented by structural renaming, and substitution and exact freshness descend to these classes. The dependency map distinguishes these checked results from the remaining obligations. Adequacy for paper tuple substitution, contextual-rewrite adequacy, the full UAM, safety and robustness, and the complete specimen-interface interpretation remain open. This is therefore not yet a formalization of the paper's full Theorem~6.
 \end{abstract}
@@ -129,6 +134,7 @@ Every finite simultaneous shallow expansion is now realized by ordinary addresse
 \input{41-deep-specimens}
 \input{42-expansion-search}
 \input{43-specimen-traversal}
+\input{44-local-incidence}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -139,7 +145,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/8a8844e38cff62a50f69925cc3835c9c09ae2055}{Repository at revision \texttt{8a8844e}}.
+\href{https://github.com/danghica/hypernets-lean/tree/e08bdb50644af00376997ebc153ced69d4412c2e}{Repository at revision \texttt{e08bdb5}}.
 \end{thebibliography}
 \clearpage
 \appendix
