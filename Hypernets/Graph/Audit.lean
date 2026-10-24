@@ -1,5 +1,5 @@
 import Hypernets.Graph.ExpansionSearchExamples
-
+import Hypernets.Graph.SpecimenTraversalExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -285,3 +285,25 @@ import Hypernets.Graph.ExpansionSearchExamples
 #print axioms Hypernets.Linear.ExpansionSearchExamples.deep_return_cost
 #print axioms Hypernets.Linear.ExpansionSearchExamples.filled_hole_triggers
 #print axioms Hypernets.Linear.ExpansionSearchExamples.reflection_needs_boundary
+
+#print axioms Hypernets.Linear.ExpansionErasure.iso
+#print axioms Hypernets.Linear.ExpansionErasure.position
+#print axioms Hypernets.Linear.ExpansionErasure.underlying_exists
+#print axioms Hypernets.Linear.ExpansionErasure.realization_iso
+#print axioms Hypernets.Linear.DeepFillingEdge.erased
+#print axioms Hypernets.Linear.Focussed.erased_source_iff
+#print axioms Hypernets.Linear.Focussed.erased_target_iff
+#print axioms Hypernets.Linear.Focussed.boundary_iff
+#print axioms Hypernets.Linear.SearchStep.remote_target
+#print axioms Hypernets.Linear.DeepSpecimen.at_original
+#print axioms Hypernets.Linear.DeepSpecimen.left_deepSearch_iff
+#print axioms Hypernets.Linear.DeepSpecimen.right_deepSearch_iff
+#print axioms Hypernets.Linear.DeepSpecimen.context_steps
+#print axioms Hypernets.Linear.DeepSpecimen.rooted_of_context_run
+#print axioms Hypernets.Linear.DeepSpecimen.not_exiting
+#print axioms Hypernets.Linear.DeepSpecimen.settled_away
+#print axioms Hypernets.Linear.DeepSpecimen.settled_match_left
+#print axioms Hypernets.Linear.DeepSpecimen.settled_traversal
+#print axioms Hypernets.Linear.SpecimenTraversalExamples.actual_step
+#print axioms Hypernets.Linear.SpecimenTraversalExamples.matching
+#print axioms Hypernets.Linear.SpecimenTraversalExamples.no_initial_context_run

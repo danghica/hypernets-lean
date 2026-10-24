@@ -19,3 +19,4 @@ import Hypernets.Graph.InterchangeExamples
 import Hypernets.Graph.DeepSpecimenExamples
 import Hypernets.Graph.ExpansionSearch
 import Hypernets.Graph.ExpansionSearchExamples
+import Hypernets.Graph.SpecimenTraversalExamples
