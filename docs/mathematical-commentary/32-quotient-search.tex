@@ -1,0 +1,327 @@
+\Needspace{20\baselineskip}
+\subsection{Insertion followed by erasure}
+\label{sec:insertion-cancellation}
+Fix a focus-free graph $G:I\to[]$, a term vertex $v$, and a mode $m$.
+Write $S=\operatorname{insert}(G,v,m)$ for the focussed graph constructed
+in Section~\ref{sec:realization}. The preceding round trip started with an
+arbitrary focussed graph. We now establish the opposite direction, including
+the position at which the focus was inserted.
+
+\begin{definition}[Deleting a fresh singleton]
+For any carrier $A$, deleting the fresh member from $A+\mathbf1$ leaves a
+carrier canonically bijective with $A$. The forward map sends a retained
+$\mathsf{inl}(a)$ to $a$; the inverse sends $a$ to that retained element.
+An element of the right summand cannot survive, since its singleton index
+must be zero. Apply general erasure to the fresh focus and fresh target of
+$S$ to define $E(S)$.
+\end{definition}
+The inverse laws hold by cases on the summand: the retained case is reflexive,
+and the fresh case contradicts its non-deletion certificate.
+\lean{Graph/InsertionRoundTrip}{10}{21}{Linear.FocusInsertion.deleteFresh}
+\lean{Graph/InsertionRoundTrip}{27}{28}{Linear.FocusInsertion.erasedInsertion}
+
+\begin{lemma}[Cancellation on ports]
+Let $D$ be the port map induced by deletion of the fresh singleton, $j$ the
+inclusion of retained ports, and $\kappa$ the collapse map of insertion.
+Then $D(x)=\kappa(j(x))$. The joined vertex maps to $v$, and for every port
+$w$ of $S$, $D(c(w))=\kappa(w)$, where $c$ is general focus contraction.
+\end{lemma}
+\begin{proof}
+The first identity follows by cases on the retained port. An internal
+right-summand case is impossible; input ports are fixed. For the joined
+vertex, inclusion gives the focus source, namely the hosted copy of $v$;
+collapse sends it to $v$. Finally, if $w$ is the fresh target, contraction
+gives the joined vertex and both sides equal $v$. Otherwise inclusion after
+contraction is $w$, and the first identity applies.
+\end{proof}
+\lean{Graph/InsertionRoundTrip}{31}{40}{Linear.FocusInsertion.deleteFresh_port}
+\lean{Graph/InsertionRoundTrip}{43}{47}{Linear.FocusInsertion.erase_position}
+\lean{Graph/InsertionRoundTrip}{50}{59}{Linear.FocusInsertion.erase_contract}
+
+\begin{theorem}[Insertion--erasure cancellation]
+\termdef{insertion-cancellation}
+There is an isomorphism $E(S)\cong G$ preserving full labels and ordered
+incidences. The choice-based operation $S.\mathsf{underlying}$ has such an
+isomorphism too, and one can choose it to send the joined vertex to $v$.
+\end{theorem}
+\begin{proof}
+Use deletion of the singleton on both internal vertices and edges. All
+surviving labels are inherited. Sources were first split by insertion and
+then contracted by erasure; the port cancellation identity reduces their
+composite to collapse after split, which is the identity. Targets were
+hosted by insertion, so the analogous composite is collapse after hosting,
+also the identity. These pointwise identities give equality of ordered lists.
+
+The target selected by general erasure is necessarily the fresh internal
+vertex: both it and the fresh vertex equal the focus target, and the internal
+port constructor is injective. Substituting this equality identifies the
+general underlying graph with $E(S)$. For the position-sensitive assertion,
+carry an arbitrary target together with its equality certificate, identify
+it with the fresh target, and use the explicit isomorphism and joined-port
+identity together. This keeps graph and coordinate recovery synchronized.
+\end{proof}
+\lean{Graph/InsertionRoundTrip}{62}{100}{Linear.FocusInsertion.erase_iso}
+\lean{Graph/InsertionRoundTrip}{103}{104}{Linear.FocusInsertion.targetVertex_eq}
+\lean{Graph/InsertionRoundTrip}{107}{111}{Linear.FocusInsertion.underlying_iso}
+\lean{Graph/InsertionRoundTrip}{115}{129}{Linear.FocusInsertion.underlying_position_exists}
+
+\Needspace{18\baselineskip}
+\subsection{Search coordinates respect renaming}
+\label{sec:search-renaming}
+Let $a:G\cong H$ be a literal-label isomorphism and write $a_*$ for its port
+map. Internal wire labels are preserved by the isomorphism's label field;
+boundary labels are preserved because boundary positions are fixed.
+\lean{Graph/SearchRenaming}{11}{16}{Linear.iso_vertexLabel}
+
+\begin{definition}[Transport of operation views and coordinates]
+Transport an operation view by applying the edge bijection to its edge and
+$a_*$ to its source and both ordered lists. Keep its operation symbol.
+Source and target certificates follow from the isomorphism's incidence laws;
+arity follows because mapping a list preserves length. Transport a typed
+coordinate $(m,v)$ to $(m,a_*v)$. Wire-label preservation supplies its typing
+certificate.
+\end{definition}
+\lean{Graph/SearchRenaming}{21}{30}{Linear.SearchOperation.rename}
+\lean{Graph/SearchRenaming}{86}{87}{Linear.TypedPosition.rename}
+
+\begin{lemma}[Transport of the local rules]
+Operation entry and argument return commute with transport. Every coordinate
+search step transports forwards, and a step between transported coordinates
+exists if and only if the original step exists.
+\end{lemma}
+\begin{proof}
+Entry depends on whether the argument list is empty or has a first element;
+mapping preserves these alternatives. Return depends on the optional element
+at index $i+1$; lookup in a mapped list is the mapped lookup. These facts prove
+the two local calculation identities.
+
+Induct on the search rule. The variable rule uses the transported label and
+singleton source certificate. The operation-entry case uses the entry identity.
+For argument return, map the certified lookup at index $i$ and use the return
+identity. This proves forward transport for all five rules. Apply the same
+result to $a^{-1}$ for reflection: the composite port map is the identity,
+and neither map changes the mode. The same inverse law proves that transporting
+a typed coordinate by $a$ and back by $a^{-1}$ returns that coordinate; subtype
+extensionality discards the irrelevant typing certificates.
+\end{proof}
+\lean{Graph/SearchRenaming}{32}{35}{Linear.SearchOperation.rename_enter}
+\lean{Graph/SearchRenaming}{37}{40}{Linear.SearchOperation.rename_resume}
+\lean{Graph/SearchRenaming}{47}{62}{Linear.SearchStep.rename}
+\lean{Graph/SearchRenaming}{65}{78}{Linear.SearchStep.rename_iff}
+\lean{Graph/SearchRenaming}{90}{95}{Linear.TypedPosition.rename_symm}
+
+\Needspace{18\baselineskip}
+\subsection{Insertion respects renaming}
+Extend the vertex and edge bijections of $a$ by the identity on each fresh
+singleton. The extended port map sends hosted vertices to hosted images and
+fixes the fresh vertex. It also commutes with splitting: injectivity gives
+$a_*w=a_*v$ exactly when $w=v$, so both splits select the fresh branch in
+exactly the same case.
+\lean{Graph/InsertionRenaming}{10}{12}{Linear.FocusInsertion.rename_host}
+\lean{Graph/InsertionRenaming}{14}{15}{Linear.FocusInsertion.rename_fresh}
+\lean{Graph/InsertionRenaming}{17}{25}{Linear.FocusInsertion.rename_split}
+
+\begin{theorem}[Naturality of insertion]
+Insertion at $(m,v)$ in $G$ is focus-preservingly isomorphic to insertion at
+$(m,a_*v)$ in $H$. In particular, realizing a typed coordinate commutes with
+its transport through $a$.
+\end{theorem}
+\begin{proof}
+Use the two extended bijections. Retained labels are preserved by $a$;
+fresh vertex and edge labels agree by construction. On retained edges,
+commutation with splitting proves the source equation and commutation with
+hosting proves the target equation, after applying the corresponding
+incidence equation of $a$. The fresh edge has exactly the hosted insertion
+position as source and the fresh vertex as target, so the two port identities
+prove its equations. The mode is unchanged, and the fresh focus edge maps
+to itself. Packaging these fields gives a focussed isomorphism. Applying
+this construction to typed coordinates gives the realization result;
+focus-free and hole-free certificates ensure both endpoints are states.
+\end{proof}
+\lean{Graph/InsertionRenaming}{28}{67}{Linear.FocusInsertion.rename_iso}
+\lean{Graph/InsertionRenaming}{70}{77}{Linear.FocusInsertion.rename_focussed}
+\lean{Graph/InsertionRenaming}{86}{89}{Linear.TypedPosition.realize_rename}
+
+\Needspace{20\baselineskip}
+\subsection{Exact characterization of search from realized states}
+\label{sec:realized-search}
+\begin{lemma}[Recovery of a realized coordinate]
+If $p$ is a typed coordinate of a focus-free, hole-free graph $G$, there is
+an isomorphism $a$ from the underlying graph of its realization to $G$
+such that $a_*\operatorname{coordinate}(\operatorname{realize}(p))=p$.
+\end{lemma}
+\begin{proof}
+Use the position-sensitive insertion--erasure isomorphism. It restores the
+vertex, while the extracted mode is definitionally the original mode. Equality
+of these two components gives equality of coordinates and then of the typed
+subtypes.
+\end{proof}
+\lean{Graph/RealizedSearch}{14}{22}{Linear.TypedPosition.coordinate_recovery}
+
+\begin{theorem}[Coordinate characterization]
+\termdef{coordinate-characterization}
+For every actual target state $t$,
+\[
+ \operatorname{realize}(p)\longrightarrow t
+ \quad\Longleftrightarrow\quad
+ \exists q,\quad p\longrightarrow_G q\ \land\
+       \operatorname{realize}(q)\cong_f t.
+\]
+Here the left relation is erasure-based state search, the middle relation is
+coordinate search on the original graph $G$, and $\cong_f$ preserves the
+focus and mode. Both realizations use the same original graph $G$.
+\end{theorem}
+\begin{proof}
+Choose the recovery isomorphism $a$ from the previous lemma. For the forward
+direction, a state-search witness consists of a successor coordinate on the
+erased graph and an isomorphism from its realization to $t$. Transport this
+coordinate and its step through $a$. Coordinate recovery identifies the source
+with $p$. Naturality of realization, inverted and composed with the supplied
+endpoint isomorphism, identifies the new realization with $t$.
+
+Conversely, transport $q$ and its step through $a^{-1}$. Inverse transport and
+coordinate recovery identify the source with the extracted coordinate of
+$\operatorname{realize}(p)$. Invert the realization isomorphism and compose it
+with the given isomorphism to $t$. The transported coordinate, transported
+step, and composite isomorphism are exactly the witnesses required by the
+state-search definition.
+\end{proof}
+\lean{Graph/RealizedSearch}{26}{48}{Linear.TypedPosition.search_realize_iff}
+Taking $t=\operatorname{realize}(q)$ and the identity endpoint isomorphism
+shows that every coordinate step realizes an actual state-search step between
+its two prescribed realizations. This strengthens the earlier endpoint-only
+realization theorem. It does not identify search with contextual graph rewriting.
+\lean{Graph/RealizedSearch}{52}{55}{Linear.TypedPosition.search_realize}
+
+\Needspace{20\baselineskip}
+\subsection{Erasure and state search respect renaming}
+\label{sec:erasure-renaming}
+Fix a focussed isomorphism $a:f\cong_f g$. For any bijection carrying $x$ to
+$y$, restrict it to the complements of $x$ and $y$. Its forward and inverse
+maps are the original maps with non-deletion certificates: injectivity prevents
+a retained point from mapping to the deleted point, and the inverse law proves
+the analogous claim backwards. Subtype extensionality lifts both inverse laws.
+\lean{Graph/ErasureRenaming}{10}{15}{Linear.exceptOfEq}
+
+The graph vertex bijection carries the selected internal target of $f$ to
+that of $g$. Indeed, the focussed isomorphism identifies the targets, their
+selection certificates make them internal, and the internal constructor is
+injective. Restrict this vertex bijection at the selected targets and the edge
+bijection at the focus edges. These give bijections of the erased carriers.
+\lean{Graph/ErasureRenaming}{21}{24}{Linear.Focussed.Iso.targetVertex}
+\lean{Graph/ErasureRenaming}{27}{28}{Linear.Focussed.Iso.erasedVertices}
+\lean{Graph/ErasureRenaming}{31}{32}{Linear.Focussed.Iso.erasedEdges}
+
+\begin{lemma}[Naturality of contraction]
+Inclusion of retained ports commutes with the restricted vertex bijection.
+The joined positions correspond, and contraction commutes with renaming.
+\end{lemma}
+\begin{proof}
+Commutation with inclusion is a case analysis on ports. To compare joined
+positions, apply the injective inclusion on the target side. The resulting
+equation is precisely preservation of the focus source. For contraction,
+separate the deleted target from other vertices. In the first case both sides
+are the corresponding joined positions. In the second, injectivity ensures
+that the image is not the target either. Apply inclusion on the target side:
+both contraction--inclusion composites reduce to their original vertices,
+and the inclusion commutation identity proves equality.
+\end{proof}
+\lean{Graph/ErasureRenaming}{34}{37}{Linear.Focussed.Iso.erased_lift}
+\lean{Graph/ErasureRenaming}{40}{45}{Linear.Focussed.Iso.erased_position}
+\lean{Graph/ErasureRenaming}{48}{63}{Linear.Focussed.Iso.erased_contract}
+
+\begin{theorem}[Naturality of erasure and state search]
+The restricted bijections form an isomorphism of the erased graphs, carrying
+the extracted coordinate of the first state to that of the second. Search
+is invariant under focus-preserving isomorphisms in both arguments.
+\end{theorem}
+\begin{proof}
+Retained labels inherit the original isomorphism's label equations. For each
+incidence list, use its original equation and commute contraction past the
+port map pointwise. This proves the erased graph isomorphism. Its coordinate
+equation follows from preservation of the mode and the joined position.
+
+Given a search step from the first state, transport its successor coordinate
+through the erased isomorphism. The coordinate equation identifies the new
+source, and search transport supplies the step. Invert the realization
+isomorphism and compose with the old endpoint isomorphism to retain the same
+actual target. This proves source invariance. Combine it with the earlier
+target invariance to obtain invariance in both arguments; use the inverse
+isomorphisms for the reverse implication.
+\end{proof}
+\lean{Graph/ErasureRenaming}{66}{86}{Linear.Focussed.Iso.erased}
+\lean{Graph/ErasureRenaming}{94}{99}{Linear.State.coordinate_iso}
+\lean{Graph/ErasureRenaming}{102}{112}{Linear.State.search_source_iso}
+\lean{Graph/ErasureRenaming}{115}{122}{Linear.State.search_iso_iff}
+
+\Needspace{20\baselineskip}
+\subsection{Search on isomorphism classes of states}
+\label{sec:state-quotient}
+\begin{definition}[State isomorphism class]
+\termdef{state-isomorphism-class}
+Two states are equivalent when there exists a focus-preserving literal-label
+isomorphism between them. Reflexivity, symmetry, and transitivity follow
+from the corresponding isomorphism constructions. A state class is the
+quotient by this equivalence; write $[s]$ for the class of $s$.
+\end{definition}
+This quotient preserves full edge labels literally, including box bodies.
+It does not yet identify independently renamed contents of nested boxes;
+connecting state dynamics with the earlier recursive isomorphisms is a
+further representation obligation.
+\lean{Graph/StateQuotient}{10}{13}{Linear.stateSetoid}
+\lean{Graph/StateQuotient}{16}{16}{Linear.StateClass}
+\lean{Graph/StateQuotient}{22}{22}{Linear.StateClass.ofState}
+
+\begin{definition}[Quotient search and observations]
+\termdef{quotient-search}
+Define $[s]\longrightarrow[t]$ by state search $s\longrightarrow t$.
+The preceding two-argument invariance proves independence of representatives,
+so quotient elimination defines a proposition on classes. Initiality and
+finality descend in the same way, using their focussed-isomorphism invariance.
+\end{definition}
+On supplied representatives, all three descended propositions agree with the
+original propositions by definition. The representative equations are therefore
+reflexive equivalences, not extra assumptions.
+\lean{Graph/StateQuotient}{25}{27}{Linear.StateClass.Search}
+\lean{Graph/StateQuotient}{29}{30}{Linear.StateClass.search_iff}
+\lean{Graph/StateQuotient}{39}{41}{Linear.StateClass.Initial}
+\lean{Graph/StateQuotient}{44}{46}{Linear.StateClass.Final}
+\lean{Graph/StateQuotient}{48}{48}{Linear.StateClass.initial_iff}
+\lean{Graph/StateQuotient}{50}{50}{Linear.StateClass.final_iff}
+
+\begin{theorem}[Deterministic quotient search and its boundaries]
+If $S\longrightarrow T$ and $S\longrightarrow U$, then $T=U$.
+A final class has no search successor, and no search step reaches an initial
+class.
+\end{theorem}
+\begin{proof}
+Eliminate the three quotient arguments to representatives $s,t,u$.
+The two representative steps have a common source, so state-level determinism
+gives a focussed isomorphism $t\cong_f u$. Quotient soundness identifies their
+classes. For each boundary theorem eliminate its two class arguments;
+the goal becomes the already proved state-level boundary law.
+\end{proof}
+\lean{Graph/StateQuotient}{33}{36}{Linear.StateClass.search_deterministic}
+\lean{Graph/StateQuotient}{53}{56}{Linear.StateClass.final_no_search}
+\lean{Graph/StateQuotient}{59}{62}{Linear.StateClass.no_search_initial}
+These are results for the search relation alone. Substitution, computation,
+rootedness, refocusing, and contextual-rewrite adequacy remain necessary for
+the full concrete UAM argument.
+
+\Needspace{18\baselineskip}
+\subsection{Concrete quotient-search regression}
+The passive nullary value step now runs from the previously defined
+\texttt{initialValue} to the specific \texttt{finalValue}, using the general
+coordinate-to-state theorem. Erase and reconstruct \texttt{initialValue} to
+define \texttt{recoveredValue}. Its carriers are rebuilt by deletion and
+insertion, but state recovery supplies a focussed isomorphism to the original.
+Source invariance therefore gives a step from this reconstructed state to
+\texttt{finalValue}. Quotient soundness identifies its class with the original
+initial class. Finally, quotient determinism compares any successor of that
+initial class with the concrete value step: it must equal the class of
+\texttt{finalValue}.
+\lean{Graph/QuotientSearchExamples}{9}{12}{Linear.Examples.value_search_final}
+\lean{Graph/QuotientSearchExamples}{15}{17}{Linear.Examples.recoveredValue}
+\lean{Graph/QuotientSearchExamples}{19}{20}{Linear.Examples.recovered_value_search}
+\lean{Graph/QuotientSearchExamples}{22}{23}{Linear.Examples.recovered_value_class}
+\lean{Graph/QuotientSearchExamples}{26}{29}{Linear.Examples.value_class_successor}

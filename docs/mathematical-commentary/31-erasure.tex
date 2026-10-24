@@ -1,5 +1,5 @@
 \Needspace{32\baselineskip}
-\section{General focus erasure and search on explicit states}
+\section{Focus erasure, renaming, and search on state classes}
 \label{sec:erasure}
 
 We now erase the focus of an arbitrary focussed graph with no outputs, prove
@@ -12,10 +12,10 @@ A concrete initial value state makes a search step to an actual final state.
 
 The remaining operational adequacy obligation is precise: identify this
 erasure-based relation with the paper's contextual local-rewrite presentation.
-We have not yet proved source-isomorphism invariance, descended the relation
-to isomorphism classes, or constructed the full machine with substitution and
-compute transitions. Determinism up to isomorphism is not equality-based
-determinism on the current carrier of named state records.
+The later subsections prove both focus round trips, source and target renaming
+invariance, and descent to literal-label isomorphism classes, where search is
+deterministic by equality of successor classes. The full machine with
+substitution and compute transitions is still to be constructed.
 
 \Needspace{16\baselineskip}
 \subsection{Contraction maps and the retained carriers}
@@ -220,8 +220,9 @@ already proved to exist; it does not assume an erasure law.
 \lean{Graph/FocusRoundTrip}{146}{147}{Linear.Focussed.underlying_holeFree}
 \lean{Graph/FocusRoundTrip}{151}{153}{Linear.Focussed.underlying_reinsert_iso}
 The theorem proves the erasure-then-insertion direction for arbitrary closed
-focussed graphs. A separate insertion-then-erasure isomorphism, and naturality
-under arbitrary source isomorphisms, are not asserted here.
+focussed graphs. The opposite insertion-then-erasure isomorphism is proved in
+Section~\ref{sec:insertion-cancellation}, and naturality under source
+isomorphisms in Section~\ref{sec:erasure-renaming}.
 
 \Needspace{16\baselineskip}
 \subsection{Focus-preserving isomorphisms and state recovery}

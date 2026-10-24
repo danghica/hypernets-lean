@@ -56,6 +56,11 @@ reinsertion isomorphism and focus endpoints, arbitrary-state recovery, state
 search determinism and boundary laws, and the execution/interior regressions.
 \lean{Graph/Audit}{109}{120}{Graph.Audit: erasure and state search dependencies}
 
+Fifteen further commands inspect insertion--erasure cancellation, coordinate
+transport and realization, erasure naturality, source invariance, quotient
+search determinism and boundaries, and the concrete quotient regressions.
+\lean{Graph/Audit}{122}{136}{Graph.Audit: round trips and quotient search dependencies}
+
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
 isomorphism invariance of unique holes, and uniqueness of the two-hole example
@@ -71,7 +76,9 @@ only \texttt{propext} and \texttt{Quot.sound}. The search audits use only \textt
 shallow filling preservation, which also uses classical choice. The new realization audits use all three standard axioms, except term-typing
 preservation, which uses only propositional extensionality and quotient soundness.
 All new general-erasure and state-search audit entries use those three
-standard axioms. The remaining audited declarations additionally report \texttt{Classical.choice}.
+standard axioms. The round-trip and quotient-search audits do too, except
+coordinate search renaming, which uses only \texttt{propext} and
+\texttt{Quot.sound}. The remaining audited declarations additionally report \texttt{Classical.choice}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
 \texttt{sorryAx} or a project-specific axiom.
@@ -120,49 +127,32 @@ included alongside it.
 
 \Needspace{24\baselineskip}
 \subsection{What remains for the paper's concrete theorem}
-The following obligations remain before Theorem~6 can be claimed with its original
-hypotheses:
+This is a to-do list only: completed obligations are removed. The remaining
+work needed to claim Theorem~6 with its original hypotheses is:
 \begin{enumerate}
-\item Prove a representation theorem relating the typed depth-indexed hierarchy
-with explicit binder metadata to the paper's set-based graph-labelled hypernets.
-Recursive isomorphism within each fixed depth layer is now proved. Relating
-different depth bounds and proving full representation adequacy remain open.
-\item Complete the remaining context algebra, including a quotient of host/site
-pairs and interchange for independent sites. Nested substitution associativity,
-corolla units, quotient three-stage coherence, and sharp composite context
-closure are now proved. Site transport between recursively
-isomorphic hosts is now proved, together with simultaneous host/replacement
-congruence and invariance of quotient substitution and exact freshness.
-Global hole-label uniqueness is now preserved under explicit freshness conditions
-for arbitrary deep replacement. Exact syntactic inventories and
-necessary-and-sufficient freshness are now proved at every finite box depth,
-together with the exact fate of a consumed hole label.
-\item Concrete focussed hypernets and the state space are now defined. The five coordinate search rules, their determinism, and their forward shallow
-context-filling law are proved. Explicit focus insertion, incidence recovery,
-term-typing preservation, initial attachment, and realization of search endpoints
-as hole-free focussed states are now proved. General erasure of arbitrary
-closed focussed states and the erasure-then-insertion isomorphism are proved,
-including the focus edge and its endpoints. Erasure-based search on actual
-states is defined, deterministic up to focussed isomorphism, and satisfies
-search boundary laws. Prove source-isomorphism invariance, an
-insertion-then-erasure isomorphism, and descent to isomorphism classes; identify
-this search relation with the paper's contextual graph rewrites. Define
-substitution and compute transitions, rootedness, and refocusing. Prove
-the structural laws under the paper's determinism and refocusing hypotheses.
-The state space and boundary predicates alone do not define that machine.
+\item Prove representation adequacy between the typed depth-indexed hierarchy
+with explicit binder metadata and the paper's set-based graph-labelled
+hypernets, including compatibility across different depth bounds.
+\item Construct a quotient of host/site pairs and prove interchange of
+substitutions at independent sites.
+\item Identify erasure-based state search with the paper's contextual local
+graph rewrites in both directions. Extend the state-level renaming results
+from literal-label isomorphisms to recursive renaming inside box bodies, and
+connect the corresponding state quotients.
+\item Define the concrete substitution and compute transitions, with their
+typing and context restrictions, and assemble the full UAM transition relation.
+\item Define concrete rootedness and refocusing. Prove the required structural
+laws under the paper's determinism and refocusing hypotheses, including the
+needed consequences of Lemma~26(3).
 \item Define concrete pre-templates, specimens, quasi-specimens, output-closure,
-input-safety, and robustness, with the paper's typing and context restrictions.
-\item Construct the abstract specimen interface from those objects, proving its
-rootedness, final-agreement, and context-only traversal laws, including the needed
-consequences of Lemma~39. Its initial/final boundary argument is now proved for
-finite fillings; connecting concrete specimens to those fillings remains open.
-Prove the safety and robustness bridges and initial lifting for concrete
-observations. Initial states can now be constructed; the missing part of
-initial lifting is their concrete context/specimen membership.
-\item Instantiate the two checked contextual sufficiency results. Only this
-last instantiation with all concrete obligations discharged yields the target
-robustness theorem.
+input-safety, and robustness with the paper's restrictions.
+\item Construct the abstract specimen interface from these objects. Connect
+concrete specimen substitution to the finite-filling boundary theorem for
+Lemma~39(1), and prove the rootedness and context-only traversal laws needed
+for Lemma~39(2--3), including entering/exiting classifications. Prove the safety
+and robustness bridges and the concrete observation/context membership
+witnesses needed for initial lifting.
+\item Instantiate the checked contextual sufficiency results using the
+concrete interface, observations, and lifting. Discharge every remaining
+concrete obligation to obtain the target robustness theorem.
 \end{enumerate}
-The present milestone proves both the abstract quantitative argument and a
-substantial concrete graph and context-calculus foundation. It does not yet establish that all
-hypotheses of the former hold for the universal abstract machine.

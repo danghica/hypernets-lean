@@ -60,8 +60,9 @@ consequences are currently requirements of the specimen interface.
   Determinism and refocusing are hypotheses of the paper's theorem, not claims
   to prove for arbitrary extrinsic rewrite rules.
 
-The next dependencies are source-isomorphism invariance, descent of search to
-isomorphism classes, and adequacy for contextual graph rewriting, together with §6.4's substitution and compute transitions, then
+The next dependencies are adequacy for contextual graph rewriting and
+extension of state dynamics to recursive box renaming, together with §6.4's
+substitution and compute transitions, then
 rootedness, Lemma 26(3), and Lemma 39(2–3).
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices whose adequacy for the paper remains a separate obligation.
@@ -92,10 +93,20 @@ up to focussed isomorphism, target-renaming closure, and the initial/final searc
 boundary laws. `ErasureExamples.lean` proves an actual initial-value-to-final-state
 search execution and tests recovery with an interior focus.
 
-This advances item 3 of the remaining-work list. Source-isomorphism invariance,
-descent to isomorphism classes, the opposite insertion/erasure round trip, and
-equivalence to the paper's contextual local rewrites remain open. The full UAM
-and concrete robustness theorem are not yet constructed.
+`InsertionRoundTrip.lean` now proves the opposite round trip, recovering both
+underlying graph and insertion position. `SearchRenaming.lean` and
+`InsertionRenaming.lean` transport the search rules and realized states through
+isomorphisms. `RealizedSearch.lean` characterizes search from a realized state
+exactly by coordinate search on its original graph, up to endpoint isomorphism.
+`ErasureRenaming.lean` proves source invariance as well as invariance in both
+arguments. `StateQuotient.lean` descends search and boundary observations to
+literal-label state isomorphism classes and proves equality of successor classes.
+`QuotientSearchExamples.lean` checks the specific initial-to-final value execution,
+a reconstructed source, and uniqueness of its successor class.
+
+The PDF's §30.3 now contains only unfinished tasks. Contextual-rewrite adequacy,
+recursive box-renaming compatibility for states, the full UAM, and the concrete
+robustness theorem remain open.
 
 ## Concrete graph milestone
 
@@ -309,12 +320,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 712 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 723
-source-fragment links point to immutable code revision `d6c2a19`. It distinguishes
+all 766 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 778
+source-fragment links point to immutable code revision `ab67d25`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 151 technical terms, with short descriptions and internal PDF links
+glossary of 155 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -349,25 +360,20 @@ logical axioms, if used, are shown explicitly.
 
 ## Remaining work toward the milestone
 
-1. Prove adequacy of the typed graph representation, relate different depth
-   bounds, quotient host/site pairs, and prove the context
-   algebra, including interchange for independent sites. Recursive isomorphism,
-   simultaneous host/replacement congruence, deep associativity, corolla units, and
-   sharp composite context closure are proved. Global hole-label uniqueness under freshness, exact hole inventories, and sharp context closure are now
-   checked even for deep replacement.
-2. Focussed hypernets, the state space, and the five coordinate search rules are
-   defined. General erasure, erasure-then-reinsertion recovery, and search on
-   explicit states are proved. Complete source-isomorphism invariance, quotient
-   descent, the opposite round trip, and contextual rewrite adequacy; define
-   substitution and compute transitions, rootedness, and refocusing; prove
-   structural laws under the paper's determinism/refocusing hypotheses.
-3. Define concrete type-indexed pre-templates, specimens, quasi-specimens,
-   output-closure, input-safety, and robustness (§8).
-4. Construct `SpecimenSystem` for those concrete definitions. Prove its
-   locality fields (especially Lemma 39), `initial_lift`, and the bridges from
-   concrete safety/robustness to the abstract predicates.
-5. Instantiate the checked sufficiency results to obtain Theorem 6 with only
-   the paper's stated hypotheses. At that point the milestone is complete.
+1. Prove representation adequacy and compatibility across depth bounds.
+2. Quotient host/site pairs and prove interchange for independent sites.
+3. Prove equivalence of state search with the paper's contextual local rewrites;
+   extend state dynamics and quotients to recursive renaming of box contents.
+4. Define substitution and compute transitions and assemble the full UAM.
+5. Define rootedness and refocusing; prove structural consequences under the
+   paper's hypotheses, including the required parts of Lemma 26(3).
+6. Define concrete pre-templates, specimens, quasi-specimens, output-closure,
+   input-safety, and robustness.
+7. Construct the concrete `SpecimenSystem`, connect specimen substitution to
+   the finite-filling boundary theorem, and prove Lemma 39's remaining locality
+   laws, the safety/robustness bridges, and concrete initial-lifting witnesses.
+8. Instantiate the checked sufficiency results with all concrete obligations
+   discharged to obtain Theorem 6.
 
 The copying UAM, lambda-term translation, and example program equivalences
 are later milestones; the current abstract and graph-level examples do not
