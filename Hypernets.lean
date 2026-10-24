@@ -24,3 +24,5 @@ import Hypernets.Graph.LocalSearchExamples
 import Hypernets.Graph.ContextualSearchExamples
 import Hypernets.Graph.UAMExamples
 import Hypernets.Graph.TupleSafetyExamples
+
+import Hypernets.Graph.SetHierarchyExamples

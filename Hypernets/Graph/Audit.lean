@@ -1,5 +1,5 @@
 import Hypernets.Graph.ExpansionSearchExamples
-import Hypernets.Graph.TupleSafetyExamples
+import Hypernets.Graph.SetHierarchyExamples
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
 #print axioms Hypernets.Graph.Net.plug
@@ -376,3 +376,14 @@ import Hypernets.Graph.TupleSafetyExamples
 #print axioms Hypernets.Linear.TupleSafetyExamples.nested_tuple_singleton
 #print axioms Hypernets.Linear.TupleSafetyExamples.unrooted_quasi
 #print axioms Hypernets.Linear.TupleSafetyExamples.different_modes_not_quasi
+
+#print axioms Hypernets.Graph.Net.set_roundtrip
+#print axioms Hypernets.Graph.Net.roundtrip
+#print axioms Hypernets.Graph.SetNet.RelIso.toNet
+#print axioms Hypernets.Linear.SetHierarchy.typed_roundtrip
+#print axioms Hypernets.Linear.SetHierarchy.set_roundtrip
+#print axioms Hypernets.Linear.SetHierarchy.normalize_iso
+#print axioms Hypernets.Linear.SetHierarchy.expose_iso_iff
+#print axioms Hypernets.Linear.SetHierarchy.normalize_raiseBy
+#print axioms Hypernets.Linear.SetHierarchy.BoxFamily.uniform_normalize
+#print axioms Hypernets.Linear.SetHierarchyExamples.forgetting_binders_fails
