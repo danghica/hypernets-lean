@@ -1,0 +1,374 @@
+\Needspace{18\baselineskip}
+\section{Erasure commutation and traversal of actual deep specimens}
+\label{sec:specimen-traversal}
+This section connects the coordinate traversal results to the actual states of
+recursive deep specimens. The main geometric construction commutes general
+focus erasure with simultaneous expansion. Its coordinate equation then proves
+that expanding an already focussed context agrees, up to a focus-preserving
+isomorphism, with filling the erased context and inserting a focus afterwards.
+The resulting traversal theorems start at the original specimen states.
+
+For this representation we also prove the non-exiting conclusion of
+Lemma~39(2), and synchronized search under the settled-mode hypotheses of
+Lemma~39(3). The proof uses the paper's adjacency interpretation of entering
+and exiting focuses and its output-closure obstruction \cite{paper}. A returned
+coordinate determines actual rooted endpoints and is remote. Packaging it as a
+new allowed specimen, and extending the argument from the checked search
+relation to the full UAM, remain separate obligations. No arbitrary rewrite
+relation is treated as search in these results.
+
+\Needspace{14\baselineskip}
+\subsection{Erasing a copied focus}
+Fix a focussed context $C:I\to[]$, focus $f$, and a filling family $H$. Assume
+that the focus is replaced by a literal corolla copy and that all other fillings
+are globally focus-free. Let $t$ be an internal vertex with
+$f.\mathsf{target}=t$. These data give an expanded focus on $C[H]$ whose target
+is the host copy of $t$.
+
+The abbreviations \texttt{erased}, \texttt{focus}, and
+\texttt{erasedExpansion} denote, respectively, erasure of $f$ from $C$, the
+retained focus on $C[H]$, and erasure of that retained focus using the explicit
+host copy of $t$. The restricted family $\overline H$ assigns $H(e)$ to each
+non-focus edge $e$ of the erased context. Erasure changes incidences, but not
+the labels of these edges, so the replacement interfaces are unchanged.
+\lean{Graph/ExpansionErasure}{14}{14}{Linear.ExpansionErasure.erased}
+\lean{Graph/ExpansionErasure}{15}{15}{Linear.ExpansionErasure.focus}
+\lean{Graph/ExpansionErasure}{16}{18}{Linear.ExpansionErasure.erasedExpansion}
+\lean{Graph/ExpansionErasure}{19}{23}{Linear.ExpansionErasure.family}
+
+\begin{definition}[Erasure--expansion carrier bijections]\label{term:erasure-expansion}
+The vertex bijection from erasure after expansion to expansion after erasure
+sends a retained host vertex to its retained host copy and an inserted internal
+vertex to the same vertex in its non-focus owner's filling. The edge bijection
+sends a surviving expanded edge to that same edge paired with its non-focus
+owner.
+\end{definition}
+\begin{proof}[Verification of the bijections]
+The copied focus has no internal vertices. Thus the only potential obstruction
+to mapping an inserted internal vertex to a non-focus owner is impossible.
+The inverse vertex map reinstates the original owner and the proof that the
+host target was not selected. Both composites reduce to the original element;
+proof fields agree by proof irrelevance.
+
+For edges, a surviving edge cannot belong to the focus fibre: the copy has
+exactly one edge, which is precisely the deleted focus. Hence its owner differs
+from the focus edge. Conversely every edge of a non-focus filling survives.
+The maps retain its owner and local edge, so both inverse equations are immediate.
+These arguments apply to arbitrary corolla names, not just the literal corolla
+constructor's chosen singleton name.
+\end{proof}
+\lean{Graph/ExpansionErasure}{24}{54}{Linear.ExpansionErasure.vertices}
+\lean{Graph/ExpansionErasure}{55}{66}{Linear.ExpansionErasure.edges}
+
+\Needspace{14\baselineskip}
+\subsection{Commutation of incidences and the join coordinate}
+For a host vertex different from $t$, retaining it during erasure commutes with
+the vertex bijection. This is proved by the internal, input, and output vertex
+cases: the resulting ports agree directly.
+\lean{Graph/ExpansionErasure}{67}{73}{Linear.ExpansionErasure.keep_host}
+\begin{lemma}[Contraction at a host vertex]
+Contracting a host vertex in $C[H]$ and applying the carrier bijection gives the
+host copy of its contraction in $C$.
+\end{lemma}
+\begin{proof}
+If the original vertex is $t$, both contractions identify it with the focus
+source. The retained-vertex calculation applies to that source, which differs
+from $t$ because a focus is not a self-loop. Otherwise injectivity of the host
+map proves that its image is not the expanded target; both contractions retain
+the vertex and the same retained-vertex calculation applies.
+\end{proof}
+\lean{Graph/ExpansionErasure}{74}{93}{Linear.ExpansionErasure.contract_host}
+The source and target port at index $i$ of an erased non-focus edge are the
+contractions of its original port at index $i$. Indeed erasure maps contraction
+over the ordered incidence lists, and indexed lookup commutes with this map.
+\lean{Graph/ExpansionErasure}{94}{98}{Linear.ExpansionErasure.sourcePort}
+\lean{Graph/ExpansionErasure}{99}{104}{Linear.ExpansionErasure.targetPort}
+\begin{lemma}[Contraction at an inserted vertex]
+For every vertex of a non-focus filling, contraction after its insertion,
+followed by the carrier bijection, equals insertion into the erased context.
+\end{lemma}
+\begin{proof}
+An inserted internal vertex is disjoint from the deleted host target and keeps
+its original non-focus owner. A filling input is glued to an original source
+port; apply contraction at host vertices and the source-port calculation.
+A filling output is treated by the target-port calculation. These three cases
+exhaust the filling's vertex type, including fillings with internal structure.
+\end{proof}
+\lean{Graph/ExpansionErasure}{105}{122}{Linear.ExpansionErasure.contract_insert}
+
+\begin{theorem}[Erasure commutes with expansion]
+There is a literal-label graph isomorphism
+\[
+  \bigl|C[H]\bigr|\ \cong\ |C|[\overline H],
+\]
+where the left erasure removes the retained copied focus and the right erasure
+removes the original focus. Both use the specified internal target.
+\end{theorem}
+\begin{proof}
+Use the carrier bijections above. Host and inserted vertex labels are retained;
+the impossible focus-fibre internal case is excluded as before. Edge labels
+are identical. For each source list, compose its insertion map, contraction,
+and the vertex bijection. The inserted-vertex lemma identifies this composition
+pointwise with insertion in the erased context. Equality of mapped lists proves
+the source equation. The target equation is the same argument on the ordered
+target list.
+\end{proof}
+\lean{Graph/ExpansionErasure}{123}{160}{Linear.ExpansionErasure.iso}
+The isomorphism also maps the joined focus coordinate to the host copy of the
+original joined coordinate. A join is the retained source of the deleted focus,
+so this is exactly the retained-host-vertex calculation.
+\lean{Graph/ExpansionErasure}{161}{169}{Linear.ExpansionErasure.position}
+The canonical underlying graph chooses an internal target rather than taking
+one as an argument. Its chosen target is necessarily the host copy of the
+original chosen target, since both are equal to the expanded focus target.
+Eliminating this equality transfers the isomorphism and its coordinate equation
+to the canonical underlying graphs. The theorem returns the isomorphism and
+the position equation together, ensuring that the same map establishes both.
+\lean{Graph/ExpansionErasure}{170}{199}{Linear.ExpansionErasure.underlying_exists}
+
+\Needspace{14\baselineskip}
+\subsection{Recovering expansion of an already focussed context}
+\begin{definition}[Focussed-context coordinate]\label{term:context-coordinate}
+For a focussed context $f$, its coordinate in the erased graph consists of its
+original mode and the joined term vertex. The term-typing proof comes from the
+focus's typed singleton source. Unlike the earlier state-coordinate operation,
+this definition does not require the context to be hole-free.
+\end{definition}
+\lean{Graph/ExpansionErasure}{200}{212}{Linear.Focussed.coordinate}
+The abbreviation \texttt{erasedFamily} uses the canonical chosen target to
+restrict the original family. The expanded erased graph is focus-free, since
+it is isomorphic to the underlying graph of the retained expanded focus. If
+the original expansion is hole-free, so is this expanded erased graph: erasure
+preserves hole freedom and the isomorphism transports it. These proofs provide
+the certificates required to realize coordinates as actual states.
+\lean{Graph/ExpansionErasure}{213}{215}{Linear.ExpansionErasure.erasedFamily}
+\lean{Graph/ExpansionErasure}{216}{220}{Linear.ExpansionErasure.expanded_free}
+\lean{Graph/ExpansionErasure}{221}{228}{Linear.ExpansionErasure.expanded_closed}
+\begin{theorem}[The focussed expansion bridge]
+Fill the erased context, transport its original coordinate through that
+filling, and realize the coordinate by focus insertion. The resulting state is
+focus-preservingly isomorphic to expansion of the original focussed context.
+\end{theorem}
+\begin{proof}
+Choose the erasure-commutation isomorphism together with its coordinate
+equation. The extracted coordinate of the expanded state maps to exactly the
+transported original coordinate; the modes agree as well. Realization respects
+renaming, so their inserted states are focus-preservingly isomorphic. Compose
+the inverse of this realization isomorphism with the general recovery
+isomorphism from insertion after erasure to the original expanded state.
+This composition identifies the distinguished edge and its mode, not merely
+the two underlying graphs.
+\end{proof}
+\lean{Graph/ExpansionErasure}{229}{246}{Linear.ExpansionErasure.realization_iso}
+
+\Needspace{14\baselineskip}
+\subsection{Actual-state search and exact executions}
+Removing the focus restricts every recursive edge certificate to the surviving
+edges. A retained certificate keeps the same copy data; a filled certificate
+keeps its hole label and related pair; a boxed certificate keeps its recursive
+inner filling. None of these certificates depends on the host's changed source
+or target lists, except through unchanged edge interfaces.
+\lean{Graph/SpecimenTraversal}{9}{26}{Linear.DeepFillingEdge.erased}
+For any typed coordinate $q$ of the erased context, \texttt{stateAt} realizes
+its transported coordinate using the focus-freedom and hole-freedom certificates
+just proved. At the original coordinate, the focussed expansion bridge applies.
+\lean{Graph/SpecimenTraversal}{27}{32}{Linear.ExpansionErasure.stateAt}
+\begin{theorem}[Search successors of the original expanded state]
+Suppose the restricted family preserves search and has search origins. If the
+original coordinate avoids hole boundaries, an actual-state search successor
+is precisely a context-coordinate successor realized in the filling, followed
+by a focus-preserving endpoint isomorphism.
+\end{theorem}
+\begin{proof}
+Use source-isomorphism invariance of state search to replace the original
+expanded source by its bridged realization. The coordinate characterization of
+search from a realized state produces a step in the expanded erased graph.
+Reflect it through the filling, using the boundary exclusion. Search preserves
+term typing, so the reflected coordinate can itself be realized. The coordinate
+equality identifies this realization with the supplied target up to the supplied
+isomorphism. Conversely, transport the context step, realize it, and apply the
+source bridge and endpoint isomorphism.
+\end{proof}
+\lean{Graph/SpecimenTraversal}{33}{58}{Linear.ExpansionErasure.search_iff}
+An $n$-step context execution from the original coordinate gives an $n$-step
+execution from the original expanded state class to \texttt{stateAt} of its
+endpoint. Transport and realize the run, then replace its initial class using
+the bridge. Similarly, a context run from the initial input to the original
+coordinate proves rootedness of the original expanded state: the earlier
+rootedness theorem applies to its realization, and the bridge equates its class
+with the original state's class.
+\lean{Graph/SpecimenTraversal}{59}{74}{Linear.ExpansionErasure.steps}
+\lean{Graph/SpecimenTraversal}{75}{94}{Linear.ExpansionErasure.rooted}
+
+\Needspace{14\baselineskip}
+\subsection{Entering, exiting, and remote coordinates}
+\begin{definition}[Concrete entering and exiting focuses]
+\label{term:concrete-entering}
+A focus is entering when its target is a source of an original shallow
+hole-labelled edge. It is exiting when its source is a target of such an edge.
+The predicates do not themselves restrict the mode, and are defined on the
+original focussed context rather than on its filling.
+\end{definition}
+\lean{Graph/SpecimenTraversal}{95}{97}{Linear.Focussed.Entering}
+\termdef{concrete-exiting}
+\lean{Graph/SpecimenTraversal}{98}{99}{Linear.Focussed.Exiting}
+\begin{lemma}[Adjacency after erasure]
+The joined coordinate is a source of an erased non-focus edge exactly when
+the original focus target is a source of that edge. It is a target of the erased
+edge exactly when the original focus source is a target of that edge.
+\end{lemma}
+\begin{proof}
+For sources, unpack membership in the contraction-mapped source list. A source
+of a non-focus edge cannot equal the focus source, by source-incidence
+uniqueness. The inverse expansion of contraction therefore recovers that source;
+expanding the joined coordinate gives the original focus target. Conversely,
+contraction maps the target to the joined coordinate.
+
+For targets, the corresponding target of a non-focus edge avoids the deleted
+focus target, by target-incidence uniqueness. Lifting its contraction recovers
+it, while lifting the joined coordinate gives the focus source. Conversely the
+focus source contracts to the joined coordinate. These arguments retain the
+incidence direction; they do not identify entering and exiting with each other.
+\end{proof}
+\lean{Graph/SpecimenTraversal}{100}{121}{Linear.Focussed.erased_source_iff}
+\lean{Graph/SpecimenTraversal}{122}{135}{Linear.Focussed.erased_target_iff}
+Consequently the erased coordinate is at a hole boundary if and only if the
+original focus is searching and entering, or backtracking and exiting. A hole
+edge cannot be the focus edge, since their primitive labels differ; thus every
+original hole witness supplies a surviving erased edge. The two adjacency
+lemmas then prove both directions of the equivalence.
+\lean{Graph/SpecimenTraversal}{136}{156}{Linear.Focussed.boundary_iff}
+
+\begin{definition}[Remote coordinate]\label{term:remote-coordinate}
+A coordinate is remote if its mode is not rewrite, or its vertex is not a source
+of any hole-labelled edge. This is the coordinate counterpart of excluding only
+an entering rewrite focus.
+\end{definition}
+\lean{Graph/SpecimenTraversal}{157}{161}{Linear.RemotePosition}
+\begin{lemma}[Search has remote targets]
+Every coordinate search successor is remote.
+\end{lemma}
+\begin{proof}
+Search can produce rewrite mode only at a variable source or an operation source.
+Such a source cannot also belong to a hole: source uniqueness would identify the
+variable or operation edge with that hole edge, contradicting their labels.
+An entry with arguments or a return with a next argument instead produces search
+mode and is immediately remote. Nullary entry and final-argument return use the
+operation-source argument, regardless of the operation's finish mode.
+\end{proof}
+\lean{Graph/SpecimenTraversal}{162}{193}{Linear.SearchStep.remote_target}
+
+\Needspace{14\baselineskip}
+\subsection{Specialization to recursive deep specimens}
+Let $S$ be a recursive deep specimen. Its edge certificates restrict to the
+erased context by the erasure theorem. Define $S.\mathsf{leftAt}(q)$ and
+$S.\mathsf{rightAt}(q)$ by the corresponding \texttt{stateAt} constructions.
+At the original coordinate these are focus-preservingly isomorphic to the
+existing $S.\mathsf{leftState}$ and $S.\mathsf{rightState}$; the original
+specimen representation has not been replaced by an assumed locality law.
+\lean{Graph/SpecimenTraversal}{194}{199}{Linear.DeepSpecimen.erased_edges}
+\lean{Graph/SpecimenTraversal}{200}{203}{Linear.DeepSpecimen.leftAt}
+\lean{Graph/SpecimenTraversal}{204}{209}{Linear.DeepSpecimen.rightAt}
+\lean{Graph/SpecimenTraversal}{210}{215}{Linear.DeepSpecimen.at_original}
+The recursive certificates give search preservation and search origins on both
+restricted families. Applying the actual-state search characterization yields
+left and right successor equivalences whenever the original coordinate avoids
+hole boundaries.
+\lean{Graph/SpecimenTraversal}{216}{227}{Linear.DeepSpecimen.left_search_iff}
+\lean{Graph/SpecimenTraversal}{228}{240}{Linear.DeepSpecimen.right_search_iff}
+The equivalences also hold for recursive state search, with recursive
+focus-preserving endpoint isomorphisms. In the forward direction, factor a
+recursive search step into a literal search step and a recursive endpoint
+renaming. Extract the context coordinate from the literal step and compose the
+isomorphisms. In the reverse direction, take the canonical literal realization
+as the intermediate state and apply the supplied recursive renaming.
+\lean{Graph/SpecimenTraversal}{241}{255}{Linear.DeepSpecimen.left_deepSearch_iff}
+\lean{Graph/SpecimenTraversal}{256}{272}{Linear.DeepSpecimen.right_deepSearch_iff}
+In particular, a left literal search step determines a context coordinate,
+a literal isomorphism from its left realization to the supplied target, and a
+matching right search step to its right realization. The right step uses the
+same context-coordinate witness and the identity endpoint isomorphism.
+\lean{Graph/SpecimenTraversal}{273}{283}{Linear.DeepSpecimen.match_left_step}
+Exact context runs give paired executions starting from the original specimen
+states, by applying the general execution bridge separately on both sides.
+A context run from the initial input to the original coordinate similarly proves
+rootedness of both original states, by the general rootedness bridge.
+\lean{Graph/SpecimenTraversal}{284}{295}{Linear.DeepSpecimen.context_steps}
+\lean{Graph/SpecimenTraversal}{296}{306}{Linear.DeepSpecimen.rooted_of_context_run}
+
+\Needspace{14\baselineskip}
+\subsection{Output closure and settled traversal}
+\begin{theorem}[Non-exiting rooted specimens: concrete Lemma 39(2)]
+If the outer pre-template is output-closed and both states of $S$ are rooted,
+then its original focus is not exiting.
+\end{theorem}
+\begin{proof}
+An exiting witness is a hole edge with the focus source among its targets.
+The singleton path consisting of this edge ends at the focus source and
+contains a non-operation edge, because a hole is not an operation. The proved
+recursive-specimen form of Lemma~26(3) says that one of the actual states is
+not rooted, contradicting joint rootedness. The argument concerns the current
+recursive representation; its adequacy for the paper's tuple notation remains
+part of the separate representation obligation.
+\end{proof}
+\lean{Graph/SpecimenTraversal}{307}{318}{Linear.DeepSpecimen.not_exiting}
+If the focus is backtracking, or is searching without entering, then joint
+rootedness and output closure exclude the coordinate hole boundary. Use the
+boundary equivalence: its entering/search alternative contradicts the mode or
+the non-entering premise; its exiting/backtrack alternative contradicts the
+non-exiting theorem. The one-sided matching theorem therefore applies under
+these settled hypotheses.
+\lean{Graph/SpecimenTraversal}{319}{331}{Linear.DeepSpecimen.settled_away}
+\lean{Graph/SpecimenTraversal}{332}{343}{Linear.DeepSpecimen.settled_match_left}
+\begin{theorem}[Synchronized settled traversal]
+Assume output closure, joint rootedness, and a backtracking or non-entering
+search focus. If recursive search is enabled on either actual specimen side,
+there is a typed successor coordinate $q$ such that both actual sides search to
+their respective realizations at $q$. Both endpoints are rooted and $q$ is remote.
+\end{theorem}
+\begin{proof}
+The settled hypotheses give boundary exclusion. Extract the context step from
+whichever side is enabled, using its recursive-search characterization. Apply
+both successor characterizations to that same step, choosing identity endpoint
+isomorphisms. The search-target lemma proves remoteness of $q$. Concrete search
+preserves rootedness, so each of the two constructed endpoints is rooted.
+\end{proof}
+\lean{Graph/SpecimenTraversal}{344}{368}{Linear.DeepSpecimen.settled_traversal}
+This proves synchronized search and the required endpoint facts. It does not
+yet return a new element of the original allowed specimen type: that requires
+repackaging the coordinate, preserving unique holes, and transporting allowed
+context membership under the relevant graph isomorphisms. The full-UAM
+transition relation and its connection to these search steps also remain open.
+These are the remaining interface obligations, rather than an assumed failure
+of the graph-level traversal proof.
+
+\Needspace{14\baselineskip}
+\subsection{Traversal and rootedness regressions}
+Return to the original deep specimen with its focus immediately before the
+consumer and its sole hole inside a box. It has no shallow hole-labelled edge,
+so neither entering nor exiting is possible. The boundary equivalence therefore
+excludes the erased-coordinate hole boundary.
+\lean{Graph/SpecimenTraversalExamples}{10}{14}{Linear.SpecimenTraversalExamples.no_boundaries}
+\lean{Graph/SpecimenTraversalExamples}{15}{21}{Linear.SpecimenTraversalExamples.away}
+The consumer is an actual operation of the erased context. Its singleton source
+is the joined coordinate: in the focussed context its source is the focus target,
+and erasure contracts that target to the join. Its argument and thunk lists
+are empty. Define the returned coordinate by changing only the mode to
+backtrack. With passive operation kinds, nullary entry supplies the corresponding
+context step.
+\lean{Graph/SpecimenTraversalExamples}{22}{42}{Linear.SpecimenTraversalExamples.consumer}
+\lean{Graph/SpecimenTraversalExamples}{43}{45}{Linear.SpecimenTraversalExamples.returned}
+\lean{Graph/SpecimenTraversalExamples}{46}{49}{Linear.SpecimenTraversalExamples.context_step}
+The left actual-state search characterization realizes this as a step from the
+original expanded specimen state. If any recursively renamed left successor is
+supplied instead, extract its context coordinate. Coordinate determinism equates
+it with the returned coordinate, giving its recursive endpoint isomorphism and
+the matching right transition.
+\lean{Graph/SpecimenTraversalExamples}{50}{53}{Linear.SpecimenTraversalExamples.actual_step}
+\lean{Graph/SpecimenTraversalExamples}{54}{65}{Linear.SpecimenTraversalExamples.matching}
+Finally no context run from the initial input can reach this specimen's original
+coordinate. Such a run would make both original states rooted by the new bridge,
+contradicting the earlier deep-box obstruction. Thus the new reconstruction and
+traversal results preserve the previous distinction between well-formed states
+and rooted states; a valid local search step does not imply rootedness.
+\lean{Graph/SpecimenTraversalExamples}{66}{74}{Linear.SpecimenTraversalExamples.no_initial_context_run}
