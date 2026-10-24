@@ -1,4 +1,4 @@
-import Hypernets.Graph.AlternatingFillings
+import Hypernets.Graph.SequentialExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -209,3 +209,17 @@ import Hypernets.Graph.AlternatingFillings
 #print axioms Hypernets.Linear.AlternatingFillings.output_closed
 #print axioms Hypernets.Linear.AlternatingFillings.no_global_oneWay_side
 #print axioms Hypernets.Linear.AlternatingFillings.not_both_reachable
+
+#print axioms Hypernets.Graph.Net.ExpansionPeel.iso
+#print axioms Hypernets.Linear.ExpansionPaths.copy_no_internal
+#print axioms Hypernets.Linear.ExpansionPaths.copiesIso
+#print axioms Hypernets.Linear.ExpansionSequential.Execution.ordinary
+#print axioms Hypernets.Linear.ExpansionSequential.Execution.iso
+#print axioms Hypernets.Linear.ExpansionSequential.Execution.order_independent
+#print axioms Hypernets.Linear.ExpansionSequential.Execution.order_independent_modulo
+#print axioms Hypernets.Linear.ExpansionSequential.remaining_copies
+#print axioms Hypernets.Linear.ExpansionSequential.realize_list
+#print axioms Hypernets.Linear.ExpansionSequential.realize
+#print axioms Hypernets.Linear.ExpansionSequential.realize_modulo
+#print axioms Hypernets.Linear.AlternatingFillings.sequential_realizations
+#print axioms Hypernets.Linear.AlternatingFillings.reverse_schedule
