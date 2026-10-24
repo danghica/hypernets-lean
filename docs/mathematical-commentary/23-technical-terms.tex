@@ -76,6 +76,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{corolla}{Corolla}{A graph with one operation edge, no internal vertices, and precisely that operation's ordered input and output boundaries.}
 
+\glossaryentry{corolla-attachment}{Corolla attachment}{The map from a selected edge's corolla inputs and outputs to its ordered host source and target ports; it need not be globally injective.}
+
 \glossaryentry{corolla-copy}{Corolla copy}{A one-edge filling retaining an original label and its complete ordered input and output boundaries.}
 
 \glossaryentry{site-correspondence}{Corresponding sites}{Addresses related by edge bijections at each enclosing level, with the same local replacement interface.}
@@ -119,6 +121,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{state-search}{Erasure-based state search}{Search between actual states, defined by a coordinate step on the erased source and a focus-preserving isomorphism to the realized target.}
 
 \glossaryentry{cost-orders}{Exact cost order}{The preorder $E$ with $a\,E\,b$ exactly when $a=b$, requiring identical successful execution counts in refinement.}
+
+\glossaryentry{hole-context-search}{Explicit-hole context search}{Finite interaction fragments plugged into the same explicit simple context; proved equivalent to erasure-based state search.}
 
 \glossaryentry{state-coordinate}{Extracted state coordinate}{The original mode and joined term vertex in the generally erased underlying graph of an arbitrary closed state.}
 
@@ -186,6 +190,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{incoming-trace}{Incoming incidence trace}{A reverse path recording each target and source incidence, without restricting edge labels.}
 
+\glossaryentry{output-focus-insertion}{Incoming-side focus subdivision}{Inserting a focus before a non-input term port by splitting target incidences; permits a focus at an output boundary.}
+
 \glossaryentry{independent-sites}{Independent sites}{Addresses that diverge at distinct edges, possibly inside a shared chain of boxes, so neither selects an ancestor of the other.}
 
 \glossaryentry{initial-attachment}{Initial focus attachment}{Constructing a genuine initial state by inserting search mode at the sole input of a focus-free, hole-free graph.}
@@ -234,6 +240,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{one-way}{One-way hypernet}{A hypernet with no operation path from a term input to a term output; paths to thunk outputs are permitted.}
 
+\glossaryentry{opened-search-slot}{Opened search slot}{A selected edge relabelled by a typed hole, giving exactly one shallow hole when the original host is hole-free.}
+
 \glossaryentry{operation-kind}{Operation kind}{The active/passive classification; finishing produces rewrite/backtrack mode respectively.}
 
 \glossaryentry{operation-path}{Operation path}{A forward, endpoint-sensitive path defined by a reverse operation trace with its edge list reversed; empty paths are permitted.}
@@ -255,6 +263,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{paired-output-closure}{Paired output-closure}{An edge-wise condition: retain both copies or have a one-way filling on at least one side, with the side allowed to vary.}
 
 \glossaryentry{path}{Path}{A nonempty edge list whose consecutive edges are adjacent. Repeated edges are allowed; this predicate does not specify endpoint vertices.}
+
+\glossaryentry{pattern-matching}{Pattern matching}{An isomorphism between a plugged finite focus fragment and an actual state, equivalent to focussed coordinate realization.}
 
 \glossaryentry{site}{Plugging site}{An address selecting an edge, possibly inside boxes, indexed by the required local depth bound and replacement interface.}
 
@@ -328,6 +338,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{specimen}{Rooted state}{A state satisfying the specimen interface's supplied predicate $\mathsf{Root}$, which its laws require to be preserved by transitions.}
 
+\glossaryentry{search-fragment}{Search interaction fragment}{A finite graph containing a variable or operation corolla and one focus at a typed input or output boundary.}
+
 \glossaryentry{focus}{Search mode}{The abstract focus mode $\mathsf{search}$, used with entering specimens in the input-safety premise.}
 
 \glossaryentry{search-operation}{Search operation view}{A certified decomposition of an actual operation edge into its singleton source, ordered argument prefix, and remaining thunk targets.}
@@ -358,11 +370,17 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{freshness}{Sharp plugging freshness}{The requirement that no retained host hole label occurs in the replacement; labels confined to the removed region may be reused.}
 
+\glossaryentry{simple-search-context}{Simple search context}{A globally focus-free graph with one shallow hole edge and no other hole occurrences, including inside boxes.}
+
 \glossaryentry{simultaneous-expansion}{Simultaneous expansion}{Replacement of every shallow host edge by a graph of its interface, with disjoint tagged internal carriers; corollas retain unchanged edges.}
 
 \glossaryentry{site-interface-transport}{Site interface transport}{Equality transport of the interface indices of an address, leaving its selected occurrence unchanged.}
 
 \glossaryentry{site-transport}{Site transport}{A classically chosen corresponding address in a recursively isomorphic host, with unchanged local depth and interface.}
+
+\glossaryentry{slot-relabelling}{Slot relabelling}{Changing only the label of a selected edge while retaining its ordered interface; proved immaterial after plugging.}
+
+\glossaryentry{slot-context-search}{Slot-context search}{Application of a finite corolla interaction in one discarded-edge slot, with both actual state endpoints matched by plugging.}
 
 \glossaryentry{indexed-port}{Source port}{A source-list vertex selected by a finite index in the edge label's input signature; the arity equation justifies the lookup.}
 
@@ -381,6 +399,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{refinement}{State refinement}{The requirement that each successful source execution has a successful target execution with counts related by the chosen cost preorder.}
 
 \glossaryentry{determinism}{Stuck state}{A normal state that is not successfully final; it cannot step and does not count as successful termination.}
+
+\glossaryentry{subdivision-exchange}{Subdivision vertex exchange}{The bijection exchanging an old internal attachment with the fresh focus vertex, identifying the two subdivision orientations.}
 
 \glossaryentry{substitution-unit}{Substitution unit}{A selected one-edge corolla: filling it returns the inserted graph, while restoring an edge's own corolla returns its host, up to isomorphism.}
 

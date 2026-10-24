@@ -111,7 +111,8 @@ The remaining work is to package that coordinate as a new allowed specimen,
 including unique-hole and context-membership witnesses, and to connect the
 search theorem to the full UAM. The abstract \texttt{context\_step} field is
 therefore not yet instantiated. Adequacy for original-hole-only paper tuple
-substitution and contextual local rewrites also remains open.
+substitution remains open. Contextual search adequacy is now established
+in Section~\ref{sec:contextual-search}.
 \item \textbf{Proposition~38: logical lifting checked; initial bridge open.}\par
 \texttt{Observations.contextual\_of\_lifting} proves the logical implication
 once initial pairs belong to the lifting. Concrete initial focus attachment is
@@ -129,25 +130,23 @@ The typed finite-depth hierarchy and explicit renaming bijections are
 representation choices. Relating them to the paper's set-based hypernets and
 across depth bounds is a separate adequacy obligation. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
-not replace the operational proofs in Appendix~F. The next proof dependency
-is factorization of independent local incidence search through the paper's
-interaction patterns and focus-free simple contexts,
-together with the remaining transitions of \S6.4. Full-UAM refocusing and
-the remaining specimen packaging for Lemma~39(3) remain obligations. The active/passive operation
-partition and all five coordinate search rules are now defined.
-Section~\ref{sec:local-incidence} proves their exact correspondence with
-independent original-graph interactions and incidence equations, including
-recursive endpoint renaming. It does not discharge the simple-context
-factorization obligation. These then support the concrete Proposition~40 bridge;
+not replace the operational proofs in Appendix~F. The contextual-search dependency is now discharged:
+Section~\ref{sec:contextual-search} identifies erasure-based state search with
+finite interaction patterns plugged into explicit simple contexts, in both
+directions. Opening and closing the selected slot covers arbitrary simple
+contexts; output fragments and self-looping attachments are included.
+The next operational dependencies are the remaining transitions of \S6.4,
+full-UAM refocusing, and specimen packaging for Lemma~39(3).
+These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 75\% of the mathematical effort toward
+As a planning estimate, approximately 78\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-60--85\%). The estimate remains unchanged after the incidence-search correspondence:
-the full contextual-rewrite obligation has not yet been discharged.
+63--87\%). This increases the previous estimate of 75\% after completing the
+finite-pattern and simple-context search adequacy obligation.
 It is a subjective estimate, not a ratio of declarations or discharged
-checklist entries. Operational adequacy, the full UAM, and deep specimen
+checklist entries. The remaining UAM transitions and deep specimen
 locality, safety, and robustness remain substantial obligations.
 The active to-do list is maintained in Appendix~\ref{app:remaining-work}.
 
@@ -158,7 +157,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{e08bdb5}, rather than to the moving
+All code links point to revision \texttt{3a196f1}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

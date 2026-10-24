@@ -186,6 +186,13 @@ determinism, and actual variable and value successors. Only the standard
 logical axioms occur; no project axiom or \texttt{sorryAx} is used.
 \lean{Graph/Audit}{311}{320}{Graph.Audit: independent incidence-search correspondence}
 
+The search-adequacy audit checks incoming subdivision, both fragment-plugging
+isomorphisms, internal orientation exchange, rule attachment and factorization,
+explicit simple-context opening and closing, both final correspondence
+theorems, arbitrary-context soundness, and the boundary and self-loop regressions.
+No project-specific axiom or admitted proof occurs.
+\lean{Graph/Audit}{322}{345}{Graph.Audit: finite-pattern simple-context search adequacy}
+
 The commentary's source checker recursively scans all Lean modules under
 \texttt{Hypernets/}, including nested graph modules, attributed declarations,
 noncomputable definitions, abbreviations, and anonymous examples. It verifies

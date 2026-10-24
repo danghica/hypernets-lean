@@ -1,0 +1,475 @@
+\Needspace{18\baselineskip}
+\section{Finite interaction patterns and simple-context search}
+\label{sec:contextual-search}
+This section discharges the search adequacy obligation formerly listed in
+Appendix~\ref{app:remaining-work}. The principal theorem identifies the checked
+erasure-based search relation with actual plugging of finite interaction
+fragments into one focus-free simple hole context, in both directions. It also
+identifies the independent incidence presentation with that same relation.
+The result concerns search: it does not add substitution or compute transitions.
+
+We use the five coordinate clauses already specified for Fig.~9 to index pairs
+of actual two-edge graphs. Each graph contains one variable or operation edge
+and one focus edge. A single shallow slot supplies the surrounding graph;
+opening it creates an explicitly labelled hole. General slot-label transport
+and a closing theorem prove that arbitrary simple contexts are covered, rather
+than restricting context application to a chosen family of examples.
+
+\subsection{Subdividing at an output port}
+\begin{definition}[Incoming-side focus subdivision]\label{term:output-focus-insertion}
+For a graph $G:I\to O$ and a term port $v$ that is not an input, retain the old
+carriers and add one internal term vertex $z$ and one focus edge $f$. Original
+source lists are mapped through the old-vertex inclusion. Original target lists
+are mapped through the split function that replaces $v$ by $z$ and includes
+all other ports. Set the focus source to $z$ and its target to the included
+copy of $v$. Thus a focus can be placed at an output boundary, which the earlier
+outgoing-side subdivision cannot do.
+\end{definition}
+\lean{Graph/OutputFocusInsertion}{9}{11}{Linear.OutputFocusInsertion.target}
+\lean{Graph/OutputFocusInsertion}{13}{15}{Linear.OutputFocusInsertion.source}
+\begin{lemma}[Incidence uniqueness and coverage]
+The incoming subdivision satisfies source and target uniqueness and the two
+coverage laws of a finite graph.
+\end{lemma}
+\begin{proof}
+For two original target lists, injectivity of splitting reflects shared
+membership to the original graph's target uniqueness. An original target
+cannot equal the focus target: a split port never equals the unsplit inclusion
+of the selected port. Two focus-edge names coincide because their carrier is a
+singleton. For sources, old-vertex inclusion is injective and its image is
+disjoint from the fresh focus source. Original source uniqueness and the
+singleton focus carrier then give source uniqueness.
+
+For target coverage, a retained port unequal to $v$ has its original target
+edge, a retained copy of $v$ is targeted by the focus, and the fresh vertex is
+targeted by the original incoming edge of $v$. That edge exists because $v$
+is not an input. Conversely each target is not an input, using the original
+coverage law, the hypothesis on $v$, or the internal status of $z$. Source
+coverage retains every old source incidence and supplies the fresh vertex
+with the focus edge; no input-side exception is needed for this direction.
+\end{proof}
+\lean{Graph/OutputFocusInsertion}{17}{36}{Linear.OutputFocusInsertion.target_unique}
+\lean{Graph/OutputFocusInsertion}{38}{57}{Linear.OutputFocusInsertion.source_unique}
+\lean{Graph/OutputFocusInsertion}{59}{86}{Linear.OutputFocusInsertion.target_coverage}
+\lean{Graph/OutputFocusInsertion}{88}{106}{Linear.OutputFocusInsertion.source_coverage}
+The constructor packages these incidence functions and laws as a typed finite
+hypernet. Finite enumerations are disjoint sums with a singleton. Nodup follows
+from injectivity of the host or split map. The existing host-label and split-label
+lemmas prove typing of original incidences; the new focus has a singleton term
+source and target. Given global focus freedom of $G$, the focus certificate
+selects the fresh edge, retains freedom of every old label, and proves distinct
+endpoints by freshness. Its source is internal, so it cannot be exposed from
+an input directly to an output.
+\lean{Graph/OutputFocusInsertion}{109}{158}{Linear.OutputFocusInsertion.insert}
+\lean{Graph/OutputFocusInsertion}{161}{177}{Linear.OutputFocusInsertion.focussed}
+
+\subsection{Finite fragments and their plugging equations}
+\begin{definition}[Boundary focus fragment]\label{term:search-fragment}
+For a selected edge $e$ of $C$, its corolla has the same label and ordered
+interface, no internal vertices, and one edge. The input fragment at a term
+input index inserts a focus before that corolla input. The output fragment at
+a term output index uses incoming subdivision after that corolla output.
+Both fragments have one internal vertex and two edges. The corresponding
+whole-graph subdivisions insert at the selected edge's source or target port.
+\end{definition}
+\lean{Graph/PatternPlugging}{10}{10}{Linear.PatternPlugging.corolla}
+\lean{Graph/PatternPlugging}{42}{43}{Linear.PatternPlugging.inputPattern}
+\lean{Graph/PatternPlugging}{46}{47}{Linear.PatternPlugging.inputWhole}
+\lean{Graph/PatternPlugging}{118}{119}{Linear.PatternPlugging.outputPattern}
+\lean{Graph/PatternPlugging}{122}{123}{Linear.PatternPlugging.outputWhole}
+The vertex bijection from a plugged fragment to the corresponding whole
+subdivision removes the empty corolla-vertex summand and retains the host and
+fresh vertices. The edge bijection retains every unselected host edge, restores
+the selected edge name from the corolla edge, and sends the fragment focus to
+the fresh whole-graph focus. Its inverse tests whether an old edge is the
+selected edge; the singleton carriers prove the inverse equations.
+\lean{Graph/PatternPlugging}{13}{17}{Linear.PatternPlugging.vertices}
+\lean{Graph/PatternPlugging}{20}{39}{Linear.PatternPlugging.edges}
+
+\begin{lemma}[Input-fragment incidence equations]
+Under those bijections, host ports retain their host inclusions; included
+corolla ports become inclusions of their attachment ports; and a split corolla
+input becomes the split attached source port.
+\end{lemma}
+\begin{proof}
+The host equation is a case analysis on internal, input, and output ports.
+For an included corolla port, the internal case is empty; the input and output
+cases reduce to that host equation at the corresponding attachment. For a
+split input, test equality of its index with the selected index. If equal,
+both sides are the fresh vertex. Otherwise injectivity of ordered source-port
+lookup proves that the attachment differs from the selected attachment, so
+both sides are the retained host port.
+\end{proof}
+\lean{Graph/PatternPlugging}{49}{51}{Linear.PatternPlugging.input_host}
+\lean{Graph/PatternPlugging}{53}{61}{Linear.PatternPlugging.input_insert_host}
+\lean{Graph/PatternPlugging}{63}{73}{Linear.PatternPlugging.input_insert_split}
+\begin{theorem}[Input-fragment factorization]
+Plugging the input fragment at $e$ is isomorphic to subdividing the whole graph
+at that edge's selected source port.
+\end{theorem}
+\begin{proof}
+Use the carrier bijections above. Labels are unchanged. A source port of an
+unselected host edge cannot equal the selected source port: otherwise source
+uniqueness would identify its edge with $e$. Its source list therefore agrees
+with the whole-graph split list. For the selected edge, enumerate the corolla's
+input indices and apply the split-input equation pointwise; enumerating the
+host's source ports reconstructs its source list. The focus source is the
+included attachment. All old targets use the host equation, and enumerating
+corolla outputs reconstructs the selected target list. Both focus targets are
+fresh. These cases establish every isomorphism field.
+\end{proof}
+\lean{Graph/PatternPlugging}{76}{115}{Linear.PatternPlugging.input_iso}
+
+The output-fragment equations are proved separately with targets in place of
+sources. Host and included-port equations again follow by port cases. For
+split outputs, equality of output indices selects the fresh vertex; inequality
+is reflected by injectivity of ordered target-port lookup.
+\lean{Graph/PatternPlugging}{125}{127}{Linear.PatternPlugging.output_host}
+\lean{Graph/PatternPlugging}{129}{137}{Linear.PatternPlugging.output_insert_host}
+\lean{Graph/PatternPlugging}{139}{149}{Linear.PatternPlugging.output_insert_split}
+\begin{theorem}[Output-fragment factorization]
+Plugging the output fragment at $e$ is isomorphic to incoming subdivision of
+the whole graph at its selected target port.
+\end{theorem}
+\begin{proof}
+Use the same carrier bijections. Target uniqueness ensures that an unselected
+host edge never targets the selected target port, so its target list is
+unchanged by splitting. Enumerate output indices and apply the split-output
+equation for the selected edge. Its focus target is the included attachment.
+Sources use host inclusion, with the selected source list reconstructed by
+its ordered input enumeration; the focus source is fresh. Labels and finite
+carriers are preserved exactly as for input fragments.
+\end{proof}
+\lean{Graph/PatternPlugging}{152}{185}{Linear.PatternPlugging.output_iso}
+Neither factorization assumes that an input attachment differs from an output
+attachment. Each uses injectivity only within the relevant ordered side.
+This distinction is necessary for self-looping slots.
+
+\subsection{Reconciling the two subdivision orientations}
+\begin{definition}[Subdivision vertex exchange]\label{term:subdivision-exchange}
+At an internal port $v$, exchange its old copy with the fresh focus vertex and
+fix every other old vertex. This self-inverse function is a bijection on the
+extended internal carrier; singleton uniqueness handles the fresh carrier's
+only index.
+\end{definition}
+\lean{Graph/FocusSubdivision}{10}{20}{Linear.FocusSubdivision.swap}
+Its port extension sends an included old port to its split version and the
+fresh port to the included copy of $v$. The first claim follows by cases on
+the port and equality with $v$; the second follows directly from the definition.
+Applying the exchange again shows that a split port returns to its inclusion.
+\lean{Graph/FocusSubdivision}{22}{28}{Linear.FocusSubdivision.swap_host}
+\lean{Graph/FocusSubdivision}{30}{30}{Linear.FocusSubdivision.swap_fresh}
+\lean{Graph/FocusSubdivision}{32}{35}{Linear.FocusSubdivision.swap_split}
+\begin{theorem}[Agreement of subdivision orientations]
+Incoming and outgoing focus subdivision at an internal term port are
+isomorphic, with the focus edge and its mode retained.
+\end{theorem}
+\begin{proof}
+Use the exchange on vertices and the identity on edges. The two exchanged
+vertices have term type; all other labels are fixed. On original sources,
+the exchange turns inclusion into splitting. On original targets it turns
+splitting into inclusion. Its fresh-port and selected-port equations identify
+the focus source and target lists. Edge labels are unchanged, including the
+focus mode.
+\end{proof}
+\lean{Graph/FocusSubdivision}{38}{68}{Linear.FocusSubdivision.iso}
+
+\subsection{Factoring the search rules through one corolla}
+\begin{definition}[Corolla attachment]\label{term:corolla-attachment}
+Attach each corolla input index to the corresponding source port of $e$, and
+each output index to the corresponding target port. There is no internal case.
+Typing of ordered port lookup proves preservation of vertex labels. Mapping
+attachment over either corolla incidence list reconstructs the corresponding
+host list by ordered port enumeration.
+\end{definition}
+\lean{Graph/CorollaSearch}{10}{13}{Linear.PatternPlugging.attach}
+\lean{Graph/CorollaSearch}{15}{20}{Linear.PatternPlugging.attach_label}
+\lean{Graph/CorollaSearch}{22}{25}{Linear.PatternPlugging.attach_source}
+\lean{Graph/CorollaSearch}{27}{30}{Linear.PatternPlugging.attach_target}
+An operation view on the corolla becomes a view on $e$ by attaching its source,
+argument list, and thunk list. The reconstructed incidence equations and
+preservation of list lengths prove the view's fields. Attachment commutes
+with entry by inspecting whether the argument list is empty, and with return
+by commuting lookup with mapping and inspecting the next argument.
+\lean{Graph/CorollaSearch}{33}{42}{Linear.PatternPlugging.operation}
+\lean{Graph/CorollaSearch}{44}{46}{Linear.PatternPlugging.operation_enter}
+\lean{Graph/CorollaSearch}{48}{51}{Linear.PatternPlugging.operation_resume}
+\begin{lemma}[Rule attachment and operation recovery]
+Every coordinate rule on the corolla attaches to a coordinate rule of $C$.
+Every operation view of $C$ is recovered from a view on its edge's corolla,
+with equal source, ordered arguments, and operation label after attachment.
+\end{lemma}
+\begin{proof}
+For a variable rule, reconstruct the singleton source list by attachment and
+apply the host variable rule. For entry, use the attached operation view and
+entry commutation. For return, map the argument lookup and use return
+commutation. For operation recovery, the corolla has the original operation
+label and hence admits a view. Its attached view has the original edge name;
+view uniqueness identifies the required data.
+\end{proof}
+\lean{Graph/CorollaSearch}{54}{65}{Linear.PatternPlugging.sound}
+\lean{Graph/CorollaSearch}{68}{75}{Linear.PatternPlugging.operation_preimage}
+\begin{theorem}[Finite-rule factorization]
+Every coordinate search step on $C$ is the attachment of a search step on the
+corolla of one interacting edge, with both endpoint coordinates attached by
+the same map.
+\end{theorem}
+\begin{proof}
+Analyze the search rule. For a variable, the signature forces its corolla
+source list to have length one. Extract that source port; reconstruction of
+the host source list identifies its attachment with the original source.
+The corolla variable rule has the required two endpoints.
+For entry, recover the corolla operation view. Equality of source data and
+uniqueness of entry selection give the endpoint equations. For return,
+recover the view and invert lookup in its mapped argument list. A failed
+lookup contradicts the given host lookup. A successful lookup supplies the
+same argument index and a port attaching to the host argument. The corolla
+return rule and uniqueness of return selection give the target equation.
+\end{proof}
+\lean{Graph/CorollaSearch}{79}{112}{Linear.PatternPlugging.complete}
+Inspecting any corolla rule shows that its label is either the variable label
+or an operation label: the variable constructor supplies the first, and the
+operation views in entry and return supply the second. Such a primitive label
+is focus-free and has no hole in its occurrence fibre. At either depth form,
+its shallow occurrence is not a hole and its child-occurrence type is empty.
+These facts are derived from the rule, not assumed of context application.
+\lean{Graph/CorollaSearch}{115}{122}{Linear.PatternPlugging.interaction_label}
+\lean{Graph/CorollaSearch}{126}{137}{Linear.PatternPlugging.interaction_closed}
+
+\subsection{Actual state endpoints}
+A literal graph isomorphism between globally uniquely focussed graphs must
+preserve their distinguished focuses. Otherwise the image of the source focus
+would be a non-focus edge of the target and therefore have a focus-free label,
+contradicting label preservation. Once the edge is identified, injectivity of
+focus labels identifies its mode. This supplies a focussed isomorphism from
+an ordinary graph isomorphism.
+\lean{Graph/PatternRealization}{10}{27}{Linear.Focussed.isoOfGraph}
+\begin{definition}[Typed fragment coordinate and matching]\label{term:pattern-matching}
+A fragment coordinate is a mode and term port of the selected corolla.
+Unlike a state coordinate it may lie at an output. Its fragment is the input
+or output graph defined above, according to the port constructor. Attaching
+it gives a typed state coordinate, by label preservation. A fragment matches
+an actual state when its plugging is literally graph-isomorphic to that state.
+\end{definition}
+\lean{Graph/PatternRealization}{30}{30}{Linear.PatternPlugging.Position}
+\lean{Graph/PatternRealization}{33}{39}{Linear.PatternPlugging.fragment}
+\lean{Graph/PatternRealization}{42}{43}{Linear.PatternPlugging.attached}
+\lean{Graph/PatternRealization}{78}{79}{Linear.PatternPlugging.Matches}
+Every output attachment in a host of interface $\star\to[]$ is internal:
+its target-list membership excludes inputs, and there are no output indices.
+\lean{Graph/PatternRealization}{46}{51}{Linear.PatternPlugging.output_internal}
+\begin{theorem}[Fragment realization]
+In a focus-free, hole-free state-interface host, plugging any typed fragment
+is isomorphic to realization of its attached coordinate. Consequently matching
+an actual state is equivalent to a focussed isomorphism from that realization.
+\end{theorem}
+\begin{proof}
+For input coordinates apply input-fragment factorization. For output
+coordinates apply output-fragment factorization, then exchange the old
+internal attachment and fresh vertex to obtain outgoing subdivision.
+The previous internality lemma justifies that exchange. The corolla has no
+internal coordinate case. Compose this graph isomorphism with a matching
+isomorphism and use uniqueness of the focus to obtain the focussed endpoint
+condition. Conversely discard the focus fields and compose graph
+isomorphisms in the opposite direction.
+\end{proof}
+\lean{Graph/PatternRealization}{54}{75}{Linear.PatternPlugging.realization}
+\lean{Graph/PatternRealization}{83}{90}{Linear.PatternPlugging.matches_iff}
+
+\begin{definition}[Slot-context search]\label{term:slot-context-search}
+Choose a focus-free, hole-free host, one selected edge, and two typed corolla
+coordinates related by a finite search rule. Require their two plugged
+fragments to match the source and target actual states. The same selected
+edge is removed by both pluggings.
+\end{definition}
+\lean{Graph/ContextualSearch}{11}{14}{Linear.State.ContextualSearch}
+\begin{theorem}[Slot-context correspondence]
+Slot-context search and erasure-based state search coincide in both directions.
+They therefore also coincide with incidence search. Recursive state search
+adds precisely recursive renaming of a slot-context successor.
+\end{theorem}
+\begin{proof}
+For soundness, attach the finite corolla rule to the host. Realize the resulting
+coordinate step and transport its source and target through the matching
+focussed isomorphisms. For completeness, erase the source state's focus and
+factor its coordinate search through a corolla. The source coordinate is
+typed by attachment-label preservation; search type preservation types the
+target coordinate. The source endpoint matches by general focus recovery,
+and the target matches by the endpoint isomorphism in the state search witness.
+The incidence equivalence follows from the previous section's theorem.
+Substitution into the characterization of recursive state search proves the
+recursive endpoint statement.
+\end{proof}
+\lean{Graph/ContextualSearch}{17}{23}{Linear.State.contextualSearch_sound}
+\lean{Graph/ContextualSearch}{27}{46}{Linear.State.contextualSearch_complete}
+\lean{Graph/ContextualSearch}{49}{51}{Linear.State.search_iff_contextual}
+\lean{Graph/ContextualSearch}{54}{56}{Linear.State.incidenceSearch_iff_contextual}
+\lean{Graph/ContextualSearch}{59}{62}{Linear.State.deepSearch_iff_contextual}
+
+\subsection{Opening and closing an explicit simple context}
+\begin{definition}[Signature-preserving slot relabelling]\label{term:slot-relabelling}
+Replace the selected edge label by a label with equal ordered input and output
+signatures, keeping all other data. The selected-label and other-label equations
+follow by the equality test defining relabelling. Identity carrier maps give
+an incidence isomorphism with the unrestricted label relation. The supplied
+signature equalities identify the old and new selected interfaces.
+\end{definition}
+\lean{Graph/SearchContexts}{16}{20}{Linear.SearchContexts.relabel}
+\lean{Graph/SearchContexts}{22}{24}{Linear.SearchContexts.selected_label}
+\lean{Graph/SearchContexts}{26}{29}{Linear.SearchContexts.other_label}
+\lean{Graph/SearchContexts}{32}{38}{Linear.SearchContexts.geometry}
+\lean{Graph/SearchContexts}{40}{42}{Linear.SearchContexts.input_eq}
+\lean{Graph/SearchContexts}{44}{46}{Linear.SearchContexts.output_eq}
+\begin{theorem}[The discarded slot label is immaterial]
+Plugging any replacement before or after slot relabelling gives isomorphic
+graphs, after transport along the equal interfaces. This works in both directions.
+\end{theorem}
+\begin{proof}
+Apply the existing host-plugging transport to the identity incidence
+isomorphism. For an unselected host edge the labels actually agree, and an
+inserted edge retains its label, so the transported incidence isomorphism is
+a literal graph isomorphism. For the reverse direction transport a replacement
+back to the old interface, apply the forward result, and cancel consecutive
+opposite interface transports. Cancellation follows by eliminating the two
+interface equalities and simplifying identity transport. Invert the result.
+\end{proof}
+\lean{Graph/SearchContexts}{49}{65}{Linear.SearchContexts.plug_iso}
+\lean{Graph/SearchContexts}{69}{80}{Linear.SearchContexts.plug_iso_reverse}
+Relabelling by a focus-free label preserves global focus freedom: inspect the
+selected edge separately and retain the other labels. If every existing hole
+occurrence belongs to the selected edge, and the new label's entire fibre
+has no hole, relabelling removes all holes. A hypothetical hole in the new
+selected fibre contradicts its emptiness; one at another edge transports to
+an old hole occurrence whose owner would have to be the selected edge.
+\lean{Graph/SearchContexts}{83}{89}{Linear.SearchContexts.relabel_free}
+\lean{Graph/SearchContexts}{93}{110}{Linear.SearchContexts.close_holeFree}
+
+\begin{definition}[Opened slot]\label{term:opened-search-slot}
+Give a hole any natural-number name and the selected edge's complete input
+and output signatures. Opening the slot relabels that edge by this hole.
+The selected label is exactly the specified hole label. If the host is
+focus-free, so is the opened graph: a hole label contains no focus.
+\end{definition}
+\lean{Graph/SearchContexts}{113}{114}{Linear.SearchContexts.hole}
+\lean{Graph/SearchContexts}{117}{119}{Linear.SearchContexts.openSlot}
+\lean{Graph/SearchContexts}{121}{122}{Linear.SearchContexts.open_label}
+\lean{Graph/SearchContexts}{125}{133}{Linear.SearchContexts.focusFree}
+\begin{lemma}[Exactly one shallow hole]
+Opening a slot in a hole-free host gives a context with exactly one shallow
+hole occurrence, of the specified label, and no nested holes.
+\end{lemma}
+\begin{proof}
+Any occurrence at another edge transports along its unchanged label to a hole
+in the original host, contradicting hole freedom. The selected edge's fibre
+is a shallow singleton plus an empty child type, and is therefore a
+subsingleton. Two hole occurrences thus have the same owner and equal fibre
+positions, proving global hole uniqueness. The shallow occurrence explicitly
+witnesses presence. Finally any hole occurrence has that owner and that
+shallow position, so its label is exactly the chosen hole.
+\end{proof}
+\lean{Graph/SearchContexts}{137}{148}{Linear.SearchContexts.occurrence_owner}
+\lean{Graph/SearchContexts}{151}{160}{Linear.SearchContexts.selected_fiber}
+\lean{Graph/SearchContexts}{163}{173}{Linear.SearchContexts.unique}
+\lean{Graph/SearchContexts}{176}{181}{Linear.SearchContexts.present}
+\lean{Graph/SearchContexts}{184}{194}{Linear.SearchContexts.only_hole}
+\begin{definition}[Focus-free simple search context]\label{term:simple-search-context}
+A selected edge carries a specified hole label, the graph is globally
+focus-free, and every hole occurrence has that edge as its outer owner.
+Because a primitive hole has no child occurrences, this permits exactly one
+shallow hole and no others. Opening a slot in a focus-free, hole-free host
+supplies these fields. Conversely, closing any such simple context with a
+compatible focus-free, hole-free label gives a focus-free, hole-free host.
+\end{definition}
+The constructor for opening uses the selected-label, focus-freedom, and
+occurrence-owner proofs above. The closing theorem pairs relabelling's
+focus-freedom theorem with the hole-elimination theorem. Its hypotheses on
+the new label are automatically satisfied by finite interaction rules.
+\lean{Graph/SearchContexts}{197}{201}{Linear.SearchContexts.Simple}
+\lean{Graph/SearchContexts}{204}{205}{Linear.SearchContexts.simple}
+\lean{Graph/SearchContexts}{209}{214}{Linear.SearchContexts.close_simple}
+
+\subsection{The explicit-hole correspondence}
+\begin{definition}[Explicit-hole pattern search]\label{term:hole-context-search}
+Transport a finite fragment's interface to that of the explicitly opened hole.
+An explicit-hole match is a graph isomorphism from plugging that transported
+fragment into the opened context to the supplied state. Explicit-hole search
+chooses one host, slot, and hole name, and one finite interaction rule whose
+two fragments match the two states using that same opened context.
+\end{definition}
+\lean{Graph/HoleContextSearch}{11}{16}{Linear.PatternPlugging.holeFragment}
+\lean{Graph/HoleContextSearch}{19}{20}{Linear.PatternPlugging.HoleMatches}
+\lean{Graph/HoleContextSearch}{35}{39}{Linear.State.HoleContextSearch}
+The discarded-slot-label isomorphism shows that explicit-hole matching and
+slot matching are equivalent: compose it with an endpoint match in one
+direction and compose its inverse in the other. Hence slot-context search
+and explicit-hole search are equivalent. To open a slot witness one may choose
+name zero; in the reverse direction any supplied name is retained by the
+matching equivalence.
+\lean{Graph/HoleContextSearch}{23}{31}{Linear.PatternPlugging.holeMatches_iff}
+\lean{Graph/HoleContextSearch}{42}{50}{Linear.State.contextual_iff_holeContext}
+\begin{theorem}[Search adequacy for explicit simple contexts]
+Erasure-based state search holds exactly when a finite search interaction is
+plugged into one explicit focus-free simple hole context, up to graph names.
+The same equivalence holds for the independent incidence equations. Recursive
+search adds precisely recursive renaming of the resulting state.
+\end{theorem}
+\begin{proof}
+Compose slot-context correspondence with explicit-hole matching equivalence.
+Compose once more with the incidence correspondence for the incidence claim.
+For recursive search, substitute this equivalence into its existing
+literal-step-plus-recursive-renaming characterization.
+\end{proof}
+\lean{Graph/HoleContextSearch}{54}{56}{Linear.State.search_iff_holeContext}
+\lean{Graph/HoleContextSearch}{59}{61}{Linear.State.incidenceSearch_iff_holeContext}
+\lean{Graph/HoleContextSearch}{64}{67}{Linear.State.deepSearch_iff_holeContext}
+
+\begin{theorem}[Arbitrary simple contexts are covered]
+Take any focus-free simple context, any compatible interaction label, and a
+finite corolla rule at that label. If its two fragments, with interface
+transport, plug into that original context to match two states, those states
+are related by search.
+\end{theorem}
+\begin{proof}
+The rule forces its label to be a variable or operation, so focus freedom and
+absence of holes in its label fibre are derived, not added as hypotheses.
+Close the original hole with this label. The closing theorem gives a
+focus-free, hole-free host. Reverse slot-label transport identifies each
+plugging into this host with the supplied plugging into the original context.
+Compose with the supplied endpoint isomorphisms to obtain a slot-context search
+witness and apply soundness. Thus representing a context by a closed host
+and a discarded edge does not exclude an arbitrary simple context.
+\end{proof}
+\lean{Graph/HoleContextSearch}{72}{95}{Linear.State.arbitrary_simple_context}
+
+\subsection{Regression examples and scope}
+The existing terminating value incidence step converts to an explicit-hole
+context step with a final target. The variable trigger similarly converts to
+a context step ending in rewrite mode. Opening the value edge with name seven
+constructs an actual simple context, proves global hole uniqueness, and
+exhibits the specified shallow hole.
+\lean{Graph/ContextualSearchExamples}{9}{12}{Linear.ContextualSearchExamples.value_contextual}
+\lean{Graph/ContextualSearchExamples}{15}{18}{Linear.ContextualSearchExamples.variable_contextual}
+\lean{Graph/ContextualSearchExamples}{21}{27}{Linear.ContextualSearchExamples.value_simple_context}
+An output-fragment regression checks the actual incidence lists for an
+operation with two term arguments and a thunk. The focus source is the fresh
+internal vertex and its target is the first output. The operation targets
+that fresh vertex, then its unchanged second argument and thunk outputs.
+The proof unfolds the finite constructors and evaluates the split tests.
+\lean{Graph/ContextualSearchExamples}{31}{41}{Linear.ContextualSearchExamples.output_fragment_incidence}
+The cyclic regression defines a unary operation signature and a well-typed
+one-edge self-loop with no outer boundary. It reuses the finite self-loop's
+incidence laws and proves the new term typing directly. Its input and output
+corolla attachments coincide. Both input and output factorization theorems
+still apply, providing explicit isomorphisms; no global attachment injectivity
+or acyclicity is silently assumed.
+\lean{Graph/ContextualSearchExamples}{44}{44}{Linear.ContextualSearchExamples.unaryOps}
+\lean{Graph/ContextualSearchExamples}{47}{63}{Linear.ContextualSearchExamples.loop}
+\lean{Graph/ContextualSearchExamples}{66}{66}{Linear.ContextualSearchExamples.loop_attachment}
+\lean{Graph/ContextualSearchExamples}{69}{71}{Linear.ContextualSearchExamples.loop_input}
+\lean{Graph/ContextualSearchExamples}{74}{76}{Linear.ContextualSearchExamples.loop_output}
+
+The former search-adequacy item is therefore removed from Appendix~\ref{app:remaining-work}.
+The six remaining obligations concern representation adequacy, the additional
+UAM transitions and their structural laws, specimen semantics and packaging,
+and the final concrete robustness instantiation. Search adequacy does not
+supply any of those remaining results by assumption.

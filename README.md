@@ -49,14 +49,16 @@ still assumes the required locality consequences.
   as the paper does. Connecting paper specimens to these filling sequences is
   still an adequacy obligation; both shallow and recursive deep specimens now
   have direct initial/final agreement for their actual filled states.
-- **Lemma 39(2–3) — open:** point (2) depends on Lemma 26(3), rootedness, and
-  output-closure; point (3) now has its actual-state search core, with successor-specimen packaging still open. The five coordinate search rules
-  and preservation of existing context steps under shallow filling are proved.
-  Concrete shallow and recursive deep specimens now satisfy the multi-hole
-  Lemma 26(3) obstruction and its jointly rooted context-path consequence;
-  the full entering/exiting classification remains open;
-  typed coordinates now have explicit focus-edge state realizations. Extraction
-  of context steps and adequacy for local graph rewriting remain open. The current `context_step` field assumes the required consequence.
+- **Lemma 39(2): checked for recursive specimens; (3): search core checked.**
+  Joint rootedness and output closure prove non-exiting. Erasure commutation and
+  the entering/exiting classification synchronize actual settled search steps
+  to rooted endpoints at a remote coordinate. Successor-specimen packaging and
+  the full-UAM context-step law remain open.
+- **Contextual search adequacy: checked.** Finite two-edge interaction patterns
+  plugged into explicit focus-free simple hole contexts coincide with
+  erasure-based state search in both directions. Arbitrary simple contexts,
+  output-boundary fragments, recursive endpoint renaming, and self-looping
+  attachments are covered.
 - **Proposition 38 — initial bridge open:** the logical lifting theorem is
   checked and initial focus attachment is constructed. Concrete observations and
   specimen witnesses must still discharge `initial_lift`.
@@ -130,10 +132,10 @@ proves the concrete Lemma 26(1) obstruction using the existing edge-path type.
 the rewrite-preservation obligation explicit. `RootedExamples.lean` proves
 the value execution rooted and the valid interior-focus state behind a variable
 not rooted. These use the current erasure-based search semantics; contextual
-local-rewrite adequacy is still open.
+local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 
-The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains only unfinished tasks. Contextual-rewrite adequacy,
-the full UAM, and the concrete robustness theorem remain open.
+The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains six unfinished tasks. Search adequacy has been discharged;
+the full UAM and the concrete robustness theorem remain open.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
 invariance under recursive renaming and closure under one-way shallow filling,
@@ -196,15 +198,22 @@ non-rootedness obstruction.
 original-graph adjacency and rewiring presentation, proved equivalent to
 erasure-based state search in both directions. Recursive endpoint renaming and
 determinism are included. `LocalSearchExamples.lean` checks actual variable and
-nullary-operation successors. **This narrows item 2 but does not remove it:**
-factorization through finite interaction patterns in simple contexts remains
-unproved. Appendix B still has seven items.
+nullary-operation successors.
 
-Estimated completion by mathematical effort: **about 75%**, with a plausible
-range of **60–85%**. This estimate is unchanged after the incidence-search
-correspondence, since the complete contextual-rewrite obligation remains open.
-This is a planning judgment, not a declaration count. Operational adequacy,
-the full UAM, specimen packaging, safety, and robustness remain substantial.
+The finite-pattern milestone completes the formerly second Appendix B item.
+`PatternPlugging.lean` constructs the two-edge fragments and proves their actual
+plugging equations. `CorollaSearch.lean` factors every search rule through its
+interacting edge. `SearchContexts.lean` opens and closes explicit simple hole
+contexts, preserving plugging. `HoleContextSearch.lean` proves
+`State.search_iff_holeContext` and covers arbitrary simple contexts without
+extra assumptions on interaction labels. Regressions include output fragments
+and a self-loop whose input and output attachments coincide. **Appendix B now
+has six items.**
+
+Estimated completion by mathematical effort: **about 78%**, with a plausible
+range of **63–87%**, up from 75% after completing search adequacy.
+This is a planning judgment, not a declaration count. The remaining UAM
+transitions, specimen packaging, safety, and robustness remain substantial.
 
 ## Concrete graph milestone
 
@@ -437,12 +446,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 1281 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 1304
-source-fragment links point to immutable code revision `e08bdb5`. It distinguishes
+all 1375 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 1399
+source-fragment links point to immutable code revision `3a196f1`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 200 technical terms, with short descriptions and internal PDF links
+glossary of 210 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -478,19 +487,17 @@ logical axioms, if used, are shown explicitly.
 ## Remaining work toward the milestone
 
 1. Prove representation adequacy and compatibility across depth bounds.
-2. Construct the finite search interaction patterns and prove their simple-context
-   plugging equivalent to the independent local incidence semantics in both directions.
-3. Define substitution and compute transitions and assemble the full UAM.
-4. Prove substitution preserves rootedness, establish the required full-UAM
+2. Define substitution and compute transitions and assemble the full UAM.
+3. Prove substitution preserves rootedness, establish the required full-UAM
    consequences of refocusing, and prove the stationary rewrite criterion.
-5. Prove compatibility of recursive deep specimens with paper tuple substitution.
+4. Prove compatibility of recursive deep specimens with paper tuple substitution.
    Define concrete quasi-specimens, input-safety, and robustness.
-6. Package synchronized successor coordinates as allowed concrete specimens,
+5. Package synchronized successor coordinates as allowed concrete specimens,
    preserving unique holes and context membership under isomorphism. Construct
    the abstract specimen interface using the checked boundary, non-exiting, and
    settled-search results, and connect its context-step law to the full UAM.
    Prove safety/robustness bridges and initial lifting.
-7. Instantiate the checked sufficiency results with all concrete obligations
+6. Instantiate the checked sufficiency results with all concrete obligations
    discharged to obtain Theorem 6.
 
 The copying UAM, lambda-term translation, and example program equivalences
