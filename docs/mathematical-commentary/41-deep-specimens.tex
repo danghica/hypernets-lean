@@ -1,0 +1,330 @@
+\Needspace{18\baselineskip}
+\section{Recursive deep specimens and their boundary and rooted-path laws}
+\label{sec:deep-specimens}
+The shallow specimen construction now extends recursively through original
+box bodies. It supplies actual filled states and proves the conclusions of
+Lemma~26(3), Lemma~39(1), and the jointly rooted context-path consequence for
+this deeper representation. These are structural results toward the paper's
+specimen argument in \S8.1 and Appendix~F~\cite{paper}. Identification with
+the paper's tuple substitution and the remaining entering/exiting, safety,
+and robustness arguments are still separate obligations.
+
+\Needspace{12\baselineskip}
+\subsection{Copies with an updated box label}
+\begin{definition}[Specified-label copy]\label{term:label-copy}
+A specified-label copy is a graph with a distinguished sole edge, a
+specified label on that edge, and source and target lists enumerating the
+full ordered input and output boundaries. Unlike an unchanged corolla
+copy, its label need not be the original host label: it may contain a
+new box body. The graph itself still satisfies all finite typed graph
+invariants. The literal corolla is such a copy, with its sole edge $0$;
+every element of $\mathrm{Fin}(1)$ equals $0$.
+\end{definition}
+\lean{Graph/DeepFillings}{11}{16}{Linear.LabelCopy}
+\lean{Graph/DeepFillings}{18}{20}{Linear.LabelCopy.corolla}
+
+If the specified label is globally focus-free, so is the copy.
+Every edge equals its distinguished edge, whose label is the specified
+label, reducing the claim to the supplied label predicate.
+\lean{Graph/DeepFillings}{22}{27}{Linear.LabelCopy.focusFree}
+
+\begin{lemma}[A non-operation copy is one-way]
+If a copy's specified label is not an operation, its graph is one-way.
+\end{lemma}
+\begin{proof}
+Use the characterization by operation reachability of term outputs.
+Every output belongs to the sole edge's target list, because that list
+enumerates the whole output boundary. If such an output were
+operation-reachable, incoming-edge uniqueness would force that edge
+to be an operation. Its label equality contradicts the hypothesis.
+\end{proof}
+\lean{Graph/DeepFillings}{30}{40}{Linear.LabelCopy.oneWay}
+
+\clearpage
+\subsection{Recursive paired filling certificates}
+\begin{definition}[Layered pre-template]\label{term:layered-template}
+A layered pre-template chooses a concrete, interface-indexed pre-template
+$T_d$ for every depth bound $d$. Each related pair is globally focus-free.
+This definition does not identify graphs or relations at different
+depth bounds; that compatibility remains a representation obligation.
+\end{definition}
+\lean{Graph/DeepFillings}{44}{46}{Linear.LayeredPreTemplate}
+
+\begin{definition}[Recursive paired filling]\label{term:deep-filling}
+The predicate $\mathsf{DeepFilling}_T(C,L,R)$ certifies two actual filled
+graphs $L,R$ of the same interface and depth as $C$. A node chooses two
+outer filling families $H,K$, certifies each original edge as below,
+and sets $L=C[H]$ and $R=C[K]$ using the concrete expansion construction.
+It is mutually defined with the edge certificates, so every recursive
+body filling is itself such a finite construction.
+\end{definition}
+\lean{Graph/DeepFillings}{49}{57}{Linear.DeepFilling}
+
+\begin{definition}[Recursive edge certificate]\label{term:deep-filling-edge}
+An original edge has one of three certificates.
+It can be retained by unchanged corolla copies on both sides.
+It can have a hole label and be filled by a pair related by $T_d$.
+Or it can be a box with bound/free metadata $(b,f)$ and original body
+$B$: recursively fill $B$ to bodies $L,R$, and use specified-label
+copies of the boxes $(b,f,L)$ and $(b,f,R)$ as the two outer fillings.
+The body interfaces remain one term input and $b+f$ term outputs.
+Recursion follows original boxes, not the interiors of newly supplied
+hole replacements. Retained holes are permitted by this graph relation;
+the specimen's final hole-freedom requirement excludes unresolved holes.
+\end{definition}
+\lean{Graph/DeepFillings}{61}{82}{Linear.DeepFillingEdge}
+
+Every shallow specimen-edge certificate is a recursive edge certificate:
+use the retained or filled constructor without descending into any box.
+Thus this representation extends the earlier one directly.
+\lean{Graph/DeepFillings}{85}{90}{Linear.SpecimenEdge.deep}
+
+\begin{theorem}[Global focus freedom under recursive filling]
+If $\mathsf{DeepFilling}_T(C,L,R)$ and $C$ is globally focus-free, then
+both $L$ and $R$ are globally focus-free.
+\end{theorem}
+\begin{proof}
+Induct on the depth bound. Each result edge is an edge in one outer
+filling, so it suffices to prove focus freedom of every filling.
+At depth zero an edge certificate is retained or filled. A retained
+copy inherits the original edge's focus freedom; a filled pair obtains
+it from the pre-template domain.
+
+At successor depth the same cases apply, together with a box case.
+The original box's label is focus-free, so its original body is
+globally focus-free. Apply the induction hypothesis to the certified
+body filling. The two new box labels are therefore focus-free, and the
+specified-label copy lemma gives focus freedom of their outer copies.
+This accounts for all descendant edges, not just outer labels.
+\end{proof}
+\lean{Graph/DeepFillings}{93}{121}{Linear.DeepFilling.focusFree}
+
+For one edge, focus freedom of its original label already suffices
+for focus freedom of both fillings. Retained and hole cases are as above;
+the box case applies the global recursive theorem to its body and then
+the copy lemma.
+\lean{Graph/DeepFillings}{124}{134}{Linear.DeepFillingEdge.focusFree}
+
+A shallow focus must take the retained branch of a recursive edge
+certificate. Its label cannot equal a hole label, and cannot equal a
+box label. Excluding those two cases leaves the pair of unchanged
+focus-copy certificates.
+\lean{Graph/DeepFillings}{137}{146}{Linear.DeepFillingEdge.focus_copies}
+
+\begin{lemma}[Outer paired path hypothesis]
+If $T_d$ is output-closed, the outer families of a recursive filling
+satisfy the paired expansion path hypothesis.
+\end{lemma}
+\begin{proof}
+A retained edge supplies its two unchanged copies.
+At a hole, output closure gives a one-way filling on at least one side,
+with the choice allowed to vary by edge. At a rebuilt box, its specified
+label is still a box and hence is not an operation. The left copy is
+therefore one-way by the non-operation copy lemma (as is the right copy,
+although one side suffices). This argument needs output closure only
+for the outer layer's related hole fillings. Inner focus freedom was
+proved recursively; inner output closure is unnecessary for this
+outer path obstruction.
+\end{proof}
+\lean{Graph/DeepFillings}{150}{158}{Linear.DeepFillingEdge.outputClosed}
+
+\Needspace{12\baselineskip}
+\subsection{Actual deep specimen states}
+\begin{definition}[Concrete recursive specimen]\label{term:deep-specimen}
+A recursive specimen consists of a unique-hole context $C$ with outer
+interface $[\mathsf{term}]\to[]$, a distinguished shallow focus, an
+allowed erased context, two outer filling families, and a recursive
+edge certificate at every original outer edge. Both resulting
+expansions must be globally hole-free. These last fields certify that
+the constructed results are states; the record contains no assumed
+boundary agreement, rootedness obstruction, or path-reflection law.
+\end{definition}
+\lean{Graph/DeepSpecimens}{11}{24}{Linear.DeepSpecimen}
+
+Its edge certificates assemble into a recursive paired filling.
+At the focus edge, the preceding retained-focus theorem supplies a
+pair of copy certificates; classical choice selects one such pair
+for the subsequent state constructors.
+\lean{Graph/DeepSpecimens}{30}{31}{Linear.DeepSpecimen.filling}
+\lean{Graph/DeepSpecimens}{33}{35}{Linear.DeepSpecimen.focus_copies}
+\lean{Graph/DeepSpecimens}{37}{37}{Linear.DeepSpecimen.focusCopies}
+
+Every other original edge is globally focus-free by uniqueness of
+the original focus. Its recursive edge certificate therefore gives
+globally focus-free fillings on both sides. The expansion focus
+construction can now retain the original focus with its mode and
+mapped source and target. Together with the specimen's two closedness
+certificates this constructs actual left and right states.
+\lean{Graph/DeepSpecimens}{39}{41}{Linear.DeepSpecimen.other_free}
+\lean{Graph/DeepSpecimens}{43}{44}{Linear.DeepSpecimen.leftState}
+\lean{Graph/DeepSpecimens}{46}{47}{Linear.DeepSpecimen.rightState}
+
+Output closure supplies the outer paired path hypothesis edge by edge,
+using the recursive edge lemma just proved.
+\lean{Graph/DeepSpecimens}{51}{53}{Linear.DeepSpecimen.outputClosedPair}
+
+\begin{theorem}[Deep specimen obstruction: Lemma 26(3)]
+Suppose the outer pre-template is output-closed. If an original context
+path ends at the focus source and contains a non-operation edge, at
+least one of the two constructed states is not rooted.
+\end{theorem}
+\begin{proof}
+Apply the checked paired expansion obstruction to the two families.
+The retained focus copies and all other focus-free fillings have just
+been derived, the states are closed by their certificates, and the
+paired path hypothesis follows from output closure and the treatment
+of rebuilt boxes. If both states were rooted, their focus sources
+would be operation-reachable. Paired path reflection would make every
+edge of the original path an operation, contradicting the chosen edge.
+The original path is an outer context path; the fillings may occur
+arbitrarily deeply inside its box labels.
+\end{proof}
+\lean{Graph/DeepSpecimens}{57}{65}{Linear.DeepSpecimen.not_both_rooted}
+
+Equivalently, under joint rootedness every edge of any context path
+to the focus source is an operation. The direct proof applies paired
+path reflection to the two operation-reachability witnesses obtained
+from rootedness, using that the focus source has term type. This is
+the rooted-context path consequence needed in the later locality
+argument, not the entire entering/exiting classification of Lemma~39.
+\lean{Graph/DeepSpecimens}{68}{76}{Linear.DeepSpecimen.rooted_context_path}
+
+\begin{theorem}[Deep specimen boundary agreement: Lemma 39(1)]
+The two actual states are initial simultaneously and final simultaneously.
+\end{theorem}
+\begin{proof}
+Expansion retains the focus mode and preserves whether its source
+is an input. Thus each expanded focus is initial exactly when the
+original focus is initial, and final exactly when the original focus
+is final. Compose the left equivalences with the inverses of the
+right equivalences. Output closure and rootedness are not required.
+\end{proof}
+\lean{Graph/DeepSpecimens}{79}{83}{Linear.DeepSpecimen.boundary_agreement}
+
+Each result graph also admits a finite ordinary shallow-substitution
+realization of its outer filling family, up to graph isomorphism.
+Apply finite sequential realization to the left family and then the
+right. These runs may rebuild a whole outer box edge from its already
+filled body. Consequently this is a graph realization result, not yet
+an adequacy theorem equating the recursive representation with the
+paper's original-hole-only tuple substitution.
+\lean{Graph/DeepSpecimens}{87}{94}{Linear.DeepSpecimen.outer_realizations}
+
+To embed an earlier shallow specimen, retain its context, focus,
+allowedness certificate, two families, and closedness proofs, and
+convert each shallow edge certificate to a recursive one.
+\lean{Graph/DeepSpecimens}{99}{109}{Linear.ShallowSpecimen.toDeep}
+
+\Needspace{12\baselineskip}
+\subsection{A genuinely deep closed-state example}
+Use two Boolean-named operations. Both have no term arguments; the
+true operation exposes one thunk of binder arity zero, while the false
+operation exposes no outputs. Let the unique hole have name $7$ and
+one term input and output. Its corolla is the original box body.
+The replacement is a unary variable corolla.
+\lean{Graph/DeepSpecimenExamples}{8}{8}{Linear.DeepSpecimenExamples.ops}
+\lean{Graph/DeepSpecimenExamples}{9}{9}{Linear.DeepSpecimenExamples.hole}
+\lean{Graph/DeepSpecimenExamples}{10}{11}{Linear.DeepSpecimenExamples.body}
+\lean{Graph/DeepSpecimenExamples}{12}{13}{Linear.DeepSpecimenExamples.wire}
+
+At every depth, the example pre-template relates equal graphs that
+are focus-free and one-way. Equality transfers focus freedom to the
+second member; output closure follows from the supplied one-wayness
+of the first. The variable wire is focus-free and hole-free by its
+label, and is one-way by the non-operation copy lemma.
+\lean{Graph/DeepSpecimenExamples}{15}{17}{Linear.DeepSpecimenExamples.template}
+\lean{Graph/DeepSpecimenExamples}{19}{19}{Linear.DeepSpecimenExamples.template_closed}
+\lean{Graph/DeepSpecimenExamples}{21}{21}{Linear.DeepSpecimenExamples.wire_free}
+\lean{Graph/DeepSpecimenExamples}{22}{22}{Linear.DeepSpecimenExamples.wire_closed}
+\lean{Graph/DeepSpecimenExamples}{23}{24}{Linear.DeepSpecimenExamples.wire_oneWay}
+
+The sole body edge is assigned the variable wire. Expand this family
+to obtain the filled body. The hole-label equation and related pair
+give a recursive filling certificate. The resulting body is hole-free
+because all its inserted graphs are the hole-free variable wire.
+\lean{Graph/DeepSpecimenExamples}{26}{26}{Linear.DeepSpecimenExamples.bodyFill}
+\lean{Graph/DeepSpecimenExamples}{27}{27}{Linear.DeepSpecimenExamples.filledBody}
+\lean{Graph/DeepSpecimenExamples}{29}{30}{Linear.DeepSpecimenExamples.body_filling}
+\lean{Graph/DeepSpecimenExamples}{32}{33}{Linear.DeepSpecimenExamples.filledBody_closed}
+
+The outer graph has three edge names: maker, box, and stop. Its two
+internal vertices have thunk and term type, respectively. The maker
+runs from the unique term input to the thunk vertex; the box runs from
+that vertex to the term vertex; the stop operation consumes the term
+vertex and has no outputs. The box has no bound variables, one free
+term port, and the original hole corolla as its body.
+Finite enumerations list the two vertices and three edges.
+All nonempty incidence lists are singletons. Case analysis on the
+three edges proves source and target uniqueness. Each internal vertex
+has exactly the required incoming and outgoing occurrence; the input
+belongs to the maker's source, and no outputs exist. These observations
+prove coverage. The typing equations hold by the definitions of the
+two operations, the box interface, and the vertex labels.
+\lean{Graph/DeepSpecimenExamples}{36}{37}{Linear.DeepSpecimenExamples.Part}
+\lean{Graph/DeepSpecimenExamples}{39}{83}{Linear.DeepSpecimenExamples.outer}
+
+The outer graph is globally focus-free: its operation labels contain
+no focus, and the box's body is a hole corolla. Insert a search focus
+at the term vertex immediately after the box, using the existing
+verified focus-insertion construction. The vertex has term type and
+is not an output, so the construction gives a well-formed focussed
+context.
+\lean{Graph/DeepSpecimenExamples}{85}{90}{Linear.DeepSpecimenExamples.outer_free}
+\lean{Graph/DeepSpecimenExamples}{92}{93}{Linear.DeepSpecimenExamples.context}
+\lean{Graph/DeepSpecimenExamples}{95}{96}{Linear.DeepSpecimenExamples.focus}
+
+Its only hole occurrence is the sole edge inside the original box.
+To prove this, split the outer edge into the three original edges or
+the newly inserted focus. Operation and focus labels have neither
+shallow holes nor children. At the box, the shallow occurrence is
+not a hole; its only inner edge has index $0$. Thus any two hole
+occurrences coincide, proving the unique-hole context property.
+There is an explicit witness for that deep occurrence, while no
+outer edge has a hole label.
+\lean{Graph/DeepSpecimenExamples}{99}{120}{Linear.DeepSpecimenExamples.context_hole_only}
+\lean{Graph/DeepSpecimenExamples}{122}{125}{Linear.DeepSpecimenExamples.context_unique}
+\lean{Graph/DeepSpecimenExamples}{128}{129}{Linear.DeepSpecimenExamples.context_has_deep_hole}
+\lean{Graph/DeepSpecimenExamples}{131}{135}{Linear.DeepSpecimenExamples.context_no_shallow_hole}
+
+\begin{lemma}[This context cannot be filled shallowly to a closed graph]
+No pair of families certified by the old shallow specimen-edge rules
+on this same context has a hole-free left expansion.
+\end{lemma}
+\begin{proof}
+Every shallow filled-hole branch is impossible, since there is no
+shallow hole label. Thus every left filling is an unchanged corolla
+copy. The identity-copy expansion theorem gives an isomorphism from
+that expansion to the original context. Recursive isomorphism
+preserves the explicit deep hole occurrence, contradicting claimed
+hole freedom of the expansion.
+\end{proof}
+\lean{Graph/DeepSpecimenExamples}{139}{152}{Linear.DeepSpecimenExamples.no_shallow_closed_filling}
+
+For the new recursive family, retain both operation edges and the
+focus by their literal corollas, but replace the outer box by a box
+whose body is the already filled body. The recursive box certificate
+uses the body-filling proof and the literal specified-label copy
+certificates. Retained edges use their corolla identities. Each filling
+is hole-free: the rebuilt box inherits its body's hole freedom, and
+the operation and focus corollas contain no shallow or deep holes.
+The expansion is therefore globally hole-free.
+\lean{Graph/DeepSpecimenExamples}{154}{161}{Linear.DeepSpecimenExamples.filling}
+\lean{Graph/DeepSpecimenExamples}{163}{177}{Linear.DeepSpecimenExamples.filling_edges}
+\lean{Graph/DeepSpecimenExamples}{179}{196}{Linear.DeepSpecimenExamples.filling_closed}
+
+Package these data as a recursive specimen with unrestricted allowed
+contexts. Both sides use the displayed family. The original box edge
+alone forms a context path to the focus source and is not an operation.
+The deep obstruction theorem yields the disjunction of non-rootedness
+for every classification of operations. The general boundary theorem
+also gives initial/final agreement for the actual constructed states.
+\lean{Graph/DeepSpecimenExamples}{198}{206}{Linear.DeepSpecimenExamples.specimen}
+\lean{Graph/DeepSpecimenExamples}{209}{215}{Linear.DeepSpecimenExamples.specimen_not_rooted}
+\lean{Graph/DeepSpecimenExamples}{217}{220}{Linear.DeepSpecimenExamples.specimen_boundary}
+
+This example distinguishes the new representation from the old one by
+a proved impossibility result, not merely by its choice of notation.
+The remaining specimen work is identification with paper tuple
+substitution, concrete quasi-specimens and their restrictions, and the
+locality, safety, and robustness bridges listed in
+Appendix~\ref{app:remaining-work}.

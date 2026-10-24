@@ -54,8 +54,11 @@ schedules give isomorphic results (Section~\ref{sec:sequential-expansion}).
 Independent deep substitutions now have constructed residual sites and a
 recursive interchange isomorphism. A quotient of hosts with selected sites
 supports substitution and sharp context validity (Section~\ref{sec:deep-interchange}).
-Deep specimens, graph-rewrite adequacy, substitution and compute
-transitions, and the full specimen interpretation remain open.
+Recursive deep specimens now supply actual filled states, with derived
+focus freedom and the Lemma~26(3), boundary, and jointly rooted context-path
+conclusions (Section~\ref{sec:deep-specimens}). Adequacy for paper tuple
+substitution, graph-rewrite adequacy, substitution and compute transitions,
+and the full specimen interpretation remain open.
 
 \Needspace{18\baselineskip}
 \subsection{Paper-to-Lean proof dependency map}
@@ -76,18 +79,19 @@ are parameters, not established concrete UAM facts.
 \texttt{Focussed.fillings\_boundary\_agreement} proves initial/final agreement
 for two finite filling sequences of one focussed hypernet. The proof preserves
 the focus mode and input status of its source, as in the paper. The remaining
-connection is to construct such witnesses for full deep specimen and
-tuple substitution. The simultaneous shallow specimen representation now
-also has a direct proof of this boundary conclusion.
+connection with paper tuple substitution remains an adequacy obligation.
+Both the shallow and recursive deep specimen representations now have direct
+proofs of this boundary conclusion for their actual filled states.
 \item \textbf{Lemma~39(2) and (3): open.}\par
 Point~(2) uses the contrapositive of Lemma~26(3), requiring concrete rooted
 states and output-closure. Concrete rootedness, its search invariant, the
 operation-path conclusion of Lemma~23, and the obstruction in Lemma~26(1) are
 now checked. Lemma~26(2) is also checked for one-way shallow fillings,
 including self-looping holes. Lemma~26(3) is now proved for concrete
-simultaneous shallow specimens, with pointwise output-closure and actual
-filled states. Compatibility with finite sequences of ordinary shallow
-addressed substitutions is now checked. Extension to deep holes remains open. Point~(3) requires the entering/exiting classifications and context-only traversal
+simultaneous shallow specimens and their recursive deep extension, with
+pointwise output-closure and actual filled states. Compatibility of the outer
+expansions with finite ordinary substitution sequences is checked; adequacy
+for the paper's original-hole-only tuple substitution remains open. Point~(3) requires the entering/exiting classifications and context-only traversal
 argument. The Fig.~9 search rules are now checked in underlying-graph coordinates,
 and existing context steps survive shallow hole filling. Extracting a context
 step from a filled specimen and proving adequacy for local graph rewriting remain
@@ -115,16 +119,16 @@ across depth bounds is a separate adequacy obligation. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
 not replace the operational proofs in Appendix~F. The next proof dependency
 is adequacy of erasure-based search for local graph rewriting,
-together with the remaining transitions of \S6.4. The deep-specimen extension of Lemma~26(3), full-UAM refocusing, and
+together with the remaining transitions of \S6.4. Full-UAM refocusing and
 Lemma~39(2--3) remain subsequent obligations. The active/passive operation
 partition and all five coordinate search rules are now defined. These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 65\% of the mathematical effort toward
+As a planning estimate, approximately 70\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-55--75\%). This revises the preceding estimate of about 60\% after completing
-arbitrary-depth independent interchange and the pointed-host quotient.
+60--80\%). This revises the preceding estimate of about 65\% after constructing
+recursive deep specimens and proving their rooted-path and boundary laws.
 It is a subjective estimate, not a ratio of declarations or discharged
 checklist entries. Operational adequacy, the full UAM, and deep specimen
 locality, safety, and robustness remain substantial obligations.
@@ -137,7 +141,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{af6296b}, rather than to the moving
+All code links point to revision \texttt{b0c4c09}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

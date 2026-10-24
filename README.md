@@ -47,14 +47,14 @@ still assumes the required locality consequences.
   finite sequences of focus-free fillings of a common focussed graph, including
   deep sites. It preserves the focus mode and input status of its source, just
   as the paper does. Connecting paper specimens to these filling sequences is
-  still open for deep specimens; simultaneous shallow specimens now have direct
-  initial/final agreement.
+  still an adequacy obligation; both shallow and recursive deep specimens now
+  have direct initial/final agreement for their actual filled states.
 - **Lemma 39(2–3) — open:** point (2) depends on Lemma 26(3), rootedness, and
   output-closure; point (3) needs context-only traversal. The five coordinate search rules
   and preservation of existing context steps under shallow filling are proved.
-  Concrete shallow specimens now satisfy the multi-hole Lemma 26(3) obstruction
-  and its jointly rooted context-path consequence; deep specimens and the full
-  entering/exiting classification remain open;
+  Concrete shallow and recursive deep specimens now satisfy the multi-hole
+  Lemma 26(3) obstruction and its jointly rooted context-path consequence;
+  the full entering/exiting classification remains open;
   typed coordinates now have explicit focus-edge state realizations. Extraction
   of context steps and adequacy for local graph rewriting remain open. The current `context_step` field assumes the required consequence.
 - **Proposition 38 — initial bridge open:** the logical lifting theorem is
@@ -67,7 +67,7 @@ still assumes the required locality consequences.
 
 The next dependencies are adequacy for contextual graph rewriting and §6.4's
 substitution and compute transitions, then
-full-UAM refocusing, deep specimen substitution, and the remaining Lemma 39(2–3) laws.
+full-UAM refocusing, paper tuple-substitution adequacy, and the remaining Lemma 39(2–3) laws.
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices whose adequacy for the paper remains a separate obligation.
 
@@ -166,11 +166,17 @@ covering-list length. SequentialExamples.lean checks both alternating families
 and schedules beginning at either of the two holes. These are graph
 replacement results. The subsequent milestone below proves independent
 interchange at arbitrary depth and constructs the host/site quotient.
-Deep specimens and the full UAM interface remain open.
+DeepFillings.lean now defines recursive paired fillings through original box
+bodies and proves global focus freedom. DeepSpecimens.lean constructs actual
+deep-filled states and proves the Lemma 26(3) obstruction, the jointly rooted
+context-path conclusion, and initial/final agreement. DeepSpecimenExamples.lean
+constructs a closed specimen whose sole hole is inside a box, and proves that
+the old shallow rules cannot close this same context. Compatibility with the
+paper's tuple substitution and the full UAM interface remain open.
 
-Estimated completion by mathematical effort: **about 65%**, with a plausible
-range of **55–75%**, up from about 60% before the deep-interchange and
-pointed-host quotient milestone. This is a planning judgment, not a declaration
+Estimated completion by mathematical effort: **about 70%**, with a plausible
+range of **60–80%**, up from about 65% before the recursive deep-specimen
+milestone. This is a planning judgment, not a declaration
 count. The remaining operational and specimen-locality proofs may expose
 substantial additional work.
 
@@ -407,7 +413,7 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
 all 1018 definitions and proved statements in the abstract and concrete graph
 development, including regression examples, in mathematical English. Its 1034
-source-fragment links point to immutable code revision `af6296b`. It distinguishes
+source-fragment links point to immutable code revision `b0c4c09`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
 glossary of 172 technical terms, with short descriptions and internal PDF links
@@ -449,12 +455,10 @@ logical axioms, if used, are shown explicitly.
 2. Prove equivalence of state search with the paper's contextual local rewrites.
 3. Define substitution and compute transitions and assemble the full UAM.
 4. Prove substitution preserves rootedness, establish the required full-UAM
-   consequences of refocusing, extend the shallow Lemma 26(3) to deep specimens,
-   and prove the stationary rewrite criterion.
-5. Extend shallow specimens to arbitrary deep holes and paper tuple substitution.
+   consequences of refocusing, and prove the stationary rewrite criterion.
+5. Prove compatibility of recursive deep specimens with paper tuple substitution.
    Define concrete quasi-specimens, input-safety, and robustness.
-6. Construct the concrete `SpecimenSystem`, extend the checked shallow boundary
-   and rooted-path laws to deep specimens, and prove the remaining Lemma 39
+6. Construct the concrete `SpecimenSystem` and prove the remaining Lemma 39
    classifications and traversal laws, safety/robustness bridges, and initial lifting.
 7. Instantiate the checked sufficiency results with all concrete obligations
    discharged to obtain Theorem 6.
