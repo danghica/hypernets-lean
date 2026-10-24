@@ -32,8 +32,9 @@ The abstract `InputSafe`, `Robust`, and `Quasi` definitions express the
 consequences of the paper's conditions consumed by the proof. They restrict
 attention to rooted specimens and, for quasi-specimens, non-rewrite focuses.
 Their equivalence to the paper's concrete graph definitions remains to prove.
-Output-closure and refocusing have not been independently defined: their
-consequences are currently requirements of the specimen interface.
+Output-closure has not yet been defined concretely. Refocusing now has a concrete
+state-class definition and a search preservation theorem; the abstract interface
+still assumes the required locality consequences.
 
 ## Paper proof dependency map
 
@@ -62,7 +63,7 @@ consequences are currently requirements of the specimen interface.
 
 The next dependencies are adequacy for contextual graph rewriting and §6.4's
 substitution and compute transitions, then
-rootedness, Lemma 26(3), and Lemma 39(2–3).
+full-UAM refocusing, Lemma 26(2–3), and Lemma 39(2–3).
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices whose adequacy for the paper remains a separate obligation.
 
@@ -114,11 +115,24 @@ preservation/reflection of search termination. Its machine instances contain
 search only; they are not the full UAM. `DeepSearchExamples.lean` checks recursive
 box focus freedom and the exact-length execution bridge on the value example.
 
+`StateRoots.lean` constructs canonical initial roots and concrete rootedness,
+proving that search preserves both the underlying graph and rootedness.
+`SearchReachability.lean` and `RootedPaths.lean` establish the operation-path
+invariant and lift it through focus insertion. `RootedStatePaths.lean` proves
+that a rooted state's actual focus source has an operation path from its
+unique input (the concrete Lemma 23 conclusion). `RootedPathObstruction.lean`
+proves the concrete Lemma 26(1) obstruction using the existing edge-path type.
+`ConcreteRefocusing.lean` defines refocusing and proves it for search, leaving
+the rewrite-preservation obligation explicit. `RootedExamples.lean` proves
+the value execution rooted and the valid interior-focus state behind a variable
+not rooted. These use the current erasure-based search semantics; contextual
+local-rewrite adequacy is still open.
+
 The PDF's §30.3 contains only unfinished tasks. Contextual-rewrite adequacy,
 the full UAM, and the concrete robustness theorem remain open.
 
-Estimated completion by mathematical effort: **about 45%**, with a plausible
-range of **35–55%**, up from about 40% before the recursive-search milestone.
+Estimated completion by mathematical effort: **about 50%**, with a plausible
+range of **40–60%**, up from about 45% before the rooted-path milestone.
 This is a planning judgment, not a declaration count. The remaining operational
 and specimen-locality proofs may expose substantial additional work.
 
@@ -334,12 +348,12 @@ dependencies. The toolchain is pinned in `lean-toolchain`.
 ## Mathematical commentary
 
 The [mathematical commentary](docs/mathematical-commentary/main.tex) explains
-all 844 definitions and proved statements in the abstract and concrete graph
-development, including regression examples, in mathematical English. Its 857
-source-fragment links point to immutable code revision `424f3b7`. It distinguishes
+all 903 definitions and proved statements in the abstract and concrete graph
+development, including regression examples, in mathematical English. Its 917
+source-fragment links point to immutable code revision `bc502dd`. It distinguishes
 proved graph properties, conditional specimen results, and the remaining
 obligations for the paper's concrete theorem. Appendix A is an alphabetical
-glossary of 160 technical terms, with short descriptions and internal PDF links
+glossary of 165 technical terms, with short descriptions and internal PDF links
 to the definitions. The source checker also validates its definition destinations.
 
 Read the [compiled PDF](output/pdf/hypernets-mathematical-commentary.pdf), or open
@@ -378,8 +392,9 @@ logical axioms, if used, are shown explicitly.
 2. Quotient host/site pairs and prove interchange for independent sites.
 3. Prove equivalence of state search with the paper's contextual local rewrites.
 4. Define substitution and compute transitions and assemble the full UAM.
-5. Define rootedness and refocusing; prove structural consequences under the
-   paper's hypotheses, including the required parts of Lemma 26(3).
+5. Prove substitution preserves rootedness, establish the required full-UAM
+   consequences of refocusing, and prove the one-way and output-closed specimen
+   cases of Lemma 26(2–3) and the stationary rewrite criterion.
 6. Define concrete pre-templates, specimens, quasi-specimens, output-closure,
    input-safety, and robustness.
 7. Construct the concrete `SpecimenSystem`, connect specimen substitution to

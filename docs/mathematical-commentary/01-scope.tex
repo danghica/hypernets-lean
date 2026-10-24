@@ -37,7 +37,11 @@ descend to literal-label state isomorphism classes, with equality-based search
 determinism. Search also respects recursive renaming inside boxes and descends
 to recursive state classes. The map from literal to recursive classes preserves
 and lifts search executions with exact lengths, including successful search
-termination. Graph-rewrite adequacy, substitution and compute transitions,
+termination. Canonical roots and concrete rootedness are now defined; search
+preserves rootedness, and concrete rooted focus sources have operation paths
+from the unique input. An incoming path containing a non-operation edge rules
+out rootedness (Section~\ref{sec:rooted-path-obstruction}). Concrete refocusing
+is defined and proved for search. Graph-rewrite adequacy, substitution and compute transitions,
 and the full specimen interpretation remain open.
 
 \Needspace{18\baselineskip}
@@ -63,7 +67,10 @@ connection is to construct such witnesses from the eventual concrete specimen
 and tuple-substitution definitions.
 \item \textbf{Lemma~39(2) and (3): open.}\par
 Point~(2) uses the contrapositive of Lemma~26(3), requiring concrete rooted
-states and output-closure. Point~(3) requires the entering/exiting classifications and context-only traversal
+states and output-closure. Concrete rootedness, its search invariant, the
+operation-path conclusion of Lemma~23, and the obstruction in Lemma~26(1) are
+now checked. Lemma~26(2--3), involving one-way fillings and specimens, remains
+open. Point~(3) requires the entering/exiting classifications and context-only traversal
 argument. The Fig.~9 search rules are now checked in underlying-graph coordinates,
 and existing context steps survive shallow hole filling. Extracting a context
 step from a filled specimen and proving adequacy for local graph rewriting remain
@@ -91,16 +98,16 @@ across depth bounds is a separate adequacy obligation. The existing plugging,
 path, inventory, and isomorphism lemmas support that representation; they do
 not replace the operational proofs in Appendix~F. The next proof dependency
 is adequacy of erasure-based search for local graph rewriting,
-together with the remaining transitions of \S6.4. Rootedness, Lemma~26(3), and
+together with the remaining transitions of \S6.4. The one-way and specimen cases of Lemma~26(2--3), full-UAM refocusing, and
 Lemma~39(2--3) remain subsequent obligations. The active/passive operation
 partition and all five coordinate search rules are now defined. These then support the concrete Proposition~40 bridge;
 initial focus construction now supplies its graph-level component for the
 separate Proposition~38 bridge, whose specimen witnesses remain open.
 
-As a planning estimate, approximately 45\% of the mathematical effort toward
+As a planning estimate, approximately 50\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-35--55\%). This revises the preceding estimate of about 40\% after completing
-recursive state search and the quotient execution bridge. It is a subjective
+40--60\%). This revises the preceding estimate of about 45\% after establishing
+concrete rootedness and the rooted-path obstruction. It is a subjective
 estimate, not a ratio of declarations or discharged checklist entries. The
 remaining operational adequacy, full UAM, and specimen locality arguments are
 substantial and may reveal further missing infrastructure.
@@ -112,7 +119,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{424f3b7}, rather than to the moving
+All code links point to revision \texttt{bc502dd}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

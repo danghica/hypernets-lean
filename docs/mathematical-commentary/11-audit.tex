@@ -66,6 +66,11 @@ insertion and erasure, recursive state search and quotient determinism, the
 quotient projection and lifting laws, exact-length executions, and regressions.
 \lean{Graph/Audit}{138}{151}{Graph.Audit: recursive state search and execution dependencies}
 
+Sixteen further commands inspect canonical roots, search preservation of
+rootedness, operation reachability, insertion of rooted paths, the concrete
+path obstruction, refocusing, and the positive and negative state examples.
+\lean{Graph/Audit}{153}{168}{Graph.Audit: rooted-state and path-obstruction dependencies}
+
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
 isomorphism invariance of unique holes, and uniqueness of the two-hole example
@@ -87,6 +92,9 @@ coordinate search renaming, which uses only \texttt{propext} and
 The recursive-search audits use all three axioms, except label and graph
 focus-freedom invariance, coordinate search transport, and the renamed-box
 focus-freedom example, which use only \texttt{propext} and \texttt{Quot.sound}.
+The rooted-state audit entries use all three axioms, except coordinate
+operation-reachability preservation and the incoming-trace operation theorem,
+which use only \texttt{propext} and \texttt{Quot.sound}.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
 \texttt{sorryAx} or a project-specific axiom.
@@ -147,9 +155,10 @@ substitutions at independent sites.
 graph rewrites in both directions.
 \item Define the concrete substitution and compute transitions, with their
 typing and context restrictions, and assemble the full UAM transition relation.
-\item Define concrete rootedness and refocusing. Prove the required structural
-laws under the paper's determinism and refocusing hypotheses, including the
-needed consequences of Lemma~26(3).
+\item Prove rootedness preservation for substitution and the required
+full-UAM structural consequences of determinism and refocusing. Establish the
+one-way and output-closed specimen cases of Lemma~26(2--3), and the stationary
+rewrite criterion where needed.
 \item Define concrete pre-templates, specimens, quasi-specimens, output-closure,
 input-safety, and robustness with the paper's restrictions.
 \item Construct the abstract specimen interface from these objects. Connect

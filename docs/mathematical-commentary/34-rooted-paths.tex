@@ -1,0 +1,387 @@
+\Needspace{22\baselineskip}
+\subsection{Canonical roots of concrete states}
+\label{sec:concrete-roots}
+This milestone connects the existing search semantics to Appendix~C.
+We construct the paper's rooted predicate, prove that search preserves it,
+and establish concrete versions of Lemmas~23 and~26(1). These results use
+our erasure-based search semantics on recursive state classes; identifying that
+semantics with the paper's contextual local rewrites remains an adequacy
+obligation. The proofs below do not assume the abstract specimen locality laws.
+
+\begin{definition}[Canonical initial attachment]
+\termdef{concrete-root}
+For a concrete state $s$, erase its focus, attach a searching focus at the
+sole input of the resulting graph, and call the resulting state $r(s)$.
+Focus freedom and hole freedom of erasure supply the certificates required
+for realization. Its focus is initial by the initial-realization theorem.
+\end{definition}
+\lean{Graph/StateRoots}{12}{14}{Linear.State.root}
+\lean{Graph/StateRoots}{16}{17}{Linear.State.root_initial}
+
+\begin{lemma}[Roots respect renaming and initiality]
+Recursively isomorphic underlying graphs give recursively focus-preservingly
+isomorphic roots. In particular, a focussed recursive isomorphism between
+states gives one between their roots. If $s$ is already initial, $r(s)$ is
+recursively focus-preservingly isomorphic to $s$.
+\end{lemma}
+\begin{proof}
+The coordinate ``search at input zero'' is fixed by every boundary-preserving
+port map. Apply recursive naturality of realization to the given underlying
+isomorphism. For focussed state isomorphisms, first use erasure naturality.
+
+For an initial state, the extracted mode is search and its extracted vertex
+is an input. The state interface has exactly one input, so that vertex is
+input zero. Thus the extracted typed coordinate equals the initial coordinate,
+by component equality and subtype extensionality. Rewrite the general recovery
+isomorphism using this coordinate equality, and embed the literal-label
+isomorphism into a recursive one.
+\end{proof}
+\lean{Graph/StateRoots}{20}{25}{Linear.State.root_of_underlying}
+\lean{Graph/StateRoots}{27}{28}{Linear.State.root_iso}
+\lean{Graph/StateRoots}{31}{40}{Linear.State.coordinate_initial}
+\lean{Graph/StateRoots}{43}{47}{Linear.State.root_initial_iso}
+
+\begin{lemma}[Search preserves the underlying graph]
+If $s\longrightarrow_d t$, their erased underlying graphs are recursively
+isomorphic.
+\end{lemma}
+\begin{proof}
+Let $q$ be the witnessing successor coordinate on the erased graph of $s$.
+Insertion--erasure cancellation identifies the underlying graph of
+$\operatorname{realize}(q)$ with the underlying graph of $s$. Invert that
+isomorphism and compose it with erasure of the supplied recursive endpoint
+isomorphism from the realization to $t$.
+\end{proof}
+\lean{Graph/StateRoots}{51}{56}{Linear.State.deepSearch_underlying}
+
+Descend $r$ to recursive state classes using root isomorphism invariance.
+Its value on a representative is its representative root class, by definition.
+Every root class is initial. An initial class is fixed by $r$, using quotient
+soundness and the initial-state recovery lemma. In particular $r(r(S))=r(S)$.
+Search preserves $r(S)$ because it preserves the underlying graph; induction
+on a search execution then proves preservation of the root along the whole run.
+\lean{Graph/StateRoots}{63}{65}{Linear.DeepStateClass.root}
+\lean{Graph/StateRoots}{67}{67}{Linear.DeepStateClass.root_ofState}
+\lean{Graph/StateRoots}{69}{71}{Linear.DeepStateClass.root_initial}
+\lean{Graph/StateRoots}{73}{75}{Linear.DeepStateClass.root_eq_of_initial}
+\lean{Graph/StateRoots}{77}{78}{Linear.DeepStateClass.root_idempotent}
+\lean{Graph/StateRoots}{81}{86}{Linear.DeepStateClass.search_root}
+\lean{Graph/StateRoots}{88}{92}{Linear.DeepStateClass.steps_root}
+
+\Needspace{20\baselineskip}
+\subsection{Concrete rootedness and its search invariant}
+\begin{definition}[Concrete rooted state]
+\termdef{concrete-rootedness}
+A recursive state class $S$ is rooted when there is a finite search-only
+execution from $r(S)$ to $S$:
+\[
+ \mathsf{Rooted}(S)\quad\Longleftrightarrow\quad
+ \exists n\in\mathbb N,\ r(S)\longrightarrow_d^n S.
+\]
+A named state is rooted when its recursive isomorphism class is rooted.
+This definition depends on the operation classification used by search.
+\end{definition}
+\lean{Graph/StateRoots}{95}{96}{Linear.DeepStateClass.Rooted}
+\lean{Graph/RootedStatePaths}{96}{97}{Linear.State.Rooted}
+
+\begin{theorem}[Initial states are rooted; search preserves rootedness]
+Every initial class is rooted, every canonical root is rooted, and search
+steps and finite search executions preserve rootedness.
+\end{theorem}
+\begin{proof}
+An initial class equals its root, so the zero-step run witnesses rootedness.
+Every root is initial, giving the second claim. For a step $S\longrightarrow_d T$,
+append that step to the witnessing run from $r(S)$ to $S$. Search preservation
+of roots identifies $r(S)$ with $r(T)$, so this is the required run to $T$.
+Induction on a finite execution gives the final claim.
+\end{proof}
+\lean{Graph/StateRoots}{98}{102}{Linear.DeepStateClass.initial_rooted}
+\lean{Graph/StateRoots}{104}{105}{Linear.DeepStateClass.root_rooted}
+\lean{Graph/StateRoots}{108}{113}{Linear.DeepStateClass.rooted_search}
+\lean{Graph/StateRoots}{115}{119}{Linear.DeepStateClass.rooted_steps}
+
+\begin{theorem}[Equivalent initial-run characterization]
+A class $S$ is rooted exactly when some initial class has a finite search run
+to $S$. The initial class in any such run must equal $r(S)$.
+\end{theorem}
+\begin{proof}
+The forward direction chooses $r(S)$, which is initial. Conversely, suppose
+$I$ is initial and reaches $S$. Initiality gives $I=r(I)$, and preservation
+of roots along the run gives $r(I)=r(S)$. Rewrite the run's source by these
+equalities to obtain the rootedness witness.
+\end{proof}
+\lean{Graph/ConcreteRefocusing}{10}{17}{Linear.DeepStateClass.rooted_iff_initial_run}
+
+\Needspace{20\baselineskip}
+\subsection{Operation reachability under coordinate search}
+\begin{definition}[Operation-reachable vertex]
+\termdef{operation-reachable}
+A vertex $v$ is operation-reachable if there are an input index $i$ and an
+edge list $E$ with an operation trace from $v$ backwards to input $i$.
+Equivalently, reversing $E$ gives an operation path from that input to $v$.
+An input is reachable using the empty trace. Each certified operation view
+has an actual operation label, by its label certificate and the definition
+of primitive operation labels at each depth.
+\end{definition}
+\lean{Graph/SearchReachability}{10}{11}{Linear.OperationReachable}
+\lean{Graph/SearchReachability}{13}{14}{Linear.OperationReachable.input}
+\lean{Graph/SearchReachability}{16}{18}{Linear.SearchOperation.isOperation}
+
+\begin{lemma}[Argument and source reachability]
+If the source of an operation is reachable, every term argument is reachable.
+Conversely, if one of its arguments is reachable, its source is reachable.
+\end{lemma}
+\begin{proof}
+Forwards, prepend the operation edge to the reverse trace from its source;
+its certified argument membership supplies the target incidence. Backwards,
+inspect a witnessing trace from the argument to an input. It cannot be empty,
+since an edge cannot target an input. Its first edge equals the given
+operation edge by uniqueness of incoming incidence. The operation's singleton
+source then identifies the next vertex in the trace with its source. The
+remaining trace proves source reachability.
+\end{proof}
+\lean{Graph/SearchReachability}{21}{25}{Linear.OperationReachable.argument}
+\lean{Graph/SearchReachability}{28}{39}{Linear.OperationReachable.source}
+
+\begin{theorem}[Search preserves operation reachability]
+Every coordinate search rule preserves operation reachability of its vertex.
+Recursive renaming preserves and reflects this property.
+\end{theorem}
+\begin{proof}
+A variable trigger keeps the vertex. Operation entry either keeps its source,
+for no term arguments, or moves to the first argument, using forward argument
+reachability. Return from an argument first gives reachability of the operation
+source by the converse lemma. It then either stays there on completion or
+moves to the next argument by the forward lemma.
+
+For renaming, transport the reverse operation trace and its edge list through
+the recursive graph isomorphism. The boundary input is fixed. Apply the same
+construction to the inverse isomorphism and cancel the port maps for reflection.
+\end{proof}
+\lean{Graph/SearchReachability}{42}{56}{Linear.SearchStep.operationReachable}
+\lean{Graph/SearchReachability}{59}{62}{Linear.OperationReachable.rename}
+\lean{Graph/SearchReachability}{64}{71}{Linear.OperationReachable.rename_iff}
+
+\Needspace{20\baselineskip}
+\subsection{Incoming paths and insertion of the focus}
+\begin{definition}[Incoming incidence trace]
+\termdef{incoming-trace}
+An incoming trace is a reverse path with explicit vertex incidences but no
+label restriction. It is either empty at a vertex or consists of an edge
+whose target contains the current vertex, a chosen source vertex of that edge,
+and a remaining incoming trace from that source.
+\end{definition}
+\lean{Graph/RootedPaths}{11}{14}{Linear.IncomingTrace}
+
+\begin{lemma}[Incoming paths to reachable vertices]
+An edge targeting an operation-reachable vertex is an operation, and each of
+its sources is operation-reachable. Consequently, every incoming trace ending
+at a reachable vertex is an operation trace with the same vertices and edge list.
+\end{lemma}
+\begin{proof}
+Compare the incoming edge with the first edge of a witnessing reverse
+operation trace to an input. The trace cannot be empty because inputs have no
+incoming edge. Target-incidence uniqueness identifies the two edges, proving
+its operation label. An operation has exactly one source, so every chosen
+source is the next vertex in the witnessing trace and is reachable by its tail.
+Induct on the arbitrary incoming trace and apply this argument at each step.
+\end{proof}
+\lean{Graph/RootedPaths}{18}{31}{Linear.OperationReachable.predecessor}
+\lean{Graph/RootedPaths}{34}{41}{Linear.IncomingTrace.operations}
+\lean{Graph/RootedPathObstruction}{11}{19}{Linear.OperationReachable.incoming_operation}
+
+\begin{lemma}[A path never departs from its final vertex earlier]
+Suppose an operation trace from $v$ to an input has length $k$. In any operation
+trace to an input with length at most $k$, no edge can have $v$ as a source.
+In particular the original trace never has $v$ as a source of one of its edges.
+\end{lemma}
+\begin{proof}
+Induct on the shorter trace's edge list. If its first edge has $v$ as source,
+its singleton-source property identifies the next vertex with $v$. The tail
+and the original length-$k$ trace therefore both run from $v$ to inputs.
+Uniqueness of operation traces to inputs equates their edge lists and hence
+their lengths. But the tail is shorter than the trace of length at most $k$,
+a contradiction. For a later edge, apply the induction hypothesis to the tail,
+whose length is still at most $k$.
+\end{proof}
+\lean{Graph/RootedPaths}{45}{68}{Linear.operationTrace_sources_avoid}
+
+\begin{theorem}[Lifting the operation path through focus insertion]
+An operation path from an input to $v$ survives insertion of a focus at $v$:
+it becomes a path from the same input to the hosted copy of $v$, using the
+retained copies of its original edges.
+\end{theorem}
+\begin{proof}
+The previous lemma says no source occurrence on this path equals $v$.
+Insertion therefore maps all its source occurrences by hosting rather than
+to the fresh focus target. Targets are always hosted. Induct on the reverse
+trace, retaining each operation label and mapping each source and target
+membership into its incidence list. The empty trace and the boundary input
+are fixed. This proves a path in the actual inserted graph, not just in its
+focus erasure.
+\end{proof}
+\lean{Graph/RootedPaths}{72}{95}{Linear.operationTrace_insert}
+
+\Needspace{22\baselineskip}
+\subsection{Rooted states have actual operation paths: Lemma 23}
+\label{sec:rooted-operation-path}
+Define the intermediate invariant $U(s)$ to mean that the extracted coordinate
+of $s$ is operation-reachable in its erased graph. It is invariant under
+focussed recursive isomorphisms: erasure naturality transports the graph,
+coordinate naturality identifies the vertex, and reachability is invariant
+under this transport.
+\lean{Graph/RootedStatePaths}{12}{13}{Linear.State.UnderlyingReachable}
+\lean{Graph/RootedStatePaths}{15}{21}{Linear.State.underlyingReachable_iso}
+
+\begin{lemma}[Realization and search preserve the intermediate invariant]
+Realizing a reachable typed coordinate satisfies $U$. Every canonical root
+satisfies $U$, and recursive state search preserves $U$.
+\end{lemma}
+\begin{proof}
+Coordinate recovery provides one isomorphism that restores both the original
+graph and the chosen coordinate after realizing and erasing. Reflect operation
+reachability along this isomorphism to prove the realization assertion.
+The initial coordinate is an input, hence reachable, which proves the root
+assertion. For a search step, coordinate search preserves reachability; apply
+the realization assertion to its successor coordinate and transport the
+result through its supplied recursive endpoint isomorphism.
+\end{proof}
+\lean{Graph/RootedStatePaths}{24}{33}{Linear.State.underlyingReachable_realize}
+\lean{Graph/RootedStatePaths}{35}{36}{Linear.State.root_underlyingReachable}
+\lean{Graph/RootedStatePaths}{39}{42}{Linear.State.deepSearch_underlyingReachable}
+
+The invariant descends to recursive classes using its isomorphism invariance.
+Quotient elimination proves the root and one-step preservation laws there.
+Induction on the witnessing root run proves that every rooted class satisfies
+$U$. This is the search-sequence induction used for the path argument in
+Appendix~C, expressed through an invariant of erased coordinates.
+\lean{Graph/RootedStatePaths}{66}{68}{Linear.DeepStateClass.UnderlyingReachable}
+\lean{Graph/RootedStatePaths}{70}{72}{Linear.DeepStateClass.root_underlyingReachable}
+\lean{Graph/RootedStatePaths}{74}{77}{Linear.DeepStateClass.search_underlyingReachable}
+\lean{Graph/RootedStatePaths}{80}{89}{Linear.DeepStateClass.rooted_underlyingReachable}
+
+\begin{theorem}[Concrete rooted-focus operation path]
+If a concrete state is rooted, its actual focus source is reachable from
+its unique input by an operation path. If the focus source is not an input,
+this path is nonempty.
+\end{theorem}
+\begin{proof}
+First consider any state satisfying $U$. Lift its witnessing erased operation
+trace through insertion at its extracted coordinate, by the insertion theorem.
+The general recovery isomorphism carries this inserted graph to the actual
+state and carries the inserted focus source to its actual focus source.
+Transport the lifted operation trace through that isomorphism. Boundary
+preservation fixes the input. This gives operation reachability in the actual
+state graph.
+
+A rooted state satisfies $U$ by the invariant proof, so the construction applies.
+The interface has one input, identifying its index with zero. Reverse the trace
+list to obtain the existing forward operation-path representation. If this
+list were empty, the zero-step reverse trace would identify the focus source
+with the input; hence the path is nonempty whenever the source is not an input.
+\end{proof}
+\lean{Graph/RootedStatePaths}{45}{59}{Linear.State.focus_operationReachable}
+\lean{Graph/RootedStatePaths}{100}{102}{Linear.State.rooted_focus_operationReachable}
+\lean{Graph/RootedStatePaths}{106}{121}{Linear.State.rooted_focus_path}
+This establishes the graph-path conclusion of Lemma~23 for the present concrete
+search model. Unlike the paper's presentation, the proof does not first require
+a separate uniqueness theorem for whole search runs: it uses the operation-path
+uniqueness already proved and a direct search invariant.
+
+\Needspace{20\baselineskip}
+\subsection{The non-operation-path obstruction: Lemma 26(1)}
+\label{sec:rooted-path-obstruction}
+\begin{theorem}[Incoming-path obstruction]
+Every incoming incidence trace to a rooted focus source is an operation trace.
+Thus an incoming trace that is not an operation trace proves that the state
+is not rooted.
+\end{theorem}
+\begin{proof}
+The preceding rooted-focus theorem gives reachability of the actual source.
+Apply the incoming-trace theorem at that vertex. The obstruction is its
+contrapositive.
+\end{proof}
+\lean{Graph/RootedStatePaths}{124}{128}{Linear.State.rooted_incoming_operations}
+\lean{Graph/RootedStatePaths}{132}{135}{Linear.State.not_rooted_of_nonoperation_path}
+
+\begin{lemma}[The existing edge-path representation]
+For any nonempty edge path whose last edge targets a reachable vertex,
+every edge of the path is an operation, and every source of each edge is
+reachable. Repeated edges are allowed in the supplied path datatype.
+\end{lemma}
+\begin{proof}
+Induct on the path. For a single edge, use the incoming-operation and source
+reachability lemmas at its target. For a path beginning with adjacent edges
+$e,f$, apply the induction hypothesis to the tail beginning at $f$. The
+adjacency witness is a source of $f$, hence reachable, and a target of $e$.
+The incoming-edge lemmas then prove the required claims for $e$, while the
+induction hypothesis proves them for all remaining edges.
+\end{proof}
+\lean{Graph/RootedPathObstruction}{23}{45}{Linear.path_operations_of_reachable}
+
+\begin{theorem}[Concrete Lemma 26(1)]
+If a nonempty graph path ends at the focus source of a rooted state, all of
+its edges are operations. Therefore a path ending there and containing any
+non-operation edge is a certificate that the state is not rooted.
+\end{theorem}
+\begin{proof}
+Apply the edge-path lemma to the actual focus-source reachability supplied
+by rootedness. For the obstruction, select the non-operation edge from the
+path and contradict the resulting operation-label assertion.
+\end{proof}
+\lean{Graph/RootedPathObstruction}{52}{57}{Linear.State.rooted_path_operations}
+\lean{Graph/RootedPathObstruction}{61}{65}{Linear.State.not_rooted_of_path}
+This is the first part of the paper's obstruction lemma in our concrete path
+and search representations. The one-way replacement argument in Lemma~26(2)
+and the output-closed specimen argument in Lemma~26(3) are not supplied by
+this result and remain separate obligations.
+
+\Needspace{20\baselineskip}
+\subsection{Concrete refocusing and the remaining rewrite obligation}
+\begin{definition}[Concrete refocusing]
+\termdef{concrete-refocusing}
+A transition relation on recursive state classes is refocusing when each
+transition from a concretely rooted state leads to a concretely rooted state.
+The rooted predicate is the one constructed from actual search above; it is
+not the abstract specimen interface's supplied rooted predicate.
+\end{definition}
+\lean{Graph/ConcreteRefocusing}{21}{23}{Linear.DeepStateClass.Refocusing}
+
+\begin{theorem}[Search refocusing and reduction to rewriting]
+Search is refocusing. For any supplied rewrite relation $R$, the relation
+$\mathsf{Search}\cup R$ is refocusing if and only if $R$ preserves rootedness.
+For any machine on these concrete classes whose step relation is refocusing,
+every execution from an initial class ends in a rooted class.
+\end{theorem}
+\begin{proof}
+Search refocusing is the proved one-step rootedness invariant. If the union
+is refocusing, apply its law to transitions from its $R$ branch. Conversely,
+case-split a union transition: use search preservation in the search branch
+and the supplied preservation law in the rewrite branch. Finally induct on
+a machine execution, starting with the theorem that initial classes are rooted
+and applying its refocusing hypothesis at each step.
+\end{proof}
+\lean{Graph/ConcreteRefocusing}{26}{28}{Linear.DeepStateClass.search_refocusing}
+\lean{Graph/ConcreteRefocusing}{32}{40}{Linear.DeepStateClass.refocusing_with_search}
+\lean{Graph/ConcreteRefocusing}{44}{53}{Linear.DeepStateClass.refocusing_execution}
+The last two statements are conditional on the indicated rewrite or machine
+preservation hypothesis. They do not construct substitution or compute
+transitions, and do not assert that arbitrary rewrite relations preserve roots.
+
+\Needspace{18\baselineskip}
+\subsection{Rooted and non-rooted concrete examples}
+The initial value state is rooted for any operation classification, by initiality.
+Its successful passive search execution gives a rooted final value state by
+preservation along search runs.
+\lean{Graph/RootedExamples}{9}{10}{Linear.Examples.initial_value_rooted}
+\lean{Graph/RootedExamples}{13}{14}{Linear.Examples.final_value_rooted}
+
+The previously constructed interior-focus state is valid and hole-free but
+is not rooted, for any operation classification. Its underlying closed chain
+has a variable before the focus position and a value after it. In the actual
+inserted graph, the retained variable edge targets the focus source. The
+single-edge path consisting of that variable therefore ends at the source,
+and its label is not an operation. The concrete Lemma~26(1) obstruction rules
+out rootedness. This separates graph validity from the operational invariant
+and exercises the obstruction on an actual named state.
+\lean{Graph/RootedExamples}{18}{26}{Linear.Examples.interior_state_not_rooted}
