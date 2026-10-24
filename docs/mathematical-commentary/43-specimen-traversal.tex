@@ -335,13 +335,10 @@ isomorphisms. The search-target lemma proves remoteness of $q$. Concrete search
 preserves rootedness, so each of the two constructed endpoints is rooted.
 \end{proof}
 \lean{Graph/SpecimenTraversal}{344}{368}{Linear.DeepSpecimen.settled_traversal}
-This proves synchronized search and the required endpoint facts. It does not
-yet return a new element of the original allowed specimen type: that requires
-repackaging the coordinate, preserving unique holes, and transporting allowed
-context membership under the relevant graph isomorphisms. The full-UAM
-transition relation and its connection to these search steps also remain open.
-These are the remaining interface obligations, rather than an assumed failure
-of the graph-level traversal proof.
+This proves synchronized search and the required endpoint facts. The result
+here supplies a coordinate rather than a new specimen. Section~\ref{sec:concrete-specimen-system}
+now completes that packaging, preserving unique holes and allowed membership,
+and proves the full-UAM context-step law.
 
 \Needspace{14\baselineskip}
 \subsection{Traversal and rootedness regressions}

@@ -1,0 +1,423 @@
+\Needspace{20\baselineskip}
+\section{Relocating specimens and constructing the concrete interface}
+\label{sec:concrete-specimen-system}
+The context-step field of the abstract specimen interface is now constructed
+from the concrete graph semantics. The missing step after synchronized search
+was to rebuild an allowed specimen at the successor coordinate. This section
+supplies that construction, with recursive fillings and actual endpoint
+transitions, and proves the safety and robustness bridges.
+
+Allowed-context membership must respect literal-label graph isomorphism.
+Output closure and refocusing of the extrinsic behaviour remain the paper's
+semantic hypotheses. No context-step law, successor-specimen existence,
+or safety bridge is supplied as a new hypothesis.
+
+There is still a distinction between this interface on named states and the
+final contextual theorem. The abstract simulation theorem requires literal
+state determinism, whereas the concrete structural theorem proves determinism
+modulo recursive isomorphism. A compatible state-class treatment, together
+with the concrete observation interface and its initial-lifting theorem,
+remains necessary. This section does not replace that obligation by a stronger
+determinism assumption on raw names.
+
+\Needspace{14\baselineskip}
+\subsection{Exact hole inventories under focus movement}
+\begin{lemma}[A focus has no hole occurrence]
+Every occurrence address in a focus label observes no hole.
+\end{lemma}
+\begin{proof}
+At every depth the focus label is primitive. Its shallow occurrence is not a
+hole and its child-occurrence type is empty. Case analysis on the depth and
+address proves the assertion.
+\end{proof}
+
+\lean{Graph/FocusContexts}{10}{15}{focus_fiber_no_hole}
+
+\begin{lemma}[Insertion preserves hole occurrences and uniqueness]
+Every hole occurrence after focus insertion comes from a retained old edge
+with exactly the same label-local address. Consequently insertion preserves
+and reflects the existence of every hole and the unique-hole property.
+\end{lemma}
+\begin{proof}
+An occurrence has an outer edge and a label-local address. Split the edge into
+an old edge or the fresh singleton focus. The first case retains the address;
+the second contradicts the preceding lemma. The converse inclusion embeds old
+edges into the left summand. To preserve uniqueness, pull two equal-labelled
+hole occurrences back to the old graph, use its uniqueness, and map the equal
+addresses forward. Reflection follows from the injectivity of the old-edge map.
+\end{proof}
+
+\lean{Graph/FocusContexts}{22}{28}{hole_occurrence}
+
+\lean{Graph/FocusContexts}{31}{37}{hasHole_iff}
+
+\lean{Graph/FocusContexts}{40}{50}{uniqueHoles_iff}
+
+\begin{lemma}[Erasure preserves holes and uniqueness]
+Erasing a focussed context preserves every hole in its full recursive inventory
+and preserves uniqueness of hole occurrences.
+\end{lemma}
+\begin{proof}
+Retained edges are a subtype of old edges with identical labels. This injective
+embedding reflects uniqueness and maps every surviving occurrence back. In the
+other direction an old hole cannot lie on the erased focus: transporting its
+address along the focus-label equality would contradict the no-hole lemma.
+Thus its edge belongs to the retained subtype, with its entire address unchanged.
+\end{proof}
+
+\lean{Graph/FocusContexts}{57}{58}{underlying_uniqueHoles}
+
+\lean{Graph/FocusContexts}{61}{71}{underlying_hasHole_iff}
+
+\termdef{iso-closed-contexts}
+\begin{definition}[Isomorphism-invariant allowed contexts]
+A predicate of allowed erased contexts is isomorphism-invariant if a literal-label
+graph isomorphism transports membership from its source to its target.
+Applying the law to the inverse also reflects membership. This is invariance
+under names, not closure under rewriting.
+\end{definition}
+
+\lean{Graph/FocusContexts}{76}{77}{IsoClosedContexts}
+
+\termdef{relocated-context}
+\begin{definition}[Context at a new coordinate]
+For specimen $S$ and typed coordinate $q$ on its erased context, erase the old
+focus and insert the mode of $q$ at its term vertex. The resulting graph is a
+unique-hole context, with the newly inserted edge as its distinguished focus.
+\end{definition}
+\begin{proof}[Verification]
+Erasure preserves uniqueness and insertion reflects it back to a focussed
+context. The old erasure is focus-free, so insertion supplies the required
+unique focus. The insertion--erasure round trip identifies the new erased
+context with the old one. Applying allowed-membership invariance to the inverse
+of that isomorphism proves the new context allowed. Composing the two inventory
+laws proves that exactly the original holes remain, including those in boxes.
+\end{proof}
+
+\lean{Graph/FocusContexts}{84}{87}{contextAt}
+
+\lean{Graph/FocusContexts}{90}{92}{focusAt}
+
+\lean{Graph/FocusContexts}{95}{97}{contextAt_underlying_iso}
+
+\lean{Graph/FocusContexts}{100}{102}{contextAt_allowed}
+
+\lean{Graph/FocusContexts}{105}{107}{contextAt_hasHole_iff}
+
+\begin{lemma}[Entering and remoteness after relocation]
+The new focus enters a shallow hole precisely when the new coordinate belongs
+to that hole's old source list. A remote coordinate therefore gives a remote
+focussed context.
+\end{lemma}
+\begin{proof}
+A hole edge cannot be the newly inserted focus. On a retained edge, membership
+of the fresh target in the split source list supplies an old source port.
+Collapse the equality to identify it with the chosen coordinate. Conversely,
+a source occurrence of that coordinate is split to the fresh target. For
+remoteness, either the mode is not rewrite, or the coordinate avoids every
+hole source; the equivalence just proved excludes entering in the second case.
+\end{proof}
+
+\lean{Graph/FocusContexts}{111}{128}{focusAt_entering_iff}
+
+\lean{Graph/FocusContexts}{131}{139}{focusAt_remote}
+
+\Needspace{14\baselineskip}
+\subsection{Insertion commutes with simultaneous filling}
+\termdef{focus-extended-family}
+\begin{definition}[Extending the filling across a focus]
+Insert the focus into a focus-free context $C$. Extend a filling family $H$ by
+keeping $H(e)$ at every old edge and assigning the new focus its one-edge
+corolla. This new corolla has no internal vertices.
+\end{definition}
+
+\lean{Graph/FocusExpansion}{12}{12}{inserted}
+
+\lean{Graph/FocusExpansion}{15}{19}{family}
+
+\begin{definition}[Carrier reassociation]
+The vertex bijection sends retained context vertices, filling vertices, and the
+fresh focus target to the corresponding three components of the graph obtained
+by filling first and inserting afterwards. An apparent fourth component,
+internal vertices of the focus corolla, is empty. The edge bijection sends old
+filling edges to their original expansion pairs and the new corolla's sole
+edge to the inserted focus edge.
+\end{definition}
+\begin{proof}[Bijection laws]
+The inverse maps return each component to its original summand. Each inverse
+law is a case split. The empty component is eliminated; all indices in the
+singleton focus carrier equal zero.
+\end{proof}
+
+\lean{Graph/FocusExpansion}{22}{40}{vertices}
+
+\lean{Graph/FocusExpansion}{43}{52}{edges}
+
+\begin{lemma}[Port compatibility]
+Retained host ports commute with reassociation, as do split host ports.
+A filling source port maps to the split expanded port; a filling target port
+maps to the retained expanded port.
+\end{lemma}
+\begin{proof}
+The host identity is a case split on internal, input, and output ports.
+For a split host port, test equality with the chosen coordinate. Host
+injectivity preserves this test through expansion. For a filling source,
+an internal port cannot equal a retained host port, an input is attached to
+the corresponding split host source, and an output is excluded by source
+well-formedness. The target proof is dual: an internal port is retained, an
+output is attached to the old target, and an input is impossible. The proof
+uses only incidence-side injectivity and therefore does not exclude self-looping
+attachments by assuming a globally injective attachment map.
+\end{proof}
+
+\lean{Graph/FocusExpansion}{55}{58}{host}
+
+\lean{Graph/FocusExpansion}{61}{70}{split}
+
+\lean{Graph/FocusExpansion}{73}{91}{source_port}
+
+\lean{Graph/FocusExpansion}{94}{107}{target_port}
+
+\begin{theorem}[Commutation of focus insertion and filling]
+Expanding the inserted context by the extended family is isomorphic to
+inserting the same focus at the corresponding host coordinate of $C[H]$.
+\end{theorem}
+\begin{proof}
+Use the two carrier bijections. Internal and edge labels agree on each
+summand. For an old filling edge, map its source and target lists twice and
+apply the corresponding port identities pointwise. For the fresh corolla,
+its source and target lists are singletons; they map to the retained chosen
+port and the fresh target respectively. These are precisely the inserted
+focus's incidence lists. Thus all fields of a graph isomorphism are proved.
+\end{proof}
+
+\lean{Graph/FocusExpansion}{110}{158}{iso}
+
+\Needspace{14\baselineskip}
+\subsection{The successor specimen and full-machine traversal}
+\begin{lemma}[Extending recursive certificates]
+Every old retained, filled-hole, or boxed filling certificate extends to the
+inserted context. The new focus is a retained corolla on both sides. If the
+old expansion is hole-free, so is the new expansion.
+\end{lemma}
+\begin{proof}
+Inspect an old edge certificate. Retained copies keep the same edge, label,
+and incidence proofs; filled holes keep their related replacements; boxed
+edges keep their recursive body-filling certificate and rebuilt box copies.
+The new edge has the explicit singleton-corolla certificate. Closure follows
+by transporting insertion's hole-free result through the commuting isomorphism.
+\end{proof}
+
+\lean{Graph/SpecimenRelocation}{14}{21}{edge_lift}
+
+\lean{Graph/SpecimenRelocation}{24}{31}{edges_lift}
+
+\lean{Graph/SpecimenRelocation}{34}{37}{closed}
+
+\termdef{relocated-specimen}
+\begin{definition}[Relocated specimen]
+The specimen at $q$ consists of the newly focussed context, its proved allowed
+membership, and the two extended families obtained from the old erased
+families. The extended certificates and closure proofs supply all remaining
+specimen fields. No new relation pair is introduced.
+\end{definition}
+\begin{lemma}[Endpoint identification and remoteness]
+Its two actual endpoints are respectively isomorphic, preserving focus, to the
+previously constructed left and right coordinate realizations. If $q$ is
+remote, so is the relocated specimen.
+\end{lemma}
+\begin{proof}
+Use insertion--expansion commutation on each side. A graph isomorphism between
+uniquely focussed graphs preserves the focus by its label and uniqueness,
+yielding the focussed isomorphisms. The remote assertion is the earlier
+coordinate-to-context result applied to the constructed focus.
+\end{proof}
+
+\lean{Graph/SpecimenRelocation}{46}{57}{relocate}
+
+\lean{Graph/SpecimenRelocation}{60}{63}{relocate_left_iso}
+
+\lean{Graph/SpecimenRelocation}{66}{69}{relocate_right_iso}
+
+\lean{Graph/SpecimenRelocation}{72}{75}{relocate_remote}
+
+\begin{theorem}[Allowed successor specimen for search]
+For an output-closed template, a settled specimen with jointly rooted endpoints
+and a search successor on either side admits a remote allowed specimen reached
+by search on both sides. Recursive renaming of the originally supplied target
+is permitted.
+\end{theorem}
+\begin{proof}
+The checked traversal theorem supplies a synchronized typed coordinate and
+proves it remote. Relocate the specimen there. Compose each search endpoint
+with the inverse of its relocation isomorphism to obtain the two transitions
+into the new specimen.
+\end{proof}
+
+\lean{Graph/SpecimenRelocation}{79}{93}{settled_successor}
+
+\begin{lemma}[Settled full-machine steps are search]
+A full-UAM step from a settled specimen's endpoint must be search.
+\end{lemma}
+\begin{proof}
+Split the transition into search or rewrite. The latter requires a rewrite
+source, contradicting either backtrack mode or search mode in the settled
+hypothesis. No locality or determinism assumption on the behaviour is used.
+\end{proof}
+\begin{theorem}[Full-UAM context-step law]
+Under allowed-membership invariance and output closure, a jointly rooted
+settled specimen with a full-UAM successor on either side has a remote allowed
+successor specimen reached by full-UAM steps on both sides.
+\end{theorem}
+\begin{proof}
+Joint rootedness and output closure exclude the exiting boundary; settledness
+excludes the entering search boundary. Reduce whichever full-machine step is
+available to search, reflect it to the erased context, and obtain a coordinate
+$q$. Its search-step theorem proves it remote. Build the relocated specimen.
+The literal search-reflection equivalences, composed with the two literal
+relocation isomorphisms, give actual search steps into its endpoints. Inject
+these into the full-UAM relation. The conclusion uses actual named states,
+not a substituted assumption about reachability or a quotient-only step.
+\end{proof}
+
+\lean{Graph/SpecimenRelocation}{96}{104}{settled_step_search}
+
+\lean{Graph/SpecimenRelocation}{108}{136}{full_context_step}
+
+\begin{theorem}[Constructed initial specimens]
+Relocating any allowed specimen to the unique input produces a specimen with
+two initial, hence rooted, endpoints and search mode. The old specimen need
+not have rooted endpoints.
+\end{theorem}
+\begin{proof}
+The inserted focus has search mode and an input source. The expansion boundary
+law transfers initiality to the left endpoint, and the specimen boundary
+agreement transfers it to the right. Zero-step initial runs establish both
+rootedness claims. Search mode establishes remoteness. This constructs an
+initial witness from an existing specimen; it does not yet construct the
+observation/context witnesses for arbitrary related fragments.
+\end{proof}
+
+\lean{Graph/SpecimenRelocation}{141}{148}{relocate_initial}
+
+\lean{Graph/SpecimenRelocation}{152}{158}{initial_witness}
+
+\Needspace{14\baselineskip}
+\subsection{The concrete abstract-interface instance and its bridges}
+\termdef{concrete-specimen-system}
+\begin{definition}[Constructed specimen system]
+For behaviour $B$, use actual recursive specimens as the abstract specimen
+type and their actual filled states as endpoints. Use the context's focus mode
+and entering predicate. Rootedness is the existing concrete predicate. Supply
+rooted-step preservation from the full-UAM structural theorem, final agreement
+from the boundary theorem, and context traversal from the newly proved
+full-machine context-step theorem.
+\end{definition}
+The parameters are an isomorphism-invariant allowed-context class,
+output closure of the template at the chosen depth, and refocusing of the
+extrinsic behaviour. All operational interface fields are now derived.
+
+\lean{Graph/ConcreteSpecimenSystem}{16}{25}{system}
+
+\begin{lemma}[Quasi-specimen bridge]
+A concrete non-rewrite quasi-specimen supplies the abstract rooted
+quasi-specimen predicate for the constructed system.
+\end{lemma}
+\begin{proof}
+After receiving both endpoint-rootedness hypotheses, apply the existing
+rooted-witness theorem. Its witness has non-rewrite mode, rooted filled
+endpoints, and exactly the two required comparison relations. The concrete
+unconditional witness and mode agreement have not been discarded from the
+original definition; this theorem derives the consequence used by the interface.
+\end{proof}
+
+\lean{Graph/ConcreteSpecimenSystem}{29}{33}{quasi_bridge}
+
+\begin{theorem}[Input-safety bridge]
+The unrestricted concrete input-safety predicate implies the abstract
+input-safety law of the constructed specimen system.
+\end{theorem}
+\begin{proof}
+Apply concrete safety at the entering search specimen. Its stuck alternative
+is already the first abstract alternative. Its direct alternative has the
+same specimen, settled predicate, exact run lengths, and cost comparison.
+For the third alternative retain both runs and their cost comparison and
+apply the quasi-specimen bridge. In particular the equivalence relations in
+this alternative are preserved, not weakened prematurely to refinement.
+\end{proof}
+
+\lean{Graph/ConcreteSpecimenSystem}{36}{44}{inputSafe_bridge}
+
+\begin{theorem}[Robustness bridge]
+Concrete robustness implies the abstract robustness law of the constructed
+system.
+\end{theorem}
+\begin{proof}
+The abstract source has rewrite mode, so its full-machine transition cannot
+be search and must be a rewrite. Apply the concrete rooted robustness theorem:
+the unrooted alternative contradicts the two given rootedness hypotheses.
+The stuck-tail case is already the abstract case. In the matching case keep
+the tail lengths, right run, and cost comparison and apply the quasi-specimen
+bridge with the supplied refinement relations.
+\end{proof}
+\begin{lemma}[Exact concrete lifting]
+The abstract lifting relation for this system is precisely existence of a
+remote concrete specimen with rooted endpoints equal to the given states.
+\end{lemma}
+\begin{proof}
+Unfold the constructed system and the two definitions. The predicates coincide
+definitionally.
+\end{proof}
+
+\lean{Graph/ConcreteSpecimenSystem}{48}{59}{robust_bridge}
+
+\lean{Graph/ConcreteSpecimenSystem}{62}{66}{lifting_iff}
+
+\Needspace{14\baselineskip}
+\subsection{Nested-hole regression and remaining obligations}
+Use the earlier specimen whose sole hole lies strictly inside a box and whose
+outer focus searches at the consumer. All contexts are allowed in this
+regression, making membership invariance immediate. Relocate it to the
+consumer's actual backtrack successor. The inventory theorem retains the
+nested hole, the context carries a uniqueness proof, and both filled endpoints
+are closed. Applying the two literal search equivalences to the known consumer
+step gives actual transitions into the rebuilt specimen on both sides.
+Its coordinate is remote, so the rebuilt specimen is remote.
+
+\lean{Graph/SpecimenRelocationExamples}{8}{8}{allowed}
+
+\lean{Graph/SpecimenRelocationExamples}{10}{10}{moved}
+
+\lean{Graph/SpecimenRelocationExamples}{13}{14}{nested_hole}
+
+\lean{Graph/SpecimenRelocationExamples}{17}{17}{unique}
+
+\lean{Graph/SpecimenRelocationExamples}{20}{21}{closed}
+
+\lean{Graph/SpecimenRelocationExamples}{24}{30}{paired_steps}
+
+\lean{Graph/SpecimenRelocationExamples}{33}{34}{remote}
+
+The same example was previously proved unrooted. Moving its focus to the input
+now supplies a genuine initial, rooted specimen, exercising construction
+without assuming the old source rooted. Finally, instantiate the concrete
+system with the empty behaviour: its refocusing condition is vacuous, output
+closure is the earlier template theorem, and the nested specimen witnesses
+that the constructed abstract specimen type is nonempty.
+
+\lean{Graph/SpecimenRelocationExamples}{38}{42}{initial_rooted}
+
+\lean{Graph/SpecimenRelocationExamples}{45}{46}{concreteSystem}
+
+\lean{Graph/SpecimenRelocationExamples}{48}{48}{interface_nonempty}
+
+\paragraph{What this milestone closes.}
+The synchronized-coordinate packaging, unique-hole preservation,
+isomorphism-invariant membership transport, full-UAM context-step field, and
+concrete safety and robustness bridges are complete. Appendix~\ref{app:remaining-work}
+retains only the unfinished portions. Initial observation lifting still needs
+its general context and endpoint witnesses. The named-state interface must
+also be connected to a deterministic state-class machine before applying the
+abstract theorem under the paper's original determinism hypothesis. The
+planning estimate is now about 91\% of mathematical effort (plausible range
+78--95\%); it remains a judgment rather than a theorem or declaration count.

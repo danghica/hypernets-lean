@@ -67,7 +67,7 @@ expansion, identifying these realizations with the original deep specimen
 states. Concrete entering/exiting predicates agree with the coordinate boundary
 test, output closure and joint rootedness imply non-exiting, and settled
 specimens have synchronized actual search transitions to rooted endpoints at
-a remote coordinate (Section~\ref{sec:specimen-traversal}). The full specimen-interface interpretation remains open.
+a remote coordinate (Section~\ref{sec:specimen-traversal}). Section~\ref{sec:concrete-specimen-system} now constructs the named-state interface and safety/robustness bridges.
 Section~\ref{sec:tuple-safety} proves compatibility with finite original-hole
 tuples and defines concrete quasi-specimens, input-safety, and robustness.
 Contextual search adequacy is proved below. Concrete substitution and compute
@@ -87,8 +87,7 @@ for a deterministic machine and a reasonable cost triple. Its proof follows
 the quantitative argument, including the eventual-stuck alternative.
 \item \textbf{Proposition~40: checked conditionally.}\par
 \texttt{SpecimenSystem.countingSimulation} and its converse construct counting
-simulations from the abstract specimen laws, safety, and robustness. These laws
-are parameters, not established concrete UAM facts.
+simulations from the abstract specimen laws, safety, and robustness. The abstract laws now have a concrete named-state instance in Section~\ref{sec:concrete-specimen-system}. State-class and observation integration remain open.
 \item \textbf{Lemma~39(1), Proof~F.4: boundary argument checked.}\par
 \texttt{Focussed.fillings\_boundary\_agreement} proves initial/final agreement
 for two finite filling sequences of one focussed hypernet. The proof preserves
@@ -96,7 +95,7 @@ the focus mode and input status of its source, as in the paper. Finite original-
 related in both directions in Section~\ref{sec:tuple-safety}.
 Both the shallow and recursive deep specimen representations now have direct
 proofs of this boundary conclusion for their actual filled states.
-\item \textbf{Lemma~39(2): checked for recursive specimens; point~(3): search core checked.}\par
+\item \textbf{Lemma~39(2): checked for recursive specimens; point~(3): full-UAM locality checked.}\par
 Concrete rootedness and output closure yield the non-operation-path obstruction
 of Lemma~26(3) for actual recursive specimen states. An exiting focus would give
 a singleton hole path to the focus source, so joint rootedness rules it out,
@@ -111,12 +110,11 @@ enabled on either specimen side yields synchronized actual-state steps to rooted
 endpoints at a remote coordinate. The proof allows recursive endpoint renaming
 and uses output closure to exclude exiting backtracking focuses.
 
-The remaining work is to package that coordinate as a new allowed specimen,
-including unique-hole and context-membership witnesses, and to connect the
-search theorem to the full UAM. The abstract \texttt{context\_step} field is
-therefore not yet instantiated. Original-hole tuple compatibility is proved in
-Section~\ref{sec:tuple-safety}. Contextual search adequacy is now established
-in Section~\ref{sec:contextual-search}.
+Section~\ref{sec:concrete-specimen-system} now packages that coordinate as
+an allowed unique-hole specimen with recursive fillings and closed endpoints.
+Its full-UAM context-step theorem constructs the abstract locality field.
+Original-hole tuple compatibility is proved in Section~\ref{sec:tuple-safety};
+contextual search adequacy is established in Section~\ref{sec:contextual-search}.
 \item \textbf{Paper \S6.4: concrete transition definition checked.}\par
 \texttt{State.Substitution} applies the explicit Fig.~9(f) fragments in a
 shallow simple context. \texttt{State.Compute} specifies the required active
@@ -136,12 +134,13 @@ reconstructs a recursive specimen with the same filled graphs. Concrete
 quasi-specimens retain unconditional witness existence and mode equality;
 input-safety is unrestricted by rootedness, and robustness retains its
 unrooted alternative. The rooted quasi and robustness consequences are proved.
-The full bridge to \texttt{SpecimenSystem} still requires its concrete laws.
+Section~\ref{sec:concrete-specimen-system} proves the safety and robustness bridges for the constructed named-state \texttt{SpecimenSystem}.
 \item \textbf{Proposition~38: logical lifting checked; initial bridge open.}\par
 \texttt{Observations.contextual\_of\_lifting} proves the logical implication
 once initial pairs belong to the lifting. Concrete initial focus attachment is
-now constructed. Allowed contexts, the observation interface, and specimen
-witnesses must still discharge the \texttt{initial\_lift} parameter.
+now constructed, including initial rooted specimens obtained by relocation.
+The observation interface and its arbitrary-fragment witnesses must still
+discharge the \texttt{initial\_lift} parameter.
 \item \textbf{Theorem~6: conditional, not complete.}\par
 The two \texttt{contextual\_sufficiency} theorems combine these abstract pieces.
 The paper itself assumes determinism and refocusing of the UAM. These remain
@@ -166,19 +165,18 @@ contexts; output fragments and self-looping attachments are included.
 The transitions of \S6.4 are now assembled into a concrete machine in
 Section~\ref{sec:full-uam}. Section~\ref{sec:uam-structure} proves substitution
 rootedness and uniqueness, stationary replay, and the full-UAM structural laws.
-The next operational dependency is specimen packaging for Lemma~39(3).
-These then support the concrete Proposition~40 bridge;
-initial focus construction now supplies its graph-level component for the
-separate Proposition~38 bridge, whose specimen witnesses remain open.
+Section~\ref{sec:concrete-specimen-system} closes the successor packaging,
+full-UAM locality, and concrete safety/robustness bridges. The remaining
+operational connections are general initial observation lifting and the
+state-class treatment needed to use determinism modulo isomorphism.
 
-As a planning estimate, approximately 88\% of the mathematical effort toward
+As a planning estimate, approximately 91\% of the mathematical effort toward
 the concrete general robustness theorem is complete (a plausible range is
-74--93\%). This increases the previous estimate of 85\% after proving
-stationary replay, substitution rootedness and uniqueness, and the full-UAM
-determinism and refocusing theorem.
-It is a subjective estimate, not a ratio of declarations or discharged
-checklist entries. Deep specimen locality, context membership, safety,
-robustness, and initial lifting remain substantial obligations.
+78--95\%). This increases the previous estimate of 88\% after constructing the
+concrete specimen interface and its operational bridges. It is a subjective
+estimate, not a ratio of declarations or discharged checklist entries.
+Initial observation lifting, state-class compatibility, and final theorem
+integration remain substantial obligations.
 The active to-do list is maintained in Appendix~\ref{app:remaining-work}.
 
 There are three distinct kinds of assertion below. A \emph{definition} specifies
@@ -188,7 +186,7 @@ structure; the current code uses that hypothesis but does not prove it for
 concrete hypernets. In particular, the laws of a specimen system must not be
 read as established theorems about the universal abstract machine.
 
-All code links point to revision \texttt{3ea0817}, rather than to the moving
+All code links point to revision \texttt{19a969b}, rather than to the moving
 \texttt{main} branch. Each link highlights the declaration together with its
 proof or defining fields. Namespace prefixes in link labels disambiguate
 declarations with the same short name. Anonymous Lean \texttt{example}

@@ -24,17 +24,16 @@ Theorems `SpecimenSystem.contextual_sufficiency` and
 both clauses of Theorem 6. They take a `SpecimenSystem` and an `initial_lift`
 proof as arguments. The system's fields include substantive graph obligations:
 rootedness preservation, final-state agreement, and context-only traversal.
-These are explicit hypotheses, **not proofs that the paper's UAM satisfies
-them**. Concrete hypernets and plugging now exist; a concrete UAM and its
-connection to this interface do not yet exist.
+The concrete `ConcreteSafety.system` now supplies every locality field from
+proved graph results. Its parameters are an isomorphism-invariant allowed-context
+class, output closure, and refocusing of the behaviour. The concrete safety and
+robustness predicates imply the abstract interface laws by proved bridges.
 
-The abstract `InputSafe`, `Robust`, and `Quasi` definitions express the
-consequences of the paper's conditions consumed by the proof. They restrict
-attention to rooted specimens and, for quasi-specimens, non-rewrite focuses.
-Their equivalence to the paper's concrete graph definitions remains to prove.
-Output-closure has not yet been defined concretely. Refocusing now has a concrete
-state-class definition and a search preservation theorem; the abstract interface
-still assumes the required locality consequences.
+The final contextual theorem still needs the concrete observation interface and
+initial lifting. It also needs a compatible state-class treatment: raw named
+states have determinism modulo recursive isomorphism, whereas the abstract
+simulation theorem consumes literal determinism. This gap is not hidden behind
+a stronger raw-state determinism assumption.
 
 ## Paper proof dependency map
 
@@ -49,11 +48,11 @@ still assumes the required locality consequences.
   as the paper does. Connecting paper specimens to these filling sequences is
   still an adequacy obligation; both shallow and recursive deep specimens now
   have direct initial/final agreement for their actual filled states.
-- **Lemma 39(2): checked for recursive specimens; (3): search core checked.**
+- **Lemma 39(2–3): checked for recursive specimens and the full UAM.**
   Joint rootedness and output closure prove non-exiting. Erasure commutation and
   the entering/exiting classification synchronize actual settled search steps
   to rooted endpoints at a remote coordinate. Successor-specimen packaging and
-  the full-UAM context-step law remain open.
+  the full-UAM context-step law are now proved.
 - **Contextual search adequacy: checked.** Finite two-edge interaction patterns
   plugged into explicit focus-free simple hole contexts coincide with
   erasure-based state search in both directions. Arbitrary simple contexts,
@@ -63,14 +62,15 @@ still assumes the required locality consequences.
   checked and initial focus attachment is constructed. Concrete observations and
   specimen witnesses must still discharge `initial_lift`.
 - **Theorem 6 — still conditional:** the abstract pieces are combined, but a
-  concrete `SpecimenSystem` and the safety/robustness bridges remain missing.
+  concrete named-state `SpecimenSystem` and safety/robustness bridges are now
+  constructed; initial observations and state-class integration remain open.
   Determinism and refocusing are hypotheses of the paper's theorem, not claims
   to prove for arbitrary extrinsic rewrite rules.
 
 Contextual search adequacy and §6.4's concrete transition definitions are now
 complete. Stationary replay, substitution rootedness and uniqueness, and the
 full-UAM structural theorem are now proved. The next dependencies are the
-remaining specimen-interface laws and their safety/robustness bridges.
+concrete observations, initial lifting, and compatible state-class determinism.
 The finite-depth typed representation and explicit isomorphisms are implementation
 choices. Their annotated set-presentation round trips and depth coherence are
 now proved. Fresh vertex naming also resolves the paper's graph-valued box-label
@@ -139,7 +139,8 @@ local-rewrite adequacy is now proved in `HoleContextSearch.lean`.
 
 The PDF's [Appendix B: remaining work](output/pdf/hypernets-mathematical-commentary.pdf#nameddest=appendix.B) contains two unfinished tasks. Search adequacy, the full UAM transition
 definition, and its structural theorem are discharged; the concrete specimen
-interface, robustness bridges, and final theorem instantiation remain open.
+interface and robustness bridges are proved; initial observation lifting,
+state-class integration, and final theorem instantiation remain open.
 
 `OneWay.lean` defines the paper's term-to-term one-way predicate, proves its
 invariance under recursive renaming and closure under one-way shallow filling,
@@ -178,7 +179,7 @@ deep-filled states and proves the Lemma 26(3) obstruction, the jointly rooted
 context-path conclusion, and initial/final agreement. DeepSpecimenExamples.lean
 constructs a closed specimen whose sole hole is inside a box, and proves that
 the old shallow rules cannot close this same context. Finite original-hole tuple compatibility is now proved in TupleFillings.lean;
-the full specimen interface remains open.
+the named-state specimen interface is now constructed in ConcreteSpecimenSystem.lean.
 
 ExpansionSearch.lean now proves exact context search transport through recursive
 fillings and reflection away from shallow hole boundaries. Entire executions
@@ -193,9 +194,9 @@ then insertion to the original expanded state. SpecimenTraversal.lean defines
 concrete entering/exiting, proves the non-exiting conclusion of Lemma 39(2), and
 uses it to synchronize actual search transitions of settled rooted specimens.
 The target coordinate is remote and both endpoint states are rooted. Literal
-and recursive endpoint renaming are supported. The remaining Lemma 39(3) work
-is successor-specimen packaging, allowed-context membership, and the full-UAM
-connection. The deep example tests actual traversal and preserves the earlier
+and recursive endpoint renaming are supported. SpecimenRelocation.lean now completes Lemma 39(3) with
+successor-specimen packaging, allowed-context membership, and the full-UAM
+context-step law. The deep example tests actual traversal and preserves the earlier
 non-rootedness obstruction.
 
 `LocalInteraction.lean` and `LocalRewiring.lean` now give an independent
@@ -235,10 +236,10 @@ unrooted robustness alternative. Rooted consequences are derived, not assumed.
 The nested-box example yields exactly one recorded hole; a mode-mismatched
 pair is rejected even with universally true up-to relations.
 
-Estimated completion by mathematical effort: **about 88%**, with a plausible
-range of **74–93%**, up from 85% after the full-UAM structural theorem.
-This is a planning judgment, not a declaration count. Specimen packaging,
-context membership, safety, robustness, and initial lifting remain substantial.
+Estimated completion by mathematical effort: **about 91%**, with a plausible
+range of **78–95%**, up from 88% after constructing the concrete specimen system.
+This is a planning judgment, not a declaration count. Initial observation lifting,
+state-class compatibility, and final theorem integration remain substantial.
 
 ## Concrete graph milestone
 
@@ -381,8 +382,8 @@ concrete specimen bridge to Theorem 6 remains the main later work.
   and a duplicate-hole intermediate graph repaired by the second substitution.
 
 These are nested substitution laws. The independent-site and pointed-host
-milestone below complements them; the concrete UAM and deep specimen bridge
-remain open.
+milestone below complements them. The later milestones construct the concrete
+UAM and named-state specimen interface; final contextual integration remains open.
 
 ## Independent deep substitution and pointed-host quotient
 
@@ -512,15 +513,11 @@ logical axioms, if used, are shown explicitly.
 
 ## Remaining work toward the milestone
 
-1. Prove substitution preserves rootedness, establish the required full-UAM
-   consequences of refocusing, and prove the stationary rewrite criterion.
-2. Package synchronized successor coordinates as allowed concrete specimens,
-   preserving unique holes and context membership under isomorphism. Construct
-   the abstract specimen interface using the checked boundary, non-exiting, and
-   settled-search results, and connect its context-step law to the full UAM.
-   Prove safety/robustness bridges and initial lifting.
-3. Instantiate the checked sufficiency results with all concrete obligations
-   discharged to obtain Theorem 6.
+1. Construct concrete observations and initial lifting for arbitrary related
+   fragments in allowed contexts. Connect the constructed named-state interface
+   to a state-class machine with the determinism required by the abstract proof.
+2. Instantiate the contextual sufficiency results to obtain Theorem 6 under its
+   original hypotheses.
 
 The copying UAM, lambda-term translation, and example program equivalences
 are later milestones; the current abstract and graph-level examples do not
@@ -563,8 +560,8 @@ on raw representatives still require their own isomorphism-invariance proofs.
 finite depth promotion. `PaperEncodingExamples.lean` repairs the prior two-box
 counterexample without imposing body consistency and checks context properties.
 
-Appendix B now has **two unfinished items**: the concrete specimen interface
-and bridges, and the final concrete Theorem 6.
+Appendix B now has **two unfinished items**: initial observations and state-class integration,
+and the final concrete Theorem 6.
 The representation result concerns the paper's typed UAM discipline; it does
 not claim to finish those operational obligations or cover unrelated signatures.
 
@@ -594,3 +591,21 @@ Arbitrary layered relations are not assumed to have this compatibility.
 Section 45 of the PDF explains every new construction and proof. Regression
 examples exercise a reachable substitution source and a nonempty compute
 behaviour. Appendix B now retains only the two unfinished obligations.
+
+## Concrete specimen interface milestone
+
+`FocusContexts.lean` proves exact hole-inventory and unique-hole preservation
+under focus movement. `FocusExpansion.lean` proves insertion commutes with
+simultaneous filling. `SpecimenRelocation.lean` constructs allowed successor
+specimens with recursive fillings, closed endpoints, and actual paired UAM
+steps, completing the context-step obligation of Lemma 39(3).
+
+`ConcreteSpecimenSystem.lean` instantiates every abstract locality field and
+proves the concrete safety and robustness bridges. The nested-box regression
+retains its deep hole and performs actual transitions into the rebuilt specimen.
+Initial rooted specimens are also constructed without assuming the original
+specimen rooted. Section 46 of the commentary explains every new declaration.
+
+Appendix B has been shortened to the unfinished portions; it still has two
+items. General observation lifting and compatible state-class determinism are
+required before claiming the paper's full theorem.
