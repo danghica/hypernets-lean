@@ -77,6 +77,12 @@ one-way filling closure, the concrete Lemma~26(2) obstruction, its paired
 single-hole corollary, and the positive and negative examples.
 \lean{Graph/Audit}{170}{185}{Graph.Audit: one-way filling dependencies}
 
+Twenty-five further commands inspect simultaneous expansion incidence,
+local path extraction, paired path reflection, focussed expansion, its identity
+isomorphism and hole freedom, the concrete shallow specimen bridges, and the
+two-hole and alternating-side regressions.
+\lean{Graph/Audit}{187}{211}{Graph.Audit: simultaneous shallow specimen dependencies}
+
 In the pinned snapshot, counting-simulation soundness, finite deep enumeration,
 unique holes under boxing, occurrence-coordinate observation preservation,
 isomorphism invariance of unique holes, and uniqueness of the two-hole example
@@ -106,6 +112,10 @@ reachability characterization, recursive renaming, and the four basic corolla
 checks use only \texttt{propext} and \texttt{Quot.sound}. The extraction,
 reflection, filling-closure, obstruction, and filled-state example entries
 also use classical choice.
+In the simultaneous-expansion group, the six incidence checks, identity
+isomorphism, hole freedom, and the two alternating-side premise checks use
+only \texttt{propext} and \texttt{Quot.sound}; the other entries also use
+classical choice.
 These are standard Lean logical axioms: propositional extensionality, quotient
 soundness, and classical choice, respectively. Neither audit reports
 \texttt{sorryAx} or a project-specific axiom.
@@ -160,22 +170,25 @@ work needed to claim Theorem~6 with its original hypotheses is:
 \item Prove representation adequacy between the typed depth-indexed hierarchy
 with explicit binder metadata and the paper's set-based graph-labelled
 hypernets, including compatibility across different depth bounds.
-\item Construct a quotient of host/site pairs and prove interchange of
-substitutions at independent sites.
+\item Relate simultaneous shallow expansion to addressed substitution.
+Construct a quotient of host/site pairs and prove interchange of substitutions
+at independent sites.
 \item Identify erasure-based state search with the paper's contextual local
 graph rewrites in both directions.
 \item Define the concrete substitution and compute transitions, with their
 typing and context restrictions, and assemble the full UAM transition relation.
 \item Prove rootedness preservation for substitution and the required
 full-UAM structural consequences of determinism and refocusing. Establish the
-general output-closed specimen case of Lemma~26(3), and the stationary
-rewrite criterion where needed.
-\item Define concrete pre-templates, specimens, quasi-specimens, output-closure,
-input-safety, and robustness with the paper's restrictions.
-\item Construct the abstract specimen interface from these objects. Connect
-concrete specimen substitution to the finite-filling boundary theorem for
-Lemma~39(1), and prove the rootedness and context-only traversal laws needed
-for Lemma~39(2--3), including entering/exiting classifications. Prove the safety
+extension of the checked shallow Lemma~26(3) to deep specimen substitution,
+and the stationary rewrite criterion where needed.
+\item Extend the concrete shallow specimen representation to arbitrary deep
+hole occurrences and establish its compatibility with the paper's tuple
+substitution. Define concrete quasi-specimens, input-safety, and robustness
+with the paper's restrictions.
+\item Construct the abstract specimen interface from these objects. Extend
+the checked shallow specimen boundary agreement and rooted-context path
+consequence to full deep specimens. Prove the remaining Lemma~39(2--3)
+entering/exiting classifications and context-only traversal laws. Prove the safety
 and robustness bridges and the concrete observation/context membership
 witnesses needed for initial lifting.
 \item Instantiate the checked contextual sufficiency results using the

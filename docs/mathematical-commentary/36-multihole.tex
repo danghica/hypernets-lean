@@ -1,0 +1,474 @@
+\Needspace{18\baselineskip}
+\subsection{Simultaneous shallow substitution: carriers and incidence}
+\label{sec:simultaneous}
+The next milestone proves the multi-hole obstruction for a concrete
+\emph{shallow} specimen representation. This needs a simultaneous filling
+construction: the one-way side of a related pair may differ at different
+holes, so one cannot simply assume that all left fillings, or all right
+fillings, are one-way. The construction below works for arbitrary finite
+typed graphs; only the later path arguments specialize to hypernets.
+
+\begin{definition}[Simultaneous expansion]\label{term:simultaneous-expansion}
+Let $C:I\to O$ be a finite typed graph and, for each edge $e$ of $C$, choose
+a graph $H_e$ with exactly the source and target interface of $e$.
+The expansion $C[H]$ replaces every edge at once. Its internal vertices and
+edges have carriers
+\[
+ V_C+\sum_{e\in E_C}V_{H_e},\qquad \sum_{e\in E_C}E_{H_e}.
+\]
+An unchanged edge will be represented by its corolla. The vertex carrier
+adds the same ordered external input and output constructors as before.
+The host map $\iota_C$ retains each original vertex. For each $e$, the map
+$\iota_e$ sends a filling internal vertex to its tagged fresh copy, its $i$th
+input to $\iota_C(\operatorname{sourcePort}(e,i))$, and its $j$th output to
+$\iota_C(\operatorname{targetPort}(e,j))$.
+\end{definition}
+\lean{Graph/Simultaneous}{12}{12}{Graph.Net.Expansion.Internal}
+\lean{Graph/Simultaneous}{13}{13}{Graph.Net.Expansion.Vertex}
+\lean{Graph/Simultaneous}{14}{14}{Graph.Net.Expansion.Edge}
+\lean{Graph/Simultaneous}{16}{16}{Graph.Net.Expansion.host}
+\lean{Graph/Simultaneous}{18}{21}{Graph.Net.Expansion.insert}
+
+The host map is injective and its image is disjoint from every fresh internal
+copy. Both facts follow by cases on the boundary/internal constructors and
+on the disjoint-sum tag.
+\lean{Graph/Simultaneous}{23}{24}{Graph.Net.Expansion.host_injective}
+\lean{Graph/Simultaneous}{26}{27}{Graph.Net.Expansion.host_ne_internal}
+
+\begin{lemma}[Uniqueness of a filling's owner]
+If two non-output filling vertices have equal images, their owning host
+edges are equal. The same holds for two non-input filling vertices.
+Within one filling, the insertion map is injective on non-output vertices,
+and separately on non-input vertices.
+\end{lemma}
+\begin{proof}
+For the first assertion, two fresh internal images identify their owner tags.
+An internal image cannot equal a boundary attachment in the host image.
+The only remaining case compares two filling inputs. Their images are
+source ports of their owning host edges; injectivity of the host map and
+unique outgoing incidence identify those edges. For non-input vertices the
+same argument uses output ports and unique incoming incidence.
+
+Once the owner is fixed, two internal images identify their internal names;
+two input images identify their input indices by distinctness of the host
+source ports. The output argument uses target-port distinctness. No
+injectivity is asserted between a filling input and output: a self-looping
+host edge can identify them.
+\end{proof}
+\lean{Graph/Simultaneous}{29}{42}{Graph.Net.Expansion.source_owner}
+\lean{Graph/Simultaneous}{44}{57}{Graph.Net.Expansion.target_owner}
+\lean{Graph/Simultaneous}{59}{72}{Graph.Net.Expansion.insert_source_injective}
+\lean{Graph/Simultaneous}{74}{87}{Graph.Net.Expansion.insert_target_injective}
+
+\Needspace{18\baselineskip}
+\subsection{Well-formedness of simultaneous expansion}
+The source and target lists of a new edge $(e,x)$ are those of $x$ in $H_e$,
+mapped by $\iota_e$. Each list remains duplicate-free: source vertices are
+never outputs, target vertices are never inputs, and the respective
+insertion injectivity lemmas therefore apply to every member of the list.
+\lean{Graph/Simultaneous}{89}{89}{Graph.Net.Expansion.source}
+\lean{Graph/Simultaneous}{90}{90}{Graph.Net.Expansion.target}
+\lean{Graph/Simultaneous}{92}{94}{Graph.Net.Expansion.source_nodup}
+\lean{Graph/Simultaneous}{96}{98}{Graph.Net.Expansion.target_nodup}
+
+\begin{lemma}[Unique incidence in the expanded graph]
+If two expanded edges share a source vertex, they are equal; the analogous
+statement holds for a shared target vertex.
+\end{lemma}
+\begin{proof}
+Pull the common incidence back along each mapped list. The owner lemma first
+identifies the two original host edges. Insertion injectivity then identifies
+the two filling vertices. Unique incidence within that one filling identifies
+the two filling edges, hence the tagged expanded edges.
+\end{proof}
+\lean{Graph/Simultaneous}{100}{110}{Graph.Net.Expansion.source_unique}
+\lean{Graph/Simultaneous}{112}{122}{Graph.Net.Expansion.target_unique}
+
+\begin{lemma}[Boundary exclusion and coverage]
+No expanded source is an output and no expanded target is an input. Every
+vertex that is not an output has a source incidence, and every vertex that
+is not an input has a target incidence.
+\end{lemma}
+\begin{proof}
+For exclusion, inspect the local vertex witnessing a mapped incidence. A
+fresh internal image has neither boundary status. A local input used as a
+source maps to a host source port, which is not an output; a local output
+cannot be a source. The target argument is dual.
+
+For a retained host vertex requiring a source incidence, use host coverage
+to find an original edge $e$ and its corresponding source-port index. Input
+coverage in $H_e$ supplies an edge sourced at that filling input, whose image
+is the original host vertex. Target coverage uses a filling output instead.
+For a fresh internal vertex in a copy of $H_e$, apply coverage directly
+inside $H_e$ and insert the resulting incidence. These cases exhaust the
+expanded vertex datatype.
+\end{proof}
+\lean{Graph/Simultaneous}{124}{129}{Graph.Net.Expansion.source_not_output}
+\lean{Graph/Simultaneous}{131}{136}{Graph.Net.Expansion.target_not_input}
+\lean{Graph/Simultaneous}{138}{143}{Graph.Net.Expansion.source_host_covered}
+\lean{Graph/Simultaneous}{145}{150}{Graph.Net.Expansion.target_host_covered}
+\lean{Graph/Simultaneous}{152}{163}{Graph.Net.Expansion.source_coverage}
+\lean{Graph/Simultaneous}{165}{176}{Graph.Net.Expansion.target_coverage}
+
+Internal labels come from the indicated host or filling summand, and an edge
+$(e,x)$ has the label of $x$ in $H_e$. The host map preserves vertex labels
+by inspection. Each insertion map preserves them because its boundary cases
+are exactly the host source-port and target-port typing equations.
+\lean{Graph/Simultaneous}{178}{178}{Graph.Net.Expansion.internalLabel}
+\lean{Graph/Simultaneous}{179}{179}{Graph.Net.Expansion.edgeLabel}
+\lean{Graph/Simultaneous}{181}{182}{Graph.Net.Expansion.host_label}
+\lean{Graph/Simultaneous}{184}{189}{Graph.Net.Expansion.insert_label}
+
+Applying these label equations to each mapped incidence list reduces its
+typing equation to the filling's original typing equation. Finite enumeration
+is obtained by a dependent sum over the finite host-edge enumeration, and a
+disjoint sum for the internal carriers. The constructor therefore proves all
+fields of \texttt{Net}; it does not postulate the incidence invariants of the
+simultaneous substitution.
+\lean{Graph/Simultaneous}{191}{197}{Graph.Net.Expansion.source_typed}
+\lean{Graph/Simultaneous}{199}{205}{Graph.Net.Expansion.target_typed}
+\lean{Graph/Simultaneous}{211}{229}{Graph.Net.expand}
+
+\Needspace{18\baselineskip}
+\subsection{Retained corollas, identity expansion, and hole freedom}
+\begin{definition}[Corolla copy]\label{term:corolla-copy}
+A corolla copy of an original edge $e$ has one distinguished edge with the
+same label as $e$, source list equal to the complete ordered input boundary,
+and target list equal to the complete ordered output boundary. Every edge
+of the copy equals the distinguished edge. The existing corolla constructor
+supplies such a copy directly; its sole edge index is $0$.
+\end{definition}
+\lean{Graph/ExpansionPaths}{16}{21}{Linear.ExpansionPaths.CorollaCopy}
+\lean{Graph/ExpansionPaths}{24}{30}{Linear.ExpansionPaths.corollaCopy}
+
+Every source or target incidence of $e$ becomes the corresponding incidence
+of its expanded corolla copy. Choose its port index in the host list; that
+boundary vertex occurs in the corolla's full boundary list and maps to the
+retained host vertex. More precisely, the copy's expanded incidence lists
+are the original host incidence lists mapped by $\iota_C$. Mapping the full
+port-index enumeration reconstructs the original ordered list, proving these
+equalities. If the original edge label is globally focus-free, so is its
+corolla copy: every edge of the copy is the distinguished one and has that
+same label.
+\lean{Graph/ExpansionPaths}{32}{37}{Linear.ExpansionPaths.copy_source}
+\lean{Graph/ExpansionPaths}{39}{44}{Linear.ExpansionPaths.copy_target}
+\lean{Graph/ExpansionFocus}{14}{19}{Linear.ExpansionPaths.copy_source_eq}
+\lean{Graph/ExpansionFocus}{21}{26}{Linear.ExpansionPaths.copy_target_eq}
+\lean{Graph/ExpansionFocus}{29}{33}{Linear.ExpansionPaths.copy_focusFree}
+
+\begin{theorem}[Identity expansion]
+Expanding every edge by its original corolla gives a graph isomorphic to $C$.
+\end{theorem}
+\begin{proof}
+Forget the empty internal carrier of every corolla and the unique edge index
+inside each corolla. These give explicit vertex and edge bijections; their
+inverses retain a host vertex or attach edge index $0$. Internal and edge
+labels are unchanged. For incidence, the exact copy-list equations reduce
+the result to a host inclusion followed by its inverse projection, which
+is the identity on every internal or boundary vertex.
+\end{proof}
+\lean{Graph/ExpansionUnits}{11}{19}{Linear.ExpansionPaths.identityVertices}
+\lean{Graph/ExpansionUnits}{22}{31}{Linear.ExpansionPaths.identityEdges}
+\lean{Graph/ExpansionUnits}{34}{65}{Linear.ExpansionPaths.identityIso}
+
+\begin{lemma}[Hole-free expansion]
+If every $H_e$ is globally hole-free, then $C[H]$ is globally hole-free.
+\end{lemma}
+\begin{proof}
+A hole occurrence in the expansion lies in the label of some tagged edge
+$(e,x)$, possibly within its nested box contents. That label is exactly the
+label of $x$ in $H_e$. The same occurrence in that label would be a hole
+occurrence in $H_e$, contradicting its global hole freedom.
+\end{proof}
+\lean{Graph/ExpansionUnits}{69}{74}{Linear.ExpansionPaths.holeFree}
+
+\Needspace{18\baselineskip}
+\subsection{Paired path reflection for many fillings}
+A non-input vertex of $H_e$ cannot be inserted as a global input: target
+coverage in $H_e$ supplies an incoming edge whose expanded copy still targets
+its image. Global inputs have no incoming edge.
+\lean{Graph/ExpansionPaths}{47}{50}{Linear.ExpansionPaths.insert_not_input}
+
+\begin{theorem}[Local extraction under simultaneous filling]
+If $\iota_e(v)$ is operation-reachable in $C[H]$, then $v$ is
+operation-reachable in $H_e$, independently of all other fillings.
+\end{theorem}
+\begin{proof}
+Induct on a reverse operation trace to the global input, generalizing $v$.
+If $v$ is a filling input, take the empty local trace. Otherwise an empty
+global trace is impossible by the previous lemma. In the nonempty case,
+target coverage in $H_e$ provides an edge at $v$. Unique incoming incidence
+in the expanded graph forces the first trace edge to be this inserted edge.
+Pull its chosen source back into $H_e$, extract a local trace from the shorter
+global trace by induction, and prepend that edge. This is the single-filling
+extraction proof with the simultaneous incidence theorem providing uniqueness.
+\end{proof}
+\lean{Graph/ExpansionPaths}{54}{79}{Linear.ExpansionPaths.extract}
+
+Consequently, if $H_e$ is one-way, no term-typed host target of $e$ can be
+operation-reachable in $C[H]$. Write that target as a target port of $e$.
+Its corresponding filling output has the same term type and the same image.
+Extraction would make this output operation-reachable in $H_e$, contradicting
+one-wayness.
+\lean{Graph/ExpansionPaths}{83}{90}{Linear.ExpansionPaths.oneWay_target}
+
+\begin{definition}[Paired output-closure for expansion]\label{term:paired-output-closure}
+Two filling families $H,K$ satisfy the paired edge condition if, for every
+original edge $e$, either both fillings are corolla copies of $e$, or $H_e$
+is one-way, or $K_e$ is one-way. The disjunction is chosen separately for
+each $e$; there need not be one side that is one-way at all replaced edges.
+\end{definition}
+\lean{Graph/ExpansionPaths}{97}{99}{Linear.ExpansionPaths.OutputClosedPair}
+
+\begin{lemma}[Paired predecessor argument]
+Suppose a term vertex $v$ of the host is the target of $e$ and its retained
+copies are operation-reachable in both expansions. Under the paired edge
+condition, $e$ is an operation, and every source of $e$ is a term vertex
+whose copies are operation-reachable on both sides.
+\end{lemma}
+\begin{proof}
+Either one-way branch contradicts reachability on that side by the previous
+result. In the remaining branch both sides retain corolla copies. Their
+expanded edges target the corresponding copies of $v$. The incoming-edge
+theorem forces their label, hence the original label of $e$, to be an
+operation. Every source of $e$ is therefore term-typed. Its mapped incidences
+in the two copies and the predecessor reachability theorem give reachability
+on each side.
+\end{proof}
+\lean{Graph/ExpansionPaths}{104}{122}{Linear.ExpansionPaths.predecessor}
+
+\begin{theorem}[Paired host-path reflection]
+If a host path ends at a term vertex reachable on both sides, all its edges
+are operations. In addition, every source of every edge on the path is
+term-typed and reachable on both sides.
+\end{theorem}
+\begin{proof}
+Induct on the nonempty host path. For a singleton path use the predecessor
+lemma. For a path $e::f::E$, apply the induction hypothesis to $f::E$. An
+adjacency witness is both a target of $e$ and a source of $f$; the strengthened
+induction conclusion supplies its type and reachability on both sides.
+Apply the predecessor lemma to $e$, then combine its conclusion with that
+for the tail. Repeated edges and any number of replaced holes are allowed.
+\end{proof}
+\lean{Graph/ExpansionPaths}{126}{150}{Linear.ExpansionPaths.path_operations}
+
+\Needspace{18\baselineskip}
+\subsection{Actual focussed expansions and their obstruction}
+Retain the host focus by a corolla copy and require every other filling to
+be globally focus-free. The expanded focus is the tagged distinguished edge
+of that copy, with the same mode and the retained copies of the original
+endpoints. The copy-list equalities give its singleton incidences. Host-map
+injectivity preserves distinct endpoints, and the unchanged boundary
+constructors preserve the prohibition on an exposed input-to-output focus.
+For uniqueness, an edge from the focus copy equals its distinguished edge;
+any edge from another filling is globally focus-free.
+\lean{Graph/ExpansionFocus}{37}{55}{Linear.ExpansionPaths.focussed}
+
+Initiality and finality are unchanged because both the mode and the input
+status of the focus source are unchanged. Once global hole freedom of the
+expanded graph is supplied, the construction packages the graph and its
+proved focus as an actual state.
+\lean{Graph/ExpansionFocus}{58}{62}{Linear.ExpansionPaths.focussed_boundary}
+\lean{Graph/ExpansionFocus}{66}{71}{Linear.ExpansionPaths.state}
+
+\begin{theorem}[Actual-state paired obstruction]
+If the host has a path containing a non-operation edge and ending at its
+focus source, and the two filling families satisfy the paired edge condition,
+at least one of the two expanded states is not rooted.
+\end{theorem}
+\begin{proof}
+If both states were rooted, Lemma~23 would make both actual focus sources
+operation-reachable. They are the retained copies of the host focus source,
+which has term type. Paired host-path reflection would therefore make every
+edge of the given path an operation, contradicting its specified non-operation
+edge. Classical case distinction turns this incompatibility into the stated
+disjunction of non-rootedness.
+\end{proof}
+\lean{Graph/ExpansionFocus}{75}{93}{Linear.ExpansionPaths.pair_not_rooted}
+
+\Needspace{18\baselineskip}
+\subsection{Concrete pre-templates and shallow specimens}
+\label{sec:shallow-specimens}
+\begin{definition}[Concrete pre-template]\label{term:concrete-pre-template}
+At a fixed depth bound, a concrete pre-template is an interface-indexed
+binary relation on hypernets, with a proof that both members of each related
+pair are globally focus-free. The relation and its domain condition are
+defining data, not a law asserting operational behavior.
+\end{definition}
+\lean{Graph/ShallowSpecimens}{10}{12}{Linear.ConcretePreTemplate}
+
+\begin{definition}[Concrete output-closure]\label{term:concrete-output-closure}
+A concrete pre-template is output-closed when every related pair has a
+one-way member on at least one side. This is the paper's output-closure
+predicate, using the concrete one-way definition.
+\end{definition}
+\lean{Graph/ShallowSpecimens}{15}{16}{Linear.ConcretePreTemplate.OutputClosed}
+
+For each original edge, the shallow specimen records one of two kinds of
+data: retained corolla copies on both sides, or an actual hole label on
+that edge together with a related pair of fillings. Thus arbitrary changes
+to non-hole edges are not permitted by this specimen definition.
+\lean{Graph/ShallowSpecimens}{20}{25}{Linear.SpecimenEdge}
+
+\begin{definition}[Concrete shallow specimen]\label{term:shallow-specimen}
+A shallow specimen consists of a globally unique-hole context of interface
+$\star\to\epsilon$, a distinguished focus, and two simultaneous filling
+families with the preceding edge-wise data. The erasure of the focussed
+context must belong to the supplied allowed-context predicate. Both expanded
+graphs must be globally hole-free. These fields express actual typing,
+context, relation-membership, and closedness restrictions; they do not include
+rootedness, path reflection, or a context-traversal law as assumptions.
+\end{definition}
+\lean{Graph/ShallowSpecimens}{30}{43}{Linear.ShallowSpecimen}
+
+This is the shallow restriction of the paper's specimen construction. It
+permits arbitrarily many outer holes and arbitrarily deep boxed contents in
+the fillings. It does not replace holes inside the original host's boxes.
+Compatibility with arbitrary addressed substitution and extension to deep
+hole occurrences remain required before identifying it with the paper's full
+specimen notion.
+
+A focus label cannot equal a hole label, by disjointness of primitive labels
+at either zero or successor depth. Therefore the focus edge must be in the
+retained branch of the specimen data. This proves existence of its two
+corolla copies, which are chosen to construct the focussed expansions.
+\lean{Graph/ShallowSpecimens}{46}{48}{Linear.focusLabel_ne_hole}
+\lean{Graph/ShallowSpecimens}{56}{61}{Linear.ShallowSpecimen.focus_copies}
+\lean{Graph/ShallowSpecimens}{64}{64}{Linear.ShallowSpecimen.focusCopies}
+
+Every other filling is globally focus-free. For a retained copy, use the
+original focus's uniqueness and the copy-label theorem. For a filled hole,
+use the pre-template's focus-free domain. These derived facts and the
+specimen's proved graph closedness construct its two actual states.
+\lean{Graph/ShallowSpecimens}{68}{73}{Linear.ShallowSpecimen.other_free}
+\lean{Graph/ShallowSpecimens}{75}{76}{Linear.ShallowSpecimen.leftState}
+\lean{Graph/ShallowSpecimens}{78}{79}{Linear.ShallowSpecimen.rightState}
+
+\Needspace{18\baselineskip}
+\subsection{Lemma 26(3) and the boundary bridge for shallow specimens}
+\begin{theorem}[Output-closure supplies paired reflection]
+An output-closed concrete pre-template supplies the paired edge condition
+for every one of its shallow specimens.
+\end{theorem}
+\begin{proof}
+At a retained edge, take the two recorded copies. At a filled hole, apply
+output-closure to the recorded related pair to obtain a one-way side.
+The side may change at the next hole.
+\end{proof}
+\lean{Graph/ShallowSpecimens}{83}{88}{Linear.ShallowSpecimen.outputClosedPair}
+
+\begin{theorem}[Concrete shallow Lemma 26(3)]
+For a shallow specimen of an output-closed pre-template, any context path
+to its focus source containing a non-operation edge implies that at least
+one of its two actual states is not rooted.
+\end{theorem}
+\begin{proof}
+The preceding theorem supplies the paired edge condition. The focus-copy
+and focus-freedom lemmas supply actual expanded states. Apply the actual-state
+paired obstruction to those states and the given context path.
+\end{proof}
+\lean{Graph/ShallowSpecimens}{92}{100}{Linear.ShallowSpecimen.not_both_rooted}
+
+Equivalently, when both specimen states are rooted, every edge of every
+context path to the focus source is an operation. The formal proof applies
+paired host-path reflection directly to the two operation-reachability
+witnesses supplied by Lemma~23. This is the path consequence used in the
+paper's Lemma~39(2), here proved for shallow specimens; it is not yet the full
+entering/exiting classification or context-traversal theorem.
+\lean{Graph/ShallowSpecimens}{104}{112}{Linear.ShallowSpecimen.rooted_context_path}
+
+The proof uses the same incoming-incidence uniqueness and one-way extraction
+as Proof~C.9. Rather than selecting a last hole and changing substitution
+order, it reasons backwards simultaneously on both sides along the supplied
+path. The paired predecessor lemma isolates exactly the contradiction that
+the paper obtains at its last hole. This proof organization avoids assuming
+an unproved interchange theorem.
+
+\begin{theorem}[Concrete shallow Lemma 39(1)]
+The two actual states of a shallow specimen agree on initiality and finality.
+\end{theorem}
+\begin{proof}
+Each expanded focus has the same mode and source-input status as the original
+context focus. Compose the left and right equivalences supplied by the
+focussed-expansion boundary theorem. Output-closure and rootedness are not
+needed for this boundary assertion.
+\end{proof}
+\lean{Graph/ShallowSpecimens}{116}{120}{Linear.ShallowSpecimen.boundary_agreement}
+
+\Needspace{18\baselineskip}
+\subsection{A constructed two-hole focussed specimen}
+The earlier one-hole context has exactly one hole occurrence: inspection of
+its labels rules out the focus and value edges, leaving its selected hole
+edge. This proves global hole-label uniqueness and the absence of any
+retained hole when that edge is removed.
+\lean{Graph/ShallowSpecimenExamples}{10}{19}{Linear.Examples.oneWayContext_hole_only}
+\lean{Graph/ShallowSpecimenExamples}{21}{23}{Linear.Examples.oneWayContext_unique}
+\lean{Graph/ShallowSpecimenExamples}{25}{30}{Linear.Examples.oneWayContext_no_retained}
+
+Replace that hole by the existing chain of two distinct holes. The exact
+freshness theorem gives a globally unique-hole context, since the host
+retains no hole and the inserted chain has distinct hole labels. Its focus
+is retained by the previously checked shallow focus-free plugging operation.
+\lean{Graph/ShallowSpecimenExamples}{33}{34}{Linear.Examples.twoHoleFocusedContext}
+\lean{Graph/ShallowSpecimenExamples}{36}{38}{Linear.Examples.twoHoleFocusedContext_unique}
+\lean{Graph/ShallowSpecimenExamples}{40}{41}{Linear.Examples.twoHoleFocus}
+
+The simultaneous filling family replaces both new holes by variable corollas
+and retains the focus and value by their original corollas. Define a
+pre-template relating a graph to itself when it is focus-free and one-way.
+This relation has the required focus-free domain, and is output-closed by its
+one-way premise. At each hole the pair of variable corollas belongs to this
+relation; at every other edge the corolla-copy fields hold by construction.
+\lean{Graph/ShallowSpecimenExamples}{45}{50}{Linear.Examples.twoHoleFilling}
+\lean{Graph/ShallowSpecimenExamples}{53}{55}{Linear.Examples.oneWayEquality}
+\lean{Graph/ShallowSpecimenExamples}{57}{58}{Linear.Examples.oneWayEquality_closed}
+\lean{Graph/ShallowSpecimenExamples}{60}{71}{Linear.Examples.twoHoleFilling_edges}
+
+Every filling is globally hole-free. A variable corolla has no hole, while a
+hole in a retained corolla would supply a retained hole occurrence in the
+earlier one-hole context, already excluded. The expansion hole-freedom lemma
+therefore proves closedness. These data assemble an actual two-hole specimen,
+with the unrestricted allowed-context predicate for this example.
+\lean{Graph/ShallowSpecimenExamples}{73}{82}{Linear.Examples.twoHoleFilling_closed}
+\lean{Graph/ShallowSpecimenExamples}{85}{93}{Linear.Examples.twoHoleSpecimen}
+
+The second hole by itself is a path to the focus source and is not an
+operation. The concrete shallow Lemma~26(3) proves the required disjunction
+of non-rootedness for the two constructed states, for every operation
+classification. Their initial/final agreement follows from the concrete
+specimen boundary theorem.
+\lean{Graph/ShallowSpecimenExamples}{96}{105}{Linear.Examples.twoHoleSpecimen_not_rooted}
+\lean{Graph/ShallowSpecimenExamples}{108}{111}{Linear.Examples.twoHoleSpecimen_boundary}
+
+\Needspace{18\baselineskip}
+\subsection{Alternating one-way choices: a necessary regression}
+Use an operation signature with one unary operation, and form both its
+operation corolla and a variable corolla. Relabel the existing two-hole chain
+to this signature, leaving its hole interfaces and incidences unchanged.
+On the left fill the first hole with a variable and the second with an
+operation; on the right reverse these choices.
+\lean{Graph/AlternatingFillings}{7}{7}{Linear.AlternatingFillings.ops}
+\lean{Graph/AlternatingFillings}{8}{9}{Linear.AlternatingFillings.variableWire}
+\lean{Graph/AlternatingFillings}{10}{11}{Linear.AlternatingFillings.operation}
+\lean{Graph/AlternatingFillings}{14}{17}{Linear.AlternatingFillings.context}
+\lean{Graph/AlternatingFillings}{19}{22}{Linear.AlternatingFillings.left}
+\lean{Graph/AlternatingFillings}{24}{27}{Linear.AlternatingFillings.right}
+
+The variable corolla is one-way: reachability of its output would force its
+incoming variable edge to be an operation. The operation corolla is not
+one-way, since its unique edge explicitly supplies an operation path between
+its term input and output.
+\lean{Graph/AlternatingFillings}{29}{34}{Linear.AlternatingFillings.variable_oneWay}
+\lean{Graph/AlternatingFillings}{36}{38}{Linear.AlternatingFillings.operation_not_oneWay}
+
+The paired edge condition holds: use the left one-way filling at the first
+hole and the right one-way filling at the second. Neither entire family is
+one-way edge by edge, as evaluation at the second left hole or the first
+right hole yields the non-one-way operation corolla. Finally, the two-edge
+host path cannot end at an output reachable on both sides. Otherwise paired
+path reflection would make its hole labels operations, a contradiction.
+This regression rules out an accidental strengthening of pointwise
+output-closure to a single global one-way-side choice.
+\lean{Graph/AlternatingFillings}{41}{51}{Linear.AlternatingFillings.output_closed}
+\lean{Graph/AlternatingFillings}{54}{57}{Linear.AlternatingFillings.no_global_oneWay_side}
+\lean{Graph/AlternatingFillings}{61}{72}{Linear.AlternatingFillings.not_both_reachable}

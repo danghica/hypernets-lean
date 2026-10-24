@@ -50,7 +50,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/fe1b8904b1e394450111eabffaf4a7eded297740}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/b850e7ac78a5b2a5ec8a2cbf3b385c8071742ec4}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -58,11 +58,17 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{24 October 2026\\\small Source snapshot: \texttt{fe1b890}; Lean \texttt{4.35.0}}
+\date{24 October 2026\\\small Source snapshot: \texttt{b850e7a}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
-This document explains every definition and proved statement in the current Lean development, including its regression examples. It gives proofs in mathematical English and links each declaration to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright. The forward and converse robustness arguments are proved relative to an explicit specimen interface. The concrete development constructs finite typed graphs, proves well-formed shallow plugging, path and isomorphism results, operation-path uniqueness, finite boxed hierarchies, addressed deep replacement, and globally unique-hole context closure under explicit freshness conditions. Plugging at every finite box depth has an exact syntactic hole inventory and a necessary-and-sufficient freshness criterion, including exact consumption of the selected hole label. Recursive isomorphism now permits independent renaming inside boxes, preserves operation paths and context validity, and makes substitution well-defined on replacement isomorphism classes. Sites now transport across recursively isomorphic hosts, with simultaneous host/replacement congruence and invariance of exact freshness. Nested substitutions now associate at arbitrary box depth, corollas satisfy unit laws, and exact composite context closure permits repair of intermediate hole collisions. The focussed state space is now defined, and the boundary argument of Lemma~39(1) is proved for finite sequences of deep focus-free fillings. The five search rules are now defined on underlying graph coordinates, with proofs of search determinism, boundary laws, and preservation of context steps under shallow filling. Typed search coordinates now have explicit focus-edge state realizations, with proved incidence recovery and initial attachment. General erasure now applies to arbitrary closed focussed states, with a focus-preserving reinsertion isomorphism. Search on explicit states is defined through erasure, proved deterministic up to focussed isomorphism, and satisfies the initial/final search boundary laws. Both focus round trips and recursive renaming invariance are proved. Search descends to literal-label and recursive state classes; projection between them preserves and lifts executions with exact lengths and reflects search termination. Concrete rootedness and refocusing are now defined. Search preserves rootedness; rooted focus sources have operation paths from the unique input, and any incoming non-operation path rules out rootedness, giving concrete versions of Lemmas 23 and 26(1). One-way hypernets now have their term-to-term path definition, renaming invariance, and filling closure. Extraction of operation paths through a filling proves the single-hole rootedness obstruction of Lemma 26(2), including self-looping holes. Adequacy for contextual local rewriting and the full UAM remain open. An explicit dependency map distinguishes these checked results from the remaining operational obligations. The connection to a concrete universal abstract machine and the verification of the specimen interface remain outstanding; the development is therefore not yet a formalization of the paper's full Theorem~6.
+This document explains every definition and proved statement in the Lean development, including its regression examples, in mathematical English. Each declaration links to its complete source fragment at a fixed Git revision. The abstract counting-simulation soundness theorem is proved outright; the forward and converse robustness arguments remain conditional on an explicit specimen interface.
+
+The concrete development supplies finite typed graphs, well-formed substitution, operation-path uniqueness, finite boxed hierarchies, exact hole inventories and freshness criteria, recursive isomorphism, transported sites, and nested substitution laws. Globally focus-free and focussed hypernets, actual states, focus insertion and erasure, both round trips, and recursive renaming invariance are formalized. The five coordinate search rules induce deterministic search on recursive state classes. Projection from literal-label classes preserves and lifts executions with exact lengths and reflects search termination. Concrete rootedness and refocusing are defined; search preserves rootedness. Rooted focus sources have operation paths from the unique input, proving the concrete Lemma~23 and the non-operation-path obstruction of Lemma~26(1).
+
+One-way hypernets have their term-to-term path definition, renaming invariance, and filling closure. Path extraction proves the single-hole obstruction of Lemma~26(2), including self-looping holes. Simultaneous shallow substitution now has proved incidence, finiteness, and typing invariants. A concrete pre-template and shallow-specimen representation supplies actual filled states. Output-closure yields the multi-hole obstruction of Lemma~26(3) for these shallow specimens, allowing the one-way side to vary at different holes. Their initial/final agreement also connects the boundary conclusion of Lemma~39(1) directly to concrete specimen states.
+
+The dependency map distinguishes these checked results from the remaining obligations. Deep specimen substitution, compatibility of simultaneous expansion with addressed substitution, contextual-rewrite adequacy, the full UAM, safety and robustness, and the complete specimen-interface interpretation remain open. This is therefore not yet a formalization of the paper's full Theorem~6.
 \end{abstract}
 \clearpage
 \begingroup
@@ -107,6 +113,7 @@ This document explains every definition and proved statement in the current Lean
 \input{33-recursive-search}
 \input{34-rooted-paths}
 \input{35-one-way}
+\input{36-multihole}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -117,7 +124,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/fe1b8904b1e394450111eabffaf4a7eded297740}{Repository at revision \texttt{fe1b890}}.
+\href{https://github.com/danghica/hypernets-lean/tree/b850e7ac78a5b2a5ec8a2cbf3b385c8071742ec4}{Repository at revision \texttt{b850e7a}}.
 \end{thebibliography}
 \clearpage
 \appendix
