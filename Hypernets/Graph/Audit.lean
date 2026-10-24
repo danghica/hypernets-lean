@@ -403,3 +403,8 @@ import Hypernets.Graph.PaperEncodingExamples
 #print axioms Hypernets.Linear.PaperEncodingExamples.distinct_contents
 #print axioms Hypernets.Linear.PaperEncodingExamples.repaired_counterexample
 #print axioms Hypernets.Linear.PaperEncodingExamples.context_properties
+
+#print axioms Hypernets.Linear.PaperEncoding.interpret_surjective
+#print axioms Hypernets.Linear.PaperEncoding.relation_raiseBy
+#print axioms Hypernets.Linear.PaperEncoding.GlobalPreTemplate.coherent
+#print axioms Hypernets.Linear.PaperEncoding.GlobalPreTemplate.rename

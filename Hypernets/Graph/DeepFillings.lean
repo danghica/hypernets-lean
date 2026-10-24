@@ -39,8 +39,8 @@ theorem LabelCopy.oneWay {d I O} {G : Hypernet ops d I O}
   rw [copy.edge_label] at op
   exact nonop op
 
-/-- One concrete pre-template for each available depth bound. Compatibility
-between different bounds remains a separate representation question. -/
+/-- One concrete pre-template for each available depth bound. Compatibility is
+not automatic; PaperRelations constructs coherent families from graph classes. -/
 abbrev LayeredPreTemplate (ops : Operations Op) := (d : Nat) → ConcretePreTemplate ops d
 
 mutual

@@ -1,4 +1,4 @@
-import Hypernets.Graph.PaperEncodingDepth
+import Hypernets.Graph.PaperRelations
 import Hypernets.Graph.SetHierarchyExamples
 
 /-! The former binder-erasure counterexample is repaired by actual vertex names. -/
