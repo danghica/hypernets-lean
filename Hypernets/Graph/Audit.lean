@@ -1,4 +1,4 @@
-import Hypernets.Graph.QuotientSearchExamples
+import Hypernets.Graph.DeepSearchExamples
 
 -- Every graph-specific invariant below is proved from concrete finite graph
 -- data. No new project axiom or `sorryAx` should appear in these reports.
@@ -134,3 +134,18 @@ import Hypernets.Graph.QuotientSearchExamples
 #print axioms Hypernets.Linear.Examples.value_search_final
 #print axioms Hypernets.Linear.Examples.recovered_value_search
 #print axioms Hypernets.Linear.Examples.value_class_successor
+
+#print axioms Hypernets.Linear.labelEquiv_focusFree
+#print axioms Hypernets.Linear.DeepIso.focusFree_iff
+#print axioms Hypernets.Linear.SearchStep.deepRename_iff
+#print axioms Hypernets.Linear.FocusInsertion.deepRename_focussed
+#print axioms Hypernets.Linear.Focussed.DeepIso.erased
+#print axioms Hypernets.Linear.State.deepSearch_iso_iff
+#print axioms Hypernets.Linear.State.deepSearch_iff
+#print axioms Hypernets.Linear.DeepStateClass.search_deterministic
+#print axioms Hypernets.Linear.StateClass.search_lift
+#print axioms Hypernets.Linear.StateClass.no_search_toDeep
+#print axioms Hypernets.Linear.StateClass.steps_lift
+#print axioms Hypernets.Linear.StateClass.final_run_toDeep_iff
+#print axioms Hypernets.Linear.Examples.renamedBoxedTwoHoles_focusFree
+#print axioms Hypernets.Linear.Examples.recovered_value_lift
