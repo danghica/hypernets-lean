@@ -1,4 +1,5 @@
 import Hypernets.Copying.AssemblyExamples
+import Hypernets.Copying.TracingExamples
 
 -- The requested Proposition 12.2 is not yet present: audit the completed prerequisites.
 #print axioms Hypernets.Copying.Term.subst_comp
@@ -21,3 +22,17 @@ import Hypernets.Copying.AssemblyExamples
 #print axioms Hypernets.Copying.Examples.distributor_input_order
 #print axioms Hypernets.Copying.Examples.distributor_separation
 #print axioms Hypernets.Copying.Examples.instanceStore_holeFree
+#print axioms Hypernets.Graph.Trace.terminal_unique
+#print axioms Hypernets.Graph.Net.exists_terminal_trace
+#print axioms Hypernets.Copying.ContractionTree.reaches_root
+#print axioms Hypernets.Copying.ContractionTree.vertex_reaches_root
+#print axioms Hypernets.Copying.ContractionTree.root_trace_unique
+#print axioms Hypernets.Copying.ContractionTree.transport
+#print axioms Hypernets.Copying.StoreTrace.hop_successor_kind
+#print axioms Hypernets.Copying.StoreTrace.resolves_unique
+#print axioms Hypernets.Copying.StoreTrace.same_store_iff
+#print axioms Hypernets.Copying.StoreTrace.resolves_iso_iff
+#print axioms Hypernets.Copying.StoreTrace.resolves_raise_iff
+#print axioms Hypernets.Copying.Examples.binaryTree
+#print axioms Hypernets.Copying.Examples.cyclicStore_cycle
+#print axioms Hypernets.Copying.Examples.cyclicStore_unique
