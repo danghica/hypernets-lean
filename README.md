@@ -16,13 +16,16 @@ The requested private-reference equivalence is **not yet proved**. The new
 indices, capture-avoiding substitution and its composition laws, the complete
 example operation alphabet, typed atom-aware boxes, recursive graph isomorphism,
 nested replacement, and canonical contraction trees matching Definition 10.1.
-Tree typing, incidence, ordered sources, path acyclicity and label-predicate
-closure/invariance are proved. These are prerequisites, not an operational
+Ordered distributors now assemble these trees with the exact input permutation
+`i + k*j`, including zero resources and zero uses. Generic parallel assembly
+preserves and reflects component paths; serial assembly connects typed shared
+interfaces. Tree/distributor acyclicity and label-predicate closure are proved. These are prerequisites, not an operational
 semantics or a conditional proof of the example.
 
 The commentary's section **Copying and store: foundations for Proposition 12.2**
-contains the dependency map and explanations of every new declaration.
-Appendix B tracks the remaining distributors/translation, copying machine,
+contains the dependency map; **Ordered distributors and graph assembly**
+explains the new constructions and proofs. Appendix B tracks the remaining
+arbitrary contraction trees, stability/copyability, translation, copying machine,
 binding-free contexts, eleven template families, and final Figure 22 assembly.
 The existing two paper-correspondence audits remain open.
 

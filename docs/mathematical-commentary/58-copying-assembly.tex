@@ -1,0 +1,283 @@
+\clearpage
+\section{Ordered distributors and graph assembly}
+\label{sec:copying-assembly}
+The next prerequisite is a concrete construction of the distributors of
+Definition~10.1. We assemble actual finite typed graphs, with the paper's
+ordered interfaces, and prove that assembly preserves incidence and paths.
+These results provide wiring for the future translation; they do not yet
+supply copying transitions, store evaluation, template robustness, or
+Proposition~12.2.
+
+\subsection{Parallel assembly with an ordered boundary}
+\termdef{ordered-parallel-assembly}
+Let $A$ be a finite index set and let $G_a:I_a\to O_a$ be typed graphs.
+A boundary specification consists of type-preserving bijections from the
+disjoint unions of their input and output ports to the chosen ordered
+interfaces $J$ and $K$. Thus every component boundary port occurs exactly once.
+This supports interleaving, rather than merely concatenating interfaces.
+
+The boundary structure records these bijections and their typing equations.
+The assembled vertex type consists of tagged internal vertices and the new
+external ports. The embedding tags an internal vertex by $a$ and sends an
+external port through the appropriate boundary bijection. Its inverse
+recovers the tag and local port. The inverse equations follow by cases on
+internal, input, and output vertices and by the two boundary inverse laws.
+
+\lean{Graph/Parallel}{15}{21}{Parallel.Boundary}
+
+\lean{Graph/Parallel}{23}{23}{Parallel.Vertex}
+
+\lean{Graph/Parallel}{26}{29}{Parallel.embed}
+
+\lean{Graph/Parallel}{32}{51}{Parallel.vertices}
+
+Embedding preserves whether a vertex is an input or output, as a direct
+case analysis shows. It is injective because the joint vertex map is a
+bijection. It preserves wire labels: internal labels are inherited, and
+external labels are preserved by the boundary specification.
+
+\lean{Graph/Parallel}{53}{54}{Parallel.embed_isInput}
+
+\lean{Graph/Parallel}{56}{57}{Parallel.embed_isOutput}
+
+\lean{Graph/Parallel}{59}{63}{Parallel.embed_injective}
+
+\lean{Graph/Parallel}{65}{71}{Parallel.embed_label}
+
+For an edge $(a,e)$, transport its incidence list through the component
+embedding. Injectivity preserves absence of repetitions. If two transported
+incidence lists contain the same vertex, the joint inverse first identifies
+the component tags and then the original vertex; local uniqueness therefore
+identifies the edges. For coverage, a local witness transports forward.
+Conversely, take the unique preimage of a global vertex and use local
+coverage there. This works for either source or target incidence by
+parameterising the vertex predicate.
+
+\lean{Graph/Parallel}{74}{75}{Parallel.incidence}
+
+\lean{Graph/Parallel}{77}{79}{Parallel.incidence_nodup}
+
+\lean{Graph/Parallel}{81}{95}{Parallel.incidence_unique}
+
+\lean{Graph/Parallel}{98}{114}{Parallel.incidence_coverage}
+
+The assembled graph has edges and internal vertices given by dependent
+disjoint unions. Finite enumerations are formed from the enumeration of $A$
+and the component enumerations. Source and target incidence use the preceding
+transport. Their uniqueness, coverage, and absence of duplicates are exactly
+the lemmas just proved. Typing follows by mapping the label-preservation
+equation over each incidence list. Thus this construction satisfies all
+finite-graph fields, including the exhaustive boundary laws.
+
+\lean{Graph/Parallel}{117}{145}{Parallel.net}
+
+If two assembled edges are adjacent, a shared target/source vertex has
+preimages in both components. Injectivity forces the tags to agree.
+Within a component, adjacency is equivalent to the original adjacency:
+reflect the shared vertex using injectivity, or transport it forward.
+Induction on a nonempty path proves that all its edges have the same tag.
+A second induction proves preservation and reflection of paths under a
+component inclusion. Empty lists are excluded by the existing path definition;
+single-edge paths give the base case. Finally a label predicate holds of
+all assembled edges precisely when it holds of every component edge,
+since edges are tagged pairs and their labels are unchanged.
+
+\lean{Graph/Parallel}{147}{153}{Parallel.adjacent_tag}
+
+\lean{Graph/Parallel}{156}{166}{Parallel.adjacent_same}
+
+\lean{Graph/Parallel}{169}{188}{Parallel.path_tags}
+
+\lean{Graph/Parallel}{191}{205}{Parallel.path_same}
+
+\lean{Graph/Parallel}{208}{212}{Parallel.labels_iff}
+
+\subsection{The finite input permutation and distributor forest}
+\termdef{copying-distributor}
+For $k$ resources each used $m$ times, the distributor $D_{k,m}$ consists of
+$k$ canonical trees. In zero-based indexing, resource $i$ at use $j$ has input
+position $i+kj$ and output position $i$. This is the ordered interface of
+Definition~10.1, not just an equality of interface sizes.
+
+The grid index maps $(i,j)$ to $i+kj$. Its bound follows from $i<k$ and
+$j<m$. The inverse sends $n$ to $(n\bmod k,\lfloor n/k\rfloor)$.
+The existence of $n<km$ implies $k>0$, so the division bounds are valid
+even though the construction allows an empty grid. The inverse equations
+use Euclidean division, $i\bmod k=i$, and $\lfloor i/k\rfloor=0$.
+They give a bijection. The final remainder and quotient lemmas explicitly
+recover the resource and use coordinates.
+
+\lean{Graph/FinGrid}{8}{12}{FinGrid.index}
+
+\lean{Graph/FinGrid}{15}{21}{FinGrid.split}
+
+\lean{Graph/FinGrid}{23}{29}{FinGrid.split_index}
+
+\lean{Graph/FinGrid}{31}{33}{FinGrid.index_split}
+
+\lean{Graph/FinGrid}{35}{39}{FinGrid.bijection}
+
+\lean{Graph/FinGrid}{42}{43}{FinGrid.index_mod}
+
+\lean{Graph/FinGrid}{46}{47}{FinGrid.index_div}
+
+The distributor input functions are this grid bijection with the list-length
+casts needed by typed interfaces. Their inverse proofs reduce to the same
+remainder and quotient equations. Each tree has one output, so the output
+bijection forgets its unique local output index. Both boundary label equations
+hold because all involved ports have the chosen sharing sort.
+
+\lean{Copying/Distributor}{14}{18}{Distributor.inputIndex}
+
+\lean{Copying/Distributor}{20}{23}{Distributor.inputSplit}
+
+\lean{Copying/Distributor}{25}{35}{Distributor.inputSplit_index}
+
+\lean{Copying/Distributor}{37}{40}{Distributor.inputIndex_split}
+
+\lean{Copying/Distributor}{43}{58}{Distributor.boundary}
+
+Instantiate parallel assembly with $k$ copies of the canonical $m$-input
+tree. The input- and output-position equations follow by unfolding the
+boundary maps. An edge $(i,e)$ is a weakening exactly when $e=0$, and is
+a contraction exactly when $e\ne0$, by the canonical-tree label lemmas.
+Relabelling primitive labels embeds this graph into every finite box allowance;
+it does not create any boxes or operational transitions.
+
+\lean{Copying/Distributor}{61}{63}{Distributor.net}
+
+\lean{Copying/Distributor}{66}{68}{Distributor.input_position}
+
+\lean{Copying/Distributor}{70}{71}{Distributor.output_position}
+
+\lean{Copying/Distributor}{74}{76}{Distributor.weakening_iff}
+
+\lean{Copying/Distributor}{78}{80}{Distributor.contraction_iff}
+
+\lean{Copying/Distributor}{83}{86}{Distributor.atDepth}
+
+A general rank argument supplies acyclicity. Suppose a natural-number rank
+strictly increases across adjacency. Induction on a path, using transitivity
+at its head, proves that the rank at any earlier position is less than the
+rank at any later position. If an edge occurred twice, compare its two
+positions; either strict ordering would make its rank less than itself.
+Hence every path has no repeated edge.
+
+\lean{Graph/PathRank}{11}{37}{PathRank.path_rank_strict}
+
+\lean{Graph/PathRank}{39}{50}{PathRank.path_nodup_of_rank}
+
+The generic parallel lemmas show that adjacent distributor edges belong
+to the same tree and that their local edges are adjacent there. Therefore
+the canonical-tree rank remains strictly increasing on distributor adjacency.
+Apply the general rank theorem to obtain absence of repeated edges on every
+path. Interleaving boundary ports has introduced no path between resources.
+
+\lean{Copying/Distributor}{89}{91}{Distributor.adjacent_tag}
+
+\lean{Copying/Distributor}{93}{95}{Distributor.adjacent_same}
+
+\lean{Copying/Distributor}{98}{105}{Distributor.adjacent_rank_lt}
+
+\lean{Copying/Distributor}{108}{111}{Distributor.path_nodup}
+
+When $k=0$, there is no edge or internal vertex: either would require an
+element of the empty resource index set. When $m=0$, each component has only
+its edge numbered zero, so every edge is a weakening. Thus zero uses does
+not silently discard resources. More generally, any primitive-label property
+true of weakening and contraction holds throughout the depth-indexed
+distributor. Unfold its labels and split on whether the local edge number
+is zero. Since neither constructor is a focus or hole, this also proves
+global focus freedom and hole freedom for both term and atom distributors.
+
+\lean{Copying/Distributor}{114}{114}{Distributor.zero_edges}
+
+\lean{Copying/Distributor}{116}{116}{Distributor.zero_internal}
+
+\lean{Copying/Distributor}{119}{125}{Distributor.zero_uses}
+
+\lean{Copying/Distributor}{128}{133}{Distributor.allLabels_atDepth}
+
+\lean{Copying/Distributor}{135}{136}{Distributor.focusFree}
+
+\lean{Copying/Distributor}{138}{139}{Distributor.holeFree}
+
+\subsection{Serial composition through a shared interface}
+\termdef{copying-serial-assembly}
+Given $G:I\to J$ and $H:J\to K$, serial composition uses a two-hole pattern
+whose internal vertices are exactly the ordered ports of $J$. The left hole
+has interface $I\to J$; the right hole has interface $J\to K$. Their hole
+identities differ even when their interfaces coincide.
+
+The pattern has two edges. Its left edge runs from outer inputs to shared
+internal vertices; its right edge runs from those internal vertices to outer
+outputs. Enumerating the corresponding finite index lists establishes all
+incidence and typing laws. Distinct port constructors exclude false matches
+between outer and internal vertices. For every $j$ in $J$, the left target
+port and right source port are the same internal vertex; the connection
+lemma proves this by evaluating the indexed incidence lists. The construction
+also handles an empty shared interface.
+
+\lean{Copying/Serial}{11}{13}{Serial.hole}
+
+\lean{Copying/Serial}{16}{80}{Serial.pattern}
+
+\lean{Copying/Serial}{83}{86}{Serial.interface_connection}
+
+Fill the left slot with $G$ and the right with $H$, using the signature
+equalities to check their interfaces. Simultaneous expansion replaces both
+pattern edges and glues their boundary vertices at the pattern ports.
+This defines the composed graph; the pattern holes are no longer edges.
+For a primitive-label predicate, each expanded edge comes from one filling,
+so its label property is inherited from that filling. Specialise this fact
+to the two slots, then to focus freedom and hole freedom. These are structural
+closure laws, not a theorem that an operational reduction can cross an
+arbitrary surrounding context.
+
+\lean{Copying/Serial}{89}{94}{Serial.filling}
+
+\lean{Copying/Serial}{97}{98}{Serial.net}
+
+\lean{Copying/Serial}{101}{106}{Serial.allLabels_expand}
+
+\lean{Copying/Serial}{109}{113}{Serial.allLabels_net}
+
+\lean{Copying/Serial}{115}{116}{Serial.focusFree_net}
+
+\lean{Copying/Serial}{118}{119}{Serial.holeFree_net}
+
+\subsection{Concrete checks and remaining obligations}
+
+The input-order regression computes all six positions for three resources
+used twice: resource zero occupies positions $0,3$, resource one $1,4$,
+and resource two $2,5$. The separation check rules out adjacency between
+the two distinct resources in a two-resource distributor by tag equality.
+A single-use tree still contains its weakening and contraction; it is not
+replaced by an identity. The zero-use check retains two distinct weakenings
+for two resources. These label calculations hold for both sharing sorts.
+Finally, serially assemble an instance edge from term to atom with a store
+edge from atom to term. The resulting term-to-term graph is focus-free and
+hole-free by the serial closure lemmas and inspection of the two labels.
+This last example checks atom-interface wiring, not allocation, reading,
+or writing in a running machine.
+
+\lean{Copying/AssemblyExamples}{8}{15}{AssemblyExamples.distributor_input_order}
+
+\lean{Copying/AssemblyExamples}{18}{22}{AssemblyExamples.distributor_separation}
+
+\lean{Copying/AssemblyExamples}{25}{28}{AssemblyExamples.distributor_single_use}
+
+\lean{Copying/AssemblyExamples}{31}{34}{AssemblyExamples.distributor_no_uses}
+
+\lean{Copying/AssemblyExamples}{37}{38}{AssemblyExamples.instanceStore}
+
+\lean{Copying/AssemblyExamples}{40}{42}{AssemblyExamples.instanceStore_focusFree}
+
+\lean{Copying/AssemblyExamples}{44}{46}{AssemblyExamples.instanceStore_holeFree}
+
+The full build and all three axiom audits pass. The new audited declarations
+use only Lean's standard propositional extensionality, classical choice, and
+quotient soundness. No machine determinism, template robustness, or
+translation-correctness assumption has been introduced. Arbitrary contraction
+trees, copyability and stability, the term/context translation and its laws,
+and the operational and template arguments remain to be proved.
