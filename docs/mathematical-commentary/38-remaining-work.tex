@@ -34,11 +34,14 @@ syntax, typed graph, canonical-tree, renaming and replacement prerequisites.
 Section~\ref{sec:copying-assembly} completes ordered distributors and typed
 parallel and serial assembly. Section~\ref{sec:copying-tracing} proves
 arbitrary-tree root termination and uniqueness of store resolution.
+Section~\ref{sec:literal-translation} implements the variable, atom, constant,
+unary and abstraction clauses without simplifying the paper's graphs.
 The remaining tasks are:
 \begin{enumerate}
-\item Construct copyable and stable graphs, and
-the inductive translation of terms and contexts with its interface, renaming,
-substitution and context-composition laws.
+\item Construct copyable and stable graphs. Complete the application and
+binary-operation clauses and recursive term/context translation, then prove
+its renaming, substitution and context-composition laws. Preserve the terms
+of Proposition~12.2 and the translation of Figure~16.
 \item Define copying and extra search transitions and all example compute rules;
 prove the unbounded machine's determinism, refocusing and specimen locality,
 including independence of the copy rule from its contraction-tree match.

@@ -25,6 +25,12 @@ now have proved root reachability and unique terminal traces. Atom-store
 resolution is unique, invariant under renaming and depth padding, and checked
 in a cyclic-store graph without assuming the whole host is acyclic.
 
+The Proposition 12.2 terms must remain unchanged. Translation follows Figure 16,
+including its single-use distributors, weakening, and ordered box interfaces.
+Five literal graph-building clauses now compile: variables, atoms, constants,
+unary operations, and abstractions. Application and binary-operation clauses,
+the full recursive translation, and its substitution/context laws remain open.
+
 The commentary's section **Copying and store: foundations for Proposition 12.2**
 contains the dependency map; **Ordered distributors and graph assembly**
 explains the new constructions and proofs. Appendix B tracks the remaining

@@ -1,0 +1,265 @@
+\clearpage
+\section{Literal clauses of the paper's term translation}
+\label{sec:literal-translation}
+\subsection{Fixed target and correspondence requirement}
+The terms of Proposition~12.2 remain exactly
+\[
+ \mathtt{let}\ x=\mathtt{ref}\ 1\ \mathtt{in}\ \lambda f.(f();!x)
+ \qquad\text{and}\qquad
+ \lambda f.(f();1).
+\]
+Their existing scoped syntax and desugaring definitions are unchanged.
+The formalisation must not replace either term by a different program, even
+an intended equivalent one, to make the theorem easier. The translation
+must follow Figure~16, including its canonical sharing trees, unused-resource
+weakening, environment order, and box interfaces. In particular,
+$D_{k,1}$ is not simplified to an identity: it contains a weakening and a
+contraction for each resource.
+
+The present milestone implements the variable, atom, constant, unary, and
+abstraction graph constructors literally as drawn in Figure~16. These are
+five graph-building clauses, not yet the full recursive translation of the
+term datatype. Application and binary operations still require their two-use
+distributors and the displayed interface permutation. Their implementation,
+the recursive assembly, and the translation's substitution and context laws
+remain open. No semantic translation-correctness theorem is asserted here.
+
+\subsection{Ordered binary juxtaposition}
+\termdef{ordered-tensor}
+For $G:I\to O$ and $H:J\to K$, ordered binary juxtaposition is a graph
+$G\otimes H:(I\mathbin{+\!+}J)\to(O\mathbin{+\!+}K)$, placing all left
+ports before all right ports. It is constructed by the previously proved
+finite parallel assembly, rather than by adding identity wires.
+
+A Boolean chooses the left or right interface. The port map sends a left
+index $i$ to $i$, and a right index $j$ to $|I|+j$. Its inverse tests whether
+the combined index is below $|I|$ and, in the right case, subtracts $|I|$.
+The inverse equations follow by that case distinction and the index bounds;
+they define a boundary bijection. Looking up a wire label in the concatenated
+list gives the original component label, by the same left/right distinction.
+
+\lean{Graph/Tensor}{9}{11}{Tensor.interfaces}
+
+\lean{Graph/Tensor}{13}{15}{Tensor.join}
+
+\lean{Graph/Tensor}{17}{19}{Tensor.split}
+
+\lean{Graph/Tensor}{21}{26}{Tensor.split_join}
+
+\lean{Graph/Tensor}{28}{30}{Tensor.join_split}
+
+\lean{Graph/Tensor}{32}{33}{Tensor.ports}
+
+\lean{Graph/Tensor}{35}{41}{Tensor.join_label}
+
+The family selects $G$ or $H$. Apply the port bijections to both their
+input and output interfaces to obtain the parallel boundary specification.
+The tensor is the parallel construction for this two-element family, with
+an explicit Boolean enumeration. Its graph laws are inherited from that
+construction. Every tensor edge is a component tag and an original edge,
+with unchanged label, so a label predicate holds on the tensor exactly
+when it holds on both factors.
+
+\lean{Graph/Tensor}{43}{45}{Tensor.family}
+
+\lean{Graph/Tensor}{47}{51}{Tensor.boundary}
+
+\lean{Graph/Tensor}{54}{55}{Tensor.net}
+
+\lean{Graph/Tensor}{58}{64}{Tensor.labels_iff}
+
+\subsection{Interface equalities and environment distributors}
+
+An interface cast changes only provably equal type indices, leaving the
+graph unchanged. Its input and output equalities are propositional equalities
+of ordered wire lists, not a permission to permute ports. Eliminating these
+equalities proves that every global primitive-label property is preserved
+and reflected. Such casts reconcile, for example, $k\cdot1$ with $k$ and
+$1+k$ with $k+1$; they perform no term rewrite or graph simplification.
+
+\lean{Copying/TranslationClauses}{13}{14}{TranslationClauses.castInterfaces}
+
+\lean{Copying/TranslationClauses}{16}{18}{TranslationClauses.allLabels_cast}
+
+Juxtapose $D^{\star}_{k,m}$ with $D^{\diamond}_{h,m}$. This gives input
+interface $\star^{km}\otimes\diamond^{hm}$ and output interface
+$\star^k\otimes\diamond^h$, preserving the variables-before-atoms order.
+The single-use constructor sets $m=1$ and uses only an interface-equality
+cast. It retains every weakening and contraction in these distributors.
+
+\lean{Copying/TranslationClauses}{21}{23}{TranslationClauses.environmentDistributor}
+
+\lean{Copying/TranslationClauses}{26}{27}{TranslationClauses.singleUse}
+
+\subsection{The five implemented Figure 16 clauses}
+\termdef{literal-translation-clauses}
+
+For resource $i$ among $n$ resources of sort $s$, construct the ordered
+juxtaposition
+\[
+ D^s_{i,0}\ \otimes\ D^s_{1,1}\ \otimes\ D^s_{n-i-1,0}.
+\]
+It has one input of sort $s$ and $n$ outputs. The index bound $i<n$ proves
+$i+1+(n-i-1)=n$, so the output cast preserves the exact order. Thus the
+selected resource is in position $i$, while all other resources retain
+weakening edges. The variable clause uses this construction at term sort,
+then juxtaposes the weakening distributor for all ambient atoms. This is
+the first diagram of Figure~16, with the two variable-environment portions
+represented by the prefix and suffix of the selected finite index.
+
+\lean{Copying/TranslationClauses}{30}{41}{TranslationClauses.selectedResource}
+
+\lean{Copying/TranslationClauses}{44}{47}{TranslationClauses.variableTerm}
+
+The atom clause keeps the instance edge. Serially connect that edge to the
+selected atom-resource graph, and juxtapose weakening for all ambient term
+variables on the left. The instance produces the atom input of its
+$D^{\diamond}_{1,1}$; that tree is not omitted. Outputs remain variables
+followed by atoms. For a constant, juxtapose variable weakening, the constant
+corolla, and atom weakening in exactly the order shown in Figure~16.
+Interface arithmetic checks the sole term input and the full ambient output
+interface, including environments whose resources are unused.
+
+\lean{Copying/TranslationClauses}{50}{54}{TranslationClauses.atom}
+
+\lean{Copying/TranslationClauses}{57}{60}{TranslationClauses.constant}
+
+For a unary operation, serially assemble the unary-operation corolla,
+the supplied translated subterm, and the term/atom single-use distributors.
+This follows the bottom-left diagram of Figure~16 for every unary operation,
+including reference creation and dereference.
+
+For abstraction, the supplied body has one extra term output. Place that
+body in a box with one bound variable, $k$ free variables, and $h$ free atoms.
+The bound variable is the first body output, as in the existing scoped
+syntax. The equality of $k+1$ and $1+k$ reconciles the numeric type indices;
+it does not reorder that body interface. The box has a $T^1(\star)$ input
+and exposes only the free environment. Serially assemble the lambda corolla,
+this box, and the two single-use distributors. Only this clause increases
+the box-depth allowance. These are graph constructors; they do not replace
+lambda or sequencing in the terms being formalised.
+
+\lean{Copying/TranslationClauses}{63}{65}{TranslationClauses.unary}
+
+\lean{Copying/TranslationClauses}{68}{70}{TranslationClauses.lambdaBox}
+
+\lean{Copying/TranslationClauses}{73}{75}{TranslationClauses.abstraction}
+
+\subsection{Global alphabet and absence of focus and holes}
+\termdef{translation-language-graph}
+The translation language permits operation, contraction, weakening, and
+instance primitives. It excludes store, focus, and hole primitives.
+A language graph satisfies this restriction recursively inside every box.
+Store edges arise later from execution of reference creation, not from
+translating the syntax of a reference-creation expression.
+
+The primitive predicate explicitly enumerates the allowed constructors;
+the graph predicate lifts it through all boxes. For any primitive-label
+predicate, tensor closure follows from the tensor label equivalence. A
+primitive corolla satisfies the lifted predicate whenever its sole primitive
+label does, by inspecting the alphabet at zero or positive depth.
+
+\lean{Copying/TranslationClauses}{78}{80}{TranslationClauses.LanguagePrimitive}
+
+\lean{Copying/TranslationClauses}{82}{82}{TranslationClauses.LanguageGraph}
+
+\lean{Copying/TranslationClauses}{84}{87}{TranslationClauses.allLabels_tensor}
+
+\lean{Copying/TranslationClauses}{89}{92}{TranslationClauses.allLabels_primitive}
+
+Every environment distributor is a language graph because each component
+contains only contraction and weakening edges. Interface casting gives the
+single-use case. Repeated tensor closure proves the selected-resource case.
+The variable case adds only atom weakening; the atom case adds term weakening
+and the permitted instance primitive; the constant case adds only its
+permitted operation primitive. These arguments establish the global alphabet
+property for every ambient scope, not just for closed terms.
+
+\lean{Copying/TranslationClauses}{94}{96}{TranslationClauses.environmentDistributor_language}
+
+\lean{Copying/TranslationClauses}{98}{99}{TranslationClauses.singleUse_language}
+
+\lean{Copying/TranslationClauses}{101}{107}{TranslationClauses.selectedResource_language}
+
+\lean{Copying/TranslationClauses}{109}{111}{TranslationClauses.variable_language}
+
+\lean{Copying/TranslationClauses}{113}{116}{TranslationClauses.atom_language}
+
+\lean{Copying/TranslationClauses}{118}{124}{TranslationClauses.constant_language}
+
+The unary clause preserves the language property by serial closure,
+combining its operation, the supplied subterm property, and the distributor
+property. For the lambda box, the recursive label predicate is precisely
+the body's label predicate, after the harmless interface cast. Serial closure
+then proves the abstraction clause from the lambda primitive, that box,
+and the single-use distributors. These are conditional preservation laws
+for constructor arguments, not unproved assumptions about the final programs.
+
+\lean{Copying/TranslationClauses}{126}{129}{TranslationClauses.unary_language}
+
+\lean{Copying/TranslationClauses}{131}{134}{TranslationClauses.lambdaBox_language}
+
+\lean{Copying/TranslationClauses}{136}{139}{TranslationClauses.abstraction_language}
+
+A language graph is globally focus-free and hole-free. To prove each
+claim, first lift the corresponding implication on primitive labels through
+the recursive alphabet by induction on depth. At depth zero and for a
+primitive at positive depth, equality with a forbidden label contradicts
+the language predicate. For a box, apply the induction hypothesis to each
+body edge. Apply this implication to every edge of the outer graph.
+
+\lean{Copying/TranslationClauses}{142}{155}{TranslationClauses.language_focusFree}
+
+\lean{Copying/TranslationClauses}{157}{169}{TranslationClauses.language_holeFree}
+
+\subsection{Checks that preserve the paper's graph structure}
+
+The reference-one graph assembles the literal constant and unary clauses
+for the unchanged subterm $\mathtt{ref}\ 1$. It is a language graph in every
+ambient environment by the two preservation lemmas. This is not the whole
+left side of Proposition~12.2: the enclosing let and applications still
+require the unfinished application translation.
+
+\lean{Copying/TranslationExamples}{7}{8}{TranslationExamples.referenceOne}
+
+\lean{Copying/TranslationExamples}{10}{11}{TranslationExamples.referenceOne_language}
+
+Kernel-checked finite-enumeration calculations guard the unsimplified
+shapes. In an environment of two variables and one atom, a constant has
+four outer edges: one constant and three weakenings. Selecting the second
+of three variables with two ambient atoms gives six edges, including the
+selected weakening/contraction pair. Selecting the second of two atoms
+with three ambient variables gives seven, including the instance edge.
+The graph for $\mathtt{ref}\ 1$ with two variables and one atom has eleven
+edges: four for the constant clause, one for reference creation, and six
+for the single-use environment distributors. These are structural checks,
+not allocation or termination tests.
+
+\lean{Copying/TranslationExamples}{14}{15}{TranslationExamples.constant_environment_edges}
+
+\lean{Copying/TranslationExamples}{18}{19}{TranslationExamples.variable_environment_edges}
+
+\lean{Copying/TranslationExamples}{22}{23}{TranslationExamples.atom_environment_edges}
+
+\lean{Copying/TranslationExamples}{26}{27}{TranslationExamples.referenceOne_environment_edges}
+
+The identity-abstraction regression supplies a variable graph at bound
+index zero as the boxed body. Its language property follows from variable
+and abstraction preservation. Its outer graph has exactly two edges, lambda
+and box, when the free environment is empty; the variable's sharing graph
+remains inside the box. Finally, the single-use distributors for two variables
+and one atom have six edges. This directly checks the feature that would
+be lost by replacing them with identity wiring.
+
+\lean{Copying/TranslationExamples}{30}{31}{TranslationExamples.identityAbstraction}
+
+\lean{Copying/TranslationExamples}{33}{34}{TranslationExamples.identityAbstraction_language}
+
+\lean{Copying/TranslationExamples}{37}{37}{TranslationExamples.identityAbstraction_outer_edges}
+
+\lean{Copying/TranslationExamples}{40}{41}{TranslationExamples.singleUse_retains_edges}
+
+The full build and all three axiom audits pass with only standard Lean
+axioms. The original proposition terms and their desugaring files have not
+been modified. The outstanding translation and machine obligations remain
+explicit in Appendix~\ref{app:remaining-work}; Proposition~12.2 is not yet proved.
