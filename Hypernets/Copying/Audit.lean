@@ -1,4 +1,4 @@
-import Hypernets.Copying.ParallelFillingExamples
+import Hypernets.Copying.ContextFillingExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -179,3 +179,17 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Padding.padSite_sole
 #print axioms Hypernets.Copying.Examples.paddedApplicationLeft_filling
 #print axioms Hypernets.Copying.Examples.paddedApplicationRight_filling
+
+#print axioms Hypernets.Copying.Translation.pad_add
+#print axioms Hypernets.Copying.Padding.extend_filling
+#print axioms Hypernets.Copying.Padding.to_filling
+#print axioms Hypernets.Copying.Padding.toSite_sole
+#print axioms Hypernets.Copying.ContextTranslation.ScopedIso.application
+#print axioms Hypernets.Copying.ContextTranslation.ScopedIso.binary
+#print axioms Hypernets.Copying.ContextTranslation.apply_iso
+#print axioms Hypernets.Copying.ContextTranslation.context_filling
+#print axioms Hypernets.Copying.ContextTranslation.context_term_filling
+#print axioms Hypernets.Copying.ContextTranslation.context_graph_filling
+#print axioms Hypernets.Copying.Examples.mixedArgumentContext_depth
+#print axioms Hypernets.Copying.Examples.mixedArgumentContext_fill
+#print axioms Hypernets.Copying.Examples.mixedArgumentContext_graph_filling
