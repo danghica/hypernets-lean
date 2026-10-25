@@ -1,0 +1,220 @@
+\clearpage
+\section{Stable graphs and copyable payloads}
+\label{sec:copying-values}
+Definitions~10.2 and 10.3 serve different purposes. Copyability describes
+what Figure~17 may duplicate; stability restricts the graph used by the
+value-sensitive rules. We now formalise both for the paper's full example
+operation alphabet. Neither the proposition terms nor their Figure~16
+translation has changed. In particular, extracting a copyable payload below
+is an exact factorisation of the original translated graph, not a replacement
+of that graph by an equivalent program.
+
+These are structural predicates and proofs. Their use in copying, store
+transitions and the operational stability/refocusing invariants remains
+unfinished. The existing correspondence audit of the earlier linear
+substitution rule remains open.
+
+\subsection{The complete stability predicate}
+\termdef{copying-stable-graph}
+A stable graph has a single term input; every edge is an instance or a
+passive operation; every external output is an atom or a thunk; and every
+vertex is reachable from that input. Boxes are not stable edges: a lambda
+head may expose a thunk output to which a box is attached outside the stable
+fragment. The definition retains all three conditions of Definition~10.3,
+rather than replacing reachability with a language-label approximation.
+
+The primitive predicate accepts an instance and accepts an operation exactly
+when its declared kind is passive. Its lifted label predicate requires an
+actual primitive label, excluding boxes even if their contents happen to
+contain passive operations. The output predicate accepts atoms and thunks
+and rejects terms. A vertex step follows one edge from any source to any
+target. Reachability is existence of an exact finite trace of such steps,
+including the zero-step trace. The stability structure then records the
+label, output, and all-vertex reachability requirements explicitly.
+
+\lean{Copying/Stability}{12}{15}{Stability.StablePrimitive}
+
+\lean{Copying/Stability}{18}{19}{Stability.StableLabel}
+
+\lean{Copying/Stability}{22}{24}{Stability.StableOutput}
+
+\lean{Copying/Stability}{27}{28}{Stability.VertexStep}
+
+\lean{Copying/Stability}{30}{31}{Stability.VertexReach}
+
+\lean{Copying/Stability}{34}{39}{Stability.Stable}
+
+Every permitted primitive has one term input. In the example alphabet,
+its outputs are non-term: a constant has no outputs, lambda has a thunk
+output, and an instance has an atom output. Case analysis on the primitive
+and operation constructors proves these signature facts. Mapping labels
+over source and target incidence lists transfers them to actual vertices:
+a source vertex of a permitted edge has term type, whereas a target vertex
+has a permitted non-term type.
+
+\lean{Copying/Stability}{41}{43}{Stability.primitive_input}
+
+\lean{Copying/Stability}{45}{50}{Stability.primitive_outputs}
+
+\lean{Copying/Stability}{52}{58}{Stability.source_type}
+
+\lean{Copying/Stability}{60}{66}{Stability.target_type}
+
+An internal vertex must occur in some source and some target, by the
+graph's two coverage laws. The preceding typing facts would therefore
+make it both term and non-term. Thus no internal vertex exists. Each edge
+has a nonempty singleton source list. Its source cannot be an output by
+boundary discipline or an internal vertex by the preceding contradiction,
+so it is the unique external input. Source-incidence uniqueness now makes
+any two edges equal. Coverage at the input also supplies an edge, proving
+existence as well as uniqueness. These conclusions use the concrete example
+signatures; they are not asserted for an arbitrary operation alphabet.
+
+\lean{Copying/Stability}{69}{75}{Stability.no_internal}
+
+\lean{Copying/Stability}{78}{92}{Stability.input_source}
+
+\lean{Copying/Stability}{95}{99}{Stability.edge_unique}
+
+\lean{Copying/Stability}{100}{103}{Stability.exists_unique_edge}
+
+For this alphabet, the output and reachability conditions follow from
+the permitted labels. Each output has a producing edge by target coverage,
+so its type is permitted. For reachability, the input reaches itself in
+zero steps, internal vertices are impossible, and each output is reached
+in one step through its producer, which consumes the input. These proofs
+construct the full stability record rather than assuming the extra fields.
+Finally, an adjacency would share a vertex between a target and a source,
+again forcing a non-term vertex to be term. Hence there is no outer edge
+adjacency in a stable graph of this alphabet.
+
+\lean{Copying/Stability}{106}{120}{Stability.of_labels}
+
+\lean{Copying/Stability}{123}{127}{Stability.no_adjacency}
+
+Constant, lambda-head, and instance corollas satisfy the label restriction;
+the construction just proved supplies their output and reachability fields
+at every box allowance. Stability also implies global focus freedom and
+hole freedom. Every outer label is a primitive instance or passive operation,
+so it cannot equal either forbidden constructor. No box case is hidden:
+the stability label predicate excludes boxes outright.
+
+\lean{Copying/Stability}{130}{135}{Stability.constant}
+
+\lean{Copying/Stability}{137}{142}{Stability.lambda}
+
+\lean{Copying/Stability}{144}{149}{Stability.instanceEdge}
+
+\lean{Copying/Stability}{151}{156}{Stability.focusFree}
+
+\lean{Copying/Stability}{158}{163}{Stability.holeFree}
+
+Recursive label equivalence preserves the stable-label predicate. At depth
+zero it is literal equality. At positive depth, related primitive labels
+are equal; primitive/box pairs cannot be related; and neither box satisfies
+the stable-label predicate. To transport stability through a recursive graph
+isomorphism, pull each target edge back through the edge bijection, transfer
+its stable label, and invoke the proved construction from labels. Applying
+the same argument to the inverse gives equivalence of stability.
+
+\lean{Copying/Stability}{166}{177}{Stability.label_equiv}
+
+\lean{Copying/Stability}{179}{183}{Stability.iso}
+
+\lean{Copying/Stability}{185}{186}{Stability.iso_iff}
+
+\subsection{Copyability specialised to the full example alphabet}
+\termdef{copying-copyable-payload}
+Definition~10.2 permits an instance, or an operation followed by the parallel
+box forest attached to its thunk outputs. In $\mathbb O^{\mathrm{ex}}$, only
+lambda has a thunk output, and it has exactly one. Thus lambda has exactly
+one attached box; constants, application, unary operations and binary
+operations have no attached boxes. Specialising the diagram gives the
+constructors below without removing any case of the example language.
+
+A lambda payload is serial assembly of the lambda corolla with the box
+of its body, before adding the translation's outer distributors. The box
+has one bound variable and the original ordered free variable/atom interface.
+Copyability has constructors for instance, constant, application, each unary
+operation, each binary operation, and this lambda payload. A final constructor
+closes these shapes under recursive graph isomorphism, including independent
+renaming inside boxes. The predicate retains the interface counts of each
+shape. Box bodies are not assumed stable: they may contain computations.
+Copyability is a shape predicate, not an assertion of termination.
+
+\lean{Copying/Copyability}{10}{15}{Copyability.lambdaPayload}
+
+\lean{Copying/Copyability}{16}{26}{Copyability.Copyable}
+
+The outer-label predicate allows only instance, operation, and box labels.
+It is invariant under recursive label equivalence by the same primitive/box
+case analysis. Induction on a copyability derivation proves that every outer
+edge has an allowed label. Primitive cases inspect the corolla; the lambda
+case splits between its lambda and box edges; the renaming case pulls back
+through the edge bijection and uses label invariance. Consequently no outer
+sharing, store, focus or hole edge is part of a copyable payload. This is
+an outer-level statement; arbitrary box bodies require their own invariants.
+Copyability is preserved and reflected by recursive isomorphism, using its
+renaming constructor in both directions.
+
+\lean{Copying/Copyability}{29}{35}{Copyability.OuterLabel}
+
+\lean{Copying/Copyability}{37}{48}{Copyability.outer_equiv}
+
+\lean{Copying/Copyability}{51}{63}{Copyability.outer_labels}
+
+\lean{Copying/Copyability}{65}{70}{Copyability.iso_iff}
+
+The literal abstraction translation factors as the lambda payload followed
+by $D^{\star}_{k,1}\otimes D^{\diamond}_{h,1}$. The equation is definitional:
+it only names an existing part of the assembled graph. In particular,
+none of the distributors is deleted. If the body is a language graph, the
+payload is a language graph too, by the box-language lemma, the permitted
+lambda primitive, and serial closure. This supplies the stronger global
+invariants when the body comes from the term translation.
+
+\lean{Copying/Copyability}{71}{72}{Copyability.abstraction_factor}
+
+\lean{Copying/Copyability}{75}{77}{Copyability.lambdaPayload_language}
+
+\subsection{Distinguishing the predicates and using the original program}
+
+Every unary operation corolla is copyable, including reference creation
+and dereference, but it is not stable: its term output contradicts the
+stable-output field. A lambda payload is also not stable, even though its
+head is passive. Serial assembly introduces an internal thunk vertex between
+lambda and box, contradicting the proved absence of internal vertices in
+a stable graph. These negative results prevent treating ``copyable'' and
+``stable'' as interchangeable approximations to values.
+
+For every scoped term supplied as a lambda body, its translated payload
+is copyable by construction. The full translation's language theorem and
+payload language preservation prove global focus and hole freedom. Thus
+arbitrary computations may remain inside the box while the fragment used
+by the copy rule has the required structural form.
+
+\lean{Copying/ValueExamples}{9}{14}{ValueExamples.unary_copyable_not_stable}
+
+\lean{Copying/ValueExamples}{17}{21}{ValueExamples.lambdaPayload_not_stable}
+
+\lean{Copying/ValueExamples}{24}{32}{ValueExamples.translated_lambda_payload}
+
+For every ambient $(k,h)$, the translation of the unchanged right-hand
+program $\lambda f.(f();1)$ factors into a copyable payload and its two
+single-use distributors. The witness is the lambda payload of the translated
+body $f();1$, using exactly the existing sequencing sugar. The factorisation
+equality is reflexivity after unfolding the construction; no contextual
+or semantic equivalence is assumed. The graph has allowance two because
+sequencing introduces the second abstraction. Finally, the unit corolla
+is stable and has a unique edge by the general stability theorems.
+
+
+\lean{Copying/ValueExamples}{33}{38}{ValueExamples.constantResult_copyable_factor}
+
+\lean{Copying/ValueExamples}{41}{44}{ValueExamples.unit_stable_unique}
+
+All three axiom audits and the full build pass with only standard Lean
+axioms. The definitions and structural properties of stable and copyable
+graphs are completed. Required depth and operational preservation laws,
+copying/store transitions, translation/context laws, and template robustness
+remain in Appendix~\ref{app:remaining-work}. Proposition~12.2 is not yet proved.

@@ -36,10 +36,12 @@ parallel and serial assembly. Section~\ref{sec:copying-tracing} proves
 arbitrary-tree root termination and uniqueness of store resolution.
 Sections~\ref{sec:literal-translation}--\ref{sec:complete-translation} construct
 all Figure~16 clauses and the full recursive term translation without
-simplifying the paper's graphs.
+simplifying the paper's graphs. Section~\ref{sec:copying-values} defines stable
+and copyable graphs and proves their structural and renaming properties.
 The remaining tasks are:
 \begin{enumerate}
-\item Construct copyable and stable graphs. Prove the term translation's
+\item Prove the remaining depth and operational invariants for stable and
+copyable graphs. Prove the term translation's
 graph-level renaming and substitution laws; construct context translation
 and prove its composition laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.

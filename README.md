@@ -33,10 +33,16 @@ with proved global language, focus-free, and hole-free properties. Graph-level
 renaming/substitution laws, context translation, the copying/store machine, and
 the final equivalence remain open.
 
+Stable graphs (Definition 10.3) and copyable payloads (Definition 10.2) now
+have separate predicates and proved structural/renaming properties. The actual
+right-hand proposition graph factors into a copyable lambda payload followed
+by the original single-use distributors. These are structural results; copying,
+store transitions and their preservation laws remain unfinished.
+
 The commentary's section **Copying and store: foundations for Proposition 12.2**
 contains the dependency map; **Ordered distributors and graph assembly**
 explains the new constructions and proofs. Appendix B tracks the remaining
-stability/copyability, translation, copying machine,
+stability/copyability preservation, translation laws, copying machine,
 binding-free contexts, eleven template families, and final Figure 22 assembly.
 The existing two paper-correspondence audits remain open.
 
