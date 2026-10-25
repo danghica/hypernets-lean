@@ -1,0 +1,266 @@
+\clearpage
+\section{Binding-freedom of every translated lambda-context}
+\label{sec:copying-context-binding}
+\termdef{copying-context-binding-certificate}
+We now prove the binding-free graph obligation in the paper's proof of
+Lemma~11.3: every annotated lambda-context translates to a binding-free graph,
+for every hole name and every finite hole allowance. The proof uses the
+existing Figure~16 construction, including the prescribed distributors,
+middle-block exchange and padding. No term or translation clause changes.
+The sole-hole certificate, addressed-plugging correspondence and semantic
+congruence remain separate obligations in Appendix~B.1.
+
+The central observation is directional. A serial graph has no path that
+crosses from its right component back into its left component. An operation
+prefix has no forbidden starting label. A sharing suffix has no hole that
+could be the endpoint of a forbidden path. These facts justify the actual
+translation graphs without deleting or identifying distributor edges.
+
+\subsection{Adjacency through finite expansion}
+
+
+For an expanded edge with disjoint source and target lists, the insertion
+map is injective on all vertices. Internal vertices carry the component tag;
+input and output coincidences are ruled out by the old edge's absence of a
+self-loop; equal ports of the same kind are identified using port injectivity.
+Consequently adjacency between two edges in that component is preserved and
+reflected: pull their shared vertex back through the injective insertion map.
+
+For two distinct components, any adjacency must cross their boundaries.
+A shared internal vertex would identify the component tags. The remaining
+possibility is an output port of the first component identified with an
+input port of the second. Host injectivity then gives an adjacency between
+the corresponding old pattern edges. These lemmas are generic finite-graph
+results, independent of the copying alphabet or machine.
+
+\lean{Graph/ExpansionAdjacency}{12}{33}{ExpansionAdjacency.insert_injective}
+
+
+\lean{Graph/ExpansionAdjacency}{34}{48}{ExpansionAdjacency.adjacent_same_iff}
+
+
+\lean{Graph/ExpansionAdjacency}{49}{67}{ExpansionAdjacency.adjacent_cross}
+
+
+\subsection{Depth and ordered parallel assembly}
+\termdef{copying-binding-padding}
+
+
+Padding leaves adjacency unchanged under the existing edge bijection.
+It also preserves and reflects both the forbidden-starting-label predicate
+and the hole-label predicate: primitives retain their constructor, and
+boxes remain boxes. Source witnesses are unchanged. The general pullback
+lemma therefore proves shallow binding-freedom in both directions.
+Induction on depth extends this equivalence to every box body. Together
+with focus-freedom invariance it proves binding-freedom invariance under
+one-step raising. Equality transport handles depth casts, induction handles
+any finite amount of padding, and combining these proves the result for
+padding to a requested common allowance. Unsafe paths cannot be concealed
+by changing a representation bound.
+
+\lean{Copying/BindingPadding}{11}{15}{BindingPadding.padding_adjacent}
+
+
+\lean{Copying/BindingPadding}{16}{25}{BindingPadding.padding_bindingLabel}
+
+
+\lean{Copying/BindingPadding}{26}{45}{BindingPadding.padding_holeLabel}
+
+
+\lean{Copying/BindingPadding}{46}{69}{BindingPadding.shallow_raise_iff}
+
+
+\lean{Copying/BindingPadding}{70}{87}{BindingPadding.paths_raise_iff}
+
+
+\lean{Copying/BindingPadding}{88}{91}{BindingPadding.raise_iff}
+
+
+\lean{Copying/BindingPadding}{92}{94}{BindingPadding.castDepth_iff}
+
+
+\lean{Copying/BindingPadding}{95}{100}{BindingPadding.pad_iff}
+
+
+\lean{Copying/BindingPadding}{101}{104}{BindingPadding.padTo_iff}
+
+
+In parallel assembly, adjacent edges have the same component tag. Induction
+on ancestry therefore keeps every edge in its starting component and
+reflects the ancestry to that component. A proposed forbidden path in the
+parallel graph yields its source witness and terminal hole in that same
+component, contradicting the component's shallow binding-freedom.
+At deeper allowances, each inserted label retains its original box body,
+so the recursive condition and focus-freedom are inherited as well.
+
+Interface casts preserve these predicates by equality elimination. Hence
+the translated pair of subterms is binding-free when both subterms are:
+the middle-block exchange only changes the boundary ordering, and the
+preceding parallel theorem allows any typed boundary bijection. This proves
+the property for the exact variable-before-atom interface of Figure~16.
+
+\lean{Copying/BindingParallel}{14}{26}{BindingParallel.ancestor_parallel}
+
+
+\lean{Copying/BindingParallel}{27}{40}{BindingParallel.shallow_parallel}
+
+
+\lean{Copying/BindingParallel}{41}{49}{BindingParallel.paths_parallel}
+
+
+\lean{Copying/BindingParallel}{50}{56}{BindingParallel.parallel}
+
+
+\lean{Copying/BindingParallel}{57}{61}{BindingParallel.castInterfaces_iff}
+
+
+\lean{Copying/BindingParallel}{62}{68}{BindingParallel.pair}
+
+
+\subsection{Directed serial assembly}
+\termdef{copying-serial-direction}
+
+
+Neither edge of the two-slot serial pattern self-loops: its external and
+internal port constructors distinguish its source and target vertices.
+A backward adjacency in the expansion would, by the crossing lemma, give
+an adjacency from the right pattern edge to the left one. That would identify
+an external output with an external input, which is impossible.
+
+Induction on ancestry proves that a path starting in the right component
+stays there. If the two endpoints have the same tag, every intermediate tag
+must agree too: a left-to-right crossing could not return to a left endpoint.
+The within-component adjacency reflection theorem then reconstructs the
+whole ancestry in the original component.
+
+\lean{Copying/BindingSerial}{12}{17}{BindingSerial.serial_nonSelfLoop}
+
+
+\lean{Copying/BindingSerial}{18}{28}{BindingSerial.serial_no_backward}
+
+
+\lean{Copying/BindingSerial}{29}{40}{BindingSerial.serial_ancestor_monotone}
+
+
+\lean{Copying/BindingSerial}{41}{64}{BindingSerial.serial_ancestor_same}
+
+
+Serial shallow closure requires a condition on paths crossing from left
+to right. It suffices that either the left graph has no prohibited starting
+labels or the right graph has no holes. Under either alternative, a forbidden
+path must have both endpoints on the same side. Directionality puts its first
+successor on that side as well, and the ancestry theorem reflects the rest
+of the path. Pulling back the source witness contradicts that component's
+shallow condition.
+
+The recursive version retains the original body condition below every
+expanded edge. Combining it with the existing focus-free serial theorem
+gives full binding-freedom. In particular, a focus-free, hole-free suffix
+can be appended to any binding-free graph. This is the case needed for
+the translation's contraction and weakening distributors. Their labels
+need not be operations, and their edges are not removed.
+
+\lean{Copying/BindingSerial}{65}{101}{BindingSerial.shallow_serial}
+
+
+\lean{Copying/BindingSerial}{102}{113}{BindingSerial.paths_serial}
+
+
+\lean{Copying/BindingSerial}{114}{122}{BindingSerial.serial}
+
+
+\lean{Copying/BindingSerial}{123}{133}{BindingSerial.serial_suffix}
+
+
+\subsection{The complete context-translation certificate}
+
+
+A graph in the translated language is focus-free and hole-free, so it is
+binding-free. An operation corolla is such a graph and has no prohibited
+starting label; serial closure therefore permits it as a prefix of any
+binding-free argument graph. A box has no outer hole, while its body inherits
+the binding-free condition independently at the lower depth.
+
+For abstraction, apply the interface cast to the certified body, box it,
+prefix the lambda operation and append the original single-use distributors.
+For a unary operation, prefix its operation edge and append those distributors.
+For application and every binary operation, use the certified ordered pair,
+prefix the operation edge, and append the original two-use distributors.
+Each suffix is focus-free and hole-free by its existing language theorem.
+
+\lean{Copying/BindingTranslation}{13}{16}{BindingTranslation.language}
+
+
+\lean{Copying/BindingTranslation}{17}{24}{BindingTranslation.operation_prefix}
+
+
+\lean{Copying/BindingTranslation}{25}{34}{BindingTranslation.box}
+
+
+\lean{Copying/BindingTranslation}{35}{43}{BindingTranslation.abstraction}
+
+
+\lean{Copying/BindingTranslation}{44}{50}{BindingTranslation.unary}
+
+
+\lean{Copying/BindingTranslation}{51}{57}{BindingTranslation.application}
+
+
+\lean{Copying/BindingTranslation}{58}{66}{BindingTranslation.binary}
+
+
+Induction on an annotated lambda-context now proves the stronger statement:
+its constructor interpretation preserves binding-freedom for \emph{any}
+binding-free graph supplied at the hole. The hole case is the hypothesis.
+Abstraction and unary cases use the constructor lemmas. Application and
+binary cases combine the recursive certificate with the hole-free translation
+of the fixed subterm. Both branches are padded to the original common maximum
+allowance, using the proved padding equivalence, before applying the pair
+and operation lemmas.
+
+Finally, supply the isolated hole corolla, whose binding-freedom was already
+proved. The result is the actual holed context translation, with no
+well-behavedness assumption on the context beyond its typed grammar. This
+is the first of the two graph properties used in the paper's proof of
+Lemma~11.3. The other is correspondence between translated term filling and
+addressed graph plugging; it is not asserted by this certificate.
+
+\lean{Copying/BindingTranslation}{67}{88}{BindingTranslation.context_apply}
+
+
+\lean{Copying/BindingTranslation}{89}{92}{BindingTranslation.context_graph}
+
+
+A nested example combines abstraction, application and reference creation,
+with the enclosing lambda binding a variable in the hole annotation. Its
+translation is certified at every allowance and every hole name by the
+general theorem.
+
+A negative example places a term contraction immediately before a term hole.
+An explicit input vertex supplies a source of the contraction; the shared
+internal vertex is both its target and the hole's source. This is a positive
+forbidden path, so the graph is not binding-free. The padding equivalence
+proves that the same rejection holds at every larger allowance. Thus the
+certificate does not accidentally admit the copying configuration that the
+binding-free restriction is intended to exclude.
+
+\lean{Copying/BindingTranslationExamples}{10}{12}{BindingTranslationExamples.nestedReferenceContext}
+
+
+\lean{Copying/BindingTranslationExamples}{13}{18}{BindingTranslationExamples.nestedReferenceContext_bindingFree}
+
+
+\lean{Copying/BindingTranslationExamples}{19}{22}{BindingTranslationExamples.contractionBeforeHole}
+
+
+\lean{Copying/BindingTranslationExamples}{23}{32}{BindingTranslationExamples.contractionBeforeHole_not_bindingFree}
+
+
+\lean{Copying/BindingTranslationExamples}{33}{36}{BindingTranslationExamples.padded_contractionBeforeHole_not_bindingFree}
+
+
+The full build and all three axiom audits pass. The binding-free certificate
+is removed from the unfinished obligations of Appendix~B.1, item~3. That item
+still requires the exact sole-hole certificate, addressed-plugging correspondence,
+and the observation/congruence proof. The copying machine and its execution
+instance remain part of item~2.

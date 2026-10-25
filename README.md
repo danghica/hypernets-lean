@@ -752,3 +752,10 @@ Figure 16 translation exactly. Concrete single-hole closing observations are
 also defined with an explicit execution parameter, and universal-cost equivalence
 is proved to mean agreement on successful termination. Addressed graph-plugging
 correspondence and term-context congruence remain open; item 3 is not complete.
+
+Every annotated lambda-context now has a proved binding-free graph translation,
+for every hole name and allowance, retaining the exact Figure 16 distributors
+and padding. The proof includes parallel/serial path separation and reflection
+of binding-freedom under padding. A contraction-before-hole regression remains
+rejected at every allowance. The sole-hole and addressed-plugging certificates,
+and hence term-context congruence, remain unfinished.
