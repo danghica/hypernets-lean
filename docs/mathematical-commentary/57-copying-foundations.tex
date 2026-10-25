@@ -29,10 +29,10 @@ properties and recursive-isomorphism invariance are proved in
 Section~\ref{sec:copying-values}.
 \item \textbf{Graph correspondence:} context translation is defined and its
 constructor interpretation laws are checked. Actual filling is proved for
-lambda/unary contexts and for each parallel, application, binary and iterated
-padding constructor (Sections~\ref{sec:copying-nested-filling}--\ref{sec:copying-parallel-padding}).
-Unrestricted context induction, graph-level term renaming/substitution, and
-remaining depth and operational invariants are pending.
+every original annotated context, with cumulative padding, sole-hole and
+binding-free certificates (Section~\ref{sec:copying-context-filling}).
+Graph-level term renaming/substitution and remaining depth and operational
+invariants are pending.
 \item \textbf{Pending machine:} the copy rule (Figure~17), extra search rules
 (Figure~18), store rules (Figure~19), and arithmetic/application behaviour.
 These must yield an unbounded deterministic refocusing copying machine and

@@ -1,0 +1,270 @@
+\clearpage
+\section{Unrestricted term-context filling}
+\label{sec:copying-context-filling}
+The structural graph-filling theorem is now proved for every context in the
+original annotated grammar, with arbitrary finite variable and atom scopes.
+It includes holes below binders, unary operations, and either argument of
+application and binary operations. The terms of Proposition~12.2, the
+Figure~16 translation and its depth choices are unchanged.
+
+The theorem supplies one actual sole-hole address before the argument graph
+is given. The translated host is binding-free. Filling this address with the
+appropriately padded translation of any term recovers the original translation
+of the filled term up to recursive graph isomorphism and equality of the outer
+depth indices. Neither machine determinism nor execution invariance is a premise
+of this structural result. Conversely, no termination equivalence follows
+without the remaining semantic connection: the copying machine must respect
+isomorphism and padding, and observational congruence must be established.
+
+\subsection{Exact composition of depth padding}
+\termdef{copying-cumulative-padding}
+Write $P_d^n(G)$ for the original operation that raises the allowance of a graph
+$G$ from $d$ to $d+n$. Equality transport changes only a type index; it does
+not insert another graph constructor. Padding and one-step raising commute
+with transport along $d=e$, because eliminating that equality leaves the
+same expressions on both sides.
+
+
+
+
+\lean{Copying/PaddingComposition}{9}{12}{PaddingComposition.pad_castDepth}
+
+\lean{Copying/PaddingComposition}{13}{18}{PaddingComposition.raise_castDepth}
+
+Successive padding satisfies
+\[
+ P_{d+n}^{m}(P_d^n(G))
+   =\operatorname{cast}_{d+(n+m)=(d+n)+m}(P_d^{n+m}(G)).
+\]
+Induct on $m$. With no additional step the expressions coincide. At a
+successor, unfold the last raising operation, apply the induction hypothesis,
+and move the equality transport through raising using the preceding lemma.
+The remaining transports agree because they express the same associativity
+of addition. This is graph equality, not an observational claim.
+
+Recursive graph isomorphism also survives depth equality transport by equality
+elimination. Raising to a specified common allowance consists of iterated
+padding followed by such a transport. Composing the previous section's padding
+congruence with transport congruence therefore proves common-allowance
+congruence.
+
+
+\lean{Copying/PaddingComposition}{19}{26}{PaddingComposition.pad_add}
+
+\lean{Copying/PaddingComposition}{27}{29}{PaddingComposition.castDepth_congr}
+
+\lean{Copying/PaddingComposition}{30}{35}{PaddingComposition.padTo_congr}
+
+An address has two independently indexed allowances: its host depth and its
+local hole depth. Transporting the host depth leaves the local depth fixed.
+Filling the transported address equals transporting the filled graph, and the
+sole-hole certificate is preserved. Each statement follows by eliminating
+the host-depth equality.
+
+Transporting the local depth instead leaves the host graph unchanged. Filling
+this transported address with a graph at the new local index equals filling
+the old address with that graph transported by the inverse equality. Its
+sole-hole certificate is again preserved. These definitions and proofs
+separate the two indices rather than silently identifying them.
+
+
+\lean{Copying/PaddingComposition}{36}{39}{PaddingComposition.Site.castDepth}
+
+\lean{Copying/PaddingComposition}{40}{43}{PaddingComposition.plugAt_castDepth}
+
+\lean{Copying/PaddingComposition}{44}{48}{PaddingComposition.SoleHole.castDepth}
+
+\lean{Copying/PaddingComposition}{49}{51}{PaddingComposition.Site.castLocal}
+
+\lean{Copying/PaddingComposition}{52}{55}{PaddingComposition.plugAt_castLocal}
+
+\lean{Copying/PaddingComposition}{56}{60}{PaddingComposition.SoleHole.castLocal}
+
+Suppose a site lies in a host of allowance $h$, while its local allowance is
+$d+n$. Padding the host by $m$ steps yields a site with local allowance
+$(d+n)+m$. Transport this local index to $d+(n+m)$; this is the extended site.
+The previous padding certificate and local-transport certificate prove that
+it remains sole.
+
+Filling the extended site with $P_d^{n+m}(A)$ is recursively isomorphic to
+$P_h^m$ applied to the original site filled with $P_d^n(A)$. First use the
+local-transport filling equality. The additive padding equality rewrites its
+replacement as $P_{d+n}^m(P_d^n(A))$. The inverse of the previous section's
+iterated padding/filling isomorphism then gives the result. Thus accumulated
+padding is applied to the original argument at its own allowance.
+
+
+\lean{Copying/PaddingComposition}{61}{65}{PaddingComposition.extendSite}
+
+\lean{Copying/PaddingComposition}{66}{69}{PaddingComposition.extendSite_sole}
+
+\lean{Copying/PaddingComposition}{70}{78}{PaddingComposition.extend_filling}
+
+For a target host allowance $N\geq h$, take $m=N-h$ in the preceding
+construction, then transport the host index $h+(N-h)$ to $N$. This gives a
+site in the existing common-allowance padding of the host, with local depth
+$d+(n+(N-h))$. The certificate follows from extended-site and host-transport
+certificate preservation. The filling law follows by transporting the
+extended-site isomorphism along the same host equality. No additional padding
+is charged for surrounding boxes already counted in $h$.
+
+
+\lean{Copying/PaddingComposition}{79}{83}{PaddingComposition.toSite}
+
+\lean{Copying/PaddingComposition}{84}{87}{PaddingComposition.toSite_sole}
+
+\lean{Copying/PaddingComposition}{88}{96}{PaddingComposition.to_filling}
+
+\subsection{Congruence of the constructor interpretation}
+
+Recall that scoped isomorphism includes equality of the two graph depths,
+followed by recursive isomorphism at that depth. For application, unpack both
+argument isomorphisms and eliminate their depth equalities. The two expressions
+then choose the same maximum allowance. Apply common-allowance congruence to
+each argument and the original application congruence to their padded graphs.
+The resulting scoped isomorphism has reflexive equality of outer depths.
+For each binary operation the proof is identical with the existing binary
+constructor congruence in place of application congruence.
+
+
+\lean{Copying/ContextFilling}{9}{18}{ContextFilling.application}
+
+\lean{Copying/ContextFilling}{19}{31}{ContextFilling.binary}
+
+Every original context preserves scoped isomorphism of its argument graphs.
+Induct on the context. The hole returns the given relation. Lambda and unary
+constructors apply their established congruence theorems. At either argument
+position of application or a binary operation, use the corresponding new
+scoped congruence with the induction hypothesis in the selected position and
+reflexive scoped isomorphism of the fixed sibling in the other position.
+This is a structural congruence theorem; it makes no claim about execution.
+
+
+\lean{Copying/ContextFilling}{32}{45}{ContextFilling.apply_iso}
+
+\subsection{The unrestricted addressed filling theorem}
+\termdef{copying-unrestricted-filling}
+
+Fix a context $C$ whose hole has scope $(v,a)$ and whose outer scope is
+$(k,h)$, an argument allowance $d$, and a hole name. Let $T_C$ denote the
+original translated holed graph, and let $D_C$ denote its outer allowance.
+There exist a natural number $n$ and a sole site $s$ of $T_C$, with local
+allowance $d+n$ and interface
+\[
+ [\mathsf{term}]\longrightarrow
+ \mathsf{environmentInterface}(v,a),
+\]
+such that, for every fitting graph $A$ at allowance $d$,
+\[
+ \bigl(D_C,\operatorname{plugAt}(s,P_d^n(A))\bigr)
+ \quad\mathrel{\mathsf{ScopedIso}}\quad
+ \operatorname{apply}(C,(d,A)).
+\]
+The quantifier over $A$ follows the choices of $n$ and $s$: both are fixed by
+the context, allowance and hole name. In particular, the proof cannot choose
+a different occurrence after inspecting the argument graph.
+
+\paragraph{Hole.} Choose $n=0$ and the hole corolla's unique edge. The existing
+corolla replacement isomorphism recovers $A$, and the singleton carrier proves
+the sole-hole certificate.
+
+\paragraph{Lambda.} Retain the induction hypothesis's $n$. Lift its address
+through the original abstraction clause. Its sole-hole law supplies the
+certificate. Compose the abstraction filling isomorphism with abstraction
+congruence applied to the induction hypothesis. The host allowance increases
+by one; the hole's local allowance does not.
+
+\paragraph{Unary operation.} Retain $n$, lift the address through the original
+unary clause, and use its sole-hole law. Compose unary filling with unary
+congruence of the induction hypothesis. The operation and distributor are
+unchanged.
+
+\paragraph{Application, left argument.} Let the selected subcontext host have
+allowance $D$ and the fixed sibling term have depth $q$. Set $N=\max(D,q)$.
+Pad the fixed sibling to $N$; it is hole-free because term translation and
+padding preserve this property. Lift the induction hypothesis's site to
+allowance $N$ using the new common-allowance site. Its local padding count is
+now $n+(N-D)$. Lift that address into the application's left argument. The
+padding and application certificates prove that it remains sole.
+
+For a graph $A$, first use application filling, then application congruence
+with the common-allowance filling isomorphism in the left position and the
+identity in the fixed position. This yields application of the padded original
+subcontext filling and the fixed sibling. Finally use scoped application
+congruence with the induction hypothesis to reach the original constructor
+interpretation. The intermediate scoped isomorphism ensures that the maximum
+depth chosen on the target side is exactly the same $N$.
+
+\paragraph{Application, right argument.} Choose $N=\max(q,D)$ and the same
+deficit $N-D$ for the selected subcontext. Use the right-site and right-filling
+laws. Place the identity and induction isomorphisms in the opposite positions.
+The ordered pair boundary is still the original one.
+
+\paragraph{Binary operation, either argument.} Repeat the corresponding left
+or right application argument with that binary operation's filling and
+congruence laws. The operation parameter remains unrestricted. These seven
+cases exhaust the original context grammar; no restricted-context predicate
+is required.
+
+
+\lean{Copying/ContextFilling}{46}{129}{ContextFilling.context_filling}
+
+For a term $t$, instantiate the theorem at $d=\mathsf{depth}(t)$ and take
+$A$ to be its unchanged translation. The previously proved constructor
+interpretation identity identifies the target with the original translation
+of $C[t]$, including its exact outer depth. The existing theorem that every
+translated term context is binding-free supplies that certificate. Thus the
+same site is sole, its host is binding-free, and its actual filling has the
+required structural correspondence for arbitrary scopes and argument terms.
+
+The graph-context interface can also be packaged using this very site, rather
+than selecting a potentially different site merely from hole existence.
+Combine the translated host, the constructed site, its sole-hole proof and
+the host's binding-free proof into a graph context. Its graph is literally
+equal to the original translated host, and the universal filling law is the
+one just proved. This packages a checked structural interface; it introduces
+no assumption about a copying execution.
+
+
+\lean{Copying/ContextFilling}{130}{143}{ContextFilling.context_term_filling}
+
+\lean{Copying/ContextFilling}{144}{152}{ContextFilling.context_graph_filling}
+
+\subsection{Mixed-context regression and semantic boundary}
+
+The fixed sibling term is $\lambda x.\lambda y.y$, represented with the
+original scoped variable indices, in arbitrary ambient environments. The
+mixed context has an outer lambda and dereference, and its path to the hole
+passes through left application, right binary addition, right application,
+and left binary assignment. Its fixed siblings include the two-box term and
+unit. Hence every context constructor occurs on one path, and the hole's
+scope includes the variable bound by the outer lambda.
+
+For a hole allowance of zero the translated host has depth three: the
+binary/application portion meets a depth-two sibling, and the outer lambda
+adds one. This equality is definitional, so the regression genuinely includes
+a maximum-depth mismatch. A second definitional equality checks that term
+filling retains the exact displayed constructor expression. The unrestricted
+term-filling theorem then proves the actual sole-hole, binding-free graph
+correspondence for every argument term and every ambient variable/atom scope.
+This is a structural regression, not a claim that the mixed expression
+terminates or is well behaved under a store machine.
+
+Appendix~B.1 item~3 no longer contains unrestricted addressed correspondence
+as an unfinished task. It still contains observational term-context congruence
+and the observation/padding audit. In particular, arguments of different
+minimal depths must be compared through common representations, and the
+concrete execution must discharge its isomorphism and padding invariance
+obligations. The copying machine and the template proofs remain pending;
+Proposition~12.2 is not yet proved.
+
+
+\lean{Copying/ContextFillingExamples}{8}{11}{ContextFillingExamples.twoBoxSibling}
+
+\lean{Copying/ContextFillingExamples}{12}{21}{ContextFillingExamples.mixedArgumentContext}
+
+\lean{Copying/ContextFillingExamples}{22}{25}{ContextFillingExamples.mixedArgumentContext_depth}
+
+\lean{Copying/ContextFillingExamples}{26}{34}{ContextFillingExamples.mixedArgumentContext_fill}
+
+\lean{Copying/ContextFillingExamples}{35}{44}{ContextFillingExamples.mixedArgumentContext_graph_filling}

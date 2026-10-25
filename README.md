@@ -796,3 +796,14 @@ Both sides of application are checked in combined two-step padding regressions.
 All terms and Figure 16 translation constructors are unchanged. Appendix B.1
 item 3 still requires unrestricted context induction at maximum-depth joins
 and observational congruence backed by the copying machine's representation laws.
+
+
+Section 66 proves unrestricted addressed filling for the original annotated
+term-context grammar. One sole-hole address, in the original binding-free
+translated host, reconstructs every fitting argument graph after precisely
+tracked cumulative padding. For terms this yields the unchanged translation
+of the filled term. The proof covers both application and binary positions,
+lambdas and unary operations; a mixed regression checks all constructors and
+a genuine depth mismatch. Appendix B.1 item 3 now retains observational
+congruence and the observation/padding audit, including the concrete machine's
+representation obligations. Proposition 12.2 remains unfinished.
