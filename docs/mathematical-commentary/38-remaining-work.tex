@@ -30,7 +30,7 @@ is now an explicit extension target.
 \Needspace{14\baselineskip}
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-expansion-plug}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-nested-filling}.
 In particular, binding-free plugging closure is proved at sourced holes;
 the zero-input counterexample in Section~\ref{sec:copying-binding} qualifies
 unrestricted closure. The five remaining tasks are:
@@ -43,11 +43,11 @@ of Proposition~12.2 and the translation of Figure~16.
 \item Define copying and extra search transitions and all example compute rules;
 prove the unbounded machine's determinism, refocusing and specimen locality,
 including independence of the copy rule from its contraction-tree match.
-\item Extend addressed graph-filling correspondence to enclosing boxes and
-parallel argument assembly with compatible depth padding; derive term-context
-congruence for the original Figure~16 translation. The unary case is proved in
-Section~\ref{sec:copying-expansion-plug}; context certification and composition
-are proved in Section~\ref{sec:copying-certified-contexts}.
+\item Prove the parallel argument-assembly and common-depth padding cases of
+addressed filling, then assemble unrestricted term-context correspondence and
+congruence for Figure~16. The abstraction case and certified filling through
+arbitrarily nested lambda/unary contexts are proved in
+Section~\ref{sec:copying-nested-filling}.
 Resolve the observation/padding audit, retaining the zero-input qualification
 of Lemma~E.1. The copying execution of item~2 must discharge isomorphism and
 padding invariance.

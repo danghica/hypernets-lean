@@ -1,0 +1,335 @@
+\clearpage
+\section{Certified filling under arbitrarily nested binders}
+\label{sec:copying-nested-filling}
+The abstraction case of addressed graph filling is now proved for the literal
+Figure~16 translation. Combining it with the unary clause gives a certified
+filling theorem for every original term context built from a hole, lambdas and
+unary operations, with arbitrarily many enclosing binders. The argument term
+is unrestricted: it may itself contain applications, binary operations and
+boxes. Its hole annotation includes every bound and ambient variable available
+there, and arbitrary atom environments are retained.
+
+The theorem constructs a single address before inspecting the argument graph.
+It proves that the address is sole, that its translated host is binding-free,
+and that filling it with an original term translation reconstructs the original
+translation of the filled term, up to recursive isomorphism and equality of
+the depth indices. This last equality is not an equivalence between different
+padding allowances. Parallel argument assembly and common-allowance padding
+remain the structural cases needed for the unrestricted context theorem in
+Appendix~B.1, item~3.
+
+\subsection{Deep replacement through serial assembly}
+
+
+Changing the body of a box in either component of a serial graph commutes
+with serial assembly up to ordinary graph isomorphism. The box's bound,
+free-variable and atom interfaces are fixed. Consequently the outer pattern
+vertices and the two components' tagged vertex and edge carriers remain in
+bijection: each tag and each local element is retained. The explicit maps
+split on the component tag because the two dependent filling families are
+not definitionally the same family of types.
+
+For a left box, a left edge is either the selected occurrence, whose label
+changes to the new body on both sides, or another occurrence, whose label is
+unchanged. Every right label is unchanged. The right-box proof reverses those
+roles. Both source and target lists retain their original component entries.
+Mapping a component vertex through assembly gives the same result for an
+internal vertex, an input port or an output port; the serial pattern identifies
+the corresponding shared boundary in both graphs. Mapping these equalities
+over the ordered lists proves incidence preservation. Equal-labelled boxes
+at other occurrences are not changed.
+
+\lean{Copying/SerialDeepPlug}{10}{61}{SerialDeepPlug.replaceBox_left}
+
+
+\lean{Copying/SerialDeepPlug}{62}{113}{SerialDeepPlug.replaceBox_right}
+
+
+An arbitrary addressed site can now be carried into either serial component.
+For a shallow site, use the component edge's original slot tag and transport
+the local interfaces along the already proved label equality. For a site
+inside a box, tag the outer box edge and keep its body address unchanged.
+This keeps the local depth and both local interfaces exactly as before.
+
+To commute filling with the lifted site, split on the original site's first
+constructor. A shallow site is handled by the preceding section's serial
+replacement theorem; equality transport supplies the matching interfaces.
+A site inside a box is handled by the new box-body interchange theorem,
+using the fully filled inner body. No induction over the remaining address
+is necessary at this step: serial assembly never changes that box's body
+before filling. The resulting laws cover addresses at every finite nesting
+depth on either side of serial composition.
+
+\lean{Copying/SerialDeepPlug}{114}{122}{SerialDeepPlug.leftSite}
+
+
+\lean{Copying/SerialDeepPlug}{123}{131}{SerialDeepPlug.rightSite}
+
+
+\lean{Copying/SerialDeepPlug}{132}{141}{SerialDeepPlug.plugAt_left}
+
+
+\lean{Copying/SerialDeepPlug}{142}{151}{SerialDeepPlug.plugAt_right}
+
+
+Hole-free labels outside a chosen component edge remain hole-free in the
+assembled graph, provided the other component is entirely hole-free. An
+assembled edge either has the selected component tag, where inequality of
+tagged edges implies inequality of local edges, or the other tag, where the
+other component's hypothesis applies. This proves both left and right laws.
+
+A sole-hole certificate then transports with the actual site. For a shallow
+site, its marked label remains the same hole and the other-edge law certifies
+all remaining edges. For a deep site, retain the inner sole-hole certificate
+and use the other-edge law outside its enclosing box. These results certify
+the addresses used by the filling laws themselves.
+
+\lean{Copying/SerialDeepPlug}{152}{161}{SerialDeepPlug.left_other_free}
+
+
+\lean{Copying/SerialDeepPlug}{162}{171}{SerialDeepPlug.right_other_free}
+
+
+\lean{Copying/SerialDeepPlug}{172}{183}{SerialDeepPlug.leftSite_sole}
+
+
+\lean{Copying/SerialDeepPlug}{184}{194}{SerialDeepPlug.rightSite_sole}
+
+
+\subsection{Boxes and the full abstraction clause}
+\termdef{copying-box-context-filling}
+
+
+An equality cast on the host's outer interfaces transports its address
+without changing the local hole interface or depth. Filling the transported
+site equals casting the original filling's outer interfaces. Both definitions
+and the equality proof follow by eliminating the two interface equalities.
+This is the precise transport needed for the existing lambda-box convention,
+which writes the bound variable first.
+
+\lean{Copying/BoxContextPlug}{10}{13}{BoxContextPlug.Site.castHost}
+
+
+\lean{Copying/BoxContextPlug}{14}{19}{BoxContextPlug.plugAt_castHost}
+
+
+To enclose an address in a fresh box, select that box's singleton outer edge
+and retain the original body address below it. Filling this new address is
+isomorphic to boxing the filled body. Keep the empty outer internal carrier
+and singleton edge carrier fixed. Every outer edge is the selected edge, so
+its replacement label is exactly the box with the filled body. Sources and
+targets agree because the bound and free interfaces are unchanged.
+
+Recursive body isomorphisms also lift through a box. The same outer carrier
+maps preserve incidence, while the recursive box-label relation is witnessed
+by the given body isomorphism. This separates the exact box-construction
+interchange from the later use of an isomorphism between body results.
+
+\lean{Copying/BoxContextPlug}{20}{25}{BoxContextPlug.boxSite}
+
+
+\lean{Copying/BoxContextPlug}{26}{43}{BoxContextPlug.box_filling}
+
+
+\lean{Copying/BoxContextPlug}{44}{56}{BoxContextPlug.box_congr}
+
+
+The sole-hole predicate is invariant under outer interface equality casts,
+by equality elimination. Enclosing a sole site in a box preserves its
+certificate: the inner certificate is unchanged and there is no other outer
+edge, since the box's edge carrier is a singleton. Thus neither transport
+nor boxing introduces an extra hole.
+
+\lean{Copying/BoxContextPlug}{57}{61}{BoxContextPlug.SoleHole.castHost}
+
+
+\lean{Copying/BoxContextPlug}{62}{71}{BoxContextPlug.boxSite_sole}
+
+
+Outer interface casts preserve recursive isomorphism, again by equality
+elimination. For the actual lambda box, first apply the existing cast from
+$k+1$ variables to $1+k$ variables, then enclose the transported address in
+the box. The box-filling isomorphism together with the host-cast filling
+equality proves the law for this exact lambda-box constructor. The ordered
+bound-variable convention is preserved; no alternative box interface is
+introduced.
+
+\lean{Copying/BoxContextPlug}{72}{77}{BoxContextPlug.castInterfaces_congr}
+
+
+\lean{Copying/BoxContextPlug}{78}{81}{BoxContextPlug.lambdaBoxSite}
+
+
+\lean{Copying/BoxContextPlug}{82}{89}{BoxContextPlug.lambdaBox_filling}
+
+
+Follow the body address into its lambda box, through the right side of the
+lambda-operation prefix, and through the left side of the prescribed
+single-use distributor suffix. This defines the full abstraction address.
+
+The filling law is a composition of three proved isomorphisms: commute filling
+past the distributor suffix, commute it past the lambda prefix, and apply
+the lambda-box filling law. Serial congruence lifts the inner isomorphisms
+through the unchanged surrounding components. Abstraction congruence follows
+from the same serial and box congruence laws, with the original interface
+cast applied to the given body isomorphism. In particular, these proofs
+retain both the lambda operation and all distributor edges.
+
+\lean{Copying/BoxContextPlug}{90}{95}{BoxContextPlug.abstractionSite}
+
+
+\lean{Copying/BoxContextPlug}{96}{103}{BoxContextPlug.abstraction_filling}
+
+
+\lean{Copying/BoxContextPlug}{104}{108}{BoxContextPlug.abstraction_congr}
+
+
+A unary constructor lifts any body address through its operation prefix and
+distributor suffix, even when that address is below boxes. The two deep serial
+filling laws prove the unary filling law directly. This strictly extends the
+preceding section's shallow unary edge result.
+
+For abstraction, sole-hole preservation follows in order from host-cast
+preservation, singleton boxing, the hole-free lambda prefix, and the hole-free
+distributor suffix. For a unary operation, use the corresponding hole-free
+operation and suffix. Each constructor therefore supplies both the filling
+isomorphism and the sole-hole proof for the same explicitly lifted address.
+
+\lean{Copying/BoxContextPlug}{109}{114}{BoxContextPlug.unarySite}
+
+
+\lean{Copying/BoxContextPlug}{115}{120}{BoxContextPlug.unary_filling}
+
+
+\lean{Copying/BoxContextPlug}{121}{127}{BoxContextPlug.abstractionSite_sole}
+
+
+\lean{Copying/BoxContextPlug}{128}{134}{BoxContextPlug.unarySite_sole}
+
+
+\subsection{Induction over the original nested contexts}
+\termdef{copying-scoped-isomorphism}
+
+
+A scoped graph packages its finite allowance with its graph. To compare such
+packages, define scoped isomorphism to mean an equality of their allowances
+and a recursive graph isomorphism after transporting along that equality.
+This merely handles dependent indices; it does not quotient different depths,
+assert padding invariance, or alter any graph.
+
+Reflexivity uses the identity recursive isomorphism. An isomorphism between
+graphs at the same depth gives a scoped isomorphism immediately. For
+transitivity, unpack the three depths, eliminate the two equalities, and
+compose the recursive isomorphisms. At an already common depth, proof
+irrelevance reduces any equality witness to reflexivity, so scoped
+isomorphism yields an actual recursive isomorphism. Abstraction and unary
+congruence follow by eliminating the depth equality and applying their
+proved graph-constructor congruence laws.
+
+\lean{Copying/NestedContextFilling}{11}{15}{NestedContextFilling.ScopedIso}
+
+
+\lean{Copying/NestedContextFilling}{16}{17}{NestedContextFilling.refl}
+
+
+\lean{Copying/NestedContextFilling}{18}{20}{NestedContextFilling.ofIso}
+
+
+\lean{Copying/NestedContextFilling}{21}{33}{NestedContextFilling.trans}
+
+
+\lean{Copying/NestedContextFilling}{34}{36}{NestedContextFilling.sameDepth}
+
+
+\lean{Copying/NestedContextFilling}{37}{45}{NestedContextFilling.abstraction}
+
+
+\lean{Copying/NestedContextFilling}{46}{59}{NestedContextFilling.unary}
+
+
+The allowed-context predicate is an inductive predicate on the original
+annotated context grammar: a hole is allowed, an enclosing lambda preserves
+the predicate, and any enclosing unary operation preserves it. It introduces
+no new term syntax and imposes no restriction on the eventual argument term.
+It intentionally does not yet cover application or binary-operation context
+constructors.
+
+The literal hole corolla has a shallow address at its annotated term and
+environment interface at every finite allowance. Its sole-hole proof uses
+the singleton edge carrier. Filling that address is recursively isomorphic
+to the supplied graph by the generic corolla left-unit isomorphism.
+
+\lean{Copying/NestedContextFilling}{60}{67}{NestedContextFilling.UnaryLambda}
+
+
+\lean{Copying/NestedContextFilling}{68}{71}{NestedContextFilling.holeSite}
+
+
+\lean{Copying/NestedContextFilling}{72}{76}{NestedContextFilling.holeSite_sole}
+
+
+\lean{Copying/NestedContextFilling}{77}{85}{NestedContextFilling.hole_filling}
+
+
+Induct on the allowed-context derivation. The induction statement constructs
+one actual address in the literal context graph, at the original hole's
+allowance, proves that it is sole, and proves the filling correspondence
+for \emph{every} graph at that interface. The address therefore does not
+depend on the eventual argument.
+
+The hole case is the corolla law. For a lambda, lift the induction address
+through the abstraction constructor. Its sole-hole certificate follows from
+the abstraction certificate. Compose the abstraction filling isomorphism
+with abstraction congruence applied to the induction hypothesis. For a unary
+operation, use the analogous unary address, certificate, filling law and
+congruence. The resulting target is exactly the existing constructor
+interpretation at the supplied argument graph.
+
+Finally choose the hole allowance to be the original argument term's
+translation depth and supply its original translated graph. The existing
+constructor-interpretation theorem identifies the target with translation
+of the syntactically filled term. The independent binding-free theorem
+certifies the literal host context graph. This proves the final conjunction:
+an actual address, its sole-hole proof, host binding-freedom, and scoped
+isomorphism between actual filling and the unchanged filled-term translation.
+The proof does not appeal to execution or observational equivalence.
+
+\lean{Copying/NestedContextFilling}{86}{106}{NestedContextFilling.unaryLambda_filling}
+
+
+\lean{Copying/NestedContextFilling}{107}{120}{NestedContextFilling.unaryLambda_term_filling}
+
+
+The regression context is
+$\lambda.\,\mathtt{ref}(\lambda.\,![-])$.
+Its hole has two more variable slots than its outer environment and the
+same atom slots. The allowed-context derivation follows the two lambdas and
+two unary operations in order. A reflexivity theorem checks the exact filled
+term, with neither binder nor operation moved or erased.
+
+For every ambient environment size, hole name and argument term at that
+annotated scope, the final regression obtains a sole-hole, binding-free host
+and the actual graph-filling correspondence with the direct translation of
+$\lambda.\,\mathtt{ref}(\lambda.\,!t)$.
+This exercises address transport below two boxes with operations between
+and below them. It is a structural regression; it makes no claim about
+executing reference creation or dereference on the resulting term.
+
+\lean{Copying/NestedFillingExamples}{7}{9}{NestedFillingExamples.twoBinderContext}
+
+
+\lean{Copying/NestedFillingExamples}{10}{13}{NestedFillingExamples.twoBinderContext_allowed}
+
+
+\lean{Copying/NestedFillingExamples}{14}{18}{NestedFillingExamples.twoBinderContext_fill}
+
+
+\lean{Copying/NestedFillingExamples}{19}{28}{NestedFillingExamples.twoBinderContext_graph_filling}
+
+
+All new declarations pass the full build, and the three axiom audits report
+only standard Lean axioms. This closes the standalone abstraction and nested
+lambda/unary filling cases. Item~3 still needs parallel argument assembly,
+compatible padding, the unrestricted context induction, and term-context
+congruence. Execution's isomorphism and padding laws must be discharged by
+the copying machine. Proposition~12.2 and its translation remain unchanged.

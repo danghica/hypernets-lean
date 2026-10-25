@@ -777,3 +777,12 @@ isomorphism congruence specialise it to the unchanged unary clause, retaining
 its distributor suffix. The explicit filled address is a certified sole hole.
 The general context filling theorem still needs enclosing boxes, parallel
 argument assembly, and compatible padding; item 3 remains open.
+
+Section 64 extends actual filling to boxes and the full abstraction clause.
+Every original context made from arbitrary nesting of lambdas and unary
+operations now has a single, sole-hole address whose filling reconstructs the
+original filled-term translation up to recursive isomorphism and equality of
+depth indices. The host is certified binding-free. Argument terms and ambient
+variable/atom environments are unrestricted. A two-binder reference/dereference
+regression checks the mixed nesting. Item 3 still needs parallel argument
+assembly, common-depth padding, and unrestricted term-context congruence.

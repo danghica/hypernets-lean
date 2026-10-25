@@ -14,8 +14,9 @@ The result holds for arbitrary finite variable and atom environments and
 arbitrary argument terms, including terms containing boxes. It proves a
 unary context with its hole at the outer level; it does not yet prove
 filling below an enclosing abstraction or inside a parallel argument pair.
-Those cases and their common-allowance padding remain in Appendix~B.1,
-item~3. No execution hypothesis is needed for the structural isomorphisms
+Section~\ref{sec:copying-nested-filling} subsequently proves the enclosing
+abstraction and nested lambda/unary cases. Parallel assembly and
+common-allowance padding remain in Appendix~B.1, item~3. No execution hypothesis is needed for the structural isomorphisms
 proved here.
 
 \subsection{The replacement--expansion isomorphism}
@@ -310,8 +311,8 @@ about executing either store operation.
 The full build and all three axiom audits pass. The dependency chain now
 contains a proved unary filling case:
 replacement--expansion interchange, serial replacement and congruence,
-unary replacement, then corolla elimination. The general context induction
-still needs replacement below boxes, the parallel argument construction,
+unary replacement, then corolla elimination. Section~\ref{sec:copying-nested-filling} extends the result below boxes.
+The general context induction still needs parallel argument assembly
 and its padding compatibility. Term-context congruence and the copying
 execution's representation laws remain separate obligations. The displayed
 programs in Proposition~12.2 and every existing translation clause are unchanged.
