@@ -52,3 +52,5 @@ import Hypernets.Copying.ValueExamples
 import Hypernets.Copying.BindingExamples
 import Hypernets.Copying.BindingInvariance
 import Hypernets.Copying.BindingPathCorrespondence
+
+import Hypernets.Copying.ObservationExamples

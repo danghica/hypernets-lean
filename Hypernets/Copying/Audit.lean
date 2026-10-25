@@ -1,4 +1,4 @@
-import Hypernets.Copying.BindingExamples
+import Hypernets.Copying.ObservationExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -94,3 +94,16 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.zeroInputContext_unique_holes
 #print axioms Hypernets.Copying.Examples.zeroInput_plug_not_bindingFree
 #print axioms Hypernets.Copying.Examples.unrestricted_hole_closure_false
+
+#print axioms Hypernets.Copying.SoleHole.fill_holeFree
+#print axioms Hypernets.Copying.SoleHole.sourced
+#print axioms Hypernets.Copying.ClosingContext.fill_bindingFree
+#print axioms Hypernets.Copying.TermContext.fill_compose
+#print axioms Hypernets.Copying.TermContext.compose_assoc
+#print axioms Hypernets.Copying.ContextTranslation.apply_ofTerm
+#print axioms Hypernets.Copying.ContextTranslation.apply_compose
+#print axioms Hypernets.Copying.Execution.refines_iff_observations
+#print axioms Hypernets.Copying.Execution.equiv_any_iff
+#print axioms Hypernets.Copying.Examples.identityClosingContext
+#print axioms Hypernets.Copying.Examples.privateCell_context_factor
+#print axioms Hypernets.Copying.Examples.constantResult_context_factor
