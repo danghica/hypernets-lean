@@ -16,13 +16,11 @@ weakening, environment order, and box interfaces. In particular,
 $D_{k,1}$ is not simplified to an identity: it contains a weakening and a
 contraction for each resource.
 
-The present milestone implements the variable, atom, constant, unary, and
-abstraction graph constructors literally as drawn in Figure~16. These are
-five graph-building clauses, not yet the full recursive translation of the
-term datatype. Application and binary operations still require their two-use
-distributors and the displayed interface permutation. Their implementation,
-the recursive assembly, and the translation's substitution and context laws
-remain open. No semantic translation-correctness theorem is asserted here.
+This section implements the variable, atom, constant, unary, and abstraction
+graph constructors literally as drawn in Figure~16. Section~\ref{sec:complete-translation}
+now completes the application and binary clauses and the full recursive
+term translation. Translation laws for substitution and contexts and the
+observational equivalence proof remain open.
 
 \subsection{Ordered binary juxtaposition}
 \termdef{ordered-tensor}
@@ -217,8 +215,8 @@ body edge. Apply this implication to every edge of the outer graph.
 The reference-one graph assembles the literal constant and unary clauses
 for the unchanged subterm $\mathtt{ref}\ 1$. It is a language graph in every
 ambient environment by the two preservation lemmas. This is not the whole
-left side of Proposition~12.2: the enclosing let and applications still
-require the unfinished application translation.
+left side of Proposition~12.2: the enclosing let and applications are assembled by the complete translation
+in Section~\ref{sec:complete-translation}.
 
 \lean{Copying/TranslationExamples}{7}{8}{TranslationExamples.referenceOne}
 

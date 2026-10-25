@@ -27,9 +27,11 @@ in a cyclic-store graph without assuming the whole host is acyclic.
 
 The Proposition 12.2 terms must remain unchanged. Translation follows Figure 16,
 including its single-use distributors, weakening, and ordered box interfaces.
-Five literal graph-building clauses now compile: variables, atoms, constants,
-unary operations, and abstractions. Application and binary-operation clauses,
-the full recursive translation, and its substitution/context laws remain open.
+All seven Figure 16 clauses and the full recursive term translation now compile.
+Both unchanged proposition terms have concrete hypernets in arbitrary environments,
+with proved global language, focus-free, and hole-free properties. Graph-level
+renaming/substitution laws, context translation, the copying/store machine, and
+the final equivalence remain open.
 
 The commentary's section **Copying and store: foundations for Proposition 12.2**
 contains the dependency map; **Ordered distributors and graph assembly**

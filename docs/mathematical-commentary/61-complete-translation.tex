@@ -1,0 +1,264 @@
+\clearpage
+\section{Complete recursive translation and the original proposition graphs}
+\label{sec:complete-translation}
+The Figure~16 graph construction is now implemented for the entire scoped
+term datatype, including application and every binary example operation.
+Both unchanged programs of Proposition~12.2 are translated in arbitrary
+variable and atom environments. The construction retains all canonical
+trees, weakenings, instances, boxes, and interface permutations prescribed
+by the paper.
+
+This completes construction of the term translation, not the observational
+equivalence theorem. The translation's renaming and substitution laws beyond
+its depth calculation, translation of contexts and their composition, the
+copying/store machine, and the template robustness arguments remain open.
+The well-formedness result for the two proposition graphs is not a replacement
+for Proposition~12.2.
+
+\subsection{The middle-block permutation}
+\termdef{middle-block-permutation}
+The parallel subterms expose variables and atoms separately on each side:
+$(\Gamma,\Delta,\Gamma,\Delta)$. Figure~16 exchanges the middle blocks to
+obtain $(\Gamma,\Gamma,\Delta,\Delta)$ before the two-use distributors.
+We implement the more general typed permutation
+$(A,B,C,D)\mapsto(A,C,B,D)$, preserving each local port index.
+
+First express concatenated ports by a disjoint sum: left ports have their
+original index, and right ports are offset by the left interface length.
+The existing ordered-tensor join and split maps prove the inverse laws.
+The two label lemmas state that looking up a left or right joined port
+returns its original wire label. Empty interfaces are included.
+
+\lean{Graph/InterfaceShuffle}{9}{21}{InterfaceShuffle.ports}
+
+\lean{Graph/InterfaceShuffle}{23}{25}{InterfaceShuffle.left_label}
+
+\lean{Graph/InterfaceShuffle}{27}{29}{InterfaceShuffle.right_label}
+
+On four disjoint summands, interchange sends an $A$ index to $A$, a $B$
+index to the third block, a $C$ index to the second, and a $D$ index to $D$.
+Its inverse performs the reverse case distinction. Both inverse equations
+are immediate by the four cases. The original-port bijection groups the
+summands as $(A+B)+(C+D)$. The shuffled-port bijection first interchanges
+the summands and then groups them as $(A+C)+(B+D)$. Composing the inverse
+of the original bijection with the shuffled bijection gives the required
+permutation of finite interface positions.
+
+\lean{Graph/InterfaceShuffle}{32}{44}{InterfaceShuffle.interchange}
+
+\lean{Graph/InterfaceShuffle}{47}{48}{InterfaceShuffle.original}
+
+\lean{Graph/InterfaceShuffle}{51}{53}{InterfaceShuffle.shuffled}
+
+\lean{Graph/InterfaceShuffle}{56}{58}{InterfaceShuffle.bijection}
+
+For each of the four component cases, repeated application of the left
+and right label lemmas shows that the original and shuffled positions have
+the same wire label. To prove this for an arbitrary original interface
+position, take its inverse image under the original-port bijection and
+use its right inverse equation. Thus the permutation is type preserving,
+not merely a bijection between interfaces of the same size.
+
+\lean{Graph/InterfaceShuffle}{60}{65}{InterfaceShuffle.component_label}
+
+\lean{Graph/InterfaceShuffle}{68}{71}{InterfaceShuffle.label}
+
+\subsection{Application and binary-operation clauses}
+
+The pair boundary leaves the two term inputs in left-to-right order.
+For outputs it first concatenates the two subterm interfaces, then applies
+the middle-block permutation with $A=C=\star^k$ and $B=D=\diamond^h$.
+Type preservation is the composition of the tensor and permutation label
+lemmas. Parallel assembly therefore constructs the actual two-subterm graph
+with input $\star\otimes\star$ and grouped outputs
+$\star^{2k}\otimes\diamond^{2h}$. The final cast uses only equalities of
+replicate-list lengths and concatenations; it does not perform another
+permutation or simplify an edge.
+
+\lean{Copying/BinaryTranslation}{11}{22}{BinaryTranslation.pairBoundary}
+
+\lean{Copying/BinaryTranslation}{25}{29}{BinaryTranslation.pair}
+
+For application, serially assemble the application corolla, the paired
+subterms, and $D^{\star}_{k,2}\otimes D^{\diamond}_{h,2}$. For a binary
+operation use the corresponding operation corolla with the same wiring.
+This covers addition, subtraction, assignment, and atom equality. These
+are precisely the two right-hand constructions in Figure~16. In particular,
+both full ambient environments occur in the subterm graphs before sharing;
+the construction does not prune unused occurrences or weakenings.
+
+\lean{Copying/BinaryTranslation}{32}{35}{BinaryTranslation.application}
+
+\lean{Copying/BinaryTranslation}{38}{41}{BinaryTranslation.binary}
+
+The pair's edge labels come from exactly one of its two subterms, so their
+global language predicates imply the pair's predicate. Interface casting
+preserves that predicate. Serial closure, the permitted operation label,
+and the proved distributor predicate establish the language property for
+both application and binary operations. These proofs inspect all nested
+box contents through the existing recursive label predicate.
+
+\lean{Copying/BinaryTranslation}{43}{49}{BinaryTranslation.pair_language}
+
+\lean{Copying/BinaryTranslation}{51}{54}{BinaryTranslation.application_language}
+
+\lean{Copying/BinaryTranslation}{56}{59}{BinaryTranslation.binary_language}
+
+\subsection{Common depth allowance without graph simplification}
+\termdef{translation-depth-padding}
+A finite representation records a maximum box allowance. Two subterms of
+an application need not have the same allowance, although they must be
+assembled in one alphabet. Padding raises the smaller allowance while
+preserving the graph incidence and recursively represented box contents.
+It adds no term constructor, sharing edge, or box.
+
+A depth cast changes only provably equal numeric indices, and equality
+elimination proves preservation and reflection of all global label
+predicates. Repeated padding is defined by iterating the earlier one-level
+raising operation. Induction on the number of iterations proves label
+invariance, using the previously proved raising equivalence at each step.
+To pad a graph from allowance $d$ to $n\ge d$, iterate $n-d$ times and
+cast along $d+(n-d)=n$. This gives padding to any chosen common allowance
+with the same global label properties.
+
+\lean{Copying/Translation}{10}{10}{Translation.castDepth}
+
+\lean{Copying/Translation}{12}{13}{Translation.allLabels_castDepth}
+
+\lean{Copying/Translation}{16}{18}{Translation.pad}
+
+\lean{Copying/Translation}{20}{24}{Translation.allLabels_pad}
+
+\lean{Copying/Translation}{27}{28}{Translation.padTo}
+
+\lean{Copying/Translation}{30}{32}{Translation.allLabels_padTo}
+
+One-level raising leaves the outer edge enumeration unchanged, by cases
+on the original depth. Induction proves the same count equality for any
+number of padding steps. A depth equality cast also preserves that count,
+by equality elimination. Combining these results proves that padding to
+a common allowance allocates no additional outer edge. These counts are
+structural checks, not execution costs.
+
+\lean{Copying/Translation}{35}{37}{Translation.raise_edgeCount}
+
+\lean{Copying/Translation}{39}{43}{Translation.pad_edgeCount}
+
+\lean{Copying/Translation}{45}{47}{Translation.castDepth_edgeCount}
+
+\lean{Copying/Translation}{49}{51}{Translation.padTo_edgeCount}
+
+The required allowance is zero for variables, atoms, and constants;
+one more than the body's allowance for abstraction; unchanged for unary
+operations; and the maximum of the two subterm allowances for application
+and binary operations. Induction on terms shows that variable and atom
+renaming preserves this number, including renaming under a binder. This
+is the depth part of a renaming law only; graph-level compatibility with
+general environment renaming remains a separate obligation.
+
+\lean{Copying/Translation}{54}{58}{Translation.depth}
+
+\lean{Copying/Translation}{61}{65}{Translation.depth_rename}
+
+\subsection{The full term translation}
+\termdef{complete-term-translation}
+
+Translate recursively by the seven scoped term constructors. The leaf
+cases use the literal variable, atom, and constant clauses. Abstraction
+boxes the recursively translated body; unary operations use the unary
+clause. Application and binary operations first pad both recursive graphs
+to the maximum of their allowances, then use their Figure~16 constructors.
+The result type states the exact interface
+$\star\to\star^k\otimes\diamond^h$ for every term in scope $(k,h)$.
+
+Induction on the same syntax proves that every result is a language graph.
+Each leaf uses its clause theorem, abstraction and unary operations use
+their preservation laws, and the two-argument cases also use padding
+invariance before their preservation laws. The generic implications from
+the language predicate give global focus freedom and hole freedom. Thus
+these properties hold recursively inside every translated box, with no
+well-formedness assumptions on particular translated subterms left open.
+
+\lean{Copying/Translation}{68}{79}{Translation.term}
+
+\lean{Copying/Translation}{82}{92}{Translation.term_language}
+
+\lean{Copying/Translation}{94}{94}{Translation.term_focusFree}
+
+\lean{Copying/Translation}{96}{96}{Translation.term_holeFree}
+
+The named-environment entry point accepts the original ordered distinct
+lists and a term scoped by their lengths. It invokes exactly the same
+translation; it does not restrict the environments to be empty or identify
+variables with atoms. The two proposition graph definitions apply this
+translation directly to the existing, unchanged \texttt{Term.privateCell}
+and \texttt{Term.constantResult}. Their global language properties are
+instances of the general theorem. Neither graph definition contains an
+assumed observational equivalence or an alternate program.
+
+\lean{Copying/Translation}{99}{100}{Translation.inEnvironment}
+
+\lean{Copying/Translation}{103}{103}{Translation.privateCell}
+
+\lean{Copying/Translation}{106}{106}{Translation.constantResult}
+
+\lean{Copying/Translation}{108}{108}{Translation.privateCell_language}
+
+\lean{Copying/Translation}{110}{110}{Translation.constantResult_language}
+
+\subsection{Permutation, sharing, and full-program regressions}
+
+For two variables and one atom in each subterm, the permutation sends
+positions $(0,1,2,3,4,5)$ to $(0,1,4,2,3,5)$. This checks the required
+movement of the left atom past the right variables. An application of two
+constant graphs in this environment has eighteen outer edges: one operation,
+four in each constant graph, and nine in the three two-use canonical trees.
+The same count is checked for every binary operation, including both store
+operations. These kernel-checked calculations would detect omission of the
+two-use distributor edges.
+
+\lean{Copying/FullTranslationExamples}{7}{11}{FullTranslationExamples.binary_environment_permutation}
+
+\lean{Copying/FullTranslationExamples}{14}{16}{FullTranslationExamples.application_environment_edges}
+
+\lean{Copying/FullTranslationExamples}{19}{22}{FullTranslationExamples.binary_environment_edges}
+
+The unchanged left program requires three nested abstraction levels,
+including the paper's let and sequencing sugar; the right requires two.
+Their closed translated graphs have respectively five and two outer edges.
+On the left these are the application, lambda, box, reference-creation,
+and numeral edges. On the right they are lambda and box. The remaining
+body graphs are inside boxes, not erased. For every named distinct-list
+environment, a single theorem gives focus freedom and hole freedom of both
+actual translated programs. It asserts structural well-formedness only;
+no statement of termination equivalence follows from it alone.
+
+\lean{Copying/FullTranslationExamples}{25}{25}{FullTranslationExamples.privateCell_depth}
+
+\lean{Copying/FullTranslationExamples}{27}{27}{FullTranslationExamples.constantResult_depth}
+
+\lean{Copying/FullTranslationExamples}{30}{31}{FullTranslationExamples.privateCell_outer_edges}
+
+\lean{Copying/FullTranslationExamples}{34}{35}{FullTranslationExamples.constantResult_outer_edges}
+
+\lean{Copying/FullTranslationExamples}{38}{44}{FullTranslationExamples.proposition12_2_graphs_wellFormed}
+
+A self-application term provides a structural regression for syntax that
+can express divergence. The generic language theorem checks its translation;
+no evaluation or divergence theorem is claimed. A separate application
+of an identity abstraction to unit has subterms of unequal box depth.
+Its translated outer graph has four edges, checking that common-depth
+padding has added no outer structure. Operational regressions for divergent
+callbacks and repeated closure use still require the unfinished machine.
+
+\lean{Copying/FullTranslationExamples}{47}{48}{FullTranslationExamples.omegaTerm}
+
+\lean{Copying/FullTranslationExamples}{50}{51}{FullTranslationExamples.omega_translation_language}
+
+\lean{Copying/FullTranslationExamples}{54}{55}{FullTranslationExamples.unequal_depth_application_edges}
+
+The full build and all three axiom audits pass with only standard Lean
+axioms. Construction of all Figure~16 clauses and the recursive term
+translation is complete. The proposition terms and their desugaring remain
+unchanged. The remaining correspondence, context, machine, and robustness
+obligations are listed in Appendix~\ref{app:remaining-work}.
