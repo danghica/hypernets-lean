@@ -1,3 +1,4 @@
+import Hypernets.Copying.BoundaryRenamingExamples
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -305,3 +306,31 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.InstancePrefix.iso
 #print axioms Hypernets.Copying.Translation.atom_rename
 #print axioms Hypernets.Copying.Translation.atomic_rename
+
+-- Compatible serial gluing and structural safety under boundary renaming.
+#print axioms Hypernets.Copying.BoundaryIso.internals
+#print axioms Hypernets.Copying.BoundaryIso.inputs
+#print axioms Hypernets.Copying.BoundaryIso.outputs
+#print axioms Hypernets.Copying.BoundarySerial.compatible_symm
+#print axioms Hypernets.Copying.BoundarySerial.compatible_trans
+#print axioms Hypernets.Copying.BoundarySerial.compatible_iff_right_commutes
+#print axioms Hypernets.Copying.BoundarySerial.iso
+#print axioms Hypernets.Copying.BoundarySerial.iso_input
+#print axioms Hypernets.Copying.BoundarySerial.iso_output
+#print axioms Hypernets.Copying.BoundaryIso.source_mem_iff
+#print axioms Hypernets.Copying.BoundaryIso.target_mem_iff
+#print axioms Hypernets.Copying.BoundaryIso.path_iff
+#print axioms Hypernets.Copying.BoundaryIso.edge_trace_iff
+#print axioms Hypernets.Copying.BoundaryIso.vertex_trace_iff
+#print axioms Hypernets.Copying.BoundaryIso.allLabels_iff
+#print axioms Hypernets.Copying.BoundaryIso.bindingFree_iff
+#print axioms Hypernets.Copying.BoundaryIso.stable_iff
+#print axioms Hypernets.Copying.BoundaryIso.toDeepIso
+#print axioms Hypernets.Copying.BoundarySerial.toDeepIso
+#print axioms Hypernets.Copying.Distributor.single_compatible_iff
+#print axioms Hypernets.Copying.Distributor.serial_singleIso
+#print axioms Hypernets.Copying.BoundaryRenamingExamples.twoAtomUses
+#print axioms Hypernets.Copying.BoundaryRenamingExamples.unmatched_swap
+#print axioms Hypernets.Copying.BoundaryRenamingExamples.emptyForest
+#print axioms Hypernets.Copying.BoundaryRenamingExamples.weakeningForest
+#print axioms Hypernets.Copying.BoundaryRenamingExamples.serial_bindingFree_iff
