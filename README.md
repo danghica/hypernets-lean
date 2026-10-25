@@ -846,3 +846,10 @@ preserved and reflected, and copyability is preserved at every adequate
 allowance, including lambda payloads with arbitrary bodies. This is a
 structural prerequisite; operational invariants and execution padding
 invariance remain outstanding. See commentary Section 70.
+
+Actual composition of separately translated contexts is now proved: after
+the required inner padding, addressed graph plugging reconstructs the direct
+translated composite, and its chosen hole works for every graph argument.
+Successive term filling is a corollary, including scopes beneath binders.
+Commentary Section 71 records the proof. Appendix B.1 removes the pending
+context-translation composition clause; machine and template work remains.

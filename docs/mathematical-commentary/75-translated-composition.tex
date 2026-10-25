@@ -1,0 +1,93 @@
+\clearpage
+\section{Actual composition of translated contexts}
+\label{sec:copying-translated-composition}
+\termdef{copying-translated-composition}
+The constructor interpretation already respects composition of annotated term
+contexts. We now connect this identity to actual replacement at certified graph
+holes. Two independently translated contexts, with the inner host padded to
+fit its outer occurrence, compose to a graph recursively isomorphic to the
+direct translation of the composed context. Filling its selected hole with
+any suitably padded graph also gives the direct constructor interpretation.
+The isomorphisms have equal outer depths; no additional common-allowance
+comparison or execution hypothesis is used.
+
+\subsection{Certified open graph contexts compose}
+Let $A$ have a sole hole accepting the outer interface of $B$, and let $B$
+have a sole hole accepting the argument graph. Form $A\circ B$ by replacing
+the hole of $A$ with the graph of $B$. Its selected occurrence is the address
+of the original hole of $B$, followed through that replacement. The existing
+sole-hole composition theorem proves that it is still the only hole.
+Both contexts have binding-free certificates. Since the hole input is the
+singleton term interface, it is sourced; the proved binding-free plugging
+closure therefore certifies the composite. This use respects the zero-input
+qualification of Section~\ref{sec:copying-binding}.
+\lean{Copying/TranslatedComposition}{10}{17}{GraphContext.compose}
+
+For every graph $G$ at the local allowance, addressed plugging associativity
+gives a recursive isomorphism
+\[
+  (A\circ B)[G]\ \cong\ A[B[G]].
+\]
+It retains all nested boxes and ordered interfaces, allowing the carrier
+reassociation already handled by the generic graph proof. Specialising $G$
+to the graph of an open program yields the corresponding equality up to
+recursive isomorphism between composed filling and successive filling.
+The open-program certificates do not add operational premises.
+\lean{Copying/TranslatedComposition}{20}{24}{GraphContext.compose_plug_iso}
+\lean{Copying/TranslatedComposition}{26}{30}{GraphContext.compose_fill_iso}
+
+The exact depth function also composes:
+$(C\circ D).\operatorname{depthAt}(d)
+=C.\operatorname{depthAt}(D.\operatorname{depthAt}(d))$.
+Induction on the outer context proves this identity: a lambda applies a
+successor, a unary operation retains the depth, and each binary or application
+branch takes the original maximum with its fixed sibling's depth.
+\lean{Copying/TranslatedComposition}{35}{38}{TermContext.depthAt_compose}
+
+\subsection{Composing the unchanged translated hosts}
+Choose annotated contexts $D$ and $C$, an argument allowance $d$, and arbitrary
+inner and outer hole names. Translate $D$ at $d$. The universal filling theorem
+provides a certified graph context $B$, an increment $n$, and a filling law
+for every graph of allowance $d$. Write $q$ for its outer allowance. Translate
+$C$ at $q$; the same theorem supplies a certified context $A$ and increment
+$m$. The outer hole of $A$ accepts allowance $q+m$, so the actual composite
+is $A\circ\operatorname{pad}_m(B)$. Its remaining hole accepts allowance
+$(d+n)+m$. Both $A$ and $B$ have literally the original translated host graphs;
+the construction changes neither their translation clauses nor their interfaces.
+
+There are two simultaneous conclusions. First, apply the outer filling law to
+the graph of $B$ itself. Constructor interpretation of $C$ on the translated
+host of $D$ is exactly translation of $C\circ D$, by the previously proved
+\texttt{graph\_compose}. Hence the composite host is recursively isomorphic
+to the directly translated composed host, at the same allowance.
+
+Second, fix any argument graph $G$. Associativity rewrites filling the
+composite as filling $A$ with the filled padded $B$. The padding/filling
+isomorphism identifies that inner result with padding $B$ filled by
+$\operatorname{pad}_n(G)$. The outer filling law now applies. Transport the
+inner filling law through the original constructor interpretation of $C$,
+using its isomorphism preservation theorem. Finally, the literal
+\texttt{apply\_compose} identity identifies the endpoint with interpretation
+of $C\circ D$ on $G$.
+
+The same increments, hosts and addresses work for every $G$: they are chosen
+before the universal quantifier. In particular, the proof is not restricted
+to language graphs or closed programs. No inequality between the two hole
+names is required. The sole-hole certificates account for removal of the
+outer hole before insertion of the inner context.
+\lean{Copying/TranslatedComposition}{46}{78}{ContextTranslation.composed_context_filling}
+
+\subsection{Successive filling of terms}
+Supply the preceding theorem with the original graph translation of a term
+$t$ at its minimal allowance. The existing exact interpretation identity
+\texttt{apply\_ofTerm} and syntactic identity \texttt{fill\_compose} identify
+the final graph with the original translation of $C[D[t]]$, up to recursive
+isomorphism at the same outer depth. This corollary covers arbitrary finite
+variable and atom scopes, including holes beneath binders, and preserves all
+original maximum-depth padding choices.
+\lean{Copying/TranslatedComposition}{82}{102}{ContextTranslation.composed_term_filling}
+
+This closes the pending context-translation composition law in Appendix~B.1.
+It does not supply graph-level term renaming or substitution, machine-step
+invariants, the concrete copying execution or the eleven template proofs.
+Proposition~12.2 remains the endpoint of those outstanding tasks.
