@@ -1,4 +1,4 @@
-import Hypernets.Copying.PaddingPredicates
+import Hypernets.Copying.TranslatedComposition
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -252,3 +252,10 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Copyable.pad
 #print axioms Hypernets.Copying.Copyable.castDepth
 #print axioms Hypernets.Copying.Copyable.padTo
+
+#print axioms Hypernets.Copying.GraphContext.compose
+#print axioms Hypernets.Copying.GraphContext.compose_plug_iso
+#print axioms Hypernets.Copying.GraphContext.compose_fill_iso
+#print axioms Hypernets.Copying.TermContext.depthAt_compose
+#print axioms Hypernets.Copying.ContextTranslation.composed_context_filling
+#print axioms Hypernets.Copying.ContextTranslation.composed_term_filling

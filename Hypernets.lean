@@ -74,3 +74,5 @@ import Hypernets.Copying.ContextDepth
 import Hypernets.Copying.GeneralCongruenceExamples
 
 import Hypernets.Copying.PaddingPredicates
+
+import Hypernets.Copying.TranslatedComposition
