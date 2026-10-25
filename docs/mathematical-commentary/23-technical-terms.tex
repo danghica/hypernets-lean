@@ -34,6 +34,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{bijection}{Bijection}{A pair of forward and inverse functions satisfying both inverse equations.}
 
+\glossaryentry{copying-binding-free}{Binding-free copying graph}{A focus-free graph with no positive path from a contraction, instance, box or hole source to a hole source, at any depth.}
+
 \glossaryentry{blocked-input}{Blocked input}{A term input from which no operation edge can leave; this suffices to exclude operation paths to outputs.}
 
 \glossaryentry{body-consistency}{Body consistency}{The condition that box edges with literally equal contents have equal external binder metadata; needed by naive binder erasure.}
@@ -568,6 +570,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{indexed-port}{Source port}{A source-list vertex selected by a finite index in the edge label's input signature; the arity equation justifies the lookup.}
 
+\glossaryentry{copying-sourced-hole}{Sourced hole}{An addressed hole with at least one input port; the proved binding-free plugging theorem applies at these occurrences.}
+
 \glossaryentry{label-copy}{Specified-label copy}{A graph with one edge of a specified label and full ordered boundary incidence, permitting an updated box body.}
 
 \glossaryentry{specimen}{Specimen}{An element of the abstract specimen type, equipped with left and right state endpoints, a mode, and an entering predicate.}
@@ -633,3 +637,5 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{vertex-name}{Vertex name}{A triple of natural numbers used as an ordinary vertex identifier in the freshened presentation.}
 
 \glossaryentry{wire}{Wire type}{Either the term type $*$ or a thunk type $T^n(*)$ with its binding count.}
+
+\glossaryentry{copying-zero-input-counterexample}{Zero-input closure counterexample}{Two binding-free graphs whose plugging at a zero-input hole creates a forbidden instance-to-hole path.}

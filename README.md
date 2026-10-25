@@ -39,6 +39,14 @@ right-hand proposition graph factors into a copyable lambda payload followed
 by the original single-use distributors. These are structural results; copying,
 store transitions and their preservation laws remain unfinished.
 
+Binding-free paths now have a checked positive-path correspondence and recursive
+isomorphism invariance. Plugging closure is proved at arbitrary nesting depth
+when the replaced hole has an input, as every translated term hole does. A
+checked finite counterexample shows why unrestricted closure at zero-input
+holes does not follow from the literal source-based definition. Observations
+and lambda-context congruence are still pending; all five Appendix B.1 items
+remain open.
+
 The commentary's section **Copying and store: foundations for Proposition 12.2**
 contains the dependency map; **Ordered distributors and graph assembly**
 explains the new constructions and proofs. Appendix B tracks the remaining

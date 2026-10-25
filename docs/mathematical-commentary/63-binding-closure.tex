@@ -1,0 +1,288 @@
+\clearpage
+\section{Binding-free paths and the boundary of plugging closure}
+\label{sec:copying-binding}
+This section treats the plugging-closure prerequisite of Appendix~B.1,
+item~3. It does not complete that item: the copying observations and the
+translation/congruence theorem for lambda-contexts remain unfinished.
+We retain Definition~11.2 literally, prove the positive-path correspondence,
+and prove Lemma~E.1 with a sourced-hole hypothesis. That hypothesis holds
+for every translated term hole. A finite counterexample shows why it cannot
+be dropped for arbitrary hole interfaces allowed by the current graph model.
+Neither program of Proposition~12.2 nor its Figure~16 translation changes.
+
+\subsection{The literal path restriction}
+\termdef{copying-binding-free}
+A binding-free graph is focus-free and has no positive path, at any depth,
+from a source of a contraction, instance, box, or hole edge to a source of
+a hole. A store edge is not an instance edge. Paths remain at one depth;
+the condition is checked separately in each box body.
+
+
+The binding-label predicate classifies the four prohibited starting kinds;
+the hole-label predicate recognises an actual primitive hole. Reflexive
+edge ancestry follows zero or more incidence adjacencies. Strict ancestry
+requires a first adjacency and hence at least one traversed edge before the
+terminal hole. The shallow restriction additionally requires a source of
+the starting edge. This is substantive for holes with an empty input list.
+The recursive path predicate conjoins the shallow restriction with the
+same predicate in every box body. Finally, binding-freedom adds global
+focus-freedom. These predicates do not themselves enforce unique hole names;
+that independent context condition must also be supplied where required.
+
+\lean{Copying/BindingFree}{11}{19}{BindingFree.BindingLabel}
+
+
+\lean{Copying/BindingFree}{20}{24}{BindingFree.HoleLabel}
+
+
+\lean{Copying/BindingFree}{25}{28}{BindingFree.Ancestor}
+
+
+\lean{Copying/BindingFree}{29}{33}{BindingFree.StrictAncestor}
+
+
+\lean{Copying/BindingFree}{34}{38}{BindingFree.ShallowBindingFree}
+
+
+\lean{Copying/BindingFree}{39}{44}{BindingFree.BindingPaths}
+
+
+\lean{Copying/BindingFree}{45}{49}{BindingFree.BindingFree}
+
+
+Ancestry is transitive by induction on its first derivation. An ancestry
+between distinct edges must have a first step, since its reflexive case
+would identify the endpoints. Any adjacency-preserving edge map transports
+ancestry by induction. These facts concern incidence alone, without an
+operational or termination hypothesis.
+
+\lean{Copying/BindingFree}{50}{55}{BindingFree.trans}
+
+
+\lean{Copying/BindingFree}{56}{61}{BindingFree.positive_of_ne}
+
+
+\lean{Copying/BindingFree}{62}{72}{BindingFree.map}
+
+
+A vertex step traverses a single edge from one of its sources to one of
+its targets. Starting at any source of an ancestor edge, induction on
+ancestry yields a finite vertex trace to a source of the terminal edge.
+Conversely, a vertex trace beginning at a target of an edge yields strict
+ancestry to any edge having the final vertex as a source. The induction
+prepends each traversed edge.
+
+Consequently, strict ancestry together with a starting-source witness is
+\emph{equivalent} to a vertex trace of length $n+1$ between the two source
+lists, for some $n$. In the reverse implication, source uniqueness identifies
+the first traversed edge with the proposed starting edge. The positive
+length is essential: reflexive vertex reachability would wrongly exclude
+an isolated hole from binding-free contexts.
+
+\lean{Copying/BindingPathCorrespondence}{7}{11}{BindingPathCorrespondence.BindingPathStep}
+
+
+\lean{Copying/BindingPathCorrespondence}{12}{21}{BindingPathCorrespondence.ancestor_vertex_trace}
+
+
+\lean{Copying/BindingPathCorrespondence}{22}{34}{BindingPathCorrespondence.target_trace_strict}
+
+
+\lean{Copying/BindingPathCorrespondence}{35}{52}{BindingPathCorrespondence.strict_iff_vertex_path}
+
+
+Every hole is a prohibited starting label. A self-loop at a hole would
+supply both a source witness and a positive path back to that hole, so a
+binding-free hole cannot self-loop. Globally hole-free graphs satisfy the
+path restriction vacuously, first at the outer level and then by induction
+inside boxes. Combining this with focus-freedom proves binding-freedom.
+A general pullback lemma transports the shallow restriction along an edge
+map preserving adjacency, starting-label classification, source existence,
+and terminal-hole classification: map any proposed counterexample and
+contradict the target graph's restriction.
+
+\lean{Copying/BindingFree}{73}{79}{BindingFree.hole_binding}
+
+
+\lean{Copying/BindingFree}{80}{85}{BindingFree.hole_nonSelfLoop}
+
+
+\lean{Copying/BindingFree}{86}{94}{BindingFree.shallow_of_holeFree}
+
+
+\lean{Copying/BindingFree}{95}{109}{BindingFree.paths_of_holeFree}
+
+
+\lean{Copying/BindingFree}{110}{114}{BindingFree.of_holeFree}
+
+
+\lean{Copying/BindingFree}{115}{128}{BindingFree.shallow_of_map}
+
+
+\subsection{Plugging closure at sourced holes}
+\termdef{copying-sourced-hole}
+A sourced hole is an addressed hole occurrence whose input list has at
+least one port. The condition concerns only the replaced hole, including
+when that hole lies inside boxes. It does not exclude unrelated zero-input
+holes from the surrounding observation context.
+
+
+For an adjacency from a surviving host edge into an inserted edge,
+source incidence of the inserted graph forces the shared vertex to be an
+input port. Thus the old host edge was adjacent to the replaced hole.
+Dually, an inserted-to-host adjacency comes from an output port and makes
+the old hole adjacent to the surviving host edge.
+
+Induction backwards along an ancestry ending at a hole now identifies its
+origin. A surviving starting edge has an ancestry to a host hole, possibly
+the replaced hole. An inserted starting edge has an ancestry to an inserted
+hole. The only problematic crossing is from insertion back to host: it
+would create a strict ancestry from the replaced hole to a host hole.
+Binding-freedom excludes this because the replaced hole has a source.
+An inserted-to-inserted adjacency reflects to the original insertion using
+the previously proved absence of a self-loop at the replaced hole.
+
+For shallow plugging closure, split the first edge and the first successor
+of an alleged forbidden path by host/inserted origin. Host-to-host and
+inserted-to-inserted paths contradict the respective original restriction.
+A host-to-inserted crossing produces a forbidden host path to the replaced
+hole. An inserted-to-host crossing contradicts the host restriction at that
+sourced hole. Source witnesses survive the incidence-list maps.
+
+\lean{Copying/BindingClosure}{14}{21}{BindingClosure.adjacent_host_insert}
+
+
+\lean{Copying/BindingClosure}{22}{32}{BindingClosure.adjacent_insert_host}
+
+
+\lean{Copying/BindingClosure}{33}{68}{BindingClosure.ancestor_origin}
+
+
+\lean{Copying/BindingClosure}{69}{105}{BindingClosure.shallow_plug}
+
+
+The addressed sourced-hole predicate descends through boxes to the
+selected shallow occurrence. Shallow closure of the recursive path predicate
+uses the path theorem at the current depth and retains the body predicates
+of all surviving or inserted boxes. Replacing only a box body changes no
+outer incidence and no outer binding/hole classification; the pullback
+lemma therefore preserves the outer restriction.
+
+Induction on the addressed occurrence combines these two cases and proves
+closure at arbitrary nesting depth. The final binding-free plugging theorem
+adds the existing global focus-freedom closure. No copying transition is
+assumed or encoded by this argument.
+
+\lean{Copying/BindingClosure}{106}{110}{BindingClosure.SourcedHole}
+
+
+\lean{Copying/BindingClosure}{111}{125}{BindingClosure.paths_shallow}
+
+
+\lean{Copying/BindingClosure}{126}{144}{BindingClosure.shallow_replaceBox}
+
+
+\lean{Copying/BindingClosure}{145}{168}{BindingClosure.paths_plugAt}
+
+
+\lean{Copying/BindingClosure}{169}{175}{BindingClosure.plugAt}
+
+
+Recursive label equivalence preserves both binding-label and hole-label
+classification: primitive labels agree, boxes match boxes, and mixed cases
+are impossible. A recursive graph isomorphism preserves adjacency and maps
+source witnesses by its vertex bijection. The pullback lemma gives shallow
+invariance. Induction on depth then applies the same argument to corresponding
+box bodies. Applying it to an isomorphism and its inverse, together with
+focus-freedom invariance, proves preservation and reflection of binding-freedom.
+
+\lean{Copying/BindingInvariance}{8}{20}{BindingInvariance.bindingLabel_equiv}
+
+
+\lean{Copying/BindingInvariance}{21}{33}{BindingInvariance.holeLabel_equiv}
+
+
+\lean{Copying/BindingInvariance}{34}{42}{BindingInvariance.shallow_iso}
+
+
+\lean{Copying/BindingInvariance}{43}{64}{BindingInvariance.paths_iso}
+
+
+\lean{Copying/BindingInvariance}{65}{72}{BindingInvariance.iso_iff}
+
+
+\subsection{Term-hole checks and a zero-input counterexample}
+\termdef{copying-zero-input-counterexample}
+
+
+Every already constructed term translation is binding-free because it is
+focus-free and hole-free. This is a theorem about terms, not yet about
+lambda-context translations. A stand-alone hole corolla is binding-free:
+its targets are outputs and its sources are inputs, so no positive return
+adjacency is possible. Finally, the hole assigned to any term judgement has
+interface $\star\Rightarrow\star^k\otimes\diamond^h$ and hence has the
+source witness required by the plugging theorem, for every $k$ and $h$.
+
+\lean{Copying/BindingExamples}{11}{14}{BindingExamples.translated_bindingFree}
+
+
+\lean{Copying/BindingExamples}{15}{29}{BindingExamples.hole_bindingFree}
+
+
+\lean{Copying/BindingExamples}{30}{35}{BindingExamples.term_hole_sourced}
+
+
+Consider a context with two holes in series,
+\[
+ \chi_0: \epsilon\Rightarrow\diamond,
+ \qquad \chi_1:\diamond\Rightarrow\epsilon.
+\]
+Their names are distinct. The context is binding-free under the literal
+source-based definition: $\chi_0$ has no source, while $\chi_1$ has no target.
+Now replace $\chi_0$ with a term weakening followed by an instance:
+\[
+ \epsilon\xrightarrow{\mathrm{weakening}_\star}\star
+ \xrightarrow{\mathsf I}\diamond.
+\]
+This insertion is focus-free and hole-free, hence binding-free. After plugging,
+there is a one-edge path from the source of $\mathsf I$ to the source of
+$\chi_1$. The result is not binding-free.
+
+Lean checks both finite constructions, both original binding-freedom proofs,
+the uniqueness of the host's hole labels, the resulting forbidden path, and
+the negation of unrestricted hole-replacement closure. The source witness
+and the final adjacency are explicit vertices of the constructed graph;
+no external decision procedure or new axiom is used.
+
+This exposes a boundary in the literal general formulation of Lemma~E.1.
+Its proof prefixes the old hole to a path, but that prefix has no starting
+source if the hole has no inputs. The qualified theorem proved here suffices
+for plugging at translated term holes. It does not silently strengthen
+Definition~11.2, nor remove zero-input holes from the observation class.
+The broader correspondence audit must record this qualification.
+
+\lean{Copying/BindingExamples}{36}{38}{BindingExamples.zeroInputContext}
+
+
+\lean{Copying/BindingExamples}{39}{41}{BindingExamples.zeroInputReplacement}
+
+
+\lean{Copying/BindingExamples}{42}{53}{BindingExamples.zeroInputContext_bindingFree}
+
+
+\lean{Copying/BindingExamples}{54}{60}{BindingExamples.zeroInputReplacement_bindingFree}
+
+
+\lean{Copying/BindingExamples}{61}{68}{BindingExamples.zeroInputContext_unique_holes}
+
+
+\lean{Copying/BindingExamples}{69}{82}{BindingExamples.zeroInput_plug_not_bindingFree}
+
+
+\lean{Copying/BindingExamples}{83}{93}{BindingExamples.unrestricted_hole_closure_false}
+
+
+The full build and all three axiom audits pass. Remaining work in
+Appendix~B.1, item~3 includes constructing copying observations, translating
+lambda-contexts and proving their binding-freedom and plugging correspondence,
+and deriving term-context congruence. That item is not marked complete.
