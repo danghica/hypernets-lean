@@ -1,4 +1,4 @@
-import Hypernets.Copying.ValueExamples
+import Hypernets.Copying.BindingExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -79,3 +79,18 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.lambdaPayload_not_stable
 #print axioms Hypernets.Copying.Examples.translated_lambda_payload
 #print axioms Hypernets.Copying.Examples.constantResult_copyable_factor
+
+#print axioms Hypernets.Copying.BindingFree.strict_iff_vertex_path
+#print axioms Hypernets.Copying.BindingFree.hole_nonSelfLoop
+#print axioms Hypernets.Copying.BindingFree.paths_of_holeFree
+#print axioms Hypernets.Copying.BindingFree.ancestor_origin
+#print axioms Hypernets.Copying.BindingFree.shallow_plug
+#print axioms Hypernets.Copying.BindingFree.paths_plugAt
+#print axioms Hypernets.Copying.BindingFree.plugAt
+#print axioms Hypernets.Copying.BindingFree.iso_iff
+#print axioms Hypernets.Copying.Examples.translated_bindingFree
+#print axioms Hypernets.Copying.Examples.hole_bindingFree
+#print axioms Hypernets.Copying.Examples.term_hole_sourced
+#print axioms Hypernets.Copying.Examples.zeroInputContext_unique_holes
+#print axioms Hypernets.Copying.Examples.zeroInput_plug_not_bindingFree
+#print axioms Hypernets.Copying.Examples.unrestricted_hole_closure_false
