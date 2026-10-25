@@ -39,4 +39,4 @@ import Hypernets.Graph.ObservationExamples
 
 import Hypernets.Graph.UnboundedTheorem
 
-import Hypernets.Copying.Examples
+import Hypernets.Copying.AssemblyExamples
