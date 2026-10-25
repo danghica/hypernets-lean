@@ -1,0 +1,354 @@
+\clearpage
+\section{Unrestricted observational context congruence}
+\label{sec:copying-general-congruence}
+The equal-input-depth restriction of the preceding section is now removed.
+Every original annotated term context preserves the existing observational
+equivalence, for arbitrary input terms and finite variable/atom environments,
+provided execution respects recursive graph isomorphism and one-step padding.
+These are explicit obligations for the concrete copying UAM, not project
+axioms or consequences of determinism. The proposition's terms, the Figure~16
+translation and the observation class are unchanged.
+
+The key new structural result compares interpreting a context with an argument
+at its original allowance and interpreting it with the padded argument. The
+two resulting graphs are proved recursively isomorphic after padding to a
+sufficient common allowance. Combining this with the universal addressed
+filling law and the cofinal observation criterion yields unrestricted semantic
+congruence. The final equivalence of the private-cell and constant-result
+programs is still pending: congruence preserves an established equivalence;
+it does not supply that equivalence or the template proofs.
+
+\subsection{One-step padding through the literal graph constructors}
+\termdef{copying-constructor-padding}
+
+The uniform relabelling presentation of padding commutes with literal serial
+assembly up to ordinary graph isomorphism. Keep each serial pattern vertex,
+component tag, component vertex and component edge. The inverse maps retain
+the same data, so both inverse identities follow by splitting on the left or
+right tag. Internal labels are unchanged, and each edge has the same raised
+component label. For sources and targets, map composition reduces the claim
+to an individual component port. Internal, input and output ports have the
+same attachment to the original two-hole serial pattern on both sides.
+Thus entire ordered incidence lists are preserved.
+
+The proof splits depth zero from positive depth to respect the existing
+alphabet representation. Replacing the uniform relabelling presentation by
+its proved equality with the original raising operation gives recursive
+isomorphism between raising a serial composite and composing its raised
+components.
+
+
+\lean{Copying/PaddingAssembly}{9}{94}{PaddingAssembly.serial_graph}
+
+\lean{Copying/PaddingAssembly}{95}{98}{PaddingAssembly.serial}
+
+Uniform relabelling also commutes with ordered parallel assembly, in this
+case as graph equality. The carriers, enumerations and labels coincide;
+equality of source and target functions follows by inspecting each internal,
+input or output port in the fixed boundary embedding. Replacing uniform
+relabelling by the original raising operation gives the corresponding exact
+parallel padding equality. Binary tensor composition is its concatenating
+boundary instance. The Boolean family of raised components equals the family
+of the two raised graphs by its two defining cases.
+
+
+\lean{Copying/PaddingAssembly}{99}{107}{PaddingAssembly.parallel_graph}
+
+\lean{Copying/PaddingAssembly}{108}{114}{PaddingAssembly.parallel}
+
+\lean{Copying/PaddingAssembly}{115}{123}{PaddingAssembly.tensor}
+
+Padding commutes with outer-interface equality casts by eliminating those
+equalities. A primitive corolla padded once equals the same primitive corolla
+at the next allowance, by splitting on the zero or positive alphabet case.
+Distributor forests satisfy the analogous equality: their unchanged graph
+is relabelled by the primitive-label embedding at the selected allowance.
+
+The environment distributor is the ordered tensor of its term and atom
+forests. Tensor padding and both forest equalities give its padding law.
+The single-use distributor adds only the existing interface cast; commute
+padding with that cast and apply the environment-distributor law. No
+contraction, weakening edge or single-use distributor is discarded.
+
+
+\lean{Copying/PaddingAssembly}{124}{128}{PaddingAssembly.castInterfaces}
+
+\lean{Copying/PaddingAssembly}{129}{132}{PaddingAssembly.primitive}
+
+\lean{Copying/PaddingAssembly}{133}{137}{PaddingAssembly.distributor}
+
+\lean{Copying/PaddingAssembly}{138}{143}{PaddingAssembly.environmentDistributor}
+
+\lean{Copying/PaddingAssembly}{144}{149}{PaddingAssembly.singleUse}
+
+Raising a box preserves its bound-variable, free-variable and atom metadata,
+and raises its body once. This is the original recursive definition of
+raising. For a lambda box, commute raising with the existing body-interface
+cast as well. The variable bound by the lambda remains in the original first
+slot.
+
+A translated pair uses the prescribed variable/atom middle-block exchange.
+Commute padding with its outer cast and with parallel assembly, then identify
+the two Boolean component families. The exchange itself is unchanged, so
+the resulting equality retains the exact Figure~16 pair wiring.
+
+
+\lean{Copying/PaddingAssembly}{150}{153}{PaddingAssembly.box}
+
+\lean{Copying/PaddingAssembly}{154}{158}{PaddingAssembly.lambdaBox}
+
+\lean{Copying/PaddingAssembly}{159}{166}{PaddingAssembly.pair}
+
+For a unary clause, compose the serial padding isomorphism for the complete
+clause with serial congruence applied to the inner operation-prefix padding
+isomorphism. The primitive and single-use equalities identify the remaining
+components with the original clause at the next allowance.
+
+For abstraction, use the same two serial steps and then the primitive,
+lambda-box and single-use equalities. Its host is raised at allowance $d+1$
+while its body is raised at $d$, preserving their one-level offset.
+
+Application and each binary operation use two serial steps around their
+ordered pair. Apply the primitive, pair and environment-distributor equalities
+to obtain their respective recursive isomorphisms. Each binary operation
+parameter is arbitrary, retaining the full operation alphabet.
+
+
+\lean{Copying/PaddingAssembly}{167}{174}{PaddingAssembly.unary}
+
+\lean{Copying/PaddingAssembly}{175}{182}{PaddingAssembly.abstraction}
+
+\lean{Copying/PaddingAssembly}{183}{190}{PaddingAssembly.application}
+
+\lean{Copying/PaddingAssembly}{191}{199}{PaddingAssembly.binary}
+
+\subsection{Padding to any specified adequate allowance}
+
+Padding a graph of allowance $d$ to $e+1$, where $d\leq e$, equals raising
+its padding to $e$ once. Write $e=d+n$ and use the exact padding-to-addition
+identity twice. The final equality is the defining successor clause of
+iterated padding.
+
+
+\lean{Copying/PaddingConstructors}{7}{16}{PaddingConstructors.padTo_succ}
+
+Each one-step constructor law extends to any adequate allowance by induction
+on the allowance bound. At equality of the original and requested allowance,
+identity padding gives reflexive isomorphism. At a successor, rewrite each
+padding with the preceding successor identity, raise the induction
+isomorphism, and compose with the corresponding one-step constructor law.
+This proves the unary, application and binary laws separately.
+
+For abstraction, a body padded from $d$ to $e$ is boxed at $e+1$; its original
+abstraction is padded from $d+1$ to $e+1$. The same induction maintains this
+shift. Existence of each isomorphism is proved before the Lean definition
+selects it; no unproved structural assumption is introduced.
+
+
+\lean{Copying/PaddingConstructors}{17}{29}{PaddingConstructors.unary_to}
+
+\lean{Copying/PaddingConstructors}{30}{43}{PaddingConstructors.abstraction_to}
+
+\lean{Copying/PaddingConstructors}{44}{57}{PaddingConstructors.application_to}
+
+\lean{Copying/PaddingConstructors}{58}{72}{PaddingConstructors.binary_to}
+
+\subsection{Structural comparison at a sufficient common allowance}
+\termdef{copying-common-allowance-iso}
+
+For two scoped graphs $G,H$, define $\mathsf{AgreeAt}(G,H,N)$ to consist of
+proofs that both depths are at most $N$, together with a recursive isomorphism
+between their original graphs padded to $N$. This is an auxiliary structural
+predicate, not a quotient of graphs or a replacement observation relation.
+
+Agreement at $N$ widens to any $M\geq N$: pad the isomorphism to $M$ and
+collapse both intermediate paddings by exact padding transitivity. Agreement
+is reflexive at every adequate allowance, symmetric by reversing the
+isomorphism, and transitive at the same allowance by composing the two
+isomorphisms. Different proofs of the middle graph's adequate bound carry
+no additional graph data.
+
+
+\lean{Copying/CommonAllowanceIso}{9}{15}{CommonAllowanceIso.AgreeAt}
+
+\lean{Copying/CommonAllowanceIso}{16}{22}{CommonAllowanceIso.widen}
+
+\lean{Copying/CommonAllowanceIso}{23}{25}{CommonAllowanceIso.refl}
+
+\lean{Copying/CommonAllowanceIso}{26}{29}{CommonAllowanceIso.symm}
+
+\lean{Copying/CommonAllowanceIso}{30}{35}{CommonAllowanceIso.trans}
+
+Agreement is preserved by unary interpretation at the same allowance. Commute
+padding with the left unary graph, apply unary congruence to the given padded
+argument isomorphism, and compose with the inverse right unary padding law.
+For abstraction, use allowance $N+1$ and the corresponding body-to-host
+padding law; both adequacy bounds increase by one. This preserves the full
+metadata and body interface of each box.
+
+
+\lean{Copying/CommonAllowanceIso}{36}{41}{CommonAllowanceIso.unary}
+
+\lean{Copying/CommonAllowanceIso}{42}{50}{CommonAllowanceIso.abstraction}
+
+The scoped application interpreter first pads its two arguments to their
+maximum depth. Padding its result further to an adequate $N$ agrees up to
+recursive isomorphism with applying the literal constructor directly to
+both arguments padded to $N$. Use the application padding law, then collapse
+each argument's two successive paddings to $N$. The binary interpreter has
+the same proof with its selected binary operation. Thus the original
+intermediate maximum is retained in the construction and eliminated only
+by a proved equality of padded graphs.
+
+
+\lean{Copying/CommonAllowanceIso}{51}{58}{CommonAllowanceIso.application_to}
+
+\lean{Copying/CommonAllowanceIso}{59}{68}{CommonAllowanceIso.binary_to}
+
+Suppose the two first arguments agree at $N$ and the two second arguments
+also agree at $N$. Both scoped applications have maximum depth at most $N$.
+Use the preceding interpreter-padding isomorphism on the left, application
+congruence of the two argument isomorphisms, and the inverse interpreter law
+on the right. This proves agreement of applications at $N$. The analogous
+three-step composite proves agreement for every binary operation.
+
+
+\lean{Copying/CommonAllowanceIso}{69}{77}{CommonAllowanceIso.application}
+
+\lean{Copying/CommonAllowanceIso}{78}{88}{CommonAllowanceIso.binary}
+
+Define common-allowance isomorphism by the existence of some $N$ at which
+the two scoped graphs agree. Reflexivity uses the graph's own depth; symmetry
+retains the witness and reverses its agreement. For transitivity, widen the
+two witnessing agreements to the maximum of their witnesses, then compose
+there. A scoped isomorphism, which already includes equality of the depths,
+supplies common-allowance isomorphism by padding it to the maximum of those
+depths. All witnesses remain actual recursively isomorphic padded graphs.
+
+
+\lean{Copying/CommonAllowanceIso}{89}{92}{CommonAllowanceIso.CommonIso}
+
+\lean{Copying/CommonAllowanceIso}{93}{94}{CommonAllowanceIso.refl}
+
+\lean{Copying/CommonAllowanceIso}{95}{97}{CommonAllowanceIso.symm}
+
+\lean{Copying/CommonAllowanceIso}{98}{101}{CommonAllowanceIso.trans}
+
+\lean{Copying/CommonAllowanceIso}{102}{105}{CommonAllowanceIso.ofScoped}
+
+Unary and abstraction interpretation preserve common-allowance isomorphism
+by using the respective fixed-allowance laws. For application and binary
+interpretation, first widen both argument comparisons to the maximum of
+their witnesses, then apply the fixed-allowance constructor theorem.
+
+Induction on the complete original annotated context now proves that its
+constructor interpretation preserves common-allowance isomorphism. The hole
+uses the supplied relation; lambda and unary use their preservation laws.
+At either application or binary position, the fixed sibling is related to
+itself and the selected subcontext uses the induction hypothesis. Every
+original context constructor is covered.
+
+Finally, a scoped graph agrees with its own padding to any adequate allowance:
+choose that allowance as witness, remove identity padding on the already
+padded side, and use reflexive isomorphism. Combined with context preservation,
+this is the missing unequal-depth structural comparison.
+
+
+\lean{Copying/CommonAllowanceIso}{106}{109}{CommonAllowanceIso.unary}
+
+\lean{Copying/CommonAllowanceIso}{110}{113}{CommonAllowanceIso.abstraction}
+
+\lean{Copying/CommonAllowanceIso}{114}{118}{CommonAllowanceIso.application}
+
+\lean{Copying/CommonAllowanceIso}{119}{124}{CommonAllowanceIso.binary}
+
+\lean{Copying/CommonAllowanceIso}{125}{136}{CommonAllowanceIso.apply}
+
+\lean{Copying/CommonAllowanceIso}{137}{143}{CommonAllowanceIso.padTo}
+
+\subsection{The unrestricted semantic congruence theorem}
+\termdef{copying-general-context-congruence}
+
+Let execution respect recursive isomorphism and one-step padding, and assume
+$t$ and $u$ are equivalent in the existing all-allowances observational sense.
+For every original annotated context $C$, the theorem proves
+\[
+ \mathsf{ObservationalEquiv}(C[t],C[u]).
+\]
+There is no premise equating the minimal depths of $t$ and $u$.
+
+\paragraph{A common input allowance and one actual hole.}
+Choose $d$ to be the maximum of the two minimal term depths. Let $G,H$ be the
+unchanged translated-program wrappers at $d$. Unrestricted filling supplies
+one certified graph context $D$, of some host allowance $q$, with local
+allowance $d+n$, whose actual filling with any graph padded by $n$ agrees
+with its constructor interpretation. The same address works for both $G$
+and $H$.
+
+\paragraph{Correspondence with the original filled terms.}
+Each original term translation is common-allowance isomorphic to its padding
+to $d$. Context preservation transports these comparisons through $C$.
+The exact constructor-interpretation identity identifies their unpadded
+endpoints with the original translations of $C[t]$ and $C[u]$. Compose the
+inverse comparisons with the addressed filling laws. This gives finite
+witness allowances $N_t,N_u$ comparing each actual filling of $D$ with its
+original filled-term translation. The two witness allowances may differ.
+
+\paragraph{The semantic comparison at arbitrarily large outputs.}
+Given any requested lower threshold $b$, choose
+$N=\max(b,\max(N_t,N_u))$. Widen both structural comparisons to $N$. Their
+adequacy proofs ensure $q\leq N$; write $N=q+m$.
+The input programs of $D$ padded by this extra $m$ are the original
+translations of $t$ and $u$ at allowance $(d+n)+m$, by exact program-padding
+coherence. The assumed observational equivalence supplies their comparison.
+Padded graph-context congruence yields equivalence of the two actual fillings
+at host allowance $N$.
+
+The two widened graph isomorphisms relate those fillings to the original
+translated-program wrappers for $C[t]$ and $C[u]$ at $N$. Execution isomorphism
+invariance turns them into observational equivalences; compose the inverse
+left one, the contextual comparison, and the right one. This establishes
+the cofinal comparison for every $b$. The previously proved cofinal criterion,
+using the explicit execution padding law as well, yields the required
+all-allowances conclusion.
+
+No template robustness or determinism premise is used. The theorem is an
+inference from input equivalence under stated representation laws. It does
+not assert those laws for a copying execution or assert the input equivalence
+of Proposition~12.2.
+
+
+\lean{Copying/GeneralContextCongruence}{9}{57}{GeneralContextCongruence.observationalEquiv_context}
+
+The structural comparison can also be stated directly: interpreting any
+original context with a graph at its original allowance, or with that graph
+padded to a larger adequate allowance, gives common-allowance isomorphic
+results. Apply context preservation to the proved comparison of a graph with
+its own padding. This theorem has no execution premise and changes no term,
+constructor, boundary permutation or observation context.
+
+
+\lean{Copying/GeneralContextCongruence}{58}{63}{GeneralContextCongruence.apply_padTo}
+
+\subsection{Original-program regression and completion boundary}
+
+For every original annotated context and every finite variable/atom scope,
+compare its direct filled-term translation with its constructor interpretation
+when the proposition's argument is supplied at allowance three. The private-cell
+program has depth three; the constant-result program has depth two and is
+padded once. Apply the preceding structural theorem to each unchanged term
+translation and rewrite its unpadded interpretation with the exact filled-term
+identity. This proves both correspondences independently. It does not compare
+the private-cell program with the constant-result program, so it neither
+assumes nor disguises the desired final equivalence.
+
+The general context-filling and observational-congruence development of former
+Appendix~B.1 item~3 is now complete. Its concrete execution hypotheses are
+consolidated into the copying-machine task, where they remain unproved.
+Appendix~B.1 therefore has four outstanding work packages: remaining translation
+and invariant laws; the full copying machine and its representation laws;
+the eleven template families; and semantic weakening, Figure~22 and the final
+proposition. This bookkeeping does not declare the application complete.
+
+
+\lean{Copying/GeneralCongruenceExamples}{11}{23}{GeneralCongruenceExamples.proposition12_2_context_representations}

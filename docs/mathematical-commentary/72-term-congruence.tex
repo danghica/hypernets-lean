@@ -9,7 +9,7 @@ not merely equivalence of two graph fillings. The execution must respect
 recursive graph isomorphism; no execution padding-invariance hypothesis is
 needed for this equal-depth result.
 
-The restriction is material. Lean checks that the unchanged private-cell
+The restriction is material; Section~\ref{sec:copying-general-congruence} removes it. Lean checks that the unchanged private-cell
 program of Proposition~12.2 has minimal translation depth three, whereas the
 constant-result program has depth two. This section therefore does not settle
 congruence for that pair, and does not prove their equivalence. The precise
@@ -184,10 +184,10 @@ To remove the restriction, prove that interpreting $C$ with a graph $A$ at
 $d$, or with $A$ padded to $e\geq d$, gives recursively isomorphic graphs
 after both results are padded to a common allowance. This must retain the
 original boxes, ordered argument exchange and distributors. The numeric
-bounds establish adequate indices; the graph comparison remains unfinished.
-Together with unrestricted filling and the cofinal criterion, it would remove
-the equal-depth restriction. Appendix~B.1 retains this step, the concrete
-execution laws, the copying UAM and the template proofs.
+bounds establish adequate indices. Section~\ref{sec:copying-general-congruence}
+proves the graph comparison and removes the restriction using unrestricted
+filling and the cofinal criterion. The concrete execution laws, copying UAM
+and template proofs remain in Appendix~B.1.
 
 \lean{Copying/ContextDepth}{50}{52}{ContextDepth.privateCell_depth}
 

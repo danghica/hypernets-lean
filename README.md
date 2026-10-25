@@ -827,3 +827,16 @@ open graph contexts connect the actual filling theorem to the original filled
 term translations. Exact context-depth laws are proved. The unchanged
 Proposition 12.2 terms have depths three and two, so unequal-depth congruence
 remains necessary; Appendix B.1 states its precise graph-padding obligation.
+
+
+Section 69 removes the equal-depth restriction: every original annotated term
+context preserves the existing observational equivalence, assuming the
+execution respects recursive isomorphism and one-step padding. New proofs
+commute padding with all literal Figure 16 constructors and show that every
+context respects structural isomorphism at a sufficient common allowance.
+The unchanged depth-three private-cell and depth-two constant-result programs
+are both checked against their direct contextual translations at allowance
+three. This does not assert their equivalence. Former Appendix B.1 item 3's
+general development is complete; its concrete execution-law obligations are
+consolidated into the machine task. Four work packages remain, including the
+copying UAM, template proofs, and Proposition 12.2 itself.
