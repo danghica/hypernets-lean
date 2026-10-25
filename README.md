@@ -20,12 +20,15 @@ Ordered distributors now assemble these trees with the exact input permutation
 `i + k*j`, including zero resources and zero uses. Generic parallel assembly
 preserves and reflects component paths; serial assembly connects typed shared
 interfaces. Tree/distributor acyclicity and label-predicate closure are proved. These are prerequisites, not an operational
-semantics or a conditional proof of the example.
+semantics or a conditional proof of the example. Arbitrary contraction trees
+now have proved root reachability and unique terminal traces. Atom-store
+resolution is unique, invariant under renaming and depth padding, and checked
+in a cyclic-store graph without assuming the whole host is acyclic.
 
 The commentary's section **Copying and store: foundations for Proposition 12.2**
 contains the dependency map; **Ordered distributors and graph assembly**
 explains the new constructions and proofs. Appendix B tracks the remaining
-arbitrary contraction trees, stability/copyability, translation, copying machine,
+stability/copyability, translation, copying machine,
 binding-free contexts, eleven template families, and final Figure 22 assembly.
 The existing two paper-correspondence audits remain open.
 

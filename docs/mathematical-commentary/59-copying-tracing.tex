@@ -1,0 +1,279 @@
+\clearpage
+\section{Arbitrary contraction trees and deterministic store tracing}
+\label{sec:copying-tracing}
+The store rules of Figure~19 locate a store by following atom contraction
+trees. This section proves two prerequisites for that matching operation.
+First, every edge of an arbitrary finite acyclic contraction tree reaches
+its unique root. Second, two successful atom traces in the same host agree
+on the store they find. The second theorem does not assume that the host
+is acyclic: stored references may form cycles.
+
+Neither result is a definition of reference creation, reading, assignment,
+or equality reduction. Nor do they prove that every atom in an arbitrary
+host reaches a store. They establish structural termination for contraction
+trees and uniqueness of successful store lookup, to be used by the future
+machine rules. They also do not prove the copying rule's independence of
+its chosen contraction-tree match.
+
+\subsection{Exact traces and finite termination}
+\termdef{exact-graph-trace}
+For a relation $R$, an exact trace $a\mathrel{R^n}b$ consists of $n$ successive
+steps. Its zero-step constructor ends where it starts; its step constructor
+prepends one step. A terminal element has no outgoing $R$-step. Here $n$
+counts graph adjacencies or atom hops, not machine transitions or the cost
+relation used in contextual refinement.
+
+Mapping every element of a trace along a relation-preserving function
+preserves its exact length, by induction on the trace constructors. A
+bijection which preserves and reflects steps also reflects traces: map
+back through its inverse, use step reflection, and apply the two inverse
+equations to the endpoints. These lemmas will transfer store lookup across
+graph renaming and depth padding.
+
+\lean{Graph/FiniteTrace}{7}{9}{FiniteTrace.Trace}
+
+\lean{Graph/FiniteTrace}{11}{14}{FiniteTrace.Terminal}
+
+\lean{Graph/FiniteTrace}{17}{22}{FiniteTrace.map}
+
+\lean{Graph/FiniteTrace}{25}{37}{FiniteTrace.map_iff}
+
+If $R$ is functional, two traces starting at the same element and ending
+at terminal elements have equal endpoints and equal lengths. Induct on the
+first trace. A zero-step trace cannot compete with a positive trace, because
+its endpoint is terminal. If both traces take a step, functionality identifies
+the next elements; induction identifies the remaining endpoints and lengths.
+
+For an arbitrary relation, bounded exploration either reaches a terminal
+or produces the requested number of steps. At bound zero take the reflexive
+trace. At a positive bound, stop if the current element is terminal;
+otherwise classical reasoning supplies a successor. Apply the induction
+hypothesis there and prepend the chosen step. This is a proof of existence,
+not an executable decision procedure for arbitrary relations.
+
+\lean{Graph/FiniteTrace}{40}{55}{FiniteTrace.terminal_unique}
+
+\lean{Graph/FiniteTrace}{58}{75}{FiniteTrace.terminal_or_long}
+
+An adjacency trace of length $n$ in a graph gives a path of $n+1$ edges:
+induction prepends the starting edge at each step. If every path has no
+repeated edge, its length is at most the length of the graph's finite edge
+enumeration, since every path edge occurs in that enumeration. Repeated
+entries in the enumeration are harmless. Consequently the trace length is
+strictly less than the enumeration length.
+
+Apply bounded exploration with the enumeration length as its bound. The
+alternative producing that many adjacency steps contradicts this strict
+inequality. Thus every edge in a finite edge-acyclic graph reaches a terminal
+edge. This proof does not assume a rank, a balanced tree, or a chosen
+canonical presentation.
+
+\lean{Graph/FiniteTrace}{78}{84}{FiniteTrace.trace_path}
+
+\lean{Graph/FiniteTrace}{87}{94}{FiniteTrace.trace_bound}
+
+\lean{Graph/FiniteTrace}{97}{102}{FiniteTrace.exists_terminal_trace}
+
+If an edge has exactly one target vertex, two adjacent successors must
+share that same vertex in their source lists. Source-incidence uniqueness
+then makes the two successors equal. This local fact supplies functionality
+both for contraction trees and for atom tracing in larger hosts.
+
+\lean{Graph/FiniteTrace}{105}{117}{FiniteTrace.adjacent_functional_at}
+
+\subsection{Arbitrary contraction trees on concrete graphs}
+\termdef{arbitrary-contraction-tree}
+For sharing sort $s$ and $m$ exposed leaves, a contraction tree is a concrete
+finite graph $s^m\to s$ whose edges are all $s$-contractions or $s$-weakenings
+and whose paths have no repeated edge. The structure does not assume
+connectedness to the output; that is proved below. It does not require a
+weakening edge: the single binary contraction is a valid tree. This is
+broader than the canonical trees, which have exactly one weakening.
+
+The structure records the finite graph, its label restriction, and the
+acyclicity proof. Both permitted labels have a single target by their
+signatures, so every tree edge has exactly one target vertex. The generic
+single-target lemma therefore proves that forward adjacency is functional.
+
+\lean{Copying/ContractionTree}{11}{17}{ContractionTree.ContractionTree}
+
+\lean{Copying/ContractionTree}{20}{22}{ContractionTree.target_single}
+
+\lean{Copying/ContractionTree}{24}{26}{ContractionTree.adjacent_functional}
+
+An edge is terminal exactly when its target is the sole external output.
+For the forward implication, inspect its unique target vertex. If that
+vertex were not an output, source coverage would supply a successor edge,
+contradicting terminality. For the reverse implication, the unique target
+is an output, and outputs never occur in source lists, so no successor
+exists.
+
+Target coverage supplies an edge producing the external output. Define the
+root to be that edge, using classical choice. Its output incidence follows
+from the choice specification, and the preceding equivalence makes it
+terminal. Any other terminal edge produces the same output, so target
+uniqueness identifies it with the root. Thus the chosen name has no effect
+on root uniqueness.
+
+\lean{Copying/ContractionTree}{29}{60}{ContractionTree.terminal_iff_output}
+
+\lean{Copying/ContractionTree}{63}{64}{ContractionTree.root}
+
+\lean{Copying/ContractionTree}{66}{67}{ContractionTree.root_output}
+
+\lean{Copying/ContractionTree}{69}{70}{ContractionTree.root_terminal}
+
+\lean{Copying/ContractionTree}{72}{73}{ContractionTree.terminal_eq_root}
+
+Finite acyclic termination supplies a terminal trace from every edge.
+Its endpoint must be the root. Functionality additionally shows that any
+two terminal traces from that edge have the same endpoint and length.
+For an exposed input, source coverage first supplies its consuming edge;
+then use that edge's root trace. The same argument applies to every vertex
+other than the external output. This derives the required connection of
+the entire tree to its root, rather than placing connectivity in the
+structure's assumptions.
+
+\lean{Copying/ContractionTree}{76}{80}{ContractionTree.reaches_root}
+
+\lean{Copying/ContractionTree}{83}{86}{ContractionTree.root_trace_unique}
+
+\lean{Copying/ContractionTree}{89}{93}{ContractionTree.input_reaches_root}
+
+\lean{Copying/ContractionTree}{96}{100}{ContractionTree.vertex_reaches_root}
+
+A graph isomorphism transports the tree property. Labels are preserved,
+and a path in the renamed graph maps back to a path in the original tree.
+The latter has no repeated edge; equality of positions in the former would
+map to equality of positions in the latter, so the former is also without
+repetitions. Finally, each canonical tree is an instance: its earlier label
+classification supplies the sharing-label restriction, and its rank proof
+supplies acyclicity.
+
+\lean{Copying/ContractionTree}{103}{115}{ContractionTree.transport}
+
+\lean{Copying/ContractionTree}{118}{124}{ContractionTree.canonical}
+
+\subsection{Atom tracing in arbitrary hosts}
+\termdef{atom-store-resolution}
+An atom hop may leave an instance edge, an atom contraction, or an atom
+weakening and follows adjacency to the next edge. These three labels have
+one atom output. A successful store resolution is an exact sequence of
+such hops whose endpoint is labelled as a store. Unlike unrestricted graph
+adjacency, this relation stops at a store and does not follow its term output.
+
+The forward-label predicate lists the three allowed labels at any box
+allowance. A hop is that predicate together with adjacency. The output
+signature of every forward label is the singleton atom interface, by cases
+on the predicate. Hence the target incidence list has length one, and
+single-target adjacency functionality proves uniqueness of the next hop.
+No hypothesis about cycles elsewhere in the host is used.
+
+\lean{Copying/StoreTrace}{13}{16}{StoreTrace.ForwardLabel}
+
+\lean{Copying/StoreTrace}{19}{20}{StoreTrace.Hop}
+
+\lean{Copying/StoreTrace}{22}{24}{StoreTrace.forward_output}
+
+\lean{Copying/StoreTrace}{27}{31}{StoreTrace.hop_functional}
+
+The common vertex of a hop lies in the forward edge's target list. Target
+typing makes its label an atom; source typing therefore puts an atom in the
+successor edge's input signature. In a hole-free host this forces the next
+edge to be an atom contraction or a store. Inspect the alphabet: operations,
+instances, and focuses have term inputs; boxes have thunk inputs; weakenings
+have no inputs; term contractions have term inputs; holes are excluded by
+the global hole-free predicate. Thus the permitted successors are proved
+from typing and the alphabet, rather than assumed as a matching convention.
+
+\lean{Copying/StoreTrace}{34}{43}{StoreTrace.hop_atom_input}
+
+\lean{Copying/StoreTrace}{46}{63}{StoreTrace.hop_successor_kind}
+
+A store is terminal for atom hopping because its output is a term, whereas
+all forward labels output an atom. A successful resolution records the
+trace and the final store label. Apply the functional-relation terminal
+uniqueness theorem to two successful resolutions: both store endpoints and
+hop counts agree. Apply this result separately to two starting atoms to
+show that testing whether their resolved store edges are equal is independent
+of the chosen successful traces. This establishes the lookup premise needed
+by atom equality; it does not yet prove the equality compute rule.
+
+\lean{Copying/StoreTrace}{66}{71}{StoreTrace.store_terminal}
+
+\lean{Copying/StoreTrace}{74}{75}{StoreTrace.Resolves}
+
+\lean{Copying/StoreTrace}{78}{81}{StoreTrace.resolves_unique}
+
+\lean{Copying/StoreTrace}{84}{90}{StoreTrace.same_store_iff}
+
+A graph isomorphism preserves labels and preserves and reflects adjacency,
+so it preserves and reflects atom hops. The exact-trace bijection lemma and
+preservation of the final store label then give equivalence of successful
+resolutions under renaming, including equality of the hop counts.
+
+\lean{Copying/StoreTrace}{93}{95}{StoreTrace.hop_iso_iff}
+
+\lean{Copying/StoreTrace}{98}{101}{StoreTrace.resolves_iso_iff}
+
+Depth padding leaves the edge carrier unchanged; an explicit bijection
+exposes this fact despite the depth-indexed type. At depth zero, lifted
+primitive labels become primitive labels at depth one. At positive depth,
+primitive labels remain primitives and box labels remain boxes. Case
+analysis therefore preserves and reflects the forward-label predicate and
+the store-label predicate. Incidence lists are unchanged. These facts give
+hop equivalence, and exact-trace transport gives resolution equivalence
+at the larger allowance. Padding creates no new store lookup behaviour.
+
+\lean{Copying/StoreTrace}{104}{107}{StoreTrace.paddingEdges}
+
+\lean{Copying/StoreTrace}{110}{121}{StoreTrace.hop_raise_iff}
+
+\lean{Copying/StoreTrace}{124}{135}{StoreTrace.resolves_raise_iff}
+
+\subsection{Regressions: no weakening and a cyclic store}
+
+The weakening-free binary tree is the corolla consisting of one contraction.
+Its label condition is immediate. It has no adjacency because its targets
+are output ports and its sources are input ports. A constant rank therefore
+vacuously increases on adjacency and proves path acyclicity. The generic
+tree theorem applies to every edge of this tree and proves root reachability.
+This checks that the arbitrary-tree definition has not silently inherited
+the canonical tree's extra weakening.
+
+\lean{Copying/TracingExamples}{9}{17}{TracingExamples.binaryTree}
+
+\lean{Copying/TracingExamples}{20}{22}{TracingExamples.binaryTree_reaches}
+
+The cyclic-store graph has two internal vertices, one term and one atom,
+and two edges. An instance runs from the term vertex to the atom vertex;
+a store runs from the atom vertex back to the term vertex. It has empty
+external interfaces. Boolean enumeration supplies finiteness, and direct
+case analysis verifies all typing, incidence uniqueness, and coverage
+fields. The path consisting of instance, store, instance witnesses a genuine
+cycle, so global acyclicity is unavailable in this example.
+
+\lean{Copying/TracingExamples}{25}{58}{TracingExamples.cyclicStore}
+
+\lean{Copying/TracingExamples}{61}{64}{TracingExamples.cyclicStore_cycle}
+
+Nevertheless, its instance resolves to its store in exactly one atom hop:
+the shared atom vertex supplies adjacency, and the endpoint has the store
+label. Any successful resolution of that instance must have the same store
+and length by the general uniqueness theorem. Both labels are different
+from every hole label, giving global hole freedom at every depth allowance.
+This checks that the tracing relation stops before following a stored value
+back into the cycle. It is a graph-level regression, not a machine execution
+or an allocation/read/write test.
+
+\lean{Copying/TracingExamples}{67}{69}{TracingExamples.cyclicStore_resolves}
+
+\lean{Copying/TracingExamples}{72}{74}{TracingExamples.cyclicStore_unique}
+
+\lean{Copying/TracingExamples}{77}{79}{TracingExamples.cyclicStore_holeFree}
+
+All new declarations pass the full build and axiom audit with only Lean's
+standard axioms. Arbitrary contraction-tree construction and root tracing
+are completed prerequisites. Copyable and stable hypernets, term/context
+translation, actual copying and store transitions, their full matching and
+locality proofs, the templates, and Proposition~12.2 remain open.
