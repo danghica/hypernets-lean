@@ -807,3 +807,13 @@ lambdas and unary operations; a mixed regression checks all constructors and
 a genuine depth mismatch. Appendix B.1 item 3 now retains observational
 congruence and the observation/padding audit, including the concrete machine's
 representation obligations. Proposition 12.2 remains unfinished.
+
+
+Section 67 proves observation transfer through padded closing contexts and
+reduces the unchanged all-allowances term equivalence to a cofinal collection
+of common allowances. Exact padding transitivity handles terms with different
+minimal depths. Semantic transfer explicitly requires execution invariance
+under recursive isomorphism and one-step padding; these remain concrete-machine
+obligations. A deterministic, isomorphism-invariant artificial execution that
+fails padding invariance checks this boundary. Item 3 and Proposition 12.2
+remain unfinished.

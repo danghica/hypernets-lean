@@ -1,0 +1,229 @@
+\clearpage
+\section{Common allowances and observation transfer}
+\label{sec:copying-observation-padding}
+The preceding section proves structural filling for all original term contexts.
+To use that correspondence semantically, comparisons made at different finite
+representation allowances must be related. This section proves that every
+closing context lifts through padding, that observational refinement at a
+larger allowance reflects to the original allowance, and that the existing
+all-allowances definition of term equivalence is equivalent to checking a
+cofinal collection of common allowances.
+
+The structural statements are unconditional. The semantic transfer theorems
+explicitly require execution invariance under recursive graph isomorphism and
+one-step padding of closed programs. They do not assume determinism or template
+robustness. These representation laws remain obligations for the copying UAM;
+they are not project axioms. A checked counterexample below shows that even
+determinism and isomorphism invariance do not imply padding invariance.
+
+\subsection{Exact padding of programs and closing contexts}
+
+Padding a graph at allowance $d$ to $d+n$ equals its original $n$-step
+padding. The proof transports the equality $(d+n)-d=n$ through the dependent
+graph index; the resulting equality of depth proofs is immaterial.
+
+Choosing an intermediate sufficient allowance changes nothing:
+\[
+ \mathsf{padTo}_{N}(\mathsf{padTo}_{e}(G))
+   =\mathsf{padTo}_{N}(G)\qquad(d\leq e\leq N).
+\]
+Write $e=d+n$ and $N=(d+n)+m$. Reduce the two successive paddings to their
+iterated forms, apply the previous section's additive padding equality, and
+transport the final allowance along associativity of addition. Equality
+elimination shows that transporting a padded graph is the same as choosing
+that transported final allowance directly. This is literal graph equality.
+
+
+\lean{Copying/ObservationPadding}{9}{15}{ObservationPadding.padTo_add}
+
+\lean{Copying/ObservationPadding}{16}{32}{ObservationPadding.padTo_trans}
+
+An open program consists of its graph together with focus-free and hole-free
+proofs. Pad its graph either by a given number of steps or to a specified
+adequate allowance, and transport both certificates using the established
+label-property laws. Equality of the underlying graphs implies equality of
+these packaged programs, since the other fields are proofs. Consequently
+padding an open program to $d+n$ agrees with padding it by $n$ steps.
+
+
+\lean{Copying/ObservationPadding}{33}{37}{ObservationPadding.pad}
+
+\lean{Copying/ObservationPadding}{38}{43}{ObservationPadding.padTo}
+
+\lean{Copying/ObservationPadding}{44}{46}{ObservationPadding.ext_graph}
+
+\lean{Copying/ObservationPadding}{47}{53}{ObservationPadding.padTo_add}
+
+For a closed program, pad its stored graph and increase its stored depth by
+the same number of steps. Focus-freedom and hole-freedom again follow from
+padding preservation. Thus every padded program remains an admissible input
+to the existing execution initializer.
+
+
+\lean{Copying/ObservationPadding}{54}{62}{ObservationPadding.pad}
+
+A closing context with local allowance $d$ and host allowance $D$ lifts to
+one with allowances $d+n$ and $D+n$. Pad its actual host graph, take the
+previously constructed padded site, and retain its sole-hole and binding-free
+certificates using their proved padding laws. This construction works for
+every original closing context, including holes below arbitrary boxes; no
+new restriction on observation contexts is imposed.
+
+Closing a padded program in this padded context is recursively isomorphic to
+padding the original closed program. This is exactly the iterated deep-filling
+law, now with the closing-context and program certificates packaged around
+it. The isomorphism compares graphs at the same resulting host allowance.
+
+
+\lean{Copying/ObservationPadding}{63}{70}{ObservationPadding.pad}
+
+\lean{Copying/ObservationPadding}{71}{80}{ObservationPadding.pad_close_iso}
+
+\subsection{The execution obligation and observation reflection}
+\termdef{copying-execution-padding}
+
+Define execution padding invariance by requiring, for every admissible closed
+program $P$, universal-cost machine equivalence between its initial state and
+the initial state of $P$ padded once. Universal cost forgets the number of
+steps but still observes successful termination, not stuckness. This property
+is explicitly passed to every theorem that uses it.
+
+The one-step property implies invariance under any finite number of steps of
+padding. Induct on their number. Zero padding gives reflexive refinement in
+both directions. At a successor, apply the one-step obligation to the already
+padded program and compose each direction with the induction hypothesis. The
+original iterative definition of padding makes the final program coincide
+with the desired successor padding.
+
+
+\lean{Copying/ObservationPadding}{81}{84}{ObservationPadding.RespectsPadding}
+
+\lean{Copying/ObservationPadding}{85}{94}{ObservationPadding.initial_pad}
+
+Let $C$ be a closing context and $G$ an open program. First apply iterated
+execution padding invariance to the closed program $C[G]$. Next apply the
+execution's separate isomorphism obligation to the proved isomorphism between
+its padded graph and the graph obtained by closing the padded $G$ in the
+padded $C$. Compose the two machine equivalences, reversing their order in
+the converse direction. This relates the two actual initialized closed
+observations, including their admissibility proofs.
+
+
+\lean{Copying/ObservationPadding}{95}{106}{ObservationPadding.close_pad}
+
+Suppose the two padded open programs refine at allowance $d+n$. To prove
+refinement at $d$, take any original closing context $C$. Transfer the first
+closed observation to the padded context, apply the supplied refinement there,
+and transfer the second observation back. Transitivity gives the requested
+refinement in $C$. Since $C$ was arbitrary, the theorem covers the original
+full observation class. Apply this argument in both directions to obtain
+reflection of equivalence.
+
+For a specified adequate allowance $N\geq d$, write $N=d+n$ and use the exact
+open-program padding equality to reduce to this result. These are reflection
+laws from larger allowances. No converse, no automatic equivalence between
+all representations, and no copying execution is inferred from them.
+
+
+\lean{Copying/ObservationPadding}{107}{113}{ObservationPadding.refines_of_pad}
+
+\lean{Copying/ObservationPadding}{114}{118}{ObservationPadding.equiv_of_pad}
+
+\lean{Copying/ObservationPadding}{119}{128}{ObservationPadding.equiv_of_padTo}
+
+Recursive isomorphism of open program graphs also gives observational
+equivalence when execution respects isomorphism of closed graphs. In each
+closing context, deep replacement congruence lifts the fragment isomorphism
+to an isomorphism of the closed fillings. Apply the closed execution obligation
+and select its forward and converse refinements for the two contextual
+directions. Padding invariance is unnecessary for this equal-allowance law.
+
+
+\lean{Copying/ObservationPadding}{129}{135}{ObservationPadding.equiv_iso}
+
+\subsection{A cofinal criterion for the unchanged term equivalence}
+\termdef{copying-cofinal-observations}
+
+The translated-program wrapper uses the original term translation padded to
+the chosen allowance. Padding that wrapper through an intermediate adequate
+allowance gives exactly the wrapper at the final allowance. Apply graph-level
+padding transitivity and then the open-program equality principle. The source
+term, its translation and its interfaces are unchanged.
+
+
+\lean{Copying/ObservationPadding}{136}{143}{ObservationPadding.translatedProgram_padTo}
+
+Under the two execution representation laws, the original definition
+$\mathsf{ObservationalEquiv}(t,u)$ is equivalent to:
+\[
+ \forall b\;\exists N\geq b,\quad
+ \mathsf{depth}(t)\leq N\ \land\ \mathsf{depth}(u)\leq N\ \land\
+ \mathsf{Equiv}_{\mathrm{any}}(T_N(t),T_N(u)),
+\]
+where $T_N$ is the unchanged translated-program wrapper. The witnessing
+allowances need not be every natural number; they must be arbitrarily large.
+
+For the forward direction, given $b$, choose the maximum of $b$ and the two
+term depths, then instantiate the original all-allowances hypothesis. For the
+converse, fix any adequate original allowance $d$. Obtain a witnessing
+$N\geq d$ from the cofinal hypothesis. The translated-program transitivity
+law identifies the translations at $N$ with the translations at $d$ padded
+to $N$. Equivalence reflection therefore supplies the required comparison
+at $d$. This argument handles different minimal term depths and preserves
+quantification over all original binding-free closing contexts.
+
+This reduction supports later common-allowance proofs. It does not prove the
+cofinal hypothesis for Proposition~12.2, or remove the need to establish the
+two representation laws for its concrete machine.
+
+
+\lean{Copying/ObservationPadding}{144}{160}{ObservationPadding.observationalEquiv_iff_cofinal}
+
+\subsection{A negative regression for the missing machine law}
+
+Consider an artificial execution with natural-number states, no transitions,
+and final predicate $d=0$. Its initializer returns the closed graph's stored
+allowance. Final states are normal because no transitions exist. The execution
+is deterministic for the same reason: an alleged pair of outgoing transitions
+already includes a contradiction.
+
+It respects recursive graph isomorphism. Such isomorphisms compare graphs at
+the same allowance, and both initializers therefore return exactly the same
+state. Reflexive machine refinement supplies both directions, regardless of
+the graph's labels or carriers. This execution is deliberately not the copying
+UAM; it tests which laws the abstract observation interface actually implies.
+
+
+\lean{Copying/ObservationPaddingExamples}{10}{17}{ObservationPaddingExamples.depthSensitiveExecution}
+
+\lean{Copying/ObservationPaddingExamples}{18}{22}{ObservationPaddingExamples.depthSensitive_deterministic}
+
+\lean{Copying/ObservationPaddingExamples}{23}{27}{ObservationPaddingExamples.depthSensitive_respectsIso}
+
+Take the unchanged closed unit translation at allowance zero, with its
+proved focus-free and hole-free certificates. Its initial state is zero,
+so the zero-step run is a successful observation. Pad the same closed program
+once. Its initial state is now one. Every run in the transition-free machine
+has zero length and unchanged state; it therefore cannot reach a final state.
+This proves failure of termination for the padded program.
+
+If the execution satisfied padding invariance, its forward refinement for
+this unit program would turn the successful zero-step run into a successful
+run from the padded initializer, contradicting the preceding result.
+Thus padding invariance is independent of the supplied determinism and
+isomorphism proofs. An axiom audit of a conditional transfer theorem cannot
+substitute for establishing this missing machine property.
+
+Appendix~B.1 retains observational term-context congruence and the concrete
+execution obligations. The common-allowance reduction and explicit context
+lift are now proved; the copying UAM, the template proofs and the final
+proposition remain unfinished.
+
+
+\lean{Copying/ObservationPaddingExamples}{28}{32}{ObservationPaddingExamples.zeroDepthUnit}
+
+\lean{Copying/ObservationPaddingExamples}{33}{36}{ObservationPaddingExamples.depthSensitive_unit_terminates}
+
+\lean{Copying/ObservationPaddingExamples}{37}{45}{ObservationPaddingExamples.depthSensitive_padded_unit_not_terminates}
+
+\lean{Copying/ObservationPaddingExamples}{46}{51}{ObservationPaddingExamples.depthSensitive_not_respectsPadding}
