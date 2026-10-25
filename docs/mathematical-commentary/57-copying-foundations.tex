@@ -1,0 +1,581 @@
+\clearpage
+\section{Copying and store: foundations for Proposition 12.2}
+\label{sec:copying-foundations}
+\Needspace{14\baselineskip}
+\subsection{Scope, dependency map, and semantic boundary}
+
+The new namespace \texttt{Hypernets.Copying} begins the extension needed for
+Proposition~12.2 of the PDF (Proposition~12 in the HTML). The requested endpoint
+is the observational equivalence of the private-cell program and the constant
+program in every distinct-list environment. That endpoint is \emph{not yet
+proved}. In particular, the new syntax is not an operational semantics, and
+its substitution equations are not unrestricted call-by-value beta rules.
+
+The following dependency map distinguishes checked prerequisites from pending
+semantic work. The paper references use the PDF numbering, with HTML aliases
+where different.
+\begin{enumerate}
+\item \textbf{Checked foundations:} Figure~13 syntax and substitution algebra;
+term/atom wire distinction and box interfaces from Sections~9--10; concrete
+canonical trees of Definition~10.1; recursive renaming, addressed replacement,
+and preservation of global label properties.
+\item \textbf{Pending graph assembly:} distributors, their interface permutations,
+term translation (Figure~16), arbitrary contraction trees, copyable graphs
+(Definition~10.2), and stable graphs (Definition~10.3).
+\item \textbf{Pending machine:} the copy rule (Figure~17), extra search rules
+(Figure~18), store rules (Figure~19), and arithmetic/application behaviour.
+These must yield an unbounded deterministic refocusing copying machine and
+a proved concrete specimen-system instance. Copy transitions replace the
+linear machine's substitution transitions; they must not be hidden in its
+existing compute parameter.
+\item \textbf{Pending contextual interface:} binding-free contexts and their
+plugging closure, translated term contexts, contextual congruence, and the
+paper-correspondence obligations of Section~\ref{sec:paper-correspondence}.
+Closure for label predicates proved below does not settle binding-free closure.
+\item \textbf{Pending templates:} Table~3 requires contraction associativity,
+commutativity and idempotence; copying and garbage collection; box permutation,
+pulling contractions and pulling weakening; micro-beta; reference creation;
+and parametricity. Their safety and robustness proofs use the transfer results
+of Appendices~G--H. Prove base structural templates before the dependent
+copying, box-pulling and parametricity arguments; do not assume their contextual
+consequences in a circular proof.
+\item \textbf{Pending assembly:} the semantic weakening laws (Proposition~12.1;
+HTML Proposition~11), the empty-environment chain of Figure~22, and extension
+to arbitrary environments (Proposition~12.2; HTML Proposition~12). The copying
+and garbage-collection templates are indirect dependencies, as Table~4 records.
+\end{enumerate}
+The final public theorem is reserved as
+\texttt{Copying.Examples.proposition12\_2}; no placeholder theorem with that name
+is introduced. Definitions and theorems below are reusable prerequisites rather
+than a conditional assertion of the requested conclusion.
+
+\Needspace{14\baselineskip}
+\subsection{Scoped terms and the two programs}
+
+\termdef{copying-scoped-term}
+Constants are naturals, booleans and unit. Unary syntax contains numeric
+negation, allocation and dereference; binary syntax contains addition,
+subtraction, assignment and atom equality. A term $t\in\mathsf{Term}(k,h)$ has
+$k$ available variables and $h$ available atoms. Variables and atoms are finite
+indices in separate namespaces. A lambda body has $k+1$ variable slots; the
+newly bound variable has index zero. Both children of application and binary
+operations use the same environments, so variable sharing is permitted.
+These are formation rules, without an evaluation relation.
+
+\lean{Copying/Syntax}{7}{11}{Syntax.Constant}
+
+\lean{Copying/Syntax}{13}{15}{Syntax.Unary}
+
+\lean{Copying/Syntax}{17}{20}{Syntax.Binary}
+
+\lean{Copying/Syntax}{23}{32}{Syntax.Term}
+
+Lifting a renaming fixes index zero and maps each successor index by the old
+renaming followed by successor. The zero and successor equations hold by
+definition. Simultaneous renaming recursively acts on variables and atoms;
+only the variable map is lifted under lambda. Non-injective maps are allowed,
+as identifying variable names is a legitimate substitution operation here.
+
+\lean{Copying/Syntax}{34}{35}{Syntax.lift}
+
+\lean{Copying/Syntax}{37}{37}{Syntax.lift_zero}
+
+\lean{Copying/Syntax}{38}{40}{Syntax.lift_succ}
+
+\lean{Copying/Syntax}{42}{49}{Syntax.rename}
+
+Lifting preserves identity and composition: split a finite index into zero
+or successor and both statements reduce to equality by definition. Structural
+induction then proves identity and composition for renaming all terms. The
+lambda cases use the corresponding lifting identities; every other constructor
+uses the induction hypotheses on its children.
+
+\lean{Copying/Syntax}{51}{52}{Syntax.lift_id}
+
+\lean{Copying/Syntax}{54}{56}{Syntax.lift_comp}
+
+\lean{Copying/Syntax}{58}{61}{Syntax.rename_id}
+
+\lean{Copying/Syntax}{63}{70}{Syntax.rename_comp}
+
+Weakening inserts a fresh variable at the front, shifting every old variable
+index by one and leaving atoms unchanged. The let form is application of a
+lambda to its bound expression. Sequencing $u;t$ is this let form with weakened
+$t$, ensuring the fresh sequencing binder does not capture any variable in $t$.
+
+\lean{Copying/Syntax}{72}{73}{Syntax.weaken}
+
+\lean{Copying/Syntax}{75}{76}{Syntax.letIn}
+
+\lean{Copying/Syntax}{78}{79}{Syntax.seq}
+
+A lifted substitution maps zero to the new bound variable and maps a successor
+to the weakened old replacement. Substitution recursively replaces variable
+leaves with terms, renames atom leaves, and lifts the replacement environment
+under lambda. Replacements are not substituted into again by this same
+operation. This is capture-avoiding simultaneous syntactic substitution.
+
+\lean{Copying/Syntax}{81}{83}{Syntax.liftSub}
+
+\lean{Copying/Syntax}{85}{92}{Syntax.subst}
+
+Lifting a substitution consisting only of variable leaves equals lifting the
+underlying renaming. Splitting the index proves this equation. Induction on
+terms then identifies substitution by variables with renaming. Its identity
+instance follows from the previously proved renaming identity.
+
+\lean{Copying/Syntax}{94}{96}{Syntax.liftSub_var}
+
+\lean{Copying/Syntax}{98}{102}{Syntax.subst_var}
+
+\lean{Copying/Syntax}{104}{106}{Syntax.subst_id}
+
+The definitions \texttt{privateCell} and \texttt{constantResult} encode the two
+programs in every scope $(k,h)$. In the desugared left program, the dereferenced
+$x$ has index two beneath the binders for $f$ and the sequencing variable.
+The two desugaring theorems are definitional equalities. Neither program uses
+an ambient variable or atom: applying any ambient renaming produces exactly
+the same program in the target scope. These equalities also hold by reduction
+of the syntax and lifting definitions, not by an observational argument.
+
+\lean{Copying/Syntax}{108}{111}{Syntax.privateCell}
+
+\lean{Copying/Syntax}{113}{115}{Syntax.constantResult}
+
+\lean{Copying/Syntax}{117}{119}{Syntax.privateCell_desugar}
+
+\lean{Copying/Syntax}{121}{123}{Syntax.constantResult_desugar}
+
+\lean{Copying/Syntax}{125}{126}{Syntax.privateCell_rename}
+
+\lean{Copying/Syntax}{128}{131}{Syntax.constantResult_rename}
+
+A named environment consists of ordered variable and atom lists with separate
+no-duplicates proofs. The two lists need not be disjoint: they designate separate
+namespaces. Their lengths determine the indices of the scoped term type.
+This retains the distinct-list presentation of the requested statement without
+requiring fresh printed binder names inside the implementation.
+
+\lean{Copying/Syntax}{134}{138}{Syntax.Environment}
+
+\Needspace{14\baselineskip}
+\subsection{Substitution algebra}
+
+Renaming a weakened term under a lifted renaming equals weakening its renamed
+term. Expand weakening, apply renaming composition, and compare the two maps
+pointwise. Splitting zero/successor lifts this identity to substitution
+environments. Structural induction now shows that renaming after substitution
+renames every replacement and composes the atom maps. The lambda case is
+exactly the lifted-environment identity.
+
+\lean{Copying/Substitution}{6}{9}{Substitution.rename_weaken}
+
+\lean{Copying/Substitution}{11}{18}{Substitution.rename_liftSub}
+
+\lean{Copying/Substitution}{20}{26}{Substitution.rename_subst}
+
+Reindexing a lifted replacement family equals lifting its reindexed family;
+zero and successor prove the assertion directly. Consequently substitution
+after renaming simply reindexes the replacement family and composes atom maps.
+The proof again follows term induction, using the family equation under lambda.
+
+\lean{Copying/Substitution}{28}{31}{Substitution.liftSub_rename}
+
+\lean{Copying/Substitution}{33}{39}{Substitution.subst_rename}
+
+Substitution under a fresh binder commutes with weakening. This follows by
+applying the two preceding interchange laws to the successor renaming. Splitting
+an index lifts the result to replacement families. Finally, two successive
+substitutions equal one substitution whose replacements are themselves
+substituted, and whose atom map is the composite. Induction on the original
+term proves this associativity law; the lambda case uses the lifted-family law.
+Thus the binder cases have been discharged, rather than left as freshness
+assumptions.
+
+\lean{Copying/Substitution}{41}{44}{Substitution.subst_weaken}
+
+\lean{Copying/Substitution}{46}{53}{Substitution.subst_liftSub}
+
+\lean{Copying/Substitution}{55}{62}{Substitution.subst_comp}
+
+Instantiation replaces variable zero with a supplied term and keeps older
+variables, shifting them down by one. Instantiating a weakened term returns
+the original term, by substitution--renaming interchange and substitution
+identity. Instantiating variable zero returns the supplied term by definition.
+These syntactic identities do not license reducing a call-by-value application
+before its argument is a value.
+
+\lean{Copying/Substitution}{64}{65}{Substitution.instantiate}
+
+\lean{Copying/Substitution}{67}{70}{Substitution.instantiate_weaken}
+
+\lean{Copying/Substitution}{73}{73}{Substitution.instantiate_zero}
+
+\Needspace{14\baselineskip}
+\subsection{Copying signatures and finite boxed graphs}
+
+\termdef{copying-wire}
+Wire types are term, atom, and a thunk annotated by its number of bound
+variables. Sharing sorts are only term and atom; the inclusion into wire types
+therefore cannot select a thunk. Operations comprise all constants, lambda,
+application, and all unary/binary syntax operations. Constants and lambda are
+passive; the remaining operations are active. Every operation has one term
+input. Outputs are empty for constants, a one-binder thunk for lambda, two
+terms for application/binary operations, and one term for unary operations.
+
+\lean{Copying/Hierarchy}{10}{13}{Hierarchy.Wire}
+
+\lean{Copying/Hierarchy}{15}{17}{Hierarchy.ShareSort}
+
+\lean{Copying/Hierarchy}{19}{22}{Hierarchy.ShareSort.wire}
+
+\lean{Copying/Hierarchy}{24}{29}{Hierarchy.Operation}
+
+\lean{Copying/Hierarchy}{31}{33}{Hierarchy.Operation.kind}
+
+\lean{Copying/Hierarchy}{35}{39}{Hierarchy.Operation.outputs}
+
+Holes have names and ordered typed interfaces. Primitive edges are operations,
+contractions, weakenings, instances, stores, focuses and holes. Contraction
+has two inputs and one output of its sharing sort; weakening has no inputs
+and one output. An instance has type $\star\Rightarrow\diamond$, and store has
+the opposite type. Focus has type $\star\Rightarrow\star$. The distinction
+between term and atom contractions is present in the labels; no copy rule for
+atom contractions is supplied. There is no primitive linear variable edge.
+
+\lean{Copying/Hierarchy}{41}{46}{Hierarchy.Hole}
+
+\lean{Copying/Hierarchy}{48}{55}{Hierarchy.Primitive}
+
+\lean{Copying/Hierarchy}{57}{70}{Hierarchy.primitiveSignature}
+
+The environment interface lists all term outputs before all atom outputs.
+An alphabet is a label type with its signature. A box records a bound-variable
+count, a free-variable count, a free-atom count, and a body whose outputs are
+bound variables, free variables, then free atoms. Its external input is the
+appropriate thunk, and its external outputs omit the bound variables.
+The zero-depth alphabet contains primitives; a successor alphabet adds boxes
+whose bodies use the previous alphabet. A hypernet is the existing finite
+interfaced graph over this alphabet, retaining every incidence and typing law.
+
+\lean{Copying/Hierarchy}{72}{73}{Hierarchy.environmentInterface}
+
+\lean{Copying/Hierarchy}{75}{78}{Hierarchy.Alphabet}
+
+\lean{Copying/Hierarchy}{80}{84}{Hierarchy.Box}
+
+\lean{Copying/Hierarchy}{86}{91}{Hierarchy.baseAlphabet}
+
+\lean{Copying/Hierarchy}{93}{102}{Hierarchy.nextAlphabet}
+
+\lean{Copying/Hierarchy}{104}{106}{Hierarchy.alphabet}
+
+\lean{Copying/Hierarchy}{108}{108}{Hierarchy.Hypernet}
+
+Primitive labels embed into every finite alphabet. Both signature equations
+are proved by splitting the depth into zero or successor. The primitive graph
+is the existing one-edge corolla at the embedded label; those equations give
+its stated interface without changing its incidence.
+
+\lean{Copying/Hierarchy}{110}{112}{Hierarchy.primitiveLabel}
+
+\lean{Copying/Hierarchy}{114}{116}{Hierarchy.primitive_input}
+
+\lean{Copying/Hierarchy}{118}{121}{Hierarchy.primitive_output}
+
+\lean{Copying/Hierarchy}{123}{125}{Hierarchy.primitiveNet}
+
+The operation predicate recognises only primitive operation labels. Their
+sources have length one, by graph typing and case analysis on labels. Hence
+the existing generic operation-path uniqueness theorem applies to copying
+hypernets as well: two operation paths to the same vertex from inputs have
+the same edges and the same starting input. A contraction is explicitly not
+an operation, so its two sources do not violate this argument.
+
+\lean{Copying/Hierarchy}{127}{131}{Hierarchy.IsOperation}
+
+\lean{Copying/Hierarchy}{134}{144}{Hierarchy.unary_operations}
+
+\lean{Copying/Hierarchy}{146}{151}{Hierarchy.operation_path_unique}
+
+\lean{Copying/Hierarchy}{153}{155}{Hierarchy.contraction_not_operation}
+
+Boxing constructs a one-edge graph with the given typed body. Raising increases
+the nesting allowance, relabelling primitives and recursively raising box
+bodies while retaining all three counts. It changes neither outer carriers
+nor incidence. Heterogeneous equalities of source and target functions follow
+by splitting the old depth; the heterogeneous formulation accommodates their
+dependent carrier types.
+
+\lean{Copying/Hierarchy}{157}{162}{Hierarchy.box}
+
+\lean{Copying/Hierarchy}{164}{171}{Hierarchy.raise}
+
+\lean{Copying/Hierarchy}{173}{174}{Hierarchy.raise_source}
+
+\lean{Copying/Hierarchy}{176}{178}{Hierarchy.raise_target}
+
+Deep edge occurrences are either shallow edges or a pair consisting of an
+outer box edge and a child occurrence. Equal box labels at different edges
+therefore still give different occurrences. Sum and dependent-sum enumeration
+construct an explicit finite enumeration recursively. Every occurrence belongs
+to it by the enumeration's completeness field.
+
+\lean{Copying/Hierarchy}{180}{185}{Hierarchy.AllEdge}
+
+\lean{Copying/Hierarchy}{187}{193}{Hierarchy.allEdgesFinite}
+
+\lean{Copying/Hierarchy}{195}{196}{Hierarchy.every_edge_enumerated}
+
+\Needspace{14\baselineskip}
+\subsection{Recursive isomorphism and addressed replacement}
+
+Box relatedness requires identical bound, free-variable and free-atom counts,
+and related bodies at that exact interface. Label equivalence is literal on
+primitives and recursive graph isomorphism on box bodies. Mixed primitive/box
+labels are unrelated. A deep isomorphism uses the generic incidence-isomorphism
+structure with this label relation; it preserves ordered boundaries at every
+level while permitting independent internal renaming.
+
+\lean{Copying/RecursiveIso}{9}{13}{RecursiveIso.BoxRelated}
+
+\lean{Copying/RecursiveIso}{16}{23}{RecursiveIso.LabelEquiv}
+
+\lean{Copying/RecursiveIso}{26}{27}{RecursiveIso.DeepIso}
+
+Induction on depth proves reflexivity, symmetry and transitivity of label
+equivalence. Primitive cases are the corresponding equality laws. In a box
+case, use the induction hypothesis to build, reverse or compose the body's
+incidence isomorphism. Incompatible label cases are impossible.
+
+\lean{Copying/RecursiveIso}{29}{39}{RecursiveIso.labelEquiv_refl}
+
+\lean{Copying/RecursiveIso}{41}{57}{RecursiveIso.labelEquiv_symm}
+
+\lean{Copying/RecursiveIso}{59}{84}{RecursiveIso.labelEquiv_trans}
+
+The graph-level identity, inverse and composition apply the generic
+isomorphism constructors with the three label laws just proved. An ordinary
+literal-label isomorphism embeds into a deep isomorphism using reflexivity
+of label equivalence.
+
+\lean{Copying/RecursiveIso}{86}{86}{RecursiveIso.refl}
+
+\lean{Copying/RecursiveIso}{88}{88}{RecursiveIso.symm}
+
+\lean{Copying/RecursiveIso}{90}{92}{RecursiveIso.trans}
+
+\lean{Copying/RecursiveIso}{94}{97}{RecursiveIso.ofIso}
+
+Related labels have equal input and output signatures. For primitives this
+follows by applying the signature function to label equality. For boxes the
+relatedness constructor identifies all interface counts. The result follows
+by cases, with mixed labels eliminated by contradiction.
+
+\lean{Copying/RecursiveIso}{99}{112}{RecursiveIso.labelEquiv_input}
+
+\lean{Copying/RecursiveIso}{114}{126}{RecursiveIso.labelEquiv_output}
+
+Replacement of a selected box changes just its body, preserving its metadata
+and all outer incidence. A typed site is either a shallow selected edge or a
+site recursively inside a selected box. Its indices carry the replacement's
+local allowance and interface. Addressed plugging performs the existing finite
+graph substitution at a shallow site and reconstructs enclosing boxes at an
+inner site. It is defined for arbitrary selected edges, not only holes.
+
+\lean{Copying/Plugging}{11}{30}{Plugging.replaceBox}
+
+\lean{Copying/Plugging}{33}{42}{Plugging.Site}
+
+\lean{Copying/Plugging}{45}{51}{Plugging.plugAt}
+
+Shallow addressed plugging equals ordinary graph plugging by definition.
+Inside a box, source and target functions of the outer graph remain unchanged,
+also by definition. Every other outer label is unchanged: unfold replacement
+and use the inequality of the selected and retained edge. Equal contents of
+distinct boxes do not trigger simultaneous replacement.
+
+\lean{Copying/Plugging}{53}{58}{Plugging.plugAt_shallow}
+
+\lean{Copying/Plugging}{60}{64}{Plugging.plugAt_inside_source}
+
+\lean{Copying/Plugging}{66}{71}{Plugging.plugAt_inside_target}
+
+\lean{Copying/Plugging}{74}{79}{Plugging.plugAt_inside_other_label}
+
+\Needspace{14\baselineskip}
+\subsection{Global predicates and closure}
+
+\termdef{copying-global-label}
+A predicate on primitive labels extends recursively through every box body.
+The graph predicate requires it on all outer labels and therefore at every
+depth. Focus freedom excludes all focus modes, and hole freedom excludes all
+hole labels. These are global predicates, not shallow tests.
+
+\lean{Copying/Predicates}{10}{13}{Predicates.LabelAll}
+
+\lean{Copying/Predicates}{15}{16}{Predicates.AllLabels}
+
+\lean{Copying/Predicates}{18}{19}{Predicates.FocusFree}
+
+\lean{Copying/Predicates}{21}{23}{Predicates.HoleFree}
+
+\termdef{copying-replacement-closure}
+A graph class is closed under replacement when replacing any well-typed
+addressed site of one member by another member produces a member. This is
+stronger than closure only at holes. Global label predicates satisfy it:
+at a shallow site every resulting edge comes from either the host or the
+replacement; inside a box apply the induction hypothesis to the selected body
+and leave other labels unchanged. Focus-free and hole-free closure are the
+two immediate instances. No binding-free path condition is asserted here.
+
+\lean{Copying/Predicates}{26}{29}{Predicates.ClosedUnderReplacement}
+
+\lean{Copying/Predicates}{31}{51}{Predicates.allLabels_plugAt}
+
+\lean{Copying/Predicates}{53}{54}{Predicates.focusFree_closed}
+
+\lean{Copying/Predicates}{56}{58}{Predicates.holeFree_closed}
+
+Raising preserves and reflects a global label property. Induction on depth
+reduces the primitive case to identity and the box case to the induction
+hypothesis. Recursive label equivalence likewise preserves and reflects the
+property: map edges through the body's bijection, using its inverse for the
+reverse coverage direction. Applying this label fact to the outer edge
+bijection proves invariance under deep graph isomorphism.
+
+\lean{Copying/Predicates}{60}{76}{Predicates.allLabels_raise_iff}
+
+\lean{Copying/Predicates}{78}{99}{Predicates.labelAll_equiv}
+
+\lean{Copying/Predicates}{101}{108}{Predicates.allLabels_iso_iff}
+
+\Needspace{14\baselineskip}
+\subsection{The ordered canonical contraction tree}
+
+\termdef{copying-canonical-tree}
+For $m$ inputs, internal vertices are $0,\ldots,m-1$ and edges are
+$0,\ldots,m$. Edge zero is weakening. If $m=0$, it targets the output.
+Otherwise edge one is the root contraction, fed on the left by the weakening.
+The other contractions form the ordered right spine from Definition~10.1.
+For $e>1$, its left source is input $e-2$; its right source is the next
+internal vertex unless it is the last contraction, whose right source is
+input $m-1$. Thus the one-input case still contains both edges. These ordered
+sources follow the PDF figure, rather than merely choosing an arbitrary
+binary tree with the same leaves.
+
+\lean{Copying/CanonicalTree}{10}{12}{CanonicalTree.Vertex}
+
+\lean{Copying/CanonicalTree}{14}{18}{CanonicalTree.node}
+
+\lean{Copying/CanonicalTree}{20}{23}{CanonicalTree.sources}
+
+\lean{Copying/CanonicalTree}{25}{26}{CanonicalTree.label}
+
+Distinct edges have distinct target nodes: inspect the empty tree, weakening,
+root and remaining spine cases. No target is an input. The two sources of a
+contraction are distinct, and a vertex cannot be sourced by two different
+edges; the proofs inspect the ordered source cases and compare finite indices.
+Every non-output vertex occurs as a source: choose the root for the weakening
+vertex, the matching spine edge for other internal vertices, and the appropriate
+contraction for each input. Every non-input vertex is the target of its indexed
+edge. Finally all vertices have the sharing sort's label, including boundary
+vertices, by inspection of the repeated interface lists.
+
+\lean{Copying/CanonicalTree}{28}{34}{CanonicalTree.node_injective}
+
+\lean{Copying/CanonicalTree}{36}{39}{CanonicalTree.node_not_input}
+
+\lean{Copying/CanonicalTree}{41}{46}{CanonicalTree.sources_nodup}
+
+\lean{Copying/CanonicalTree}{48}{60}{CanonicalTree.source_unique}
+
+\lean{Copying/CanonicalTree}{62}{89}{CanonicalTree.source_coverage}
+
+\lean{Copying/CanonicalTree}{91}{110}{CanonicalTree.target_coverage}
+
+\lean{Copying/CanonicalTree}{112}{116}{CanonicalTree.vertex_label}
+
+The tree graph packages these finite carriers and incidence functions. The
+preceding results discharge uniqueness and coverage. Source and target typing
+follow because every vertex has the same sharing label and the primitive
+signature has the corresponding arity. The label characterisations prove
+that edge zero is the unique weakening and all remaining $m$ edges are
+contractions.
+
+\lean{Copying/CanonicalTree}{118}{142}{CanonicalTree.net}
+
+\lean{Copying/CanonicalTree}{144}{150}{CanonicalTree.weakening_iff}
+
+\lean{Copying/CanonicalTree}{152}{159}{CanonicalTree.contraction_iff}
+
+Two tree edges are adjacent exactly when they are weakening followed by the
+root, or consecutive edges in the upward right spine. Unfold singleton target
+membership and the source cases to prove this equivalence. Assign weakening
+rank zero and a nonzero edge $e$ rank $m+1-e$. Each adjacency strictly increases
+rank, by the just-proved characterisation and arithmetic.
+
+\lean{Copying/CanonicalTree}{161}{169}{CanonicalTree.adjacent_iff}
+
+\lean{Copying/CanonicalTree}{171}{171}{CanonicalTree.rank}
+
+\lean{Copying/CanonicalTree}{173}{178}{CanonicalTree.adjacent_rank_lt}
+
+Induction on the path list proves that earlier positions have strictly smaller
+rank than later positions. At its head, combine the first adjacency with the
+induction hypothesis on the tail; two tail positions reduce directly to that
+hypothesis. Equal edges at different positions would then have strictly
+ordered equal ranks, a contradiction. Hence every path has distinct edges.
+This acyclicity is a theorem for these trees, not an axiom imposed on general
+store graphs. Finally signature-preserving relabelling embeds the tree into
+any finite copying alphabet.
+
+\lean{Copying/CanonicalTree}{180}{205}{CanonicalTree.path_rank_lt}
+
+\lean{Copying/CanonicalTree}{207}{221}{CanonicalTree.path_nodup}
+
+\lean{Copying/CanonicalTree}{223}{225}{CanonicalTree.atDepth}
+
+\Needspace{14\baselineskip}
+\subsection{Regression examples and what they establish}
+
+The first regression substitutes an open variable beneath a lambda and checks
+that its index is shifted rather than captured. The second inserts an atom
+beneath a lambda and checks that the atom index is not shifted. Both equations
+are proved by evaluating the recursive syntax definitions.
+
+\lean{Copying/Examples}{11}{14}{Examples.substitution_avoids_capture}
+
+\lean{Copying/Examples}{16}{19}{Examples.atom_not_captured}
+
+The one-input regression checks the ordered sources: weakening first, input
+second. The two-input regression checks the lower contraction's ordered input
+ports. The three-input regression checks weakening-to-root and both spine
+adjacencies, and excludes the reverse edge. The first two reduce directly;
+the last uses the adjacency characterisation and finite arithmetic.
+
+\lean{Copying/Examples}{21}{24}{Examples.unary_tree_sources}
+
+\lean{Copying/Examples}{26}{29}{Examples.binary_tree_sources}
+
+\lean{Copying/Examples}{31}{38}{Examples.ternary_tree_adjacency}
+
+The boxed-instance graph has no bound or free term variables and one free
+atom. Its interface is a zero-binder thunk to an atom output. Its body is an
+instance corolla. Inspection of the sole primitive inside the box proves both
+global focus freedom and global hole freedom.
+
+\lean{Copying/Examples}{40}{41}{Examples.boxedInstance}
+
+\lean{Copying/Examples}{43}{46}{Examples.boxedInstance_focusFree}
+
+\lean{Copying/Examples}{48}{52}{Examples.boxedInstance_holeFree}
+
+For every named distinct-list environment, both displayed programs are the
+renamings of their empty-environment syntax. Apply the two program renaming
+theorems to the unique maps from empty index sets. This does not prove the
+semantic weakening laws, which compare translated graphs and remain on the
+dependency map. The new axiom audit checks these prerequisites separately;
+there is no assertion of Proposition~12.2 in this snapshot.
+
+\lean{Copying/Examples}{55}{60}{Examples.programs_in_environment}

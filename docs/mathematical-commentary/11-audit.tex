@@ -1,7 +1,7 @@
 \Needspace{32\baselineskip}
 \section{Proof checking}
 \Needspace{24\baselineskip}
-\subsection{The two axiom audits}
+\subsection{The axiom audits}
 The file \leanfile{Hypernets/Audit.lean}{Audit.lean} contains six
 \texttt{\#print axioms} commands. They inspect counting-simulation soundness,
 the forward and converse simulation constructions, the two contextual sufficiency
@@ -282,3 +282,13 @@ search locality, the constructed specimen system, both semantic bridges,
 initial lifting and the final two-clause theorem. Its only logical axioms are
 Lean's standard \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
 \lean{Graph/Audit}{509}{527}{Graph.Audit: complete unbounded theorem}
+
+\Needspace{12\baselineskip}
+\subsection{Copying-foundation audit}
+Eight additional commands inspect substitution composition, operation-path
+uniqueness, the canonical tree's graph invariants and acyclicity, closure under
+nested replacement, depth invariance, recursive-isomorphism invariance, and
+the environment-instantiation regression. All report only standard Lean axioms
+among propositional extensionality, classical choice and quotient soundness.
+There is no final Proposition~12.2 theorem to audit yet.
+\lean{Copying/Audit}{4}{11}{Copying.Audit: completed prerequisite dependencies}

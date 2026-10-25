@@ -5,8 +5,29 @@ Ambridge, **A robust graph-based approach to observational equivalence**.
 The reference version is [arXiv:1907.01257v5](https://arxiv.org/abs/1907.01257v5),
 23 April 2025, published in LMCS 21(2:8), 2025.
 
-The target milestone is the general sufficiency-of-robustness theorem
-(Theorem 8.11 in the PDF; Theorem 6 in the HTML), including both its forward and converse clauses.
+The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
+is proved in the concrete encoding, subject to the correspondence audits below.
+The current extension target is the example equivalence of Proposition 12.2.
+
+## Proposition 12.2: current extension target
+
+The requested private-reference equivalence is **not yet proved**. The new
+`Hypernets.Copying` namespace contains scoped terms with separate variable/atom
+indices, capture-avoiding substitution and its composition laws, the complete
+example operation alphabet, typed atom-aware boxes, recursive graph isomorphism,
+nested replacement, and canonical contraction trees matching Definition 10.1.
+Tree typing, incidence, ordered sources, path acyclicity and label-predicate
+closure/invariance are proved. These are prerequisites, not an operational
+semantics or a conditional proof of the example.
+
+The commentary's section **Copying and store: foundations for Proposition 12.2**
+contains the dependency map and explanations of every new declaration.
+Appendix B tracks the remaining distributors/translation, copying machine,
+binding-free contexts, eleven template families, and final Figure 22 assembly.
+The existing two paper-correspondence audits remain open.
+
+Validation: `lake build`; `lake env lean Hypernets/Copying/Audit.lean`.
+The copying audit has no project-specific axioms or unfinished proofs.
 
 ## Current status
 
