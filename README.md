@@ -853,3 +853,9 @@ translated composite, and its chosen hole works for every graph argument.
 Successive term filling is a corollary, including scopes beneath binders.
 Commentary Section 71 records the proof. Appendix B.1 removes the pending
 context-translation composition clause; machine and template work remains.
+
+Literal distributor resource-permutation laws are proved at every allowance,
+including independent variable/atom permutations and the single-use case.
+All canonical contraction and weakening edges remain. Commentary Section 72
+explains these whole-term renaming prerequisites; it does not claim the full
+renaming or substitution theorem.

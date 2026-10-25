@@ -1,0 +1,85 @@
+\clearpage
+\section{Resource permutation of literal distributors}
+\label{sec:copying-distributor-permutation}
+\termdef{copying-distributor-permutation}
+Graph-level environment renaming must respect the actual distributors of
+Figure~16. We prove their resource-permutation law, without deleting their
+weakening or contraction edges. This is a prerequisite for bijective renaming
+of entire translated terms. It is not the whole-term renaming theorem, and
+it does not handle weakening or identification of distinct resources.
+
+\subsection{Permuting resources while retaining use order}
+Let $\pi$ be a bijection of the $k$ resource positions. For any component
+carrier $X$, define a bijection on tagged elements by
+$(i,x)\mapsto(\pi(i),x)$, with inverse using $\pi^{-1}$.
+The inverse identities follow directly from those of $\pi$; the component
+vertex or edge is unchanged.
+\lean{Copying/DistributorPermutation}{9}{14}{Distributor.resourceTags}
+
+Recall that $D_{k,m}$ places leaf $j$ of resource $i$ at input position
+$i+kj$ and its output at position $i$. Define the permuted boundary by
+precomposing the original input and output bijections with resource retagging.
+The resulting input position is $\pi(i)+kj$ and the output position is
+$\pi(i)$. Thus each use retains its position within the use-major ordering,
+and the same permutation is applied at every use. The original boundary's
+typing proofs supply the new boundary's typing proofs. No resource is removed,
+identified or duplicated by this operation.
+\lean{Copying/DistributorPermutation}{17}{24}{Distributor.permutedBoundary}
+\lean{Copying/DistributorPermutation}{27}{31}{Distributor.permuted_input_position}
+\lean{Copying/DistributorPermutation}{32}{34}{Distributor.permuted_output_position}
+
+Assemble the original family of canonical contraction trees with this
+boundary. Every component retains its internal vertices, labels and ordered
+incidences. The original finite enumeration of resource positions is used.
+This defines the boundary-permuted forest, including $k=0$ and $m=0$ without
+separate non-emptiness assumptions.
+\lean{Copying/DistributorPermutation}{37}{41}{Distributor.permutedNet}
+
+\subsection{An isomorphism of the actual finite graphs}
+Retagging an internal vertex after embedding it into the permuted forest
+has the same result as embedding the unchanged component vertex at resource
+$\pi(i)$ in the original forest. For internal vertices this is the definition
+of retagging. For inputs and outputs it is the defining boundary permutation.
+Importantly, the statement fixes the resulting external port itself; it is
+stronger than equality of its wire type or equality of boundary sizes.
+\lean{Copying/DistributorPermutation}{44}{49}{Distributor.permuted_embed}
+
+Use resource retagging for both the internal-vertex and edge bijections.
+Labels agree because all resource components are copies of the same canonical
+tree. For each source list, compose its two maps and apply the preceding
+embedding identity to each entry, preserving list order. The same argument
+applies to the target list. This constructs an ordinary graph isomorphism
+from the permuted forest to the original $D_{k,m}$.
+The zero-use case still contains every canonical weakening edge; the
+single-use case is not simplified to a wire.
+\lean{Copying/DistributorPermutation}{53}{68}{Distributor.permuted_iso}
+
+Relabel the permuted forest into the copying alphabet at any allowance $d$,
+using the same primitive embedding as the original distributor. Its carriers
+and incidence lists are unchanged. The preceding bijections therefore give
+a recursive isomorphism: corresponding embedded primitive labels satisfy
+reflexivity of the recursive label relation, and the same source and target
+proofs apply. The result holds at every finite box allowance.
+\lean{Copying/DistributorPermutation}{71}{75}{Distributor.permutedAtDepth}
+\lean{Copying/DistributorPermutation}{77}{85}{Distributor.permuted_deepIso}
+
+\subsection{Separate variable and atom environments}
+Apply independent bijections $\rho$ and $\alpha$ to the term and atom forests.
+Their ordered tensor is the permuted environment distributor. Term resources
+remain before atom resources, and no permutation mixes the two wire sorts.
+Tensor congruence assembles the two proved recursive isomorphisms into one
+for the original environment distributor.
+\lean{Copying/DistributorPermutation}{94}{98}{Translation.permutedEnvironmentDistributor}
+\lean{Copying/DistributorPermutation}{101}{105}{Translation.environmentDistributor_permutation}
+
+Finally, take one use and transport along the same interface equalities
+used in the original single-use constructor. Isomorphism preservation under
+that transport gives the single-use permutation law. All original distributor
+edges remain in both graphs.
+\lean{Copying/DistributorPermutation}{108}{112}{Translation.singleUse_permutation}
+
+The remaining translation work must propagate boundary renaming through
+selected-resource clauses, ordered pairing, binders and their boxes, and all
+term constructors. Non-bijective renamings and substitution require additional
+sharing arguments. No observational or template theorem follows merely from
+this distributor isomorphism; Proposition~12.2 remains unfinished.
