@@ -1,4 +1,4 @@
-import Hypernets.Copying.BoundaryRenamingExamples
+import Hypernets.Copying.UnaryFragmentRenaming
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -334,3 +334,19 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.BoundaryRenamingExamples.emptyForest
 #print axioms Hypernets.Copying.BoundaryRenamingExamples.weakeningForest
 #print axioms Hypernets.Copying.BoundaryRenamingExamples.serial_bindingFree_iff
+
+-- The original unary fragment, including allocation and both dereference forms.
+#print axioms Hypernets.Copying.EnvironmentPermutation.terms
+#print axioms Hypernets.Copying.EnvironmentPermutation.atoms
+#print axioms Hypernets.Copying.SingleUseBoundary.ofTyped
+#print axioms Hypernets.Copying.SingleUseBoundary.ofTyped_input
+#print axioms Hypernets.Copying.SingleUseBoundary.ofTyped_output
+#print axioms Hypernets.Copying.Translation.unary_prefix_compatible
+#print axioms Hypernets.Copying.Translation.unary_forest_compatible
+#print axioms Hypernets.Copying.Translation.unary_boundaryIso
+#print axioms Hypernets.Copying.Translation.unary_boundaryIso_output
+#print axioms Hypernets.Copying.Translation.unaryFragment_rename
+#print axioms Hypernets.Copying.Translation.unaryChain_rename
+#print axioms Hypernets.Copying.Examples.referenceOne_boundaryRename
+#print axioms Hypernets.Copying.Examples.dereferenceAtom_boundaryRename
+#print axioms Hypernets.Copying.Examples.dereferenceVariable_boundaryRename

@@ -84,3 +84,4 @@ import Hypernets.Copying.DistributorBoundaryIso
 import Hypernets.Copying.AtomicRenaming
 
 import Hypernets.Copying.BoundaryRenamingExamples
+import Hypernets.Copying.UnaryFragmentRenaming
