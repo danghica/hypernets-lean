@@ -1,4 +1,4 @@
-import Hypernets.Copying.UnaryFragmentRenaming
+import Hypernets.Copying.BinaryRenamingRegression
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -350,3 +350,37 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.referenceOne_boundaryRename
 #print axioms Hypernets.Copying.Examples.dereferenceAtom_boundaryRename
 #print axioms Hypernets.Copying.Examples.dereferenceVariable_boundaryRename
+
+-- Original application/binary clauses, full lambda-free renaming, and unequal-depth composition.
+#print axioms Hypernets.Copying.PairBoundary.index_surjective
+#print axioms Hypernets.Copying.PairBoundary.term_index
+#print axioms Hypernets.Copying.PairBoundary.atom_index
+#print axioms Hypernets.Copying.MultiUseBoundary.ofTyped_pair_input
+#print axioms Hypernets.Copying.PairBoundary.iso
+#print axioms Hypernets.Copying.PairBoundary.iso_input
+#print axioms Hypernets.Copying.PairBoundary.iso_output
+#print axioms Hypernets.Copying.TwoArgumentBoundary.forest_compatible
+#print axioms Hypernets.Copying.Translation.application_boundaryIso
+#print axioms Hypernets.Copying.Translation.binary_boundaryIso
+#print axioms Hypernets.Copying.ResourceAction.agree
+#print axioms Hypernets.Copying.Translation.variableTerm_action
+#print axioms Hypernets.Copying.Translation.atom_action
+#print axioms Hypernets.Copying.Translation.constant_action
+#print axioms Hypernets.Copying.LambdaFree.rename_with_action
+#print axioms Hypernets.Copying.Translation.lambdaFree_rename
+#print axioms Hypernets.Copying.Examples.callbackInvocation_rename
+#print axioms Hypernets.Copying.Examples.repeatedVariable_rename
+#print axioms Hypernets.Copying.Examples.assignmentAllocation_rename
+#print axioms Hypernets.Copying.Examples.everyBinary_rename
+#print axioms Hypernets.Copying.Examples.twoSortExample_rename
+#print axioms Hypernets.Copying.Examples.mismatched_operand_actions
+#print axioms Hypernets.Copying.BoundaryIso.raise
+#print axioms Hypernets.Copying.BoundaryIso.padTo
+#print axioms Hypernets.Copying.BoundaryIso.padTo_output
+#print axioms Hypernets.Copying.ResourceAction.padTo
+#print axioms Hypernets.Copying.Translation.padded_application_boundaryIso
+#print axioms Hypernets.Copying.Translation.padded_binary_boundaryIso
+#print axioms Hypernets.Copying.Examples.unequalAllowanceRenaming
+#print axioms Hypernets.Copying.Examples.unequalAllowanceBinaryRenaming
+#print axioms Hypernets.Copying.Examples.boxedOperandApplication
+#print axioms Hypernets.Copying.Examples.lambdaFree_namedEnvironment
