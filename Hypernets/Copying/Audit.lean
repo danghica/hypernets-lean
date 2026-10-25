@@ -1,4 +1,4 @@
-import Hypernets.Copying.TranslatedComposition
+import Hypernets.Copying.DistributorPermutation
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -259,3 +259,16 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.TermContext.depthAt_compose
 #print axioms Hypernets.Copying.ContextTranslation.composed_context_filling
 #print axioms Hypernets.Copying.ContextTranslation.composed_term_filling
+
+#print axioms Hypernets.Copying.Distributor.resourceTags
+#print axioms Hypernets.Copying.Distributor.permutedBoundary
+#print axioms Hypernets.Copying.Distributor.permuted_input_position
+#print axioms Hypernets.Copying.Distributor.permuted_output_position
+#print axioms Hypernets.Copying.Distributor.permutedNet
+#print axioms Hypernets.Copying.Distributor.permuted_embed
+#print axioms Hypernets.Copying.Distributor.permuted_iso
+#print axioms Hypernets.Copying.Distributor.permutedAtDepth
+#print axioms Hypernets.Copying.Distributor.permuted_deepIso
+#print axioms Hypernets.Copying.Translation.permutedEnvironmentDistributor
+#print axioms Hypernets.Copying.Translation.environmentDistributor_permutation
+#print axioms Hypernets.Copying.Translation.singleUse_permutation

@@ -76,3 +76,5 @@ import Hypernets.Copying.GeneralCongruenceExamples
 import Hypernets.Copying.PaddingPredicates
 
 import Hypernets.Copying.TranslatedComposition
+
+import Hypernets.Copying.DistributorPermutation
