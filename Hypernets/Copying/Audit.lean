@@ -1,3 +1,4 @@
+import Hypernets.Copying.ValueExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -65,3 +66,16 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.privateCell_outer_edges
 #print axioms Hypernets.Copying.Examples.constantResult_outer_edges
 #print axioms Hypernets.Copying.Examples.unequal_depth_application_edges
+#print axioms Hypernets.Copying.Stable.of_labels
+#print axioms Hypernets.Copying.Stable.no_internal
+#print axioms Hypernets.Copying.Stable.exists_unique_edge
+#print axioms Hypernets.Copying.Stable.no_adjacency
+#print axioms Hypernets.Copying.Stable.iso_iff
+#print axioms Hypernets.Copying.Stable.focusFree
+#print axioms Hypernets.Copying.Copyable.outer_labels
+#print axioms Hypernets.Copying.Copyable.iso_iff
+#print axioms Hypernets.Copying.Copyable.abstraction_factor
+#print axioms Hypernets.Copying.Examples.unary_copyable_not_stable
+#print axioms Hypernets.Copying.Examples.lambdaPayload_not_stable
+#print axioms Hypernets.Copying.Examples.translated_lambda_payload
+#print axioms Hypernets.Copying.Examples.constantResult_copyable_factor

@@ -46,3 +46,5 @@ import Hypernets.Copying.TracingExamples
 import Hypernets.Copying.TranslationExamples
 
 import Hypernets.Copying.FullTranslationExamples
+
+import Hypernets.Copying.ValueExamples
