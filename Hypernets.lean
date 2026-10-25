@@ -66,3 +66,5 @@ import Hypernets.Copying.NestedFillingExamples
 import Hypernets.Copying.ParallelFillingExamples
 
 import Hypernets.Copying.ContextFillingExamples
+
+import Hypernets.Copying.ObservationPaddingExamples

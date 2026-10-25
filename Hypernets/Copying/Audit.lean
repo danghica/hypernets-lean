@@ -1,4 +1,4 @@
-import Hypernets.Copying.ContextFillingExamples
+import Hypernets.Copying.ObservationPaddingExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -193,3 +193,18 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.mixedArgumentContext_depth
 #print axioms Hypernets.Copying.Examples.mixedArgumentContext_fill
 #print axioms Hypernets.Copying.Examples.mixedArgumentContext_graph_filling
+
+#print axioms Hypernets.Copying.Translation.padTo_trans
+#print axioms Hypernets.Copying.ClosingContext.pad_close_iso
+#print axioms Hypernets.Copying.Execution.initial_pad
+#print axioms Hypernets.Copying.Execution.close_pad
+#print axioms Hypernets.Copying.Execution.refines_of_pad
+#print axioms Hypernets.Copying.Execution.equiv_of_padTo
+#print axioms Hypernets.Copying.Execution.equiv_iso
+#print axioms Hypernets.Copying.translatedProgram_padTo
+#print axioms Hypernets.Copying.observationalEquiv_iff_cofinal
+#print axioms Hypernets.Copying.Examples.depthSensitive_respectsIso
+#print axioms Hypernets.Copying.Examples.depthSensitive_unit_terminates
+#print axioms Hypernets.Copying.Examples.depthSensitive_padded_unit_not_terminates
+#print axioms Hypernets.Copying.Examples.depthSensitive_not_respectsPadding
+#print axioms Hypernets.Copying.Examples.depthSensitive_deterministic
