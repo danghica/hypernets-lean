@@ -1,0 +1,222 @@
+\clearpage
+\section{Renaming the literal atomic translations}
+\label{sec:copying-atomic-renaming}
+\termdef{copying-atomic-renaming}
+This section closes the selected-resource and all three atomic cases of
+bijective environment renaming for the original Figure~16 translation.
+The construction works for arbitrary finite variable and atom environments,
+at every adequate allowance for the individual clauses. The proof retains
+all weakening and contraction edges and the atom clause's instance edge.
+It neither simplifies a distributor to a wire nor replaces the proposition's
+terms. Composite-term renaming and general substitution remain separate tasks.
+
+\subsection{Coordinates for the selected-resource graph}
+\termdef{copying-selected-resource-coordinates}
+For a resource $i<n$, the raw assembly is precisely
+$(D_{i,0}\otimes D_{1,1})\otimes D_{n-i-1,0}$, the expression inside the
+existing interface cast. We introduce coordinates for its carriers, not a
+new translation. There is one weakening for every output resource and one
+additional contraction belonging to the selected resource.
+
+\lean{Copying/SelectedResourceShape}{9}{11}{SelectedResourceShape.raw}
+
+The edge-coordinate map sends a weakening in the left forest to its original
+resource number, the selected weakening to $i$, and a weakening at offset $j$
+in the right forest to $i+1+j$. The selected contraction is the extra summand
+of $\operatorname{Fin}(n)+1$. The inverse compares a resource number with $i$:
+less than $i$ selects the left forest; equality selects the middle weakening;
+greater than $i$ selects the right forest after subtracting $i+1$. The extra
+summand selects the contraction. Checking these three cases proves both
+inverse identities, including the empty left or right forest cases, and
+packages them as an edge bijection.
+
+\lean{Copying/SelectedResourceShape}{13}{16}{SelectedResourceShape.edgeIndex}
+\lean{Copying/SelectedResourceShape}{18}{22}{SelectedResourceShape.edgeAt}
+\lean{Copying/SelectedResourceShape}{24}{34}{SelectedResourceShape.edgeIndex_at}
+\lean{Copying/SelectedResourceShape}{36}{62}{SelectedResourceShape.edgeAt_index}
+\lean{Copying/SelectedResourceShape}{64}{65}{SelectedResourceShape.edges}
+
+The internal carrier is a singleton: only the middle one-use tree has an
+internal vertex. The two weakening forests have empty internal carriers.
+Case analysis on the tensor and forest tags proves the corresponding
+bijection with the unit type. The input length is one; the output length is
+$i+1+(n-i-1)=n$, using $i<n$. These identities give a bijection from all raw
+vertices to $\operatorname{Port}(1,1,n)$: preserve each boundary index and
+use the singleton coordinate internally. The inverse laws follow from the
+internal bijection and equality of finite indices with the same value.
+
+\lean{Copying/SelectedResourceShape}{68}{84}{SelectedResourceShape.internal}
+\lean{Copying/SelectedResourceShape}{86}{88}{SelectedResourceShape.input_length}
+\lean{Copying/SelectedResourceShape}{90}{94}{SelectedResourceShape.output_length}
+\lean{Copying/SelectedResourceShape}{96}{113}{SelectedResourceShape.ports}
+
+In these coordinates every weakening has empty source. The contraction's
+source is the ordered pair consisting first of the internal vertex and then
+of the sole input. Weakening $i$ targets the internal vertex; every other
+weakening $j$ targets output $j$; the contraction targets output $i$.
+The label-coordinate function assigns weakening to the resource summand
+and contraction to the extra summand.
+
+\lean{Copying/SelectedResourceShape}{116}{118}{SelectedResourceShape.source}
+\lean{Copying/SelectedResourceShape}{120}{122}{SelectedResourceShape.target}
+\lean{Copying/SelectedResourceShape}{124}{126}{SelectedResourceShape.label}
+
+The source, target and label correspondence lemmas prove these descriptions
+for the actual raw assembly, by splitting the resource comparison and the
+two middle edges. The target proof checks the right-forest offset arithmetic
+and the equality test for the selected resource. All vertices have the
+selected wire sort: the sole internal case is direct, and boundary cases
+use membership in the three concatenated replicated interface lists.
+Thus coordinates describe the entire ordered incidence data, not merely
+edge counts or an informal shape.
+
+\lean{Copying/SelectedResourceShape}{130}{143}{SelectedResourceShape.source_at}
+\lean{Copying/SelectedResourceShape}{145}{162}{SelectedResourceShape.target_at}
+\lean{Copying/SelectedResourceShape}{166}{173}{SelectedResourceShape.label_at}
+\lean{Copying/SelectedResourceShape}{175}{192}{SelectedResourceShape.vertex_label}
+
+\subsection{Renaming the original selected resource}
+For a resource bijection $\pi$, permute output coordinates by $\pi$ and fix
+the internal vertex and input. On edge coordinates apply $\pi$ to weakening
+resources and fix the extra contraction. The source lists commute with these
+maps directly. Target lists commute because
+$\pi(j)=\pi(i)$ if and only if $j=i$. This uses injectivity and is the point
+where the argument is specifically bijective renaming.
+
+\lean{Copying/SelectedResourceRenaming}{8}{12}{SelectedResourceRenaming.outputPermutation}
+\lean{Copying/SelectedResourceRenaming}{14}{16}{SelectedResourceRenaming.source_permutation}
+\lean{Copying/SelectedResourceRenaming}{18}{25}{SelectedResourceRenaming.target_permutation}
+
+Applying the inverse port-coordinate bijection to the source and target
+correspondence lemmas reconstructs the actual incidence lists. Compose the
+source coordinate bijection, the permutation, and the inverse target
+coordinate bijection, on vertices and edges alike. Wire labels agree because
+all these vertices have the same wire sort; input and output roles are
+preserved. The coordinate label lemma gives recursive equality of edge
+labels. Reconstruct the source and target lists and use their permutation
+identities to finish the boundary-isomorphism proof.
+The raw output-action lemma states explicitly that output $j$ is sent to
+output $\pi(j)$.
+
+\lean{Copying/SelectedResourceRenaming}{27}{30}{SelectedResourceRenaming.source_eq}
+\lean{Copying/SelectedResourceRenaming}{32}{35}{SelectedResourceRenaming.target_eq}
+\lean{Copying/SelectedResourceRenaming}{38}{68}{SelectedResourceRenaming.rawIso}
+\lean{Copying/SelectedResourceRenaming}{69}{73}{SelectedResourceRenaming.rawIso_output}
+
+Interface casts transport boundary isomorphisms by equality elimination.
+A companion lemma transports a specified output action along the induced
+finite-index casts. Applying these to the raw isomorphism gives the theorem
+for the existing public selected-resource constructor, and proves that its
+output action is exactly $j\mapsto\pi(j)$. This checks the boundary action
+of the actual Figure~16 clause after its original casts.
+
+\lean{Copying/SelectedResourceRenaming}{81}{84}{SelectedResourceRenaming.castInterfaces}
+\lean{Copying/SelectedResourceRenaming}{85}{90}{SelectedResourceRenaming.castInterfaces_output}
+\lean{Copying/SelectedResourceRenaming}{96}{100}{SelectedResourceRenaming.selectedResource_rename}
+\lean{Copying/SelectedResourceRenaming}{102}{108}{SelectedResourceRenaming.selectedResource_rename_output}
+
+\subsection{Transport through ordered parallel assembly}
+For a family of component boundary isomorphisms, map tagged vertices and edges
+componentwise, retaining their component tags. Each inverse identity reduces
+to the component inverse identity. Compose the inverse original parallel
+vertex assembly with this tagged vertex map and the target assembly to get
+the whole-graph port bijection. The embedding lemma says that this bijection
+commutes with embedding each component vertex.
+
+\lean{Copying/BoundaryParallel}{11}{15}{BoundaryParallel.componentPorts}
+\lean{Copying/BoundaryParallel}{17}{24}{BoundaryParallel.componentEdges}
+\lean{Copying/BoundaryParallel}{26}{28}{BoundaryParallel.ports}
+\lean{Copying/BoundaryParallel}{30}{35}{BoundaryParallel.embed}
+
+The resulting assembly isomorphism preserves wire labels using the two
+embedding-label equations and the component isomorphism. The input and output
+role proofs reduce through the embedding equations to the corresponding
+component role proofs. Edge labels are related componentwise. For sources
+and targets, map the component incidence equality through the embedding and
+use the embedding lemma entry by entry. Specialising to the original Boolean
+family and concatenated boundary gives ordered tensor congruence.
+
+\lean{Copying/BoundaryParallel}{38}{79}{BoundaryParallel.iso}
+\lean{Copying/BoundaryParallel}{85}{90}{BoundaryParallel.tensor}
+
+The variable clause is now immediate from selected-resource renaming on the
+term side and the zero-use atom-distributor automorphism on the atom side,
+followed by the original interface casts. For a constant, tensor the zero-use
+term-distributor automorphism, the identity of the constant operation, and
+the zero-use atom-distributor automorphism, then use the original casts.
+Unused resources remain represented by their weakening edges.
+
+\lean{Copying/BoundaryParallel}{96}{101}{BoundaryParallel.variableTerm_rename}
+\lean{Copying/BoundaryParallel}{104}{110}{BoundaryParallel.constant_rename}
+
+\subsection{Retaining the atom's instance edge}
+The atom clause additionally has the literal serial prefix of an instance
+edge. Let $H$ be its remaining graph, with one atom input. The prefixed graph
+has one new external term input; every old vertex survives, with the old
+atom input becoming internal. A bijection between its vertices and
+$1+\operatorname{Vertex}(H)$ records this fact, checking both depth-zero and
+positive-depth representations. Lift a boundary isomorphism of $H$ by fixing
+the new input and applying its old port bijection.
+
+\lean{Copying/BoundaryInstance}{8}{8}{BoundaryInstance.graph}
+\lean{Copying/BoundaryInstance}{10}{35}{BoundaryInstance.ports}
+\lean{Copying/BoundaryInstance}{37}{39}{BoundaryInstance.liftPorts}
+
+A boundary isomorphism between graphs with one input fixes that input:
+input-role preservation implies its image is an input, and the index set
+has only one element. Embedding an old vertex uses the inverse coordinate
+map on the right summand. The lifted map commutes with this embedding by
+cancellation. Embedded vertices retain their wire labels; none is a new
+external input; and being an output is preserved and reflected. These three
+facts follow by cases on the old vertex. The actual expansion insertion
+agrees with this embedding, including the shared internal atom vertex and
+the original ordered output positions.
+
+\lean{Copying/BoundaryInstance}{41}{47}{BoundaryInstance.input_fixed}
+\lean{Copying/BoundaryInstance}{50}{51}{BoundaryInstance.embed}
+\lean{Copying/BoundaryInstance}{53}{56}{BoundaryInstance.lift_embed}
+\lean{Copying/BoundaryInstance}{60}{62}{BoundaryInstance.vertex_embed}
+\lean{Copying/BoundaryInstance}{64}{65}{BoundaryInstance.input_embed}
+\lean{Copying/BoundaryInstance}{67}{68}{BoundaryInstance.output_embed}
+\lean{Copying/BoundaryInstance}{70}{73}{BoundaryInstance.insert}
+\lean{Copying/BoundaryInstance}{75}{86}{BoundaryInstance.insert_eq_embed}
+
+Map the new instance edge to itself and the old edges by the given edge
+bijection. Its inverse identities hold separately in the two tags. For the
+prefix isomorphism, the vertex and role laws use the preceding coordinate
+facts. The new edge's source is fixed; its target is fixed by uniqueness of
+the old atom input. For every old edge, source and target preservation follow
+from the old incidence equations, insertion/embedding correspondence, and
+commutation of the lifted port map with embedding. Tensor this prefix result
+with the ambient term-weakening forest, and apply the original casts, to
+obtain renaming for the public atom translation.
+
+\lean{Copying/BoundaryInstance}{88}{95}{BoundaryInstance.edges}
+\lean{Copying/BoundaryInstance}{97}{159}{BoundaryInstance.iso}
+\lean{Copying/BoundaryInstance}{165}{171}{BoundaryInstance.atom_rename}
+
+\subsection{The atomic-case endpoint and remaining work}
+The predicate \texttt{Atomic} selects precisely variables, atoms and constants
+from the original scoped syntax. The atomic renaming theorem proves existence
+of a boundary isomorphism between the original translation and the translation
+of the syntactically renamed term. Its sole depth cast uses the already proved
+depth-renaming identity. Cases on the atomic predicate reduce to the three
+public clause results above. There are no operational or template hypotheses.
+
+\lean{Copying/AtomicRenaming}{8}{14}{AtomicRenaming.Atomic}
+\lean{Copying/AtomicRenaming}{15}{22}{AtomicRenaming.atomic_rename}
+
+This completes the selected-resource and atomic cases of bijective translation
+renaming. It does not prove the inductive cases for application, unary and
+binary operations, or lambda boxes; nor does it prove non-bijective renaming,
+weakening or graph-level substitution. Boundary-permuting isomorphism is
+still distinct from the boundary-fixing equivalence used for observations.
+The original terms and translation of Proposition~12.2 are unchanged.
+
+\paragraph{Completion estimate.}
+As of 25 October 2026, the estimated completion of the requested
+Proposition~12.2 development is about \textbf{40\% by mathematical effort},
+with a plausible range of \textbf{30--50\%}. This is a judgement about remaining
+proof difficulty, not a measured percentage of declarations or checklist items.
+The current milestone closes actual translation cases; it does not erase the
+large remaining concrete copying-machine and eleven-template obligations.

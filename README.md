@@ -866,3 +866,13 @@ of boundary-fixing recursive isomorphisms are proved. Distributors have an
 explicit automorphism at every allowance with the prescribed input/output
 permutation. Section 73 explains why this does not yet establish whole-term
 renaming or change the observational relation.
+
+Selected-resource renaming and all atomic Figure 16 cases are now proved for
+arbitrary finite resource permutations. The variable, atom and constant
+translations retain every original distributor edge and the atom's instance
+prefix. Ordered parallel and instance-prefix boundary transport are proved.
+The `atomic_rename` endpoint has no execution or template assumptions.
+Commentary Section 74 explains all declarations. Composite-term renaming,
+non-bijective renaming, graph substitution, the copying machine and templates
+remain open. Estimated completion of Proposition 12.2 by mathematical effort:
+about 40%, with a plausible 30–50% range (25 October 2026).
