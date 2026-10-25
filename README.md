@@ -786,3 +786,13 @@ depth indices. The host is certified binding-free. Argument terms and ambient
 variable/atom environments are unrestricted. A two-binder reference/dereference
 regression checks the mixed nesting. Item 3 still needs parallel argument
 assembly, common-depth padding, and unrestricted term-context congruence.
+
+
+Section 65 proves actual filling through ordered parallel assembly, both full
+application/binary argument clauses, and any finite number of depth-padding
+steps. The selected occurrence remains sole, including beneath boxes; padding
+raises the local replacement allowance by the same amount as the host allowance.
+Both sides of application are checked in combined two-step padding regressions.
+All terms and Figure 16 translation constructors are unchanged. Appendix B.1
+item 3 still requires unrestricted context induction at maximum-depth joins
+and observational congruence backed by the copying machine's representation laws.

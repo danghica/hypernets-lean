@@ -30,24 +30,23 @@ is now an explicit extension target.
 \Needspace{14\baselineskip}
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-nested-filling}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-parallel-padding}.
 In particular, binding-free plugging closure is proved at sourced holes;
 the zero-input counterexample in Section~\ref{sec:copying-binding} qualifies
 unrestricted closure. The five remaining tasks are:
 \begin{enumerate}
 \item Prove the remaining depth and operational invariants for stable and
 copyable graphs. Prove the term translation's
-graph-level renaming and substitution laws; construct context translation
-and prove its composition laws. Preserve the terms
+graph-level renaming and substitution laws and the remaining context-translation
+composition laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
 \item Define copying and extra search transitions and all example compute rules;
 prove the unbounded machine's determinism, refocusing and specimen locality,
 including independence of the copy rule from its contraction-tree match.
-\item Prove the parallel argument-assembly and common-depth padding cases of
-addressed filling, then assemble unrestricted term-context correspondence and
-congruence for Figure~16. The abstraction case and certified filling through
-arbitrarily nested lambda/unary contexts are proved in
-Section~\ref{sec:copying-nested-filling}.
+\item Assemble unrestricted term-context correspondence and congruence for
+Figure~16, combining the proved constructor laws with cumulative local padding
+at maximum-depth joins. Parallel argument filling and iterated padding
+compatibility are proved in Section~\ref{sec:copying-parallel-padding}.
 Resolve the observation/padding audit, retaining the zero-input qualification
 of Lemma~E.1. The copying execution of item~2 must discharge isomorphism and
 padding invariance.

@@ -1,0 +1,417 @@
+\clearpage
+\section{Parallel argument filling and depth padding}
+\label{sec:copying-parallel-padding}
+This section proves the remaining individual constructor laws for actual
+addressed filling: ordered parallel argument assembly, both arguments of
+application and binary operations, and any finite amount of representation
+padding. These are laws about the existing finite graphs and their actual
+replacement operation. They do not change the term language, the proposition's
+programs, the Figure~16 translation, or its variable/atom ordering.
+
+The dependency chain is generic parallel replacement, recursive parallel
+congruence, arbitrary-depth component addresses, the full pair and operation
+clauses, and padding of addresses and fillings. The previous section supplies
+abstraction and unary filling. The unrestricted context induction must still
+combine these ingredients with the maximum-depth choices of the constructor
+interpreter. In particular, a padded host requires padding the replacement at
+the hole's local allowance, not merely at the host's allowance. Execution
+invariance under these representation changes remains a separate obligation
+of the copying machine. No observational equivalence or robustness claim is
+inferred solely from a graph isomorphism.
+
+\subsection{Replacement in an ordered parallel family}
+\termdef{copying-parallel-filling}
+
+Let $F_b$ be a finite family of graphs, let $a$ be a selected component,
+and let $e$ be an edge of $F_a$. A graph $H$ has exactly the input and output
+interface of $e$. The updated family replaces $e$ by $H$ in component $a$
+and retains every other component. Its two evaluation lemmas split on whether
+the component index equals $a$, eliminating the dependent interface transport
+in the selected case. The parallel boundary is arbitrary but fixed; it may
+permute component boundary blocks.
+
+
+\lean{Graph/ParallelPlug}{15}{19}{ParallelPlug.family}
+
+\lean{Graph/ParallelPlug}{20}{22}{ParallelPlug.family_same}
+
+\lean{Graph/ParallelPlug}{23}{26}{ParallelPlug.family_other}
+
+Before regrouping, internal vertices are either a tagged vertex of an old
+component or a vertex of the inserted graph. After regrouping, they are tagged
+vertices of the updated family. The forward map keeps every unchanged component
+tag, marks old vertices in component $a$ as retained, and places inserted
+vertices in component $a$ with the inserted tag. The two evaluation lemmas
+identify its action on old vertices in the selected and unselected components.
+The inverse inspects the component tag and, in component $a$, the retained or
+inserted tag. Splitting on those same alternatives proves both inverse laws.
+Thus the regrouping is a bijection without any assumptions about vertex names.
+
+
+\lean{Graph/ParallelPlug}{27}{37}{ParallelPlug.vertexTo}
+
+\lean{Graph/ParallelPlug}{38}{42}{ParallelPlug.vertexTo_same}
+
+\lean{Graph/ParallelPlug}{43}{46}{ParallelPlug.vertexTo_other}
+
+\lean{Graph/ParallelPlug}{47}{56}{ParallelPlug.vertexFrom}
+
+\lean{Graph/ParallelPlug}{57}{80}{ParallelPlug.vertices}
+
+The edge bijection uses the analogous regrouping, but the old carrier omits
+the selected edge. A retained edge in component $a$ carries a proof that it is
+not $e$; inequality of tagged edges supplies this proof. Edges of other
+components keep their names and tags. New edges are placed in the selected
+component. The inverse either returns the unchanged tagged edge or strips the
+inserted tag. Case analysis proves the inverse identities, with equality
+transport of carriers cancelling in each case.
+
+
+\lean{Graph/ParallelPlug}{81}{91}{ParallelPlug.edgeTo}
+
+\lean{Graph/ParallelPlug}{92}{104}{ParallelPlug.edgeFrom}
+
+\lean{Graph/ParallelPlug}{105}{142}{ParallelPlug.edges}
+
+Three attachment identities prove that regrouping commutes with the parallel
+boundary: for a vertex of another component, a vertex of the selected component,
+and a vertex inserted from $H$. Internal vertices follow the explicit maps.
+Input and output vertices use the same boundary bijection on both sides.
+For an inserted boundary vertex, attachment first reaches the selected edge's
+source or target port, then the selected component's external embedding; this
+is exactly its attachment after regrouping. The three edge evaluation lemmas
+record the retained-selected, unselected, and newly inserted cases, allowing
+the later dependent label and incidence expressions to be rewritten.
+
+
+\lean{Graph/ParallelPlug}{143}{154}{ParallelPlug.map_other}
+
+\lean{Graph/ParallelPlug}{155}{167}{ParallelPlug.map_component}
+
+\lean{Graph/ParallelPlug}{168}{183}{ParallelPlug.map_inserted}
+
+\lean{Graph/ParallelPlug}{184}{190}{ParallelPlug.edgeTo_same}
+
+\lean{Graph/ParallelPlug}{191}{196}{ParallelPlug.edgeTo_other}
+
+\lean{Graph/ParallelPlug}{197}{203}{ParallelPlug.edgeTo_inserted}
+
+Replacing the tagged edge after parallel assembly is isomorphic to assembling
+the updated family. Use the vertex and edge bijections above. Labels agree by
+the selected/unselected family equations. For sources and targets, split each
+edge into the same three cases. Mapping an ordered incidence list twice equals
+mapping the composite; apply the appropriate attachment identity to every
+entry. This proves equality of entire ordered lists, not merely membership or
+unordered incidence. The theorem introduces no acyclicity or self-loop premise.
+
+
+\lean{Graph/ParallelPlug}{204}{276}{ParallelPlug.iso}
+
+Parallel assembly also transports component-wise isomorphisms whose edge
+labels are related by a supplied relation. Both carrier maps retain the
+component index and apply that component's bijection. Their inverses work
+component-wise. Boundary embedding commutes with the vertex map: internal
+vertices use the component bijection, while external vertices use the fixed
+parallel boundary. Component label and incidence laws then prove the assembled
+related-label isomorphism by mapping this identity over each incidence list.
+Instantiating the label relation with recursive box isomorphism gives the
+congruence used below.
+
+
+\lean{Graph/ParallelIso}{12}{18}{ParallelIso.vertices}
+
+\lean{Graph/ParallelIso}{19}{25}{ParallelIso.edges}
+
+\lean{Graph/ParallelIso}{26}{30}{ParallelIso.map_embed}
+
+\lean{Graph/ParallelIso}{31}{49}{ParallelIso.iso}
+
+\subsection{Deep sites in either parallel component}
+
+Specialise the family to two graphs using the existing Boolean component
+index and an arbitrary ordered boundary. The net abbreviation denotes that
+exact parallel constructor. A left or right edge retains its local name and
+receives the corresponding tag; its label is unchanged. Specialising the
+generic replacement isomorphism proves the two shallow filling laws. The
+updated family agrees component-wise with the pair containing the replaced
+graph, and equality transport yields the stated interfaces. Specialising
+parallel related-label congruence gives recursive congruence for both graphs.
+
+
+\lean{Copying/ParallelContextPlug}{13}{15}{ParallelContextPlug.net}
+
+\lean{Copying/ParallelContextPlug}{16}{16}{ParallelContextPlug.leftEdge}
+
+\lean{Copying/ParallelContextPlug}{17}{18}{ParallelContextPlug.rightEdge}
+
+\lean{Copying/ParallelContextPlug}{19}{21}{ParallelContextPlug.leftEdge_label}
+
+\lean{Copying/ParallelContextPlug}{22}{25}{ParallelContextPlug.rightEdge_label}
+
+\lean{Copying/ParallelContextPlug}{26}{36}{ParallelContextPlug.plug_left}
+
+\lean{Copying/ParallelContextPlug}{37}{47}{ParallelContextPlug.plug_right}
+
+\lean{Copying/ParallelContextPlug}{48}{53}{ParallelContextPlug.congr}
+
+Changing a box body in either component commutes with parallel assembly.
+The outer carrier bijections retain the component tags and local elements.
+In the selected component, split an edge into the chosen box edge and every
+other edge: only the chosen label changes. In the opposite component every
+label is unchanged. Box metadata fixes the external interface, so neither
+source nor target incidence changes. The boundary embeddings agree on internal,
+input and output vertices, proving both ordered incidence laws.
+
+
+\lean{Copying/ParallelContextPlug}{54}{105}{ParallelContextPlug.replaceBox_left}
+
+\lean{Copying/ParallelContextPlug}{106}{157}{ParallelContextPlug.replaceBox_right}
+
+Lift an arbitrary-depth occurrence into either component. A shallow address
+uses the tagged edge and the label equality to transport the local interfaces.
+An address inside a box uses the tagged enclosing box and retains its body
+address. Thus parallel assembly changes neither the local allowance nor the
+hole interface. Filling a lifted shallow site uses the shallow replacement
+law; filling a deep site uses the box-body interchange law with the already
+filled inner body. This covers arbitrary finite nesting without flattening
+boxes or identifying distinct equally labelled occurrences.
+
+
+\lean{Copying/ParallelContextPlug}{158}{166}{ParallelContextPlug.leftSite}
+
+\lean{Copying/ParallelContextPlug}{167}{175}{ParallelContextPlug.rightSite}
+
+\lean{Copying/ParallelContextPlug}{176}{185}{ParallelContextPlug.plugAt_left}
+
+\lean{Copying/ParallelContextPlug}{186}{195}{ParallelContextPlug.plugAt_right}
+
+To preserve a sole-hole certificate, assume the fixed opposite component
+is hole-free. Any other edge is either in the selected component, where
+inequality of tags reduces to inequality of local edges, or in the fixed
+component, where hole-freedom applies directly. A shallow site's marked hole
+label is preserved. A deep site's inner certificate is retained and the same
+other-edge argument applies outside its enclosing box. This certifies precisely
+the addresses used in the filling laws.
+
+
+\lean{Copying/ParallelContextPlug}{196}{205}{ParallelContextPlug.left_other_free}
+
+\lean{Copying/ParallelContextPlug}{206}{215}{ParallelContextPlug.right_other_free}
+
+\lean{Copying/ParallelContextPlug}{216}{227}{ParallelContextPlug.leftSite_sole}
+
+\lean{Copying/ParallelContextPlug}{228}{238}{ParallelContextPlug.rightSite_sole}
+
+\subsection{The unchanged pair, application and binary clauses}
+
+The Figure~16 pair uses the prescribed middle-block exchange of the two
+variable/atom interfaces. Instantiate the parallel laws with that exact
+boundary and apply the existing outer-interface equality cast. This defines
+both pair addresses. The host-cast filling law followed by parallel filling
+proves both pair filling laws. Parallel recursive congruence lifts through
+the same cast. The component sole-hole certificates also survive this cast,
+giving both certified pair addresses.
+
+
+\lean{Copying/BinaryContextPlug}{9}{15}{BinaryContextPlug.pairLeftSite}
+
+\lean{Copying/BinaryContextPlug}{16}{21}{BinaryContextPlug.pairRightSite}
+
+\lean{Copying/BinaryContextPlug}{22}{28}{BinaryContextPlug.pairLeft_filling}
+
+\lean{Copying/BinaryContextPlug}{29}{36}{BinaryContextPlug.pairRight_filling}
+
+\lean{Copying/BinaryContextPlug}{37}{40}{BinaryContextPlug.pair_congr}
+
+\lean{Copying/BinaryContextPlug}{41}{45}{BinaryContextPlug.pairLeftSite_sole}
+
+\lean{Copying/BinaryContextPlug}{46}{51}{BinaryContextPlug.pairRightSite_sole}
+
+An application is the serial composite of the application operation, the
+ordered pair of arguments, and the original environment distributor. To lift
+an argument address, first lift into the pair, then into the right side of
+the operation prefix, and finally into the left side of the distributor
+suffix. Compose the two serial filling isomorphisms with pair filling and
+serial congruence. This proves the left and right application laws separately.
+The operation and distributor contain no holes, so the serial sole-hole laws
+and pair certificates prove uniqueness of the selected occurrence. Finally,
+recursive congruence of both arguments follows by pair congruence and two
+applications of serial congruence. No distributor is removed or replaced.
+
+
+\lean{Copying/BinaryContextPlug}{52}{57}{BinaryContextPlug.applicationLeftSite}
+
+\lean{Copying/BinaryContextPlug}{58}{65}{BinaryContextPlug.applicationLeft_filling}
+
+\lean{Copying/BinaryContextPlug}{66}{73}{BinaryContextPlug.applicationLeftSite_sole}
+
+\lean{Copying/BinaryContextPlug}{74}{79}{BinaryContextPlug.applicationRightSite}
+
+\lean{Copying/BinaryContextPlug}{80}{87}{BinaryContextPlug.applicationRight_filling}
+
+\lean{Copying/BinaryContextPlug}{88}{95}{BinaryContextPlug.applicationRightSite_sole}
+
+\lean{Copying/BinaryContextPlug}{96}{100}{BinaryContextPlug.application_congr}
+
+For each binary operation, use its original primitive operation edge in the
+same serial construction. The left and right site definitions follow the
+corresponding argument tag through the pair, prefix and suffix. Their filling
+proofs compose serial and pair filling as above; their sole-hole proofs use
+hole-freedom of this binary operation and the environment distributor. Recursive
+congruence follows from pair and serial congruence. The operation parameter is
+arbitrary, so these results do not restrict the surrounding operation alphabet.
+
+
+\lean{Copying/BinaryContextPlug}{101}{106}{BinaryContextPlug.binaryLeftSite}
+
+\lean{Copying/BinaryContextPlug}{107}{114}{BinaryContextPlug.binaryLeft_filling}
+
+\lean{Copying/BinaryContextPlug}{115}{122}{BinaryContextPlug.binaryLeftSite_sole}
+
+\lean{Copying/BinaryContextPlug}{123}{128}{BinaryContextPlug.binaryRightSite}
+
+\lean{Copying/BinaryContextPlug}{129}{136}{BinaryContextPlug.binaryRight_filling}
+
+\lean{Copying/BinaryContextPlug}{137}{144}{BinaryContextPlug.binaryRightSite_sole}
+
+\lean{Copying/BinaryContextPlug}{145}{149}{BinaryContextPlug.binary_congr}
+
+\subsection{Padding the address and the replacement together}
+\termdef{copying-padded-filling}
+
+Two equality transports are needed. Changing the local interface of a site
+is equivalent, upon filling, to reindexing the replacement by the inverse
+interface equalities. Transporting a site's host along graph equality leaves
+the resulting filling equal to the old filling. Define the host transport by
+equality elimination. Both filling equalities follow by eliminating the
+relevant equalities, after which the reflexive reindexings disappear.
+
+
+\lean{Copying/PaddingPlug}{9}{15}{PaddingPlug.plugAt_castInterfaces}
+
+\lean{Copying/PaddingPlug}{16}{18}{PaddingPlug.Site.castGraph}
+
+\lean{Copying/PaddingPlug}{19}{24}{PaddingPlug.plugAt_castGraph}
+
+The uniform padding label map preserves primitive labels, and maps a box to
+the same bound/free-variable/free-atom metadata with its body raised once.
+At allowance zero it removes the primitive label's type-level wrapper. Splitting
+on the depth and label shows that both ordered signatures are unchanged.
+Relabelling by this map gives a graph with definitionally unchanged outer
+carriers and incidence. It equals the existing recursive raise operation:
+at depth zero the definitions coincide; at positive depth equality of the
+label functions follows by primitive/box case analysis. This is a proof about
+the existing padding, not a replacement definition of translation.
+
+
+\lean{Copying/PaddingPlug}{25}{29}{PaddingPlug.label}
+
+\lean{Copying/PaddingPlug}{30}{35}{PaddingPlug.label_input}
+
+\lean{Copying/PaddingPlug}{36}{42}{PaddingPlug.label_output}
+
+\lean{Copying/PaddingPlug}{43}{45}{PaddingPlug.graph}
+
+\lean{Copying/PaddingPlug}{46}{55}{PaddingPlug.graph_eq_raise}
+
+One-step padding commutes with shallow replacement up to ordinary isomorphism.
+Both graphs retain the same old and inserted carrier tags, so identity carrier
+bijections suffice. The labels coincide under the uniform padding map. For
+retained edges the source and target lists coincide. For inserted edges, the
+local signature casts cancel and each internal/input/output attachment agrees;
+map composition proves equality of the ordered incidence lists.
+
+Padding also commutes with changing a particular box body. Keep all outer
+carrier names fixed. At the selected edge both labels are the same padded box
+with the new padded body; all other labels agree. The outer incidence never
+changes. This second law handles a site's enclosing box.
+
+
+\lean{Copying/PaddingPlug}{56}{98}{PaddingPlug.plug}
+
+\lean{Copying/PaddingPlug}{99}{117}{PaddingPlug.replaceBox_iso}
+
+Raise an address by structural induction. A shallow site in the uniform
+relabelling has the old local interface by the two signature equalities;
+transport its host to the original raise operation. A deep site retains its
+outer edge, pads the enclosing box body, and recursively raises its inner
+address. Both the host and the local hole allowance increase by one.
+
+The filling theorem states that padding the filled graph is recursively
+isomorphic to filling the raised address with the raised replacement. In the
+shallow case, the equality-transport laws reduce the statement to shallow
+padding/replacement interchange. In the deep case, compose box-body interchange
+with recursive congruence of the changed box body, using the induction
+hypothesis for the inner address. The replacement is raised at its own local
+depth, which may differ from the host depth.
+
+
+\lean{Copying/PaddingPlug}{118}{128}{PaddingPlug.site}
+
+\lean{Copying/PaddingPlug}{129}{144}{PaddingPlug.filling}
+
+Host equality transport preserves a sole-hole certificate by equality
+elimination. For every other outer edge, the existing per-label padding law
+preserves hole-freedom; the uniform presentation has the same property by
+primitive/box case analysis. Induction on the site now proves that its raised
+address is still sole. A shallow marked hole stays the same primitive hole,
+and every other edge stays hole-free. A deep address uses the inner induction
+hypothesis and the same other-edge argument for its enclosing graph.
+
+
+\lean{Copying/PaddingPlug}{145}{149}{PaddingPlug.site_castGraph_sole}
+
+\lean{Copying/PaddingPlug}{150}{161}{PaddingPlug.graph_other_free}
+
+\lean{Copying/PaddingPlug}{162}{181}{PaddingPlug.site_sole}
+
+Padding preserves recursive isomorphism. Retain the original outer carrier
+bijections and incidence equations. At depth zero equal primitive labels
+remain equal. At positive depth, related primitives remain equal, mismatched
+primitive/box cases are impossible, and related box bodies remain related by
+the depth induction hypothesis. Bound and free metadata stay identical.
+
+Iterate the raised-address construction $n$ times. A site with host allowance
+$d$ and local allowance $r$ then has allowances $d+n$ and $r+n$. Iterating the
+preceding congruence gives isomorphism preservation under the original padding
+function. Induction on $n$ proves the filling law: raise the preceding filling
+isomorphism, then compose it with the one-step filling theorem for the current
+padded site and replacement. A separate induction iterates sole-hole
+preservation. These statements retain the exact same number of padding steps
+on the host and replacement.
+
+
+\Needspace{8\baselineskip}
+\lean{Copying/PaddingPlug}{182}{218}{PaddingPlug.congr}
+
+\lean{Copying/PaddingPlug}{219}{224}{PaddingPlug.padSite}
+
+\lean{Copying/PaddingPlug}{225}{232}{PaddingPlug.pad_congr}
+
+\lean{Copying/PaddingPlug}{233}{241}{PaddingPlug.pad_filling}
+
+\lean{Copying/PaddingPlug}{242}{249}{PaddingPlug.padSite_sole}
+
+\subsection{Combined regressions and completion boundary}
+
+The regressions combine two padding steps, an arbitrary-depth occurrence and
+the full application clause, on each side separately. The fixed opposite
+argument is any hole-free graph at the resulting allowance and may contain
+boxes. The same explicitly constructed address is proved sole, and its filling
+is recursively isomorphic to the application of the padded original filling.
+The proof composes application filling with the inverse iterated-padding
+filling law under application congruence. Thus both component tags, the ordered
+boundary exchange, the serial distributors, and distinct host/local allowances
+are checked together. These are structural regressions, not executions of a
+copying machine; callback divergence and store behaviour still require item~2.
+
+The individual parallel and padding filling laws are now discharged. Remaining
+item~3 work is the unrestricted context induction, including cumulative padding
+at maximum-depth joins, and the passage from structural correspondence to
+observational congruence with proved machine representation laws. The other
+Appendix~B.1 obligations are unchanged.
+
+
+\lean{Copying/ParallelFillingExamples}{10}{24}{ParallelFillingExamples.paddedApplicationLeft_filling}
+
+\lean{Copying/ParallelFillingExamples}{25}{37}{ParallelFillingExamples.paddedApplicationRight_filling}

@@ -27,19 +27,25 @@ properties are checked in Sections~\ref{sec:literal-translation}--\ref{sec:compl
 Copyable and stable graphs (Definitions~10.2--10.3), their structural
 properties and recursive-isomorphism invariance are proved in
 Section~\ref{sec:copying-values}.
-\item \textbf{Pending graph assembly:} context translation and term/context
-translation laws, together with the required depth and operational invariants
-for stable and copyable graphs.
+\item \textbf{Graph correspondence:} context translation is defined and its
+constructor interpretation laws are checked. Actual filling is proved for
+lambda/unary contexts and for each parallel, application, binary and iterated
+padding constructor (Sections~\ref{sec:copying-nested-filling}--\ref{sec:copying-parallel-padding}).
+Unrestricted context induction, graph-level term renaming/substitution, and
+remaining depth and operational invariants are pending.
 \item \textbf{Pending machine:} the copy rule (Figure~17), extra search rules
 (Figure~18), store rules (Figure~19), and arithmetic/application behaviour.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its
 existing compute parameter.
-\item \textbf{Pending contextual interface:} binding-free contexts and their
-plugging closure, translated term contexts, contextual congruence, and the
-paper-correspondence obligations of Section~\ref{sec:paper-correspondence}.
-Closure for label predicates proved below does not settle binding-free closure.
+\item \textbf{Contextual interface:} binding-free closure at sourced holes,
+binding-freedom of all translated term contexts, sole-hole certificates and
+addressed context composition are checked. Graph-context congruence has an
+explicit execution-isomorphism premise. Unrestricted term-context congruence,
+the machine's isomorphism/padding laws, and the paper-correspondence obligations
+of Section~\ref{sec:paper-correspondence} remain pending. Unrestricted
+zero-input-hole closure is refuted, as recorded in Appendix~B.1.
 \item \textbf{Pending templates:} Table~3 requires contraction associativity,
 commutativity and idempotence; copying and garbage collection; box permutation,
 pulling contractions and pulling weakening; micro-beta; reference creation;
