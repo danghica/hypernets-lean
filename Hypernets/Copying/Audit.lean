@@ -1,4 +1,4 @@
-import Hypernets.Copying.GeneralCongruenceExamples
+import Hypernets.Copying.PaddingPredicates
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -241,3 +241,14 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.ContextTranslation.apply_padTo
 #print axioms Hypernets.Copying.observationalEquiv_context
 #print axioms Hypernets.Copying.Examples.proposition12_2_context_representations
+
+#print axioms Hypernets.Copying.Stable.padding_label
+#print axioms Hypernets.Copying.Stable.raise_iff
+#print axioms Hypernets.Copying.Stable.pad_iff
+#print axioms Hypernets.Copying.Stable.castDepth_iff
+#print axioms Hypernets.Copying.Stable.padTo_iff
+#print axioms Hypernets.Copying.Copyable.raise_lambdaPayload
+#print axioms Hypernets.Copying.Copyable.raise
+#print axioms Hypernets.Copying.Copyable.pad
+#print axioms Hypernets.Copying.Copyable.castDepth
+#print axioms Hypernets.Copying.Copyable.padTo
