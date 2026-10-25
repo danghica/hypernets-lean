@@ -1,4 +1,4 @@
-import Hypernets.Copying.BindingTranslationExamples
+import Hypernets.Copying.CertifiedContextExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -121,3 +121,20 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.BindingFree.context_graph
 #print axioms Hypernets.Copying.Examples.nestedReferenceContext_bindingFree
 #print axioms Hypernets.Copying.Examples.padded_contractionBeforeHole_not_bindingFree
+
+#print axioms Hypernets.Copying.SingleHole.site
+#print axioms Hypernets.Copying.SingleHole.transport
+#print axioms Hypernets.Copying.SingleHole.padTo_iff
+#print axioms Hypernets.Copying.SingleHole.context_certificate
+#print axioms Hypernets.Copying.plugAt_deepIso
+#print axioms Hypernets.Copying.plugAt_assoc
+#print axioms Hypernets.Copying.SoleHole.comp
+#print axioms Hypernets.Copying.context_comp_certified
+#print axioms Hypernets.Copying.ClosingContext.compose_fill_iso
+#print axioms Hypernets.Copying.Execution.refines_context
+#print axioms Hypernets.Copying.Execution.equiv_context
+#print axioms Hypernets.Copying.ContextTranslation.certified_graph
+#print axioms Hypernets.Copying.ContextTranslation.certified_graph_congruence
+#print axioms Hypernets.Copying.Examples.duplicate_holes_rejected
+#print axioms Hypernets.Copying.Examples.nestedReferenceContext_certified
+#print axioms Hypernets.Copying.Examples.nestedReferenceContext_graph_unchanged
