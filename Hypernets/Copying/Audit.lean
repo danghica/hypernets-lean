@@ -1,3 +1,4 @@
+import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
 import Hypernets.Copying.TracingExamples
@@ -49,3 +50,18 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.referenceOne_environment_edges
 #print axioms Hypernets.Copying.Examples.identityAbstraction_language
 #print axioms Hypernets.Copying.Examples.singleUse_retains_edges
+#print axioms Hypernets.Graph.InterfaceShuffle.bijection
+#print axioms Hypernets.Graph.InterfaceShuffle.label
+#print axioms Hypernets.Copying.Translation.application_language
+#print axioms Hypernets.Copying.Translation.binary_language
+#print axioms Hypernets.Copying.Translation.padTo_edgeCount
+#print axioms Hypernets.Copying.Translation.depth_rename
+#print axioms Hypernets.Copying.Translation.term
+#print axioms Hypernets.Copying.Translation.term_language
+#print axioms Hypernets.Copying.Translation.term_focusFree
+#print axioms Hypernets.Copying.Translation.term_holeFree
+#print axioms Hypernets.Copying.Examples.binary_environment_permutation
+#print axioms Hypernets.Copying.Examples.proposition12_2_graphs_wellFormed
+#print axioms Hypernets.Copying.Examples.privateCell_outer_edges
+#print axioms Hypernets.Copying.Examples.constantResult_outer_edges
+#print axioms Hypernets.Copying.Examples.unequal_depth_application_edges
