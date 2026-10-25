@@ -1,0 +1,196 @@
+\clearpage
+\section{Observational context congruence at equal input depths}
+\label{sec:copying-term-congruence}
+Unrestricted addressed filling now yields an observational congruence theorem
+for every original annotated term context, provided the two input terms have
+equal minimal translation depths. The conclusion is the existing
+all-allowances observational equivalence of the original filled terms. It is
+not merely equivalence of two graph fillings. The execution must respect
+recursive graph isomorphism; no execution padding-invariance hypothesis is
+needed for this equal-depth result.
+
+The restriction is material. Lean checks that the unchanged private-cell
+program of Proposition~12.2 has minimal translation depth three, whereas the
+constant-result program has depth two. This section therefore does not settle
+congruence for that pair, and does not prove their equivalence. The precise
+remaining structural obligation is described below.
+
+\subsection{Congruence through padded open graph contexts}
+
+An open graph context has local allowance $r$ and host allowance $D$.
+Padding its graph and selected address by $m$ steps yields allowances $r+m$
+and $D+m$. Sole-hole and binding-free preservation supply the corresponding
+certificates, so the result remains an admissible graph context. The iterated
+filling law gives a recursive isomorphism between padding an original filling
+and filling this padded context with the padded argument. Neither the outer
+interface nor the selected local interface changes.
+
+
+\lean{Copying/PaddedContextCongruence}{8}{15}{PaddedContextCongruence.pad}
+
+\lean{Copying/PaddedContextCongruence}{16}{23}{PaddedContextCongruence.pad_fill_iso}
+
+For any open program, padding first by $n$ and then by $m$ equals padding it
+directly to the final allowance $(d+n)+m$. Rewrite both incremental paddings
+as padding to a specified allowance, apply the exact graph-level transitivity
+law, and use equality of the underlying graphs to identify the packaged
+programs. This law includes all admissibility certificates by proof irrelevance.
+
+
+\lean{Copying/PaddedContextCongruence}{24}{35}{PaddedContextCongruence.pad_padTo}
+
+Suppose two fragments are observationally equivalent at every padded local
+allowance. Their fillings in any fixed certified graph context are then
+equivalent at every padded host allowance. Fix an increment $m$. The padded
+filling isomorphisms give observational equivalences between each padded
+original filling and its filling in the padded context, using the execution's
+isomorphism law. The hypothesis supplies equivalence of the padded input
+fragments. Apply graph-context congruence in the padded context, then compose
+with the two surrounding equivalences, reversing the second one.
+
+This argument does not claim that padding preserves execution of an individual
+program. Instead, it uses an input comparison already supplied at the required
+padded allowance. Thus the execution's isomorphism obligation suffices here.
+
+
+\lean{Copying/PaddedContextCongruence}{36}{48}{PaddedContextCongruence.equiv_context_padded}
+
+A scoped isomorphism also yields recursive graph isomorphism after padding
+both graphs to any common adequate allowance. Unpack the two graph depths and
+the scoped depth equality; eliminate that equality. The two graphs now have
+the same index, so the previously proved common-allowance isomorphism congruence
+applies. This transports structural filling correspondence to the allowance
+at which an observation is requested.
+
+
+\lean{Copying/PaddedContextCongruence}{49}{58}{PaddedContextCongruence.padTo}
+
+\subsection{From actual filling to term-context congruence}
+\termdef{copying-equal-depth-congruence}
+
+Padding a graph to its existing allowance is the identity. This is the
+zero-increment instance of the exact padding-to-addition law. Consequently,
+interpreting a term context with the translated-program wrapper at the term's
+own minimal depth gives exactly the original translation of the filled term.
+Eliminate the stated equality of the chosen depth and the term's depth, remove
+the identity padding, and apply the original constructor-interpretation law.
+No term or distributor is simplified.
+
+
+\lean{Copying/TermContextCongruence}{7}{13}{TermContextCongruence.padTo_self}
+
+\lean{Copying/TermContextCongruence}{14}{25}{TermContextCongruence.apply_program_at_depth}
+
+Let $t$ and $u$ have the same minimal translation depth $d$, and suppose
+$t$ and $u$ are observationally equivalent in the existing all-allowances
+sense. For every original context $C$, the theorem proves
+\[
+ \mathsf{ObservationalEquiv}(C[t],C[u]),
+\]
+provided the execution respects recursive isomorphism. All finite variable
+and atom environments are retained; the hole may use variables bound by
+surrounding lambdas.
+
+\paragraph{One shared addressed context.}
+Apply unrestricted graph filling to $C$ at allowance $d$. It supplies one
+certified graph context $D$, with host allowance $q$ and local allowance
+$d+n$, whose filling law works for every argument graph at allowance $d$.
+Take $G$ and $H$ to be the original translated-program wrappers for $t$ and
+$u$ at $d$. Their equality of minimal depths permits both exact
+constructor-interpretation identities. The universal filling law therefore
+relates $D[G\text{ padded by }n]$ to the original translation of $C[t]$, and
+similarly for $u$. Each relation includes equality of the filled term's depth
+with $q$.
+
+\paragraph{Input comparison at every needed allowance.}
+For an additional increment $m$, the two input programs are $G$ and $H$
+padded first by $n$ and then by $m$. The exact program-padding law and the
+translated-program coherence law identify these with the original translations
+of $t$ and $u$ at allowance $(d+n)+m$. The assumed term equivalence supplies
+precisely this comparison. No preservation of individual executions through
+padding is used.
+
+\paragraph{Every output observation.}
+Fix any adequate output allowance $N$ for the two filled terms. The scoped
+filling laws imply $q\leq N$, so write $N=q+m$. The padded graph-context
+congruence theorem gives equivalence of the two filled graphs padded by $m$.
+Pad each structural filling isomorphism to $N$. The resulting isomorphisms
+identify those two padded fillings with the original translated-program
+wrappers for $C[t]$ and $C[u]$ at $N$. Execution isomorphism invariance turns
+these into observational equivalences. Compose the inverse left equivalence,
+the contextual comparison, and the right equivalence. Since $N$ was arbitrary,
+this proves the full existing all-allowances conclusion.
+
+The input equivalence and the execution isomorphism law are explicit premises
+of this inference theorem. They are not asserted for the proposition's programs
+or its still-unconstructed copying execution.
+
+
+\lean{Copying/TermContextCongruence}{26}{56}{TermContextCongruence.observationalEquiv_context_of_depth_eq}
+
+\Needspace{8\baselineskip}
+\subsection{Exact context depths and the remaining unequal-depth case}
+\termdef{copying-context-depth}
+
+Define $\delta_C(d)$ to be the context's outer allowance when its hole has
+allowance $d$. A hole returns $d$, a lambda adds one, and a unary operation
+retains the subcontext allowance. Application and binary contexts take the
+maximum of the selected subcontext allowance and the fixed sibling's minimal
+depth, in the original left/right order.
+
+Induction on the context proves that this numerical function equals the
+actual graph interpreter's depth: each constructor selects exactly the stated
+successor, unchanged value or maximum. Applying that equality to a translated
+term and then the exact constructor-interpretation identity gives
+$\mathsf{depth}(C[t])=\delta_C(\mathsf{depth}(t))$.
+These are statements about the unchanged interpreter, not a new translation.
+
+
+\lean{Copying/ContextDepth}{10}{18}{ContextDepth.depthAt}
+
+\lean{Copying/ContextDepth}{19}{25}{ContextDepth.depth_apply}
+
+\lean{Copying/ContextDepth}{26}{32}{ContextDepth.depth_fill}
+
+Three inequalities follow by context induction and elementary natural-number
+arithmetic:
+\[
+ d\leq\delta_C(d),\qquad
+ d\leq e\Longrightarrow\delta_C(d)\leq\delta_C(e),\qquad
+ \delta_C(d+n)\leq\delta_C(d)+n.
+\]
+The hole cases are immediate. Lambda adds the same one to the inductive
+comparison, and unary retains it. For a maximum-depth join the fixed sibling
+is unchanged, so it cannot reverse monotonicity or increase the difference
+beyond $n$. In particular, a fixed deep sibling may absorb an increase in the
+hole allowance. These facts control the indices of the remaining graph-level
+comparison, but do not themselves prove graph isomorphism.
+
+
+\lean{Copying/ContextDepth}{33}{36}{ContextDepth.le_depthAt}
+
+\lean{Copying/ContextDepth}{37}{42}{ContextDepth.depthAt_mono}
+
+\lean{Copying/ContextDepth}{43}{49}{ContextDepth.depthAt_add_le}
+
+For every ambient variable and atom scope, the private-cell term has minimal
+depth three and the constant-result term has minimal depth two. Both equalities
+hold by reducing the original syntax, its let/sequencing sugar and the original
+translation depth function. Rewriting with these equalities proves that the
+two depths differ. Thus the equal-depth theorem above cannot be applied
+directly to this pair.
+
+To remove the restriction, prove that interpreting $C$ with a graph $A$ at
+$d$, or with $A$ padded to $e\geq d$, gives recursively isomorphic graphs
+after both results are padded to a common allowance. This must retain the
+original boxes, ordered argument exchange and distributors. The numeric
+bounds establish adequate indices; the graph comparison remains unfinished.
+Together with unrestricted filling and the cofinal criterion, it would remove
+the equal-depth restriction. Appendix~B.1 retains this step, the concrete
+execution laws, the copying UAM and the template proofs.
+
+\lean{Copying/ContextDepth}{50}{52}{ContextDepth.privateCell_depth}
+
+\lean{Copying/ContextDepth}{53}{56}{ContextDepth.constantResult_depth}
+
+\lean{Copying/ContextDepth}{57}{62}{ContextDepth.proposition12_2_depths_differ}

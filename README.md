@@ -817,3 +817,13 @@ under recursive isomorphism and one-step padding; these remain concrete-machine
 obligations. A deterministic, isomorphism-invariant artificial execution that
 fails padding invariance checks this boundary. Item 3 and Proposition 12.2
 remain unfinished.
+
+
+Section 68 derives actual observational term-context congruence for every
+original annotated context when the two input translations have equal minimal
+depths. It assumes execution isomorphism invariance, but not execution padding
+invariance: input equivalence already supplies all needed allowances. Padded
+open graph contexts connect the actual filling theorem to the original filled
+term translations. Exact context-depth laws are proved. The unchanged
+Proposition 12.2 terms have depths three and two, so unequal-depth congruence
+remains necessary; Appendix B.1 states its precise graph-padding obligation.

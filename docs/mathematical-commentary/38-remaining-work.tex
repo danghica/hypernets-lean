@@ -30,7 +30,7 @@ is now an explicit extension target.
 \Needspace{14\baselineskip}
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-observation-padding}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-term-congruence}.
 In particular, binding-free plugging closure is proved at sourced holes;
 the zero-input counterexample in Section~\ref{sec:copying-binding} qualifies
 unrestricted closure. The five remaining tasks are:
@@ -43,12 +43,14 @@ of Proposition~12.2 and the translation of Figure~16.
 \item Define copying and extra search transitions and all example compute rules;
 prove the unbounded machine's determinism, refocusing and specimen locality,
 including independence of the copy rule from its contraction-tree match.
-\item Derive observational term-context congruence using unrestricted filling
-and the proved cofinal common-allowance criterion
-(Sections~\ref{sec:copying-context-filling}--\ref{sec:copying-observation-padding}).
-Complete the observation/padding audit by proving the concrete execution's
-isomorphism and one-step padding laws in item~2; these are explicit hypotheses,
-not consequences of determinism. Retain the zero-input qualification of Lemma~E.1.
+\item Remove the equal-input-depth restriction from observational context
+congruence. Prove that interpreting a padded argument agrees at a common
+allowance with padding the interpreted result, retaining Figure~16's graphs;
+then use unrestricted filling and the cofinal criterion. Equal-depth congruence
+and exact context-depth bounds are proved in Section~\ref{sec:copying-term-congruence}.
+The original proposition terms have depths three and two. Discharge the
+concrete execution's isomorphism and padding laws in item~2, retaining the
+zero-input qualification of Lemma~E.1.
 \item Prove all eleven template families' safety and robustness in Table~3's
 dependency order, including the indirect copying and garbage-collection dependencies.
 \item Prove the semantic weakening laws, assemble Figure~22's equivalence chain,
