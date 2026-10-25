@@ -70,3 +70,5 @@ import Hypernets.Copying.ContextFillingExamples
 import Hypernets.Copying.ObservationPaddingExamples
 
 import Hypernets.Copying.ContextDepth
+
+import Hypernets.Copying.GeneralCongruenceExamples

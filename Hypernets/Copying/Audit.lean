@@ -1,4 +1,4 @@
-import Hypernets.Copying.ContextDepth
+import Hypernets.Copying.GeneralCongruenceExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -222,3 +222,22 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.privateCell_depth
 #print axioms Hypernets.Copying.Examples.constantResult_depth
 #print axioms Hypernets.Copying.Examples.proposition12_2_depths_differ
+
+#print axioms Hypernets.Copying.Padding.serial
+#print axioms Hypernets.Copying.Padding.parallel
+#print axioms Hypernets.Copying.Padding.tensor
+#print axioms Hypernets.Copying.Padding.environmentDistributor
+#print axioms Hypernets.Copying.Padding.lambdaBox
+#print axioms Hypernets.Copying.Padding.pair
+#print axioms Hypernets.Copying.Padding.unary
+#print axioms Hypernets.Copying.Padding.abstraction
+#print axioms Hypernets.Copying.Padding.application
+#print axioms Hypernets.Copying.Padding.binary
+#print axioms Hypernets.Copying.Padding.abstraction_to
+#print axioms Hypernets.Copying.Padding.application_to
+#print axioms Hypernets.Copying.ContextTranslation.AgreeAt.widen
+#print axioms Hypernets.Copying.ContextTranslation.CommonIso.trans
+#print axioms Hypernets.Copying.ContextTranslation.CommonIso.apply
+#print axioms Hypernets.Copying.ContextTranslation.apply_padTo
+#print axioms Hypernets.Copying.observationalEquiv_context
+#print axioms Hypernets.Copying.Examples.proposition12_2_context_representations
