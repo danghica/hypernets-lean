@@ -1,4 +1,4 @@
-import Hypernets.Copying.ObservationPaddingExamples
+import Hypernets.Copying.ContextDepth
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -208,3 +208,17 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.depthSensitive_padded_unit_not_terminates
 #print axioms Hypernets.Copying.Examples.depthSensitive_not_respectsPadding
 #print axioms Hypernets.Copying.Examples.depthSensitive_deterministic
+
+#print axioms Hypernets.Copying.GraphContext.pad_fill_iso
+#print axioms Hypernets.Copying.OpenProgram.pad_padTo
+#print axioms Hypernets.Copying.Execution.equiv_context_padded
+#print axioms Hypernets.Copying.ContextTranslation.ScopedIso.padTo
+#print axioms Hypernets.Copying.observationalEquiv_context_of_depth_eq
+#print axioms Hypernets.Copying.TermContext.depth_apply
+#print axioms Hypernets.Copying.TermContext.depth_fill
+#print axioms Hypernets.Copying.TermContext.le_depthAt
+#print axioms Hypernets.Copying.TermContext.depthAt_mono
+#print axioms Hypernets.Copying.TermContext.depthAt_add_le
+#print axioms Hypernets.Copying.Examples.privateCell_depth
+#print axioms Hypernets.Copying.Examples.constantResult_depth
+#print axioms Hypernets.Copying.Examples.proposition12_2_depths_differ
