@@ -1,3 +1,4 @@
+import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
 import Hypernets.Copying.TracingExamples
 
@@ -36,3 +37,15 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.binaryTree
 #print axioms Hypernets.Copying.Examples.cyclicStore_cycle
 #print axioms Hypernets.Copying.Examples.cyclicStore_unique
+#print axioms Hypernets.Graph.Net.Tensor.net
+#print axioms Hypernets.Copying.Translation.selectedResource
+#print axioms Hypernets.Copying.Translation.constant_language
+#print axioms Hypernets.Copying.Translation.variable_language
+#print axioms Hypernets.Copying.Translation.atom_language
+#print axioms Hypernets.Copying.Translation.unary_language
+#print axioms Hypernets.Copying.Translation.abstraction_language
+#print axioms Hypernets.Copying.Translation.language_focusFree
+#print axioms Hypernets.Copying.Translation.language_holeFree
+#print axioms Hypernets.Copying.Examples.referenceOne_environment_edges
+#print axioms Hypernets.Copying.Examples.identityAbstraction_language
+#print axioms Hypernets.Copying.Examples.singleUse_retains_edges
