@@ -1,4 +1,4 @@
-import Hypernets.Copying.UnaryPlug
+import Hypernets.Copying.NestedFillingExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -148,3 +148,17 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Translation.unaryHoleSite_sole
 #print axioms Hypernets.Copying.Translation.unary_hole_filling
 #print axioms Hypernets.Copying.Translation.unary_term_filling
+
+#print axioms Hypernets.Copying.Serial.replaceBox_left
+#print axioms Hypernets.Copying.Serial.replaceBox_right
+#print axioms Hypernets.Copying.Serial.plugAt_left
+#print axioms Hypernets.Copying.Serial.plugAt_right
+#print axioms Hypernets.Copying.Serial.leftSite_sole
+#print axioms Hypernets.Copying.Serial.rightSite_sole
+#print axioms Hypernets.Copying.box_filling
+#print axioms Hypernets.Copying.Translation.abstraction_filling
+#print axioms Hypernets.Copying.Translation.abstractionSite_sole
+#print axioms Hypernets.Copying.Translation.unary_filling
+#print axioms Hypernets.Copying.ContextTranslation.unaryLambda_filling
+#print axioms Hypernets.Copying.ContextTranslation.unaryLambda_term_filling
+#print axioms Hypernets.Copying.Examples.twoBinderContext_graph_filling
