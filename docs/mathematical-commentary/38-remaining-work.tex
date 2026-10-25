@@ -30,7 +30,7 @@ is now an explicit extension target.
 \Needspace{14\baselineskip}
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-certified-contexts}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-expansion-plug}.
 In particular, binding-free plugging closure is proved at sourced holes;
 the zero-input counterexample in Section~\ref{sec:copying-binding} qualifies
 unrestricted closure. The five remaining tasks are:
@@ -43,15 +43,14 @@ of Proposition~12.2 and the translation of Figure~16.
 \item Define copying and extra search transitions and all example compute rules;
 prove the unbounded machine's determinism, refocusing and specimen locality,
 including independence of the copy rule from its contraction-tree match.
-\item Prove addressed graph-filling correspondence for the certified translated
-lambda-context, including compatibility with common depth allowances; derive
-term-context congruence for the original Figure~16 translation.
-Resolve the observation/padding correspondence audit and retain the zero-input
-qualification of Lemma~E.1. Sole-hole and binding-free certification and actual
-graph-context composition are proved in
-Section~\ref{sec:copying-certified-contexts}. Graph-context congruence there
-requires execution to respect recursive isomorphism; the concrete copying
-execution and its representation laws await item~2.
+\item Extend addressed graph-filling correspondence to enclosing boxes and
+parallel argument assembly with compatible depth padding; derive term-context
+congruence for the original Figure~16 translation. The unary case is proved in
+Section~\ref{sec:copying-expansion-plug}; context certification and composition
+are proved in Section~\ref{sec:copying-certified-contexts}.
+Resolve the observation/padding audit, retaining the zero-input qualification
+of Lemma~E.1. The copying execution of item~2 must discharge isomorphism and
+padding invariance.
 \item Prove all eleven template families' safety and robustness in Table~3's
 dependency order, including the indirect copying and garbage-collection dependencies.
 \item Prove the semantic weakening laws, assemble Figure~22's equivalence chain,

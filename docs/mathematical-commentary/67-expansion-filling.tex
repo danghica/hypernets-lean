@@ -1,0 +1,317 @@
+\clearpage
+\section{Actual filling through expansion and unary term contexts}
+\label{sec:copying-expansion-plug}
+\termdef{expansion-replacement-interchange}
+This section proves a structural part of the missing graph-filling bridge.
+Replacing an edge within a component of a finite expansion agrees, up to
+explicit graph isomorphism, with replacing that edge in the component before
+expansion. The result applies to the original serial constructor and hence
+to the full unary-operation clause of Figure~16, including its distributor
+suffix. For a unary term context we obtain an actual addressed-filling law
+whose target is the unchanged original term translation.
+
+The result holds for arbitrary finite variable and atom environments and
+arbitrary argument terms, including terms containing boxes. It proves a
+unary context with its hole at the outer level; it does not yet prove
+filling below an enclosing abstraction or inside a parallel argument pair.
+Those cases and their common-allowance padding remain in Appendix~B.1,
+item~3. No execution hypothesis is needed for the structural isomorphisms
+proved here.
+
+\subsection{The replacement--expansion isomorphism}
+Let $C$ be a finite pattern and $F_b$ its assigned component at edge $b$.
+Choose an edge $a$ of $C$, an edge $e$ of $F_a$, and a graph $H$ with the
+interface of $e$. Write $F'_a=F_a[e:=H]$ and $F'_b=F_b$ for $b\ne a$.
+The theorem constructs
+\[
+  (C[F])[(a,e):=H]\;\cong\; C[F'].
+\]
+It assumes no non-self-loop condition and no hole-free or binding-free
+condition: it is a theorem about finite typed graph construction itself.
+
+
+The changed family is defined by testing whether its component index is
+$a$. At $a$ it is ordinary shallow replacement; elsewhere it is the original
+component. Equality transport preserves the dependent interface type when
+the index is identified with $a$. The two evaluation lemmas reduce the
+selected and non-selected cases, respectively.
+
+\lean{Graph/ExpansionPlug}{14}{18}{ExpansionPlug.family}
+
+
+\lean{Graph/ExpansionPlug}{19}{21}{ExpansionPlug.family_same}
+
+
+\lean{Graph/ExpansionPlug}{22}{25}{ExpansionPlug.family_other}
+
+
+The source graph's internal carrier has the form
+$(V_C+\sum_b V_{F_b})+V_H$. The target carrier is
+$V_C+\sum_b V_{F'_b}$. Map each old pattern vertex to itself. A vertex in a
+component different from $a$ keeps its tag. A vertex in $F_a$ becomes an
+old vertex of $F_a[e:=H]$, and a vertex of $H$ becomes a newly inserted vertex
+of that same component. The inverse splits these cases in reverse. The two
+inverse laws follow by case analysis, using equality transport to identify
+the selected component's internal carrier with $V_{F_a}+V_H$.
+
+\lean{Graph/ExpansionPlug}{26}{36}{ExpansionPlug.vertexTo}
+
+
+\lean{Graph/ExpansionPlug}{37}{47}{ExpansionPlug.vertexFrom}
+
+
+\lean{Graph/ExpansionPlug}{48}{73}{ExpansionPlug.vertices}
+
+
+The source edge carrier consists of all tagged component edges except
+$(a,e)$, together with $H$'s edges. For a surviving edge in component $a$,
+its inequality with $(a,e)$ proves that its local edge differs from $e$;
+place it in the retained part of $F_a[e:=H]$. Other component edges are
+unchanged, and new edges receive component tag $a$ and the inserted tag.
+The inverse removes those tags. The inverse laws preserve both the dependent
+component index and the retained-edge inequality; proof irrelevance removes
+any difference between witnesses of the same inequality.
+
+\lean{Graph/ExpansionPlug}{74}{84}{ExpansionPlug.edgeTo}
+
+
+\lean{Graph/ExpansionPlug}{85}{97}{ExpansionPlug.edgeFrom}
+
+
+\lean{Graph/ExpansionPlug}{98}{133}{ExpansionPlug.edges}
+
+
+Transporting a graph vertex across an equality of graphs fixes all external
+ports and transports only its internal carrier. Equality elimination proves
+this fact. The vertex regrouping fixes every original pattern vertex,
+including pattern boundary vertices. An unchanged component's vertex has
+exactly the same attachment to the pattern before and after regrouping.
+An old vertex of the selected component becomes a retained vertex in its
+replacement graph, again with the same attachment.
+
+For a newly inserted vertex, the internal case is the defining carrier map.
+An input port attaches to the selected edge's corresponding source vertex;
+an output attaches to its target vertex. The selected-component lemma,
+together with expansion's ordered source and target list definitions,
+shows that these attachments agree on both sides. Thus the maps preserve
+actual incidence, not just counts or labels.
+
+\lean{Graph/ExpansionPlug}{134}{139}{ExpansionPlug.cast_vertex}
+
+
+\lean{Graph/ExpansionPlug}{140}{145}{ExpansionPlug.map_host}
+
+
+\lean{Graph/ExpansionPlug}{146}{157}{ExpansionPlug.map_other}
+
+
+\lean{Graph/ExpansionPlug}{158}{170}{ExpansionPlug.map_component}
+
+
+\lean{Graph/ExpansionPlug}{171}{185}{ExpansionPlug.map_inserted}
+
+
+Equality transport preserves internal labels and edge labels. It transports
+source and target lists by mapping the corresponding vertex transport over
+the original list. All four statements follow by eliminating the graph
+equality; the incidence statements then reduce to mapping the identity
+over a list. These lemmas expose the dependent casts required by the
+changed family without changing graph structure.
+
+\lean{Graph/ExpansionPlug}{186}{188}{ExpansionPlug.cast_internalLabel}
+
+
+\lean{Graph/ExpansionPlug}{189}{191}{ExpansionPlug.cast_edgeLabel}
+
+
+\lean{Graph/ExpansionPlug}{192}{195}{ExpansionPlug.cast_source}
+
+
+\lean{Graph/ExpansionPlug}{196}{200}{ExpansionPlug.cast_target}
+
+
+Three equations describe the edge map: one for retained edges of the selected
+component, one for edges of other components, and one for newly inserted edges. They reduce directly
+from the edge-map definition and the component-index equality test.
+
+The final graph isomorphism uses the proved vertex and edge bijections.
+Internal labels agree in each carrier case, and the three edge equations
+reduce edge-label preservation to the transport lemmas. For source incidence,
+a retained selected-component edge uses the selected-component vertex lemma;
+an unchanged edge uses the other-component lemma; a new edge uses the
+inserted-vertex lemma. Mapping these pointwise equalities over the entire
+source list proves preservation of its order as well as its entries.
+The target proof is identical with target lists. This completes the
+replacement--expansion isomorphism with every interface and incidence law
+checked by Lean.
+
+\lean{Graph/ExpansionPlug}{201}{207}{ExpansionPlug.edgeTo_same}
+
+
+\lean{Graph/ExpansionPlug}{208}{213}{ExpansionPlug.edgeTo_other}
+
+
+\lean{Graph/ExpansionPlug}{214}{220}{ExpansionPlug.edgeTo_inserted}
+
+
+\lean{Graph/ExpansionPlug}{221}{291}{ExpansionPlug.iso}
+
+
+\subsection{Component isomorphisms and serial assembly}
+
+A second generic construction assembles component-wise isomorphisms under
+a common pattern. It permits a supplied relation on edge labels, so it also
+applies to recursive graph isomorphism, where corresponding box bodies may
+be isomorphic rather than literally equal.
+
+Keep each pattern vertex fixed and apply the relevant component's vertex
+bijection inside each tagged component. Apply its edge bijection inside
+that component as well. The inverse laws are the component inverse laws.
+Pattern boundary attachment is fixed, and component insertion commutes with
+these maps by the internal/input/output cases. The resulting label-related
+isomorphism inherits the internal-label and edge-relation proofs pointwise.
+Its ordered incidence equations follow by mapping the insertion equality
+over the component incidence lists and using the component isomorphism's
+source or target equation.
+
+\lean{Graph/ExpansionIso}{13}{23}{ExpansionIso.vertices}
+
+
+\lean{Graph/ExpansionIso}{24}{29}{ExpansionIso.edges}
+
+
+\lean{Graph/ExpansionIso}{30}{33}{ExpansionIso.map_host}
+
+
+\lean{Graph/ExpansionIso}{34}{43}{ExpansionIso.map_insert}
+
+
+\lean{Graph/ExpansionIso}{44}{64}{ExpansionIso.iso}
+
+
+Serial composition is the original expansion of a two-slot pattern.
+A left-component occurrence is tagged by the left Boolean slot, and a
+right-component occurrence by the right slot. The edge maps are defined
+at each allowance, respecting the copying alphabet's base and successor
+representations. Both mapped occurrences retain exactly their original
+edge labels, and hence their ordered interfaces.
+
+\lean{Copying/SerialPlug}{13}{18}{SerialPlug.leftEdge}
+
+
+\lean{Copying/SerialPlug}{19}{23}{SerialPlug.rightEdge}
+
+
+\lean{Copying/SerialPlug}{24}{26}{SerialPlug.leftEdge_label}
+
+
+\lean{Copying/SerialPlug}{27}{30}{SerialPlug.rightEdge_label}
+
+
+To replace an edge on the left, apply the generic replacement--expansion
+isomorphism with the selected slot equal to the left slot. The changed
+family is pointwise equal to the serial filling family formed from the
+replaced left graph and the untouched right graph. The two Boolean cases
+prove that equality. Interface transport aligns the inserted graph with
+the occurrence's retained label. The right-component theorem uses the
+same argument with the other slot selected.
+
+Finally, the generic component-isomorphism construction applied to these
+two slots proves recursive isomorphism congruence for serial assembly.
+These are laws for the original expanded graph, with no replacement serial
+representation or additional semantic hypothesis.
+
+\lean{Copying/SerialPlug}{31}{50}{SerialPlug.plug_left}
+
+
+\lean{Copying/SerialPlug}{51}{69}{SerialPlug.plug_right}
+
+
+\lean{Copying/SerialPlug}{70}{75}{SerialPlug.congr}
+
+
+\subsection{The actual unary term-context filling law}
+\termdef{copying-unary-filling-law}
+
+
+The unary translation first serially connects its operation corolla to the
+argument graph, then appends the prescribed single-use environment
+distributor. Follow an argument occurrence through the right slot of the
+first composition and then the left slot of the second. Its label remains
+the argument edge's label by the two serial label lemmas.
+
+For replacement at that occurrence, use the left serial replacement theorem
+to move replacement past the distributor suffix. Use the right serial
+replacement theorem to move it past the operation prefix. Lift the latter
+isomorphism through the unchanged suffix by serial congruence and compose
+the two isomorphisms. This gives the literal unary replacement law for any
+argument edge and any fitting replacement graph. The corresponding unary
+congruence theorem follows by applying serial congruence twice, fixing the
+operation and distributor graphs.
+
+\lean{Copying/UnaryPlug}{11}{15}{UnaryPlug.unaryEdge}
+
+
+\lean{Copying/UnaryPlug}{16}{20}{UnaryPlug.unaryEdge_label}
+
+
+\lean{Copying/UnaryPlug}{21}{45}{UnaryPlug.unary_plug}
+
+
+\lean{Copying/UnaryPlug}{46}{51}{UnaryPlug.unary_congr}
+
+
+Specialise the argument graph to the annotated hole corolla. Following its
+single edge through the unary clause gives an explicit shallow site at the
+hole's term-and-environment interface.
+
+To certify that particular site, first prove a general occurrence fact.
+If a graph has exactly one specified hole and an outer edge is labelled by
+that hole, the outer edge is the selected occurrence: otherwise the
+inventory's other-edge condition would declare the hole label hole-free,
+a contradiction. Its shallow site is therefore sole. Applying this fact to
+the existing unary single-hole inventory certifies the explicit address
+used in the filling theorem. Thus the theorem does not rely on a different
+existentially chosen hole address.
+
+\lean{Copying/UnaryPlug}{52}{58}{UnaryPlug.unaryHoleSite}
+
+
+\lean{Copying/UnaryPlug}{59}{74}{UnaryPlug.sole_of_single_hole}
+
+
+\lean{Copying/UnaryPlug}{75}{88}{UnaryPlug.unaryHoleSite_sole}
+
+
+Fill this actual site with an arbitrary graph $G$ at the annotated
+interface. The unary replacement law identifies the result with the unary
+translation of the hole corolla filled by $G$. The generic corolla left-unit
+isomorphism identifies that filled corolla with $G$ itself. Unary congruence
+lifts this isomorphism through the unchanged operation and distributor
+construction. Writing $\mathcal{T}$ for the original translation, composing proves
+\[
+  \mathcal{T}(o([-]))[\mathcal{T}(t)]
+  \;\cong\;\mathcal{T}(o(t))
+\]
+when $G$ is the original translation of $t$, with the hole allowance equal
+to $t$'s translation depth. The final declaration states precisely this
+specialisation using actual addressed replacement and the original
+\texttt{Translation.term} on the right. All unary operations are covered,
+including reference creation and dereference, for arbitrary scopes and
+argument terms. This is a structural translation theorem, not a theorem
+about executing either store operation.
+
+\lean{Copying/UnaryPlug}{89}{105}{UnaryPlug.unary_hole_filling}
+
+
+\lean{Copying/UnaryPlug}{106}{109}{UnaryPlug.unary_term_filling}
+
+
+The full build and all three axiom audits pass. The dependency chain now
+contains a proved unary filling case:
+replacement--expansion interchange, serial replacement and congruence,
+unary replacement, then corolla elimination. The general context induction
+still needs replacement below boxes, the parallel argument construction,
+and its padding compatibility. Term-context congruence and the copying
+execution's representation laws remain separate obligations. The displayed
+programs in Proposition~12.2 and every existing translation clause are unchanged.

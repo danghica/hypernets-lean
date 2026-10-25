@@ -769,3 +769,11 @@ Figure 16 translation. Item 3 remains open: the addressed filling law connecting
 that graph to translation of a filled term, compatible padding, and term-context
 congruence are still required. The copying execution must prove its representation
 laws. Section 62 documents these proofs and the remaining boundary.
+
+Section 63 now proves actual graph filling for every unary term context and
+arbitrary argument term and environments. A new generic isomorphism commutes
+replacement with simultaneous expansion; serial replacement and recursive
+isomorphism congruence specialise it to the unchanged unary clause, retaining
+its distributor suffix. The explicit filled address is a certified sole hole.
+The general context filling theorem still needs enclosing boxes, parallel
+argument assembly, and compatible padding; item 3 remains open.
