@@ -859,3 +859,10 @@ including independent variable/atom permutations and the single-use case.
 All canonical contraction and weakening edges remain. Commentary Section 72
 explains these whole-term renaming prerequisites; it does not claim the full
 renaming or substitution theorem.
+
+Typed boundary isomorphisms now express resource renaming directly on original
+graphs. Identity, inverse, composition, adjacency invariance, and the embedding
+of boundary-fixing recursive isomorphisms are proved. Distributors have an
+explicit automorphism at every allowance with the prescribed input/output
+permutation. Section 73 explains why this does not yet establish whole-term
+renaming or change the observational relation.

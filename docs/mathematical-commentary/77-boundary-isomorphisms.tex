@@ -1,0 +1,92 @@
+\clearpage
+\section{Typed boundary isomorphisms for renaming}
+\label{sec:copying-boundary-iso}
+\termdef{copying-boundary-iso}
+The existing recursive graph isomorphism fixes each external boundary position.
+Environment renaming may move those positions. We introduce a separate typed
+boundary-isomorphism interface and prove a direct resource-permuting
+automorphism of the original distributor. Neither the existing isomorphism nor
+the observation relation is replaced. These are structural prerequisites for
+whole-term renaming; the selected-resource clauses and propagation through
+term constructors remain to be proved.
+
+\subsection{The interface and its elementary laws}
+A boundary isomorphism between two copying hypernets at the same allowance
+consists of bijections on all vertices and on edges. The vertex bijection
+preserves wire labels and preserves and reflects the predicates of being an
+input and being an output. Hence it also preserves internal vertices. It may
+permute external positions, but cannot exchange input and output roles or
+mix term and atom wire types. Corresponding edge labels satisfy the existing
+recursive label relation. Mapping an entire source or target list gives the
+corresponding list in the target graph, in the same order. The definition
+permits different interface lists when these conditions can be met.
+\lean{Copying/BoundaryIso}{11}{19}{BoundaryIso}
+
+Identity uses the identity bijections, reflexivity of label equivalence and
+identity list maps. To reverse an isomorphism, use the two inverse bijections.
+Wire labels and boundary roles are transported by their right-inverse laws.
+Reverse the recursive edge-label relation. For an incidence list, apply the
+inverse vertex map to its proved forward equality; cancellation of the two
+vertex maps and the edge inverse identity give the required reversed equality.
+\lean{Copying/BoundaryIso}{23}{31}{BoundaryIso.refl}
+\lean{Copying/BoundaryIso}{33}{46}{BoundaryIso.symm}
+
+Composition uses composition of the two vertex bijections and the two edge
+bijections. Wire-label and boundary-role preservation compose directly;
+recursive label equivalence is transitive. The list-map composition identity
+reduces each incidence condition to the two component incidence conditions.
+\lean{Copying/BoundaryIso}{48}{61}{BoundaryIso.trans}
+
+Directed adjacency is preserved and reflected. A common vertex in a source
+and target list maps to a common vertex in the image lists. Conversely,
+recover preimages from the two mapped-list memberships; injectivity of the
+vertex bijection identifies those preimages and supplies a common original
+vertex. The statement therefore concerns actual incidence adjacency, not
+just a relation between labels.
+\lean{Copying/BoundaryIso}{64}{79}{BoundaryIso.adjacent_iff}
+
+Every existing boundary-fixing recursive isomorphism embeds into the new
+interface. Extend its internal-vertex bijection by the identity on input and
+output constructors; reuse its edge bijection, label relation and incidence
+proofs. For boundary ports, wire-label and role preservation are reflexive;
+for internal ports use the original internal-label equation. This is an
+embedding of the stronger boundary-fixing data, not a converse identification.
+\lean{Copying/BoundaryIso}{81}{93}{BoundaryIso.ofDeepIso}
+
+\subsection{An automorphism of the original distributor}
+The original ordered parallel assembly provides a bijection between its
+vertices and pairs consisting of a resource index and a component vertex.
+Invert this bijection, apply the resource-tag permutation from Section~72,
+and apply the assembly bijection again. This defines a bijection on all
+vertices of the original distributor itself.
+\lean{Copying/DistributorBoundaryIso}{9}{13}{Distributor.resourcePorts}
+
+On a vertex embedded from component $i$, the inverse assembly cancels the
+embedding. The result is exactly the same component vertex embedded at
+$\pi(i)$. This cancellation identity proves the concrete boundary action:
+the input for resource $i$ at use $j$ is sent to the input for $\pi(i)$ at the
+same use $j$, and output $i$ is sent to output $\pi(i)$. Thus the input
+positions transform as $i+kj\mapsto\pi(i)+kj$, matching the preceding
+permuted-boundary construction.
+\lean{Copying/DistributorBoundaryIso}{15}{23}{Distributor.resourcePorts_embed}
+\lean{Copying/DistributorBoundaryIso}{26}{31}{Distributor.resourcePorts_input}
+\lean{Copying/DistributorBoundaryIso}{33}{37}{Distributor.resourcePorts_output}
+
+Use this all-vertex bijection and resource retagging on edges to construct
+a boundary isomorphism from the original distributor to itself, at every
+allowance. To prove wire-label preservation, express an arbitrary vertex
+through the inverse assembly bijection and use the typing equation of each
+component embedding. Input and output roles are preserved by a case split on
+the component vertex. Edge labels are unchanged. For source and target lists,
+compose the list maps and apply the embedding cancellation identity entry
+by entry. All canonical weakening and contraction edges remain, with their
+original ordered incidences; no positivity assumption on the resource or
+use count is needed.
+\lean{Copying/DistributorBoundaryIso}{41}{83}{Distributor.boundaryIso}
+
+This interface makes the external action explicit on the original graph,
+whereas Section~72 compared a separately boundary-permuted assembly with the
+original assembly using boundary-fixing isomorphism. Neither result proves
+observational equivalence under arbitrary boundary permutations. The original
+terms and translation of Proposition~12.2 remain unchanged, and whole-term
+renaming, substitution and the copying machine remain outstanding.
