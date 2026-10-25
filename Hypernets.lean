@@ -80,3 +80,5 @@ import Hypernets.Copying.TranslatedComposition
 import Hypernets.Copying.DistributorPermutation
 
 import Hypernets.Copying.DistributorBoundaryIso
+
+import Hypernets.Copying.AtomicRenaming

@@ -1,4 +1,4 @@
-import Hypernets.Copying.DistributorBoundaryIso
+import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -283,3 +283,25 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Distributor.resourcePorts_input
 #print axioms Hypernets.Copying.Distributor.resourcePorts_output
 #print axioms Hypernets.Copying.Distributor.boundaryIso
+
+#print axioms Hypernets.Copying.SelectedResource.edges
+#print axioms Hypernets.Copying.SelectedResource.internal
+#print axioms Hypernets.Copying.SelectedResource.ports
+#print axioms Hypernets.Copying.SelectedResource.source_at
+#print axioms Hypernets.Copying.SelectedResource.target_at
+#print axioms Hypernets.Copying.SelectedResource.label_at
+#print axioms Hypernets.Copying.SelectedResource.vertex_label
+#print axioms Hypernets.Copying.SelectedResource.rawIso
+#print axioms Hypernets.Copying.SelectedResource.rawIso_output
+#print axioms Hypernets.Copying.BoundaryIso.castInterfaces
+#print axioms Hypernets.Copying.BoundaryIso.castInterfaces_output
+#print axioms Hypernets.Copying.Translation.selectedResource_rename
+#print axioms Hypernets.Copying.Translation.selectedResource_rename_output
+#print axioms Hypernets.Copying.BoundaryParallel.iso
+#print axioms Hypernets.Copying.BoundaryIso.tensor
+#print axioms Hypernets.Copying.Translation.variableTerm_rename
+#print axioms Hypernets.Copying.Translation.constant_rename
+#print axioms Hypernets.Copying.InstancePrefix.input_fixed
+#print axioms Hypernets.Copying.InstancePrefix.iso
+#print axioms Hypernets.Copying.Translation.atom_rename
+#print axioms Hypernets.Copying.Translation.atomic_rename
