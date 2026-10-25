@@ -897,3 +897,15 @@ proofs. Unary operations are removed from the remaining renaming cases in
 Appendix B; application, binary operations, and lambda boxes remain. The latest
 completion estimate is **about 45% by mathematical effort** (broad plausible range
 **30–55%**), not a measured percentage of declarations.
+
+
+The full lambda-free renaming milestone proves bijective renaming for every
+original term without lambdas, including arbitrary nesting of application,
+negation, allocation, dereferencing, addition, subtraction, assignment, and atom
+equality. A common resource-action certificate discharges operand matching
+inside the induction. The original shuffle and both two-use forests are retained;
+constructor congruence also works at unequal padded allowances. Section 77 and
+Appendix B explain the remaining lambda-box interface correspondence. The latest
+estimate is **about 50% by mathematical effort** (broad plausible range **35–60%**).
+The concrete copying machine, robustness templates, and Proposition 12.2 remain
+unfinished; these structural renaming results do not assert their semantics.

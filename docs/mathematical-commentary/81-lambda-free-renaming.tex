@@ -1,0 +1,338 @@
+\clearpage
+\section{Renaming all lambda-free terms and padded binary clauses}
+\label{sec:copying-lambda-free-renaming}
+\termdef{copying-lambda-free-renaming}
+The main theorem of this milestone proves bijective environment renaming for
+every lambda-free term of the original syntax, at arbitrary finite variable and
+atom scopes. Application, all unary operations, and all four binary operations
+may be nested without restriction. Repeated variable or atom occurrences are
+allowed: both two-use distributor forests and the original middle-block exchange
+remain in the graph. A named distinct-list environment corollary uses exactly
+the existing environment and translation definitions.
+
+The construction also proves application and binary congruence for supplied
+operand isomorphisms at arbitrary, possibly unequal allowances. Thus it is usable
+with boxed operands once their own boundary correspondence is established. It
+does not prove lambda-box renaming, an operational allocation/read/write rule,
+or Proposition~12.2. The theorem at the end is stated on the original
+\texttt{Translation.term}; no replacement translation is introduced.
+
+\Needspace{12\baselineskip}
+\subsection{Coordinates of the original operand shuffle}
+
+\termdef{copying-pair-boundary-coordinates}
+The left and right operand tags are represented by Booleans, with use numbers
+zero and one. A component index pairs such a tag with an original environment
+position. The grouped position is obtained by applying the existing pair-boundary
+bijection and transporting through the existing interface-length equality.
+Every grouped position has this form: invert the pair-boundary bijection after
+transporting back along the length equality, and split its component tag.
+
+\lean{Copying/PairBoundaryCoordinates}{8}{8}{PairBoundaryCoordinates.use}
+\lean{Copying/PairBoundaryCoordinates}{10}{12}{PairBoundaryCoordinates.component}
+\lean{Copying/PairBoundaryCoordinates}{15}{18}{PairBoundaryCoordinates.index}
+\lean{Copying/PairBoundaryCoordinates}{21}{31}{PairBoundaryCoordinates.index_surjective}
+
+The original shuffle is the inverse of the original four-block ordering
+followed by the shuffled ordering. Evaluating it at an original component
+therefore cancels the original ordering's inverse. Apply this cancellation in
+the four cases (left/right operand, term/atom resource). Term resource $i$ in use
+$u$ reaches grouped term position $i+ku$. Atom resource $a$ reaches grouped atom
+position $a+hu$, after both term blocks; its absolute position is $2k+a+hu$.
+For atoms, the separate concatenation identity checks that $k+a$ is exactly the
+right-block injection, by equality of finite-index values. These calculations
+retain the original order rather than replacing the shuffle by a counting law.
+
+\lean{Copying/PairBoundaryCoordinates}{33}{39}{PairBoundaryCoordinates.shuffle_component}
+\lean{Copying/PairBoundaryCoordinates}{42}{65}{PairBoundaryCoordinates.term_index}
+\lean{Copying/PairBoundaryCoordinates}{67}{70}{PairBoundaryCoordinates.atom_join}
+\lean{Copying/PairBoundaryCoordinates}{73}{97}{PairBoundaryCoordinates.atom_index}
+
+\Needspace{12\baselineskip}
+\subsection{Matching the multi-use environment forests}
+
+\termdef{copying-multi-use-boundary-action}
+Tensor the original automorphisms of $D_{k,m}$ and $D_{h,m}$. This constructs an
+automorphism of the actual environment distributor for every use count $m$ and
+allowance. Its outputs carry the resource actions $\rho$ and $\alpha$. Its input
+actions preserve the use number: $i+ku$ maps to $\rho(i)+ku$, and $a+hu$ maps to
+$\alpha(a)+hu$. The existing finite-grid index supplies the bounds even for
+arbitrary $m$; the original distributor action and tensor block laws prove the
+ordered-port equations. In particular, zero resources and zero uses need no
+nonemptiness assumption.
+
+\lean{Copying/MultiUseBoundaryRenaming}{8}{10}{MultiUseBoundaryRenaming.iso}
+\lean{Copying/MultiUseBoundaryRenaming}{12}{17}{MultiUseBoundaryRenaming.output_term}
+\lean{Copying/MultiUseBoundaryRenaming}{19}{24}{MultiUseBoundaryRenaming.output_atom}
+\lean{Copying/MultiUseBoundaryRenaming}{26}{38}{MultiUseBoundaryRenaming.input_term}
+\lean{Copying/MultiUseBoundaryRenaming}{40}{56}{MultiUseBoundaryRenaming.input_atom}
+
+A typed environment permutation $\pi$ splits into its term and atom
+bijections by the previous section. Apply the multi-use construction to that
+pair. Splitting an arbitrary output position into the two resource blocks proves
+that the output action is exactly $\pi$. For two uses, the coordinate laws above
+identify the input action with applying $\pi$ independently inside each original
+operand, then performing the original pair shuffle. This is the precise bridge
+between the two operand graphs and their sharing forests.
+
+\lean{Copying/MultiUseBoundaryRenaming}{58}{58}{MultiUseBoundaryRenaming.ofTyped}
+\lean{Copying/MultiUseBoundaryRenaming}{61}{71}{MultiUseBoundaryRenaming.ofTyped_output}
+\lean{Copying/MultiUseBoundaryRenaming}{75}{86}{MultiUseBoundaryRenaming.ofTyped_pair_input}
+
+\Needspace{12\baselineskip}
+\subsection{The application and binary constructor proofs}
+
+A typed boundary isomorphism fixes a singleton input index: both its image
+and the original index are zero. Assemble two operand isomorphisms by the existing
+parallel theorem using the original pair boundary; transport the resulting
+output interface along the same equality as the translation. This defines the
+raw and final pair isomorphisms. Their two argument inputs are individually fixed,
+as follows by the singleton law and the two component insertion equations.
+If the operand output maps agree, both shuffled output blocks carry that common
+map; prove this by the component output equation in each of the two cases.
+
+\lean{Copying/PairBoundaryRenaming}{8}{14}{PairBoundaryRenaming.input_singleton}
+\lean{Copying/PairBoundaryRenaming}{22}{26}{PairBoundaryRenaming.rawIso}
+\lean{Copying/PairBoundaryRenaming}{28}{29}{PairBoundaryRenaming.iso}
+\lean{Copying/PairBoundaryRenaming}{32}{57}{PairBoundaryRenaming.iso_input}
+\lean{Copying/PairBoundaryRenaming}{60}{79}{PairBoundaryRenaming.iso_output}
+
+A small head index selects either the original application edge or one
+of the original binary-operation edges. In both cases the selected graph is the
+existing primitive graph with one term input and two ordered term outputs. It
+is an abbreviation for these original graphs, not an additional language
+operation. The identity of this head matches the fixed two argument inputs of
+the pair isomorphism, so serial gluing yields the prefix isomorphism.
+
+\lean{Copying/BinaryBoundaryRenaming}{8}{8}{BinaryBoundaryRenaming.Head}
+\lean{Copying/BinaryBoundaryRenaming}{10}{15}{BinaryBoundaryRenaming.graph}
+\lean{Copying/BinaryBoundaryRenaming}{17}{21}{BinaryBoundaryRenaming.prefix_compatible}
+\lean{Copying/BinaryBoundaryRenaming}{23}{23}{BinaryBoundaryRenaming.prefixIso}
+
+Choose the actual two-use forest automorphism from the left operand's
+typed output bijection. To prove compatibility, express every intermediate
+position as a component and an environment position using surjectivity of the
+pair index. The prefix output law, the pair output law, and the two-use input
+law all give the same grouped position. Thus agreement between operand resource
+actions proves the entire matching obligation. The clause abbreviation is
+literally the original serial expression, and gluing this prefix and forest
+gives its boundary isomorphism. The external output action equals the original
+left operand action because the final forest realises that action exactly.
+
+\lean{Copying/BinaryBoundaryRenaming}{25}{25}{BinaryBoundaryRenaming.forestIso}
+\lean{Copying/BinaryBoundaryRenaming}{28}{38}{BinaryBoundaryRenaming.forest_compatible}
+\lean{Copying/BinaryBoundaryRenaming}{40}{41}{BinaryBoundaryRenaming.clause}
+\lean{Copying/BinaryBoundaryRenaming}{43}{45}{BinaryBoundaryRenaming.iso}
+\lean{Copying/BinaryBoundaryRenaming}{47}{52}{BinaryBoundaryRenaming.iso_output}
+
+Specialise the head to application or to each binary operation. This gives
+public constructor isomorphisms for the existing translation functions, together
+with their exact external output equations. The only compatibility hypothesis
+at this constructor level is equality of the two operand output actions; below,
+the syntax induction proves it from a common resource specification.
+
+\lean{Copying/BinaryBoundaryRenaming}{61}{62}{BinaryBoundaryRenaming.application_boundaryIso}
+\lean{Copying/BinaryBoundaryRenaming}{64}{65}{BinaryBoundaryRenaming.binary_boundaryIso}
+\lean{Copying/BinaryBoundaryRenaming}{67}{69}{BinaryBoundaryRenaming.application_boundaryIso_output}
+\lean{Copying/BinaryBoundaryRenaming}{71}{73}{BinaryBoundaryRenaming.binary_boundaryIso_output}
+
+\Needspace{12\baselineskip}
+\subsection{The resource-action induction invariant}
+
+\termdef{copying-resource-boundary-action}
+For resource bijections $\rho$ and $\alpha$, a resource-action certificate says
+that an isomorphism maps variable output $i$ to $\rho(i)$ and atom output $k+a$
+to $k+\alpha(a)$. Two such certificates imply equality of their complete output
+index maps: split an arbitrary environment index at $k$, apply the relevant
+certificate equation, and use injectivity of the output-port constructor.
+This is why a mere existence theorem for each operand is too weak for induction.
+
+\lean{Copying/ResourceBoundaryAction}{8}{11}{ResourceBoundaryAction.ResourceAction}
+\lean{Copying/ResourceBoundaryAction}{18}{33}{ResourceBoundaryAction.agree}
+
+If a constructor's external action is the operand's action, compose that
+output equation with the operand certificate. This proves a general certificate
+transfer lemma. Apply it to the existing unary output theorem and to the new
+application and binary output theorems, using the agreement just proved for the
+two operands. Consequently the same specified resource action persists through
+every non-binding constructor.
+
+\lean{Copying/ResourceBoundaryAction}{36}{46}{ResourceBoundaryAction.of_output}
+\lean{Copying/ResourceBoundaryAction}{48}{50}{ResourceBoundaryAction.unary}
+\lean{Copying/ResourceBoundaryAction}{52}{54}{ResourceBoundaryAction.application}
+\lean{Copying/ResourceBoundaryAction}{56}{58}{ResourceBoundaryAction.binary}
+
+The atomic isomorphisms must satisfy that stronger specification too.
+Extract the selected-resource output index from its existing explicit port
+equation. Tensor it with the unused atom forest to prove the variable clause's
+two resource equations. For the instance prefix, insertion commutation at an
+output says that its external output map is exactly the operand output map;
+checking the allowance cases proves this for the original prefix. Combine it
+with the selected-atom action and unused variable forest to prove the atom clause.
+For constants, the primitive has no outputs, so the inner tensor's outputs all
+come from the variable weakening forest and the outer tensor adds exactly the
+atom block. Tensor output laws and the empty-output arithmetic prove both
+constant equations. All existing interface casts are retained throughout.
+
+\lean{Copying/AtomicBoundaryActions}{8}{14}{AtomicBoundaryActions.selected_outputIndex}
+\lean{Copying/AtomicBoundaryActions}{16}{33}{AtomicBoundaryActions.variableTerm_action}
+\lean{Copying/AtomicBoundaryActions}{39}{44}{AtomicBoundaryActions.iso_output}
+\lean{Copying/AtomicBoundaryActions}{50}{70}{AtomicBoundaryActions.atom_action}
+\lean{Copying/AtomicBoundaryActions}{72}{103}{AtomicBoundaryActions.constant_action}
+
+\Needspace{12\baselineskip}
+\subsection{Induction on every lambda-free term}
+
+The lambda-free predicate is indexed by the original term. It includes
+variables, atoms, constants, and is closed under every unary and binary operation
+and application. It has no lambda constructor. Ordinary syntactic renaming
+preserves membership by induction, including non-injective renamings; this
+membership fact alone is not a graph substitution or non-injective graph-renaming
+theorem. A second induction shows the translation allowance is zero: leaves
+have depth zero, unary depth is unchanged, and the maximum of two zeros is zero.
+
+\lean{Copying/LambdaFreeRenaming}{9}{15}{LambdaFreeRenaming.LambdaFree}
+\lean{Copying/LambdaFreeRenaming}{19}{27}{LambdaFreeRenaming.rename}
+\lean{Copying/LambdaFreeRenaming}{29}{30}{LambdaFreeRenaming.depth_zero}
+
+For the induction only, expose this zero allowance by equality transport
+of the already defined translated graph. This auxiliary graph is the original
+translation with its index rewritten, not a simplification of its carriers or
+edges. Equality transport commutes with unary translation. For application and
+binary translation, eliminate the two depth-zero equalities: their maximum is
+zero and both original pads compute to the zero pad. This proves the two general
+zero-allowance identities and their specialisations to actual translated terms.
+
+\lean{Copying/LambdaFreeRenaming}{34}{35}{LambdaFreeRenaming.graph}
+\lean{Copying/LambdaFreeRenaming}{37}{39}{LambdaFreeRenaming.graph_unary}
+\lean{Copying/LambdaFreeRenaming}{42}{48}{LambdaFreeRenaming.application_zero}
+\lean{Copying/LambdaFreeRenaming}{50}{56}{LambdaFreeRenaming.binary_zero}
+\lean{Copying/LambdaFreeRenaming}{58}{60}{LambdaFreeRenaming.graph_application}
+\lean{Copying/LambdaFreeRenaming}{62}{64}{LambdaFreeRenaming.graph_binary}
+
+The strong induction theorem constructs an isomorphism together with its
+resource-action certificate. Leaves use the newly certified atomic isomorphisms.
+A unary node uses unary constructor congruence and certificate preservation.
+At application or binary nodes, obtain both certified operand isomorphisms,
+derive agreement from the certificates, apply constructor congruence, and carry
+the certificate forward. Thus the agreement premise is discharged inside the
+proof, at every node and for arbitrarily repeated resources.
+
+Finally, eliminating the two zero-allowance equalities converts the induction's
+isomorphism back to the original translated graphs. The theorem
+\texttt{Translation.lambdaFree\_rename} has only the original term, its
+lambda-free certificate, and the two finite resource bijections as parameters.
+It has no operational, stability, robustness, or operand-agreement assumption.
+The only target equality transport is the pre-existing syntactic depth-renaming
+identity, just as in the earlier atomic endpoint.
+
+\lean{Copying/LambdaFreeRenaming}{68}{91}{LambdaFreeRenaming.rename_with_action}
+\lean{Copying/LambdaFreeRenaming}{94}{98}{LambdaFreeRenaming.uncast}
+\lean{Copying/LambdaFreeRenaming}{104}{109}{LambdaFreeRenaming.lambdaFree_rename}
+
+\Needspace{12\baselineskip}
+\subsection{Unequal allowances and supplied boxed operands}
+
+\termdef{copying-boundary-padding-renaming}
+Recursive label equivalence survives one step of the original padding. Primitive
+labels retain equality. For boxes, their existing body isomorphism is padded by
+the previously proved recursive-isomorphism theorem, preserving binder metadata.
+This yields a padded boundary isomorphism with the exact same outer port and edge
+bijections. Its external output action is unchanged. Iteration gives any finite
+padding, with the output equation proved by induction on the number of steps.
+These are structural representation results, not execution-padding invariance.
+
+\lean{Copying/BoundaryPaddingRenaming}{8}{23}{BoundaryPaddingRenaming.label_equiv}
+\lean{Copying/BoundaryPaddingRenaming}{31}{46}{BoundaryPaddingRenaming.raise}
+\lean{Copying/BoundaryPaddingRenaming}{48}{50}{BoundaryPaddingRenaming.raise_output}
+\lean{Copying/BoundaryPaddingRenaming}{52}{54}{BoundaryPaddingRenaming.pad}
+\lean{Copying/BoundaryPaddingRenaming}{56}{63}{BoundaryPaddingRenaming.pad_output}
+
+Equality transport of the allowance also preserves the isomorphism and
+its output action; eliminate the equality to prove both facts. Compose iterated
+padding and equality transport to obtain the original \texttt{padTo} operation,
+whose output law is obtained by composing the two preceding laws. Substituting
+that equation into the term and atom certificate fields proves resource-action
+preservation under padding.
+
+\lean{Copying/BoundaryPaddingRenaming}{65}{67}{BoundaryPaddingRenaming.castDepth}
+\lean{Copying/BoundaryPaddingRenaming}{69}{71}{BoundaryPaddingRenaming.castDepth_output}
+\lean{Copying/BoundaryPaddingRenaming}{73}{75}{BoundaryIso.padTo}
+\lean{Copying/BoundaryPaddingRenaming}{77}{82}{BoundaryPaddingRenaming.padTo_output}
+\lean{Copying/BoundaryPaddingRenaming}{88}{99}{ResourceAction.padTo}
+
+For operands at depths $d$ and $e$, pad their supplied certified
+isomorphisms independently to $\max(d,e)$. Their resource certificates still
+agree, so the application and binary constructor theorems apply at exactly the
+common allowance chosen by Figure~16. No equal-depth premise is added, and no
+box is removed. These two constructors are ready for operands containing boxes,
+provided their own resource-renaming isomorphisms are established separately.
+
+\lean{Copying/BoundaryPaddingRenaming}{111}{115}{BoundaryPaddingRenaming.padded_application_boundaryIso}
+\lean{Copying/BoundaryPaddingRenaming}{117}{121}{BoundaryPaddingRenaming.padded_binary_boundaryIso}
+
+\Needspace{12\baselineskip}
+\subsection{Concrete instances, rejected mismatch, and remaining scope}
+
+The callback invocation $f()$ is an application of a variable to the
+original unit constant, so its lambda-free certificate immediately gives the
+renaming theorem. Self-application of a variable gives a regression with the
+same resource in both operands. Assignment of an allocated reference combines
+the original atom, reference-creation, constant and assignment clauses; the
+same endpoint proves its renaming. A further family combines dereferencing a
+variable with an atom and is parameterised by every binary operation, covering
+addition, subtraction, assignment and atom equality without separate assumptions.
+These are translation theorems, not termination or store-behaviour assertions.
+
+\lean{Copying/LambdaFreeRenamingExamples}{8}{12}{LambdaFreeRenamingExamples.callbackInvocation_rename}
+\lean{Copying/LambdaFreeRenamingExamples}{15}{19}{LambdaFreeRenamingExamples.repeatedVariable_rename}
+\lean{Copying/LambdaFreeRenamingExamples}{22}{26}{LambdaFreeRenamingExamples.assignmentAllocation_rename}
+\lean{Copying/LambdaFreeRenamingExamples}{29}{33}{LambdaFreeRenamingExamples.everyBinary_rename}
+
+A concrete two-variable, two-atom term applies a dereferenced variable
+to an atom-equality expression. Its membership proof follows the syntax, and
+swapping both resource sorts instantiates the general theorem nontrivially.
+For the negative regression, compare two original constant-graph automorphisms:
+one swaps two variable resources and one fixes them. Their certified images of
+variable output zero differ. Equality of their whole output actions would imply
+$1=0$. This rejects the tempting but invalid claim that well-typed operand
+isomorphisms automatically match.
+
+\lean{Copying/LambdaFreeRenamingExamples}{36}{37}{LambdaFreeRenamingExamples.twoSortExample}
+\lean{Copying/LambdaFreeRenamingExamples}{39}{40}{LambdaFreeRenamingExamples.twoSortExample_free}
+\lean{Copying/LambdaFreeRenamingExamples}{42}{45}{LambdaFreeRenamingExamples.twoSortExample_rename}
+\lean{Copying/LambdaFreeRenamingExamples}{49}{58}{LambdaFreeRenamingExamples.mismatched_operand_actions}
+
+Identity isomorphisms satisfy the identity resource certificate by
+reflexivity. Further regressions use the proved nontrivial atom and variable
+permutations, first padded to allowances one and three, then combined by the
+common-allowance application and binary theorems. A genuine translated lambda
+operand at depth one can also be combined with a depth-zero constant, using the
+lambda operand's identity isomorphism. This last instance tests boxed composition,
+not arbitrary lambda renaming. Finally the named-environment corollary specialises
+the lambda-free theorem to the lengths of an existing distinct-list environment;
+the environment translation wrapper is definitionally the original translation.
+
+\lean{Copying/BinaryRenamingRegression}{7}{9}{BinaryRenamingRegression.refl}
+\lean{Copying/BinaryRenamingRegression}{16}{19}{BinaryRenamingRegression.unequalAllowanceRenaming}
+\lean{Copying/BinaryRenamingRegression}{22}{25}{BinaryRenamingRegression.unequalAllowanceBinaryRenaming}
+\lean{Copying/BinaryRenamingRegression}{29}{32}{BinaryRenamingRegression.boxedOperandApplication}
+\lean{Copying/BinaryRenamingRegression}{35}{42}{BinaryRenamingRegression.lambdaFree_namedEnvironment}
+
+\paragraph{Completion boundary and estimate.}
+Application and binary operations are removed from the remaining bijective
+translation-renaming cases. The missing constructor is lambda, including the
+correspondence between a box's external free-resource interface and its body's
+ordered boundary. The existing recursive label relation fixes body boundaries;
+it cannot silently serve as a proof of arbitrary boundary permutation inside a
+box. Establish that correspondence while preserving the original terms and
+Figure~16 translation. Non-bijective graph renaming, graph substitution, the
+concrete copying UAM, its execution representation laws, all eleven robustness
+template families, semantic weakening, and Figure~22's equivalence chain remain.
+
+As of 25 October 2026, estimated completion of the requested Proposition~12.2
+formalisation is approximately \textbf{50\% by mathematical effort}, with a broad
+plausible range of \textbf{35--60\%}. This estimate supersedes the earlier
+unary-fragment estimate. It reflects a complete non-binding syntax induction and
+unequal-allowance constructor proofs; it does not count these as completed machine
+or robustness-template proofs. Proposition~12.2 itself is not yet proved.

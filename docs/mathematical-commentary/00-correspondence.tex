@@ -300,3 +300,12 @@ finite chain of the original unary operations over atomic terms, and proves
 constructor congruence for arbitrary operands with a typed boundary isomorphism.
 The original single-use graphs are retained. Allocation and dereference subterms
 are covered, while their operational rules and the full proposition remain open.
+
+
+Section~\ref{sec:copying-lambda-free-renaming} completes bijective translation
+renaming for all lambda-free original terms and distinct-list scopes. Application
+and all binary constructors retain their original shuffle and two-use forests;
+constructor congruence also handles unequal padded allowances. The lambda-box
+interface correspondence, concrete execution laws, and final equivalence remain
+open. These representation theorems do not establish operational correctness of
+allocation, dereferencing, assignment, or callback execution.
