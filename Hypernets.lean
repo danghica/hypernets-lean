@@ -54,3 +54,5 @@ import Hypernets.Copying.BindingInvariance
 import Hypernets.Copying.BindingPathCorrespondence
 
 import Hypernets.Copying.ObservationExamples
+
+import Hypernets.Copying.BindingTranslationExamples

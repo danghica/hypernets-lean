@@ -1,4 +1,4 @@
-import Hypernets.Copying.ObservationExamples
+import Hypernets.Copying.BindingTranslationExamples
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -107,3 +107,17 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.identityClosingContext
 #print axioms Hypernets.Copying.Examples.privateCell_context_factor
 #print axioms Hypernets.Copying.Examples.constantResult_context_factor
+
+#print axioms Hypernets.Graph.Net.Expansion.adjacent_same_iff
+#print axioms Hypernets.Graph.Net.Expansion.adjacent_cross
+#print axioms Hypernets.Copying.BindingFree.raise_iff
+#print axioms Hypernets.Copying.BindingFree.padTo_iff
+#print axioms Hypernets.Copying.BindingFree.parallel
+#print axioms Hypernets.Copying.BindingFree.serial_no_backward
+#print axioms Hypernets.Copying.BindingFree.serial_ancestor_same
+#print axioms Hypernets.Copying.BindingFree.serial_suffix
+#print axioms Hypernets.Copying.BindingFree.abstraction
+#print axioms Hypernets.Copying.BindingFree.context_apply
+#print axioms Hypernets.Copying.BindingFree.context_graph
+#print axioms Hypernets.Copying.Examples.nestedReferenceContext_bindingFree
+#print axioms Hypernets.Copying.Examples.padded_contractionBeforeHole_not_bindingFree
