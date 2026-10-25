@@ -757,5 +757,15 @@ Every annotated lambda-context now has a proved binding-free graph translation,
 for every hole name and allowance, retaining the exact Figure 16 distributors
 and padding. The proof includes parallel/serial path separation and reflection
 of binding-freedom under padding. A contraction-before-hole regression remains
-rejected at every allowance. The sole-hole and addressed-plugging certificates,
-and hence term-context congruence, remain unfinished.
+rejected at every allowance. The sole-hole certificate is now proved as described below; addressed-plugging
+correspondence and term-context congruence remain unfinished.
+
+Every translated lambda-context now has an actual sole-hole address with its
+annotated interface. Nested addressed replacement associates up to recursive
+isomorphism, and composition preserves the context certificates. Graph-context
+congruence is proved under the explicit requirement that execution respects
+recursive graph isomorphism. The certified graph is definitionally the unchanged
+Figure 16 translation. Item 3 remains open: the addressed filling law connecting
+that graph to translation of a filled term, compatible padding, and term-context
+congruence are still required. The copying execution must prove its representation
+laws. Section 62 documents these proofs and the remaining boundary.

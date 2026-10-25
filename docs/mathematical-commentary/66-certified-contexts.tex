@@ -1,0 +1,345 @@
+\clearpage
+\section{Certified context occurrences and graph-context congruence}
+\label{sec:copying-certified-contexts}
+Every annotated lambda-context now has an actual sole-hole address in its
+unchanged Figure~16 translation. Its binding-free certificate was proved in
+Section~\ref{sec:copying-context-binding}. We also prove composition of
+addressed graph contexts, associativity of filling up to recursive graph
+isomorphism, and graph-context congruence for an execution that respects that
+isomorphism. The latter is an explicit semantic hypothesis to be discharged
+by the copying machine, not an axiom of this development.
+
+These results do not yet prove the paper's Lemma~11.3. That requires a further
+structural bridge: filling this certified graph with a suitably padded term
+translation must agree, up to recursive isomorphism, with translating the
+filled term. The constructor-interpreter equality from
+Section~\ref{sec:copying-observations} is not this bridge: it concerns
+re-evaluation of graph constructors, rather than addressed replacement.
+Appendix~B.1, item~3 therefore remains open.
+
+\subsection{Exact occurrence inventory}
+\termdef{copying-single-hole-inventory}
+
+
+Fix a named hole $h$, including its ordered input and output interfaces.
+A primitive label has the single-hole property precisely when it is that
+hole. A box label has the property precisely when exactly one edge of its
+body has the property recursively and every other body edge is globally
+hole-free. A graph has the property when exactly one outer edge has the
+label property and all its other edges are globally hole-free. This counts
+occurrences, including occurrences below boxes; repeated copies of the same
+name do not count as one occurrence.
+
+\lean{Copying/SingleHole}{11}{16}{SingleHole.SingleHoleLabel}
+
+
+\lean{Copying/SingleHole}{17}{21}{SingleHole.SingleHole}
+
+
+Interface equality transports an existing addressed site, and equality
+elimination preserves its sole-hole certificate. Induction on depth then
+turns the occurrence inventory into an actual site with exactly $h$'s
+interfaces. At a primitive occurrence, choose its shallow edge and transport
+the interface equations obtained from its label. At a box, use the induction
+hypothesis in its body and extend the address through the box. The other-edge
+conditions are precisely those required by the recursive sole-hole predicate.
+
+The property is unchanged by an outer interface cast. A hole corolla has it
+at every allowance: its only edge is the hole, and any proposed different
+edge contradicts the singleton edge enumeration.
+
+\lean{Copying/SingleHole}{22}{24}{SingleHole.Site.castInterfaces}
+
+
+\lean{Copying/SingleHole}{25}{32}{SingleHole.SoleHole.castInterfaces}
+
+
+\lean{Copying/SingleHole}{33}{59}{SingleHole.site}
+
+
+\lean{Copying/SingleHole}{60}{64}{SingleHole.castInterfaces_iff}
+
+
+\lean{Copying/SingleHole}{65}{69}{SingleHole.corolla}
+
+
+\subsection{Preservation by the original assembly operations}
+
+An edge bijection transports the inventory provided it preserves and
+reflects both marked labels and hole-free labels. For the forward direction,
+map the marked edge and pull each other edge back through the inverse;
+injectivity shows that the inverse is different from the original marked
+edge. The reverse argument is symmetric.
+
+For an ordered parallel family, choose the marked edge in its unique marked
+component. Another edge either belongs to that component, where the existing
+certificate applies, or to another component, which is hole-free. Finite
+expansion has the same tagged edge inventory and uses the same argument.
+Serial composition is expansion of a two-edge pattern, so the left and right
+versions follow by choosing the appropriate Boolean tag. Enclosing the graph
+in a box makes that box the unique marked outer edge; the recursive label
+condition is exactly the original graph inventory.
+
+\lean{Copying/SingleHoleAssembly}{10}{32}{SingleHoleAssembly.transport}
+
+
+\lean{Copying/SingleHoleAssembly}{33}{46}{SingleHoleAssembly.parallel}
+
+
+\lean{Copying/SingleHoleAssembly}{47}{59}{SingleHoleAssembly.expand}
+
+
+\lean{Copying/SingleHoleAssembly}{60}{67}{SingleHoleAssembly.serial_left}
+
+
+\lean{Copying/SingleHoleAssembly}{68}{75}{SingleHoleAssembly.serial_right}
+
+
+\lean{Copying/SingleHoleAssembly}{76}{83}{SingleHoleAssembly.box}
+
+
+Raising preserves and reflects hole-freedom of an individual edge label.
+For a primitive, the label constructor is unchanged. For a box, the existing
+recursive all-labels padding theorem supplies the equivalence for its body.
+Induction on allowance proves the marked-label equivalence as well; the edge
+bijection then transports the entire single-hole inventory. Depth equality
+casts preserve it by equality elimination. Iterating the raising theorem
+handles finite padding, and combining padding with the depth cast handles
+padding to any specified larger allowance.
+
+\lean{Copying/SingleHoleAssembly}{84}{99}{SingleHoleAssembly.freeLabel_raise}
+
+
+\lean{Copying/SingleHoleAssembly}{100}{121}{SingleHoleAssembly.raise_iff}
+
+
+\lean{Copying/SingleHoleAssembly}{122}{124}{SingleHoleAssembly.castDepth_iff}
+
+
+\lean{Copying/SingleHoleAssembly}{125}{130}{SingleHoleAssembly.pad_iff}
+
+
+\lean{Copying/SingleHoleAssembly}{131}{134}{SingleHoleAssembly.padTo_iff}
+
+
+A translated ordered pair retains exactly the marked occurrence in either
+component when the other is hole-free. The proof uses the parallel theorem
+and the existing boundary cast; it leaves the middle-block exchange intact.
+Operation corollas are hole-free. Consequently abstraction preserves the
+inventory by casting and boxing the body, prefixing the lambda operation,
+and appending the original hole-free single-use distributor. Unary operations
+use the same prefix and suffix argument without boxing. Application and
+binary operations prefix their operation edge to the certified pair and
+append the existing two-use environment distributor. No distributor edge
+is eliminated or identified in any of these proofs.
+
+\lean{Copying/SingleHoleTranslation}{10}{19}{SingleHoleTranslation.pair_left}
+
+
+\lean{Copying/SingleHoleTranslation}{20}{29}{SingleHoleTranslation.pair_right}
+
+
+\lean{Copying/SingleHoleTranslation}{30}{32}{SingleHoleTranslation.operation_holeFree}
+
+
+\lean{Copying/SingleHoleTranslation}{33}{41}{SingleHoleTranslation.abstraction}
+
+
+\lean{Copying/SingleHoleTranslation}{42}{48}{SingleHoleTranslation.unary}
+
+
+\lean{Copying/SingleHoleTranslation}{49}{55}{SingleHoleTranslation.application}
+
+
+\lean{Copying/SingleHoleTranslation}{56}{64}{SingleHoleTranslation.binary}
+
+
+Structural induction on the annotated term context proves preservation
+for any supplied single-hole graph. The hole case is immediate; abstraction
+and unary cases use their constructor lemmas. In application and binary
+cases, the induction hypothesis supplies the marked component and the fixed
+term translation is hole-free. Padding both to the prescribed maximum
+allowance preserves these facts. Thus the constructor lemma applies to the
+literal graph used by the translator.
+
+Supplying a hole corolla proves the exact named-hole inventory of the context
+translation. Extracting the site and combining its sole-hole certificate
+with the previously proved binding-free theorem gives an existential
+certificate at the annotated term and atom interface. Its local allowance
+is existential because enclosing fixed subterms can force additional padding.
+No occurrence-existence assumption remains.
+
+\lean{Copying/SingleHoleTranslation}{65}{89}{SingleHoleTranslation.context_apply}
+
+
+\lean{Copying/SingleHoleTranslation}{90}{95}{SingleHoleTranslation.context_graph}
+
+
+\lean{Copying/SingleHoleTranslation}{96}{101}{SingleHoleTranslation.context_certificate}
+
+
+\subsection{Composition of actual addressed contexts}
+\termdef{copying-addressed-composition}
+
+
+Replacing a fixed box by recursively isomorphic bodies gives recursively
+isomorphic outer graphs. Keep the outer vertex and edge maps equal to the
+identity; at the selected edge use the given body isomorphism, and at every
+other edge use reflexivity. Induction on an addressed site then proves that
+plugging recursively isomorphic graphs preserves recursive isomorphism:
+use generic shallow replacement at the outer level and the box result below
+an enclosing box.
+
+Replacing the same box twice retains only the last body. This follows
+pointwise from the conditional label replacement and does not change ports.
+Changing an inserted box body commutes with shallow insertion up to a graph
+isomorphism whose carrier maps are identities. Retained edges have the old
+labels, inserted edges have the same changed labels, and both port maps
+follow the same host or inserted-vertex cases.
+
+\lean{Copying/DeepComposition}{13}{35}{DeepComposition.replaceBox_deepIso}
+
+
+\lean{Copying/DeepComposition}{36}{43}{DeepComposition.plugAt_deepIso}
+
+
+\lean{Copying/DeepComposition}{44}{56}{DeepComposition.replaceBox_overwrite}
+
+
+\lean{Copying/DeepComposition}{57}{99}{DeepComposition.plug_replaceBox_iso}
+
+
+Let $s$ be an address in $G$ and $t$ an address in a graph $H$ that fits $s$.
+Their composite is an address in $G[s:=H]$. If $s$ is shallow, an outer
+edge of $H$ receives the inserted-edge tag; a deeper $t$ retains its body
+address under that tag. If $s$ descends through a box, recursively compose
+inside its body and then extend through the updated box.
+
+Filling the composite address with $A$ is recursively isomorphic to
+$G[s:=H[t:=A]]$. When both addresses are shallow this is the generic finite
+graph associativity isomorphism. A shallow outer address and an inner box
+use the preceding box-insertion interchange. For an outer box, remove the
+overwritten intermediate body and lift the induction hypothesis through
+that box. This proves associativity for arbitrary finite nested addresses.
+
+If both original sites are sole holes, so is the composite: retained edges
+are hole-free by the outer certificate and inserted non-selected edges by
+the inner certificate. Induction handles enclosing boxes. Finally, when
+the outer hole has a nonempty input interface, the sourced-hole closure
+theorem proves that the composite host is binding-free. The zero-input
+qualification from Section~\ref{sec:copying-binding} is retained.
+
+\lean{Copying/DeepComposition}{100}{113}{DeepComposition.Site.comp}
+
+
+\lean{Copying/DeepComposition}{114}{133}{DeepComposition.plugAt_assoc}
+
+
+\lean{Copying/DeepComposition}{134}{159}{DeepComposition.SoleHole.comp}
+
+
+\lean{Copying/DeepComposition}{160}{167}{DeepComposition.context_comp_certified}
+
+
+\subsection{The semantic congruence theorem and its hypothesis}
+\termdef{copying-execution-isomorphism}
+
+
+An open graph context packages a graph, an addressed term hole, its
+sole-hole proof and its binding-free proof. Its outer environment may remain
+open. Filling it with an open program uses actual addressed replacement;
+focus-freedom follows from replacement closure and hole-freedom from the
+sole-hole theorem.
+
+Compose a closing context $C$ with an open graph context $D$ by inserting
+$D$'s graph and using the composite site. The preceding proofs supply the
+sole-hole condition and binding-freedom; the hole's singleton term input
+supplies the required nonempty interface. Associativity gives a recursive
+isomorphism between closing $G$ with this composite context and closing
+$D[G]$ with $C$.
+
+\lean{Copying/ContextCongruence}{11}{17}{ContextCongruence.GraphContext}
+
+
+\lean{Copying/ContextCongruence}{18}{26}{ContextCongruence.fill}
+
+
+\lean{Copying/ContextCongruence}{27}{37}{ContextCongruence.ClosingContext.compose}
+
+
+\lean{Copying/ContextCongruence}{38}{47}{ContextCongruence.ClosingContext.compose_fill_iso}
+
+
+The execution interface currently accepts an arbitrary initial-state map
+on closed graph presentations. Such a map need not respect renaming of
+internal carriers. We therefore state its representation obligation
+explicitly: recursively isomorphic closed, focus-free, hole-free graphs
+must have universally cost-related executions. By the earlier observation
+theorem, this means that they agree on successful termination. The copying
+machine of Appendix~B.1, item~2 must eventually prove this property. It is
+a parameter of the present congruence theorem, not a newly postulated axiom
+and not a proved property of a concrete copying execution.
+
+Suppose $G$ refines $H$ under all closing graph contexts and execution has
+this invariance property. To prove refinement of $D[G]$ by $D[H]$, choose
+an arbitrary closing context $C$. Apply the hypothesis to the proved
+closing context $C\circ D$. Execution invariance transports the source
+and target along the two filling-associativity isomorphisms. Transitivity
+then yields the required comparison under $C$. Applying this argument to
+both refinements proves graph-context equivalence congruence. The theorem
+uses the universal cost relation; no stronger quantitative congruence is
+claimed here.
+
+\lean{Copying/ContextCongruence}{48}{55}{ContextCongruence.RespectsIso}
+
+
+\lean{Copying/ContextCongruence}{56}{65}{ContextCongruence.refines_context}
+
+
+\lean{Copying/ContextCongruence}{66}{71}{ContextCongruence.equiv_context}
+
+
+Choose the allowance and address supplied by the translated-context
+certificate and package them as an open graph context. Its graph is
+\emph{definitionally equal} to the existing translation. Classical choice
+selects a certified address, not a replacement graph or a new translation.
+The graph-context congruence theorem now applies directly to this package,
+under the explicit execution invariance hypothesis. Its conclusion compares
+actual fillings of that graph. It does not yet identify those fillings
+with translations of filled terms.
+
+\lean{Copying/CertifiedContexts}{10}{17}{CertifiedContexts.certified}
+
+
+\lean{Copying/CertifiedContexts}{18}{23}{CertifiedContexts.certified_graph}
+
+
+\lean{Copying/CertifiedContexts}{24}{30}{CertifiedContexts.certified_graph_congruence}
+
+
+A negative regression places two occurrences of the same hole in a parallel
+graph. Whichever occurrence is selected, the other violates the requirement
+that all remaining labels be hole-free. Thus the certificate does not confuse
+unique names with unique occurrences.
+
+The nested reference context from the preceding section receives an actual
+address, sole-hole proof and binding-free proof at every hole allowance and
+name. A reflexivity proof checks that its certified graph is exactly the
+old Figure~16 graph. These structural regressions do not assert any copying
+machine execution behaviour.
+
+\lean{Copying/CertifiedContextExamples}{10}{20}{CertifiedContextExamples.duplicate_holes_rejected}
+
+
+\lean{Copying/CertifiedContextExamples}{21}{28}{CertifiedContextExamples.nestedReferenceContext_certified}
+
+
+\lean{Copying/CertifiedContextExamples}{29}{32}{CertifiedContextExamples.nestedReferenceContext_graph_unchanged}
+
+
+The full Lean build and all three axiom audits pass. The completed
+sole-hole certification and graph-context composition obligations are removed
+from item~3's to-do wording. Addressed filling correspondence, its depth-padding
+compatibility, and the resulting term-context congruence remain to be proved;
+the concrete execution must also discharge its representation laws. Neither
+Proposition~12.2 nor item~3 is marked complete.

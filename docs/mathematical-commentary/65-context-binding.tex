@@ -7,8 +7,10 @@ Lemma~11.3: every annotated lambda-context translates to a binding-free graph,
 for every hole name and every finite hole allowance. The proof uses the
 existing Figure~16 construction, including the prescribed distributors,
 middle-block exchange and padding. No term or translation clause changes.
-The sole-hole certificate, addressed-plugging correspondence and semantic
-congruence remain separate obligations in Appendix~B.1.
+Section~\ref{sec:copying-certified-contexts} supplies the sole-hole certificate
+and graph-context congruence with an explicit execution hypothesis.
+Addressed-plugging correspondence and term-context congruence remain
+separate obligations in Appendix~B.1.
 
 The central observation is directional. A serial graph has no path that
 crosses from its right component back into its left component. An operation
@@ -260,7 +262,7 @@ binding-free restriction is intended to exclude.
 
 
 The full build and all three axiom audits pass. The binding-free certificate
-is removed from the unfinished obligations of Appendix~B.1, item~3. That item
-still requires the exact sole-hole certificate, addressed-plugging correspondence,
-and the observation/congruence proof. The copying machine and its execution
+is removed from the unfinished obligations of Appendix~B.1, item~3. The exact sole-hole certificate is subsequently proved in
+Section~\ref{sec:copying-certified-contexts}. That item still requires
+addressed-plugging correspondence and the term observation/congruence proof. The copying machine and its execution
 instance remain part of item~2.
