@@ -840,3 +840,9 @@ three. This does not assert their equivalence. Former Appendix B.1 item 3's
 general development is complete; its concrete execution-law obligations are
 consolidated into the machine task. Four work packages remain, including the
 copying UAM, template proofs, and Proposition 12.2 itself.
+
+The copying side conditions now have checked padding laws: stability is
+preserved and reflected, and copyability is preserved at every adequate
+allowance, including lambda payloads with arbitrary bodies. This is a
+structural prerequisite; operational invariants and execution padding
+invariance remain outstanding. See commentary Section 70.

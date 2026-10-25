@@ -1,0 +1,82 @@
+\clearpage
+\section{Padding stability and copyable payloads}
+\label{sec:copying-padding-predicates}
+\termdef{copying-predicate-padding}
+The copying machine must retain the side conditions of Definitions~10.2
+and 10.3 when a finite representation is embedded at a larger allowance.
+We prove this structural prerequisite for the unchanged graph definitions.
+Stability is preserved and reflected; copyability is preserved. These results
+neither define machine transitions nor prove execution padding invariance.
+They make no change to the terms or translation of Proposition~12.2.
+
+\subsection{Stability is independent of unused allowance}
+A label is stable exactly when it denotes an instance or a passive operation.
+The padding label map leaves the primitive unchanged. At allowance zero,
+the proof removes the primitive wrapper; at positive allowance it preserves
+the primitive branch of the sum. A box remains a box and cannot satisfy the
+stable-label predicate on either side. Thus the stable-label test is equivalent
+before and after one padding.
+\lean{Copying/PaddingPredicates}{12}{29}{Stable.padding_label}
+
+For a graph with one term input, the existing theorem \texttt{Stable.of\_labels}
+reconstructs the entire stability predicate from its label condition for this
+specific example alphabet. Its proof uses the graph's incidence coverage and
+typing laws to derive both the permitted outputs and input reachability.
+Consequently these conditions are not dropped in the new proof. Express
+padding as the already proved uniform relabelling of the original graph;
+the outer edge carrier is unchanged. Transport each edge's stable-label
+condition in either direction and apply \texttt{Stable.of\_labels}. This proves
+\[
+  \operatorname{Stable}(\operatorname{raise}_d G)
+  \quad\Longleftrightarrow\quad \operatorname{Stable}(G).
+\]
+\lean{Copying/PaddingPredicates}{32}{43}{Stable.raise_iff}
+
+Induction on the number of padding steps gives the same equivalence for
+iterated padding: the zero case is identity and the successor case composes
+one-step equivalence with the induction hypothesis. Transport along an equality
+of depth indices preserves stability by equality elimination. Combining this
+transport with iterated padding proves equivalence at every specified adequate
+allowance. In particular, unused allowance cannot make an unstable graph stable.
+\lean{Copying/PaddingPredicates}{45}{49}{Stable.pad_iff}
+\lean{Copying/PaddingPredicates}{51}{52}{Stable.castDepth_iff}
+\lean{Copying/PaddingPredicates}{54}{56}{Stable.padTo_iff}
+
+\subsection{Copyable shapes survive padding}
+The lambda payload is the original serial composition of a lambda operation
+and its box, before the surrounding environment distributor. Padding this
+serial composition is recursively isomorphic to composing the padded
+components. The primitive-padding equality identifies the lambda operation,
+and the lambda-box equality identifies the original box with its body padded
+once. This gives a recursive isomorphism to the lambda payload of the padded
+body, with the same bound, free-variable and atom interfaces.
+\lean{Copying/PaddingPredicates}{63}{67}{Copyable.raise_lambdaPayload}
+
+Induct on the derivation of copyability. For instances, constants,
+application, unary operations and binary operations, the primitive-padding
+identity gives precisely the corresponding copyable constructor at the next
+allowance. For a lambda payload, the padded body is arbitrary: the definition
+of copyability places no stability condition on that body. Its payload is
+copyable by the lambda constructor, and the inverse of the preceding
+isomorphism transports copyability to the padded original payload. Finally,
+if copyability was obtained by recursive renaming, pad that isomorphism and
+transport the induction hypothesis along it. This proves preservation for
+every constructor of the full example operation alphabet.
+\lean{Copying/PaddingPredicates}{70}{79}{Copyable.raise}
+
+Induction on the padding count gives iterated preservation. Equality
+elimination handles a change of depth index, and composing these two facts
+proves preservation at an arbitrary adequate allowance. No converse for
+copyability is claimed here; no assumption about the behaviour of an
+execution or about deterministic matching is used.
+\lean{Copying/PaddingPredicates}{81}{85}{Copyable.pad}
+\lean{Copying/PaddingPredicates}{87}{89}{Copyable.castDepth}
+\lean{Copying/PaddingPredicates}{91}{94}{Copyable.padTo}
+
+\subsection{Remaining operational boundary}
+These theorems discharge the forward padding obligations for both side
+conditions, and the reflection obligation for stability. They belong to the
+structural prerequisites in Appendix~B.1. Preservation under actual machine
+steps, copying-rule matching, concrete execution isomorphism and padding laws,
+template robustness and the final equivalence remain to be proved. The four
+outstanding work packages are therefore retained.
