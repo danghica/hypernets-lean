@@ -52,6 +52,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{body-consistency}{Body consistency}{The condition that box edges with literally equal contents have equal external binder metadata; needed by naive binder erasure.}
 
+\glossaryentry{copying-boundary-components}{Boundary carrier actions}{The separately extracted bijections of internal vertices, input positions, and output positions of a typed boundary isomorphism.}
+
 \glossaryentry{boundary-finality}{Boundary finality}{Backtracking mode with the focus source at an input; on a state this is the final-state characterization of Proof F.4.}
 
 \glossaryentry{boundary-finality}{Boundary initiality}{Search mode with the focus source at an input; preserved through all certified fillings.}
@@ -95,6 +97,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{depth-equivalence}{Common-depth equivalence}{Two finite presentations become equal after possibly different numbers of paddings.}
 
 \glossaryentry{compatible}{Compatible provenance}{The condition that no hole label in the replacement occurs at a retained host origin of the provenance map.}
+
+\glossaryentry{copying-serial-compatible}{Compatible serial renaming}{Agreement of the left output and right input permutations on every shared interface position, ensuring the original serial insertions commute.}
 
 \glossaryentry{complement-restriction}{Complement restriction}{The bijection between the complements of corresponding selected elements, used for surviving host edges.}
 
@@ -229,6 +233,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{copying-distributor}{Distributor}{A forest of canonical sharing trees whose input for resource $i$ at use $j$ occurs at position $i+kj$.}
 
 \glossaryentry{copying-distributor-permutation}{Distributor resource permutation}{A bijective reordering applied consistently to every use and output of a literal distributor, preserving its graph up to carrier renaming.}
+
+\glossaryentry{copying-distributor-serial-renaming}{Distributor serial renaming}{The proved automorphism of the original many-use distributor followed by its single-use forest, using the same resource permutation in both.}
 
 \glossaryentry{net}{Edge}{An element of a net's finite edge carrier, carrying an operation label and ordered source and target vertex lists.}
 
@@ -670,9 +676,15 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{typed-position}{Typed search position}{A mode and term-labelled vertex of a graph of type $*\to\epsilon$, realizable as an explicit focussed state under focus and hole freedom.}
 
+\glossaryentry{copying-single-use-typed-renaming}{Typed single-use extension}{The automorphism of the unchanged single-use environment distributors realising any type-preserving environment permutation on both boundaries.}
+
+\glossaryentry{copying-unary-boundary-congruence}{Unary boundary congruence}{The proved extension of any typed operand boundary isomorphism through the original unary operation and its single-use distributors.}
+
 \glossaryentry{unary}{Unary operations}{The condition that every selected operation edge has a source list of length one; no one-output condition is imposed.}
 
 \glossaryentry{copying-unary-filling-law}{Unary term-context filling}{The proved correspondence between actual filling of a translated unary context and the original translation of the filled term.}
+
+\glossaryentry{copying-unary-fragment}{Unary translation fragment}{The original atomic terms closed under arbitrarily many original unary operations; its bijective translation-renaming theorem is proved.}
 
 \glossaryentry{unbounded-run}{Unbounded run}{An exactly counted finite run on the union carrier, with each transition witnessed at finite depth.}
 

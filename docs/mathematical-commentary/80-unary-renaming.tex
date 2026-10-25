@@ -1,0 +1,177 @@
+\clearpage
+\section{Renaming the complete unary fragment}
+\label{sec:copying-unary-renaming}
+\termdef{copying-unary-fragment}
+The serial compatibility results now yield a full constructor theorem for the
+original unary translation, including its final single-use distributors. Every
+finite chain of negation, reference creation, and dereferencing over an atomic
+term respects bijective variable and atom renaming. In particular this covers
+the original $\mathtt{ref}\ 1$ and $!x$ subterms of Proposition~12.2, as well as
+dereferencing a named atom. It is a theorem about the original translated graphs;
+it does not assert an allocation or read transition of the unfinished machine.
+
+\subsection{Decomposing a typed environment permutation}
+An environment consists of $k$ term positions followed by $h$ atom positions.
+Embed a variable index $i$ at position $i$, and an atom index $a$ at position
+$k+a$. Looking up their wire types gives term and atom, respectively. Conversely,
+a position has term type exactly when it is less than $k$, and atom type exactly
+when it is at least $k$. Split the appended boundary list at $k$ to prove these
+two characterisations. They work with either block empty.
+
+\lean{Copying/EnvironmentPermutation}{8}{8}{EnvironmentPermutation.termIndex}
+\lean{Copying/EnvironmentPermutation}{9}{9}{EnvironmentPermutation.atomIndex}
+\lean{Copying/EnvironmentPermutation}{11}{12}{EnvironmentPermutation.term_label}
+\lean{Copying/EnvironmentPermutation}{14}{15}{EnvironmentPermutation.atom_label}
+\lean{Copying/EnvironmentPermutation}{18}{22}{EnvironmentPermutation.term_iff}
+\lean{Copying/EnvironmentPermutation}{25}{33}{EnvironmentPermutation.atom_iff}
+
+Let $\pi$ be any bijection of environment positions preserving wire types.
+Its variable component sends $i$ to the numeric value of $\pi(i)$; type
+preservation proves that value is less than $k$. Its atom component sends $a$
+to the numeric value of $\pi(k+a)$ minus $k$. The result is less than $h$ by the
+environment bound. Type preservation proves $\pi(k+a)\geq k$, so embedding the
+new atom index reconstructs $\pi(k+a)$ exactly. The variable reconstruction is
+definitional.
+
+\lean{Copying/EnvironmentPermutation}{35}{36}{EnvironmentPermutation.termMap}
+\lean{Copying/EnvironmentPermutation}{38}{40}{EnvironmentPermutation.atomMap}
+\lean{Copying/EnvironmentPermutation}{42}{42}{EnvironmentPermutation.term_action}
+\lean{Copying/EnvironmentPermutation}{45}{49}{EnvironmentPermutation.atom_action}
+
+The inverse of $\pi$ preserves types as well: apply type preservation at
+an inverse image and then the right-inverse equation. Extract the two maps from
+this inverse. To prove the extracted variable maps inverse, embed their indices
+in the environment and use the original inverse equation; equality of numeric
+values suffices for finite indices. For atoms, reconstruct both embedded images
+and cancel the common offset $k$. These arguments package independent resource
+bijections $\rho$ and $\alpha$ from an arbitrary typed environment bijection.
+No premise says in advance that the two sorts are preserved separately.
+
+\lean{Copying/EnvironmentPermutation}{52}{55}{EnvironmentPermutation.inverse_typed}
+\lean{Copying/EnvironmentPermutation}{57}{70}{EnvironmentPermutation.terms}
+\lean{Copying/EnvironmentPermutation}{72}{91}{EnvironmentPermutation.atoms}
+
+\subsection{Exact actions through the original distributors}
+The tensor boundary action on a left input is the left component's input map
+followed by the left block injection. The right input, left output and right
+output laws are analogous. Each follows from the existing parallel-insertion
+commutation theorem, specialised to the relevant component and boundary port,
+then the extracted input or output equation. These laws explicitly retain the
+variable-before-atom ordering, including the offset of the right block.
+
+\lean{Copying/TensorBoundaryActions}{9}{17}{TensorBoundaryActions.tensor_input_left}
+\lean{Copying/TensorBoundaryActions}{19}{27}{TensorBoundaryActions.tensor_input_right}
+\lean{Copying/TensorBoundaryActions}{29}{37}{TensorBoundaryActions.tensor_output_left}
+\lean{Copying/TensorBoundaryActions}{39}{47}{TensorBoundaryActions.tensor_output_right}
+
+\termdef{copying-single-use-typed-renaming}
+For separate resource bijections $\rho$ and $\alpha$, form the tensor of the
+original one-use distributor automorphisms, and transport its input interface
+through $k\cdot1=k$ and $h\cdot1=h$. This gives an automorphism of the actual
+\texttt{singleUse} translation graph. Its term input and output actions are
+$i\mapsto\rho(i)$, while its atom actions are $k+a\mapsto k+\alpha(a)$.
+For the input laws, use the original use-major position $i+k\cdot0=i$,
+then the tensor input law and equality transport. The output laws use the
+original distributor output formula and tensor output law. These proofs do not
+simplify the single-use graph to an identity wire.
+
+\lean{Copying/SingleUseBoundaryRenaming}{8}{11}{SingleUseBoundaryRenaming.iso}
+\lean{Copying/SingleUseBoundaryRenaming}{13}{23}{SingleUseBoundaryRenaming.input_term}
+\lean{Copying/SingleUseBoundaryRenaming}{25}{38}{SingleUseBoundaryRenaming.input_atom}
+\lean{Copying/SingleUseBoundaryRenaming}{40}{48}{SingleUseBoundaryRenaming.output_term}
+\lean{Copying/SingleUseBoundaryRenaming}{50}{58}{SingleUseBoundaryRenaming.output_atom}
+
+Apply this construction to the extracted pair $(\rho,\alpha)$ of any typed
+permutation $\pi$. Every environment position is in the variable or atom block;
+in each case use its reconstruction equation and the corresponding block action.
+The resulting original single-use graph therefore realises precisely $\pi$
+on both its inputs and its outputs. This is the critical extension theorem:
+no separate distributor-matching premise is required from its caller.
+
+\lean{Copying/SingleUseBoundaryRenaming}{68}{69}{SingleUseBoundaryRenaming.ofTyped}
+\lean{Copying/SingleUseBoundaryRenaming}{72}{82}{SingleUseBoundaryRenaming.ofTyped_input}
+\lean{Copying/SingleUseBoundaryRenaming}{85}{95}{SingleUseBoundaryRenaming.ofTyped_output}
+
+\subsection{The complete unary constructor theorem}
+\termdef{copying-unary-boundary-congruence}
+Let $f:G\to H$ be any typed boundary isomorphism between operands with one
+term input and the same environment interface. The original unary clause has
+three serial components: the unary operation edge, the operand, and the
+single-use environment distributor. Its operation edge has one output and the
+operand has one input. Both associated index maps are necessarily the identity
+on a singleton, so the operation's identity isomorphism glues with $f$.
+This constructs the prefix isomorphism with no extra hypothesis.
+
+\lean{Copying/UnaryBoundaryRenaming}{11}{24}{UnaryBoundaryRenaming.unary_prefix_compatible}
+\lean{Copying/UnaryBoundaryRenaming}{26}{29}{UnaryBoundaryRenaming.unaryPrefixIso}
+
+The output map $f_O$ preserves boundary wire types by the extracted output
+label law. Apply the preceding single-use extension theorem to this very
+bijection, obtaining the forest automorphism. The prefix's output action is
+$f_O$, by the serial output law; the forest's input action is $f_O$, by the
+extension theorem. Thus their compatibility is proved. Applying serial gluing
+again gives an isomorphism between the two literal unary translations. Its
+external output action remains exactly $f_O$, because the forest's output action
+is $f_O$ as well. This theorem applies at arbitrary allowance and to arbitrary
+operands admitting $f$, including operands with nested boxes. It does not itself
+construct the separate box-body renaming correspondence needed for a lambda.
+
+\lean{Copying/UnaryBoundaryRenaming}{32}{34}{UnaryBoundaryRenaming.unaryForestIso}
+\lean{Copying/UnaryBoundaryRenaming}{36}{43}{UnaryBoundaryRenaming.unary_forest_compatible}
+\lean{Copying/UnaryBoundaryRenaming}{46}{47}{UnaryBoundaryRenaming.unary_boundaryIso}
+\lean{Copying/UnaryBoundaryRenaming}{50}{55}{UnaryBoundaryRenaming.unary_boundaryIso_output}
+
+\subsection{Induction over the original syntax}
+The unary-fragment predicate is an indexed predicate on the existing
+\texttt{Term}: atomic terms belong to it, and applying any original unary
+operation preserves membership. It is not a new term datatype or a replacement
+translation. Transporting a graph along equality of allowances commutes with
+the original unary clause; eliminate that equality to prove the statement.
+Now induct on fragment membership. The leaf case is the previous atomic
+renaming theorem. For a unary node, expose the original translation and renaming
+clauses, move the allowance equality through the unary constructor, and apply
+the constructor theorem to the induction hypothesis. The result has only the
+fragment-membership and bijection hypotheses, with no machine, stability, or
+template premise.
+
+\lean{Copying/UnaryFragmentRenaming}{10}{12}{UnaryFragmentRenaming.UnaryFragment}
+\lean{Copying/UnaryFragmentRenaming}{15}{18}{UnaryFragmentRenaming.castDepth_unary}
+\lean{Copying/UnaryFragmentRenaming}{22}{32}{UnaryFragmentRenaming.unaryFragment_rename}
+
+A list of unary operators can be folded around an original term. Induction
+on the list shows that folding around an atomic term belongs to the fragment,
+and the fragment theorem then proves renaming for arbitrarily long chains.
+This supplies an unbounded syntactic family, rather than a fixed set of examples.
+
+\lean{Copying/UnaryFragmentRenaming}{35}{37}{UnaryFragmentRenaming.unaryChain}
+\lean{Copying/UnaryFragmentRenaming}{39}{43}{UnaryFragmentRenaming.unaryChain_fragment}
+\lean{Copying/UnaryFragmentRenaming}{45}{50}{UnaryFragmentRenaming.unaryChain_rename}
+
+The three public example constructions use the constructor theorem directly.
+For $\mathtt{ref}\ 1$, use the original constant automorphism with both ambient
+resource bijections. For dereferencing an atom, use the original atom-renaming
+isomorphism, retaining its instance edge. For dereferencing a variable, use the
+original selected-variable isomorphism. All three have arbitrary finite variable
+and atom scopes and preserve the original terms, labels, and sharing graphs.
+They establish representation correspondence, not behavioural equivalence
+between allocation and a constant result.
+
+\lean{Copying/UnaryFragmentRenaming}{57}{59}{UnaryFragmentRenaming.referenceOne_boundaryRename}
+\lean{Copying/UnaryFragmentRenaming}{62}{66}{UnaryFragmentRenaming.dereferenceAtom_boundaryRename}
+\lean{Copying/UnaryFragmentRenaming}{69}{73}{UnaryFragmentRenaming.dereferenceVariable_boundaryRename}
+
+\paragraph{Updated remaining work.}
+Unary operations are removed from the remaining bijective translation-renaming
+cases. Application, binary operations, and lambda boxes remain, together with
+non-bijective renaming and graph-level substitution. The concrete copying UAM,
+its representation laws, the eleven template families, semantic weakening,
+and Figure~22's observational-equivalence chain are still required. The full
+build and all three axiom audits pass for the present milestone without
+\texttt{sorryAx} or project-specific axioms.
+
+As of 25 October 2026, the estimated completion is approximately
+\textbf{45\% by mathematical effort}, with a broad plausible range of
+\textbf{30--55\%}. This supersedes the earlier estimate after the serial-only
+milestone. The increase reflects a completed constructor and an unbounded
+fragment theorem; it does not count infrastructure declarations as completed
+machine or template proofs.

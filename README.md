@@ -876,3 +876,24 @@ Commentary Section 74 explains all declarations. Composite-term renaming,
 non-bijective renaming, graph substitution, the copying machine and templates
 remain open. Estimated completion of Proposition 12.2 by mathematical effort:
 about 40%, with a plausible 30–50% range (25 October 2026).
+
+
+The compatible serial-renaming milestone proves exact gluing of typed boundary
+isomorphisms, including necessity of agreement at shared wires, preservation of
+stability and nested binding-freedom, and recovery of the existing boundary-fixing
+recursive isomorphism when external positions are fixed. Concrete distributor
+compositions work for all resource/use counts and depths; mismatched swaps are
+rejected. The original terms and translation remain unchanged. Section 75
+explains the proofs. Whole-term renaming and the concrete copying machine remain
+open. The current mathematical-effort estimate is roughly **40–45%**, with a broad
+uncertainty range of **30–50%**.
+
+
+The subsequent unary-fragment milestone proves constructor congruence for every
+original unary operation and bijective translation renaming for arbitrarily long
+unary chains over atomic terms. It includes the original `ref 1`, `!x`, and atom
+dereference clauses with all distributors retained. Section 76 explains the
+proofs. Unary operations are removed from the remaining renaming cases in
+Appendix B; application, binary operations, and lambda boxes remain. The latest
+completion estimate is **about 45% by mathematical effort** (broad plausible range
+**30–55%**), not a measured percentage of declarations.

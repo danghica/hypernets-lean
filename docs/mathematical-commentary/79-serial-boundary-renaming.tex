@@ -1,0 +1,239 @@
+\clearpage
+\section{Compatible serial renaming and structural safety}
+\label{sec:copying-serial-renaming}
+This milestone closes the compatibility argument for renaming the original
+serial assembly. Suppose $G:I\to J$ and $H:J\to K$ are replaced by boundary
+isomorphic graphs $G':I'\to J'$ and $H':J'\to K'$. The two isomorphisms must
+send each shared position of $J$ to the same position of $J'$. Under precisely
+this condition, the original two-hole expansion admits a boundary isomorphism.
+All ordered incidences and all recursive edge labels are preserved. No identity
+wire, contraction, weakening, or box is removed.
+
+The result supplies a composition step needed by Figure~16's composite clauses;
+it does not by itself finish their renaming induction. We also prove that typed
+boundary renaming preserves stability, binding-freedom and exact structural
+paths. These are not machine-execution traces or a proof of Proposition~12.2.
+
+\subsection{Extracting the three carrier actions}
+\termdef{copying-boundary-components}
+A boundary isomorphism preserves the predicates ``is an input'' and ``is an
+output''. Consequently an internal port must map to an internal port; either
+other result would contradict role preservation. Pattern matching on the port
+image therefore extracts a map on internal vertices, and the equation saying
+that this map reconstructs the original port image follows by the same cases.
+The input and output maps are extracted similarly, using the positive role
+condition to exclude the other two constructors.
+
+\lean{Copying/BoundaryComponents}{8}{12}{BoundaryComponents.internalMap}
+\lean{Copying/BoundaryComponents}{14}{20}{BoundaryComponents.map_internal}
+\lean{Copying/BoundaryComponents}{22}{26}{BoundaryComponents.inputMap}
+\lean{Copying/BoundaryComponents}{28}{33}{BoundaryComponents.map_input}
+\lean{Copying/BoundaryComponents}{35}{39}{BoundaryComponents.outputMap}
+\lean{Copying/BoundaryComponents}{41}{46}{BoundaryComponents.map_output}
+
+Apply those constructions to the inverse isomorphism to obtain inverse
+maps. Embed an alleged inverse identity into the corresponding port constructor,
+rewrite both extracted maps as the original port map, and use the original
+bijection's inverse identity. Injectivity of each constructor gives the desired
+identity on the carrier. This constructs bijections on internal vertices,
+input indices and output indices separately. Finally, specialising the original
+vertex-label law to each constructor proves type preservation for all three
+bijections. Thus compatibility below compares actual typed positions, not merely
+interface cardinalities.
+
+\lean{Copying/BoundaryComponents}{48}{58}{BoundaryComponents.internals}
+\lean{Copying/BoundaryComponents}{60}{70}{BoundaryComponents.inputs}
+\lean{Copying/BoundaryComponents}{72}{82}{BoundaryComponents.outputs}
+\lean{Copying/BoundaryComponents}{84}{88}{BoundaryComponents.internal_label}
+\lean{Copying/BoundaryComponents}{90}{93}{BoundaryComponents.input_label}
+\lean{Copying/BoundaryComponents}{95}{98}{BoundaryComponents.output_label}
+
+\Needspace{12\baselineskip}
+\subsection{The exact gluing condition}
+\termdef{copying-serial-compatible}
+Let $f$ and $g$ be the two component isomorphisms. Write $f_O$ for the output
+index bijection of $f$, and $g_I$ for the input index bijection of $g$.
+Their compatibility is
+\[
+                 \forall j\in\operatorname{Fin}|J|,\qquad f_O(j)=g_I(j).
+\]
+It is inherited by inverses: apply the injective input map to the proposed
+identity of inverse images, then use compatibility and both right-inverse laws.
+It is inherited by composition because extracting an input or output map
+commutes with composing port bijections. Equality of the two composite actions
+then follows by the two given compatibility equations.
+
+\lean{Copying/BoundarySerial}{13}{13}{BoundarySerial.Compatible}
+\lean{Copying/BoundarySerial}{16}{20}{BoundarySerial.compatible_symm}
+\lean{Copying/BoundarySerial}{23}{39}{BoundarySerial.compatible_trans}
+
+The existing serial graph has internal vertices comprising shared-interface
+positions, tagged left internal vertices, and tagged right internal vertices.
+Its boundary consists of the left inputs and right outputs. Map these five
+classes by $f_O$, the internal maps of $f$ and $g$, $f_I$, and $g_O$, respectively.
+The inverse uses the five inverse bijections. Checking each constructor proves
+both inverse laws. The edges retain their left/right tags and are mapped by the
+appropriate component edge bijection.
+
+\lean{Copying/BoundarySerial}{41}{69}{BoundarySerial.ports}
+\lean{Copying/BoundarySerial}{138}{144}{BoundarySerial.edges}
+
+The two insertion maps are the actual maps used by the existing two-hole
+expansion. For the left insertion, the new port map commutes on internal,
+input, and output ports by its definition. For the right insertion, the
+internal and output cases are again direct; its input case is exactly the
+compatibility equation, since that input has become a shared internal vertex.
+Conversely, specialise commutation with the right insertion to each right input.
+Injectivity of the internal-port and sum constructors recovers compatibility.
+Thus agreement is necessary as well as sufficient for this explicit map to
+respect both insertions. The converse does not claim that every possible
+isomorphism between the assembled graphs must arise from these components.
+
+\lean{Copying/BoundarySerial}{71}{73}{BoundarySerial.leftInsert}
+\lean{Copying/BoundarySerial}{75}{77}{BoundarySerial.rightInsert}
+\lean{Copying/BoundarySerial}{79}{98}{BoundarySerial.left_commutes}
+\lean{Copying/BoundarySerial}{100}{120}{BoundarySerial.right_commutes}
+\lean{Copying/BoundarySerial}{124}{136}{BoundarySerial.compatible_iff_right_commutes}
+
+To prove the assembled isomorphism, type preservation is checked on the
+same five port classes. Boundary roles follow immediately from their constructors.
+An edge retains its component tag, so its recursive label relation is the
+component's label relation. Its ordered source list is the component source list
+mapped by its insertion. Use insertion commutation, the component's source law,
+and composition of list maps. The target proof is identical with target lists.
+Finally, evaluation on external inputs and outputs gives their exact actions:
+$f_I$ on inputs, $g_O$ on outputs. All these proofs work at every allowance,
+including zero, without requiring any interface to be inhabited.
+
+\lean{Copying/BoundarySerial}{147}{186}{BoundarySerial.iso}
+\lean{Copying/BoundarySerial}{189}{191}{BoundarySerial.iso_input}
+\lean{Copying/BoundarySerial}{194}{196}{BoundarySerial.iso_output}
+
+\subsection{Paths, nested binding restrictions, and stability}
+For a boundary isomorphism $f:G\to H$, membership of the image of a port in
+an image edge's source list is equivalent to original source membership.
+Rewrite the source law and use injectivity of the port map to reflect membership
+in the mapped list. Targets are identical. The existing adjacency equivalence
+then transports ordered edge paths and exact-length adjacency traces. A vertex
+step consists of a common edge witnessing source and target membership; transport
+that edge forward, or recover it with the inverse edge bijection. This proves
+vertex-step equivalence, hence exact vertex-trace and reachability equivalence.
+The length preserved here counts graph incidences, not UAM transition costs.
+
+\lean{Copying/BoundarySafety}{12}{19}{BoundarySafety.source_mem_iff}
+\lean{Copying/BoundarySafety}{21}{28}{BoundarySafety.target_mem_iff}
+\lean{Copying/BoundarySafety}{31}{33}{BoundarySafety.path_iff}
+\lean{Copying/BoundarySafety}{36}{38}{BoundarySafety.edge_trace_iff}
+\lean{Copying/BoundarySafety}{40}{48}{BoundarySafety.vertex_step_iff}
+\lean{Copying/BoundarySafety}{50}{52}{BoundarySafety.vertex_trace_iff}
+\lean{Copying/BoundarySafety}{54}{56}{BoundarySafety.vertex_reach_iff}
+
+Every recursive primitive-label property is invariant: move each edge
+back through the edge bijection and apply the existing recursive label-equivalence
+law. Focus-freedom and hole-freedom are special cases. For shallow binding-freedom,
+pull forbidden ancestry back using adjacency preservation, preserve binding and
+hole labels, and transport the explicit source witness by source membership.
+The proof retains the source requirement; it does not strengthen Lemma~E.1 at
+zero-input holes. For a nested box, the existing recursive label relation provides
+a boundary-fixing isomorphism of its body, to which the already proved nested
+binding-path law applies. Combine this with the shallow result and focus-freedom,
+and apply the inverse isomorphism, to obtain full binding-freedom in both directions.
+
+\lean{Copying/BoundarySafety}{59}{65}{BoundarySafety.allLabels_iff}
+\lean{Copying/BoundarySafety}{67}{67}{BoundarySafety.focusFree_iff}
+\lean{Copying/BoundarySafety}{69}{69}{BoundarySafety.holeFree_iff}
+\lean{Copying/BoundarySafety}{72}{77}{BoundarySafety.shallow_bindingFree}
+\lean{Copying/BoundarySafety}{79}{98}{BoundarySafety.bindingPaths}
+\lean{Copying/BoundarySafety}{101}{103}{BoundarySafety.bindingFree_iff}
+
+Stability is also invariant when atom or thunk outputs are permuted.
+Transport the permitted flat labels through the edge bijection and apply the
+previously established characterisation of stability by these labels for the
+example alphabet. That characterisation supplies the actual output and
+all-vertex reachability conditions; neither condition is dropped from the
+definition. Inversion proves reflection. This does not assert that arbitrary
+execution steps preserve stability, nor does it alter the copyability predicate.
+
+\lean{Copying/BoundarySafety}{106}{115}{BoundarySafety.stable_iff}
+
+\subsection{Recovering the boundary-fixing interface}
+If an isomorphism's extracted input and output maps fix every position, its
+internal bijection and edge bijection form an existing recursive isomorphism.
+For ordered incidences, compare the all-port map with the extension of the
+internal map: they agree internally by extraction and on the boundary by the
+two fixing hypotheses. Applying this to compatible serial assembly needs only
+the left external inputs and right external outputs to be fixed. Its internal
+shared-interface action may be nontrivial. The exact external action laws proved
+above supply the two fixing hypotheses. This is a proved bridge to the original
+observation infrastructure; the separate execution-invariance assumptions of
+that infrastructure remain to be discharged by the concrete machine.
+
+\lean{Copying/BoundarySafety}{119}{140}{BoundaryIso.toDeepIso}
+\lean{Copying/BoundarySafety}{148}{161}{BoundarySerial.toDeepIso}
+
+\subsection{Concrete distributor compositions and mismatch rejection}
+\termdef{copying-distributor-serial-renaming}
+The input-action transport lemma eliminates the four interface equalities and
+then uses the original action equation. We use it to expose $D_{k,1}$ at interface
+$k\to k$, by the equality $k\cdot1=k$ only. The graph retains its full forest of
+weakening and contraction edges. Its isomorphism is the original distributor
+resource automorphism, transported through that equality.
+
+\lean{Copying/DistributorSerialRenaming}{9}{14}{DistributorSerialRenaming.castInterfaces_input}
+\lean{Copying/DistributorSerialRenaming}{20}{21}{DistributorSerialRenaming.single}
+\lean{Copying/DistributorSerialRenaming}{23}{25}{DistributorSerialRenaming.singleIso}
+
+For a resource bijection $\pi$, the one-use forest sends input $i$ and
+output $i$ to $\pi(i)$. The input position formula $i+k\cdot0=i$ and the previous
+distributor output law prove these claims. Injectivity of the port constructors
+then gives the same formula for the extracted input and output index maps.
+
+\lean{Copying/DistributorSerialRenaming}{27}{35}{DistributorSerialRenaming.singleIso_input}
+\lean{Copying/DistributorSerialRenaming}{37}{40}{DistributorSerialRenaming.singleIso_output}
+\lean{Copying/DistributorSerialRenaming}{43}{50}{DistributorSerialRenaming.outputIndex_eq}
+\lean{Copying/DistributorSerialRenaming}{53}{60}{DistributorSerialRenaming.singleInputIndex_eq}
+
+Consequently the original $D_{k,m}$ followed by the original $D_{k,1}$
+admits the assembled automorphism when both forests use $\pi$. This is an
+unconditional family for every finite $k,m$ and every allowance; matching is
+proved, not supplied as an application premise. Conversely, if the first forest
+uses $\pi$ and the second uses $\tau$, compatibility holds exactly when the two
+resource functions agree. Substitute the two explicit index formulas and compare
+their finite-index values. The reverse direction substitutes equality of the
+functions. This validates the gluing condition on actual sharing graphs rather
+than only on an abstract interface.
+
+\lean{Copying/DistributorSerialRenaming}{63}{66}{DistributorSerialRenaming.single_compatible}
+\lean{Copying/DistributorSerialRenaming}{70}{73}{DistributorSerialRenaming.serial_singleIso}
+\lean{Copying/DistributorSerialRenaming}{76}{86}{DistributorSerialRenaming.single_compatible_iff}
+
+The regression family uses the involution $i\mapsto1-i$ on two resources.
+Finite arithmetic proves its two inverse identities. Apply the distributor
+composition theorem to two-use atom forests at arbitrary depth. A swap on one
+side and identity on the other cannot satisfy compatibility: the characterisation
+would force their functions to agree, and evaluation at zero gives $1=0$.
+Separate instances cover no resources and no uses, so the theorem includes empty
+forests and pure weakening. Finally, combining the generic serial isomorphism
+with recursive binding-freedom invariance proves the safety equivalence of the
+two actual serial assemblies, with the compatibility condition explicit.
+
+\lean{Copying/BoundaryRenamingExamples}{8}{12}{BoundaryRenamingExamples.swapTwo}
+\lean{Copying/BoundaryRenamingExamples}{15}{15}{BoundaryRenamingExamples.twoAtomUses}
+\lean{Copying/BoundaryRenamingExamples}{18}{25}{BoundaryRenamingExamples.unmatched_swap}
+\lean{Copying/BoundaryRenamingExamples}{28}{29}{BoundaryRenamingExamples.emptyForest}
+\lean{Copying/BoundaryRenamingExamples}{32}{33}{BoundaryRenamingExamples.weakeningForest}
+\lean{Copying/BoundaryRenamingExamples}{37}{42}{BoundaryRenamingExamples.serial_bindingFree_iff}
+
+\paragraph{Remaining obligations and effort estimate.}
+The completed subtask is typed serial gluing, including its exact compatibility
+criterion, structural safety transport, and concrete distributor instances.
+Whole-term renaming still requires the composite clauses and lambda boxes;
+non-bijective renaming and graph substitution remain open. In particular, the
+current recursive label relation fixes a box body's ordered boundary: a
+permutation outside a box does not automatically justify permuting its body.
+The induction must address that interface explicitly while retaining Figure~16.
+As of 25 October 2026, estimated completion of the requested Proposition~12.2
+formalisation is roughly \textbf{40--45\% by mathematical effort}, with a broad
+plausible range of \textbf{30--50\%}. This is a judgement about remaining proof
+work, not a count of declarations. The concrete copying machine and eleven
+template families still account for a large part of the remaining effort.
