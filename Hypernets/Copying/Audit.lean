@@ -1,4 +1,4 @@
-import Hypernets.Copying.DistributorPermutation
+import Hypernets.Copying.DistributorBoundaryIso
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -272,3 +272,14 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Translation.permutedEnvironmentDistributor
 #print axioms Hypernets.Copying.Translation.environmentDistributor_permutation
 #print axioms Hypernets.Copying.Translation.singleUse_permutation
+
+#print axioms Hypernets.Copying.BoundaryIso.refl
+#print axioms Hypernets.Copying.BoundaryIso.symm
+#print axioms Hypernets.Copying.BoundaryIso.trans
+#print axioms Hypernets.Copying.BoundaryIso.adjacent_iff
+#print axioms Hypernets.Copying.BoundaryIso.ofDeepIso
+#print axioms Hypernets.Copying.Distributor.resourcePorts
+#print axioms Hypernets.Copying.Distributor.resourcePorts_embed
+#print axioms Hypernets.Copying.Distributor.resourcePorts_input
+#print axioms Hypernets.Copying.Distributor.resourcePorts_output
+#print axioms Hypernets.Copying.Distributor.boundaryIso
