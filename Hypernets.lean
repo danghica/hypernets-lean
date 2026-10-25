@@ -62,3 +62,5 @@ import Hypernets.Copying.CertifiedContextExamples
 import Hypernets.Copying.UnaryPlug
 
 import Hypernets.Copying.NestedFillingExamples
+
+import Hypernets.Copying.ParallelFillingExamples
