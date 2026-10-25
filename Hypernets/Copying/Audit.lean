@@ -1,4 +1,4 @@
-import Hypernets.Copying.CertifiedContextExamples
+import Hypernets.Copying.UnaryPlug
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
 import Hypernets.Copying.AssemblyExamples
@@ -138,3 +138,13 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.duplicate_holes_rejected
 #print axioms Hypernets.Copying.Examples.nestedReferenceContext_certified
 #print axioms Hypernets.Copying.Examples.nestedReferenceContext_graph_unchanged
+
+#print axioms Hypernets.Graph.Net.ExpansionPlug.iso
+#print axioms Hypernets.Graph.Net.ExpansionIso.iso
+#print axioms Hypernets.Copying.Serial.plug_left
+#print axioms Hypernets.Copying.Serial.plug_right
+#print axioms Hypernets.Copying.Serial.congr
+#print axioms Hypernets.Copying.Translation.unary_plug
+#print axioms Hypernets.Copying.Translation.unaryHoleSite_sole
+#print axioms Hypernets.Copying.Translation.unary_hole_filling
+#print axioms Hypernets.Copying.Translation.unary_term_filling
