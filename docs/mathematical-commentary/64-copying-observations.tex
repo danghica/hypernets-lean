@@ -1,0 +1,287 @@
+\clearpage
+\section{Annotated term contexts and concrete closing observations}
+\label{sec:copying-observations}
+This section constructs the remaining syntax and observation interfaces of
+Appendix~B.1, item~3, without claiming its congruence theorem. The Figure~16
+translation of both proposition programs remains unchanged. Two different
+composition operations must be distinguished: composing graph-building
+constructors is proved here, whereas correspondence with addressed graph
+plugging is still required. Execution remains an explicit parameter until
+the copying UAM of item~2 is constructed.
+
+\subsection{Exact single-hole closing contexts}
+\termdef{copying-sole-hole}
+
+
+A sole-hole certificate identifies the selected occurrence as the only hole
+at every depth. At a shallow occurrence it requires a hole label there and
+global hole-freedom below every other edge. Inside a box it requires the
+corresponding certificate for the body and hole-freedom elsewhere outside.
+Induction on the occurrence proves that filling it with a hole-free graph
+leaves no holes. In the shallow case, every remaining edge is either a
+retained non-hole or an inserted hole-free edge. In the deep case, only
+the selected box body changes.
+
+If the local input list is nonempty, the selected hole has a source: its
+source-list length is its input-interface length. The same argument descends
+through boxes. Thus the sourced-hole premise of the previous section follows
+from the interface and sole-hole certificate; it is not a new assumption on
+translated term contexts.
+
+\lean{Copying/Contexts}{10}{19}{Contexts.SoleHole}
+
+
+\lean{Copying/Contexts}{20}{41}{Contexts.fill_holeFree}
+
+
+\lean{Copying/Contexts}{42}{63}{Contexts.sourced}
+
+
+A closing context records an arbitrary outer depth, a graph of interface
+$\star\Rightarrow\epsilon$, an addressed term hole of the requested depth
+and environment interface, its sole-hole certificate, and binding-freedom.
+The surrounding context can contain arbitrary example-language graph
+structure permitted by these conditions; it is not restricted to syntax.
+Filling is the existing addressed graph replacement. Hole-freedom follows
+from the sole-hole lemma, focus-freedom from global replacement closure,
+and binding-freedom from the sourced-hole theorem. The latter's source
+condition is derived from the hole's single term input.
+
+\lean{Copying/Contexts}{64}{71}{Contexts.ClosingContext}
+
+
+\lean{Copying/Contexts}{72}{75}{Contexts.fill}
+
+
+\lean{Copying/Contexts}{76}{79}{Contexts.fill_holeFree}
+
+
+\lean{Copying/Contexts}{80}{83}{Contexts.fill_focusFree}
+
+
+\lean{Copying/Contexts}{84}{88}{Contexts.fill_bindingFree}
+
+
+\subsection{The annotated grammar and literal graph interpretation}
+\termdef{copying-term-context}
+
+
+A term context has a fixed hole scope and a separately indexed outer
+scope. Its constructors are the hole, abstraction, left and right application,
+unary operation, and left and right binary operation, exactly the grammar
+of Section~11. An abstraction removes one variable from the outer scope;
+the hole annotation retains any variables bound by enclosing abstractions.
+Filling is structural recursion using the original term constructors.
+Context composition substitutes an annotated context for the hole, with
+matching scopes enforced by the type indices. Induction on the outer context
+proves the filling law, the right identity law, and associativity. The left
+identity is definitional. No variable names or program terms are changed.
+
+\lean{Copying/TermContexts}{7}{17}{TermContexts.TermContext}
+
+
+\lean{Copying/TermContexts}{18}{28}{TermContexts.fill}
+
+
+\lean{Copying/TermContexts}{29}{39}{TermContexts.compose}
+
+
+\lean{Copying/TermContexts}{40}{44}{TermContexts.fill_compose}
+
+
+\lean{Copying/TermContexts}{45}{47}{TermContexts.compose_hole}
+
+
+\lean{Copying/TermContexts}{48}{58}{TermContexts.compose_assoc}
+
+
+A scoped graph packages its finite depth together with a graph of the
+corresponding term and environment interface. This is a dependent pair, not a
+quotient or a new translation. The packaged abstraction, unary, application,
+and binary constructors call the existing Figure~16 constructors. Binary
+branches use the original maximum-depth padding. Thus all distributor edges,
+port ordering and boxes remain present.
+
+Interpret a term context by replacing its hole with a supplied scoped graph
+and applying these graph constructors recursively. Induction proves that
+supplying the original translation of a term returns exactly the original
+translation of the filled term, including its depth. Each inductive case
+rewrites the recursive result and closes by definitional equality. A second
+induction proves that interpretation respects context composition.
+
+The actual holed translation is obtained by supplying the prescribed
+single hole edge, at any chosen allowance and hole name. Its constructor
+composition law follows from the preceding interpretation theorem. This
+law does not yet identify interpretation with the operation that replaces
+the selected edge in the holed graph: that addressed-plugging correspondence,
+including padding and recursive isomorphism, remains to be proved.
+
+\lean{Copying/TermContexts}{59}{60}{TermContexts.ScopedGraph}
+
+
+\lean{Copying/TermContexts}{61}{62}{TermContexts.ofTerm}
+
+
+\lean{Copying/TermContexts}{63}{65}{TermContexts.abstraction}
+
+
+\lean{Copying/TermContexts}{66}{68}{TermContexts.unary}
+
+
+\lean{Copying/TermContexts}{69}{73}{TermContexts.application}
+
+
+\lean{Copying/TermContexts}{74}{80}{TermContexts.binary}
+
+
+\lean{Copying/TermContexts}{81}{92}{TermContexts.apply}
+
+
+\lean{Copying/TermContexts}{93}{105}{TermContexts.apply_ofTerm}
+
+
+\lean{Copying/TermContexts}{106}{112}{TermContexts.apply_compose}
+
+
+\lean{Copying/TermContexts}{113}{115}{TermContexts.hole}
+
+
+\lean{Copying/TermContexts}{116}{118}{TermContexts.graph}
+
+
+\lean{Copying/TermContexts}{119}{123}{TermContexts.graph_compose}
+
+
+\subsection{Termination observations with an explicit execution interface}
+\termdef{copying-closing-observation}
+
+
+An open program contains an actual graph of a fixed term/environment
+interface and proofs of global focus-freedom and hole-freedom. A closed
+program contains a graph of interface $\star\Rightarrow\epsilon$ with
+the same two proofs and its finite depth. Closing an open program in a
+certified context constructs a closed program using the filling lemmas.
+An execution interface supplies a machine and an initializer for these
+closed programs. The interface is a parameter: no copying machine, machine
+law, or translation-correctness hypothesis is asserted by its definition.
+
+\lean{Copying/Observations}{11}{15}{Observations.OpenProgram}
+
+
+\lean{Copying/Observations}{16}{21}{Observations.ClosedProgram}
+
+
+\lean{Copying/Observations}{22}{27}{Observations.ClosingContext.close}
+
+
+\lean{Copying/Observations}{28}{35}{Observations.Execution}
+
+
+An observation interface fixes the fragment's depth and the two environment
+sizes. Its context type is the concrete closing-context structure above,
+whose outer depth is unrestricted. Observation initializes the filled closed
+graph. Since validity is built into that structure, every inhabitant is
+allowed. Successful termination means a finite machine run to a final state;
+a stuck nonfinal state is not counted.
+
+Quantitative refinement universally quantifies over these concrete contexts
+and compares their initialized states by the existing machine refinement.
+Equivalence is mutual refinement. Unfolding the observation relation proves
+that this direct definition equals the generic observation interface used
+by the robustness infrastructure. Reflexivity and transitivity hold pointwise
+from the corresponding machine results; equivalence is consequently reflexive,
+symmetric and transitive. No context closure is used to prove these order
+laws. Closure is needed for congruence, a distinct theorem still outstanding.
+
+For the universal cost relation, refinement is exactly implication of
+successful termination in each context. One direction extracts the target
+run promised by refinement; the other supplies that run and the trivial
+cost witness. Applying both directions proves that equivalence is precisely
+agreement on termination, without determinism or a runtime bound.
+
+\lean{Copying/Observations}{36}{40}{Observations.Interface}
+
+
+\lean{Copying/Observations}{41}{47}{Observations.observations}
+
+
+\lean{Copying/Observations}{48}{52}{Observations.Terminates}
+
+
+\lean{Copying/Observations}{53}{56}{Observations.Refines}
+
+
+\lean{Copying/Observations}{57}{61}{Observations.Equiv}
+
+
+\lean{Copying/Observations}{62}{71}{Observations.refines_iff_observations}
+
+
+\lean{Copying/Observations}{72}{74}{Observations.refines_refl}
+
+
+\lean{Copying/Observations}{75}{78}{Observations.refines_trans}
+
+
+\lean{Copying/Observations}{79}{81}{Observations.equiv_refl}
+
+
+\lean{Copying/Observations}{82}{84}{Observations.equiv_symm}
+
+
+\lean{Copying/Observations}{85}{90}{Observations.equiv_trans}
+
+
+\lean{Copying/Observations}{91}{102}{Observations.refines_any_iff}
+
+
+\lean{Copying/Observations}{103}{114}{Observations.equiv_any_iff}
+
+
+The original translation of a term is packaged at any adequate allowance
+using the existing padding operation. Its global label theorems prove
+focus-freedom and hole-freedom after padding. Term observational equivalence
+then compares both translations at every common adequate allowance, against
+all certified closing contexts, using the universal cost relation. The
+execution parameter remains visible: the concrete copying UAM must instantiate
+it later. Padding/initialization invariance and the full paper-correspondence
+argument are not consequences of this definition alone.
+
+\lean{Copying/Observations}{115}{122}{Observations.translatedProgram}
+
+
+\lean{Copying/Observations}{123}{127}{Observations.ObservationalEquiv}
+
+
+The closing-context type is nonempty for closed terms at every allowance:
+the identity observation is the single $\star\Rightarrow\epsilon$ hole.
+Its sole-hole proof uses the singleton edge carrier and its binding-freedom
+is the isolated-hole theorem. This checks that the observation quantifier
+is not vacuous in the closed case.
+
+Three exact translation checks exercise the annotation and constructor laws.
+An enclosing lambda binds the variable at index zero in the hole's annotated
+scope. The left proposition program is reconstructed by filling the argument
+of its original lambda application with $\mathtt{ref}\,1$. The right program
+is reconstructed by filling an abstraction context with its original sequence
+$f();1$. Each proof invokes the exact interpretation theorem. These are
+structural equalities, not semantic equivalence claims.
+
+\lean{Copying/ObservationExamples}{10}{24}{ObservationExamples.identityClosingContext}
+
+
+\lean{Copying/ObservationExamples}{25}{32}{ObservationExamples.bound_hole_translation}
+
+
+\lean{Copying/ObservationExamples}{33}{43}{ObservationExamples.privateCell_context_factor}
+
+
+\lean{Copying/ObservationExamples}{44}{49}{ObservationExamples.constantResult_context_factor}
+
+
+The full build and three axiom audits pass. Item~3 remains open until the
+holed translation has its sole-hole and binding-free certificates, addressed
+plugging correspondence is established, and term-context congruence is derived
+with matching observation and padding quantification. The execution interface
+must also receive its copying-UAM implementation from item~2. No conditional
+wrapper is presented as Proposition~12.2 or Lemma~11.3.

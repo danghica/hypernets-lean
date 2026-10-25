@@ -745,3 +745,10 @@ fragment pair has representatives at every sufficiently large depth.
 Section 52 of the PDF explains every new definition and proof. Appendix B
 records the remaining paper-correspondence audits; the copying UAM and application-specific
 results remain separate projects.
+
+Annotated lambda-contexts and their literal graph-constructor interpretation
+are now defined. Filling with a translated term reconstructs the unchanged
+Figure 16 translation exactly. Concrete single-hole closing observations are
+also defined with an explicit execution parameter, and universal-cost equivalence
+is proved to mean agreement on successful termination. Addressed graph-plugging
+correspondence and term-context congruence remain open; item 3 is not complete.
