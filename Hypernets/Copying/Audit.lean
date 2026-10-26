@@ -1,4 +1,4 @@
-import Hypernets.Copying.AllocationCoherenceExamples
+import Hypernets.Copying.EqualityCoherenceExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -1200,3 +1200,66 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.AllocationCoherenceExamples.reference_unbounded_exact_cost
 #print axioms Hypernets.Copying.AllocationCoherenceExamples.reference_padded_exact_cost
 #print axioms Hypernets.Copying.AllocationCoherenceExamples.host_allocation_successor
+
+-- Both reference-equality branches: complete successor coherence and exact costs.
+#print axioms Hypernets.Copying.DiscardResult.fin_one
+#print axioms Hypernets.Copying.DiscardResult.fin_three
+#print axioms Hypernets.Copying.DiscardResult.label
+#print axioms Hypernets.Copying.DiscardResult.source
+#print axioms Hypernets.Copying.DiscardResult.target
+#print axioms Hypernets.Copying.DiscardResult.base
+#print axioms Hypernets.Copying.DiscardResult.net
+#print axioms Hypernets.Copying.AtomEquality.filler
+#print axioms Hypernets.Copying.AtomEquality.canonical
+#print axioms Hypernets.Copying.AtomEquality.canonical_rename
+#print axioms Hypernets.Copying.AtomEquality.Same.head
+#print axioms Hypernets.Copying.AtomEquality.Same.head_at
+#print axioms Hypernets.Copying.AtomEquality.Same.replaced
+#print axioms Hypernets.Copying.AtomEquality.Same.vertexTo
+#print axioms Hypernets.Copying.AtomEquality.Same.vertexFrom
+#print axioms Hypernets.Copying.AtomEquality.Same.vertices
+#print axioms Hypernets.Copying.AtomEquality.Same.edgeTo
+#print axioms Hypernets.Copying.AtomEquality.Same.edgeFrom
+#print axioms Hypernets.Copying.AtomEquality.Same.edges
+#print axioms Hypernets.Copying.AtomEquality.Same.map_frame
+#print axioms Hypernets.Copying.AtomEquality.Same.map_tree
+#print axioms Hypernets.Copying.AtomEquality.Same.replacement_iso
+#print axioms Hypernets.Copying.AtomEquality.Same.canonical_local
+#print axioms Hypernets.Copying.AtomEquality.Different.head
+#print axioms Hypernets.Copying.AtomEquality.Different.head_at
+#print axioms Hypernets.Copying.AtomEquality.Different.replaced
+#print axioms Hypernets.Copying.AtomEquality.Different.vertexTo
+#print axioms Hypernets.Copying.AtomEquality.Different.vertexFrom
+#print axioms Hypernets.Copying.AtomEquality.Different.vertices
+#print axioms Hypernets.Copying.AtomEquality.Different.edgeTo
+#print axioms Hypernets.Copying.AtomEquality.Different.edgeFrom
+#print axioms Hypernets.Copying.AtomEquality.Different.edges
+#print axioms Hypernets.Copying.AtomEquality.Different.map_frame
+#print axioms Hypernets.Copying.AtomEquality.Different.map_tree
+#print axioms Hypernets.Copying.AtomEquality.Different.map_right_tree
+#print axioms Hypernets.Copying.AtomEquality.Different.replacement_iso
+#print axioms Hypernets.Copying.AtomEquality.Different.canonical_local
+#print axioms Hypernets.Copying.Combined.rewrite_equality_decision
+#print axioms Hypernets.Copying.Combined.rewrite_equality_reflect
+#print axioms Hypernets.Copying.Combined.local_equality_canonical
+#print axioms Hypernets.Copying.Combined.rewrite_equality_canonical
+#print axioms Hypernets.Copying.Combined.equality_rewrite_deterministic
+#print axioms Hypernets.Copying.Combined.equality_step_deterministic
+#print axioms Hypernets.Copying.Combined.equality_cost_spectrum
+#print axioms Hypernets.Copying.Combined.equality_unbounded_deterministic
+#print axioms Hypernets.Copying.Combined.equality_unbounded_equiv
+#print axioms Hypernets.Copying.Search.serial_left
+#print axioms Hypernets.Copying.AtomEquality.Same.contents_successor
+#print axioms Hypernets.Copying.AtomEquality.Same.contents_exact_cost
+#print axioms Hypernets.Copying.AtomEquality.Same.host_successor
+#print axioms Hypernets.Copying.AtomEquality.Different.contents_successor
+#print axioms Hypernets.Copying.AtomEquality.Different.contents_exact_cost
+#print axioms Hypernets.Copying.AtomEquality.Different.host_successor
+#print axioms Hypernets.Copying.Combined.successful_unbounded_iff
+#print axioms Hypernets.Copying.EqualityCoherenceExamples.sharedContents
+#print axioms Hypernets.Copying.EqualityCoherenceExamples.distinctContents
+#print axioms Hypernets.Copying.EqualityCoherenceExamples.shared_exact_cost
+#print axioms Hypernets.Copying.EqualityCoherenceExamples.distinct_exact_cost
+#print axioms Hypernets.Copying.EqualityCoherenceExamples.shared_decision
+#print axioms Hypernets.Copying.EqualityCoherenceExamples.distinct_decision
+#print axioms Hypernets.Copying.EqualityCoherenceExamples.omega_contents
