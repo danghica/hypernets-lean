@@ -51,7 +51,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/97ecd28f67e444f13ccdfd0c96db76748fef435c}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/73de253650f06cfa3e6f14c83ca28eafd5a5bb68}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -59,7 +59,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{26 October 2026\\\small Source snapshot: \texttt{97ecd28}; Lean \texttt{4.35.0}}
+\date{26 October 2026\\\small Source snapshot: \texttt{73de253}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -104,7 +104,9 @@ Reference allocation now has a concrete local rule, fresh-store proofs, and
 a checked execution of the unchanged reference translation. Dereferencing now has
 a general local rule with preserved store identity and an exact execution to
 copy request for arbitrary atom trees. The literal copy rule now preserves
-residual trees, nested boxes and shared stores, with proved representation laws. The remaining
+residual trees, nested boxes and shared stores, with proved representation laws.
+Stable assignment now preserves store identity and old contents with checked
+local execution, safety and representation laws. The remaining
 compute rules, full-machine laws and the template argument remain pending;
 Section~\ref{sec:copying-foundations} records the dependency map and proved
 prerequisites.
@@ -204,6 +206,7 @@ prerequisites.
 \input{84-copying-allocation}
 \input{85-copying-dereference}
 \input{86-copying-rule}
+\input{87-copying-assignment}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}

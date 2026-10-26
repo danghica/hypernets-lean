@@ -1,0 +1,456 @@
+\clearpage
+\section{Stable assignment with preserved store identity}
+\label{sec:copying-assignment}
+Figure~19(c) (PDF p.~38) now has a concrete local assignment rule.
+The matched atom contraction tree is arbitrary, the new value is an arbitrary
+stable hypernet, and all other atom-reference inputs remain available.
+The rule updates the selected store's term connection, weakens the consumed
+instance and old contents, and returns unit. It neither allocates a fresh
+store nor deletes the old heap. This matters for Proposition~12.2 because
+its arbitrary callback belongs to the full language and may use assignment,
+even though the displayed terms contain no assignment themselves.
+
+The development proves exact preservation of store-resolution costs, ordered
+boundary preservation, safety, renaming and recursive padding. Seven-step
+local executions are checked, including a payload using the unchanged
+Figure~16 literal translation. The local rule is not yet integrated into
+arbitrary focused-context matching or the complete copying UAM. In
+particular, no whole-program assignment execution or callback equivalence
+is claimed here. The proposition's terms and translation remain unchanged.
+
+\Needspace{12\baselineskip}
+\subsection{Interfaces and finite assignment frames}
+
+\termdef{copying-assignment-interface}
+Let $C:\diamond^{h+1}\Rightarrow\diamond$ be the matched atom tree and
+$G:\star\Rightarrow O$ the new-value graph. The fragment's input list is
+one term input followed by $h$ atom inputs. Its output list is one term
+output, for the old contents, followed by $O$, preserving the new value's
+external interface. The assigning instance supplies input zero of $C$;
+the other inputs of $C$ remain external. Connections from the value's atom
+outputs back into that tree can be made by a surrounding graph; these
+fragment interfaces expose those cuts rather than assuming the references
+are distinct cells. Such arbitrary ambient matching remains a separate
+integration obligation.
+
+The frame contains a tree hole and a value hole with exactly the signatures
+of $C$ and $G$. Its redex edge tags are assignment, instance, tree, store and
+value. The reduct adds separate tags for discarding the instance, discarding
+the old contents, and returning unit, while retaining instance, tree, store
+and value tags.
+
+\lean{Copying/AssignmentFrames}{9}{9}{Assignment.inputs}
+
+\lean{Copying/AssignmentFrames}{10}{10}{Assignment.outputs}
+
+\lean{Copying/AssignmentFrames}{11}{11}{Assignment.treeHole}
+
+\lean{Copying/AssignmentFrames}{12}{12}{Assignment.valueHole}
+
+\lean{Copying/AssignmentFrames}{14}{16}{Assignment.BeforeEdge}
+
+\lean{Copying/AssignmentFrames}{17}{19}{Assignment.AfterEdge}
+
+Input positions are embedded by their numerical indices. The other-reference
+list is the increasing list of successor positions. Value outputs are the
+successor-indexed output positions, leaving output zero for the old contents.
+Both lists are duplicate-free by injectivity of the relevant port constructor
+and successor. Their membership lemmas follow from finite-range mapping:
+a vertex belongs precisely when it has the corresponding indexed form.
+
+\lean{Copying/AssignmentFrames}{21}{22}{Assignment.inputPort}
+
+\lean{Copying/AssignmentFrames}{23}{24}{Assignment.otherInputs}
+
+\lean{Copying/AssignmentFrames}{25}{26}{Assignment.outputPort}
+
+\lean{Copying/AssignmentFrames}{27}{28}{Assignment.valueOutputs}
+
+\lean{Copying/AssignmentFrames}{30}{31}{Assignment.otherInputs_nodup}
+
+\lean{Copying/AssignmentFrames}{32}{33}{Assignment.mem_otherInputs}
+
+\lean{Copying/AssignmentFrames}{34}{35}{Assignment.valueOutputs_nodup}
+
+\lean{Copying/AssignmentFrames}{36}{37}{Assignment.mem_valueOutputs}
+
+The redex has four internal vertices. Two term vertices are the assignment
+arguments: the first feeds the instance, the second feeds $G$. The instance
+produces an atom vertex feeding the tree's first input; the other atom
+vertex connects the tree root to the store. The store's term output is
+external output zero. The value hole's outputs occupy the remaining
+external positions. The label, source and target functions specify every
+one of these incidences in order.
+
+The finite-net constructor checks unique incidence, complete coverage,
+duplicate-free incidence lists and signature typing. Internal coverage is
+four-way finite case analysis. External coverage splits an index into zero
+or successor. Uniqueness separates the five edge tags and uses disjointness
+of zero and successor output positions. Mapping each boundary occurrence
+to its type gives the required input/output signature lists.
+
+\lean{Copying/AssignmentFrames}{39}{44}{Assignment.beforeLabel}
+
+\lean{Copying/AssignmentFrames}{46}{51}{Assignment.beforeSource}
+
+\lean{Copying/AssignmentFrames}{53}{58}{Assignment.beforeTarget}
+
+\lean{Copying/AssignmentFrames}{60}{122}{Assignment.beforeFrame}
+
+In the reduct, the tree and instance keep their atom wiring. A new term
+weakening feeds the consumed instance. The store's output now feeds the
+new value at the second term vertex. A separate term weakening feeds old
+output zero. Unit consumes the external term input and has no outputs.
+The same four internal vertices suffice, and all $O$ outputs keep their
+positions. The seven-edge constructor proves the same finite typing and
+incidence obligations, using the same zero/successor distinctions.
+
+\lean{Copying/AssignmentFrames}{124}{131}{Assignment.afterLabel}
+
+\lean{Copying/AssignmentFrames}{133}{140}{Assignment.afterSource}
+
+\lean{Copying/AssignmentFrames}{142}{149}{Assignment.afterTarget}
+
+\lean{Copying/AssignmentFrames}{151}{211}{Assignment.afterFrame}
+
+\Needspace{12\baselineskip}
+\subsection{The stable compute rule}
+
+\termdef{copying-assignment-rule}
+Relabelling the primitive frames into allowance $d$ produces two patterns.
+The filling functions replace the tree hole by $C$ at that allowance and
+the value hole by $G$. Every other frame edge is filled by its original
+primitive corolla. Simultaneous expansion gives actual finite typed redex
+and reduct hypernets; no holes remain from the pattern itself. This uses
+$G$ literally, without simplifying distributors inside a translated value.
+
+\lean{Copying/Assignment}{8}{9}{Assignment.beforePattern}
+
+\lean{Copying/Assignment}{10}{11}{Assignment.afterPattern}
+
+\lean{Copying/Assignment}{13}{23}{Assignment.beforeFill}
+
+\lean{Copying/Assignment}{25}{36}{Assignment.afterFill}
+
+\lean{Copying/Assignment}{38}{39}{Assignment.before}
+
+\lean{Copying/Assignment}{40}{41}{Assignment.after}
+
+The local rule requires the existing full stability predicate on $G$,
+including its label, output-type and input-reachability conditions. No
+stability obligation is assumed of the entire heap. Rule inversion
+exposes exactly a matched tree, a stable value, and the equalities to these
+two concrete graph constructions. The proof is elimination and construction
+of the single assignment-rule constructor.
+
+\lean{Copying/Assignment}{44}{46}{Assignment.Rule}
+
+\lean{Copying/Assignment}{48}{52}{Assignment.rule_iff}
+
+Designated edge injections locate the original instance, store and each
+new-value edge on both sides. Their labels are preserved exactly, by
+unfolding expansion at zero and successor allowance. In particular, the
+store occurrence remains a store and each value edge keeps its original
+operation or box label.
+
+\lean{Copying/Assignment}{54}{55}{Assignment.beforeInstance}
+
+\lean{Copying/Assignment}{56}{57}{Assignment.afterInstance}
+
+\lean{Copying/Assignment}{58}{59}{Assignment.beforeStore}
+
+\lean{Copying/Assignment}{60}{61}{Assignment.afterStore}
+
+\lean{Copying/Assignment}{62}{63}{Assignment.beforeValue}
+
+\lean{Copying/Assignment}{64}{65}{Assignment.afterValue}
+
+\lean{Copying/Assignment}{67}{69}{Assignment.value_labels}
+
+\lean{Copying/Assignment}{70}{72}{Assignment.store_labels}
+
+\Needspace{12\baselineskip}
+\subsection{Exact preservation of store resolution}
+
+The tree-edge injections and vertex insertion maps locate the preserved
+atom tree inside either rule graph. Every tree label is its original
+primitive label lifted to the allowance. An adjacent pair of tree edges
+therefore yields an atom-routing hop on either side: the tree's label
+classification establishes a forwarding edge, and mapping the shared
+vertex proves adjacency in the expanded net.
+
+\lean{Copying/AssignmentResolution}{9}{10}{Assignment.beforeTree}
+
+\lean{Copying/AssignmentResolution}{11}{12}{Assignment.afterTree}
+
+\lean{Copying/AssignmentResolution}{13}{14}{Assignment.beforeTreeVertex}
+
+\lean{Copying/AssignmentResolution}{15}{16}{Assignment.afterTreeVertex}
+
+\lean{Copying/AssignmentResolution}{18}{20}{Assignment.tree_labels}
+
+\lean{Copying/AssignmentResolution}{22}{31}{Assignment.tree_hop_before}
+
+\lean{Copying/AssignmentResolution}{33}{42}{Assignment.tree_hop_after}
+
+The instance enters input zero of the same tree on both sides. Given an
+edge incident to that input, its adjacency with the instance follows from
+the explicit frame attachment. At the other end, the tree's root output
+is attached to the designated store input. These entry and exit lemmas
+hold for arbitrary contraction-tree presentations, not only canonical ones.
+
+\lean{Copying/AssignmentResolution}{45}{52}{Assignment.enters_before}
+
+\lean{Copying/AssignmentResolution}{54}{61}{Assignment.enters_after}
+
+\lean{Copying/AssignmentResolution}{63}{72}{Assignment.root_before}
+
+\lean{Copying/AssignmentResolution}{74}{83}{Assignment.root_after}
+
+\termdef{copying-assignment-resolution}
+The contraction-tree reachability theorem supplies an input-zero edge and
+a path of some length $m$ from that edge to the root. Map this path through
+the two tree embeddings, prepend the instance-entry hop and append the
+root-to-store hop. This gives resolution to the designated store on both
+sides in exactly $m+2$ hops. The general uniqueness theorem for store traces
+then proves equality of the successful resolution counts in both directions.
+It also proves that any successful resolution from the instance must end
+at the designated store, before or after assignment. Stability of the new
+value is not needed for these routing lemmas; the rule itself still requires it.
+
+\lean{Copying/AssignmentResolution}{86}{93}{Assignment.resolves_both}
+
+\lean{Copying/AssignmentResolution}{96}{102}{Assignment.resolution_count_iff}
+
+\lean{Copying/AssignmentResolution}{105}{108}{Assignment.store_unique_before}
+
+\lean{Copying/AssignmentResolution}{111}{114}{Assignment.store_unique_after}
+
+\Needspace{12\baselineskip}
+\subsection{What changes and what remains attached}
+
+The value-vertex insertion map places $G$ in the reduct. The store target
+is exactly the image of $G$'s term input. Every source and target list of
+$G$ is mapped entrywise by this insertion, and output $i$ of $G$ remains
+external output $i+1$. These equations follow from the expansion definition
+and the frame's ordered value-output list. They prove reconnection of the
+actual value graph, rather than an abstract update of a separate heap map.
+
+\lean{Copying/AssignmentPreservation}{9}{10}{Assignment.afterValueVertex}
+
+\lean{Copying/AssignmentPreservation}{12}{13}{Assignment.updated_content}
+
+\lean{Copying/AssignmentPreservation}{15}{16}{Assignment.value_sources}
+
+\lean{Copying/AssignmentPreservation}{18}{19}{Assignment.value_targets}
+
+\lean{Copying/AssignmentPreservation}{21}{27}{Assignment.value_output_order}
+
+Separate edge selectors identify the two new weakenings. The first has
+term-weakening label and feeds external old-content output zero. The other
+has the same label and feeds precisely the consumed instance's input.
+Neither weakening is erased. For each other reference input $i+1$, the
+tree-vertex map before and after assignment is the same external input
+position. Thus the update changes a term connection while preserving the
+atom routing and other reference attachments.
+
+\lean{Copying/AssignmentPreservation}{29}{30}{Assignment.discardOld}
+
+\lean{Copying/AssignmentPreservation}{31}{32}{Assignment.discardInstance}
+
+\lean{Copying/AssignmentPreservation}{34}{37}{Assignment.old_content_weakened}
+
+\lean{Copying/AssignmentPreservation}{39}{42}{Assignment.instance_weakened}
+
+\lean{Copying/AssignmentPreservation}{44}{53}{Assignment.other_references_preserved}
+
+An arbitrary continuation may be attached to all fragment outputs, including
+the old contents at output zero. Serial composition preserves every edge
+label of that continuation. The already established successful atom trace
+also survives this attachment, so store-trace uniqueness prevents the
+updated instance from resolving to a different surrounding cell. This
+argument imposes no acyclicity condition on the continuation. It is a
+structural and routing preservation result, not yet a full contextual
+execution theorem for assignment.
+
+\lean{Copying/AssignmentPreservation}{57}{58}{Assignment.withContents}
+
+\lean{Copying/AssignmentPreservation}{60}{62}{Assignment.old_contents_retained}
+
+\lean{Copying/AssignmentPreservation}{65}{70}{Assignment.attached_store_unique}
+
+\Needspace{12\baselineskip}
+\subsection{Search, update and unit return}
+
+The two argument coordinates are the first and second internal term
+vertices. Search first enters the instance argument. The instance returns
+by backtracking; the assignment head then resumes at the second, new-value
+argument. Once that argument returns, backtracking through assignment
+requests rewrite focus at the external term input. After the assignment
+rewrite resets search there, the unit edge returns immediately. These five
+individual interaction lemmas check the actual ordered argument positions.
+
+\lean{Copying/AssignmentExecution}{8}{9}{Assignment.instanceArgument}
+
+\lean{Copying/AssignmentExecution}{10}{11}{Assignment.valueArgument}
+
+\lean{Copying/AssignmentExecution}{13}{19}{Assignment.search_instance}
+
+\lean{Copying/AssignmentExecution}{21}{26}{Assignment.instance_returns}
+
+\lean{Copying/AssignmentExecution}{28}{31}{Assignment.search_value}
+
+\lean{Copying/AssignmentExecution}{33}{36}{Assignment.ready}
+
+\lean{Copying/AssignmentExecution}{38}{44}{Assignment.unit_returns}
+
+\termdef{copying-assignment-subsystem}
+A state keeps a concrete graph and its focus coordinate together. The local
+transition relation contains intrinsic search and the stable assignment
+compute rule. Finality is backtracking at an external input. Such a state
+cannot search further, by the established search theorem, and cannot assign,
+because assignment requires rewrite mode. This proves final normality for
+the subsystem machine. It does not assert global determinism of overlapping
+matches or supply the remaining language rules.
+
+\lean{Copying/AssignmentExecution}{46}{46}{Assignment.State}
+
+\lean{Copying/AssignmentExecution}{47}{50}{Assignment.Step}
+
+\lean{Copying/AssignmentExecution}{52}{61}{Assignment.final_normal}
+
+\lean{Copying/AssignmentExecution}{63}{66}{Assignment.machine}
+
+Any constant corolla returns at the new-value argument in one search step.
+For such a value the complete local run has seven transitions: enter the
+instance, return from it, move to the value, return from it, request rewrite,
+perform assignment, and return unit. The run uses the proved stability of
+the constant, so no unproved operational premise is hidden in this example.
+
+\lean{Copying/AssignmentExecution}{69}{76}{Assignment.constant_returns}
+
+\lean{Copying/AssignmentExecution}{79}{86}{Assignment.constant_run}
+
+\Needspace{12\baselineskip}
+\subsection{Renaming, padding and safety}
+
+An ordered isomorphism of matched atom trees and a deep isomorphism of
+value graphs induce deep isomorphisms on both rule sides. Simultaneous
+expansion assembles identity isomorphisms on the primitive corollas, the
+lifted tree isomorphism in the tree slot, and the supplied value isomorphism
+in the value slot. Boundary order is unchanged.
+
+\lean{Copying/AssignmentTransport}{8}{18}{Assignment.before_congr}
+
+\lean{Copying/AssignmentTransport}{20}{32}{Assignment.after_congr}
+
+Padding has an explicit graph-isomorphism proof for each side. The maps
+keep frame vertices fixed and map each component edge or internal vertex
+within its original component tag. Their inverses use the same tags. Labels
+agree under the recursive padding map. Incidence follows by composing list
+maps; the host-vertex lemma checks that padding commutes with attachment to
+each frame vertex. Empty weakening sources and the empty unit target are
+handled directly. The uniform relabelling presentation of padding is then
+identified with the existing recursive raise operation, yielding deep
+isomorphisms for the original assignment graphs.
+
+\lean{Copying/AssignmentTransport}{34}{139}{Assignment.before_raise_graph}
+
+\lean{Copying/AssignmentTransport}{141}{143}{Assignment.before_raise}
+
+\lean{Copying/AssignmentTransport}{145}{261}{Assignment.after_raise_graph}
+
+\lean{Copying/AssignmentTransport}{263}{265}{Assignment.after_raise}
+
+Assignment up to representation isomorphism retains a witness tree and a
+stable value, together with deep isomorphisms to the literal redex and
+reduct. A raw rule gives this immediately. Raising transports the witnesses
+using the preceding two graph laws and the proved preservation of stability.
+Induction gives forward preservation for every finite padding amount.
+No determinism hypothesis is used to infer padding invariance.
+
+\lean{Copying/AssignmentTransport}{268}{269}{Assignment.UpToIso}
+
+\lean{Copying/AssignmentTransport}{270}{272}{Assignment.rule_upToIso}
+
+\lean{Copying/AssignmentTransport}{273}{277}{Assignment.upToIso_raise}
+
+\lean{Copying/AssignmentTransport}{278}{282}{Assignment.upToIso_pad}
+
+For any primitive-label predicate $P$, redex safety follows from safety of
+$G$, classification of the tree's labels, and $P$ on assignment, instance
+and store. Reduct safety additionally requires term weakening and unit.
+The proof splits the finite frame components and applies simultaneous
+expansion's label law. Excluding focus and hole labels gives both properties
+on both sides whenever $G$ is stable. Conversely, the updated whole heap
+is not stable: its designated store label violates the stable-label
+condition. This prevents mistakenly treating the entire post-update graph
+as the stable argument required by a later compute rule.
+
+\lean{Copying/AssignmentSafety}{8}{21}{Assignment.before_labels}
+
+\lean{Copying/AssignmentSafety}{23}{38}{Assignment.after_labels}
+
+\lean{Copying/AssignmentSafety}{40}{51}{Assignment.stable_assignment_safe}
+
+\lean{Copying/AssignmentSafety}{54}{60}{Assignment.after_not_stable}
+
+\Needspace{12\baselineskip}
+\subsection{Translated payloads and concrete update regressions}
+
+The literal-edge selector identifies the natural-number edge in the original
+closed Figure~16 constant translation, including its retained empty
+distributors. That edge proves a one-step return at the value argument.
+Substituting this return and the already proved stability of the translated
+literal gives the same seven-step local assignment execution. Only the
+payload is claimed to be this exact translated term; the whole local rule
+fragment is not being presented as a completed translation of a source
+assignment context.
+
+\lean{Copying/AssignmentExamples}{8}{8}{Assignment.literalEdge}
+
+\lean{Copying/AssignmentExamples}{10}{15}{Assignment.translated_value_returns}
+
+\lean{Copying/AssignmentExamples}{18}{25}{Assignment.translated_value_run}
+
+The updated-heap regression attaches the original translated old literal
+to the reduct's old-content output, while the new payload is the original
+translated new literal. Edge selectors locate the updated store, new
+literal, old literal and old-content weakening. Label equations establish
+which numerical value each edge represents. The store target equals the
+new literal's source, and the weakening target equals the old literal's
+source. The two literal occurrences are disjoint because they belong to
+different serial components, even when their numerical values coincide.
+
+\lean{Copying/AssignmentExamples}{28}{29}{Assignment.updatedHeap}
+
+\lean{Copying/AssignmentExamples}{30}{31}{Assignment.updatedCell}
+
+\lean{Copying/AssignmentExamples}{32}{33}{Assignment.updatedValue}
+
+\lean{Copying/AssignmentExamples}{34}{35}{Assignment.discardedValue}
+
+\lean{Copying/AssignmentExamples}{36}{37}{Assignment.oldWeakening}
+
+\lean{Copying/AssignmentExamples}{39}{41}{Assignment.updated_literal}
+
+\lean{Copying/AssignmentExamples}{43}{46}{Assignment.discarded_literal}
+
+\lean{Copying/AssignmentExamples}{49}{53}{Assignment.old_new_disjoint}
+
+Instantiating with the weakening-free binary atom tree tests a noncanonical
+match with another exposed reference. Updating literal one to literal two
+has exactly the store-to-two and weakening-to-one connections just proved.
+This verifies concrete mutation while retaining the discarded graph for
+later garbage-collection reasoning.
+
+\lean{Copying/AssignmentExamples}{57}{62}{Assignment.one_to_two}
+
+Validation checks 326 build jobs and the three axiom audits: 6 abstract,
+477 graph and 576 copying results. Only standard Lean logical axioms occur.
+Estimated completion of Proposition~12.2 is about 65\% by mathematical effort,
+with broad uncertainty of 50--75\% (26 October 2026). Assignment construction
+is removed from Appendix~B.1's pending compute rules. Atom equality,
+arithmetic, application, full-machine integration and template robustness
+remain, as do the final Figure~22 chain and semantic weakening argument.
+

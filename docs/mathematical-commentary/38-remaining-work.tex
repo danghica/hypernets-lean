@@ -30,7 +30,7 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-rule}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-assignment}.
 They include context composition, structural padding and safety transport,
 full-syntax bijective translation renaming by explicit BPerm derivations,
 and concrete intrinsic search with determinism, typing, value recognition, exact
@@ -40,7 +40,9 @@ contents, forward padding preservation and concrete translated executions.
 Dereferencing has a general local rule, exact store-resolution preservation,
 other-reference preservation, safety and a checked execution to copy request.
 The literal copy rule now has arbitrary residual trees, unchanged box bodies,
-shared-store resolution, safety, renaming and forward padding laws. Completed proofs
+shared-store resolution, safety, renaming and forward padding laws.
+Stable assignment preserves the store and old contents, with exact routing,
+checked local executions, safety, renaming and forward padding. Completed proofs
 are excluded from the tasks below.
 The four remaining tasks are:
 \begin{enumerate}
@@ -50,8 +52,8 @@ contextual-equivalence interpretation, using proved BPerm robustness and executi
 congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
 and graph-level substitution laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
-\item Define the remaining compute rules (assignment, atom equality, arithmetic and application);
-integrate the proved local allocation, dereference and copy rules into the complete
+\item Define the remaining compute rules (atom equality, arithmetic and application);
+integrate the proved local allocation, dereference, assignment and copy rules into the complete
 context-matching relation;
 prove the unbounded machine's determinism, refocusing and specimen locality,
 including independence of the copy rule from its contraction-tree match.
