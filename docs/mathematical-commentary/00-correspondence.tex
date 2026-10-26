@@ -42,7 +42,10 @@ successful completion. Reference allocation now adds actual graph-changing compu
 argument, fresh store identity and a five-transition execution of the unchanged
 $\mathtt{ref}\ n$ translation (Section~\ref{sec:copying-allocation}). This is a
 search/allocation subsystem, with forward padding preservation for allocation
-pairs. The full copy/compute machine, focused-state correspondence,
+pairs. Dereferencing now has the general Figure~19(b) local rule and an
+execution ending in a genuine copy request, with other reference inputs and
+store identity preserved (Section~\ref{sec:copying-dereference}). It does not
+directly return or replace the stored value. The full copy/compute machine, focused-state correspondence,
 determinism of combined rewrites, refocusing and specimen interface remain unfinished.
 
 \Needspace{14\baselineskip}

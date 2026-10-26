@@ -47,8 +47,11 @@ extra search rules (Figure~18) now have concrete incidence rules, determinism,
 typing, value recognition, exact isomorphism/padding transport and shallow
 plugging preservation (Section~\ref{sec:copying-search-phase}). Reference creation (Figure~19(a)) now has its actual stable-argument pair,
 freshness and resolution laws, and a search/allocation execution subsystem
-(Section~\ref{sec:copying-allocation}). The copy rule (Figure~17), remaining
-store rules (Figure~19(b)--(d)), and arithmetic/application behaviour remain pending.
+(Section~\ref{sec:copying-allocation}). Dereferencing (Figure~19(b)) now has a
+general local rule for arbitrary atom contraction trees, store-resolution
+preservation and an execution to copy request
+(Section~\ref{sec:copying-dereference}). The copy rule (Figure~17), remaining
+store rules (Figure~19(c)--(d)), and arithmetic/application behaviour remain pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its

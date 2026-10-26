@@ -1,0 +1,406 @@
+\clearpage
+\section{Dereferencing through arbitrary atom trees}
+\label{sec:copying-dereference}
+Figure~19(b) of the paper (PDF p.~38) now has a concrete local dereference
+rule for an arbitrary atom contraction tree with $h+1$ inputs, for every
+$h\geq0$. One input belongs to the instance being read; the other $h$ inputs
+remain available to other references. Both rule sides are actual finite typed
+hypernets, not a heap lookup substituted for the paper's graph rule.
+
+The computation keeps the store and the atom tree, weakens the consumed
+instance, and inserts $D^{\star}_{1,2}$ between the store and its contents.
+Search then requests copying at that term distributor. It does not yet return
+the stored value. Exact store resolution, preservation of other reference
+inputs, renaming, forward padding, safety, and a five-transition local
+search/read execution are proved.
+
+The complete allocation/application/read execution of Proposition~12.2 is
+still pending. In particular, combining the local allocation and read rules
+with arbitrary focused contexts, proving global rule matching and determinism,
+and supplying the ensuing copy transitions remain necessary. The local read
+execution below does not claim to be a run of the original translated entire
+program. The terms and all Figure~16 translation clauses remain unchanged.
+
+\Needspace{12\baselineskip}
+\subsection{Finite wiring frames with exposed reference inputs}
+
+\termdef{copying-read-interface}
+The common input list is one term wire followed by $h$ atom wires; the output
+is one term wire. A named tree hole expects $h+1$ atom inputs and one atom
+output. A second, differently named hole expects two term inputs and one term
+output. The first will receive the preserved atom tree, the second the new
+term distributor. The redex edge tags are reader, instance, tree and store;
+the reduct edge tags are discard, instance, tree, store and share. These are
+finite enumeration types, not semantic operations.
+
+\lean{Copying/DereferenceFrames}{9}{9}{Dereference.inputs}
+
+\lean{Copying/DereferenceFrames}{11}{11}{Dereference.treeHole}
+
+\lean{Copying/DereferenceFrames}{12}{12}{Dereference.shareHole}
+
+\lean{Copying/DereferenceFrames}{14}{16}{Dereference.BeforeEdge}
+
+\lean{Copying/DereferenceFrames}{17}{19}{Dereference.AfterEdge}
+
+The boundary-index helper embeds an index of $h+1$ into the length-indexed
+input interface without changing its numerical value. The other-reference
+list consists of input positions $i+1$, in order, for $0\leq i<h$.
+Its no-duplicates proof composes injectivity of the input constructor with
+injectivity of successor. Membership in that list is equivalent to being
+one of these successor-indexed inputs, by the finite-range map definition.
+
+\lean{Copying/DereferenceFrames}{21}{22}{Dereference.inputPort}
+
+\lean{Copying/DereferenceFrames}{24}{25}{Dereference.otherInputs}
+
+\lean{Copying/DereferenceFrames}{27}{28}{Dereference.otherInputs_nodup}
+
+\lean{Copying/DereferenceFrames}{30}{32}{Dereference.mem_otherInputs}
+
+In the redex frame, the reader consumes term input zero and produces the
+instance's term input. The instance produces the first atom-tree input; the
+remaining atom-tree inputs are exactly the external successor positions.
+The tree output enters the store, whose term output is the sole external
+output. The frame has three internal vertices and four edges. Their label,
+source and target functions explicitly encode this wiring.
+
+The net constructor proves source/target lists duplicate-free, uniqueness of
+the incident edge at each side of a vertex, coverage of all non-boundary
+positions, and equality of incidence types with each primitive signature.
+Finite edge case analysis proves uniqueness. Coverage splits internal
+positions into their three cases and input positions into zero or successor.
+Typing of the variable-length atom list follows from its constant atom labels.
+These are proved fields of the actual graph, not external well-formedness
+assumptions.
+
+\lean{Copying/DereferenceFrames}{34}{38}{Dereference.beforeLabel}
+
+\lean{Copying/DereferenceFrames}{40}{44}{Dereference.beforeSource}
+
+\lean{Copying/DereferenceFrames}{46}{50}{Dereference.beforeTarget}
+
+\lean{Copying/DereferenceFrames}{53}{104}{Dereference.beforeFrame}
+
+The reduct replaces the reader by term weakening feeding the old instance.
+The instance, atom tree and store remain connected in the same order. The
+store's term output and external term input zero feed the two inputs of the
+new share hole, in that order. Its output is the external term output. This
+frame has four internal vertices and five edges. Its typing and incidence
+proofs repeat the explicit finite checks, with the store-result wire and
+share hole as the additional cases. The other reference inputs are still
+attached to the old atom-tree positions.
+
+\lean{Copying/DereferenceFrames}{106}{111}{Dereference.afterLabel}
+
+\lean{Copying/DereferenceFrames}{113}{118}{Dereference.afterSource}
+
+\lean{Copying/DereferenceFrames}{120}{125}{Dereference.afterTarget}
+
+\lean{Copying/DereferenceFrames}{128}{185}{Dereference.afterFrame}
+
+\Needspace{12\baselineskip}
+\subsection{Filling the frames with the actual trees}
+
+\termdef{copying-dereference-rule}
+Given a contraction tree $T$ of atom type with $h+1$ inputs, the redex filling
+puts its actual net in the tree slot and a primitive corolla at each other
+edge. The reduct filling puts the same $T$ in its tree slot, the original
+canonical tree $D^{\star}_{1,2}$ in the share slot, and the designated primitive
+corollas at the other edges. Simultaneous expansion removes the holes and
+connects these components by the proved frame incidences. Relabelling primitives
+into allowance $d$ yields both copying hypernets. In particular, no term
+weakening or contraction in the canonical tree is omitted.
+
+The raw local rule consists of these two constructed graphs, for any $T$ and
+$d$. Its inversion theorem recovers a tree witness and equalities with the two
+sides by elimination of the rule constructor; the converse substitutes those
+equalities and constructs the rule. Unlike allocation, dereferencing does not
+replace or evaluate its external stored contents, so this local fragment has
+no stable-value parameter. The subsequent copying operation has its own
+copyability obligation.
+
+\lean{Copying/Dereference}{10}{17}{Dereference.beforeFill}
+
+\lean{Copying/Dereference}{20}{28}{Dereference.afterFill}
+
+\lean{Copying/Dereference}{31}{33}{Dereference.before}
+
+\lean{Copying/Dereference}{36}{38}{Dereference.after}
+
+\lean{Copying/Dereference}{42}{43}{Dereference.Rule}
+
+\lean{Copying/Dereference}{45}{49}{Dereference.rule_iff}
+
+The instance and store occurrences on each side have explicit expanded
+edge tags. The tree injections retain every original tree edge under its
+component tag. Their label equation is literal preservation of the old tree
+label, lifted to the copying alphabet. One allowance raise of either rule
+side equals constructing that same side at allowance $d+1$; this follows by
+cases on the allowance, since every edge is primitive. The rule therefore
+survives a raise by rewriting these two equalities.
+
+The first search step on the reduct meets the second contraction of
+$D^{\star}_{1,2}$ at external term input zero. The exact source membership and
+term-contraction label give a rewrite token at that same vertex. This is the
+required copy request.
+
+\lean{Copying/Dereference}{51}{51}{Dereference.beforeInstance}
+
+\lean{Copying/Dereference}{52}{52}{Dereference.afterInstance}
+
+\lean{Copying/Dereference}{53}{53}{Dereference.beforeStore}
+
+\lean{Copying/Dereference}{54}{54}{Dereference.afterStore}
+
+\lean{Copying/Dereference}{55}{55}{Dereference.beforeTree}
+
+\lean{Copying/Dereference}{56}{56}{Dereference.afterTree}
+
+\lean{Copying/Dereference}{58}{60}{Dereference.tree_labels}
+
+\lean{Copying/Dereference}{63}{64}{Dereference.before_raise}
+
+\lean{Copying/Dereference}{66}{67}{Dereference.after_raise}
+
+\lean{Copying/Dereference}{69}{72}{Dereference.rule_raise}
+
+\lean{Copying/Dereference}{75}{79}{Dereference.requests_copy}
+
+\Needspace{12\baselineskip}
+\subsection{Preservation of resolved store identity and trace length}
+
+\termdef{copying-read-resolution}
+Each side has the actual expansion attachment map from tree vertices into
+the surrounding fragment. If two tree edges are adjacent, map their shared
+vertex through this attachment. Mapped target/source membership proves
+adjacency in the fragment. The tree's weakening-or-contraction label condition
+makes this an atom hop. The argument applies separately to the redex and
+reduct with identical original tree edges.
+
+The instance enters whichever tree edge consumes input zero: its target and
+that inserted input are the same frame vertex. At the other end, the unique
+tree root targets the store's input. Root-output membership supplies the shared
+vertex, and the root's permitted label supplies the atom-hop condition. Thus
+the two boundary hops are proved from the actual graph construction.
+
+\lean{Copying/DereferenceResolution}{9}{10}{Dereference.beforeTreeVertex}
+
+\lean{Copying/DereferenceResolution}{12}{13}{Dereference.afterTreeVertex}
+
+\lean{Copying/DereferenceResolution}{15}{22}{Dereference.tree_hop_before}
+
+\lean{Copying/DereferenceResolution}{24}{31}{Dereference.tree_hop_after}
+
+\lean{Copying/DereferenceResolution}{34}{39}{Dereference.enters_before}
+
+\lean{Copying/DereferenceResolution}{41}{46}{Dereference.enters_after}
+
+\lean{Copying/DereferenceResolution}{48}{55}{Dereference.root_before}
+
+\lean{Copying/DereferenceResolution}{57}{64}{Dereference.root_after}
+
+Appending one relation step to an $n$-step trace gives an $(n+1)$-step
+trace, by induction on the original trace. The arbitrary-tree theorem supplies
+an edge consuming input zero and an $n$-step trace from that edge to its root.
+Map this trace into each rule side, append the root-to-store hop, and prepend
+the instance-to-tree hop. Both sides resolve to their designated store in
+$n+2$ atom hops.
+
+This proves existence without choosing a canonical tree presentation. Given
+any proposed successful resolution at cost $m$ on either side, deterministic
+atom tracing and terminal-store uniqueness identify $m$ with the common cost
+above. Consequently the two sides admit successful resolution at exactly the
+same counts. The same uniqueness theorem excludes every other endpoint store.
+These counts measure atom-trace witnesses, not UAM execution steps. This does
+not yet prove uniqueness of all possible context matches in a whole machine
+state, nor identify non-isomorphic tree presentations as graphs.
+
+\lean{Copying/DereferenceResolution}{67}{71}{Dereference.trace_snoc}
+
+\lean{Copying/DereferenceResolution}{74}{81}{Dereference.resolves_both}
+
+\lean{Copying/DereferenceResolution}{84}{90}{Dereference.resolution_count_iff}
+
+\lean{Copying/DereferenceResolution}{93}{96}{Dereference.store_unique_before}
+
+\lean{Copying/DereferenceResolution}{99}{102}{Dereference.store_unique_after}
+
+\Needspace{12\baselineskip}
+\subsection{The local execution and its pending copy}
+
+The reader's argument vertex is the first internal frame vertex. Entering
+the actual reader edge searches this vertex; entering the actual instance
+returns backtrack there. Returning through the unary reader then changes to
+rewrite mode at external term input zero. All three search witnesses carry
+their exact edge labels and ordered incidence positions.
+
+\lean{Copying/DereferenceExecution}{9}{9}{Dereference.argument}
+
+\lean{Copying/DereferenceExecution}{11}{15}{Dereference.search_argument}
+
+\lean{Copying/DereferenceExecution}{17}{20}{Dereference.instance_returns}
+
+\lean{Copying/DereferenceExecution}{22}{24}{Dereference.ready}
+
+\termdef{copying-read-subsystem}
+A state pairs an actual graph at the local read interface with a token
+coordinate in that graph. The subsystem relation consists of intrinsic search
+and the raw read computation from rewrite mode on the redex to search mode on
+the reduct. Successful finality remains backtrack at an external input.
+Such states have no search successor by the input obstruction and no read
+successor because the read constructor requires rewrite mode. This proves
+final normality for the subsystem machine.
+
+Concatenate the three search transitions, the single read transition, and the
+proved term-contraction search transition. The result is a five-step execution
+ending in rewrite mode on the reduct. Its finality predicate is false, because
+rewrite and backtrack modes differ. No claim of combined-machine determinism
+or value return is hidden in this execution theorem.
+
+\lean{Copying/DereferenceExecution}{27}{27}{Dereference.State}
+
+\lean{Copying/DereferenceExecution}{30}{33}{Dereference.Step}
+
+\lean{Copying/DereferenceExecution}{35}{44}{Dereference.final_normal}
+
+\lean{Copying/DereferenceExecution}{46}{49}{Dereference.machine}
+
+\lean{Copying/DereferenceExecution}{52}{57}{Dereference.read_run}
+
+\lean{Copying/DereferenceExecution}{60}{62}{Dereference.read_pending_copy}
+
+Two further incidence equalities check the intended read action: the old
+instance source is now the target of the discard weakening; and the new
+term-contraction source list consists of the store output followed by the
+external result input. For each other reference $i<h$, the tree's input $i+1$
+attaches to external atom position $i+1$ on both sides. Unfold the expansion's
+input attachment and the ordered finite-range list to prove these equations.
+Thus reading neither reconnects another reference to a different input nor
+consumes it.
+
+\lean{Copying/DereferenceExecution}{65}{66}{Dereference.instance_discarded}
+
+\lean{Copying/DereferenceExecution}{69}{70}{Dereference.shared_store_result}
+
+\lean{Copying/DereferenceExecution}{73}{76}{Dereference.before_other_input}
+
+\lean{Copying/DereferenceExecution}{78}{81}{Dereference.after_other_input}
+
+\Needspace{12\baselineskip}
+\subsection{Carrier renaming, safety, and retained contents}
+
+An equality-labelled isomorphism of primitive nets lifts to a recursive
+copying isomorphism at every allowance. Keep its carrier bijections and ordered
+incidence equations; label equality followed by reflexivity of recursive label
+equivalence proves the label field. To rename a matched tree, assemble its net
+isomorphism at the tree component and identity isomorphisms everywhere else.
+Simultaneous-expansion congruence supplies the redex and reduct isomorphisms,
+and the lifting construction promotes them to allowance $d$. Both maps send
+the designated store occurrence to the designated store occurrence by
+definition. Iterating the raw one-step padding theorem proves forward padding
+of local rules by any finite allowance increment.
+
+\lean{Copying/DereferenceTransport}{9}{19}{Dereference.liftIso}
+
+\lean{Copying/DereferenceTransport}{21}{28}{Dereference.beforeBaseIso}
+
+\lean{Copying/DereferenceTransport}{30}{38}{Dereference.afterBaseIso}
+
+\lean{Copying/DereferenceTransport}{41}{42}{Dereference.before_rename}
+
+\lean{Copying/DereferenceTransport}{44}{45}{Dereference.after_rename}
+
+\lean{Copying/DereferenceTransport}{48}{50}{Dereference.rename_store}
+
+\lean{Copying/DereferenceTransport}{53}{57}{Dereference.rule_pad}
+
+A primitive label satisfies a recursively lifted predicate precisely when
+the primitive itself satisfies it, by allowance cases. Hence the redex has
+any global predicate true of reader, instance, store, atom weakening and atom
+contraction. The reduct has any global predicate true of instance, store and
+both sorts of weakening and contraction. Case analysis on the expanded edge
+component proves these claims; tree components use the contraction-tree label
+condition or the canonical-tree label definition. Specialise to exclusion of
+focus labels and hole labels to prove both rule sides focus-free and hole-free.
+
+\lean{Copying/DereferenceSafety}{9}{10}{Dereference.label_primitive}
+
+\lean{Copying/DereferenceSafety}{12}{23}{Dereference.before_labels}
+
+\lean{Copying/DereferenceSafety}{25}{41}{Dereference.after_labels}
+
+\lean{Copying/DereferenceSafety}{43}{49}{Dereference.focusFree_sides}
+
+\lean{Copying/DereferenceSafety}{51}{57}{Dereference.holeFree_sides}
+
+Appending any graph $G:\star\Rightarrow O$ to the reduct gives the read
+fragment with actual contents. Each edge in $G$ retains its label through the
+right serial injection. The output of the new term distributor is attached
+exactly to the old input of $G$, by the actual serial incidence equation.
+No assumption that $G$ is acyclic or already evaluated is used here. The
+known local resolution trace persists in the left component of serial assembly;
+comparing it with any successful trace in the complete graph forces that
+trace to end at the retained store. These are contents and lookup laws, not
+a completed context-closure theorem for read computations.
+
+\lean{Copying/DereferenceSafety}{60}{61}{Dereference.withContent}
+
+\lean{Copying/DereferenceSafety}{63}{65}{Dereference.content_label}
+
+\lean{Copying/DereferenceSafety}{68}{70}{Dereference.content_attachment}
+
+\lean{Copying/DereferenceSafety}{73}{77}{Dereference.content_store_unique}
+
+\Needspace{12\baselineskip}
+\subsection{Canonical and noncanonical regression instances}
+
+For the canonical atom tree with one input, its root is contraction edge
+one, as witnessed by its output incidence and uniqueness of the output
+producer. The instance enters this same edge, so the empty internal tree
+trace plus the two boundary hops gives resolution in exactly two hops.
+Resolution-count preservation gives the same result after reading.
+
+For a noncanonical example, use the weakening-free binary contraction tree.
+Its sole edge is both entry and root, giving two-hop resolution with one
+additional exposed reference. The other-reference theorem keeps that reference
+at external atom position one, and the general execution theorem supplies the
+five-step read trace for this noncanonical match.
+
+\lean{Copying/DereferenceExamples}{10}{17}{Dereference.canonical_resolves_before}
+
+\lean{Copying/DereferenceExamples}{19}{23}{Dereference.canonical_resolves_after}
+
+\lean{Copying/DereferenceExamples}{26}{35}{Dereference.binary_resolves_before}
+
+\lean{Copying/DereferenceExamples}{38}{40}{Dereference.binary_other_reference}
+
+\lean{Copying/DereferenceExamples}{43}{45}{Dereference.binary_read_run}
+
+Finally attach the original empty-environment translation of literal one
+to the canonical reduct. Its named retained value edge still has the constant
+one label, and its source equals the term distributor's output target list.
+The canonical term distributor has all three expected edges: term weakening
+and both term contractions. These equalities are checked on the actual graph
+construction. They establish preserved contents and the real copy handoff;
+they do not supply the pending copying execution or a complete execution of
+$!(\mathtt{ref}\ 1)$ from its term translation.
+
+\lean{Copying/DereferenceExamples}{48}{48}{Dereference.storedOne}
+
+\lean{Copying/DereferenceExamples}{50}{50}{Dereference.storedOneValue}
+
+\lean{Copying/DereferenceExamples}{52}{52}{Dereference.stored_one_label}
+
+\lean{Copying/DereferenceExamples}{54}{55}{Dereference.stored_one_attachment}
+
+\lean{Copying/DereferenceExamples}{58}{62}{Dereference.canonical_copy_edges}
+
+Validation checks all 311 build jobs. The three axiom audits check six
+abstract, 477 graph and 489 copying declarations and use only standard Lean
+logical axioms; no unfinished proofs or project-specific axioms occur.
+Estimated completion of Proposition~12.2 is about 60\% by mathematical effort,
+with broad uncertainty of 45--70\% (26 October 2026). This judgement concerns
+the remaining mathematics. Copying, integration and matching of the complete
+machine, and the template robustness proofs remain substantial obligations.
+

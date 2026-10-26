@@ -240,6 +240,12 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{global-class}{Depth-independent graph class}{A finite-depth actual-content graph modulo recursive isomorphism and depth promotion.}
 
+\glossaryentry{copying-read-interface}{Dereference interface}{One term input followed by the other atom references, and one term output; the reading instance supplies the first atom-tree input internally.}
+
+\glossaryentry{copying-read-resolution}{Dereference resolution preservation}{The theorem that a matched atom tree resolves to its designated store before and after reading at exactly the same atom-trace counts.}
+
+\glossaryentry{copying-dereference-rule}{Dereference rule}{The Figure 19(b) graph rewrite retaining the atom tree and store, weakening the consumed instance, and inserting the actual two-use term distributor.}
+
 \glossaryentry{determinism}{Determinism}{The property that any two one-step successors of the same state are equal.}
 
 \glossaryentry{determinism-modulo}{Determinism modulo isomorphism}{Uniqueness of transition targets up to recursive focus-preserving graph isomorphism.}
@@ -601,6 +607,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{copying-scoped-isomorphism}{Scoped graph isomorphism}{Equality of the finite depth indices followed by recursive graph isomorphism; this does not identify different padding allowances.}
 
 \glossaryentry{copying-allocation-subsystem}{Search and allocation subsystem}{The actual graph-changing machine combining intrinsic search with rooted stable-argument allocation, optionally retaining a serial continuation; the other UAM rules remain pending.}
+
+\glossaryentry{copying-read-subsystem}{Search and read subsystem}{Intrinsic search plus the local dereference computation; its five-step read execution ends at a pending copy request, not a returned value.}
 
 \glossaryentry{search-fragment}{Search interaction fragment}{A finite graph containing a variable or operation corolla and one focus at a typed input or output boundary.}
 

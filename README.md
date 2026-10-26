@@ -9,29 +9,28 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: reference allocation with fresh stores
+## Latest milestone: general local dereferencing
 
-Figure 19(a) now has a concrete allocation rule retaining the paper's stable-argument
-premise and canonical atom distributor. The new store is fresh, contains the original
-argument, and is reached by the allocated instance in exactly two atom hops.
-Resolution remains unique after insertion into arbitrary hosts, including cyclic ones,
-and cannot alias a retained host store. Renaming and forward padding preservation
-are proved, as are focus freedom and hole freedom.
+Figure 19(b) now has a concrete read rule for arbitrary atom contraction trees
+and any number of other references. The rule preserves the store and atom tree,
+weakens the consumed instance, and inserts the paper's complete term distributor.
+Proved laws cover exact store resolution, preservation of other reference inputs,
+carrier renaming, forward padding, focus freedom and hole freedom.
 
-The unchanged Figure 16 translation of `ref n` has a checked five-transition run
-in the search/allocation subsystem, for every natural literal `n`. The returned
-reference resolves to the store containing that same literal. This includes `ref 1`,
-the allocation subexpression of Proposition 12.2. It does not yet execute the enclosing
-let, lambda copying/application, or dereference; the final equivalence remains open.
-The proposition's terms and translation remain unchanged.
+A checked five-transition local search/read execution ends by **requesting copying**.
+It does not return the stored value prematurely. Canonical and noncanonical tree
+regressions pass, and the actual stored literal `1` remains attached through the
+term distributor. Full context matching, copying and the complete translated
+allocation/application/read execution remain unfinished. The proposition's terms
+and Figure 16 translation are unchanged.
 
-Commentary Section 80 explains every new declaration and proof. Appendix B removes
-local reference-rule construction from the pending work and retains its full-machine
-integration. Full build: 304 jobs. All three axiom audits pass (6 abstract, 477 graph,
-460 copying), with no project axioms or unfinished proofs.
+Commentary Section 81 explains every new declaration and proof. Appendix B removes
+local dereference construction from pending work while retaining full-machine
+integration. Full build: 311 jobs. All three axiom audits pass (6 abstract, 477 graph,
+489 copying), with no project axioms or unfinished proofs.
 
-Estimated completion by mathematical effort: **roughly 55–60%**, with broad
-uncertainty **40–65%**, as of 26 October 2026. This is a judgement, not a declaration count.
+Estimated completion by mathematical effort: **about 60%**, with broad uncertainty
+**45–70%**, as of 26 October 2026. This is a judgement, not a declaration count.
 
 ## Proposition 12.2: current extension target
 
@@ -62,7 +61,8 @@ have separate predicates and proved structural/renaming properties. The actual
 right-hand proposition graph factors into a copyable lambda payload followed
 by the original single-use distributors. These are structural results; copying,
 the remaining store transitions and their preservation laws remain unfinished.
-Reference allocation is now proved with its stable premise and retained argument.
+Reference allocation is now proved with its stable premise and retained argument;
+the local dereference rule preserves the store and requests the required copying.
 
 Binding-free paths now have a checked positive-path correspondence and recursive
 isomorphism invariance. Plugging closure is proved at arbitrary nesting depth

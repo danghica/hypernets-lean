@@ -30,13 +30,15 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-allocation}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-dereference}.
 They include context composition, structural padding and safety transport,
 full-syntax bijective translation renaming by explicit BPerm derivations,
 and concrete intrinsic search with determinism, typing, value recognition, exact
 isomorphism/padding transport and shallow plugging preservation. Reference
 allocation now has a local stable-argument rule, fresh store identity, preserved
-contents, forward padding preservation and concrete translated executions. Completed proofs
+contents, forward padding preservation and concrete translated executions.
+Dereferencing has a general local rule, exact store-resolution preservation,
+other-reference preservation, safety and a checked execution to copy request. Completed proofs
 are excluded from the tasks below.
 The four remaining tasks are:
 \begin{enumerate}
@@ -46,9 +48,9 @@ contextual-equivalence interpretation, using proved BPerm robustness and executi
 congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
 and graph-level substitution laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
-\item Define copying transitions and the remaining compute rules (dereference,
-assignment, atom equality, arithmetic and application); integrate the proved
-local allocation rule into the complete context-matching relation;
+\item Define copying transitions and the remaining compute rules (assignment, atom equality, arithmetic and application);
+integrate the proved local allocation and dereference rules into the complete
+context-matching relation;
 prove the unbounded machine's determinism, refocusing and specimen locality,
 including independence of the copy rule from its contraction-tree match.
 Extend the proved search laws to the combined transition relation and focused
