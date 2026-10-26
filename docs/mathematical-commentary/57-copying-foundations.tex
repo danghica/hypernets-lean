@@ -52,15 +52,17 @@ general local rule for arbitrary atom contraction trees, store-resolution
 preservation and an execution to copy request
 (Section~\ref{sec:copying-dereference}). The copy rule (Figure~17) now has a literal finite-graph construction,
 local execution, safety, renaming, forward padding and shared-store resolution
-(Section~\ref{sec:copying-rule}). Its arbitrary ambient matching and global
-integration remain pending. Stable assignment (Figure~19(c)) now has a
+(Section~\ref{sec:copying-rule}). Stable assignment (Figure~19(c)) now has a
 concrete local rule, preserved store resolution and old contents, checked
 execution, safety, renaming and forward padding
 (Section~\ref{sec:copying-assignment}). Both equality-testing cases (Figure~19(d)) now have concrete rules,
 exact local runs, safety, representation laws and context-stable store-identity
 outcomes (Section~\ref{sec:copying-atom-equality}). Stable micro-beta application now has a concrete rule and quantitative local
-executions (Section~\ref{sec:copying-application}). Arithmetic
-behaviour and complete-machine integration remain pending.
+executions (Section~\ref{sec:copying-application}). All six local machines now embed in one shallow context-closed subsystem,
+with exact run costs and term-token typing. Its concrete allowance-indexed
+execution has exact finite-run correspondence and proved recursive
+isomorphism invariance (Section~\ref{sec:copying-combined}). Arithmetic,
+matching independence, padding invariance and complete-machine laws remain pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its
@@ -68,7 +70,8 @@ existing compute parameter.
 \item \textbf{Contextual interface:} binding-free closure at sourced holes,
 binding-freedom of all translated term contexts, sole-hole certificates and
 addressed context composition are checked. Graph-context congruence has an
-explicit execution-isomorphism premise. Observation reflection and the cofinal
+explicit execution-isomorphism premise, now discharged for the combined
+non-arithmetic subsystem. Observation reflection and the cofinal
 allowance criterion additionally assume one-step execution padding invariance
 (Section~\ref{sec:copying-observation-padding}). Equal-depth observational
 term-context congruence is proved under isomorphism invariance in

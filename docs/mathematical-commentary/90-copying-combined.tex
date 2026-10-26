@@ -1,0 +1,424 @@
+\clearpage
+\section{A combined contextual copying subsystem}
+\label{sec:copying-combined}
+The previously separate allocation, dereference, assignment, atom-equality,
+application and copying machines now execute within one transition system.
+Every proved local run embeds with precisely its original cost. Graph-changing
+transitions can occur in shallow typed contexts, including an argument of an
+active operation. A concrete allowance-indexed execution instance transports
+all finite runs under recursive graph isomorphism. Its execution-isomorphism
+law, previously an abstract premise, is proved; the existing graph-context
+congruence theorem therefore applies to this instance without that premise.
+
+This is a subsystem milestone on the route to Proposition~12.2. The original
+terms, Figure~16 translation, stable-argument premises and copyability premises
+are unchanged. Arithmetic is still absent. Matching independence, deterministic
+behaviour up to representation, refocusing, focused-graph correspondence,
+padding invariance and specimen locality are not proved for this combined
+system. The named representation relation admits isomorphic presentations of
+each rewrite; this is an explicit semantic closure, not a theorem asserting
+unique raw graph matches. The final proposition and all template-robustness
+obligations remain open.
+
+\Needspace{12\baselineskip}
+\subsection{Local rules and shallow matching}
+
+\termdef{combined-copying-subsystem}
+A local rule records two actual finite hypernets with the same ordered
+interface and one active coordinate on each side. Its seven constructors
+are reference creation, dereference, assignment, same-atom equality,
+different-atom equality, micro-beta and copying. Creation, assignment and
+micro-beta retain stability of the supplied value; copying retains copyability
+and its arbitrary residual contraction tree. The two equality constructors
+retain their separate finite graphs. The coordinates are their original term
+inputs. No constructor assumes termination or the desired equivalence.
+
+\lean{Copying/CombinedRules}{10}{31}{Combined.Local}
+
+\termdef{shallow-rewrite-match}
+The rewrite relation is the least relation generated from these local pairs
+by three further constructors. Recursive isomorphisms may rename both sides
+and their active vertices independently. Typed replacement may put both sides
+in the same selected edge slot of a host graph. Simultaneous expansion may
+change one selected component while every other filling remains equal. The
+selected host edge is erased by replacement: its label supplies the slot's
+signature and is not asserted to be an observable hole label. These
+constructors give explicit witnesses for a match; they do not implement a
+unique-match algorithm.
+
+All insertions take place at the outer graph level. There is no constructor
+that evaluates inside an unopened box. A recursive isomorphism may rename
+vertices inside a box, but it preserves the box hierarchy and does not move
+the token into its body. Box opening is the actual micro-beta rule. Later
+binding-free template arguments must still justify their own restrictions;
+shallow closure alone does not prove template robustness.
+
+\lean{Copying/CombinedRules}{36}{54}{Combined.Rewrite}
+
+At fixed allowance $d$ and interfaces $I,O$, a state is a dependent pair
+of an actual hypernet and a search position on that graph. A transition is
+either the existing intrinsic search relation on one unchanged graph, or a
+rewrite from rewrite focus at the source coordinate to search focus at the
+target coordinate. Finality is backtracking at an external input. Search
+cannot continue there, and a rewrite requires a different focus mode;
+case analysis therefore proves final normality and supplies a machine.
+
+\lean{Copying/CombinedRules}{56}{56}{Combined.State}
+
+\lean{Copying/CombinedRules}{59}{61}{Combined.Step}
+
+\lean{Copying/CombinedRules}{63}{71}{Combined.final_normal}
+
+\lean{Copying/CombinedRules}{73}{76}{Combined.machine}
+
+Every local rule becomes a transition by the local-match constructor
+followed by the rewrite-step constructor. Conversely, rewrite focus has no
+intrinsic search successor, by the previously checked search theorem. Thus
+copying and compute are explicit graph-changing transitions; neither has
+been put into the older linear search or compute parameter.
+
+\lean{Copying/CombinedRules}{79}{80}{Combined.local_step}
+
+\lean{Copying/CombinedRules}{83}{84}{Combined.rewrite_not_search}
+
+\Needspace{12\baselineskip}
+\subsection{State isomorphisms and exact costs}
+
+\termdef{combined-state-isomorphism}
+A state isomorphism consists of a recursive graph isomorphism, equality of
+focus modes and equality of the target token coordinate with the image of
+the source coordinate. Reflexivity uses identity bijections. Symmetry uses
+the inverse vertex map. Transitivity composes graph isomorphisms and vertex
+maps; the port-map composition equation follows by the three cases of a
+port. These maps fix ordered external inputs and outputs. Consequently a
+token is at an input before transport exactly when it is at an input after
+transport, proving equivalence of finality.
+
+\lean{Copying/CombinedIso}{10}{13}{Combined.StateIso}
+
+\lean{Copying/CombinedIso}{17}{20}{Combined.StateIso.refl}
+
+\lean{Copying/CombinedIso}{21}{26}{Combined.StateIso.symm}
+
+\lean{Copying/CombinedIso}{27}{35}{Combined.StateIso.trans}
+
+\lean{Copying/CombinedIso}{37}{39}{Combined.StateIso.final_iff}
+
+One-step transport is proved by cases on the transition. Search uses
+the established incidence transport through the induced boundary isomorphism.
+For a rewrite, the explicit renaming closure changes its source presentation;
+the old target itself can be retained, with the reflexive target isomorphism.
+In both cases there is one target transition and an isomorphism relating
+endpoints. This proof uses the chosen rewrite relation's representation
+closure; it does not prove that arbitrary redex decompositions are unique.
+
+\lean{Copying/CombinedIso}{43}{65}{Combined.step_transport}
+
+Induction on a run transports one step and then the remainder using
+the newly obtained endpoint isomorphism. No stuttering steps are inserted,
+so the length stays exactly $n$. Successful termination at cost $n$ means
+existence of a final endpoint after $n$ transitions. Run transport and finality
+transport prove the forward implication; the inverse state isomorphism proves
+the converse. No determinism assumption is used.
+
+\lean{Copying/CombinedIso}{68}{76}{Combined.run_transport}
+
+\lean{Copying/CombinedIso}{79}{80}{Combined.TerminatesIn}
+
+\lean{Copying/CombinedIso}{82}{90}{Combined.terminatesIn_iso}
+
+\Needspace{12\baselineskip}
+\subsection{Changing graphs inside an active context}
+
+Plugging a state inserts both its graph and its token into the same
+typed host slot. The two mode components agree by construction. An intrinsic
+search step lifts by the established insertion theorem; a rewrite lifts by
+the corresponding rewrite constructor. Induction extends this to all finite
+runs with the exact same length. This theorem concerns transitions, not
+preservation of finality at an arbitrarily attached boundary.
+
+\lean{Copying/CombinedLocality}{10}{13}{Combined.plugState}
+
+\lean{Copying/CombinedLocality}{15}{21}{Combined.step_plug}
+
+\lean{Copying/CombinedLocality}{23}{30}{Combined.run_plug}
+
+Serial state insertion separately handles a changing left component
+followed by a fixed continuation, and a fixed left component followed by a
+changing right component. Each construction maps the token with the actual
+serial insertion map. A left external input remains an external input; the
+proof computes the source port of the left frame hole. One-step lifting uses
+search transport or simultaneous rewrite expansion with the other component
+unchanged. The unchanged-component proof is a case split on the two hole
+tags. Run lifting then follows by induction.
+
+\lean{Copying/CombinedLocality}{33}{34}{Combined.serialLeft}
+
+\lean{Copying/CombinedLocality}{35}{36}{Combined.serialRight}
+
+\lean{Copying/CombinedLocality}{38}{43}{Combined.left_input}
+
+\lean{Copying/CombinedLocality}{45}{57}{Combined.step_serialLeft}
+
+\lean{Copying/CombinedLocality}{59}{71}{Combined.step_serialRight}
+
+\lean{Copying/CombinedLocality}{73}{78}{Combined.run_serialLeft}
+
+\lean{Copying/CombinedLocality}{80}{85}{Combined.run_serialRight}
+
+A right-component input becomes an internal connection of the serial
+frame. Backtracking there is therefore not final for the whole graph.
+The proof computes the right hole's source port and contradicts its alleged
+external-input status. A left-component input instead remains external,
+so backtracking there is final. These two results prevent local completion
+from being incorrectly promoted to program termination.
+
+\lean{Copying/CombinedLocality}{88}{95}{Combined.right_return_not_final}
+
+\lean{Copying/CombinedLocality}{98}{104}{Combined.left_return_final}
+
+\Needspace{12\baselineskip}
+\subsection{An unbounded execution instance and exact representation}
+
+\termdef{combined-allowance-execution}
+The unbounded state type is the dependent union over all natural allowances
+of closed-interface states. A transition lifts a fixed-allowance transition;
+it does not add padding steps. Finality is inherited from that component,
+and normality follows by inversion of a lifted step. This defines a concrete
+machine and a concrete execution instance. Initialization retains the supplied
+closed graph literally and places search at its unique external term input.
+
+Here ``unbounded'' means there is no global upper bound on permitted finite
+allowances. It does not mean that different padded representations have been
+identified. Unlike the completed linear development, this subsystem is not
+yet quotiented by padding; invariance under changing the allowance remains
+an explicit unfinished obligation.
+
+\lean{Copying/CombinedExecution}{9}{9}{Combined.UnboundedState}
+
+\lean{Copying/CombinedExecution}{10}{11}{Combined.UnboundedStep}
+
+\lean{Copying/CombinedExecution}{13}{16}{Combined.unbounded_final_normal}
+
+\lean{Copying/CombinedExecution}{18}{21}{Combined.unboundedMachine}
+
+\lean{Copying/CombinedExecution}{24}{26}{Combined.execution}
+
+Each transition preserves its allowance by construction. Transitivity
+of equality proves the same for a run. Conversely, every fixed-allowance run
+lifts one transition at a time. Reflection is proved by induction on an
+unbounded run: inversion of its first lifted transition identifies the source
+allowance and state, and the induction hypothesis reflects the remaining run.
+The dependent endpoint equality records the resulting bounded state. For
+endpoints already presented at the same allowance, eliminating that equality
+gives an exact equivalence of the two finite-run judgements at length $n$.
+Thus the wrapper introduces neither extra runs nor extra costs.
+
+\lean{Copying/CombinedExecution}{29}{30}{Combined.step_depth}
+
+\lean{Copying/CombinedExecution}{32}{35}{Combined.run_depth}
+
+\lean{Copying/CombinedExecution}{38}{42}{Combined.run_unbounded}
+
+\lean{Copying/CombinedExecution}{45}{58}{Combined.run_bounded}
+
+\lean{Copying/CombinedExecution}{61}{68}{Combined.run_unbounded_iff}
+
+The representation relation on unbounded states lifts a state
+isomorphism at the same allowance. It is symmetric, and related states have
+equivalent finality. Inverting this relation and an unbounded step reduces
+one-step transport to the fixed-allowance theorem. Induction transports
+unbounded runs with their exact lengths and related endpoints.
+
+\lean{Copying/CombinedExecution}{71}{72}{Combined.Represents}
+
+\lean{Copying/CombinedExecution}{74}{75}{Combined.represents_symm}
+
+\lean{Copying/CombinedExecution}{77}{79}{Combined.represents_final}
+
+\lean{Copying/CombinedExecution}{81}{88}{Combined.unbounded_step_transport}
+
+\lean{Copying/CombinedExecution}{90}{98}{Combined.unbounded_run_transport}
+
+For any cost preorder $Q$, a successful source run of length $n$
+transports to a successful target run of the same length. Reflexivity
+$Q(n,n)$ supplies the quantitative comparison. Applying this reasoning in
+both directions proves machine equivalence for every cost preorder,
+including exact equality of costs. Initial states of isomorphic closed
+graphs have equal search modes and the same external input, so they are
+related. This discharges the execution-isomorphism interface law for this
+concrete subsystem.
+
+\lean{Copying/CombinedExecution}{101}{105}{Combined.represents_refines}
+
+\lean{Copying/CombinedExecution}{107}{108}{Combined.represents_equiv}
+
+\lean{Copying/CombinedExecution}{111}{113}{Combined.execution_respectsIso}
+
+The existing graph-context congruence theorem now specializes to the
+concrete execution. Its proof uses the previously established composition
+of observation contexts and equality up to graph isomorphism; the new
+execution-isomorphism theorem supplies the formerly abstract premise.
+The result preserves any already proved contextual equivalence under an
+admissible graph context, with the universal cost relation. It does not
+assert that any new program pair is contextually equivalent, or discharge
+BPerm's operational robustness. It also does not remove the independent
+padding premise from the observation-reflection theorem.
+
+\lean{Copying/CombinedExecution}{116}{119}{Combined.equiv_context}
+
+\Needspace{12\baselineskip}
+\subsection{Every existing local execution embeds}
+
+Each old machine step is mapped to the corresponding combined step.
+For allocation, ordinary search and the raw rule map directly. Its additional
+suffix-allocation constructor is handled by left serial lifting, using the
+proved equality for the external input. Induction on a complete allocation
+run preserves its length and literal endpoint graphs.
+
+\lean{Copying/CombinedEmbedding}{9}{14}{Combined.allocation_step}
+
+\lean{Copying/CombinedEmbedding}{16}{21}{Combined.allocation_run}
+
+Dereference and assignment use their existing intrinsic search
+constructors or their corresponding local-rule constructors. Assignment's
+stability witness is retained. In each case induction on a run yields a
+combined run with exactly the same endpoints and cost.
+
+\lean{Copying/CombinedEmbedding}{23}{26}{Combined.dereference_step}
+
+\lean{Copying/CombinedEmbedding}{28}{33}{Combined.dereference_run}
+
+\lean{Copying/CombinedEmbedding}{35}{38}{Combined.assignment_step}
+
+\lean{Copying/CombinedEmbedding}{40}{45}{Combined.assignment_run}
+
+The atom-equality embedding handles both same-identity and distinct-
+identity rules, retaining their contraction trees. Application retains the
+original box body, argument and stability witness. Copying retains the original
+residual tree, value and copyability witness. Each one-step case analysis
+extends by run induction, again without changing any costs. These embeddings
+are inclusions; they do not assert that the richer combined system has only
+the runs available in an isolated local machine.
+
+\lean{Copying/CombinedEmbedding}{47}{51}{Combined.equality_step}
+
+\lean{Copying/CombinedEmbedding}{53}{58}{Combined.equality_run}
+
+\lean{Copying/CombinedEmbedding}{60}{63}{Combined.application_step}
+
+\lean{Copying/CombinedEmbedding}{65}{70}{Combined.application_run}
+
+\lean{Copying/CombinedEmbedding}{72}{75}{Combined.copying_step}
+
+\lean{Copying/CombinedEmbedding}{77}{82}{Combined.copying_run}
+
+\Needspace{12\baselineskip}
+\subsection{Term-wire typing throughout execution}
+
+Both active coordinates of every local rule are term typed, by the
+literal interface definitions. Induction on a rewrite preserves this
+property: recursive isomorphisms preserve vertex labels; replacement and
+expansion insertion preserve the labels of their inserted coordinates.
+Case analysis then combines rewrite typing with the established intrinsic
+search endpoint theorem. Thus both endpoints of every combined transition
+are on term wires, including coordinates that have become internal.
+
+\lean{Copying/CombinedTyping}{10}{12}{Combined.local_endpoints_term}
+
+\lean{Copying/CombinedTyping}{15}{27}{Combined.rewrite_endpoints_term}
+
+\lean{Copying/CombinedTyping}{29}{33}{Combined.step_endpoints_term}
+
+A run preserves a term-typed token. The zero-length case uses its
+initial typing hypothesis; in the nonempty case the first step supplies
+typing at the intermediate state and induction handles the rest. Inversion
+of a lifted transition gives the unbounded one-step theorem. Finally, reflect
+any run from a closed program into its initial allowance and use the run
+theorem. The initial input has type term by the closed-program interface.
+This is an operational token invariant, not yet the stronger preservation
+of all stable/copyable graph predicates required by the paper.
+
+\lean{Copying/CombinedTyping}{36}{41}{Combined.run_term}
+
+\lean{Copying/CombinedTyping}{43}{45}{Combined.unbounded_step_term}
+
+\lean{Copying/CombinedTyping}{48}{53}{Combined.reachable_term}
+
+\Needspace{12\baselineskip}
+\subsection{Concrete execution regressions}
+
+The reference program is the actual Figure~16 translation of
+$\mathtt{ref}\ n$, with its distributors retained. Its safety proofs are the
+translation's existing focus-free and hole-free theorems. Embedding the
+previous allocation run and lifting the allowance gives a five-step
+successful execution. The final state explicitly witnesses termination.
+Any recursively isomorphic closed representation has exactly the same
+successful costs, by the concrete representation-equivalence theorem.
+
+\lean{Copying/CombinedExamples}{10}{14}{Combined.Examples.referenceProgram}
+
+\lean{Copying/CombinedExamples}{16}{19}{Combined.Examples.reference_run}
+
+\lean{Copying/CombinedExamples}{21}{22}{Combined.Examples.reference_terminates}
+
+\lean{Copying/CombinedExamples}{25}{29}{Combined.Examples.reference_representation}
+
+A second regression places that unchanged translated allocation in
+the argument of an outer reference-operation corolla. The two serial graphs
+record its source and its allocated inner reduct, and the coordinate selector
+records the argument's input as inserted in that host. This is a concrete
+assembled context test; no equality with the complete Figure~16 translation
+of a nested reference expression is asserted.
+
+\lean{Copying/CombinedExamples}{31}{31}{Combined.Examples.outerRef}
+
+\lean{Copying/CombinedExamples}{32}{32}{Combined.Examples.nested}
+
+\lean{Copying/CombinedExamples}{33}{33}{Combined.Examples.nestedAllocated}
+
+\lean{Copying/CombinedExamples}{34}{35}{Combined.Examples.innerInput}
+
+The outer corolla first searches its argument. The general right
+serial run theorem performs the five-step allocation inside that argument.
+The returned token is then handled by the outer corolla's backtrack rule,
+which requests the outer rewrite. Concatenating these traces gives seven
+transitions. The intermediate returned argument is not final because its
+input is internal; the seven-step endpoint is not final because its mode
+is rewrite. Thus the integration checks actual graph change in a context
+and subsequent host search, without claiming the next allocation has run.
+
+\lean{Copying/CombinedExamples}{37}{41}{Combined.Examples.enter_inner}
+
+\lean{Copying/CombinedExamples}{43}{46}{Combined.Examples.return_to_outer}
+
+\lean{Copying/CombinedExamples}{49}{54}{Combined.Examples.nested_run}
+
+\lean{Copying/CombinedExamples}{57}{60}{Combined.Examples.inner_return_not_final}
+
+\lean{Copying/CombinedExamples}{63}{65}{Combined.Examples.nested_endpoint_not_final}
+
+The application regression uses a literal translated constant body,
+including its unused-parameter distributor, with a stable unit argument.
+The local rule's safety theorem supplies the closed-program certificates.
+Embedding its seven-step opening-and-return run gives an unbounded run
+and successful termination. This is the concrete application redex with an
+original translated body, not a claim that the entire translated application
+has already been matched through all surrounding distributors.
+
+\lean{Copying/CombinedExamples}{68}{74}{Combined.Examples.applicationProgram}
+
+\lean{Copying/CombinedExamples}{76}{80}{Combined.Examples.application_run}
+
+\lean{Copying/CombinedExamples}{82}{83}{Combined.Examples.application_terminates}
+
+The full build checks 349 jobs. All three audits pass: 6 abstract,
+477 graph and 830 copying declarations, with only standard Lean logical
+axioms. Appendix~B.1 removes the completed non-arithmetic context integration
+and its execution-isomorphism premise, while retaining the full-machine
+extensions and independent padding law. No whole remaining package is declared
+complete. Estimated progress by mathematical effort is about 73\%, with broad
+uncertainty of 58--83\% (26 October 2026). The change reflects operational
+integration and concrete execution laws, not the number of new declarations;
+template robustness remains a substantial source of uncertainty.
+

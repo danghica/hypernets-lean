@@ -56,10 +56,13 @@ local executions and a lookup-outcome uniqueness theorem preserved by context
 attachment (Section~\ref{sec:copying-atom-equality}). This compares actual
 store identities, not their contents. Stable micro-beta application now opens
 the actual lambda box, preserves free interfaces and supplies exact opening
-and body-search costs (Section~\ref{sec:copying-application}). Full translated
-application execution still needs context matching. The full copy/compute
-machine, focused-state correspondence,
-determinism of combined rewrites, refocusing and specimen interface remain unfinished.
+and body-search costs (Section~\ref{sec:copying-application}). A combined
+non-arithmetic subsystem now lifts all these local runs through shallow typed
+contexts, retains exact costs and proves term-token typing. Its concrete
+allowance-indexed execution has proved isomorphism invariance and graph-context
+congruence (Section~\ref{sec:copying-combined}). Arithmetic, match independence,
+focused-state correspondence, deterministic combined behaviour, padding
+invariance, refocusing and the specimen interface remain unfinished.
 
 \Needspace{14\baselineskip}
 \subsection{The statement and its quantitative conclusion}
@@ -299,8 +302,10 @@ all original contexts when the input terms have equal minimal depths, assuming
 execution isomorphism invariance. The proposition's actual depths are three
 and two. Section~\ref{sec:copying-general-congruence} removes the depth
 restriction and proves general observational context congruence under the
-explicit execution isomorphism and padding laws. Those concrete machine
-laws remain open; no equivalence of the proposition programs is inferred.
+explicit execution isomorphism and padding laws. Section~\ref{sec:copying-combined}
+now discharges isomorphism invariance for the concrete non-arithmetic subsystem;
+padding and the full-machine extensions remain open. No equivalence of the
+proposition programs is inferred.
 Earlier statements that no work remained for the paper's theorem should be
 read with this qualification: completion of the formal construction does not
 settle these external correspondence questions.

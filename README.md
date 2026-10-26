@@ -9,30 +9,30 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: stable micro-beta application
+## Latest milestone: a combined contextual copying subsystem
 
-Figure 10(b) now has an actual copying-language application rule, retaining the
-paper's stable-argument premise. It opens the lambda box and connects only its
-bound output to the argument. Free variables, atoms, argument edges and nested
-boxes are preserved. The proposition's terms and Figure 16 translation are unchanged.
+Allocation, dereference, assignment, atom equality, application and copying now
+run in one concrete subsystem. All six local machines embed with exact costs;
+steps and runs lift through shallow typed contexts. A checked allocation inside
+an active argument resumes the host operation without falsely treating the
+argument's return as program termination. Every reachable token is term typed.
+The proposition's terms and Figure 16 translation are unchanged.
 
-The general execution takes six transitions to start the opened body, followed
-by exactly the cost of any finite body-search trace. Checked original-body
-regressions cover unused parameters, reference arguments and nested lambdas.
-A variable body still requests copying through its original distributor; the
-rule does not perform immediate syntactic substitution.
+A concrete allowance-indexed execution has exact bounded/unbounded finite-run
+correspondence and transports complete runs under recursive isomorphism. This
+discharges the isomorphism premise of graph-context congruence for this subsystem.
+Rewrite matching explicitly closes under representation isomorphism; uniqueness
+of decompositions is not claimed. Different padded allowances are not identified.
 
-Local application, copying and all four store-operation constructions are now
-present. Arithmetic, full-machine context matching/determinism/refocusing,
-template robustness and the final proposition remain unfinished.
+Arithmetic, matching independence, full-machine determinism/refocusing/padding,
+specimen locality, template robustness and the final proposition remain unfinished.
+Commentary Section 86 explains all 82 new declarations and proofs. Appendix B
+removes the completed non-arithmetic integration obligations while retaining these
+full-machine tasks. Full build: 349 jobs. All three axiom audits pass
+(6 abstract, 477 graph, 830 copying), with no project axioms or unfinished proofs.
 
-Commentary Section 85 explains every new declaration and proof. Appendix B
-removes local application construction while retaining global integration.
-Full build: 342 jobs. All three axiom audits pass (6 abstract, 477 graph, 748 copying),
-with no project axioms or unfinished proofs.
-
-Estimated completion by mathematical effort: **about 70%**, with broad uncertainty
-**55–80%**, as of 26 October 2026. This is a judgement, not a declaration count.
+Estimated completion by mathematical effort: **about 73%**, with broad uncertainty
+**58–83%**, as of 26 October 2026. This is a judgement, not a declaration count.
 
 ## Proposition 12.2: current extension target
 
