@@ -426,3 +426,4 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.captured_swap_rejected
 #print axioms Hypernets.Copying.Examples.box_swap_not_iso
 #print axioms Hypernets.Copying.Examples.unshifted_box_pair_impossible
+#print axioms Hypernets.Copying.BoxPermutation.normalized

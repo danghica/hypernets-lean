@@ -27,12 +27,14 @@ theorem Step.allLabels {d I O} {G H : Hypernet d I O} (s : Step G H) (P : Primit
   cases s with
   | @permute d n k h G p =>
     constructor
-    · intro h; exact (allLabels_right G p P).mpr (h (0 : Fin 1))
-    · intro h e; exact (allLabels_right G p P).mp h
+    · intro h e; exact h (0 : Fin 1)
+    · intro h e; exact h (0 : Fin 1)
 
 theorem Step.bindingFree {d I O} {G H : Hypernet d I O} (s : Step G H) : BindingFree G ↔ BindingFree H := by
   cases s with
-  | permute G p => exact (bindingFree_box_iff G).trans (bindingFree_right G p).symm
+  | permute G p =>
+    exact (bindingFree_box_iff _).trans ((InterfacePermutation.bindingFree_iff G p.body.symm).trans
+      ((bindingFree_box_iff G).symm.trans (InterfacePermutation.bindingFree_iff _ p.outer.symm).symm))
 
 /-- Fixed-boundary isomorphism closure does not weaken the safety statement. -/
 theorem UpToIso.bindingFree {d I O} {G H : Hypernet d I O} (s : UpToIso G H) : BindingFree G ↔ BindingFree H := by

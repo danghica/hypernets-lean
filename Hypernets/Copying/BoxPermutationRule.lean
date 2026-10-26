@@ -23,10 +23,12 @@ def right : Hypernet (d+1) [.thunk n] (environmentInterface k h) :=
   InterfacePermutation.net (box (bound := n) (freeVariables := k)
     (InterfacePermutation.net G p.body)) p.outer.symm
 
-/-- A single raw structural pre-template instance, without semantic closure. -/
+/-- The literal Figure 21 pair: permute the body on the left, or the outer
+box on the right, using the paper's boundary-list convention. -/
 inductive Step : {d : Nat} → {I O : List Wire} → Hypernet d I O → Hypernet d I O → Prop where
   | permute {d n k h : Nat} (G : Hypernet d [.term] (environmentInterface (n+k) h)) (p : Pair n k h) :
-      Step (box (bound := n) (freeVariables := k) G) (right G p)
+      Step (box (bound := n) (freeVariables := k) (InterfacePermutation.net G p.body.symm))
+        (InterfacePermutation.net (box (bound := n) (freeVariables := k) G) p.outer.symm)
 
 /-- Carrier choices may differ on either side of the concrete rule. -/
 inductive UpToIso : {d : Nat} → {I O : List Wire} → Hypernet d I O → Hypernet d I O → Prop where
@@ -48,9 +50,12 @@ theorem of_bodyIso {G H : Hypernet d [.term] (environmentInterface (n+k) h)}
     (action : ∀ i, f.outputs.toFun i = p.body.bijection.toFun i) :
     UpToIso (box (bound := n) (freeVariables := k) G)
       (InterfacePermutation.net (box (bound := n) (freeVariables := k) H) p.outer.symm) := by
-  have body := InterfacePermutation.realize f p.body (fun _ => f.input_singleton _) action
-  exact .witness (DeepIso.refl _) (.permute G p)
-    (InterfacePermutation.congr (box_congr body) p.outer.symm)
+  have body := InterfacePermutation.compensate f p.body (fun _ => f.input_singleton _) action
+  exact .witness (box_congr body) (.permute H p) (DeepIso.refl _)
+
+/-- The compensated normal form follows from the literal paper rule up to isomorphism. -/
+theorem normalized : UpToIso (box (bound := n) (freeVariables := k) G) (right G p) :=
+  of_bodyIso p (InterfacePermutation.iso G p.body) (InterfacePermutation.iso_output G p.body)
 
 /-- An ordered corolla isomorphism must fix each output position individually. -/
 theorem box_output_fixed {G H : Hypernet d [.term] (environmentInterface (n+k) h)}
