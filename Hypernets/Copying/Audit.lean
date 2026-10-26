@@ -1,4 +1,4 @@
-import Hypernets.Copying.SearchTraceExamples
+import Hypernets.Copying.AllocationStoreExamples
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -460,3 +460,38 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Search.addition_trace
 #print axioms Hypernets.Copying.Search.addition_exact_cost
 #print axioms Hypernets.Copying.Search.addition_padded
+
+-- Reference allocation, stable premises, fresh stores, and actual translated execution.
+#print axioms Hypernets.Copying.Allocation.rule_iff
+#print axioms Hypernets.Copying.Allocation.oldEdge_injective
+#print axioms Hypernets.Copying.Allocation.store_fresh
+#print axioms Hypernets.Copying.Allocation.old_label
+#print axioms Hypernets.Copying.Allocation.resolves
+#print axioms Hypernets.Copying.Allocation.resolves_exact
+#print axioms Hypernets.Copying.Allocation.returns
+#print axioms Hypernets.Copying.Allocation.renamed_rule
+#print axioms Hypernets.Copying.Allocation.raised_rule
+#print axioms Hypernets.Copying.Allocation.upToIso_raise
+#print axioms Hypernets.Copying.Allocation.upToIso_pad
+#print axioms Hypernets.Copying.StoreTrace.resolves_insert
+#print axioms Hypernets.Copying.StoreTrace.resolves_insert_exact
+#print axioms Hypernets.Copying.StoreTrace.inserted_not_host
+#print axioms Hypernets.Copying.Allocation.old_source
+#print axioms Hypernets.Copying.Allocation.old_target
+#print axioms Hypernets.Copying.Allocation.stored_input
+#print axioms Hypernets.Copying.Allocation.not_old_store
+#print axioms Hypernets.Copying.Allocation.parallel_stores_distinct
+#print axioms Hypernets.Copying.Allocation.completed_normal
+#print axioms Hypernets.Copying.Allocation.returns_suffix
+#print axioms Hypernets.Copying.Allocation.constantArgument_stable
+#print axioms Hypernets.Copying.Allocation.reference_run
+#print axioms Hypernets.Copying.Allocation.reference_completes
+#print axioms Hypernets.Copying.StoreTrace.resolves_serial_left
+#print axioms Hypernets.Copying.Allocation.allocated_resolves_exact
+#print axioms Hypernets.Copying.Allocation.allocated_value_label
+#print axioms Hypernets.Copying.Allocation.allocated_store_value
+#print axioms Hypernets.Copying.Allocation.ref_one
+#print axioms Hypernets.Copying.Allocation.reference_final_normal
+
+#print axioms Hypernets.Copying.Allocation.stable_allocation_safe
+#print axioms Hypernets.Copying.Allocation.after_not_stable
