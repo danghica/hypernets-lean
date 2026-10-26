@@ -9,48 +9,47 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: complete assignment coherence and exact costs
+## Latest milestone: complete store coherence and exact read handoff
 
-Assignment now has **proved successor-state coherence** in the actual combined
-machine. Independently chosen contextual writes at the same request produce
+**All store operations now have proved successor-state coherence** in the actual
+combined machine: allocation, dereference, assignment and both reference-equality
+branches. Independently chosen contextual computations at the same request give
 recursively isomorphic complete graphs with matching resumed token positions.
-The proof reconnects the existing store to the new value, retains the old
-contents behind their weakening, and returns unit. It covers renaming, plugging
-and simultaneous expansion without assuming a common matching decomposition,
-global boundary injectivity, acyclicity or machine determinism.
+The unified theorem covers renaming, plugging and simultaneous expansion without
+assuming common matching decompositions or global machine determinism.
 
-A typed target-exchange construction gives a canonical successor and an explicit
-isomorphism to the paper's original Figure 19(c) reduct. This is a proof device;
-the operational rules, stable-value requirement, Proposition 12.2 terms and
-Figure 16 translation are unchanged.
+The new read proof retains the existing store, atom tree and contents, discards
+the consumed instance by weakening, and inserts exactly the paper's distributor
+with its weakening and two contractions. A finite graft and typed target exchange
+provide an auxiliary canonical successor, explicitly isomorphic to the original
+Figure 19(b) reduct. The temporary feedback in that proof construction adds no
+machine rule. Proposition 12.2's terms and Figure 16's translation are unchanged.
 
-A write of any stable value has **exactly the successful cost seven** with
-arbitrary attached old contents. Full-machine regressions retain the unchanged
-literal translations and the translation of any closed term as old data,
-including self-application and nested boxes, at every finite depth padding.
-The omega-data regression proves the write's termination without executing the
-old contents; it does not assert a separate divergence theorem for omega.
-These are explicit heap scenarios, not a claimed translation theorem for a
-whole surface assignment expression. Arbitrary typed hosts are also covered
-by successor coherence, including internal resumed request wires.
+Every successful full-machine read has **exactly five transitions before its
+copying continuation**: its cost is five plus a successful cost of the actual
+pending copy request. The prefix always exists with arbitrary attached contents,
+and no read can finish within those five steps. Unchanged translated literals
+and arbitrary closed terms, including literal omega with nested boxes, satisfy
+this continuation law at every finite depth padding. This does not assert that
+omega's own divergence has been proved, or identify the explicit heap scenario
+with a whole surface-language read translation.
 
-This closes assignment within Appendix B.1's successor-coherence obligation.
-Allocation and both equality branches were completed previously. Dereference,
-application, arithmetic and copying still need successor comparison;
+This completes the store-operation portion of Appendix B.1's successor-coherence
+obligation. Application, arithmetic and copying still need successor comparison;
 full-machine refocusing, focused-graph correspondence, specimen locality,
 the eleven-template argument and Proposition 12.2 remain unfinished.
 The four broad remaining packages stay open.
 
-Commentary Section 92 explains all 78 new declarations with immutable source
-links. Full build: 388 jobs. All three axiom audits pass (6 abstract, 477 graph,
-1,282 copying; 1,765 total), using only Lean's standard logical axioms.
+Commentary Section 93 explains all 71 new declarations with immutable source
+links. Full build: 397 jobs. All three axiom audits pass (6 abstract, 477 graph,
+1,353 copying; 1,836 total), using only Lean's standard logical axioms.
 
 Estimated completion by mathematical effort: **roughly 50–65%, with low
 confidence**, as of 26 October 2026. The earlier **80% estimate is withdrawn**:
 it over-weighted infrastructure and under-weighted the remaining machine laws,
-dependent template proofs and final observational argument. Completing assignment
-is substantive progress but does not justify a precise percentage increase.
-The estimate is not a declaration or TODO count.
+dependent template proofs and final observational argument. Completing the store
+comparisons is substantial progress but does not justify a precise percentage
+increase. The estimate is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target
 

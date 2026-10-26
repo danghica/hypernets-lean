@@ -82,8 +82,12 @@ Assignment now also has complete contextual successor coherence, proved by
 typed target exchange and comparison with the original local reduct. Stable
 writes with arbitrary attached old contents have exactly seven successful
 steps, with translated-data regressions at every finite padding
-(Section~\ref{sec:copying-assignment-coherence}). Successor coherence for
-dereference, application, arithmetic and copying, focused-state correspondence,
+(Section~\ref{sec:copying-assignment-coherence}). Dereference now also has
+complete contextual successor coherence, closing this obligation for all
+store-operation heads. Its exact cost law retains the five-step read prefix
+and the subsequent copying continuation, including unchanged translated data
+at every finite padding (Section~\ref{sec:copying-dereference-coherence}).
+Successor coherence for application, arithmetic and copying, focused-state correspondence,
 full-machine determinism, refocusing and the specimen interface remain unfinished.
 
 The earlier estimate of 80\% completion of Proposition~12.2 is withdrawn.

@@ -6,7 +6,9 @@ proved for the actual context-closed combined machine. Any two writes from
 the same request produce recursively isomorphic complete successor graphs,
 with matching resumed token positions. This extends the earlier uniqueness
 of the selected store to uniqueness of the whole update. Allocation and both
-reference-equality branches were completed previously; dereference, application,
+reference-equality branches were completed previously.
+Section~\ref{sec:copying-dereference-coherence} subsequently completes
+dereference and unifies all store-operation comparisons. Application,
 arithmetic and copying remain to be compared.
 
 The operational rule remains Figure~19(c), described in

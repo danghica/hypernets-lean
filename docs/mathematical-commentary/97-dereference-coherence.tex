@@ -1,0 +1,499 @@
+\clearpage
+\section{Dereference coherence and the complete store interface}
+\label{sec:copying-dereference-coherence}
+Every actual contextual read now has a unique complete successor up to
+recursive state isomorphism. Together with the preceding allocation,
+assignment and equality results, this proves successor coherence for all
+four store-operation heads, including both equality branches. The proof
+uses the original Figure~19(b) rule, described in
+\href{https://arxiv.org/html/1907.01257v5\#S10.SS1}{HTML Section~10.1}.
+It retains the existing store and atom tree, consumes the instance by weakening,
+and connects the store and request to the exact distributor
+$D^{\mathrm{term}}_{1,2}$, including its weakening and two contractions.
+
+The key quantitative conclusion is a continuation law. With arbitrary contents
+attached, a read succeeds in $n$ transitions if and only if $n=5+r$ and
+the resulting copying request succeeds in $r$ transitions. In particular,
+the five-step read prefix is not a completed evaluation. This strengthens
+the earlier chosen local trace to a statement about every successful execution
+of the full combined machine, including all contextual matching choices.
+
+The dependency chain is: unique source read match; a finite read graft;
+typed target exchange; commutation with contexts; explicit isomorphism to
+the original reduct; induction over actual rewrites; successor coherence;
+exact cost decomposition. The graft is solely a proof construction. It does
+not add a transition or change the terms of Proposition~12.2, the translation
+of Figure~16, or any stability condition in the operational rules.
+
+This completes the store-operation part of Appendix~B.1's successor obligation.
+Application, arithmetic and copying still require successor comparison, and
+the complete machine's refocusing and specimen laws remain open. The four
+broad packages stay open. The mathematical-effort estimate remains roughly
+50--65\%, with low confidence: these proofs do not complete the template
+argument or the final observational equivalence.
+
+\Needspace{12\baselineskip}
+\subsection{A finite graft for the exact distributor}
+
+\termdef{read-graft}
+The \emph{read graft} is a graph with one term input $q$, one term output $i$,
+three fresh internal term ports $a,b,c$ and four edges. Its first two edges
+are weakenings and its last two are contractions. The ordered source and
+target lists are
+\[
+\begin{array}{c|c|c}
+\text{edge}&\text{sources}&\text{targets}\\\hline
+0&[]&[i]\\
+1&[]&[b]\\
+2&[b,c]&[a]\\
+3&[a,q]&[c].
+\end{array}
+\]
+Edge zero will discard the consumed instance. Edges one to three are the
+literal $D^{\mathrm{term}}_{1,2}$ pattern, temporarily joining its first input
+to its output at $a$. That temporary feedback is removed by target exchange
+with the store-content port before the graph is compared with a read result.
+No claim of copyability or stability is made for the intermediate graft.
+
+\lean{Copying/ReadStub}{12}{13}{ReadStub.label}
+
+\lean{Copying/ReadStub}{15}{17}{ReadStub.source}
+
+\lean{Copying/ReadStub}{19}{21}{ReadStub.target}
+
+Every index of the four-element edge type is one of $0,1,2,3$, by its
+finite bound. Enumerating these cases verifies absence of repeated ports
+in each list and uniqueness of each source and target incidence. For coverage,
+$q,a,b,c$ each occur once as a source and $i,a,b,c$ each occur once as a
+target; $i$ is not a source and $q$ is not a target. All labels are term,
+so the listed arities also verify typing. These facts construct the finite
+primitive graph. Relabelling its primitive edges at any depth $d$ gives
+the corresponding hypernet, with the same carriers and incidences.
+
+\lean{Copying/ReadStub}{9}{9}{ReadStub.fin_four}
+
+\lean{Copying/ReadStub}{24}{75}{ReadStub.base}
+
+\lean{Copying/ReadStub}{77}{78}{ReadStub.net}
+
+\Needspace{12\baselineskip}
+\subsection{State-level transport of target exchange}
+
+A non-input port remains a non-input under any incidence-preserving match
+embedding: target coverage supplies an edge targeting it, the embedding
+transports that incidence, and no target in the receiving graph can be an
+external input. This argument applies even when boundary attachment maps
+are not globally injective.
+
+\lean{Copying/TargetSwapStates}{9}{12}{TargetSwap.embedded_not_input}
+
+The state-level target exchange $S_{a,b}(G,v)$ consists of the exchanged
+graph and the search token at the unchanged port $v$. Only target incidences
+are exchanged, so moving the token by the exchange would be incorrect.
+If two graphs are equal, transporting their ports along that equality
+preserves both the non-input conditions and equality of endpoint labels.
+Eliminating the equality reduces each assertion to its original proof.
+The same elimination gives the state isomorphism back to the original
+exchanged state.
+
+\lean{Copying/TargetSwapStates}{14}{16}{TargetSwap.state}
+
+\lean{Copying/TargetSwapStates}{19}{21}{TargetSwap.cast_not_input}
+
+\lean{Copying/TargetSwapStates}{23}{27}{TargetSwap.cast_typed}
+
+\lean{Copying/TargetSwapStates}{29}{35}{TargetSwap.state_cast}
+
+Suppose a recursive graph isomorphism maps $a,b,v$ to $a',b',w$.
+The earlier target-exchange renaming theorem supplies an isomorphism of
+the exchanged graphs, and the given token equation supplies the state
+isomorphism. For plugging, use the earlier exchange-plugging graph isomorphism.
+Its carrier map is the identity and its insertion-map equation identifies
+the token. Thus exchanging the embedded endpoints in the whole graph agrees
+with inserting the exchanged component state.
+
+\lean{Copying/TargetSwapStates}{38}{45}{TargetSwap.state_congr}
+
+\lean{Copying/TargetSwapStates}{48}{61}{TargetSwap.state_plug}
+
+For simultaneous expansion, let $F$ and $K$ agree except at the selected
+component. Assume that exchanging the selected endpoints in $F(e)$ gives
+a state isomorphic to the specified state in $K(e)$. First commute exchange
+through the expansion, obtaining the family $P$ which exchanges only $F(e)$.
+At $e$, the family definition identifies $P(e)$ with that exchanged graph;
+elsewhere $P$ agrees with $F$, hence with $K$. Apply expansion congruence to
+the given component state isomorphism. The insertion-map equation tracks the
+token through both comparisons. Other components may contain arbitrary
+recursive boxes and cycles.
+
+\lean{Copying/TargetSwapStates}{64}{91}{TargetSwap.state_expand_result}
+
+\Needspace{12\baselineskip}
+\subsection{Unique source data and the canonical read successor}
+
+\termdef{dereference-match}
+A \emph{dereference match} at a port $v$ records a dereference head $e$, a
+store $s$, its content port $o$, and an atom-trace length $k$. Its evidence
+says that $v$ is a source of $e$, $s$ has the store label and singleton target
+$[o]$, and operand zero of the dereference resolves to $s$ in $k$ contractions.
+This is a description of source incidences and resolution, not an assumed
+result or matching oracle.
+
+\lean{Copying/DereferenceMatch}{8}{16}{Dereference.Match}
+
+Match embeddings transport the head, store and content port, preserving
+the trace length. Ordered target transport preserves $[o]$, and operand
+transport preserves store resolution. Matches at the same source request
+are unique: source-head uniqueness identifies the heads; uniqueness of
+operand resolution identifies the stores and trace lengths; the singleton
+target equations identify the content ports. Proof irrelevance identifies
+the remaining evidence. Because $o$ is a store target, it is not an input;
+the store's target-typing law gives it type term.
+
+\lean{Copying/DereferenceMatch}{20}{29}{Dereference.Match.map}
+
+\lean{Copying/DereferenceMatch}{31}{35}{Dereference.Match.unique}
+
+\lean{Copying/DereferenceMatch}{37}{39}{Dereference.Match.contents_not_input}
+
+\lean{Copying/DereferenceMatch}{41}{45}{Dereference.Match.contents_typed}
+
+The match's filler is the read graft transported to the head's exact
+interface using its primitive label. Replacing just $e$ by this filler
+defines the grafted graph. Its fresh port is the graft's internal port zero,
+and its retained port is the host image of $o$. The fresh port is internal
+by construction. The retained port is non-input by the original property
+and the three cases of the host port map. Both ports have type term: this
+is immediate for the graft port, and follows from preservation of host
+labels for the content port. Thus target exchange is well typed.
+
+\lean{Copying/DereferenceMatch}{47}{51}{Dereference.Match.filler}
+
+\lean{Copying/DereferenceMatch}{53}{54}{Dereference.Match.grafted}
+
+\lean{Copying/DereferenceMatch}{56}{56}{Dereference.Match.fresh}
+
+\lean{Copying/DereferenceMatch}{57}{58}{Dereference.Match.retained}
+
+\lean{Copying/DereferenceMatch}{60}{61}{Dereference.Match.fresh_not_input}
+
+\lean{Copying/DereferenceMatch}{63}{65}{Dereference.Match.retained_not_input}
+
+\lean{Copying/DereferenceMatch}{67}{71}{Dereference.Match.endpoints_typed}
+
+\termdef{canonical-read-successor}
+The \emph{canonical read successor} is the search state obtained by exchanging
+the targets at those fresh and retained ports in the grafted graph, retaining
+the old request token. The store, previously targeting $o$, now targets $a$;
+the distributor root, previously targeting $a$, now targets $o$. Its ordered
+inputs therefore connect the store and resumed request to the original stored
+contents. The separate weakening connects to the consumed instance.
+
+\lean{Copying/DereferenceMatch}{74}{76}{Dereference.Match.canonical}
+
+\Needspace{11\baselineskip}
+Every original local read source supplies a match. Its head and store are
+their explicit expanded occurrences; the content port is the source graph's
+single term output. The earlier finite store-resolution theorem supplies a
+trace length and operand proof. Classical choice selects this witness, while
+match uniqueness proves that its choice cannot change the canonical successor.
+
+\lean{Copying/DereferenceMatch}{79}{88}{Dereference.localMatch}
+
+\Needspace{12\baselineskip}
+\subsection{Commutation with renaming and contexts}
+
+A recursive isomorphism of source graphs induces an isomorphism of their
+grafted graphs. Use the carrier bijections supplied by host plugging. On
+retained edges, labels and incidence lists obey the original isomorphism.
+On the four inserted edges, labels are identical; the insertion-map equation,
+applied portwise to each ordered list, proves both incidence equations.
+Boundary casts are checked separately on internal, input and output ports.
+The fresh port maps to the fresh port, and host-port naturality transports
+both the content port and the token. State-level exchange congruence now
+proves renaming compatibility of the canonical successor.
+
+\lean{Copying/DereferenceCanonicalTransport}{8}{52}{Dereference.Match.graft_rename}
+
+\lean{Copying/DereferenceCanonicalTransport}{54}{61}{Dereference.Match.canonical_rename}
+
+For plugging, associativity of replacement first identifies grafting at
+the embedded head with inserting the grafted component. Its middle-component
+port equation identifies the retained content port and request token, and
+the fresh graft port maps directly. The two embedded endpoints remain
+non-inputs, and insertion preserves their labels. State-level exchange
+congruence followed by exchange-plugging gives the desired canonical-state
+comparison for any typed host.
+
+\lean{Copying/DereferenceCanonicalTransport}{62}{81}{Dereference.Match.canonical_plug}
+
+For simultaneous expansion, replace the head only in the selected component
+of a family $F$, giving a family $P$. Its selected graph equals the grafted
+component, so equality transport supplies its endpoint conditions and token.
+The expansion-plugging isomorphism compares whole-graph grafting with
+expansion by $P$; its inserted-port and component-port equations identify
+the fresh endpoint, retained endpoint and token. Apply exchange congruence,
+then the state-level exchange-expansion theorem with the given component
+successor comparison. This allows the new family $K$ to use an independently
+represented successor, as the actual rewrite relation requires.
+
+\lean{Copying/DereferenceCanonicalTransport}{83}{118}{Dereference.Match.canonical_expand_result}
+
+\Needspace{12\baselineskip}
+\subsection{The explicit isomorphism to Figure 19(b)}
+
+The abbreviation \texttt{replaced} names the graph of the canonical
+successor for the original local source. Its forward internal-vertex map
+retains the three old frame vertices and every atom-tree vertex. The graft's
+fresh vertex becomes the fourth frame vertex of the original reduct, and
+its other two vertices become the distributor's two internal vertices.
+\lean{Copying/DereferenceReplacement}{8}{9}{Dereference.Replacement.replaced}
+
+\lean{Copying/DereferenceReplacement}{11}{18}{Dereference.Replacement.vertexTo}
+
+\Needspace{10\baselineskip}
+The inverse separates these cases and restores the replacement tags.
+Primitive components have no internal vertices. Enumerating the finite
+frame and graft indices proves that the two maps are inverse bijections.
+
+\lean{Copying/DereferenceReplacement}{20}{27}{Dereference.Replacement.vertexFrom}
+
+\lean{Copying/DereferenceReplacement}{29}{41}{Dereference.Replacement.vertices}
+
+\Needspace{12\baselineskip}
+The edge map retains the instance, store and every atom-tree occurrence.
+The deleted head is excluded by the retained-edge subtype. Graft edge zero
+becomes the discarded-instance weakening; graft edges one, two and three
+become respectively the distributor's weakening and its two contractions.
+The inverse restores the finite indices and retained-edge tags. Enumerating
+the four graft indices and the one-edge primitive components proves both
+inverse equations and gives the edge bijection.
+
+\lean{Copying/DereferenceReplacement}{43}{49}{Dereference.Replacement.edgeTo}
+
+\lean{Copying/DereferenceReplacement}{51}{57}{Dereference.Replacement.edgeFrom}
+
+\lean{Copying/DereferenceReplacement}{59}{71}{Dereference.Replacement.edges}
+
+The vertex bijection preserves every atom-tree port's attachment. Internal
+tree ports and the single output follow directly from the definitions; for
+inputs, split the first input from the remaining atom-interface inputs and
+reduce the respective frame attachments. Moreover, target exchange fixes
+every such tree port: retained host ports cannot be the fresh graft port,
+and none of the tree's attached internal, input or output ports is the
+external content port. These observations also cover noncanonical atom trees
+with any number of additional references at their boundary.
+
+\lean{Copying/DereferenceReplacement}{74}{86}{Dereference.Replacement.map_tree}
+
+\lean{Copying/DereferenceReplacement}{90}{111}{Dereference.Replacement.exchange_tree}
+
+These bijections preserve all labels and ordered incidence lists, giving
+an isomorphism of complete graphs. Tree sources use the attachment equation;
+tree targets additionally use the fact that exchange fixes them. The instance
+target is unchanged. The store target moves from the old content port to
+the fresh port. In the graft, the distributor root target makes the opposite
+move, whereas the discarded-instance weakening, distributor weakening and
+inner contraction targets are fixed. All remaining source and label cases
+are the displayed finite incidences. The request input is fixed, so this
+graph isomorphism lifts to a state isomorphism with the original resumed
+search state. This establishes correspondence with the unchanged reduct,
+not merely agreement at the store endpoint.
+
+\lean{Copying/DereferenceReplacement}{114}{186}{Dereference.Replacement.iso}
+
+\lean{Copying/DereferenceReplacement}{188}{190}{Dereference.Replacement.canonical_local}
+
+\Needspace{12\baselineskip}
+\subsection{Coherence of every actual contextual read}
+
+For a local step admitting a dereference match, inspect the rule constructor.
+Every non-read constructor has a different active head label, contradicting
+source-head uniqueness. In the read case, uniqueness identifies the given
+match with the original local match, and the explicit isomorphism applies.
+The parallel local inversion theorem extracts a match from any actual local
+step at a dereference head, using the same constructor analysis.
+
+\lean{Copying/DereferenceCoherence}{9}{31}{Combined.local_dereference_canonical}
+
+\lean{Copying/DereferenceCoherence}{35}{54}{Combined.local_dereference_match}
+
+Inducting over actual rewrite derivations extends match extraction to all
+contextual reads. At a local step use inversion. Under recursive renaming,
+plugging or simultaneous expansion, reflect the active head into the rewritten
+component, extract its match by induction, and transport it outward through
+the corresponding match embedding. No assumption of unique decomposition
+or a pre-existing deterministic matcher is used.
+
+\lean{Copying/DereferenceCoherence}{58}{74}{Combined.rewrite_dereference_match}
+
+A second induction compares each actual read successor with the canonical
+successor of its source match. At a contextual constructor, extract the inner
+match and identify its outward transport with the supplied match by uniqueness.
+Apply induction inside the component and then the appropriate canonical
+renaming, plugging or expansion theorem. In the renaming case, compose with
+the separately specified target isomorphism. Thus independent contextual
+decompositions are compared through one source-determined state.
+
+\lean{Copying/DereferenceCoherence}{77}{102}{Combined.rewrite_dereference_canonical}
+
+Given two reads at the same request, extract a match from the first and
+compare both targets with its canonical successor. Composing one comparison's
+inverse with the other gives a complete recursive state isomorphism between
+the targets. For full-machine steps in rewrite mode, intrinsic search is
+impossible, so both steps must be rewrites and the same theorem applies.
+The generic coherent-step cost law then shows that one actual read step
+consumes exactly one transition and leaves the same full spectrum of future
+successful costs, independently of matching choices.
+
+\lean{Copying/DereferenceCoherence}{105}{112}{Combined.dereference_rewrite_deterministic}
+
+\lean{Copying/DereferenceCoherence}{115}{124}{Combined.dereference_step_deterministic}
+
+\lean{Copying/DereferenceCoherence}{127}{131}{Combined.dereference_cost_spectrum}
+
+An unbounded step is a lift of a bounded step. Destructing two such lifts
+and applying bounded coherence gives the proved representation relation
+between their successors. Representation invariance gives observational
+equivalence at every cost preorder, including equality of costs. These
+statements impose no finite-depth cutoff and no global determinism premise.
+
+\lean{Copying/DereferenceCoherence}{134}{143}{Combined.dereference_unbounded_deterministic}
+
+\lean{Copying/DereferenceCoherence}{146}{149}{Combined.dereference_unbounded_equiv}
+
+\Needspace{12\baselineskip}
+\subsection{All store operations under one theorem}
+
+\termdef{store-successor-coherence}
+The predicate \texttt{StoreHead} holds when the selected request is an
+allocation, dereference, assignment or atom-equality head. Its four constructors
+retain the actual head-incidence evidence. Equality includes both the same-cell
+and distinct-cell operational rules. It asserts the kind of head, not that
+every such source admits a rewrite.
+
+\lean{Copying/StoreCoherence}{8}{12}{Combined.StoreHead}
+
+\emph{Store successor coherence} says that any two actual rewrites from
+one of these heads have recursively isomorphic complete successors, including
+the resumed token. Case analysis on \texttt{StoreHead} applies the four
+independently proved family theorems. The full-machine step theorem follows
+by the same case analysis. This closes the store-operation portion of
+successor coherence while keeping existence and stable-payload conditions
+in the original operational rules.
+
+\lean{Copying/StoreCoherence}{15}{22}{Combined.store_rewrite_deterministic}
+
+\lean{Copying/StoreCoherence}{25}{32}{Combined.store_step_deterministic}
+
+The generic coherent-step theorem now yields a uniform cost law:
+if $s\to t$ is any actual store computation, then $s$ terminates in $n$
+exactly when $n=1+r$ and $t$ terminates in $r$. Finally, destructing unbounded
+lifts transfers coherence to represented states, and representation invariance
+gives successor equivalence for every cost preorder. These are genuine
+consequences of the proved store comparisons; they do not supply the still
+missing application, arithmetic or copying comparisons.
+
+\lean{Copying/StoreCoherence}{35}{38}{Combined.store_cost_spectrum}
+
+\lean{Copying/StoreCoherence}{41}{49}{Combined.store_unbounded_deterministic}
+
+\lean{Copying/StoreCoherence}{52}{55}{Combined.store_unbounded_equiv}
+
+\Needspace{12\baselineskip}
+\subsection{Exact cost of the read prefix with arbitrary contents}
+
+Attach any graph $H$ to the local source's content output. Transport the
+read head through serial composition and compare an arbitrary actual step
+with the serially embedded original local read. Dereference coherence shows
+that every successor is isomorphic to the explicit result retaining $H$.
+Neither termination, stability nor acyclicity of $H$ is assumed.
+
+\lean{Copying/DereferenceCost}{9}{15}{Dereference.contents_successor}
+
+\termdef{read-cost-handoff}
+Let $s$ be this composed graph with a search token at its request, and let
+$p$ be the composed original reduct with a rewrite token at that request.
+The \emph{read cost handoff} is
+\[
+ s\text{ terminates in }n
+ \quad\Longleftrightarrow\quad
+ \exists r,\ n=r+5\ \land\ p\text{ terminates in }r.
+\]
+Its five transitions are: search the instance argument; return from the
+instance; request dereference; perform the store-preserving read rewrite;
+request copying at the new distributor. Apply the exact search-cost theorem
+at the four search transitions and the dereference cost theorem at the
+computation. Eliminating the five intermediate natural numbers gives the
+displayed equation; conversely, inserting $r+4,r+3,r+2,r+1,r$ constructs
+all five predecessor costs. This is a full-machine equivalence for all
+successful costs, not an existence-only local execution.
+
+\lean{Copying/DereferenceCost}{18}{38}{Dereference.contents_cost_handoff}
+
+\Needspace{12\baselineskip}
+The five-step prefix itself always exists: embed the previously proved
+local read run into the combined machine, then transport it through serial
+attachment. No successful execution can have cost at most five. If it did,
+the handoff equation would force the residual cost to be zero. A zero-step
+successful run would make $p$ final, but its mode is rewrite, whereas finality
+requires backtrack at an input. This proves that the mandatory pending copy
+has not been erased, even for literal data.
+
+\lean{Copying/DereferenceCost}{41}{45}{Dereference.contents_prefix}
+
+\lean{Copying/DereferenceCost}{48}{56}{Dereference.contents_no_early_success}
+
+Successor coherence also holds after inserting the read into any typed
+host hole, transporting interfaces along their equalities. Transport the
+head through rebounding and plugging, then compare an arbitrary step with
+the explicitly plugged original local read. This permits internal resumed
+request wires. The fixed five-step cost statement above concerns the serial
+content attachment; an arbitrary surrounding host can perform further work.
+
+\lean{Copying/DereferenceCost}{59}{68}{Dereference.host_successor}
+
+\Needspace{12\baselineskip}
+\subsection{Unchanged translated data and depth padding}
+
+The closed program \texttt{storedTerm} places the literal Figure~16
+translation of any closed term $t$ at the read source's content output.
+Its depth is the translation depth of $t$; focus and hole freedom follow
+from the safety of the read source, translation safety and serial composition.
+The state \texttt{pending} is the explicit original read reduct with the
+same translation attached and its token in rewrite mode. These are heap-state
+regressions; no identification with a whole surface-language read translation
+is asserted.
+
+\lean{Copying/DereferenceCoherenceExamples}{9}{14}{DereferenceCoherenceExamples.storedTerm}
+
+\lean{Copying/DereferenceCoherenceExamples}{17}{21}{DereferenceCoherenceExamples.pending}
+
+For every finite depth padding and every proposed successful cost, the
+unbounded initial execution satisfies exactly the read cost handoff to
+\texttt{pending}. First use the proved padding-invariance theorem to reflect
+successful costs to the original allowance. Then use the bounded/unbounded
+successful-run correspondence and instantiate the arbitrary-contents handoff.
+Lifting the serial prefix also proves an actual five-step unbounded run to
+the specified pending state. The same zero-residual-cost contradiction proves
+that no padding permits a successful cost at most five.
+
+\lean{Copying/DereferenceCoherenceExamples}{24}{31}{DereferenceCoherenceExamples.storedTerm_cost_handoff}
+
+\lean{Copying/DereferenceCoherenceExamples}{34}{39}{DereferenceCoherenceExamples.storedTerm_prefix}
+
+\lean{Copying/DereferenceCoherenceExamples}{42}{50}{DereferenceCoherenceExamples.storedTerm_no_early_success}
+
+Specializing the general cost law to a natural-number literal retains its
+complete translation and copying continuation. Specializing it to the literal
+self-application term $\Omega$ retains its nested boxes as stored data;
+this proves no separate divergence or termination result for $\Omega$.
+Finally, arbitrary-successor coherence specializes to every translated payload,
+preserving the entire attached graph and resumed token under every actual
+contextual read.
+
+\lean{Copying/DereferenceCoherenceExamples}{53}{59}{DereferenceCoherenceExamples.literal_cost_handoff}
+
+\lean{Copying/DereferenceCoherenceExamples}{62}{67}{DereferenceCoherenceExamples.omega_cost_handoff}
+
+\lean{Copying/DereferenceCoherenceExamples}{70}{77}{DereferenceCoherenceExamples.storedTerm_successor}

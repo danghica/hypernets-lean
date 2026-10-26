@@ -85,8 +85,12 @@ successor coherence too, retaining the store, updated payload, discarded old
 contents and token position. Typed target exchange commutes with arbitrary
 context formation; stable writes have exactly seven successful steps with
 arbitrary attached contents and translated-data padding regressions
-(Section~\ref{sec:copying-assignment-coherence}). Successor coherence for
-dereference, application, arithmetic and copying, and the remaining
+(Section~\ref{sec:copying-assignment-coherence}). Dereference now also has
+complete contextual successor coherence, closing this obligation for all
+store-operation heads. Its exact cost law retains the five-step read prefix
+and the subsequent copying continuation, including unchanged translated data
+at every finite padding (Section~\ref{sec:copying-dereference-coherence}).
+Successor coherence for application, arithmetic and copying, and the remaining
 complete-machine laws, are pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the

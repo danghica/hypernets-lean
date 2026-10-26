@@ -51,7 +51,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/b4bf3a556dc2b99dfcc27955000b6f9140048a2c}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/08fae0e1bed69ab0fd5528251b91c718e127dd0d}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -59,7 +59,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{26 October 2026\\\small Source snapshot: \texttt{b4bf3a5}; Lean \texttt{4.35.0}}
+\date{26 October 2026\\\small Source snapshot: \texttt{08fae0e}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -112,8 +112,12 @@ unchanged translated-data regressions and all finite depth padding. Both atom-eq
 have complete successor-state coherence for independently chosen contextual
 matches, and exactly seven successful steps with arbitrary stored contents,
 including unchanged term translations and finite depth padding. Allocation
-also has complete successor coherence. Stable application and all arithmetic
-families complete the local rules.
+also has complete successor coherence. Dereference now completes successor
+coherence for all store operations, including arbitrary contextual matches.
+Its full-machine successful-cost law retains five transitions before the
+actual copying request, followed by that request's successful continuation.
+The unchanged translated-data regressions respect this law at every finite
+padding. Stable application and all arithmetic families complete the local rules.
 Exact padding reflection now discharges concrete execution-padding invariance
 and full term-context congruence. Full-machine laws and the template argument
 remain pending;
@@ -225,6 +229,7 @@ prerequisites.
 \input{94-allocation-coherence}
 \input{95-equality-coherence}
 \input{96-assignment-coherence}
+\input{97-dereference-coherence}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -235,7 +240,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/b4bf3a556dc2b99dfcc27955000b6f9140048a2c}{Repository at revision \texttt{b4bf3a5}}.
+\href{https://github.com/danghica/hypernets-lean/tree/08fae0e1bed69ab0fd5528251b91c718e127dd0d}{Repository at revision \texttt{08fae0e}}.
 \end{thebibliography}
 \clearpage
 \appendix
