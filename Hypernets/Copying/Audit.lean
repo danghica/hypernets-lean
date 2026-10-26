@@ -1,4 +1,4 @@
-import Hypernets.Copying.BinaryRenamingRegression
+import Hypernets.Copying.FullRenamingExamples
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -384,3 +384,45 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.unequalAllowanceBinaryRenaming
 #print axioms Hypernets.Copying.Examples.boxedOperandApplication
 #print axioms Hypernets.Copying.Examples.lambdaFree_namedEnvironment
+
+-- Full original translation renaming via explicit BPerm derivations.
+#print axioms Hypernets.Copying.TypedPermutation.extend
+#print axioms Hypernets.Copying.TypedPermutation.environment_term
+#print axioms Hypernets.Copying.BoxPermutation.inner_bound
+#print axioms Hypernets.Copying.BoxPermutation.inner_free
+#print axioms Hypernets.Copying.BoxPermutation.Pair.unique
+#print axioms Hypernets.Copying.BoxPermutation.Pair.symm
+#print axioms Hypernets.Copying.BoxPermutation.Pair.trans
+#print axioms Hypernets.Copying.InterfacePermutation.net
+#print axioms Hypernets.Copying.InterfacePermutation.iso
+#print axioms Hypernets.Copying.InterfacePermutation.compensate
+#print axioms Hypernets.Copying.InterfacePermutation.roundtrip
+#print axioms Hypernets.Copying.InterfacePermutation.congr
+#print axioms Hypernets.Copying.InterfacePermutation.realize
+#print axioms Hypernets.Copying.BoxPermutation.of_bodyIso
+#print axioms Hypernets.Copying.BoxPermutation.box_output_fixed
+#print axioms Hypernets.Copying.BoxPermutation.nontrivial_not_ordered
+#print axioms Hypernets.Copying.BoxPermutation.bindingFree_right
+#print axioms Hypernets.Copying.BoxPermutation.UpToIso.bindingFree
+#print axioms Hypernets.Copying.BoxPermutation.lift
+#print axioms Hypernets.Copying.BoxPermutation.lambdaPair
+#print axioms Hypernets.Copying.BoxPermutation.lambda_of_action
+#print axioms Hypernets.Copying.AbstractionShell.iso
+#print axioms Hypernets.Copying.AbstractionShell.iso_output
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.of_upToIso
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.abstraction
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.pair
+#print axioms Hypernets.Copying.BoxPermutation.Renaming.abstraction
+#print axioms Hypernets.Copying.BoxPermutation.Renaming.padded_application
+#print axioms Hypernets.Copying.BoxPermutation.Renaming.derivation
+#print axioms Hypernets.Copying.Translation.term_rename_via_boxPermutation
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.allLabels
+#print axioms Hypernets.Copying.Examples.termRenamingDerivation
+#print axioms Hypernets.Copying.Examples.privateCell_fullRenaming
+#print axioms Hypernets.Copying.Examples.constantResult_fullRenaming
+#print axioms Hypernets.Copying.Examples.nestedRenaming
+#print axioms Hypernets.Copying.Examples.unequalDepthRenaming
+#print axioms Hypernets.Copying.Examples.full_namedEnvironment
+#print axioms Hypernets.Copying.Examples.captured_swap_rejected
+#print axioms Hypernets.Copying.Examples.box_swap_not_iso
+#print axioms Hypernets.Copying.Examples.unshifted_box_pair_impossible

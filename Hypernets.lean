@@ -86,3 +86,5 @@ import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.BoundaryRenamingExamples
 import Hypernets.Copying.UnaryFragmentRenaming
 import Hypernets.Copying.BinaryRenamingRegression
+
+import Hypernets.Copying.FullRenamingExamples
