@@ -1,0 +1,632 @@
+\clearpage
+\section{Atom equality by resolved store identity}
+\label{sec:copying-atom-equality}
+Both Figure~19(d) rules (PDF p.~38) now have concrete finite-graph
+implementations. Two instances attached to one atom contraction tree and
+store compare true. Instances attached to two separate trees and stores
+compare false. Both instances are weakened after the comparison, while all
+trees, stores and store-content interfaces remain. The trees and the
+numbers of other references are arbitrary.
+
+The decisive semantic check is identity of the resolved store, not equality
+of stored contents. Successful lookups determine a unique boolean even in
+cyclic hosts, and inserting a fragment into a surrounding graph preserves
+that boolean. Each of the two local rules has a checked seven-step
+search/compute/return execution. Renaming, forward padding and recursive
+label safety are proved. These results complete the local constructions
+for all four Figure~19 store operations.
+
+They do not yet prove determinism of the combined copying UAM, arbitrary
+focused-context matching, or the robustness of the templates. The lookup
+outcome uniqueness theorem below is narrower than uniqueness of an entire
+graph rewrite. Proposition~12.2 and its Figure~16 translation remain
+unchanged, and the full proposition is still unfinished.
+
+\Needspace{12\baselineskip}
+\subsection{The common-store frame}
+
+\termdef{copying-equality-same}
+The common-store fragment has one external term input, $h$ other atom inputs,
+and one term output for the contents of the shared store. Its tree slot has
+$h+2$ atom inputs: the first two come from the two instances; the rest are
+the other references. The redex edge tags are comparison, left instance,
+right instance, tree and store. The reduct replaces the comparison by a
+true constant and adds a separate weakening for each instance.
+
+\lean{Copying/AtomEqualitySameFrames}{8}{8}{AtomEquality.Same.inputs}
+
+\lean{Copying/AtomEqualitySameFrames}{9}{9}{AtomEquality.Same.treeHole}
+
+\lean{Copying/AtomEqualitySameFrames}{10}{12}{AtomEquality.Same.BeforeEdge}
+
+\lean{Copying/AtomEqualitySameFrames}{13}{15}{AtomEquality.Same.AfterEdge}
+
+The external input index is unchanged by the boundary embedding. The
+other-reference list consists of successor positions in increasing order.
+Injectivity of successor and the input constructor proves that this list
+has no duplicates; finite-range membership characterises its elements.
+
+\lean{Copying/AtomEqualitySameFrames}{17}{18}{AtomEquality.Same.inputPort}
+
+\lean{Copying/AtomEqualitySameFrames}{19}{20}{AtomEquality.Same.otherInputs}
+
+\lean{Copying/AtomEqualitySameFrames}{21}{22}{AtomEquality.Same.otherInputs_nodup}
+
+\lean{Copying/AtomEqualitySameFrames}{23}{24}{AtomEquality.Same.mem_otherInputs}
+
+Five internal vertices carry the wiring: two term argument inputs, two
+atom outputs of the instances, and the atom connection between tree root
+and store. The comparison's ordered outputs feed the two term vertices.
+The tree's first two inputs receive the two atom vertices; its root feeds
+the store; the store's term output is the external output. Label, source
+and target functions spell out this graph. The constructor proves finiteness,
+complete vertex coverage, unique incidence, duplicate-free lists and
+signature typing by finite case analysis and the indexed other-input list.
+
+\lean{Copying/AtomEqualitySameFrames}{26}{31}{AtomEquality.Same.beforeLabel}
+
+\lean{Copying/AtomEqualitySameFrames}{33}{38}{AtomEquality.Same.beforeSource}
+
+\lean{Copying/AtomEqualitySameFrames}{40}{45}{AtomEquality.Same.beforeTarget}
+
+\lean{Copying/AtomEqualitySameFrames}{47}{98}{AtomEquality.Same.beforeFrame}
+
+On the reduct side, each consumed instance receives a term weakening at
+its original term input. The true constant consumes the external term
+input and has no output. The atom tree and store wiring are identical to
+the redex wiring. Seven finite edge cases establish the same coverage,
+uniqueness and typing obligations; no tree or store edge is discarded.
+
+\lean{Copying/AtomEqualitySameFrames}{100}{107}{AtomEquality.Same.afterLabel}
+
+\lean{Copying/AtomEqualitySameFrames}{109}{116}{AtomEquality.Same.afterSource}
+
+\lean{Copying/AtomEqualitySameFrames}{118}{125}{AtomEquality.Same.afterTarget}
+
+\lean{Copying/AtomEqualitySameFrames}{127}{178}{AtomEquality.Same.afterFrame}
+
+\Needspace{12\baselineskip}
+\subsection{The distinct-store frame}
+
+\termdef{copying-equality-different}
+The distinct-store fragment has one external term input, $n+m$ other atom
+inputs, and two term outputs for the two stores' contents. Each tree slot
+has one selected instance input and its own other references: $n$ on the
+left, $m$ on the right. The two tree holes have different names. The edge
+types explicitly contain two store occurrences, in addition to two trees
+and two instances. Including these stores is essential: two separate
+reference paths alone would not prove that their eventual stores differ.
+
+\lean{Copying/AtomEqualityDifferentFrames}{8}{8}{AtomEquality.Different.inputs}
+
+\lean{Copying/AtomEqualityDifferentFrames}{9}{9}{AtomEquality.Different.treeHole}
+
+\lean{Copying/AtomEqualityDifferentFrames}{10}{12}{AtomEquality.Different.BeforeEdge}
+
+\lean{Copying/AtomEqualityDifferentFrames}{13}{15}{AtomEquality.Different.AfterEdge}
+
+The left other-reference block occupies positions $1$ through $n$; the
+right block occupies positions $n+1$ through $n+m$. The finite lists use
+these offsets explicitly. Their duplicate-freedom proofs reduce equality
+of port indices to equality of the corresponding finite indices. Membership
+lemmas expose the index witnesses, allowing the frame proof to show that
+the two blocks cannot overlap.
+
+\lean{Copying/AtomEqualityDifferentFrames}{17}{18}{AtomEquality.Different.inputPort}
+
+\lean{Copying/AtomEqualityDifferentFrames}{19}{20}{AtomEquality.Different.leftInputs}
+
+\lean{Copying/AtomEqualityDifferentFrames}{21}{22}{AtomEquality.Different.rightInputs}
+
+\lean{Copying/AtomEqualityDifferentFrames}{23}{24}{AtomEquality.Different.leftInputs_nodup}
+
+\lean{Copying/AtomEqualityDifferentFrames}{25}{26}{AtomEquality.Different.rightInputs_nodup}
+
+\lean{Copying/AtomEqualityDifferentFrames}{27}{28}{AtomEquality.Different.mem_leftInputs}
+
+\lean{Copying/AtomEqualityDifferentFrames}{29}{30}{AtomEquality.Different.mem_rightInputs}
+
+The redex has two internal term vertices and four internal atom vertices.
+The two instance outputs enter their respective tree inputs; each tree
+root feeds its own store; the stores feed external term outputs zero and
+one. The other-reference blocks attach to the corresponding trees. The
+net proof checks coverage by separating external input zero, the left
+block and the right block. Source uniqueness uses the disjoint index
+intervals; target uniqueness separates the two store outputs. The remaining
+finite cases establish typing and all incidence requirements.
+
+\lean{Copying/AtomEqualityDifferentFrames}{32}{39}{AtomEquality.Different.beforeLabel}
+
+\lean{Copying/AtomEqualityDifferentFrames}{41}{48}{AtomEquality.Different.beforeSource}
+
+\lean{Copying/AtomEqualityDifferentFrames}{50}{57}{AtomEquality.Different.beforeTarget}
+
+\lean{Copying/AtomEqualityDifferentFrames}{59}{128}{AtomEquality.Different.beforeFrame}
+
+The reduct retains those six internal vertices, both trees and both
+stores. It weakens each consumed instance and places a false constant at
+the external term input. The nine-edge frame proves the same interface
+and typing properties. The two output positions remain distinct, so the
+store identities cannot be merged merely by choosing equal contents.
+
+\lean{Copying/AtomEqualityDifferentFrames}{130}{139}{AtomEquality.Different.afterLabel}
+
+\lean{Copying/AtomEqualityDifferentFrames}{141}{150}{AtomEquality.Different.afterSource}
+
+\lean{Copying/AtomEqualityDifferentFrames}{152}{161}{AtomEquality.Different.afterTarget}
+
+\lean{Copying/AtomEqualityDifferentFrames}{163}{232}{AtomEquality.Different.afterFrame}
+
+\Needspace{12\baselineskip}
+\subsection{Literal rule graphs and depth allowances}
+
+For the common-store case, the filling functions put the supplied arbitrary
+atom contraction tree in its slot and fill every other edge with its
+original primitive corolla. Expansion followed by primitive relabelling
+produces the two actual hypernets at every allowance $d$. The rule has one
+constructor relating exactly those graphs. It requires an actual contraction
+tree, without any assumed machine determinism or observational equivalence.
+
+\lean{Copying/AtomEquality}{8}{16}{AtomEquality.Same.beforeFill}
+
+\lean{Copying/AtomEquality}{17}{19}{AtomEquality.Same.before}
+
+\lean{Copying/AtomEquality}{20}{30}{AtomEquality.Same.afterFill}
+
+\lean{Copying/AtomEquality}{31}{33}{AtomEquality.Same.after}
+
+\lean{Copying/AtomEquality}{34}{35}{AtomEquality.Same.Rule}
+
+The designated left instance, right instance and store are explicit edge
+injections on each side. They provide the coordinates used by all lookup
+and execution proofs. Raising the allowance preserves each rule graph
+literally because all of its labels are primitive and the graph wiring is
+unchanged. Rule preservation follows by rewriting these equalities; induction
+gives every finite padding amount.
+
+\lean{Copying/AtomEquality}{36}{36}{AtomEquality.Same.beforeLeft}
+
+\lean{Copying/AtomEquality}{37}{37}{AtomEquality.Same.beforeRight}
+
+\lean{Copying/AtomEquality}{38}{38}{AtomEquality.Same.beforeStore}
+
+\lean{Copying/AtomEquality}{40}{40}{AtomEquality.Same.afterLeft}
+
+\lean{Copying/AtomEquality}{41}{41}{AtomEquality.Same.afterRight}
+
+\lean{Copying/AtomEquality}{42}{42}{AtomEquality.Same.afterStore}
+
+\lean{Copying/AtomEquality}{39}{39}{AtomEquality.Same.before_raise}
+
+\lean{Copying/AtomEquality}{43}{43}{AtomEquality.Same.after_raise}
+
+\lean{Copying/AtomEquality}{44}{47}{AtomEquality.Same.rule_raise}
+
+\lean{Copying/AtomEquality}{48}{52}{AtomEquality.Same.rule_pad}
+
+The distinct-store filling functions put the two arbitrary trees into
+separate slots, retaining the other primitive corollas. The rule likewise
+relates the literal redex and reduct. Separate edge injections identify
+both instances and both stores before and after the rewrite. Its primitive
+construction has the same literal raising equalities and finite-padding
+preservation, again proved directly from the constructors.
+
+\lean{Copying/AtomEquality}{55}{65}{AtomEquality.Different.beforeFill}
+
+\lean{Copying/AtomEquality}{66}{68}{AtomEquality.Different.before}
+
+\lean{Copying/AtomEquality}{69}{81}{AtomEquality.Different.afterFill}
+
+\lean{Copying/AtomEquality}{82}{84}{AtomEquality.Different.after}
+
+\lean{Copying/AtomEquality}{85}{86}{AtomEquality.Different.Rule}
+
+\lean{Copying/AtomEquality}{87}{87}{AtomEquality.Different.beforeLeft}
+
+\lean{Copying/AtomEquality}{88}{88}{AtomEquality.Different.beforeRight}
+
+\lean{Copying/AtomEquality}{89}{89}{AtomEquality.Different.beforeStore}
+
+\lean{Copying/AtomEquality}{90}{90}{AtomEquality.Different.beforeStoreRight}
+
+\lean{Copying/AtomEquality}{92}{92}{AtomEquality.Different.afterLeft}
+
+\lean{Copying/AtomEquality}{93}{93}{AtomEquality.Different.afterRight}
+
+\lean{Copying/AtomEquality}{94}{94}{AtomEquality.Different.afterStore}
+
+\lean{Copying/AtomEquality}{95}{95}{AtomEquality.Different.afterStoreRight}
+
+\lean{Copying/AtomEquality}{91}{91}{AtomEquality.Different.before_raise}
+
+\lean{Copying/AtomEquality}{96}{96}{AtomEquality.Different.after_raise}
+
+\lean{Copying/AtomEquality}{97}{100}{AtomEquality.Different.rule_raise}
+
+\lean{Copying/AtomEquality}{101}{105}{AtomEquality.Different.rule_pad}
+
+\Needspace{12\baselineskip}
+\subsection{Resolving both references before and after comparison}
+
+The common path lemma concerns one contraction tree embedded into two
+actual hypernets. Suppose its adjacency steps, selected input attachment
+and root-to-store attachment are preserved in both embeddings, and the
+two designated destinations have store labels. Tree reachability supplies
+a path of length $q$ from the selected input edge to the root. Map that
+same path into both graphs, prepend the instance hop and append the store
+hop. Both resolutions therefore have exactly $q+2$ hops. The concrete
+applications below discharge every embedding premise; the local rules do
+not assume these routing properties.
+
+\lean{Copying/AtomEqualityResolution}{9}{22}{AtomEquality.tree_resolution_pair}
+
+In the common-store case, the left and right tree-edge injections use the
+same tree slot, but the entry inputs are zero and one respectively. The
+vertex maps are expansion insertion maps. Adjacent tree edges become atom
+hops because their labels are weakening or contraction and their shared
+vertex is preserved. The instance-target calculation proves entry, and
+the tree-root output calculation proves exit to the shared store.
+
+\lean{Copying/AtomEqualityResolution}{24}{24}{AtomEquality.Same.beforeLeftTree}
+
+\lean{Copying/AtomEqualityResolution}{25}{26}{AtomEquality.Same.beforeLeftVertex}
+
+\lean{Copying/AtomEqualityResolution}{27}{27}{AtomEquality.Same.afterLeftTree}
+
+\lean{Copying/AtomEqualityResolution}{28}{29}{AtomEquality.Same.afterLeftVertex}
+
+\lean{Copying/AtomEqualityResolution}{30}{68}{AtomEquality.Same.resolves_left}
+
+\lean{Copying/AtomEqualityResolution}{69}{69}{AtomEquality.Same.beforeRightTree}
+
+\lean{Copying/AtomEqualityResolution}{70}{71}{AtomEquality.Same.beforeRightVertex}
+
+\lean{Copying/AtomEqualityResolution}{72}{72}{AtomEquality.Same.afterRightTree}
+
+\lean{Copying/AtomEqualityResolution}{73}{74}{AtomEquality.Same.afterRightVertex}
+
+\lean{Copying/AtomEqualityResolution}{75}{113}{AtomEquality.Same.resolves_right}
+
+The resulting existence theorems preserve each reference's own exact
+resolution count across the rewrite. They do not assert that the left
+and right references have equal counts. For any proposed count, uniqueness
+of successful store traces identifies it with the constructed count; this
+proves the two exact-count equivalences.
+
+\lean{Copying/AtomEqualityResolution}{114}{120}{AtomEquality.Same.left_resolution_count_iff}
+
+\lean{Copying/AtomEqualityResolution}{121}{127}{AtomEquality.Same.right_resolution_count_iff}
+
+In the distinct-store case, the left edge and vertex maps use the first
+tree slot and the right maps use the second. Each selected entry is input
+zero of its own tree. The two root outputs attach to their own designated
+stores. The same adjacency, entry and exit calculations discharge the
+common path lemma for each reference separately.
+
+\lean{Copying/AtomEqualityResolution}{130}{130}{AtomEquality.Different.beforeLeftTree}
+
+\lean{Copying/AtomEqualityResolution}{131}{132}{AtomEquality.Different.beforeLeftVertex}
+
+\lean{Copying/AtomEqualityResolution}{133}{133}{AtomEquality.Different.afterLeftTree}
+
+\lean{Copying/AtomEqualityResolution}{134}{135}{AtomEquality.Different.afterLeftVertex}
+
+\lean{Copying/AtomEqualityResolution}{136}{174}{AtomEquality.Different.resolves_left}
+
+\lean{Copying/AtomEqualityResolution}{175}{175}{AtomEquality.Different.beforeRightTree}
+
+\lean{Copying/AtomEqualityResolution}{176}{177}{AtomEquality.Different.beforeRightVertex}
+
+\lean{Copying/AtomEqualityResolution}{178}{178}{AtomEquality.Different.afterRightTree}
+
+\lean{Copying/AtomEqualityResolution}{179}{180}{AtomEquality.Different.afterRightVertex}
+
+\lean{Copying/AtomEqualityResolution}{181}{219}{AtomEquality.Different.resolves_right}
+
+The resulting existence theorems preserve each reference's own exact
+resolution count across the rewrite. They do not assert that the left
+and right references have equal counts. For any proposed count, uniqueness
+of successful store traces identifies it with the constructed count; this
+proves the two exact-count equivalences.
+
+\lean{Copying/AtomEqualityResolution}{220}{226}{AtomEquality.Different.left_resolution_count_iff}
+
+\lean{Copying/AtomEqualityResolution}{227}{233}{AtomEquality.Different.right_resolution_count_iff}
+
+\Needspace{12\baselineskip}
+\subsection{Store identity determines a unique boolean}
+
+\termdef{copying-equality-outcome}
+For a graph $G$ and selected edges $a,b$, a justified comparison outcome
+$r$ consists of successful store traces $a\leadsto s$ and $b\leadsto t$
+with their individual lengths, together with $r=\mathsf{true}$ if and only
+if $s=t$. The definition compares the destination edges themselves. It
+never inspects their term outputs or stored contents.
+
+Two such witnesses must have the same left store and the same right store,
+by uniqueness of successful store resolution. Substituting these identities
+leaves the same truth condition for both booleans, so Boolean case analysis
+proves their equality. This result needs no global acyclicity and no
+assumption that the full UAM is deterministic.
+
+\lean{Copying/AtomEqualityIdentity}{9}{11}{AtomEquality.Outcome}
+
+\lean{Copying/AtomEqualityIdentity}{14}{21}{AtomEquality.outcome_unique}
+
+Inserting a matched fragment into any correctly typed hole preserves both
+successful traces with their exact lengths. Store occurrences are mapped
+by the inserted-edge injection, which preserves and reflects equality.
+Consequently the comparison outcome is preserved. Applying outcome
+uniqueness in the resulting host graph excludes any contrary successful
+outcome obtained by a different routing witness. This proves locality of
+the identity decision; it does not by itself prove contextual closure or
+uniqueness of all graph rewrites.
+
+\lean{Copying/AtomEqualityIdentity}{24}{30}{AtomEquality.outcome_insert}
+
+\lean{Copying/AtomEqualityIdentity}{33}{37}{AtomEquality.inserted_outcome_unique}
+
+In the common-store construction, the two resolution theorems have the
+same destination edge, on both rule sides. They therefore justify true.
+A false outcome is impossible by uniqueness of the comparison result.
+
+\lean{Copying/AtomEqualityIdentity}{41}{45}{AtomEquality.Same.true_before}
+
+\lean{Copying/AtomEqualityIdentity}{47}{51}{AtomEquality.Same.true_after}
+
+\lean{Copying/AtomEqualityIdentity}{53}{55}{AtomEquality.Same.cannot_return_false}
+
+In the distinct-store construction, equality of the designated stores
+would force two distinct frame tags to be equal. This contradiction proves
+store distinctness before and after the rule. Together with the two
+successful resolutions it justifies false on both sides. A true outcome
+is therefore impossible, regardless of the contents attached to the stores.
+
+\lean{Copying/AtomEqualityIdentity}{59}{61}{AtomEquality.Different.stores_distinct_before}
+
+\lean{Copying/AtomEqualityIdentity}{63}{65}{AtomEquality.Different.stores_distinct_after}
+
+\lean{Copying/AtomEqualityIdentity}{67}{71}{AtomEquality.Different.false_before}
+
+\lean{Copying/AtomEqualityIdentity}{73}{77}{AtomEquality.Different.false_after}
+
+\lean{Copying/AtomEqualityIdentity}{79}{81}{AtomEquality.Different.cannot_return_true}
+
+\Needspace{12\baselineskip}
+\subsection{The search and equality subsystem}
+
+\termdef{copying-equality-subsystem}
+A state consists of its actual graph and token position. One common local
+transition relation contains intrinsic search and both equality rewrites,
+with the interfaces fixed by their respective fragments. Each rewrite
+starts in rewrite mode at the external term input and resets search at
+that input in the reduct. Finality is backtracking at an external input.
+The search finality theorem excludes another search transition there;
+both equality constructors require a different focus mode. Thus final
+normality is proved for this subsystem machine.
+
+\lean{Copying/AtomEqualityExecution}{8}{8}{AtomEquality.State}
+
+\lean{Copying/AtomEqualityExecution}{9}{15}{AtomEquality.Step}
+
+\lean{Copying/AtomEqualityExecution}{17}{27}{AtomEquality.final_normal}
+
+\lean{Copying/AtomEqualityExecution}{29}{32}{AtomEquality.machine}
+
+For the common-store case, the argument coordinates
+are the two internal term vertices. Search enters the left instance, returns
+from it, resumes at the right instance, and returns from it. Backtracking
+through the comparison head then requests rewriting. The result-edge
+selector identifies the literal true constant in the reduct, and its label
+theorem checks that value directly. Searching that constant returns at the
+external input in one step. Composing the five pre-compute search steps,
+the equality rewrite and the final return gives exactly seven transitions.
+These are local fragment executions; a complete execution of a translated
+source equality expression in an arbitrary context is not claimed here.
+
+\lean{Copying/AtomEqualityExecution}{34}{34}{AtomEquality.Same.leftArgument}
+
+\lean{Copying/AtomEqualityExecution}{35}{35}{AtomEquality.Same.rightArgument}
+
+\lean{Copying/AtomEqualityExecution}{36}{40}{AtomEquality.Same.search_left}
+
+\lean{Copying/AtomEqualityExecution}{41}{44}{AtomEquality.Same.left_returns}
+
+\lean{Copying/AtomEqualityExecution}{45}{48}{AtomEquality.Same.right_returns}
+
+\lean{Copying/AtomEqualityExecution}{49}{51}{AtomEquality.Same.search_right}
+
+\lean{Copying/AtomEqualityExecution}{53}{55}{AtomEquality.Same.ready}
+
+\lean{Copying/AtomEqualityExecution}{57}{57}{AtomEquality.Same.resultEdge}
+
+\lean{Copying/AtomEqualityExecution}{58}{59}{AtomEquality.Same.result_label}
+
+\lean{Copying/AtomEqualityExecution}{61}{65}{AtomEquality.Same.result_returns}
+
+\lean{Copying/AtomEqualityExecution}{67}{73}{AtomEquality.Same.comparison_run}
+
+For the distinct-store case, the argument coordinates
+are the two internal term vertices. Search enters the left instance, returns
+from it, resumes at the right instance, and returns from it. Backtracking
+through the comparison head then requests rewriting. The result-edge
+selector identifies the literal false constant in the reduct, and its label
+theorem checks that value directly. Searching that constant returns at the
+external input in one step. Composing the five pre-compute search steps,
+the equality rewrite and the final return gives exactly seven transitions.
+These are local fragment executions; a complete execution of a translated
+source equality expression in an arbitrary context is not claimed here.
+
+\lean{Copying/AtomEqualityExecution}{76}{76}{AtomEquality.Different.leftArgument}
+
+\lean{Copying/AtomEqualityExecution}{77}{77}{AtomEquality.Different.rightArgument}
+
+\lean{Copying/AtomEqualityExecution}{78}{82}{AtomEquality.Different.search_left}
+
+\lean{Copying/AtomEqualityExecution}{83}{86}{AtomEquality.Different.left_returns}
+
+\lean{Copying/AtomEqualityExecution}{87}{90}{AtomEquality.Different.right_returns}
+
+\lean{Copying/AtomEqualityExecution}{91}{93}{AtomEquality.Different.search_right}
+
+\lean{Copying/AtomEqualityExecution}{95}{97}{AtomEquality.Different.ready}
+
+\lean{Copying/AtomEqualityExecution}{99}{99}{AtomEquality.Different.resultEdge}
+
+\lean{Copying/AtomEqualityExecution}{100}{101}{AtomEquality.Different.result_label}
+
+\lean{Copying/AtomEqualityExecution}{103}{107}{AtomEquality.Different.result_returns}
+
+\lean{Copying/AtomEqualityExecution}{109}{115}{AtomEquality.Different.comparison_run}
+
+\Needspace{12\baselineskip}
+\subsection{Representation and boundary preservation}
+
+For the common-store construction, ordered tree-carrier
+isomorphisms extend to both rule sides. Componentwise expansion uses the
+supplied isomorphism in each tree slot and identity on every primitive
+corolla. Primitive relabelling lifts that isomorphism to the required
+allowance. The two weakening selectors then prove explicitly that each
+consumed instance is fed by a term weakening at its original source.
+
+\lean{Copying/AtomEqualityPreservation}{8}{16}{AtomEquality.Same.before_congr}
+
+\lean{Copying/AtomEqualityPreservation}{17}{27}{AtomEquality.Same.after_congr}
+
+\lean{Copying/AtomEqualityPreservation}{28}{28}{AtomEquality.Same.discardLeft}
+
+\lean{Copying/AtomEqualityPreservation}{29}{31}{AtomEquality.Same.left_weakened}
+
+\lean{Copying/AtomEqualityPreservation}{32}{32}{AtomEquality.Same.discardRight}
+
+\lean{Copying/AtomEqualityPreservation}{33}{35}{AtomEquality.Same.right_weakened}
+
+The single store target remains external output zero. Every other tree
+input $i+2$ remains external input $i+1$ before and after comparison, as
+shown by indexing the two-prefix source list. The stored content and all
+other-reference attachments therefore retain their ordered boundary positions.
+
+\lean{Copying/AtomEqualityPreservation}{36}{38}{AtomEquality.Same.store_boundary}
+
+\lean{Copying/AtomEqualityPreservation}{39}{43}{AtomEquality.Same.other_references}
+
+For the distinct-store construction, ordered tree-carrier
+isomorphisms extend to both rule sides. Componentwise expansion uses the
+supplied isomorphism in each tree slot and identity on every primitive
+corolla. Primitive relabelling lifts that isomorphism to the required
+allowance. The two weakening selectors then prove explicitly that each
+consumed instance is fed by a term weakening at its original source.
+
+\lean{Copying/AtomEqualityPreservation}{46}{56}{AtomEquality.Different.before_congr}
+
+\lean{Copying/AtomEqualityPreservation}{57}{69}{AtomEquality.Different.after_congr}
+
+\lean{Copying/AtomEqualityPreservation}{70}{70}{AtomEquality.Different.discardLeft}
+
+\lean{Copying/AtomEqualityPreservation}{71}{73}{AtomEquality.Different.left_weakened}
+
+\lean{Copying/AtomEqualityPreservation}{74}{74}{AtomEquality.Different.discardRight}
+
+\lean{Copying/AtomEqualityPreservation}{75}{77}{AtomEquality.Different.right_weakened}
+
+The two store targets remain external outputs zero and one respectively.
+Other left-tree input $i+1$ remains input $i+1$; other right-tree input
+$j+1$ remains input $n+j+1$. The finite-range source lists prove these
+four before/after equalities without permuting reference blocks.
+
+\lean{Copying/AtomEqualityPreservation}{78}{82}{AtomEquality.Different.store_boundaries}
+
+\lean{Copying/AtomEqualityPreservation}{83}{87}{AtomEquality.Different.other_left_references}
+
+\lean{Copying/AtomEqualityPreservation}{88}{92}{AtomEquality.Different.other_right_references}
+
+\Needspace{12\baselineskip}
+\subsection{Safety and stored-content regressions}
+
+Recursive label safety for the common-store fragments follows
+by classifying the finite frame edges. Tree labels satisfy the chosen
+predicate whenever atom weakening and contraction do; the other edges
+require the appropriate comparison/result operation, instances, stores
+and term weakenings. Specialising the predicate to exclude focus labels,
+or hole labels, proves both rule sides focus-free and hole-free at every
+allowance. The temporary tree slots have been filled by actual graphs.
+
+\lean{Copying/AtomEqualitySafety}{7}{18}{AtomEquality.Same.before_labels}
+
+\lean{Copying/AtomEqualitySafety}{19}{32}{AtomEquality.Same.after_labels}
+
+\lean{Copying/AtomEqualitySafety}{33}{38}{AtomEquality.Same.focusFree_sides}
+
+\lean{Copying/AtomEqualitySafety}{39}{44}{AtomEquality.Same.holeFree_sides}
+
+Recursive label safety for the distinct-store fragments follows
+by classifying the finite frame edges. Tree labels satisfy the chosen
+predicate whenever atom weakening and contraction do; the other edges
+require the appropriate comparison/result operation, instances, stores
+and term weakenings. Specialising the predicate to exclude focus labels,
+or hole labels, proves both rule sides focus-free and hole-free at every
+allowance. The temporary tree slots have been filled by actual graphs.
+
+\lean{Copying/AtomEqualitySafety}{47}{61}{AtomEquality.Different.before_labels}
+
+\lean{Copying/AtomEqualitySafety}{62}{78}{AtomEquality.Different.after_labels}
+
+\lean{Copying/AtomEqualitySafety}{79}{84}{AtomEquality.Different.focusFree_sides}
+
+\lean{Copying/AtomEqualitySafety}{85}{90}{AtomEquality.Different.holeFree_sides}
+
+Serially attaching arbitrary contents preserves a justified outcome.
+Both successful traces lift into the left serial component; equality of
+store edges is preserved and reflected by its injection. The common-store
+case thus compares true for arbitrary contents. A weakening-free binary
+tree supplies a checked noncanonical seven-step true execution.
+
+\lean{Copying/AtomEqualityExamples}{9}{17}{AtomEquality.outcome_serial_left}
+
+\lean{Copying/AtomEqualityExamples}{21}{23}{AtomEquality.Same.arbitrary_contents}
+
+\lean{Copying/AtomEqualityExamples}{25}{28}{AtomEquality.Same.noncanonical_run}
+
+The distinct-store case compares false for arbitrary two-input contents.
+No surrounding content graph can identify the designated stores in a
+successful comparison: a hypothetical true outcome contradicts outcome
+uniqueness. The theorem does not require the contents to terminate or the
+surrounding graph to be acyclic. It is a routing theorem, not an assertion
+that arbitrary callbacks have already been executed in the full language.
+
+\lean{Copying/AtomEqualityExamples}{32}{35}{AtomEquality.Different.arbitrary_contents}
+
+\lean{Copying/AtomEqualityExamples}{37}{41}{AtomEquality.Different.contents_cannot_identify_stores}
+
+The final regression attaches two copies of the unchanged Figure~16
+translation of the same natural numeral to the two stores. The heap and
+literal-edge selectors retain their actual distributors and component
+tags. Both literal labels denote the same numeral, and explicit incidence
+equalities connect the respective store targets to those literal sources.
+Nevertheless the reference comparison is false, by the arbitrary-contents
+theorem. This checks that equality has not been replaced by comparison of
+stored values.
+
+\lean{Copying/AtomEqualityExamples}{44}{45}{AtomEquality.Different.identicalContents}
+
+\lean{Copying/AtomEqualityExamples}{47}{49}{AtomEquality.Different.equalValueHeap}
+
+\lean{Copying/AtomEqualityExamples}{51}{52}{AtomEquality.Different.equalValueLeft}
+
+\lean{Copying/AtomEqualityExamples}{53}{54}{AtomEquality.Different.equalValueRight}
+
+\lean{Copying/AtomEqualityExamples}{56}{58}{AtomEquality.Different.identical_literal_labels}
+
+\lean{Copying/AtomEqualityExamples}{60}{62}{AtomEquality.Different.identical_literal_attachments}
+
+\lean{Copying/AtomEqualityExamples}{65}{67}{AtomEquality.Different.identical_contents_compare_false}
+
+The full build checks 335 jobs. All three axiom audits pass: 6 abstract,
+477 graph and 652 copying results, using only standard Lean logical axioms.
+Estimated completion of Proposition~12.2 is about 67\% by mathematical effort,
+with broad uncertainty of 52--77\% (26 October 2026). All four store operations
+now have local concrete rules. Arithmetic and application remain to be
+constructed, followed by the combined-machine laws, template robustness,
+semantic weakening and Figure~22 equivalence chain. Appendix~B.1 retains
+those obligations and removes atom-equality construction from pending work.
+

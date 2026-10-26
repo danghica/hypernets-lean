@@ -56,8 +56,10 @@ local execution, safety, renaming, forward padding and shared-store resolution
 integration remain pending. Stable assignment (Figure~19(c)) now has a
 concrete local rule, preserved store resolution and old contents, checked
 execution, safety, renaming and forward padding
-(Section~\ref{sec:copying-assignment}). Equality testing (Figure~19(d)) and
-arithmetic/application behaviour remain pending.
+(Section~\ref{sec:copying-assignment}). Both equality-testing cases (Figure~19(d)) now have concrete rules,
+exact local runs, safety, representation laws and context-stable store-identity
+outcomes (Section~\ref{sec:copying-atom-equality}). Arithmetic/application
+behaviour and complete-machine integration remain pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its
