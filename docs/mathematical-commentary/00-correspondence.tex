@@ -65,9 +65,21 @@ exact-cost padding of all combined runs are proved in
 Section~\ref{sec:copying-arithmetic-padding}. Exact reflection of arbitrary
 padded matches and runs now proves the converse, discharging concrete
 execution-padding invariance and full term-context congruence
-(Section~\ref{sec:copying-padding-reflection}). Match independence, focused-state
-correspondence, deterministic combined behaviour, refocusing and the specimen
-interface remain unfinished.
+(Section~\ref{sec:copying-padding-reflection}). Canonical source selection is
+now proved for every contextual rewrite, including ordered numeric operands,
+reference-equality branches, copy payload heads and read/write stores.
+Recursive runtime safety holds throughout every finite run
+(Section~\ref{sec:copying-selection}). These results allow independently chosen
+matches, but do not yet prove their successor graphs isomorphic. Successor
+coherence, focused-state correspondence, deterministic combined behaviour,
+refocusing and the specimen interface remain unfinished.
+
+The new recognition predicate records proved facts about the existing source
+graph. It is not a new reduction rule or a replacement for stability and
+copyability premises. The runtime alphabet adds stores to the translation
+alphabet, since allocation introduces stores; preserving the smaller alphabet
+would be false. Neither hidden focus edges nor holes are introduced, even
+inside copied or opened boxes.
 
 The new auxiliary truncation is a structural proof device. A recursive
 representability predicate characterizes exactly the isomorphism-closed image

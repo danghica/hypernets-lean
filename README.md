@@ -9,33 +9,36 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: exact execution padding reflection
+## Latest milestone: canonical match selection and runtime safety
 
-Every run from a padded combined-machine state now reflects to a run of
-**exactly the same length** at the original allowance, with an isomorphic
-padded endpoint. Together with forward transport this proves equality of all
-successful execution costs, for every finite amount of padding.
+Every contextual combined rewrite now has a **unique recognized rule choice**.
+Independently chosen matches agree on operation family, ordered arithmetic
+operands, reference-equality result and copy-head primitive. Stronger occurrence
+results identify the same actual copy payload-head edge and read/write store
+edge in arbitrary hosts. The matched trees need not be isomorphic or have the
+same interface. Successful sharing/store traces also have unique lengths.
 
-The proof constructs typed truncation, characterizes the image of padding,
-reflects copyability, and descends all local and contextual matches while
-proving preservation of the unused depth layer. It assumes no determinism,
-refocusing or matching independence. The auxiliary truncation is not a new
-machine rule. The proposition's terms and Figure 16 translation are unchanged.
+Recursive runtime safety now holds throughout every finite execution, including
+inside copied or opened boxes. Runtime graphs admit the stores created by
+allocation; hidden focus edges and holes remain excluded. A stable payload
+cannot be rewritten at its input even after attachment to an arbitrary host.
+The proposition's terms, Figure 16 translation and operational rules are unchanged.
 
-The concrete execution now discharges `RespectsPadding`. Observation reflection,
-the cofinal-allowance criterion and full term-context congruence consequently
-have both representation premises discharged, including for terms with unequal
-minimum translation depths. Padding reflection is removed from Appendix B.1.
-Matching independence, determinism/refocusing, specimen locality, template
-robustness and Proposition 12.2 remain unfinished.
+This completes **source selection**, not successor-graph coherence: independently
+chosen matches must still be proved to yield isomorphic successor states.
+Refocusing, focused-graph correspondence, specimen locality, template robustness
+and Proposition 12.2 remain unfinished. Appendix B.1 removes the completed
+selection and recursive-safety obligations and retains these remaining tasks.
+None of its four broad packages is claimed wholly closed.
 
-Commentary Section 88 explains all 89 new declarations with immutable source
-links. Full build: 362 jobs. All three axiom audits pass (6 abstract, 477 graph,
-1,001 copying), with no project axioms or unfinished proofs.
+Commentary Section 89 explains all 103 new declarations with immutable source
+links. Full build: 369 jobs. All three axiom audits pass (6 abstract, 477 graph,
+1,104 copying), using only Lean's standard logical axioms.
 
-Estimated completion by mathematical effort: **about 78%**, broadly **60–88%**,
-as of 26 October 2026. This is a judgement about proof difficulty, not a
-declaration count; the template argument and final Figure 22 chain remain substantial.
+Estimated completion by mathematical effort: **about 80%**, broadly **62–90%**,
+as of 26 October 2026, up from 78%. This is a judgement about proof difficulty,
+not a declaration count; successor coherence, the eleven-template argument and
+the final Figure 22 chain remain substantial.
 
 ## Proposition 12.2: current extension target
 

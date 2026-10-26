@@ -30,23 +30,26 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites and their proofs are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-padding-reflection}.
-Exact padding reflection is complete, including copyability reflection,
-representability preservation, arbitrary contextual matches and finite runs.
-Concrete execution-padding invariance and full term-context congruence are proved.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-selection}.
+Exact padding invariance and concrete full term-context congruence are proved.
+Canonical source selection is now proved for all contextual rewrites, including
+copy heads, store destinations, comparison answers and ordered numeric operands.
+Recursive runtime safety and stable-input inertness are also proved.
 Completed tasks are omitted below.
 The four remaining tasks are:
 \begin{enumerate}
-\item Prove the remaining operational invariants for stable and
-copyable graphs. Give the completed structural renaming derivations their
+\item Prove any further stability/copyability invariants required by the
+specimen and template arguments beyond recursive label safety and stable-input
+inertness. Give the completed structural renaming derivations their
 contextual-equivalence interpretation, using proved BPerm robustness and execution
 congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
 and graph-level substitution laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
-\item Prove matching independence, including independence
-of the copy rule from its contraction-tree match; establish deterministic
-behaviour up to representation, refocusing and specimen locality for the
-complete unbounded machine. Prove correspondence with the paper's focused
+\item Complete matching independence by proving that independently chosen
+matches produce recursively isomorphic successor states, including the residual
+copy tree, complete copied payload, distributors and retained host. Establish
+deterministic behaviour up to representation, refocusing and specimen locality
+for the complete unbounded machine. Prove correspondence with the paper's focused
 graph representation and preserve the completed execution-isomorphism and
 exact padding-invariance laws through any necessary semantic corrections.
 Retain the zero-input qualification of Lemma~E.1.

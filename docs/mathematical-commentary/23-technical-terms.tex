@@ -42,6 +42,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{copying-assignment-subsystem}{Assignment subsystem}{Intrinsic search plus the stable local assignment rule, with final normality and checked seven-step literal-value executions.}
 
+\glossaryentry{atom-match-decision}{Atom-comparison decision}{A Boolean fixed by whether the two ordered arguments resolve to the same store occurrence.}
+
 \glossaryentry{atom-store-resolution}{Atom-store resolution}{An exact sequence of atom hops ending at a store, without following its term output.}
 
 \glossaryentry{copying-atomic-renaming}{Atomic translation renaming}{Bijective resource renaming for the original variable, atom and constant translation clauses, preserving their actual graph wiring.}
@@ -113,6 +115,10 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{copying-cofinal-observations}{Cofinal observation allowances}{An arbitrarily large collection of common adequate depths; equivalence there reflects to every adequate depth under the execution representation laws.}
 
 \glossaryentry{combined-copying-subsystem}{Combined copying subsystem}{The local copying, store, application and arithmetic rules together with intrinsic search and explicit shallow contextual rewrite closure.}
+
+\glossaryentry{combined-rule-choice}{Combined rule choice}{Source matching data: rule family, comparison answer, copy-head primitive, or ordered arithmetic numbers.}
+
+\glossaryentry{combined-recognition}{Combined source recognition}{A predicate reading rule-choice data from the source graph; all actual rewrites have a unique recognized choice.}
 
 \glossaryentry{copying-common-allowance-iso}{Common-allowance isomorphism}{Existence of an adequate common depth at which the two original graphs, padded by the original operation, are recursively isomorphic.}
 
@@ -190,9 +196,13 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{coordinate-machine}{Coordinate search machine}{Search on mode--vertex pairs, with successful return at an input; defined also for open contexts.}
 
+\glossaryentry{copy-resolution}{Copy resolution}{An exact term-sharing trace from a selected wire to an instance or operation payload head.}
+
 \glossaryentry{copying-intrinsic-rule}{Copy rule}{The intrinsic Figure 17 transformation duplicating a copyable payload, retaining its weakened residual tree and inserting both ordered output distributors.}
 
 \glossaryentry{copying-copy-subsystem}{Copy subsystem}{Intrinsic search plus the concrete copy transition; it has checked local return executions but is not the complete copying UAM.}
+
+\glossaryentry{copy-match-head-independence}{Copy-head independence}{Independently chosen tree/payload matches at one wire select the same host payload-head edge, without assuming the trees isomorphic.}
 
 \glossaryentry{copyability-padding-reflection}{Copyability reflection}{The proved converse padding law: extra representation allowance cannot make a previously non-copyable payload copyable.}
 
@@ -205,6 +215,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{copying-global-label}{Copying global label predicate}{A primitive-label property required on every edge at every box depth.}
 
 \glossaryentry{copying-replacement-closure}{Copying replacement closure}{Closure of a graph class under well-typed replacement at any selected edge, including inside boxes.}
+
+\glossaryentry{copying-runtime-alphabet}{Copying runtime alphabet}{The translation alphabet extended with stores, closed under all combined executions at every recursive depth.}
 
 \glossaryentry{copying-scoped-term}{Copying scoped term}{A term with separate finite variable and atom indices; lambda extends only the variable scope.}
 
@@ -484,6 +496,12 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{machine}{Machine}{A transition relation on states, a successful-finality predicate, and a proof that final states cannot step.}
 
+\glossaryentry{match-embedding}{Match embedding}{An edge-injective occurrence preserving primitive labels and ordered incidence; attachment may identify boundary ports.}
+
+\glossaryentry{matched-argument}{Matched argument}{The consumer of a specified ordered target of an operation edge; incidence uniqueness fixes the consumer.}
+
+\glossaryentry{matched-head}{Matched head}{The primitive edge consuming a selected wire; both the edge and its primitive are unique in the host.}
+
 \glossaryentry{copying-micro-beta-cost}{Micro-beta opening cost}{Six local search/compute transitions reach the opened body; a following body-search trace of length $n$ gives $6+n$ subsystem transitions.}
 
 \glossaryentry{middle-block-permutation}{Middle-block permutation}{The typed exchange $(A,B,C,D)\mapsto(A,C,B,D)$ used before two-use environment distributors.}
@@ -501,6 +519,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{determinism}{Normal state}{A state with no outgoing transition, whether or not it is successfully final.}
 
 \glossaryentry{numeric-arithmetic-redex}{Numeric arithmetic redex}{An arithmetic operation corolla attached to one or two ordered numeric corollas, rewritten to its computed number corolla.}
+
+\glossaryentry{numeric-operand-match}{Numeric operand match}{An ordered argument whose consuming edge is labelled by an actual natural-number constant.}
 
 \glossaryentry{observation-coverage}{Observation coverage}{Every original hole, including inside original boxes, has a declared slot.}
 
@@ -656,6 +676,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{specimen}{Rooted state}{A state satisfying the specimen interface's supplied predicate $\mathsf{Root}$, which its laws require to be preserved by transitions.}
 
+\glossaryentry{rule-label-admissibility}{Rule-label admissibility}{A primitive predicate containing every operation, instance, store, weakening and contraction introduced by the rules.}
+
 \glossaryentry{copying-scoped-isomorphism}{Scoped graph isomorphism}{Equality of the finite depth indices followed by recursive graph isomorphism; this does not identify different padding allowances.}
 
 \glossaryentry{copying-allocation-subsystem}{Search and allocation subsystem}{The actual graph-changing machine combining intrinsic search with rooted stable-argument allocation, optionally retaining a serial continuation; the other UAM rules remain pending.}
@@ -753,6 +775,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{stationary-replay}{Stationary replay conditions}{One-way old fillings and immediate rewrite at other inputs, together with proved context search transport.}
 
 \glossaryentry{stationary-rewrite}{Stationary rewrite}{A context-preserving change from rewrite to search at the same designated input, satisfying the one-way and other-input conditions.}
+
+\glossaryentry{store-operand-match}{Store operand match}{An operation-head and ordered-argument witness together with an exact trace to its actual store edge.}
 
 \glossaryentry{copying-equality-outcome}{Store-identity comparison outcome}{A boolean justified by two successful store traces: true exactly when their destination store edges coincide, independently of their contents.}
 

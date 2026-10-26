@@ -1,0 +1,584 @@
+\clearpage
+\section{Canonical rule selection and recursive runtime safety}
+\label{sec:copying-selection}
+Every contextual rewrite of the concrete combined machine now has a unique
+\emph{recognized rule choice}. Independently chosen decompositions of one
+source graph agree on the operation family, ordered arithmetic operands,
+atom-comparison result and copy-head primitive. More precisely, arbitrary
+copy matches at the same wire select the same payload head \emph{edge}; read
+and write matches select the same store edge. These are properties of the
+actual host graph, with no global acyclicity assumption. The proof permits
+different matched contraction trees, different local interfaces and different
+representation allowances. It does not assume an isomorphism between the
+chosen matches.
+
+This completes the source-selection part of matching independence. It does
+\emph{not} yet identify the graphs produced by independently chosen rewrites:
+in particular, the residual tree, copied payload, distributors and surviving
+host must still be compared by a boundary-respecting recursive isomorphism.
+The theorem records a copy's head occurrence, not a new proof that the entire
+copied box forest is unique. These remaining successor-graph obligations are
+retained in Appendix~B.1, along with refocusing and the specimen laws.
+
+A second result proves recursive label safety through every complete finite
+run. The source translation alphabet excludes stores; the runtime alphabet
+adds stores because reference allocation creates them. Neither hidden focus
+edges nor unfilled holes can appear, even in duplicated or opened box bodies.
+The original rewrite relation, stability and copyability premises, proposition
+terms, and Figure~16 translations are unchanged.
+
+The dependency chain is: incidence-preserving occurrences; canonical heads
+and ordered arguments; deterministic term-sharing and atom-store resolution;
+unique rule recognition; then preservation of recursive labels through all
+local rules, their context closure and finite runs. These proofs supply
+premises needed by the paper's copying-machine determinism argument in
+Section~10.3, rather than replacing that argument with an assumed interface.
+
+\Needspace{12\baselineskip}
+\subsection{Occurrences inside arbitrary hosts}
+
+\termdef{match-embedding}
+An occurrence $f:G\hookrightarrow H$ consists of a map of ports and an injective
+map of edge occurrences. Mapping the ordered source and target lists of an edge
+must give exactly the corresponding host lists. A primitive label $p$ in $G$
+must remain $p$ in $H$, interpreted at the host's depth allowance. No global
+injectivity of ports is assumed: attachment may identify boundary ports.
+Edge injectivity is essential for preserving distinct store identities.
+This interface describes an occurrence; it is not an assertion that an arbitrary
+non-injective variable renaming preserves program meaning. It also does not
+compare the contents of arbitrary box labels, so later uses are restricted to
+primitive recognition and incidence tracing.
+
+\lean{Copying/MatchEmbedding}{10}{16}{MatchEmbedding}
+
+The identity occurrence uses identity maps. Composition composes both maps;
+edge injectivity composes, primitive-label preservation is used twice, and
+mapping an incidence list twice equals mapping the composite function.
+A previously proved search transport supplies an occurrence by forgetting
+its inverse and boundary classification. A recursive graph isomorphism gives
+such a search transport, hence an occurrence.
+
+\lean{Copying/MatchEmbedding}{20}{26}{MatchEmbedding.refl}
+
+\lean{Copying/MatchEmbedding}{28}{35}{MatchEmbedding.comp}
+
+\lean{Copying/MatchEmbedding}{37}{43}{MatchEmbedding.ofTransport}
+
+\lean{Copying/MatchEmbedding}{45}{46}{MatchEmbedding.ofDeepIso}
+
+Shallow plugging maps inserted edges to the right summand and ports by the
+actual attachment map. Simultaneous expansion maps a filler edge $a$ to the
+dependent pair $(e,a)$ for its slot $e$. Both edge maps are injective; their
+incidence and primitive-label laws are the definitions of plugging and
+expansion. The left and right occurrences in serial assembly use its existing
+edge and port maps; their edge images are the two distinct slot tags. These
+constructions require no safety predicate on the erased slot label.
+
+\lean{Copying/MatchEmbedding}{48}{56}{MatchEmbedding.plug}
+
+\lean{Copying/MatchEmbedding}{58}{66}{MatchEmbedding.expand}
+
+\lean{Copying/MatchEmbedding}{68}{74}{MatchEmbedding.serialLeft}
+
+\lean{Copying/MatchEmbedding}{76}{84}{MatchEmbedding.serialRight}
+
+Membership in a source or target list survives mapping because membership
+survives list mapping. An adjacency witness is a shared port in a target and
+a source; mapping that witness preserves adjacency. These facts deliberately
+use forward incidence preservation, not a false assumption that the attachment
+map is globally injective on ports.
+
+\lean{Copying/MatchEmbedding}{86}{88}{MatchEmbedding.source_mem}
+
+\lean{Copying/MatchEmbedding}{90}{92}{MatchEmbedding.target_mem}
+
+\lean{Copying/MatchEmbedding}{94}{96}{MatchEmbedding.adjacent}
+
+\Needspace{12\baselineskip}
+\subsection{Canonical active heads and ordered arguments}
+
+\termdef{matched-head}
+$\mathsf{HeadAt}(G,v,e,p)$ says that edge $e$ has primitive label $p$ and consumes
+wire $v$. If two heads consume the same wire, source-incidence uniqueness
+forces their edges to be equal. Their labels are then equal, and injectivity
+of primitive labelling forces the primitives to be equal. Transporting a head
+uses primitive preservation and source membership preservation.
+
+\lean{Copying/MatchEmbedding}{99}{100}{MatchEmbedding.HeadAt}
+
+\lean{Copying/MatchEmbedding}{102}{106}{MatchEmbedding.head_unique}
+
+\lean{Copying/MatchEmbedding}{108}{109}{MatchEmbedding.head}
+
+\termdef{matched-argument}
+$\mathsf{Argument}(G,e,i,a)$ says that the $i$th target of edge $e$ exists and
+is consumed by edge $a$. Two witnesses use the same port because the ordered
+list has one value at index $i$; source-incidence uniqueness then equates
+the consuming edges. Mapping a list preserves the value at an existing
+index, so occurrences preserve this ordered argument relation. This rules
+out changing operand order while presenting the same host match.
+
+\lean{Copying/MatchEmbedding}{112}{113}{MatchEmbedding.Argument}
+
+\lean{Copying/MatchEmbedding}{115}{119}{MatchEmbedding.argument_unique}
+
+\lean{Copying/MatchEmbedding}{121}{125}{MatchEmbedding.argument}
+
+\Needspace{12\baselineskip}
+\subsection{Term-sharing resolution}
+
+\termdef{copy-resolution}
+The forward labels for a copy trace are term contraction and term weakening.
+A payload head is an instance or operation primitive. A hop follows an
+adjacency whose departing edge has a forward label. Each forward edge has
+exactly one term target, by its signature. Consequently two hops from that
+edge agree on the next edge: their shared ports coincide, and source
+uniqueness identifies the next consumer. A payload head is terminal for this
+relation because neither an instance nor an operation is a sharing edge.
+The weakening case is admitted in intermediate tree reasoning, although a
+weakening cannot consume an externally selected input.
+
+\lean{Copying/CopyMatching}{12}{13}{CopyTrace.ForwardLabel}
+
+\lean{Copying/CopyMatching}{16}{16}{CopyTrace.PayloadHead}
+
+\lean{Copying/CopyMatching}{18}{19}{CopyTrace.Hop}
+
+\lean{Copying/CopyMatching}{21}{22}{CopyTrace.forward_output}
+
+\lean{Copying/CopyMatching}{24}{26}{CopyTrace.hop_functional}
+
+\lean{Copying/CopyMatching}{28}{34}{CopyTrace.head_terminal}
+
+A resolution of wire $v$ to payload edge $e$, primitive $p$ and count $n$
+chooses its first consuming edge and an exact $n$-hop trace ending at a
+$p$-labelled payload head. Two successful resolutions first agree on their
+starting edge by source uniqueness. The functional-terminal-trace theorem
+then gives the same endpoint and exact length. Primitive-label injectivity
+also gives the same $p$. A surrounding cycle causes no problem: the theorem
+compares successful traces and does not claim every host trace terminates.
+
+\lean{Copying/CopyMatching}{37}{38}{CopyTrace.Resolves}
+
+\lean{Copying/CopyMatching}{41}{49}{CopyTrace.resolves_unique}
+
+An occurrence maps sharing labels and adjacency, hence each hop, and maps
+an entire exact trace without changing its length. Combining this transport
+with uniqueness in the larger host proves that attachment cannot redirect an
+already resolved request or supply a different successful hop count. The
+auxiliary last-hop lemma appends one hop to a trace and increments its length;
+its proof is induction on the trace.
+
+\lean{Copying/CopyMatching}{51}{56}{CopyTrace.hop_map}
+
+\lean{Copying/CopyMatching}{58}{62}{CopyTrace.resolves_map}
+
+\lean{Copying/CopyMatching}{65}{68}{CopyTrace.resolves_map_exact}
+
+\lean{Copying/CopyMatching}{71}{75}{CopyTrace.snoc}
+
+\Needspace{12\baselineskip}
+\subsection{Every actual copy match resolves to its payload}
+
+A copyable graph has one term input, which source coverage assigns to an
+edge. Its proved outer-label property permits only instances, operations or
+boxes. Typing excludes a box at this input, since a box consumes a thunk wire.
+Thus the edge is an instance/operation head. No condition on the behaviour or
+stability of a lambda body is added to copyability.
+
+\lean{Copying/CopyMatching}{80}{100}{Copyable.head_exists}
+
+In the literal copying redex, the tree's output and the payload's input are
+the same serial-assembly wire. Each tree adjacency becomes a sharing hop
+through the left occurrence. The root targets that shared wire, so it has one
+last hop to the payload head in the right occurrence. The arbitrary-tree
+termination theorem supplies, for every selected input, a trace from its
+consumer to the root. Mapping that trace and appending the last hop produces
+resolution to the attached payload, with count $m+1$ for a tree trace of
+length $m$.
+
+\lean{Copying/CopyMatching}{105}{108}{CopyRule.tree_payload_wire}
+
+\lean{Copying/CopyMatching}{111}{118}{CopyRule.before_tree_hop}
+
+\lean{Copying/CopyMatching}{121}{131}{CopyRule.before_root_hop}
+
+\lean{Copying/CopyMatching}{134}{144}{CopyRule.before_resolves}
+
+The consumer of a tree input must be a contraction: a weakening's source
+list is empty. This proves the active head required for copy recognition.
+If a particular payload head was specified in advance, head uniqueness
+identifies it with the head chosen by the existence proof, giving the same
+resolution theorem for that specified edge.
+
+\lean{Copying/CopyMatching}{147}{161}{CopyRule.before_active_head}
+
+\lean{Copying/CopyMatching}{163}{170}{CopyRule.before_resolves_head}
+
+\termdef{copy-match-head-independence}
+Now place two independently chosen redexes into one host, with the same image
+of their selected input. Their trees may have different input counts and need
+not be isomorphic. Their payloads may be presented at different allowances.
+Resolve each selected input in its own redex, map both traces into the host,
+and apply host resolution uniqueness. The images of the payload heads are
+the same edge and have the same primitive. This is the precise copy-selection
+independence established here; it does not equate the two rewritten graphs.
+
+\lean{Copying/CopyMatching}{174}{189}{CopyRule.match_payload_unique}
+
+\Needspace{12\baselineskip}
+\subsection{Read and write destinations}
+
+Atom hops and successful store-resolution traces map through the same
+occurrence interface. Unlike copy traces, their forward labels also include
+instance edges, and their terminal edge is a store. The proofs map the exact
+trace and preserve the store label; previously proved store-resolution
+uniqueness supplies its canonical endpoint and count.
+
+\lean{Copying/StoreMatching}{9}{15}{StoreTrace.hop_map}
+
+\lean{Copying/StoreMatching}{17}{19}{StoreTrace.resolves_map}
+
+\termdef{store-operand-match}
+A resolved store operand at wire $v$ specifies an operation $o$, an argument
+index $i$, a store edge $s$ and a hop count. It witnesses the operation head,
+the edge consuming its $i$th argument, and a store-resolution trace from that
+edge. Two witnesses agree on the head, then on the ordered argument edge,
+then on the store and count. Occurrences preserve all three witnesses.
+
+\lean{Copying/StoreMatching}{22}{23}{StoreTrace.Operand}
+
+\lean{Copying/StoreMatching}{26}{34}{StoreTrace.operand_unique}
+
+\lean{Copying/StoreMatching}{36}{40}{StoreTrace.operand_map}
+
+For each concrete dereference redex, its reader's argument is the displayed
+instance and its already proved trace resolves to the retained store. For
+assignment, argument zero is the displayed instance resolving to the
+destination store; the new stable value remains argument one. These witnesses
+are built from the actual local incidence lists and existing tree-resolution
+proofs. Given two independent embeddings of read redexes, or two of write
+redexes, at the same host token, transport the operand witnesses and apply
+uniqueness. Both matches select the same store occurrence. This result does
+not yet compare the entire written-value graphs or the successor heaps.
+
+\lean{Copying/StoreMatching}{45}{49}{Dereference.before_operand}
+
+\lean{Copying/StoreMatching}{52}{61}{Dereference.match_store_unique}
+
+\lean{Copying/StoreMatching}{66}{70}{Assignment.before_operand}
+
+\lean{Copying/StoreMatching}{73}{83}{Assignment.match_store_unique}
+
+\Needspace{12\baselineskip}
+\subsection{Reference-equality branch independence}
+
+\termdef{atom-match-decision}
+A comparison decision $b$ at $v$ consists of resolved stores $s,t$ for the
+ordered arguments zero and one, together with
+\[
+       s=t\quad\Longleftrightarrow\quad b=\mathsf{true}.
+\]
+Two decisions agree on each store by operand uniqueness, hence agree on $b$.
+Mapping a decision uses edge injectivity in the reverse implication
+$f(s)=f(t)\Rightarrow s=t$. This is why mere forward incidence preservation
+would not suffice to exclude a false aliasing match.
+
+\lean{Copying/StoreMatching}{88}{90}{AtomEquality.Decision}
+
+\lean{Copying/StoreMatching}{93}{101}{AtomEquality.decision_unique}
+
+\lean{Copying/StoreMatching}{104}{108}{AtomEquality.decision_map}
+
+The one-store local rule has decision true: both existing atom traces end
+at its same store. The two-store rule has decision false: the store edges
+have distinct constructor tags in the actual frame. The operation head and
+both ordered argument incidences are checked directly. If both redex shapes
+could embed at the same host token, transported decisions would force true
+to equal false. Thus the branches are disjoint under independently chosen
+contexts and contraction trees, not just under a renaming of one match.
+
+\lean{Copying/StoreMatching}{112}{120}{AtomEquality.Same.before_decision}
+
+\lean{Copying/StoreMatching}{124}{135}{AtomEquality.Different.before_decision}
+
+\lean{Copying/StoreMatching}{139}{148}{AtomEquality.same_different_disjoint}
+
+\Needspace{12\baselineskip}
+\subsection{Arithmetic operand independence}
+
+\termdef{numeric-operand-match}
+A number argument witnesses the edge consuming argument $i$ and requires its
+label to be the actual natural-number constant $n$. The argument edge is
+unique; equality of its primitive labels implies equality of the numbers.
+Occurrences preserve this witness and its index.
+
+\lean{Copying/ArithmeticMatching}{9}{10}{Arithmetic.NumberArgument}
+
+\lean{Copying/ArithmeticMatching}{12}{19}{Arithmetic.numberArgument_unique}
+
+\lean{Copying/ArithmeticMatching}{21}{24}{Arithmetic.numberArgument_map}
+
+The local unary head is numeric negation and its argument is the specified
+number edge. The binary head is the specified addition/subtraction operation;
+its two number edges occur at indices zero and one respectively. All these
+facts are checked from the original serial/tensor incidence lists, with no
+evaluation or term simplification. The operation-code-to-symbol function is
+injective by its two cases. Therefore independently embedded binary redexes
+at one token agree on the operation code, the left number and the right
+number. The arithmetic convention remains $-n=0-n$ on natural numbers.
+
+\lean{Copying/ArithmeticMatching}{26}{27}{Arithmetic.unary_head}
+
+\lean{Copying/ArithmeticMatching}{29}{33}{Arithmetic.unary_operand}
+
+\lean{Copying/ArithmeticMatching}{35}{37}{Arithmetic.binary_head}
+
+\lean{Copying/ArithmeticMatching}{39}{44}{Arithmetic.binary_left_operand}
+
+\lean{Copying/ArithmeticMatching}{46}{51}{Arithmetic.binary_right_operand}
+
+\lean{Copying/ArithmeticMatching}{53}{54}{Arithmetic.BinaryCode.symbol_injective}
+
+\lean{Copying/ArithmeticMatching}{57}{69}{Arithmetic.binary_match_unique}
+
+\Needspace{12\baselineskip}
+\subsection{Unique selection for the full contextual relation}
+
+\termdef{combined-rule-choice}
+A rule choice records allocation, read, assignment, beta, a Boolean comparison
+result, a copy-head primitive, a unary numeric operand, or a binary operation
+code with both numbers. Its head function gives the corresponding active
+operation or term contraction. Comparison choices with different answers,
+copy choices with different payload labels, and arithmetic choices with
+different numbers deliberately share a head; incidence and trace facts must
+distinguish those cases.
+
+\lean{Copying/CombinedSelection}{10}{15}{Combined.Choice}
+
+\lean{Copying/CombinedSelection}{17}{25}{Combined.Choice.head}
+
+\termdef{combined-recognition}
+Recognition of a choice means that the source wire has its required head,
+plus the appropriate comparison decision, copy resolution, or ordered number
+arguments. Allocation, read, assignment and beta need no additional data in
+this particular record. Their finer store-selection results were proved
+separately above. Recognition only inspects the source graph; it neither
+changes the operational semantics nor asserts that a recognized choice has
+an applicable rewrite. For example, it does not remove beta's stable-argument
+premise.
+
+\lean{Copying/CombinedSelection}{28}{34}{Combined.Recognizes}
+
+Recognition transports through occurrences by the head, argument and trace
+transport lemmas. For uniqueness, head uniqueness first excludes differing
+operation families. The remaining cases use comparison-decision uniqueness,
+copy-resolution uniqueness, or number-argument uniqueness. Binary-symbol
+injectivity handles addition versus subtraction. These exhaust the choice
+constructors.
+
+\lean{Copying/CombinedSelection}{37}{46}{Combined.recognizes_map}
+
+\lean{Copying/CombinedSelection}{49}{69}{Combined.recognizes_unique}
+
+Every local rewrite has a recognition witness. The fixed operation heads
+are read directly from the local frames. Equality uses the true/false decision
+lemmas, copying uses the arbitrary-tree head and resolution theorems, and
+arithmetic uses the two ordered operand witnesses. The original local-rule
+proof supplies its existing stability or copyability premise.
+
+Induction on an actual contextual rewrite then lifts recognition through
+recursive renaming, shallow plugging and simultaneous expansion. The unchanged
+fillers need not be inspected for this source property. Combining existence
+with uniqueness gives the milestone theorem:
+\[
+ G@v\longrightarrow H@w\quad\Longrightarrow\quad
+ \exists!c,\ \mathsf{Recognizes}(G,v,c).
+\]
+This statement applies to every derivation of the existing rewrite relation.
+Uniqueness of $c$ must not be confused with uniqueness of $(H,w)$ up to
+representation; the latter still needs the successor-coherence argument.
+
+\lean{Copying/CombinedSelection}{72}{90}{Combined.local_recognizes}
+
+\lean{Copying/CombinedSelection}{93}{99}{Combined.rewrite_recognizes}
+
+\lean{Copying/CombinedSelection}{103}{106}{Combined.rewrite_unique_choice}
+
+Every choice head is active or a term contraction, by cases on the choice.
+Stable graphs contain only instances and passive operation heads, so they
+support no contextual rewrite at any wire. More generally, an embedded
+stable payload cannot be rewritten at the image of its input, even if its
+host is cyclic or contains other redexes: source coverage supplies its passive
+head, whose image conflicts with every recognized rewrite head. Finally, a
+rewrite cannot be based at an external output, because its recognized head
+would consume that output, contradicting graph incidence coverage.
+
+\lean{Copying/CombinedSelection}{109}{111}{Combined.choice_head_active}
+
+\lean{Copying/CombinedSelection}{114}{123}{Combined.stable_no_rewrite}
+
+\lean{Copying/CombinedSelection}{126}{128}{Combined.rewrite_not_output}
+
+\lean{Copying/CombinedSelection}{130}{142}{Combined.stable_occurrence_no_rewrite}
+
+For a full search transport, apply occurrence transport in both directions;
+the inverse port map cancels the forward map. This proves recognition
+preservation and reflection. Instantiating with arbitrary finite padding
+shows that the chosen operation, copy-head label, comparison answer and
+numeric operands do not change with unused representation allowance.
+
+\lean{Copying/CombinedSelection}{145}{152}{Combined.recognizes_transport_iff}
+
+\lean{Copying/CombinedSelection}{155}{157}{Combined.recognizes_pad_iff}
+
+\Needspace{12\baselineskip}
+\subsection{Recursive label preservation through computation}
+
+\termdef{rule-label-admissibility}
+A primitive predicate $P$ admits the local rules when it includes every
+operation, instance, store, weakening and contraction label. This is a
+sufficient closure condition for the new labels introduced by computation.
+It need not admit focus or hole labels. Safety is the existing recursive
+predicate $\mathsf{AllLabels}(P,G)$, so it inspects every box body as well as
+outer labels.
+
+\lean{Copying/CombinedSafety}{10}{15}{RuleSafety.Admits}
+
+Safety of a serial composite implies safety of each component by evaluating
+the predicate on its corresponding edge occurrence and using label equality.
+For beta, source safety additionally gives safety of the chosen lambda body:
+inspect its actual box edge, unfold the recursive label predicate and undo
+the provably equal interface cast. Inspecting the argument occurrence gives
+its complete recursive safety independently of the separate stability premise.
+
+\lean{Copying/CombinedSafety}{17}{21}{RuleSafety.serial_left}
+
+\lean{Copying/CombinedSafety}{23}{27}{RuleSafety.serial_right}
+
+\lean{Copying/CombinedSafety}{30}{34}{RuleSafety.application_body}
+
+\lean{Copying/CombinedSafety}{37}{41}{RuleSafety.application_argument}
+
+Local preservation is proved by cases on all nine rule constructors.
+Allocation extracts safety of the old value and adds only admitted prefix
+labels. Read and equality use their existing all-label lemmas. Assignment
+extracts safety of the value occurrence and applies its after-graph lemma.
+Beta extracts the body and argument predicates and uses preservation when
+opening the box. Copying extracts payload safety from the serial source and
+preserves it in both copies and the environment distributors. Arithmetic
+returns an admitted numeric constant.
+
+For context closure, recursive isomorphisms transport the predicate. Plugging
+splits each target edge into a surviving host edge, certified by source safety,
+or an inserted edge, certified by induction. Simultaneous expansion uses
+induction at the rewritten slot and the explicit equality of all other
+fillers. No safety assumption on an erased host slot is needed.
+
+\lean{Copying/CombinedSafety}{44}{63}{RuleSafety.local_allLabels}
+
+\lean{Copying/CombinedSafety}{66}{85}{RuleSafety.rewrite_allLabels}
+
+\Needspace{12\baselineskip}
+\subsection{Runtime alphabet and reachable-state guarantees}
+
+\termdef{copying-runtime-alphabet}
+The runtime predicate is the union of the original translation alphabet with
+the store primitive. A runtime graph satisfies this predicate at every depth.
+All five admissibility fields follow by cases on their constructor. Every
+translated-language graph is a runtime graph: prove this by induction on the
+box allowance, injecting primitive membership into the union and recursively
+handling boxed bodies.
+
+The predicates excluding every focus label and excluding every hole label
+also admit all local rules, by constructor disjointness. Applying the generic
+rewrite theorem gives preservation of runtime membership, focus freedom and
+hole freedom separately. This proves a runtime invariant; it does not
+incorrectly claim that allocation preserves the smaller translation alphabet.
+
+\lean{Copying/CombinedSafety}{88}{88}{RuleSafety.RuntimePrimitive}
+
+\lean{Copying/CombinedSafety}{90}{90}{RuleSafety.RuntimeGraph}
+
+\lean{Copying/CombinedSafety}{92}{98}{RuleSafety.admits_runtime}
+
+\lean{Copying/CombinedSafety}{101}{109}{RuleSafety.language_runtime}
+
+\lean{Copying/CombinedSafety}{111}{112}{RuleSafety.admits_focusFree}
+
+\lean{Copying/CombinedSafety}{114}{115}{RuleSafety.admits_holeFree}
+
+\lean{Copying/CombinedSafety}{120}{122}{Combined.rewrite_runtime}
+
+\lean{Copying/CombinedSafety}{124}{125}{Combined.rewrite_focusFree}
+
+\lean{Copying/CombinedSafety}{127}{128}{Combined.rewrite_holeFree}
+
+A combined search step leaves the graph unchanged; a rewrite step uses the
+proved label-preservation theorem. Induction on exact finite machine runs
+therefore preserves any admitted recursive predicate. For an unbounded run,
+use the already proved exact bounded-run representation, then apply that
+induction at the fixed allowance. A certified closed program supplies initial
+focus freedom and hole freedom, giving both at every reachable state.
+If its initial graph is additionally in the translation alphabet, the same
+argument gives runtime-alphabet membership throughout. These conclusions
+hold for every finite prefix, irrespective of whether the execution eventually
+terminates.
+
+\lean{Copying/CombinedSafety}{130}{134}{Combined.step_allLabels}
+
+\lean{Copying/CombinedSafety}{136}{140}{Combined.run_allLabels}
+
+\lean{Copying/CombinedSafety}{143}{148}{Combined.reachable_safe}
+
+\lean{Copying/CombinedSafety}{151}{155}{Combined.reachable_runtime}
+
+\Needspace{12\baselineskip}
+\subsection{Regression consequences, audit and remaining effort}
+
+The arithmetic regression excludes two matches whose unequal operands were
+swapped: binary-match uniqueness would force the two numbers equal. An
+allocation regression proves that its after-graph really leaves the
+translation alphabet by inspecting the newly created store; another proves
+that it nevertheless remains in the runtime alphabet. A numeric value
+embedded in any host cannot support a rewrite at its input, by the stable
+occurrence theorem.
+
+\lean{Copying/SelectionExamples}{9}{15}{SelectionExamples.unequal_operands_not_swappable}
+
+\lean{Copying/SelectionExamples}{18}{23}{SelectionExamples.allocation_not_translation_alphabet}
+
+\lean{Copying/SelectionExamples}{26}{30}{SelectionExamples.allocation_runtime}
+
+\lean{Copying/SelectionExamples}{33}{36}{SelectionExamples.embedded_number_no_rewrite}
+
+For each unchanged Proposition~12.2 term, every finite run in every certified
+closing context remains focus-free and hole-free. The quantification covers
+arbitrary variable/atom environments and finite prefixes arising from
+admissible divergent callbacks or repeated closure use. These are safety
+invariants, not new equivalence or termination proofs for such callbacks;
+the Figure~22 template argument is still required.
+
+\lean{Copying/SelectionExamples}{40}{43}{SelectionExamples.privateCell_runs_safe}
+
+\lean{Copying/SelectionExamples}{46}{49}{SelectionExamples.constantResult_runs_safe}
+
+All 103 new declarations are included in the axiom audit. The complete
+build passes 369 jobs. The three audits check 6 abstract, 477 graph and 1104
+copying declarations and use only \texttt{propext}, \texttt{Classical.choice}
+and \texttt{Quot.sound}. No unfinished proof or project-specific axiom is
+introduced.
+
+Appendix~B.1 removes source-selection independence and recursive label safety
+from the unfinished obligations, while retaining successor-graph coherence,
+refocusing, focused-state correspondence, specimen locality, semantic
+renaming/substitution, all required template robustness proofs and final
+assembly. None of the four broad remaining packages is claimed wholly closed.
+
+The estimate for completion of Proposition~12.2 is now about 80\% of the
+mathematical effort, with a broad plausible range of 62--90\% (26 October 2026).
+The previous estimate was 78\%. The increase reflects canonical selection for
+all rewrite families and complete-run recursive safety. This is a judgement
+about proof difficulty, not a declaration count; successor coherence and the
+eleven-template argument still carry substantial uncertainty.
+
