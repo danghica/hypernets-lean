@@ -50,8 +50,11 @@ freshness and resolution laws, and a search/allocation execution subsystem
 (Section~\ref{sec:copying-allocation}). Dereferencing (Figure~19(b)) now has a
 general local rule for arbitrary atom contraction trees, store-resolution
 preservation and an execution to copy request
-(Section~\ref{sec:copying-dereference}). The copy rule (Figure~17), remaining
-store rules (Figure~19(c)--(d)), and arithmetic/application behaviour remain pending.
+(Section~\ref{sec:copying-dereference}). The copy rule (Figure~17) now has a literal finite-graph construction,
+local execution, safety, renaming, forward padding and shared-store resolution
+(Section~\ref{sec:copying-rule}). Its arbitrary ambient matching and global
+integration remain pending, as do store rules (Figure~19(c)--(d)) and
+arithmetic/application behaviour.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its

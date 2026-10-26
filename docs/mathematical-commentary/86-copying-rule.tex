@@ -1,0 +1,353 @@
+\clearpage
+\section{The literal copying rule and preservation of shared stores}
+\label{sec:copying-rule}
+Figure~17 (PDF p.~37) now has a concrete finite-graph implementation, for
+an arbitrary term contraction tree $C$ with $n+1$ inputs and an arbitrary
+copyable hypernet $H:\star\Rightarrow\star^k\otimes\diamond^h$.
+The selected occurrence is input zero; the other $n$ inputs keep their order.
+The rewrite duplicates $H$, retains $C$ behind the second copy, weakens the
+consumed input of $C$, and inserts the paper's two output distributors.
+Neither the proposition's terms nor the translation clauses are changed.
+
+This milestone proves typing and finiteness by constructing actual nets,
+recursive safety, disjointness of copied edge identities, preservation of
+literal box contents, carrier-renaming laws and forward padding laws. Local
+copy-and-return executions and shared-reference resolution are checked.
+It does not yet prove independence from different contraction-tree matches
+in one ambient graph, arbitrary focused-context matching, or determinism and
+refocusing of the complete copying UAM. Those remain in Appendix~B.1.
+
+\Needspace{12\baselineskip}
+\subsection{Retaining the matched contraction tree}
+
+\termdef{copying-residual-tree}
+The residual tree is the original matched tree with its first input closed
+by a term weakening. Its interface is $\star^n\Rightarrow\star$.
+The construction uses a two-edge frame: a weakening and a tree hole of
+signature $\star^{n+1}\Rightarrow\star$. One internal term vertex connects
+the weakening output to input zero of the hole. The remaining hole inputs
+are the external inputs in increasing order; its output is the external
+output. The label and incidence functions specify this wiring directly.
+
+\lean{Copying/CopyFrames}{9}{9}{CopyRule.treeHole}
+
+\lean{Copying/CopyFrames}{10}{12}{CopyRule.residualLabel}
+
+\lean{Copying/CopyFrames}{13}{15}{CopyRule.residualSource}
+
+\lean{Copying/CopyFrames}{16}{18}{CopyRule.residualTarget}
+
+The frame is a finite typed net with a Boolean edge carrier and one internal
+vertex. Its constructor checks each source and target for duplicate freedom,
+unique incidence, complete coverage and agreement with the primitive signature.
+The two edge cases discharge uniqueness; coverage splits vertices into the
+single internal vertex, external inputs and external output. The ordered
+finite input range gives both the typing equation and input injectivity.
+
+\lean{Copying/CopyFrames}{21}{55}{CopyRule.residualFrame}
+
+Filling the tree slot with $C$ and the other slot with the weakening corolla
+produces the residual graph. Relabelling primitive graphs into allowance $d$
+produces both the original tree and the residual tree at that allowance;
+it does not alter any graph incidence. The two edge injections distinguish
+the new weakening from every original tree edge. Their label theorem follows
+by unfolding expansion. Increasing the allowance commutes literally with
+both primitive-only constructions, by the two depth cases.
+
+\lean{Copying/CopyFrames}{57}{62}{CopyRule.residualFill}
+
+\lean{Copying/CopyFrames}{64}{66}{CopyRule.tree}
+
+\lean{Copying/CopyFrames}{68}{71}{CopyRule.residual}
+
+\lean{Copying/CopyFrames}{73}{73}{CopyRule.residualWeakening}
+
+\lean{Copying/CopyFrames}{74}{74}{CopyRule.residualTreeEdge}
+
+\lean{Copying/CopyFrames}{76}{78}{CopyRule.residual_labels}
+
+\lean{Copying/CopyFrames}{80}{80}{CopyRule.tree_raise}
+
+\lean{Copying/CopyFrames}{81}{81}{CopyRule.residual_raise}
+
+The tree-vertex map is the expansion insertion map. The selected input is
+exactly the weakening's target, not an erased wire. Original input $i+1$
+becomes external input $i$; this follows by indexing the explicit finite
+input list. Every original source and target list is mapped entrywise by
+the same insertion map. Thus the entire ordered incidence of $C$ survives,
+not merely its number of leaves or its output type.
+
+\lean{Copying/CopyExamples}{8}{9}{CopyRule.residualTreeVertex}
+
+\lean{Copying/CopyExamples}{12}{14}{CopyRule.selected_input_weakened}
+
+\lean{Copying/CopyExamples}{17}{21}{CopyRule.residual_input_order}
+
+\lean{Copying/CopyExamples}{24}{25}{CopyRule.residual_sources}
+
+\lean{Copying/CopyExamples}{27}{28}{CopyRule.residual_targets}
+
+\Needspace{12\baselineskip}
+\subsection{The two rule graphs and their side condition}
+
+\termdef{copying-intrinsic-rule}
+Write $R(C)$ for the residual tree. Before copying the graph is $C;H$.
+After copying it is
+\[
+  \bigl(H\otimes(R(C);H)\bigr);\chi;
+  \bigl(D^{\star}_{k,2}\otimes D^{\diamond}_{h,2}\bigr),
+\]
+where $\chi$ is the middle-block exchange of Figure~17. Each copy of $H$
+has term outputs followed by atom outputs; the exchange groups the two term
+blocks before the two atom blocks. It uses the same ordered output bijection
+as the original binary translation. The external input order is the active
+input followed by the $n$ residual inputs. Interface equality transport
+changes only length indices and preserves edge and internal carriers.
+The full canonical distributors, including their weakening edges, remain.
+
+\lean{Copying/CopyRule}{10}{19}{CopyRule.pairBoundary}
+
+\lean{Copying/CopyRule}{22}{27}{CopyRule.copies}
+
+\lean{Copying/CopyRule}{29}{31}{CopyRule.before}
+
+\lean{Copying/CopyRule}{33}{36}{CopyRule.after}
+
+The intrinsic rule relates these two concrete graphs only when $H$ is
+copyable in Definition~10.2's existing formalisation. This includes instances,
+constants, active operations and lambda payloads. It does not replace
+copyability by stability. The rule-characterisation theorem says precisely
+that any rule witness supplies such a tree and copyable payload, with the
+two graph equalities. Its proof eliminates or constructs the sole rule
+constructor. The transition is separate from the linear compute relation.
+
+\lean{Copying/CopyRule}{39}{44}{CopyRule.Rule}
+
+\lean{Copying/CopyRule}{46}{50}{CopyRule.rule_iff}
+
+The left and right edge injections use different Boolean component tags.
+Their labels are exactly the original labels, proved by unfolding the
+constructors at zero and successor allowance. The injections have disjoint
+images: equality would force the distinct Boolean tags to be equal.
+In particular a box label, including its complete body, is preserved exactly.
+
+\lean{Copying/CopyRule}{52}{54}{CopyRule.leftEdge}
+
+\lean{Copying/CopyRule}{55}{57}{CopyRule.rightEdge}
+
+\lean{Copying/CopyRule}{60}{63}{CopyRule.copy_labels}
+
+\lean{Copying/CopyRule}{66}{73}{CopyRule.copies_disjoint}
+
+\Needspace{12\baselineskip}
+\subsection{Safety throughout nested boxes}
+
+Let $P$ be a primitive-label predicate. If $P$ holds on term weakening and
+contraction, it holds throughout the tree and its residual. For the original
+tree this is the tree's label classification; for the residual, split an
+edge into the inserted weakening or an original tree edge. If $H$ also
+satisfies $P$ recursively, serial assembly proves safety of the redex.
+For the reduct, require $P$ on weakening and contraction of both sorts.
+Split parallel components, use residual safety for the second component,
+then use the distributor and serial-assembly label laws. No assumption that
+box bodies are passive is introduced.
+
+\lean{Copying/CopySafety}{8}{11}{CopyRule.tree_labels}
+
+\lean{Copying/CopySafety}{13}{17}{CopyRule.residual_allLabels}
+
+\lean{Copying/CopySafety}{19}{22}{CopyRule.before_allLabels}
+
+\lean{Copying/CopySafety}{24}{33}{CopyRule.after_allLabels}
+
+Taking $P$ to exclude focus labels proves focus freedom of the reduct;
+taking it to exclude hole labels proves hole freedom. These are recursive
+properties, so they also exclude forbidden labels inside copied boxes.
+The frame's temporary tree hole has been filled and does not remain.
+
+\lean{Copying/CopySafety}{35}{37}{CopyRule.focusFree_after}
+
+\lean{Copying/CopySafety}{39}{41}{CopyRule.holeFree_after}
+
+\Needspace{12\baselineskip}
+\subsection{Local copy execution}
+
+\termdef{copying-copy-subsystem}
+A local state consists of a concrete graph at the common rule interface and
+a focus mode with a vertex. Its transition relation contains intrinsic
+search and the copy transition from rewrite focus at input zero to search
+focus at that same external input on the reduct. Finality means backtracking
+at an external input. A final state has no transition: search is impossible
+by search finality, while copying requires a different mode. This defines a
+search/copy subsystem with a proved final-normal law. It is not a claim that
+the entire copying UAM, including all compute rules and contexts, is finished.
+
+\lean{Copying/CopyExecution}{8}{9}{CopyRule.State}
+
+\lean{Copying/CopyExecution}{11}{15}{CopyRule.Step}
+
+\lean{Copying/CopyExecution}{17}{25}{CopyRule.final_normal}
+
+\lean{Copying/CopyExecution}{27}{30}{CopyRule.machine}
+
+For an instance payload, the active copy has an instance edge at input zero,
+so its next search transition backtracks there. For any constant payload,
+the same argument uses the zero-argument passive-operation search rule.
+The incidence calculation unfolds the parallel boundary and serial insertion;
+the active input remains exactly position zero. Composing one intrinsic
+copy transition and this return proves a two-step local execution in each
+case. These runs begin at rewrite focus, rather than claiming an unproved
+whole-program path from the original source term.
+
+\lean{Copying/CopyExecution}{33}{40}{CopyRule.instance_returns}
+
+\lean{Copying/CopyExecution}{43}{51}{CopyRule.constant_returns}
+
+\lean{Copying/CopyExecution}{54}{58}{CopyRule.instance_run}
+
+\lean{Copying/CopyExecution}{60}{64}{CopyRule.constant_run}
+
+\Needspace{12\baselineskip}
+\subsection{References share their original cell}
+
+\termdef{copying-shared-store}
+To test reference copying, attach a single original store to the atom output
+of the copy reduct for an instance payload. This test is at allowance zero
+and allows any residual term tree. The two designated instance edges are
+nested left/right injections; the designated store is the right serial
+component. The atom distributor has the actual canonical two-use tree:
+a weakening, a lower contraction and its root contraction. Its edge selector
+chooses these three occurrences. Both instance labels remain instance labels,
+and the store label remains a store label.
+
+\lean{Copying/CopyStore}{9}{11}{CopyRule.sharedStore}
+
+\lean{Copying/CopyStore}{13}{14}{CopyRule.sharedLeft}
+
+\lean{Copying/CopyStore}{15}{16}{CopyRule.sharedRight}
+
+\lean{Copying/CopyStore}{17}{18}{CopyRule.sharedCell}
+
+\lean{Copying/CopyStore}{19}{20}{CopyRule.sharedContraction}
+
+\lean{Copying/CopyStore}{22}{24}{CopyRule.shared_instance_labels}
+
+\lean{Copying/CopyStore}{26}{27}{CopyRule.shared_cell_label}
+
+Both instance outputs enter the same lower atom contraction, at its first
+and second input respectively. That contraction feeds the root contraction,
+which feeds the single original store. Each hop proof supplies the actual
+shared target/source vertex and checks its ordered incidence membership.
+Composing these hops gives exactly three atom-routing steps from either
+copy to the same store. Store-trace uniqueness then rules out any different
+successful destination or hop count. The store is shared; copying has not
+allocated a new cell for either occurrence.
+
+\lean{Copying/CopyStore}{30}{36}{CopyRule.shared_left_hop}
+
+\lean{Copying/CopyStore}{38}{44}{CopyRule.shared_right_hop}
+
+\lean{Copying/CopyStore}{46}{52}{CopyRule.shared_root_hop}
+
+\lean{Copying/CopyStore}{54}{60}{CopyRule.shared_store_hop}
+
+\lean{Copying/CopyStore}{63}{68}{CopyRule.shared_resolves}
+
+\lean{Copying/CopyStore}{71}{76}{CopyRule.shared_resolves_unique}
+
+\Needspace{12\baselineskip}
+\subsection{Renaming and allowance transport}
+
+Boundary equality reindexing preserves a deep isomorphism, by eliminating
+the two interface equalities. It commutes with raising by the same argument.
+An ordered isomorphism between two matched tree carriers lifts to the
+copying hierarchy. For residual trees, use componentwise expansion
+isomorphism on the two-edge frame, with identity on the weakening.
+Parallel component isomorphisms then transport the two copies, and serial
+composition transports both complete rule sides. The payload is allowed a
+deep isomorphism, which also renames recursively inside boxes.
+
+\lean{Copying/CopyTransport}{9}{11}{CopyRule.reboundaryIso}
+
+\lean{Copying/CopyTransport}{13}{15}{CopyRule.raise_reboundary}
+
+\lean{Copying/CopyTransport}{17}{18}{CopyRule.tree_congr}
+
+\lean{Copying/CopyTransport}{20}{25}{CopyRule.residual_congr}
+
+\lean{Copying/CopyTransport}{27}{33}{CopyRule.copies_congr}
+
+\lean{Copying/CopyTransport}{35}{37}{CopyRule.before_congr}
+
+\lean{Copying/CopyTransport}{39}{41}{CopyRule.after_congr}
+
+Raising commutes with the parallel constructor and boundary reindexing.
+The residual serial component commutes up to the already proved serial
+padding isomorphism; the residual primitive graph itself raises literally.
+These facts prove padding for the paired copies. Serial padding gives the
+redex law, and the paired-copy law followed by distributor padding gives the
+reduct law. These are explicit operational construction proofs, not an
+inference from determinism.
+
+\lean{Copying/CopyTransport}{43}{52}{CopyRule.copies_raise}
+
+\lean{Copying/CopyTransport}{54}{57}{CopyRule.before_raise}
+
+\lean{Copying/CopyTransport}{59}{64}{CopyRule.after_raise}
+
+The representation closure of a copy pair consists of a tree and a copyable
+payload, together with deep isomorphisms from the supplied two graphs to the
+literal redex and reduct. Every raw rule supplies such a witness. Independent
+renamings of its two sides preserve this closure by inverse composition.
+Raising transports the two witnesses using the preceding padding laws and
+the proved preservation of copyability. Induction gives every finite padding
+amount. This is forward preservation; no new converse execution theorem is
+being claimed for the combined UAM.
+
+\lean{Copying/CopyTransport}{67}{68}{CopyRule.UpToIso}
+
+\lean{Copying/CopyTransport}{70}{73}{CopyRule.rule_upToIso}
+
+\lean{Copying/CopyTransport}{75}{78}{CopyRule.upToIso_congr}
+
+\lean{Copying/CopyTransport}{80}{84}{CopyRule.upToIso_raise}
+
+\lean{Copying/CopyTransport}{86}{90}{CopyRule.upToIso_pad}
+
+\Needspace{12\baselineskip}
+\subsection{Operational regressions and remaining obligations}
+
+The lambda regression applies the rule to an arbitrary original lambda
+payload, with no stability restriction on its body. For every box-labelled
+edge, both copied labels equal the original box label by transitivity with
+the general label theorem. This includes nested boxes without translating
+or normalising their contents. A separate application regression checks
+that active application heads also satisfy copyability.
+
+\lean{Copying/CopyExamples}{31}{34}{CopyRule.lambda_rule}
+
+\lean{Copying/CopyExamples}{37}{43}{CopyRule.lambda_box_preserved}
+
+\lean{Copying/CopyExamples}{46}{48}{CopyRule.application_rule}
+
+The weakening-free binary tree supplies a noncanonical matched tree.
+Its residual contains the new weakening even though the original tree had
+none. Copying a reference with this match gives two distinct instance edges
+that resolve to the same cell in three hops, by disjointness and the shared
+resolution theorem. These checks do not yet constitute repeated closure
+application or execution of a divergent callback in the complete language;
+those require the missing application rule and machine integration.
+
+\lean{Copying/CopyExamples}{52}{54}{CopyRule.binary_residual_weakening}
+
+\lean{Copying/CopyExamples}{57}{66}{CopyRule.binary_shared_reference}
+
+The build checks 318 jobs. The axiom audits check 6 abstract, 477 graph and
+528 copying results and use only the standard Lean logical axioms.
+Estimated completion of Proposition~12.2 is about 63\% by mathematical effort,
+with broad uncertainty of 48--73\% (26 October 2026). The copying construction
+is now proved, but matching independence, the remaining compute rules,
+full-machine integration and the eleven template robustness proofs remain
+substantial. Appendix~B.1 removes the completed local copy construction
+from its pending list while retaining these exact obligations.
+

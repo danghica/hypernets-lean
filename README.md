@@ -9,28 +9,30 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: general local dereferencing
+## Latest milestone: literal copying and shared-store preservation
 
-Figure 19(b) now has a concrete read rule for arbitrary atom contraction trees
-and any number of other references. The rule preserves the store and atom tree,
-weakens the consumed instance, and inserts the paper's complete term distributor.
-Proved laws cover exact store resolution, preservation of other reference inputs,
-carrier renaming, forward padding, focus freedom and hole freedom.
+Figure 17 now has its concrete copy rule for arbitrary matched term contraction
+trees and copyable payloads. It preserves the residual tree with its consumed
+input weakened, duplicates the payload with disjoint edge identities, and retains
+the complete term/atom distributors and ordered middle-block exchange.
 
-A checked five-transition local search/read execution ends by **requesting copying**.
-It does not return the stored value prematurely. Canonical and noncanonical tree
-regressions pass, and the actual stored literal `1` remains attached through the
-term distributor. Full context matching, copying and the complete translated
-allocation/application/read execution remain unfinished. The proposition's terms
-and Figure 16 translation are unchanged.
+Proved results cover recursive safety, unchanged nested box labels, carrier
+renaming and explicit forward padding laws. Checked local runs copy constants
+and instances. Both copies of a reference resolve to the **same original store**
+in exactly three atom-routing hops; uniqueness rules out another successful
+store or cost. A noncanonical binary-tree regression also passes.
 
-Commentary Section 81 explains every new declaration and proof. Appendix B removes
-local dereference construction from pending work while retaining full-machine
-integration. Full build: 311 jobs. All three axiom audits pass (6 abstract, 477 graph,
-489 copying), with no project axioms or unfinished proofs.
+Full context matching, independence of alternative tree matches, the remaining
+compute rules and complete-UAM determinism/refocusing are unfinished. The terms
+of Proposition 12.2 and Figure 16 translation remain unchanged.
 
-Estimated completion by mathematical effort: **about 60%**, with broad uncertainty
-**45–70%**, as of 26 October 2026. This is a judgement, not a declaration count.
+Commentary Section 82 explains every new declaration and proof. Appendix B removes
+the completed local copy construction while retaining integration obligations.
+Full build: 318 jobs. All three axiom audits pass (6 abstract, 477 graph, 528 copying),
+with no project axioms or unfinished proofs.
+
+Estimated completion by mathematical effort: **about 63%**, with broad uncertainty
+**48–73%**, as of 26 October 2026. This is a judgement, not a declaration count.
 
 ## Proposition 12.2: current extension target
 
