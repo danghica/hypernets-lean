@@ -26,7 +26,8 @@ not add a transition or change the terms of Proposition~12.2, the translation
 of Figure~16, or any stability condition in the operational rules.
 
 This completes the store-operation part of Appendix~B.1's successor obligation.
-Application, arithmetic and copying still require successor comparison, and
+Section~\ref{sec:copying-arithmetic-coherence} subsequently completes arithmetic.
+Application and copying still require successor comparison, and
 the complete machine's refocusing and specimen laws remain open. The four
 broad packages stay open. The mathematical-effort estimate remains roughly
 50--65\%, with low confidence: these proofs do not complete the template
@@ -392,7 +393,7 @@ exactly when $n=1+r$ and $t$ terminates in $r$. Finally, destructing unbounded
 lifts transfers coherence to represented states, and representation invariance
 gives successor equivalence for every cost preorder. These are genuine
 consequences of the proved store comparisons; they do not supply the still
-missing application, arithmetic or copying comparisons.
+then-missing application, arithmetic or copying comparisons.
 
 \lean{Copying/StoreCoherence}{35}{38}{Combined.store_cost_spectrum}
 

@@ -1,0 +1,512 @@
+\clearpage
+\section{Arithmetic coherence and the remaining machine cases}
+\label{sec:copying-arithmetic-coherence}
+The original arithmetic rules now have complete successor-state coherence
+under every constructor of the actual contextual rewrite relation. This covers
+unary natural negation, addition and truncated subtraction. A second result
+exhausts the computation alphabet: any pair of successors is recursively
+isomorphic, or the original state requests application or copying. These are
+therefore the only two remaining computation families for successor coherence.
+This is not yet a proof of full-machine determinism, refocusing or robustness.
+
+Arithmetic differs from the completed store comparisons because it removes
+both operand edges and their internal wires. The proof records the surviving
+occurrences in the original source, derives this record from every actual
+rewrite, and compares two results through their common source. No deletion
+certificate is added to the operational premises. The binary rule remains
+Figure~10(a), and unary negation remains the agreed natural-number operation
+$-n=0-n=0$. The terms of Proposition~12.2, Figure~16's translation, and the
+stability conditions of other operations are unchanged.
+
+Every successful unary redex execution has exactly five transitions, and every
+successful binary redex execution has exactly seven, even after arbitrary finite
+depth padding. These statements quantify over all successful runs of the full
+machine. A binary redex attached below an arbitrary host returns control in
+seven transitions, after which the host's own successful cost is retained.
+The nested arithmetic regression has exactly eleven successful transitions.
+These are explicit graph redexes, not simplified replacements for complete
+surface-term translations.
+
+The dependency chain is: unique source recognition; survivor certificates;
+renaming and context transport; certificates for the original local rules;
+induction over actual rewrites; whole-state coherence; exact cost laws; and
+exhaustive classification of the remaining heads. Appendix~B.1 removes
+arithmetic from its outstanding successor comparisons. Its four broad work
+packages remain open, and the mathematical-effort estimate stays at roughly
+50--65\%, with low confidence.
+
+\Needspace{12\baselineskip}
+\subsection{Surviving vertices and edges}
+
+\termdef{internal-arithmetic-targets}
+A head has \emph{internal arithmetic targets} when each port in its target
+list is an internal vertex of the source graph. This property prevents
+arithmetic deletion from removing a host boundary wire after insertion. It is
+proved for the original redexes and transported through all rewrite contexts;
+it does not assume global acyclicity or injectivity of boundary attachment.
+
+\lean{Copying/ArithmeticReduction}{9}{10}{Arithmetic.InternalTargets}
+
+\termdef{arithmetic-deletion-certificate}
+Fix a source graph $G$, its arithmetic head $e$, and the numeric result $r$.
+A \emph{source-relative deletion certificate} for a successor $H$ consists of
+injective maps $j_V:V_H\to V_G$ on internal vertices and
+$j_E:E_H\to E_G$ on edges, with exact images
+\[
+\begin{split}
+\operatorname{im}(j_V)&=\{x\mid\operatorname{internal}(x)\notin\operatorname{tgt}_G(e)\},\\
+\operatorname{im}(j_E)&=\{a\mid\neg\operatorname{Adjacent}_G(e,a)\}.
+\end{split}
+\]
+Here adjacency means that a target of $e$ is a source of $a$. The port map
+$\widehat j_V$ fixes external inputs and outputs and acts by $j_V$ internally.
+Internal labels and every ordered source list are preserved. An edge mapped
+to $e$ has numeric label $r$ and empty target list. Every other edge has a
+recursively equivalent label and the same ordered targets after mapping by
+$\widehat j_V$. Thus the certificate describes the entire successor, including
+all retained boxes; it is stronger than identifying the numeric result alone.
+The local redex proofs below show that the head survives and precisely its
+numeric operands and operand wires disappear.
+
+\lean{Copying/ArithmeticReduction}{14}{26}{Arithmetic.Reduction}
+
+Two injective maps with the same image determine a bijection between their
+domains: send an element to the unique element with the same image. Classical
+choice selects the preimage; injectivity proves both inverse equations. The
+commuting equation says that applying the second embedding after this bijection
+recovers the first embedding. Applying this construction separately to $j_V$
+and $j_E$ gives the vertex and edge bijections between two certified successors.
+Their commuting equations follow directly; the port equation adds the input
+and output cases, where both maps are the identity.
+
+\lean{Copying/ArithmeticReduction}{32}{40}{Arithmetic.Reduction.sameRange}
+
+\lean{Copying/ArithmeticReduction}{42}{45}{Arithmetic.Reduction.sameRange_commute}
+
+\lean{Copying/ArithmeticReduction}{47}{50}{Arithmetic.Reduction.vertexBijection}
+
+\lean{Copying/ArithmeticReduction}{52}{55}{Arithmetic.Reduction.edgeBijection}
+
+\lean{Copying/ArithmeticReduction}{57}{58}{Arithmetic.Reduction.vertex_commute}
+
+\lean{Copying/ArithmeticReduction}{60}{61}{Arithmetic.Reduction.edge_commute}
+
+\lean{Copying/ArithmeticReduction}{63}{65}{Arithmetic.Reduction.port_commute}
+
+These bijections form a recursive graph isomorphism. Internal labels agree
+through their common source labels. At the arithmetic head both edge labels
+are the same numeric constant; elsewhere compose the two recursive label
+comparisons through $G$. For incidences, map both candidate lists into $G$,
+use their certificate equations and the commuting equations, then cancel the
+injective port map. The head's two target lists are both empty.
+If the two resumed tokens also map to the same source port, the port commuting
+equation and injectivity identify them. Both states are in search mode, so this
+upgrades the graph isomorphism to a complete state isomorphism.
+
+\lean{Copying/ArithmeticReduction}{68}{93}{Arithmetic.Reduction.iso}
+
+\lean{Copying/ArithmeticReduction}{96}{101}{Arithmetic.Reduction.stateIso}
+
+\Needspace{12\baselineskip}
+\subsection{Renaming the source and successor}
+
+Port mapping respects composition of internal-vertex maps, by the three
+port constructors. Mapping an entire list respects the same composition, by
+list-map composition and the pointwise port equation. These elementary laws
+control all incidence equations under renaming.
+
+\lean{Copying/ArithmeticReductionRenaming}{9}{10}{Arithmetic.Reduction.port_comp}
+
+\lean{Copying/ArithmeticReductionRenaming}{12}{15}{Arithmetic.Reduction.map_ports_comp}
+
+To re-present the successor by an isomorphism $K\cong H$, compose its carrier
+bijections with $H$'s maps into $G$. Surjectivity leaves the images unchanged,
+and composition preserves injectivity. Recursive label comparison transports
+the numeric head label exactly and all other labels relationally. The incidence
+laws compose; an empty mapped target list implies the original list is empty.
+Thus the certificate is preserved under arbitrary recursive successor renaming.
+
+\lean{Copying/ArithmeticReductionRenaming}{18}{47}{Arithmetic.Reduction.targetRename}
+
+To re-present the source by $f:G\cong N$, compose the certificate maps with
+$f$ and replace the selected head by $f(e)$. Target membership reflects through
+the inverse vertex bijection, and adjacency reflects through the inverse edge
+bijection. These facts transfer the exact-image conditions. Labels and incidences
+then compose with the corresponding isomorphism laws. The two port-transport
+lemmas state the resulting composition equations explicitly, so the resumed
+token can subsequently be transported without rebuilding this argument.
+
+\lean{Copying/ArithmeticReductionRenaming}{50}{92}{Arithmetic.Reduction.sourceRename}
+
+\lean{Copying/ArithmeticReductionRenaming}{94}{95}{Arithmetic.Reduction.targetRename_port}
+
+\lean{Copying/ArithmeticReductionRenaming}{97}{98}{Arithmetic.Reduction.sourceRename_port}
+
+\Needspace{12\baselineskip}
+\subsection{Deleting an arithmetic redex inside a plugged graph}
+
+Let $C[h:=G]$ be a typed plugging. An inserted component port can equal an
+internal vertex of that component only if it was already that internal vertex:
+inputs and outputs attach to host ports, whose carrier tags are disjoint from
+component-internal tags. When the selected head has internal targets, its
+plugged target vertices are exactly the inserted original target vertices.
+It therefore cannot be adjacent to a retained host edge, and adjacency to an
+inserted edge is equivalent to adjacency inside $G$. The forward direction
+reflects the shared internal port using the preceding disjointness fact; the
+reverse direction uses incidence transport. Internal-target closure itself
+survives plugging because insertion preserves component-internal vertices.
+
+\lean{Copying/ArithmeticReductionPlug}{13}{18}{Arithmetic.Reduction.inserted_internal}
+
+\lean{Copying/ArithmeticReductionPlug}{20}{29}{Arithmetic.Reduction.plug_target}
+
+\lean{Copying/ArithmeticReductionPlug}{31}{37}{Arithmetic.Reduction.plug_adjacent_host}
+
+\lean{Copying/ArithmeticReductionPlug}{39}{47}{Arithmetic.Reduction.plug_adjacent_inner}
+
+\lean{Copying/ArithmeticReductionPlug}{49}{53}{Arithmetic.Reduction.plug_closed}
+
+The whole successor's vertex map is the identity on host vertices and the
+component certificate map on inserted vertices. Mapping an inserted port this
+way agrees with first mapping it in the component and then inserting it into
+the original plugged graph. Internal ports are immediate; boundary ports
+follow by considering the host port to which they attach. The host-port equation
+is simply the identity in each of the three port cases.
+
+\lean{Copying/ArithmeticReductionPlug}{55}{65}{Arithmetic.Reduction.plug_port}
+
+\lean{Copying/ArithmeticReductionPlug}{67}{69}{Arithmetic.Reduction.plug_host}
+
+Define the whole edge map likewise: retain each host edge and use the
+component edge map inside the hole. Disjoint carrier tags and component
+injectivity prove injectivity. The preceding target and adjacency lemmas give
+the exact vertex and edge images: every host occurrence survives, and the
+component removes precisely its original operand occurrences. Host labels are
+unchanged; component labels use the original certificate. Ordered incidence
+lists commute by the two port equations. This constructs a deletion certificate
+for the whole plugging, without imposing a common host decomposition on two
+independently chosen arithmetic matches.
+
+\lean{Copying/ArithmeticReductionPlug}{72}{164}{Arithmetic.Reduction.plug}
+
+\Needspace{12\baselineskip}
+\subsection{Simultaneous expansion and dependent component carriers}
+
+Suppose two filling families $F$ and $K$ agree at every host edge except
+$h$, where a certificate compares $F(h)$ with $K(h)$. Equality of two hypernets
+induces a recursive isomorphism in the reverse direction by eliminating the
+equality. For each component, define its vertex and edge maps to be the
+certificate maps when its index is $h$, and the equality-induced isomorphism
+maps otherwise. At $h$ these definitions reduce to the certificate maps.
+The whole expansion maps preserve the host vertices and every component index,
+using these maps within the corresponding dependent component carriers.
+
+\lean{Copying/ArithmeticReductionExpansion}{13}{14}{Arithmetic.Reduction.equalIso}
+
+\lean{Copying/ArithmeticReductionExpansion}{16}{19}{Arithmetic.Reduction.fiberVertices}
+
+\lean{Copying/ArithmeticReductionExpansion}{21}{24}{Arithmetic.Reduction.fiberEdges}
+
+\lean{Copying/ArithmeticReductionExpansion}{26}{27}{Arithmetic.Reduction.fiber_vertices_same}
+
+\lean{Copying/ArithmeticReductionExpansion}{29}{30}{Arithmetic.Reduction.fiber_edges_same}
+
+\lean{Copying/ArithmeticReductionExpansion}{32}{34}{Arithmetic.Reduction.expansionVertices}
+
+\lean{Copying/ArithmeticReductionExpansion}{36}{38}{Arithmetic.Reduction.expansionEdges}
+
+Mapping a port inserted from any component commutes with inserting its
+component image. Internal ports retain their component index; boundary ports
+attach to the same host port on both sides. A port inserted at index $e$ can
+be an internal vertex tagged by $e$ only when it was that internal vertex.
+The selected head's expanded targets are therefore exactly its own tagged
+internal targets. Adjacency within the selected component reflects and
+preserves adjacency there. Adjacency to another component is impossible:
+internal ports have different tags, and boundary attachments lie in the host.
+In particular the selected head still has only internal targets.
+
+\lean{Copying/ArithmeticReductionExpansion}{40}{50}{Arithmetic.Reduction.expansion_port}
+
+\lean{Copying/ArithmeticReductionExpansion}{52}{61}{Arithmetic.Reduction.expansion_internal}
+
+\lean{Copying/ArithmeticReductionExpansion}{63}{71}{Arithmetic.Reduction.expansion_target}
+
+\lean{Copying/ArithmeticReductionExpansion}{73}{81}{Arithmetic.Reduction.expansion_adjacent_same}
+
+\lean{Copying/ArithmeticReductionExpansion}{83}{97}{Arithmetic.Reduction.expansion_adjacent_other}
+
+\lean{Copying/ArithmeticReductionExpansion}{99}{104}{Arithmetic.Reduction.expansion_closed}
+
+These facts construct the expansion certificate. Each component map is
+injective, by the given certificate at $h$ and by an isomorphism elsewhere.
+Preserved indices give injectivity of the whole maps. In the selected component
+the image conditions are exactly the certificate conditions; every other
+component is covered by the inverse isomorphism, and every host vertex survives.
+No other component is adjacent to the selected head. Internal labels, recursively
+equivalent edge labels, and incidences follow component by component; the port
+commutation law handles attachment. This proof also accounts for unchanged
+components containing arbitrary boxes or cycles.
+
+\lean{Copying/ArithmeticReductionExpansion}{106}{266}{Arithmetic.Reduction.expand}
+
+\Needspace{12\baselineskip}
+\subsection{Certificates for the original numeric rules}
+
+A two-element index is either zero or one, by its finite bound. Enumerating
+the serial redex carriers shows that every unary internal vertex is its sole
+operand wire and every binary internal vertex is one of its two ordered operand
+wires. Primitive numeric edges have no internal vertices of their own. Thus
+all internal vertices occur in the head's target list, and every head target
+is internal. Enumerating the two unary edges, or the three binary edges, shows
+that the head is adjacent exactly to the other edges. The head is not adjacent
+to itself, because its source is the external input.
+
+\lean{Copying/ArithmeticLocalReduction}{8}{8}{Arithmetic.fin_two}
+
+\lean{Copying/ArithmeticLocalReduction}{10}{15}{Arithmetic.unary_internal_deleted}
+
+\lean{Copying/ArithmeticLocalReduction}{17}{26}{Arithmetic.binary_internal_deleted}
+
+\lean{Copying/ArithmeticLocalReduction}{28}{30}{Arithmetic.unary_internal_targets}
+
+\lean{Copying/ArithmeticLocalReduction}{32}{36}{Arithmetic.binary_internal_targets}
+
+\lean{Copying/ArithmeticLocalReduction}{38}{48}{Arithmetic.unary_adjacent_iff}
+
+\lean{Copying/ArithmeticLocalReduction}{50}{68}{Arithmetic.binary_adjacent_iff}
+
+A general local construction now suffices. Suppose a closed redex has all
+internal vertices targeted by its head, the head is adjacent precisely to all
+other edges, and its source list is the singleton external input. The result
+corolla has no internal vertices, so its vertex map is the empty map. Map its
+unique edge to the old head. The vertex image is empty by the first hypothesis;
+the edge image is exactly the head by the second. The singleton source and empty
+target list satisfy the incidence requirements, and the result label is numeric
+by construction. Applying this construction to unary and binary redexes gives
+the original arithmetic rules' certificates, with results $0-n$ and
+$\operatorname{eval}(o,m,n)$ respectively.
+
+\lean{Copying/ArithmeticLocalReduction}{71}{98}{Arithmetic.result_reduction}
+
+\lean{Copying/ArithmeticLocalReduction}{100}{102}{Arithmetic.unary_reduction}
+
+\lean{Copying/ArithmeticLocalReduction}{104}{106}{Arithmetic.binary_reduction}
+
+\Needspace{12\baselineskip}
+\subsection{Recognized arithmetic requests and actual contextual rewrites}
+
+\termdef{arithmetic-request}
+An \emph{arithmetic request} is either unary negation with operand $n$, or a
+binary code $o$ with ordered operands $m,n$. Its recognized machine choice has
+the same data; its result evaluates the indicated natural-number operation.
+The map to machine choices is injective, because the constructors and their
+fields distinguish the requests.
+
+\lean{Copying/ArithmeticCoherence}{8}{10}{Arithmetic.Request}
+
+\lean{Copying/ArithmeticCoherence}{12}{14}{Arithmetic.Request.choice}
+
+\lean{Copying/ArithmeticCoherence}{16}{18}{Arithmetic.Request.result}
+
+\lean{Copying/ArithmeticCoherence}{20}{21}{Arithmetic.Request.choice_injective}
+
+A complete arithmetic certificate additionally specifies the source head,
+recognition of its primitive label at the source token, internal-target closure,
+a deletion certificate, and the equation mapping the resumed successor token
+back to the original source token. Internal-target closure is invariant under
+recursive isomorphism: reflect target membership, use internality in the source,
+then map the internal vertex forward.
+
+\lean{Copying/ArithmeticCoherence}{24}{29}{Arithmetic.Certificate}
+
+\lean{Copying/ArithmeticCoherence}{31}{37}{Arithmetic.internalTargets_rename}
+
+For renaming, transport the head by the match embedding, rename the source
+and then the successor of the deletion certificate, and cancel the successor
+isomorphism with its inverse in the token equation. For plugging, use the
+plugged deletion certificate and head, together with the inserted-port
+commutation law. For expansion, use the expanded certificate and the
+component-port equation at $h$. In each case the resumed token is tracked through
+the same carrier map as the graph. The original unary and binary rules supply
+complete certificates using the explicit local reductions; both tokens are the
+external input, so their token equation is reflexive.
+
+\lean{Copying/ArithmeticCoherence}{39}{51}{Arithmetic.Certificate.rename}
+
+\lean{Copying/ArithmeticCoherence}{53}{62}{Arithmetic.Certificate.plug}
+
+\lean{Copying/ArithmeticCoherence}{64}{77}{Arithmetic.Certificate.expand}
+
+\lean{Copying/ArithmeticCoherence}{80}{86}{Arithmetic.unary_certificate}
+
+\lean{Copying/ArithmeticCoherence}{88}{94}{Arithmetic.binary_certificate}
+
+Recognition can be reflected into the component of an actual rewrite even
+though a general match embedding need not be surjective. The component's actual
+rewrite has some recognized choice by the earlier selection theorem. Transport
+that choice to the host and compare it with the specified host recognition.
+Uniqueness of source recognition identifies the choices, leaving the required
+component recognition. The actual-rewrite premise is essential to this argument.
+
+\lean{Copying/ArithmeticCoherence}{101}{105}{Combined.rewrite_recognition_reflect}
+
+For a local rewrite recognized as arithmetic, inspect the original rule
+constructor. In the unary and binary cases, recognition uniqueness identifies
+the requested operation and ordered operands, so the corresponding local
+certificate applies. Every store, application or copying constructor has a
+different source-head label. Head uniqueness therefore excludes it; binary
+codes are split into addition and subtraction where needed to distinguish
+assignment and atom equality. No existing stability or copyability premise is
+erased. Inducting over the actual rewrite relation now derives certificates
+for every arithmetic computation: the local case is just proved, while renaming,
+plugging and expansion use recognition reflection and certificate transport.
+
+\lean{Copying/ArithmeticCoherence}{107}{149}{Combined.local_arithmetic_certificate}
+
+\lean{Copying/ArithmeticCoherence}{152}{165}{Combined.rewrite_arithmetic_certificate}
+
+\termdef{arithmetic-successor-coherence}
+Take any two actual arithmetic rewrites from the same source request. Their
+derived certificates have the same head by source-head uniqueness and the same
+result by the fixed recognized request. The survivor-image theorem therefore
+gives a recursive graph isomorphism; their token equations give the state
+isomorphism. This is \emph{arithmetic successor coherence}. It compares complete
+successors produced by arbitrary contextual matches, not only the selected
+redex fragments. A combined transition from rewrite mode cannot be a search
+transition, so the result immediately covers the full combined step relation.
+
+\lean{Copying/ArithmeticCoherence}{168}{181}{Combined.arithmetic_rewrite_deterministic}
+
+\lean{Copying/ArithmeticCoherence}{183}{192}{Combined.arithmetic_step_deterministic}
+
+An arithmetic transition consumes exactly one unit of successful cost.
+For any chosen actual successor $t$, a successful source cost $n$ is equivalent
+to $n=1+k$ and a successful cost $k$ from $t$. Any competing first successor
+is isomorphic to $t$, and the previously proved execution-isomorphism law
+transports its remaining run without changing cost. Lifting the state
+isomorphism proves representation equivalence of arbitrary unbounded
+successors; representation equivalence then yields observational equivalence
+at every cost preorder. These results do not assume global machine determinism.
+
+\lean{Copying/ArithmeticCoherence}{194}{197}{Combined.arithmetic_cost_spectrum}
+
+\lean{Copying/ArithmeticCoherence}{199}{208}{Combined.arithmetic_unbounded_deterministic}
+
+\lean{Copying/ArithmeticCoherence}{210}{214}{Combined.arithmetic_unbounded_equiv}
+
+\Needspace{12\baselineskip}
+\subsection{An exhaustive description of the remaining coherence cases}
+
+\termdef{higher-order-head}
+The predicate \emph{higher-order head} records either an application edge or
+a term-contraction edge at the current token. In this development those are
+the two computation families whose complete successor comparison remains open;
+the predicate does not assert that either family is nondeterministic.
+
+\lean{Copying/CombinedCoherenceFrontier}{9}{11}{Combined.HigherOrderHead}
+
+For two actual rewrites, obtain the recognized choice of the first one
+and inspect all eight choice constructors. Allocation, read, assignment and
+either comparison branch use the completed store-coherence theorems. Unary and
+binary arithmetic use the new theorem. The application and copy cases supply
+the corresponding higher-order head. Thus every rewrite pair is coherent or
+has one of these two heads. For full machine steps, a search first step has
+its unique literal successor, and mixed search/rewrite steps are impossible.
+The remaining case is the rewrite classification. Consequently any possibly
+unresolved pair must also have rewrite mode.
+
+\lean{Copying/CombinedCoherenceFrontier}{14}{28}{Combined.rewrite_coherent_or_higherOrder}
+
+\lean{Copying/CombinedCoherenceFrontier}{32}{43}{Combined.step_coherent_or_higherOrder}
+
+If the source is not a rewrite request at one of these heads, eliminate
+the second alternative to obtain successor coherence outright. Applying the
+one-step cost theorem gives the corresponding exact cost decomposition. The
+same exhaustive disjunction lifts to the unbounded machine: fixed-depth coherent
+successors become representation-equivalent successors, and the head/mode
+alternative is unchanged. This identifies the remaining proof obligation
+without changing the transition relation or silently asserting the missing cases.
+
+\lean{Copying/CombinedCoherenceFrontier}{46}{49}{Combined.step_deterministic_away_higherOrder}
+
+\lean{Copying/CombinedCoherenceFrontier}{52}{56}{Combined.cost_spectrum_away_higherOrder}
+
+\lean{Copying/CombinedCoherenceFrontier}{59}{69}{Combined.unbounded_coherent_or_higherOrder}
+
+\Needspace{12\baselineskip}
+\subsection{Exact costs, arbitrary hosts and regressions}
+
+Search in the right component of a serial graph is a genuine search step
+in the whole graph, with its token inserted at the actual shared interface.
+This follows from simultaneous-expansion search transport at the right-hand
+component of the two-edge serial pattern.
+
+\lean{Copying/ArithmeticCost}{8}{12}{Search.serial_right}
+
+Unary evaluation takes three search transitions to reach its rewrite
+request, one arithmetic transition, and one return from the resulting number.
+Apply search cost decomposition at each search step and arithmetic cost
+decomposition at the compute step. The final external-input backtrack state
+has exactly zero remaining successful cost. Adding these equations gives
+$n=5$; conversely the explicit remaining costs $4,3,2,1,0$ reconstruct a
+successful run. Binary evaluation has five search transitions before rewriting,
+then the same compute and return, giving $n=7$ in both directions. These
+statements concern every successful run of the full machine.
+
+\lean{Copying/ArithmeticCost}{19}{28}{Arithmetic.unary_cost_iff}
+
+\lean{Copying/ArithmeticCost}{31}{42}{Arithmetic.binary_cost_iff}
+
+For an arbitrary typed host hole, first cast the local redex boundary to
+the hole's signature and plug the original arithmetic transition into that
+hole. Its source head is still arithmetic by boundary transport and the match
+embedding. Head uniqueness excludes both higher-order alternatives, so the
+classification theorem compares any actual successor with this chosen one.
+This proves unary and binary host-successor coherence while retaining the
+entire host and its recursive boxes.
+
+\lean{Copying/ArithmeticCost}{45}{58}{Arithmetic.unary_host_successor}
+
+\lean{Copying/ArithmeticCost}{61}{74}{Arithmetic.binary_host_successor}
+
+Exact padding reflection and exact finite/unbounded-run correspondence
+transfer the local five- and seven-step characterizations to every padded
+closed arithmetic redex program. The underflow regression combines the
+previously constructed subtraction result $0$ for $m\leq n$ with the new
+all-run cost characterization. The negation regression similarly combines
+its exact result $0$ with the five-step spectrum. Neither operation is replaced
+by an observationally assumed constant; the existing rule and execution proofs
+supply the stated results.
+
+\lean{Copying/ArithmeticCoherenceExamples}{9}{13}{Arithmetic.Examples.unary_pad_cost_iff}
+
+\lean{Copying/ArithmeticCoherenceExamples}{16}{20}{Arithmetic.Examples.binary_pad_cost_iff}
+
+\lean{Copying/ArithmeticCoherenceExamples}{23}{28}{Arithmetic.Examples.underflow_result_and_cost}
+
+\lean{Copying/ArithmeticCoherenceExamples}{31}{36}{Arithmetic.Examples.negation_result_and_cost}
+
+\termdef{arithmetic-cost-handoff}
+The \emph{arithmetic cost handoff} retains an arbitrary host $C$ above a binary
+redex. A successful cost $n$ at the redex's inserted input is equivalent to
+$n=7+k$ and a successful cost $k$ from the inserted backtrack state of its
+numeric result. Transport the five search steps and final numeric return
+through serial composition, and use the embedded recognition and contextual
+arithmetic coherence at the computation step. Summing the seven one-step
+cost equations proves the forward implication; choosing the seven successive
+remaining costs proves the reverse implication. The returned token is internal
+to the host, so it is not mistaken for a final whole-program state. No
+termination assumption is made about the host continuation.
+
+\lean{Copying/ArithmeticCoherenceExamples}{40}{59}{Arithmetic.Examples.binary_host_handoff}
+
+Finally consider unary negation applied to a binary arithmetic redex.
+One search step enters the inner redex. Its seven-step handoff changes the
+inner graph into the numeric result before the outer operation resumes.
+There remain one outer readiness step, one unary computation and one numeric
+return. The final external-input backtrack has cost zero. Composing these
+cost equivalences proves that the nested expression succeeds at exactly
+$1+7+1+1+1=11$ transitions. This regression checks actual graph change between
+the two arithmetic computations, not merely concatenation of abstract numbers.
+
+\lean{Copying/ArithmeticCoherenceExamples}{63}{81}{Arithmetic.Examples.nested_cost_iff}
