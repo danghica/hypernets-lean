@@ -30,11 +30,12 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites and their proofs are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-selection}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-allocation-coherence}.
 Exact padding invariance and concrete full term-context congruence are proved.
 Canonical source selection is now proved for all contextual rewrites, including
 copy heads, store destinations, comparison answers and ordered numeric operands.
-Recursive runtime safety and stable-input inertness are also proved.
+Recursive runtime safety, stable-input inertness and allocation successor-state
+coherence for arbitrary contextual matches are also proved.
 Completed tasks are omitted below.
 The four remaining tasks are:
 \begin{enumerate}
@@ -45,9 +46,10 @@ contextual-equivalence interpretation, using proved BPerm robustness and executi
 congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
 and graph-level substitution laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
-\item Complete matching independence by proving that independently chosen
-matches produce recursively isomorphic successor states, including the residual
-copy tree, complete copied payload, distributors and retained host. Establish
+\item Prove successor-state coherence for dereference, assignment, both
+atom-comparison branches, application, arithmetic and copying. For copying,
+compare the residual tree, complete payload, distributors and retained host.
+Establish
 deterministic behaviour up to representation, refocusing and specimen locality
 for the complete unbounded machine. Prove correspondence with the paper's focused
 graph representation and preserve the completed execution-isomorphism and

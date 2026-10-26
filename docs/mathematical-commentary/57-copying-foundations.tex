@@ -73,8 +73,12 @@ of representability are proved from the concrete graph rules
 is proved for independently chosen matches in arbitrary hosts; so are copy-head
 and read/write-store identity, disjoint equality branches, and recursive
 runtime safety for complete finite runs (Section~\ref{sec:copying-selection}).
-The successor-graph part of matching independence and the remaining
-complete-machine laws are pending.
+Allocation now has complete successor-state coherence for independently
+chosen contextual matches, with exact-cost consequences and a unique successful
+cost for the literal translated reference expression
+(Section~\ref{sec:copying-allocation-coherence}). Successor coherence for the
+other compute families and copying, and the remaining complete-machine laws,
+are pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its

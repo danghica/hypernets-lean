@@ -69,10 +69,18 @@ execution-padding invariance and full term-context congruence
 now proved for every contextual rewrite, including ordered numeric operands,
 reference-equality branches, copy payload heads and read/write stores.
 Recursive runtime safety holds throughout every finite run
-(Section~\ref{sec:copying-selection}). These results allow independently chosen
-matches, but do not yet prove their successor graphs isomorphic. Successor
-coherence, focused-state correspondence, deterministic combined behaviour,
-refocusing and the specimen interface remain unfinished.
+(Section~\ref{sec:copying-selection}). Allocation successor coherence is now
+proved for independently chosen contextual matches: complete successor graphs
+and resumed token positions agree up to recursive isomorphism. The original
+translation of $\mathtt{ref}\ n$ has exactly the successful cost five, including
+under finite padding (Section~\ref{sec:copying-allocation-coherence}). Successor
+coherence for the other compute families and copying, focused-state correspondence,
+full-machine determinism, refocusing and the specimen interface remain unfinished.
+
+The earlier estimate of 80\% completion of Proposition~12.2 is withdrawn.
+The current cautious assessment is 50--65\% of mathematical effort, with low
+confidence. The template argument and remaining machine laws are substantial
+proof obligations; declaration counts do not measure their difficulty.
 
 The new recognition predicate records proved facts about the existing source
 graph. It is not a new reduction rule or a replacement for stability and
@@ -334,8 +342,9 @@ and two. Section~\ref{sec:copying-general-congruence} removes the depth
 restriction and proves general observational context congruence under the
 explicit execution isomorphism and padding laws. Section~\ref{sec:copying-combined}
 now discharges isomorphism invariance for the concrete subsystem; Section~\ref{sec:copying-arithmetic-padding} now proves
-forward execution padding as well. Reverse padding transport and the
-full-machine laws remain open. No equivalence of the
+forward execution padding as well. Section~\ref{sec:copying-padding-reflection}
+discharges reverse padding transport. The remaining full-machine laws are
+listed in Appendix~B.1. No equivalence of the
 proposition programs is inferred.
 Earlier statements that no work remained for the paper's theorem should be
 read with this qualification: completion of the formal construction does not

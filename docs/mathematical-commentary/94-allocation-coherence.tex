@@ -1,0 +1,338 @@
+\clearpage
+\section{Allocation successor coherence and exact costs}
+\label{sec:copying-allocation-coherence}
+The allocation branch of matching independence is now complete for the actual
+combined rewrite relation. If two rewrites start at the same ref request in
+the same host graph, their successor graphs are recursively isomorphic and
+the isomorphism carries one resumed token to the other. The matches may choose
+different retained hosts, stable argument subgraphs, context decompositions
+and output representations. No agreement of these choices is assumed.
+The theorem covers every finite interface and depth allowance, including
+arbitrary typed context insertion and simultaneous expansion.
+
+This is stronger than source selection: the entire result is compared,
+including the fresh instance, canonical atom tree, store, retained graph and
+token. It completes the allocation case of the copying-machine determinism
+obligation. Successor coherence for copying and the other compute families,
+refocusing and the concrete specimen interface remain open. Neither the
+Proposition~12.2 terms nor Figure~16's translation is modified.
+
+The construction follows the allocation rule in PDF Figure~19(a). Its source
+is a ref corolla followed by a stable argument $A$; its target replaces that
+corolla by the allocated-cell prefix and keeps $A$. The proof turns this
+observation into a canonical replacement of one edge of the entire source
+host. It uses the previously proved substitution associativity and unit laws,
+then inducts over the actual context-closed rewrite derivation. The original
+stability premise is retained: a ref head alone need not be reducible.
+
+The dependency chain is therefore source-head uniqueness, state-level
+replacement congruences, canonical local allocation, induction over actual
+matches, successor coherence, then exact successful-cost consequences.
+This discharges a concrete machine obligation needed before the paper's
+robustness theorem can be instantiated; it is not yet the reference-creation
+template's robustness proof.
+
+\Needspace{12\baselineskip}
+\subsection{States and replacement congruences}
+
+A state consists of a graph, a focus mode and a vertex. When a graph is
+changed by equality, transporting its vertex along that equality gives the
+same dependent state. Equality of states supplies a state isomorphism by the
+identity construction. Both facts follow by eliminating the equality proof;
+they handle representation indices without dropping the token coordinate.
+
+\lean{Copying/ReplacementStates}{12}{15}{Combined.StateIso.cast_state}
+
+\lean{Copying/ReplacementStates}{28}{29}{Combined.StateIso.ofEq}
+
+A state isomorphism between two fillers lifts through plugging into a fixed
+host edge. The existing graph congruence gives the graph isomorphism; its
+inserted-port equation, followed by the original token equation, gives the
+new token equation. For simultaneous expansion, assign the supplied graph
+isomorphism to the changed component and identity isomorphisms to all other
+components. The assembly isomorphism preserves the selected token by its
+component-insertion equation. These statements do not assume that attachment
+is injective on boundary ports.
+
+\lean{Copying/ReplacementStates}{18}{25}{Combined.StateIso.plug}
+
+\lean{Copying/ReplacementStates}{32}{47}{Combined.StateIso.expand}
+
+Changing equal interface lists preserves a primitive-head witness. Labels
+are unchanged and the source incidence list is mapped by the boundary cast;
+source membership therefore survives by membership in a mapped list.
+
+\lean{Copying/ReplacementStates}{51}{54}{Combined.head_reboundary}
+
+\termdef{canonical-replacement-state}
+For a host $G$, selected edge $e$, fitting replacement $A$ and old token $v$,
+define the \emph{replacement state}
+\[
+ R(G,e,A,v)=\bigl(G[e:=A],\;\mathrm{search},\;\iota_G(v)\bigr),
+\]
+where $\iota_G$ is the actual retained-host port map. The old wire is retained,
+including when it is a boundary wire or participates in cyclic host structure.
+This definition records where search resumes; it does not itself assert that
+the operational relation can perform the replacement.
+
+\lean{Copying/ReplacementStates}{58}{61}{Combined.Replacement.state}
+
+Replacing an edge of a plugged filler can be performed either after
+plugging or inside the filler before plugging. The graph isomorphism is
+substitution associativity; its middle-component equation carries the old
+filler token to the same attached wire. In a simultaneous expansion, regroup
+the replacement into its selected component and leave every other component
+unchanged. The expansion/replacement interchange isomorphism provides the
+graph map and its component equation provides the token map. The cast in the
+formal statement only identifies the selected component of the updated
+family with the explicitly replaced filler.
+
+\lean{Copying/ReplacementStates}{64}{73}{Combined.Replacement.plug}
+
+\lean{Copying/ReplacementStates}{76}{88}{Combined.Replacement.expand}
+
+Recursive renaming of the host transports replacement to the renamed edge.
+The replacement's interface is reindexed by the equalities forced by the
+related edge labels. Host-plug congruence gives the graph isomorphism, and
+its retained-host equation proves the token equation. Finally, if a changed
+component has an independently chosen isomorphic output, compose expansion
+interchange with expansion congruence. Equality transport removes the selected
+family-component cast before applying that component isomorphism.
+
+\lean{Copying/ReplacementStates}{91}{101}{Combined.Replacement.rename}
+
+\lean{Copying/ReplacementStates}{104}{121}{Combined.Replacement.expand_result}
+
+\Needspace{12\baselineskip}
+\subsection{Canonical allocation in a source host}
+
+Two successive changes of interface lists equal the single change by their
+composite equalities. Eliminating the four equality proofs reduces the claim
+to the identity-boundary law. In an allocation source, the selected head is
+the left serial component's sole ref edge. Its primitive label and source
+membership follow directly from the ref corolla and serial incidence.
+
+\lean{Copying/AllocationCoherence}{9}{12}{reboundary_comp}
+
+\lean{Copying/AllocationCoherence}{16}{17}{Allocation.head}
+
+\lean{Copying/AllocationCoherence}{19}{21}{Allocation.head_at}
+
+\termdef{canonical-allocation-successor}
+Suppose $e$ has label ref in $G$. Its interfaces are then both the singleton
+term interface. The \emph{allocation filler} is the existing allocated-cell
+prefix, reindexed by these forced interface equalities. It contains an
+instance edge, the original canonical atom-sharing tree and a store edge.
+The \emph{canonical allocation successor} is
+\[
+ C(G,e,v)=R(G,e,\mathrm{cellPrefix},v).
+\]
+Thus the construction depends only on the source host, its selected edge and
+its focused wire. It does not inspect a chosen decomposition into argument
+and retained context, nor simplify any distributor.
+
+\lean{Copying/AllocationCoherence}{24}{29}{Allocation.filler}
+
+\lean{Copying/AllocationCoherence}{32}{34}{Allocation.canonical}
+
+Canonical allocation commutes with recursive host renaming. Apply the
+replacement-renaming isomorphism and combine the successive interface
+reindexings; proof irrelevance identifies the resulting equality witnesses.
+For a local source $\mathrm{ref};A$, serial replacement interchange first moves
+the replacement inside the left ref corolla. The corolla substitution unit
+then identifies that replaced component with the allocated-cell prefix.
+Serial congruence leaves $A$ fixed. All these isomorphisms fix the external
+input, so the token equation follows as well.
+
+\lean{Copying/AllocationCoherence}{37}{48}{Allocation.canonical_rename}
+
+\lean{Copying/AllocationCoherence}{51}{62}{Allocation.canonical_local}
+
+\Needspace{12\baselineskip}
+\subsection{Independently chosen contextual matches}
+
+Every actual rewrite already has a recognized primitive head in its changed
+component. Map that head into a surrounding occurrence. If the host token
+has primitive head $e$, source uniqueness identifies the mapped component
+head with $e$, and primitive-label injectivity identifies their labels.
+Consequently the component contains the same primitive head. This reflection
+argument uses the actual rewrite witness; it does not claim that arbitrary
+occurrences reflect all source information, and needs no injective port map.
+
+\lean{Copying/AllocationCoherence}{71}{76}{Combined.rewrite_head_reflect}
+
+For a local rule whose source head is ref, inspect the actual local-rule
+constructor. Allocation has the canonical result just proved. Dereference,
+assignment, both equality branches, application, term copying and arithmetic
+have different primitive heads, contradicting head uniqueness. The allocation
+constructor still carries its original stable-argument proof. Thus the local
+case contains neither an assumed determinism law nor an extra reduction rule.
+
+\lean{Copying/AllocationCoherence}{79}{113}{Combined.local_allocation_canonical}
+
+Now induct over the actual contextual rewrite derivation. The local case is
+the preceding result. In a renaming case, reflect the ref head to the original
+source, apply induction, and compose the inverse canonical-source renaming
+with the inductive result and target renaming. In a plugging case, reflect
+the head into the changed filler, apply induction, and compose replacement
+associativity with state congruence. In an expansion case, reflect into the
+selected component and use the proved expansion-result interchange. In each
+case the head's edge equality identifies the canonical replacement of the
+whole source with the one used in the induction.
+
+\lean{Copying/AllocationCoherence}{117}{138}{Combined.rewrite_allocation_canonical}
+
+\termdef{allocation-successor-coherence}
+\emph{Successor coherence at allocation} means that any two actual rewrites
+from the same ref request produce state-isomorphic successors. Both successors
+are isomorphic to $C(G,e,v)$; invert the first isomorphism and compose it with
+the second. This compares complete output graphs and resumed token positions,
+not merely labels or observable answers.
+
+\lean{Copying/AllocationCoherence}{141}{147}{Combined.allocation_rewrite_deterministic}
+
+The corresponding full-machine step cannot be a search step: search has no
+transition from rewrite mode. Therefore every full step at the request has
+the canonical successor, and any two such steps have isomorphic successors.
+Moreover, an admitted allocation can step directly to the canonical
+representative: rename the target of its actual rewrite by the inverse
+canonical-result isomorphism. Its token equation gives the required resumed
+coordinate. The existence premise here is an actual transition, not a
+hypothetical stability or correctness axiom.
+
+\lean{Copying/AllocationCoherence}{155}{160}{Combined.allocation_step_canonical}
+
+\lean{Copying/AllocationCoherence}{163}{169}{Combined.allocation_step_deterministic}
+
+\lean{Copying/AllocationCoherence}{172}{184}{Combined.allocation_step_to_canonical}
+
+\Needspace{12\baselineskip}
+\subsection{Exact costs and the unbounded machine}
+
+Write $T_n(s)$ for existence of a successful run of exactly $n$ combined
+transitions from $s$. Given an actual allocation step $s\to t$,
+\[
+ T_{n+1}(s)\quad\Longleftrightarrow\quad T_n(t).
+\]
+For the forward direction, split off the successful run's first step. Its
+successor is state-isomorphic to $t$, and the previously proved run transport
+carries the tail at the same cost. Conversely, prepend the given allocation
+step. This argument places no restriction on the later computation; in
+particular it does not assume termination of a callback.
+
+\lean{Copying/AllocationCoherence}{188}{199}{Combined.allocation_cost_iff}
+
+An unbounded step retains its finite representation allowance. Inverting its
+wrapper reduces two allocation steps to the bounded result above, then
+re-wrapping the state isomorphism gives the existing representation relation.
+That relation preserves every successful cost. Thus independently chosen
+unbounded allocation successors refine one another for every cost preorder,
+including exact equality. This remains an allocation theorem, not global
+unbounded-machine determinism.
+
+\lean{Copying/AllocationCoherence}{202}{211}{Combined.allocation_unbounded_deterministic}
+
+\lean{Copying/AllocationCoherence}{214}{218}{Combined.allocation_unbounded_equiv}
+
+An actual search step has a unique full-machine successor: another search
+step agrees by intrinsic search determinism, while a rewrite alternative
+would require rewrite mode, from which the given search step cannot start.
+A final state has precisely cost zero, because finality excludes any first
+transition. Its zero-step run supplies the converse.
+
+\lean{Copying/AllocationCost}{8}{12}{Combined.search_successor_unique}
+
+\lean{Copying/AllocationCost}{15}{20}{Combined.final_cost_iff}
+
+More generally, a given step $s\to t$ whose alternative successors are all
+state-isomorphic to $t$ satisfies
+\[
+ T_n(s)\quad\Longleftrightarrow\quad
+ \exists m\in\mathbb N\;\bigl(n=m+1\ \land\ T_m(t)\bigr).
+\]
+A successful zero-step run at $s$ would contradict its outgoing step. For a
+positive run, remove its first step and transport its tail by successor
+coherence. The reverse direction prepends the given step. Search uniqueness
+and proved allocation coherence discharge this intermediate theorem's local
+coherence hypothesis in their respective specializations. The public search
+and allocation cost laws have no assumed determinism premise.
+
+\lean{Copying/AllocationCost}{23}{34}{Combined.coherent_step_cost_iff}
+
+\lean{Copying/AllocationCost}{37}{40}{Combined.search_cost_iff}
+
+\lean{Copying/AllocationCost}{43}{47}{Combined.allocation_cost_spectrum}
+
+\Needspace{12\baselineskip}
+\subsection{Regressions on the original translation and arbitrary hosts}
+
+The literal translated term $\mathtt{ref}\ n$ retains all Figure~16
+single-use distributors, including its empty-environment forests. Its ref
+head has the required label and input incidence by definition. The actual
+allocation transition is obtained by lifting the existing stable-argument
+allocation through the unchanged serial distributor continuation. Applying
+successor coherence compares every other full-machine successor with this
+constructed result.
+
+\lean{Copying/AllocationCoherenceExamples}{9}{10}{AllocationCoherenceExamples.reference_head}
+
+\lean{Copying/AllocationCoherenceExamples}{13}{17}{AllocationCoherenceExamples.reference_allocate}
+
+\lean{Copying/AllocationCoherenceExamples}{20}{23}{AllocationCoherenceExamples.reference_successor}
+
+For every natural $n$ and cost $k$, the original translation of
+$\mathtt{ref}\ n$ satisfies
+\[
+ T_k(\lbrack\!\lbrack\mathtt{ref}\ n\rbrack\!\rbrack,\mathrm{search},\mathrm{input}_0)
+ \quad\Longleftrightarrow\quad k=5.
+\]
+There are three search transitions (enter ref, return the numeral, request
+allocation), one allocation transition and one instance-return transition.
+Apply the exact cost laws successively, then finality's zero-cost law. The
+resulting five successor equations force $k=5$; the reverse direction supplies
+those five costs. This proves uniqueness of successful cost under the full
+combined relation, beyond the earlier exhibited five-step run.
+
+\lean{Copying/AllocationCoherenceExamples}{27}{42}{AllocationCoherenceExamples.reference_exact_cost}
+
+Exact bounded/unbounded run correspondence gives the same cost characterization
+for the unbounded initializer. The already proved padding reflection and
+preservation then give the same characterization at every larger allowance.
+In particular this covers the literal $\mathtt{ref}\ 1$ subexpression used
+in Proposition~12.2. It does not claim the proposition's entire closure is
+observationally equivalent yet.
+
+\lean{Copying/AllocationCoherenceExamples}{45}{54}{AllocationCoherenceExamples.reference_unbounded_exact_cost}
+
+\lean{Copying/AllocationCoherenceExamples}{57}{60}{AllocationCoherenceExamples.reference_padded_exact_cost}
+
+Finally, insert an allocation source with any stable argument into any
+typed host edge whose input interface is a single term. Reindex its boundary
+by the supplied interface equality and lift the actual local allocation step.
+Map the ref-head witness through the same attachment. The general coherence
+theorem shows that every alternative successor agrees with the host filled
+by the allocation result. No acyclicity, global boundary injectivity or
+common matching decomposition is required.
+
+\lean{Copying/AllocationCoherenceExamples}{64}{74}{AllocationCoherenceExamples.host_allocation_successor}
+
+All 39 new declarations are audited. The full build passes 373 jobs and the
+three audits inspect 6 abstract, 477 graph and 1143 copying declarations,
+with only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+The standard check script now includes the copying audit as well.
+
+Appendix~B.1 removes allocation from the unfinished successor-coherence
+families. Its four broad packages remain open: in particular copying needs
+comparison of complete payloads, residual trees, distributors and retained
+hosts, and all eleven template families still need the required robustness
+arguments before Figure~22 can be assembled.
+
+The earlier estimate of 80\% completion is withdrawn. A cautious current
+assessment is \textbf{50--65\% of the mathematical effort}, with low confidence
+(26 October 2026). That is not a measured percentage, a count of declarations,
+or a claim that the remaining work is routine. Source selection and allocation
+coherence are substantial established prerequisites; full copying-machine laws,
+the dependent template proofs and the final observational argument can still
+account for a large part of the work. This milestone does not justify a
+numerically precise increase within that range.
+

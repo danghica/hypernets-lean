@@ -562,3 +562,13 @@ recursive runtime safety and the regression consequences. The complete build
 passes 369 jobs; the audits check 6 abstract, 477 graph and 1104 copying
 declarations with only the three standard logical axioms listed above.
 \lean{Copying/Audit}{1059}{1161}{Copying.Audit: match selection and runtime safety}
+
+
+The allocation-coherence milestone audits all 39 new declarations: replacement
+state congruences, canonical allocation for arbitrary contextual matches,
+bounded and unbounded successor coherence, exact cost laws, literal-translation
+regressions and arbitrary-host successor comparison. The full build passes
+373 jobs. The three audits inspect 6 abstract, 477 graph and 1143 copying
+declarations, using only the standard logical axioms listed above. The standard
+check script now runs all three audits.
+\lean{Copying/Audit}{1164}{1202}{Copying.Audit: allocation coherence and exact costs}
