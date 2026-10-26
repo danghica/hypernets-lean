@@ -20,6 +20,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{tuple-entry}{Aligned substitution entry}{One original hole name and its two type-correct replacement graphs, recording their shared depth and ordered interface.}
 
+\glossaryentry{copying-allocation-up-to-iso}{Allocation up to isomorphism}{A stable allocation pair with independently supplied recursive graph isomorphisms to its literal source and target; proved preserved by forward padding.}
+
 \glossaryentry{observations}{Allowed context}{A context satisfying the supplied predicate $\mathsf{Allowed}$ in an observation interface.}
 
 \glossaryentry{box}{Alphabet}{A type of edge labels equipped with a signature assigning their input and output wire types.}
@@ -314,6 +316,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{observations}{Fragment}{An element of the family $F_i$ in an observation interface, matched with contexts of the same interface index $i$.}
 
+\glossaryentry{copying-allocation-fresh-store}{Fresh allocation store}{The new store occurrence in the allocated prefix, proved distinct from every retained argument edge; resolved inserted references also cannot alias retained host stores.}
+
 \glossaryentry{fresh-naming}{Fresh naming}{A bijective assignment of names consisting of two chosen prefix coordinates and a distinct enumeration index.}
 
 \glossaryentry{copying-full-renaming}{Full translation renaming}{Bijective renaming of every original term by a finite BPerm derivation and a certified final boundary isomorphism; semantic interpretation remains open.}
@@ -550,6 +554,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{recursive-state-search}{Recursive state search}{Coordinate search after erasure, allowing a focussed recursive isomorphism at the realized target.}
 
+\glossaryentry{copying-allocation-rule}{Reference allocation rule}{The stable-argument graph rewrite of Figure 19(a), introducing an instance, the canonical atom tree, and a fresh store attached to the preserved argument.}
+
 \glossaryentry{reindexing}{Reindexing}{Renaming a net's internal and edge carriers along bijections, transporting labels and incidence while preserving boundary order.}
 
 \glossaryentry{relabelling}{Relabelling}{Changing operation labels along a signature-preserving map, leaving the graph's carriers, vertex labels, and incidence unchanged.}
@@ -593,6 +599,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{specimen}{Rooted state}{A state satisfying the specimen interface's supplied predicate $\mathsf{Root}$, which its laws require to be preserved by transitions.}
 
 \glossaryentry{copying-scoped-isomorphism}{Scoped graph isomorphism}{Equality of the finite depth indices followed by recursive graph isomorphism; this does not identify different padding allowances.}
+
+\glossaryentry{copying-allocation-subsystem}{Search and allocation subsystem}{The actual graph-changing machine combining intrinsic search with rooted stable-argument allocation, optionally retaining a serial continuation; the other UAM rules remain pending.}
 
 \glossaryentry{search-fragment}{Search interaction fragment}{A finite graph containing a variable or operation corolla and one focus at a typed input or output boundary.}
 

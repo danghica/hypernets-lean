@@ -9,26 +9,29 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: concrete copying search
+## Latest milestone: reference allocation with fresh stores
 
-The copying UAM now has concrete intrinsic search rules for the full example
-operation alphabet, term contractions and instances. Proved laws include
-determinism, term-wire typing, stable-primitive recognition, exact run transport
-under recursive isomorphism and depth padding, and shallow plugging preservation.
-The original translation checks a five-step ordered search trace for `1 + 2`
-and one-step outer-lambda return for Proposition 12.2's right-hand program in
-arbitrary environments. Rewrite mode hands off to pending copy/compute phases.
+Figure 19(a) now has a concrete allocation rule retaining the paper's stable-argument
+premise and canonical atom distributor. The new store is fresh, contains the original
+argument, and is reached by the allocated instance in exactly two atom hops.
+Resolution remains unique after insertion into arbitrary hosts, including cyclic ones,
+and cannot alias a retained host store. Renaming and forward padding preservation
+are proved, as are focus freedom and hole freedom.
 
-This is a search-phase milestone, not the full copying machine. Copy and store
-computation, full refocusing/specimen laws, template robustness and the final
-proposition remain unfinished. The original terms and Figure 16 translation
-are unchanged. Full-syntax structural bijective renaming via BPerm remains proved.
-Commentary Section 79 explains every new declaration and proof; Appendix B
-removes the completed search-definition obligation.
+The unchanged Figure 16 translation of `ref n` has a checked five-transition run
+in the search/allocation subsystem, for every natural literal `n`. The returned
+reference resolves to the store containing that same literal. This includes `ref 1`,
+the allocation subexpression of Proposition 12.2. It does not yet execute the enclosing
+let, lambda copying/application, or dereference; the final equivalence remains open.
+The proposition's terms and translation remain unchanged.
 
-Full build: 298 jobs. All three axiom audits pass (6 abstract, 477 graph, 428 copying).
-Estimated completion by mathematical effort: **about 55%**, with broad uncertainty
-**40–65%**, as of 26 October 2026. This is a judgement, not a declaration count.
+Commentary Section 80 explains every new declaration and proof. Appendix B removes
+local reference-rule construction from the pending work and retains its full-machine
+integration. Full build: 304 jobs. All three axiom audits pass (6 abstract, 477 graph,
+460 copying), with no project axioms or unfinished proofs.
+
+Estimated completion by mathematical effort: **roughly 55–60%**, with broad
+uncertainty **40–65%**, as of 26 October 2026. This is a judgement, not a declaration count.
 
 ## Proposition 12.2: current extension target
 
@@ -58,7 +61,8 @@ Stable graphs (Definition 10.3) and copyable payloads (Definition 10.2) now
 have separate predicates and proved structural/renaming properties. The actual
 right-hand proposition graph factors into a copyable lambda payload followed
 by the original single-use distributors. These are structural results; copying,
-store transitions and their preservation laws remain unfinished.
+the remaining store transitions and their preservation laws remain unfinished.
+Reference allocation is now proved with its stable premise and retained argument.
 
 Binding-free paths now have a checked positive-path correspondence and recursive
 isomorphism invariance. Plugging closure is proved at arbitrary nesting depth

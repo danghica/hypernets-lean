@@ -45,8 +45,10 @@ non-bijective graph renaming, graph-level substitution and operational invariant
 \item \textbf{Checked search, pending full machine:} operation search and the
 extra search rules (Figure~18) now have concrete incidence rules, determinism,
 typing, value recognition, exact isomorphism/padding transport and shallow
-plugging preservation (Section~\ref{sec:copying-search-phase}). The copy rule
-(Figure~17), store rules (Figure~19), and arithmetic/application behaviour remain pending.
+plugging preservation (Section~\ref{sec:copying-search-phase}). Reference creation (Figure~19(a)) now has its actual stable-argument pair,
+freshness and resolution laws, and a search/allocation execution subsystem
+(Section~\ref{sec:copying-allocation}). The copy rule (Figure~17), remaining
+store rules (Figure~19(b)--(d)), and arithmetic/application behaviour remain pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its

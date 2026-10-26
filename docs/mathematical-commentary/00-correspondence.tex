@@ -38,8 +38,12 @@ The copying extension also has a proved intrinsic search phase
 of a fixed graph. Its determinism, term-wire typing, stable-primitive recognition,
 exact run transport under isomorphism and padding, and shallow plugging
 preservation are established. A rewrite token suspends this phase; it is not
-successful completion. The corresponding full copy/compute machine, focused
-state correspondence, refocusing and specimen interface remain unfinished.
+successful completion. Reference allocation now adds actual graph-changing computation with a stable
+argument, fresh store identity and a five-transition execution of the unchanged
+$\mathtt{ref}\ n$ translation (Section~\ref{sec:copying-allocation}). This is a
+search/allocation subsystem, with forward padding preservation for allocation
+pairs. The full copy/compute machine, focused-state correspondence,
+determinism of combined rewrites, refocusing and specimen interface remain unfinished.
 
 \Needspace{14\baselineskip}
 \subsection{The statement and its quantitative conclusion}
