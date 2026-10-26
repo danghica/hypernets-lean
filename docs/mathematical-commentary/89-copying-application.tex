@@ -1,0 +1,426 @@
+\clearpage
+\section{Stable micro-beta application and exact opening costs}
+\label{sec:copying-application}
+The local application rule of Figure~10(b) (PDF p.~18), with the stability
+condition imposed in PDF Definition~12.1, is now constructed for the copying
+alphabet. It removes the application and lambda heads, opens the lambda box,
+and attaches the stable argument to the body's first, bound output. Free
+variable and atom outputs retain their original order. Neither the body nor
+the argument is copied or substituted syntactically by this rule.
+
+This is a central prerequisite for Proposition~12.2: its let and sequencing
+sugar and the callback all use application. The construction accepts every
+finite body environment and every correctly typed stable argument. It proves
+six transitions to the opened body, and $6+n$ transitions when followed by
+$n$ steps of body search. It does not assume that the body terminates.
+
+The proposition's terms and the Figure~16 translation are unchanged.
+The regression bodies below are literal translations, including their
+weakening and contraction distributors. The local redex contains the lambda
+head and box; surrounding translation distributors belong to the eventual
+matching context. Executing every complete translated application in arbitrary
+contexts still requires full-machine integration. The present construction
+also does not prove the micro-beta template's robustness.
+
+\Needspace{12\baselineskip}
+\subsection{Connecting the bound output without changing free outputs}
+
+\termdef{copying-bound-splice}
+Let $F$ and $O$ be arbitrary ordered wire interfaces. A body fragment has
+interface $\star\Rightarrow\star\otimes F$, while its argument has interface
+$\star\Rightarrow O$. Their bound-output splice has interface
+$\star\Rightarrow F\otimes O$. Its two temporary holes name these fragments
+separately. The first external output block uses indices $i<|F|$; the second
+uses $|F|+j$ for $j<|O|$. Finite-range lists enumerate both blocks.
+
+\lean{Copying/ApplicationFrame}{9}{11}{Application.spliceHole}
+
+\lean{Copying/ApplicationFrame}{12}{13}{Application.freePort}
+
+\lean{Copying/ApplicationFrame}{14}{15}{Application.valuePort}
+
+\lean{Copying/ApplicationFrame}{16}{17}{Application.freePorts}
+
+\lean{Copying/ApplicationFrame}{18}{19}{Application.valuePorts}
+
+The membership lemmas recover the corresponding index witness.
+Duplicate-freedom follows from injectivity of each index embedding: the first
+preserves the index and the second adds a fixed offset. These facts supply
+coverage and uniqueness obligations for the actual net.
+
+\lean{Copying/ApplicationFrame}{20}{21}{Application.mem_freePorts}
+
+\lean{Copying/ApplicationFrame}{22}{23}{Application.mem_valuePorts}
+
+\lean{Copying/ApplicationFrame}{24}{28}{Application.freePorts_nodup}
+
+\lean{Copying/ApplicationFrame}{29}{33}{Application.valuePorts_nodup}
+
+There is exactly one internal frame vertex. The body consumes the
+external term input; its bound output targets this internal vertex, which
+is consumed by the argument. The body targets the entire first external
+block after its bound output, and the argument targets the second block.
+The net proof checks all incidence laws. The two output blocks cannot collide
+because one index is below $|F|$ and the other is at least $|F|$. Every output
+belongs to one block by the same case split. Typing follows by indexing the
+left and right parts of the concatenated interface. No free identity wire
+is introduced.
+
+\lean{Copying/ApplicationFrame}{35}{37}{Application.spliceSource}
+
+\lean{Copying/ApplicationFrame}{38}{40}{Application.spliceTarget}
+
+\lean{Copying/ApplicationFrame}{43}{105}{Application.spliceFrame}
+
+The primitive filling chooses the body or argument according to the
+hole tag. Relabelling the frame embeds it at the required copying allowance;
+the typed filling accounts for that alphabet. Simultaneous expansion then
+removes both holes and retains the actual component graphs. These four
+constructors separate the finite wiring proof from its alphabet-dependent
+instantiation.
+
+\lean{Copying/ApplicationFrame}{108}{114}{Application.spliceFill}
+
+\lean{Copying/ApplicationFrame}{116}{118}{Application.splicePattern}
+
+\lean{Copying/ApplicationFrame}{119}{123}{Application.spliceFilling}
+
+\lean{Copying/ApplicationFrame}{125}{126}{Application.splice}
+
+\Needspace{12\baselineskip}
+\subsection{The literal application rule}
+
+\termdef{copying-micro-beta-rule}
+For a body $B:\star\Rightarrow\star^{k+1}\otimes\diamond^h$ at allowance $d$,
+the closure is the lambda corolla followed by the original lambda box.
+The application redex at allowance $d+1$ is the application corolla followed
+by the ordered parallel pair of this closure and an argument $G$.
+Opening the body raises its representation allowance to $d+1$ and exposes
+its first term output as the bound output. This preserves every edge and
+recursively pads each nested box; it performs no term substitution.
+Splicing that body with $G$ gives the reduct.
+
+\lean{Copying/Application}{10}{12}{Application.closure}
+
+\lean{Copying/Application}{15}{17}{Application.before}
+
+\lean{Copying/Application}{20}{22}{Application.openBody}
+
+\lean{Copying/Application}{25}{27}{Application.after}
+
+The rule has one constructor, with the full predicate $\mathsf{Stable}(G)$
+as a premise. This is the paper's operational side condition, rather than
+an assumed observational equivalence or determinism property. Inversion of
+the constructor gives an equivalent existential description by the actual
+body, argument, stability proof and the two graph equalities. Conversely,
+those witnesses construct the rule.
+
+\lean{Copying/Application}{30}{34}{Application.Rule}
+
+\lean{Copying/Application}{36}{40}{Application.rule_iff}
+
+The argument and opened-body edge injections use distinct component
+tags. Each injection preserves its entire label, including recursively typed
+box bodies. Injectivity follows from equality of dependent pairs with a
+fixed tag. Equality between a body edge and an argument edge would instead
+force the two Boolean tags to agree, which is impossible. Thus opening
+retains both components without identifying, duplicating or relabelling
+the argument's reference occurrences.
+
+\lean{Copying/Application}{43}{44}{Application.argumentEdge}
+
+\lean{Copying/Application}{45}{46}{Application.bodyEdge}
+
+\lean{Copying/Application}{47}{49}{Application.argument_label}
+
+\lean{Copying/Application}{50}{52}{Application.body_label}
+
+\lean{Copying/Application}{53}{55}{Application.argument_injective}
+
+\lean{Copying/Application}{56}{58}{Application.body_injective}
+
+\lean{Copying/Application}{59}{61}{Application.components_disjoint}
+
+\Needspace{12\baselineskip}
+\subsection{Boundary and search locality}
+
+A stable primitive is an instance or passive operation. Case analysis
+on the complete operation alphabet shows that entering it immediately returns
+the token, independently of its outputs. Stability of a graph supplies an
+actual edge at the unique input, with such a label. This constructs its
+one-step return; existence is derived from the graph laws, not assumed as a
+machine property.
+
+\lean{Copying/ApplicationLocality}{10}{14}{Search.enter_stable}
+
+\lean{Copying/ApplicationLocality}{17}{21}{Search.stable_return}
+
+A generic search-transport lemma covers any simultaneously expanded
+component. The interacting edge acquires its component tag. Source membership,
+ordered target lookup and the singleton source equation transport through the
+insertion map. The already-proved commutation of entry and backtracking with
+vertex maps then reconstructs the same search step. This argument works for
+arbitrary typed attachment maps, without postulating their injectivity.
+
+\lean{Copying/ApplicationLocality}{24}{41}{Search.expand_insert}
+
+The two vertex maps are the actual body and argument insertion maps.
+The body input remains the external input. Body output zero and argument
+input zero become the same internal vertex. Every body output $i+1$ becomes
+external output $i$, and every argument output $j$ becomes external output
+$|F|+j$. These are explicit equalities of vertices, proved by indexing the
+frame's incidence lists. They include every free variable and atom output.
+
+\lean{Copying/ApplicationLocality}{45}{47}{Application.bodyVertex}
+
+\lean{Copying/ApplicationLocality}{49}{51}{Application.argumentVertex}
+
+\lean{Copying/ApplicationLocality}{53}{54}{Application.body_input}
+
+\lean{Copying/ApplicationLocality}{56}{57}{Application.bound_connection}
+
+\lean{Copying/ApplicationLocality}{59}{65}{Application.free_outputs}
+
+\lean{Copying/ApplicationLocality}{67}{73}{Application.argument_outputs}
+
+Specialising generic expansion transport to the two tags preserves
+body and argument search respectively. Mapping each step of a finite body
+trace gives a trace of precisely the same length after attachment. This is
+search locality; it does not yet assert locality for all copying and compute
+transitions of the complete machine.
+
+\lean{Copying/ApplicationLocality}{76}{79}{Application.body_search}
+
+\lean{Copying/ApplicationLocality}{81}{84}{Application.argument_search}
+
+\lean{Copying/ApplicationLocality}{87}{90}{Application.body_trace}
+
+\Needspace{12\baselineskip}
+\subsection{Recursive renaming and padding}
+
+Componentwise expansion extends body and argument isomorphisms to the
+splice. Ordered parallel assembly does the same for a tensor. A recursive
+body isomorphism extends through the original lambda-box cast and the lambda
+corolla, giving closure congruence. Tensor and serial congruence then prove
+redex congruence. Padding the body isomorphism and applying splice congruence
+prove reduct congruence. Stability transports across the argument isomorphism,
+so the renamed graph pair satisfies the raw rule.
+
+\lean{Copying/ApplicationTransport}{8}{16}{Application.splice_congr}
+
+\lean{Copying/ApplicationTransport}{18}{20}{Application.tensor_congr}
+
+\lean{Copying/ApplicationTransport}{22}{24}{Application.closure_congr}
+
+\lean{Copying/ApplicationTransport}{25}{27}{Application.before_congr}
+
+\lean{Copying/ApplicationTransport}{28}{30}{Application.after_congr}
+
+\lean{Copying/ApplicationTransport}{32}{34}{Application.renamed_rule}
+
+Padding the splice is proved by an explicit finite-carrier isomorphism.
+It retains the frame vertex and each component tag, and uses the corresponding
+padded component vertex or edge. Inverse laws and labels hold by cases.
+For source and target lists, insertion commutes with that vertex map;
+composition of list maps proves the incidence equations. This yields a
+recursive isomorphism between the padded splice and the splice of padded
+components. It is an independently proved representation law, not a
+consequence of determinism.
+
+\lean{Copying/ApplicationTransport}{36}{89}{Application.splice_raise_graph}
+
+\lean{Copying/ApplicationTransport}{91}{93}{Application.splice_raise}
+
+Existing serial, tensor and lambda-box padding laws establish closure
+and redex padding. The interface equality cast in the opened body commutes
+with raising, giving a literal equality there. Splice padding gives the
+reduct isomorphism. The stability-padding equivalence supplies the stable
+argument premise for the rule at the next allowance.
+
+\lean{Copying/ApplicationTransport}{95}{98}{Application.closure_raise}
+
+\lean{Copying/ApplicationTransport}{100}{105}{Application.before_raise}
+
+\lean{Copying/ApplicationTransport}{107}{109}{Application.openBody_raise}
+
+\lean{Copying/ApplicationTransport}{111}{114}{Application.after_raise}
+
+\lean{Copying/ApplicationTransport}{116}{119}{Application.raised_rule}
+
+The rule up to recursive isomorphism records an actual body and stable
+argument, together with isomorphisms from both supplied sides to their raw
+rule graphs. Every raw rule supplies reflexive isomorphisms. Renaming either
+side composes inverse isomorphisms with those witnesses. Raising both sides
+raises the body and argument witnesses, transports stability, and composes
+the newly proved redex and reduct padding isomorphisms. This establishes the
+operational representation closure required for later matching.
+
+\lean{Copying/ApplicationTransport}{121}{123}{Application.UpToIso}
+
+\lean{Copying/ApplicationTransport}{125}{128}{Application.rule_upToIso}
+
+\lean{Copying/ApplicationTransport}{130}{133}{Application.upToIso_congr}
+
+\lean{Copying/ApplicationTransport}{136}{141}{Application.upToIso_raise}
+
+\Needspace{12\baselineskip}
+\subsection{Exact execution costs}
+
+\termdef{copying-micro-beta-cost}
+The local machine carries an actual graph and a token coordinate. Its steps
+are intrinsic search or a stable micro-beta rewrite at the external input.
+The rewrite resets search at the reduct's external input. A final state is
+backtracking at that external input. Search cannot continue there, and
+micro-beta requires rewrite focus, so final normality is proved. This machine
+is the application subsystem, not the complete copying UAM.
+
+\lean{Copying/ApplicationExecution}{9}{9}{Application.State}
+
+\lean{Copying/ApplicationExecution}{10}{14}{Application.Step}
+
+\lean{Copying/ApplicationExecution}{16}{24}{Application.final_normal}
+
+\lean{Copying/ApplicationExecution}{26}{29}{Application.machine}
+
+Explicit selectors identify the application edge, lambda edge and
+original argument edges. The two argument coordinates are the ordered
+internal vertices created by serial composition. Search first enters the
+function, returns immediately from its lambda head, and then enters the
+argument. The stable-graph theorem supplies the argument's actual passive
+edge and return. Backtracking from the second argument requests rewriting
+at the application root.
+
+\lean{Copying/ApplicationExecution}{31}{32}{Application.head}
+
+\lean{Copying/ApplicationExecution}{33}{34}{Application.lambdaEdge}
+
+\lean{Copying/ApplicationExecution}{35}{36}{Application.valueEdge}
+
+\lean{Copying/ApplicationExecution}{37}{38}{Application.argument}
+
+\lean{Copying/ApplicationExecution}{40}{45}{Application.search_function}
+
+\lean{Copying/ApplicationExecution}{47}{52}{Application.function_returns}
+
+\lean{Copying/ApplicationExecution}{54}{57}{Application.search_argument}
+
+\lean{Copying/ApplicationExecution}{59}{66}{Application.argument_returns}
+
+\lean{Copying/ApplicationExecution}{68}{71}{Application.ready}
+
+Composing these five transitions gives the pre-compute search trace.
+Search determinism and normality at rewrite focus imply that every normal
+search-only run from this initial state has exactly that endpoint and length.
+Appending the micro-beta compute step gives six transitions to search at the
+opened body. There is no termination assumption on the body: in particular,
+search has not entered its box before this step.
+
+\lean{Copying/ApplicationExecution}{74}{78}{Application.search_trace}
+
+\lean{Copying/ApplicationExecution}{80}{85}{Application.search_exact}
+
+\lean{Copying/ApplicationExecution}{88}{94}{Application.opening_run}
+
+Induction on a finite body-search trace lifts it to subsystem machine
+steps through body attachment, preserving its length. Appending those steps
+to the six-transition opening run gives the quantitative $6+n$ theorem.
+If the body trace returns to its input in backtrack mode, that input maps to
+the external input of the reduct, so the resulting endpoint is final.
+These statements only compose body \emph{search} steps; they do not silently
+claim execution of further copying or compute requests.
+
+\lean{Copying/ApplicationExecution}{96}{104}{Application.body_run}
+
+\lean{Copying/ApplicationExecution}{107}{115}{Application.opening_then_body}
+
+\lean{Copying/ApplicationExecution}{118}{124}{Application.returning_body}
+
+\Needspace{12\baselineskip}
+\subsection{Recursive safety and call-by-value restrictions}
+
+Any recursive primitive-label predicate satisfied by the body and
+lambda head holds in the closure. Requiring it also of the argument and
+application head proves it on the redex. The reduct needs only the body and
+argument hypotheses: padding and casting preserve the body's predicate,
+and expansion takes every label from one of the two components. Specialising
+to absence of focus and hole labels gives both safety properties on both
+sides, using the corresponding consequences of argument stability.
+
+\lean{Copying/ApplicationSafety}{8}{13}{Application.closure_labels}
+
+\lean{Copying/ApplicationSafety}{15}{20}{Application.before_labels}
+
+\lean{Copying/ApplicationSafety}{22}{28}{Application.after_labels}
+
+\lean{Copying/ApplicationSafety}{31}{37}{Application.safe_sides}
+
+An active-operation corolla cannot be stable. If it were, its actual
+edge label would equal a stable primitive label. Injectivity of primitive
+labelling identifies that primitive with the active operation, forcing its
+kind to be passive as well as active, a contradiction. This proves a concrete
+negative side-condition check rather than admitting unevaluated arguments.
+
+\lean{Copying/ApplicationSafety}{40}{49}{Application.active_not_stable}
+
+\Needspace{12\baselineskip}
+\subsection{Unchanged-translation regressions and remaining work}
+
+Three actual Figure~16 translations provide the bodies: a constant with
+one unused bound variable, that bound variable itself, and a nested lambda
+whose own bound variable is used. Their original distributors remain.
+After opening, the constant returns at its literal edge; the variable enters
+its retained term contraction and requests copying; the nested lambda returns
+at its own lambda edge without opening the inner box. Each proof identifies
+the actual edge and checks its source incidence and search result.
+
+\lean{Copying/ApplicationExamples}{10}{10}{Application.Examples.constantBody}
+
+\lean{Copying/ApplicationExamples}{11}{11}{Application.Examples.variableBody}
+
+\lean{Copying/ApplicationExamples}{12}{12}{Application.Examples.nestedBody}
+
+\lean{Copying/ApplicationExamples}{14}{18}{Application.Examples.constant_body_returns}
+
+\lean{Copying/ApplicationExamples}{21}{25}{Application.Examples.variable_body_requests_copy}
+
+\lean{Copying/ApplicationExamples}{28}{32}{Application.Examples.nested_body_returns}
+
+The body-attachment law transports each of those transitions to the
+corresponding reduct, for an arbitrary argument of the appropriate interface.
+Appending it to the general opening execution gives seven-step runs: the
+constant and nested lambda return, whereas the variable stops at a copy
+request. This last regression checks that micro-beta has not been replaced
+by immediate syntactic substitution.
+
+\lean{Copying/ApplicationExamples}{34}{36}{Application.Examples.constant_after_returns}
+
+\lean{Copying/ApplicationExamples}{38}{40}{Application.Examples.variable_after_requests_copy}
+
+\lean{Copying/ApplicationExamples}{42}{44}{Application.Examples.nested_after_returns}
+
+\lean{Copying/ApplicationExamples}{47}{51}{Application.Examples.constant_run}
+
+\lean{Copying/ApplicationExamples}{54}{58}{Application.Examples.variable_run}
+
+\lean{Copying/ApplicationExamples}{60}{64}{Application.Examples.nested_run}
+
+Instantiating the constant-body run with an instance corolla checks a
+reference argument and retains its atom output. Conversely, the active
+application corolla fails stability even for an unused parameter. These
+checks do not establish the eventual contextual equivalence in the presence
+of divergent callbacks or repeated closure use; those require the combined
+machine and robustness results.
+
+\lean{Copying/ApplicationExamples}{67}{71}{Application.Examples.reference_argument_run}
+
+\lean{Copying/ApplicationExamples}{73}{74}{Application.Examples.unused_argument_still_must_be_stable}
+
+The complete build checks 342 jobs, and all three axiom audits pass:
+6 abstract, 477 graph and 748 copying declarations, using only standard Lean
+logical axioms. Appendix~B.1 removes local application construction from the
+unfinished compute-rule list. Arithmetic construction, full context matching,
+combined determinism and refocusing, template robustness, semantic weakening
+and the Figure~22 chain remain. The mathematical-effort estimate is about
+70\%, with broad uncertainty of 55--80\% (26 October 2026); this is a judgement
+about remaining proof difficulty, not a declaration-count percentage.
+

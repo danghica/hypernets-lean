@@ -9,30 +9,30 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: both atom-equality rules and store-identity comparison
+## Latest milestone: stable micro-beta application
 
-Both Figure 19(d) cases now have concrete rules for arbitrary atom contraction
-trees and other references. References to one store compare true; references to
-two explicit distinct stores compare false. Both consumed instances are weakened,
-while trees, stores and content boundaries remain unchanged.
+Figure 10(b) now has an actual copying-language application rule, retaining the
+paper's stable-argument premise. It opens the lambda box and connects only its
+bound output to the argument. Free variables, atoms, argument edges and nested
+boxes are preserved. The proposition's terms and Figure 16 translation are unchanged.
 
-Successful store lookups determine a unique boolean even in cyclic hosts, and
-context attachment preserves it. Both cases have checked seven-step local runs,
-safety, renaming and forward padding laws. Two stores containing the same actual
-translated numeral still compare false: equality tests reference identity.
+The general execution takes six transitions to start the opened body, followed
+by exactly the cost of any finite body-search trace. Checked original-body
+regressions cover unused parameters, reference arguments and nested lambdas.
+A variable body still requests copying through its original distributor; the
+rule does not perform immediate syntactic substitution.
 
-All four Figure 19 store operations now have local concrete rules. Arithmetic,
-application, full-machine matching/determinism/refocusing, template robustness
-and the final proposition remain unfinished. The proposition's terms and Figure 16
-translation are unchanged.
+Local application, copying and all four store-operation constructions are now
+present. Arithmetic, full-machine context matching/determinism/refocusing,
+template robustness and the final proposition remain unfinished.
 
-Commentary Section 84 explains every new declaration and proof. Appendix B removes
-atom-equality construction while retaining full-machine integration obligations.
-Full build: 335 jobs. All three axiom audits pass (6 abstract, 477 graph, 652 copying),
+Commentary Section 85 explains every new declaration and proof. Appendix B
+removes local application construction while retaining global integration.
+Full build: 342 jobs. All three axiom audits pass (6 abstract, 477 graph, 748 copying),
 with no project axioms or unfinished proofs.
 
-Estimated completion by mathematical effort: **about 67%**, with broad uncertainty
-**52–77%**, as of 26 October 2026. This is a judgement, not a declaration count.
+Estimated completion by mathematical effort: **about 70%**, with broad uncertainty
+**55–80%**, as of 26 October 2026. This is a judgement, not a declaration count.
 
 ## Proposition 12.2: current extension target
 
