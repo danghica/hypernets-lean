@@ -1,7 +1,7 @@
-import Hypernets.Copying.ApplicationExamples
+import Hypernets.Copying.Arithmetic
 
-/-! The proved non-arithmetic copying rules, kept distinct from intrinsic search.
-This is a concrete subsystem; arithmetic and the complete-UAM laws remain open. -/
+/-! The proved copying, store, application and arithmetic rules, kept distinct from intrinsic search.
+All operation families have local rules; complete-UAM laws remain open. -/
 set_option backward.isDefEq.respectTransparency false
 namespace Hypernets.Copying.Combined
 open Graph
@@ -29,6 +29,11 @@ inductive Local : {d : Nat} → {I O : List Wire} →
   | copy {d n k h} (T : ContractionTree .term (n+1))
       (G : Hypernet d [.term] (environmentInterface k h)) (copyable : Copyable G) :
       Local (CopyRule.before T G) (.input ⟨0,by simp⟩) (CopyRule.after T G) (.input ⟨0,by simp⟩)
+
+  | unaryArithmetic (d n : Nat) :
+      Local (Arithmetic.unaryBefore d n) (.input 0) (Arithmetic.unaryAfter d n) (.input 0)
+  | binaryArithmetic (o : Arithmetic.BinaryCode) (d m n : Nat) :
+      Local (Arithmetic.binaryBefore o d m n) (.input 0) (Arithmetic.binaryAfter o d m n) (.input 0)
 
 /-- Match at the current outer level by typed insertion or simultaneous assembly.
 There is no rule for evaluating inside a closed box. Recursive isomorphisms only

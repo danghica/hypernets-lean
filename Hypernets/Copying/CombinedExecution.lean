@@ -1,7 +1,7 @@
 import Hypernets.Copying.CombinedLocality
 
 /-! An unbounded allowance-indexed execution instance for the proved-rule subsystem.
-The complete paper UAM still requires arithmetic, matching independence and refocusing. -/
+The complete paper UAM still requires matching independence and refocusing. -/
 set_option backward.isDefEq.respectTransparency false
 namespace Hypernets.Copying.Combined
 open Graph
