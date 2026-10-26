@@ -9,30 +9,33 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: arithmetic and exact forward execution padding
+## Latest milestone: exact execution padding reflection
 
-Unary minus, addition and subtraction now have concrete local rules in the
-combined copying machine. They execute in five or seven transitions; an
-11-step nested example performs both an inner and an outer arithmetic rewrite.
-The original natural-number domain is retained: subtraction truncates at zero,
-and the author's clarification `-x = 0 - x` therefore makes unary minus zero.
-The proposition's terms and Figure 16 translation are unchanged.
+Every run from a padded combined-machine state now reflects to a run of
+**exactly the same length** at the original allowance, with an isomorphic
+padded endpoint. Together with forward transport this proves equality of all
+successful execution costs, for every finite amount of padding.
 
-Every combined rewrite, contextual match and finite run now pads forward at
-exactly the same cost. Arbitrary finite padding preserves successful program
-executions and closed observations. This includes the existing translated
-reference and original-body application examples. It does **not** yet reflect
-arbitrary runs from a larger allowance, so two-sided padding invariance remains open.
+The proof constructs typed truncation, characterizes the image of padding,
+reflects copyability, and descends all local and contextual matches while
+proving preservation of the unused depth layer. It assumes no determinism,
+refocusing or matching independence. The auxiliary truncation is not a new
+machine rule. The proposition's terms and Figure 16 translation are unchanged.
 
-Arithmetic construction is removed from Appendix B. Matching independence,
-determinism/refocusing, reverse padding transport, specimen locality, template
-robustness and Proposition 12.2 remain unfinished. Commentary Section 87 explains
-all 82 new declarations with immutable source links. Full build: 355 jobs.
-All three axiom audits pass (6 abstract, 477 graph, 912 copying), with no project
-axioms or unfinished proofs.
+The concrete execution now discharges `RespectsPadding`. Observation reflection,
+the cofinal-allowance criterion and full term-context congruence consequently
+have both representation premises discharged, including for terms with unequal
+minimum translation depths. Padding reflection is removed from Appendix B.1.
+Matching independence, determinism/refocusing, specimen locality, template
+robustness and Proposition 12.2 remain unfinished.
 
-Estimated completion by mathematical effort: **about 75%**, broadly **60–85%**,
-as of 26 October 2026. This is a judgement, not a declaration count.
+Commentary Section 88 explains all 89 new declarations with immutable source
+links. Full build: 362 jobs. All three axiom audits pass (6 abstract, 477 graph,
+1,001 copying), with no project axioms or unfinished proofs.
+
+Estimated completion by mathematical effort: **about 78%**, broadly **60–88%**,
+as of 26 October 2026. This is a judgement about proof difficulty, not a
+declaration count; the template argument and final Figure 22 chain remain substantial.
 
 ## Proposition 12.2: current extension target
 
@@ -44,8 +47,8 @@ nested replacement, and canonical contraction trees matching Definition 10.1.
 Ordered distributors now assemble these trees with the exact input permutation
 `i + k*j`, including zero resources and zero uses. Generic parallel assembly
 preserves and reflects component paths; serial assembly connects typed shared
-interfaces. Tree/distributor acyclicity and label-predicate closure are proved. These are prerequisites, not an operational
-semantics or a conditional proof of the example. Arbitrary contraction trees
+interfaces. Tree/distributor acyclicity and label-predicate closure are proved. The combined copying execution now includes all local operation families;
+its complete-machine laws and the example equivalence remain unfinished. Arbitrary contraction trees
 now have proved root reachability and unique terminal traces. Atom-store
 resolution is unique, invariant under renaming and depth padding, and checked
 in a cyclic-store graph without assuming the whole host is acyclic.
@@ -61,8 +64,8 @@ the final equivalence remain open.
 Stable graphs (Definition 10.3) and copyable payloads (Definition 10.2) now
 have separate predicates and proved structural/renaming properties. The actual
 right-hand proposition graph factors into a copyable lambda payload followed
-by the original single-use distributors. These are structural results; copying,
-the remaining store transitions and their preservation laws remain unfinished.
+by the original single-use distributors. The local copying, store and application rules and their representation
+laws are now proved; the remaining operational invariants are tracked in Appendix B.1.
 Reference allocation is now proved with its stable premise and retained argument;
 the local dereference rule preserves the store and requests the required copying.
 
@@ -70,9 +73,9 @@ Binding-free paths now have a checked positive-path correspondence and recursive
 isomorphism invariance. Plugging closure is proved at arbitrary nesting depth
 when the replaced hole has an input, as every translated term hole does. A
 checked finite counterexample shows why unrestricted closure at zero-input
-holes does not follow from the literal source-based definition. Observations
-and lambda-context congruence still require the full execution laws; four
-Appendix B.1 work packages remain open.
+holes does not follow from the literal source-based definition. Concrete observation reflection and full term-context congruence now have
+proved execution representation laws. Four broader Appendix B.1 work packages
+remain open.
 
 The commentary's section **Copying and store: foundations for Proposition 12.2**
 contains the dependency map; **Ordered distributors and graph assembly**

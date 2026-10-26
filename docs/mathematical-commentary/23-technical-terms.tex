@@ -22,7 +22,7 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{copying-allocation-up-to-iso}{Allocation up to isomorphism}{A stable allocation pair with independently supplied recursive graph isomorphisms to its literal source and target; proved preserved by forward padding.}
 
-\glossaryentry{combined-allowance-execution}{Allowance-indexed subsystem execution}{The dependent union of fixed-allowance combined machines, with exact finite-run reflection; padding equivalence is a separate unfinished law.}
+\glossaryentry{combined-allowance-execution}{Allowance-indexed subsystem execution}{The dependent union of fixed-allowance combined machines, with exact finite-run reflection; exact padding equivalence is now proved for this concrete execution.}
 
 \glossaryentry{observations}{Allowed context}{A context satisfying the supplied predicate $\mathsf{Allowed}$ in an observation interface.}
 
@@ -162,6 +162,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{concrete-template}{Concrete template}{An input-safe layered pre-template satisfying output closure at every available depth.}
 
+\glossaryentry{concrete-term-congruence}{Concrete term-context congruence}{Every original term context preserves observational equivalence for the concrete combined execution, with its representation laws proved and no equal-depth restriction.}
+
 \glossaryentry{net}{Concrete typed net}{A finite labelled hypergraph with ordered boundaries and certified distinctness, incidence uniqueness, coverage, and signature typing.}
 
 \glossaryentry{concrete-specimen-system}{Constructed concrete specimen system}{The abstract locality interface instantiated with actual recursive specimens and proved full-UAM graph laws.}
@@ -191,6 +193,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{copying-intrinsic-rule}{Copy rule}{The intrinsic Figure 17 transformation duplicating a copyable payload, retaining its weakened residual tree and inserting both ordered output distributors.}
 
 \glossaryentry{copying-copy-subsystem}{Copy subsystem}{Intrinsic search plus the concrete copy transition; it has checked local return executions but is not the complete copying UAM.}
+
+\glossaryentry{copyability-padding-reflection}{Copyability reflection}{The proved converse padding law: extra representation allowance cannot make a previously non-copyable payload copyable.}
 
 \glossaryentry{copying-copyable-payload}{Copyable payload}{The instance or operation-with-boxes shape of Definition 10.2, before adding sharing distributors.}
 
@@ -256,6 +260,10 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{depth-promotion}{Depth promotion}{Increasing an allowed nesting depth while preserving incidence and recursively promoting box contents.}
 
+\glossaryentry{lowering-representability}{Depth representability}{Recursive certificate that every actual nested box fits one allowance lower; primitive labels always fit.}
+
+\glossaryentry{depth-truncation}{Depth truncation}{Auxiliary typed lowering that preserves primitive labels and incidence; excessive boxes become typed placeholders only outside the certified representable fragment.}
+
 \glossaryentry{paper-refinement}{Depth-independent contextual refinement}{Contextual refinement for every finite representative and original context, evaluated on the unbounded machine.}
 
 \glossaryentry{global-class}{Depth-independent graph class}{A finite-depth actual-content graph modulo recursive isomorphism and depth promotion.}
@@ -292,6 +300,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{copying-equality-subsystem}{Equality subsystem}{Intrinsic search plus the two concrete atom-equality rewrites, with final normality and exact seven-step local executions.}
 
+\glossaryentry{lowering-erased-slot}{Erased-slot depth condition}{Plugging requires representability of the filler and surviving host labels, with no condition on the label of the erased slot.}
+
 \glossaryentry{erasure-expansion}{Erasure--expansion commutation}{An explicit isomorphism between erasing a retained expanded focus and expanding the erased context, preserving the joined coordinate.}
 
 \glossaryentry{state-search}{Erasure-based state search}{Search between actual states, defined by a coordinate step on the erased source and a focus-preserving isomorphism to the realized target.}
@@ -303,6 +313,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{copying-execution-isomorphism}{Execution isomorphism invariance}{The requirement that recursively isomorphic closed graph presentations agree on successful termination.}
 
 \glossaryentry{copying-execution-padding}{Execution padding invariance}{The explicit requirement that padding an admissible closed program once preserves its successful termination observation.}
+
+\glossaryentry{execution-padding-reflection}{Execution padding reflection}{Every run from a padded state has a run of identical length at the original allowance, with an isomorphic padded endpoint.}
 
 \glossaryentry{expansion-replacement-interchange}{Expansion--replacement interchange}{The isomorphism between replacing a component edge after finite expansion and replacing it in that component before expansion.}
 
@@ -410,6 +422,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{hypernet}{Hypernet}{A typed net over a finite-depth alphabet whose labels may include boxes with bodies over the preceding alphabet.}
 
+\glossaryentry{padding-image}{Image of padding}{The recursively isomorphic copies of padded graphs, proved to be exactly the graphs satisfying depth representability.}
+
 \glossaryentry{cost-orders}{Improvement cost order}{The preorder $I$ with $a\,I\,b$ exactly when $b\leq a$; the target successful execution takes no more steps than the source.}
 
 \glossaryentry{net}{Incidence coverage}{The net laws saying that exactly non-output vertices occur in some source list and exactly non-input vertices occur in some target list.}
@@ -465,6 +479,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{local-interaction}{Local interaction}{A variable trigger, operation entry, or ordered argument return inspected directly in the original focussed graph.}
 
 \glossaryentry{local-rewiring}{Local rewiring}{Carrier bijections preserving non-focus labels and target incidences, with explicit equations for moving the focus and redirecting sources.}
+
+\glossaryentry{local-match-lowering}{Local-match lowering}{Descent of every actual local rule to the smaller allowance while preserving its stability/copyability premise and proving target representability.}
 
 \glossaryentry{machine}{Machine}{A transition relation on states, a successful-finality predicate, and a proof that final states cannot step.}
 
@@ -751,6 +767,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{substitution-presentation}{Substitution presentation}{An erased base graph with its selected variable and proved source and resumed-target isomorphisms.}
 
 \glossaryentry{substitution-unit}{Substitution unit}{A selected one-edge corolla: filling it returns the inserted graph, while restoring an edge's own corolla returns its host, up to isomorphism.}
+
+\glossaryentry{successful-cost-spectrum}{Successful-cost spectrum}{All natural lengths of successful executions from a program initializer; this set is unchanged by finite padding.}
 
 \glossaryentry{indexed-port}{Target port}{A target-list vertex selected by a finite index in the edge label's output signature.}
 

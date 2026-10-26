@@ -30,9 +30,10 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites and their proofs are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-arithmetic-padding}.
-Arithmetic construction and forward exact-cost execution padding are complete;
-the remaining padding obligation is reflection of arbitrary matches and runs.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-padding-reflection}.
+Exact padding reflection is complete, including copyability reflection,
+representability preservation, arbitrary contextual matches and finite runs.
+Concrete execution-padding invariance and full term-context congruence are proved.
 Completed tasks are omitted below.
 The four remaining tasks are:
 \begin{enumerate}
@@ -46,12 +47,8 @@ of Proposition~12.2 and the translation of Figure~16.
 of the copy rule from its contraction-tree match; establish deterministic
 behaviour up to representation, refocusing and specimen locality for the
 complete unbounded machine. Prove correspondence with the paper's focused
-graph representation and preserve the completed execution-isomorphism law
-through any necessary semantic corrections. Reflect arbitrary matches and
-runs from a padded graph to its smaller allowance; combine this converse
-with the proved forward exact-cost transport to discharge execution padding
-invariance and its observation consequences. Forward transport alone does
-not discharge this obligation.
+graph representation and preserve the completed execution-isomorphism and
+exact padding-invariance laws through any necessary semantic corrections.
 Retain the zero-input qualification of Lemma~E.1.
 \item Prove all eleven template families' safety and robustness in Table~3's
 dependency order, including the indirect copying and garbage-collection dependencies.

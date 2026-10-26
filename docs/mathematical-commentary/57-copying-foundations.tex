@@ -63,9 +63,12 @@ with exact run costs and term-token typing. Arithmetic rules now extend the
 same relation, with five-step unary and seven-step binary executions. Its concrete allowance-indexed
 execution has exact finite-run correspondence and proved recursive
 isomorphism invariance (Section~\ref{sec:copying-combined}). Every combined run
-and closed observation now pads forward at exactly the same cost
-(Section~\ref{sec:copying-arithmetic-padding}). Reverse padding transport,
-matching independence and complete-machine laws remain pending.
+and closed observation pads forward at exactly the same cost
+(Section~\ref{sec:copying-arithmetic-padding}). Every padded match and run now
+also reflects at exactly the same cost; copyability reflection and preservation
+of representability are proved from the concrete graph rules
+(Section~\ref{sec:copying-padding-reflection}). Matching independence and the
+remaining complete-machine laws are pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its
@@ -74,14 +77,13 @@ existing compute parameter.
 binding-freedom of all translated term contexts, sole-hole certificates and
 addressed context composition are checked. Graph-context congruence has an
 explicit execution-isomorphism premise, now discharged for the combined
-subsystem, now including arithmetic. Observation reflection and the cofinal
-allowance criterion additionally assume one-step execution padding invariance
-(Section~\ref{sec:copying-observation-padding}). Equal-depth observational
-term-context congruence is proved under isomorphism invariance in
-Section~\ref{sec:copying-term-congruence}; Section~\ref{sec:copying-general-congruence}
-removes the depth restriction using common-allowance graph isomorphisms.
-The full machine's isomorphism/padding laws and the paper-correspondence obligations
-of Section~\ref{sec:paper-correspondence} remain pending. Unrestricted
+subsystem, including arithmetic. Observation reflection and the cofinal
+allowance criterion from Section~\ref{sec:copying-observation-padding} now have
+both execution premises discharged. Section~\ref{sec:copying-padding-reflection}
+instantiates full term-context congruence with the concrete execution, without
+an equal-minimum-depth restriction. These representation laws must be preserved
+through any semantic correction required by the remaining full-machine and
+paper-correspondence obligations of Section~\ref{sec:paper-correspondence}. Unrestricted
 zero-input-hole closure is refuted, as recorded in Appendix~B.1.
 \item \textbf{Pending templates:} Table~3 requires contraction associativity,
 commutativity and idempotence; copying and garbage collection; box permutation,

@@ -61,10 +61,20 @@ subsystem now lifts all these local runs through shallow typed
 contexts, retains exact costs and proves term-token typing. Its concrete
 allowance-indexed execution has proved isomorphism invariance and graph-context
 congruence (Section~\ref{sec:copying-combined}). Arithmetic rules and forward
-exact-cost padding of all combined runs are now proved
-(Section~\ref{sec:copying-arithmetic-padding}). Match independence, focused-state
-correspondence, deterministic combined behaviour, reverse padding transport,
-refocusing and the specimen interface remain unfinished.
+exact-cost padding of all combined runs are proved in
+Section~\ref{sec:copying-arithmetic-padding}. Exact reflection of arbitrary
+padded matches and runs now proves the converse, discharging concrete
+execution-padding invariance and full term-context congruence
+(Section~\ref{sec:copying-padding-reflection}). Match independence, focused-state
+correspondence, deterministic combined behaviour, refocusing and the specimen
+interface remain unfinished.
+
+The new auxiliary truncation is a structural proof device. A recursive
+representability predicate characterizes exactly the isomorphism-closed image
+of padding. Truncation recovers that image without changing the graph's
+meaning; its total definition uses typed placeholders only for excessive
+boxes outside the certified fragment, including erased context slots.
+It is not a reduction rule or a replacement for the Figure~16 translation.
 
 \Needspace{5\baselineskip}
 The arithmetic domain remains natural numbers, with subtraction truncated at

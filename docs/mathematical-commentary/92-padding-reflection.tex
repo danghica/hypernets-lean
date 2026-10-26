@@ -1,0 +1,564 @@
+\clearpage
+\section{Exact padding reflection and contextual congruence}
+\label{sec:copying-padding-reflection}
+The concrete combined execution now satisfies both representation laws:
+recursive-isomorphism invariance and padding invariance. Every finite run
+from a padded state reflects to a run of exactly the same length at the
+original allowance. Its endpoint is recursively isomorphic to the padding
+of the smaller endpoint. Together with the preceding section's forward
+transport, this establishes equality of all successful execution costs.
+No determinism, refocusing or matching-independence assumption is used.
+
+This is a substantial machine obligation, not the final template theorem.
+The abstract cofinal-allowance and full term-context-congruence results can
+now be instantiated with this concrete execution without representation-law
+premises. The full copying-machine correspondence, matching independence,
+refocusing, specimen laws and eleven template families still require proofs.
+In particular, this section does not assert equivalence of the two programs
+of Proposition~12.2. Their terms and their Figure~16 translations are unchanged.
+
+The dependency chain is: typed truncation and its two round trips;
+reflection of stability and copyability; descent of every primitive local
+match; descent of contextual matches; exact finite-run reflection; and the
+unbounded observation and congruence consequences. The depth invariant is
+proved simultaneously with operational descent, rather than assumed.
+
+\Needspace{12\baselineskip}
+\subsection{Typed truncation and the representable fragment}
+
+\termdef{depth-truncation}
+Write $P_d$ for padding from allowance $d$ to $d+1$, and $L_d$ for the new
+auxiliary truncation in the reverse direction. Truncation preserves every
+outer vertex, edge, wire label and ordered incidence list. It preserves
+primitive labels. At a positive target allowance, it preserves a box's
+bound, free-variable and free-atom counts and recursively truncates its body.
+At target allowance zero there is no box constructor. To make the auxiliary
+function total, an excessive box is replaced by a typed hole with input
+$[\mathsf{thunk}(b)]$, output the original free interface, and a fixed
+auxiliary name. Such a replacement is used only in the structural proof.
+It is neither an execution step nor a clause of term translation.
+
+Totality matters because a context's replaced slot disappears during plugging:
+its label need not be representable even if the filled graph is. The proofs
+below exclude excessive boxes from actual representable source and target
+graphs. No semantic result is claimed for truncating an arbitrary excessive
+box without that restriction.
+
+\lean{Copying/DepthLowering}{13}{14}{Lowering.slot}
+
+\lean{Copying/DepthLowering}{17}{25}{Lowering.lower}
+
+\lean{Copying/DepthLowering}{28}{32}{Lowering.label}
+
+The input and output signature equations follow by cases on the target
+allowance and on whether the label is primitive or boxed. In the excessive
+case, the placeholder has exactly the box's old signature by construction.
+Uniform graph truncation is therefore the existing typed relabelling
+operation; its graph laws, incidence coverage and finite enumerations are
+inherited from that operation. The uniform presentation and recursive
+presentation are equal by cases on allowance and labels. The uniform form
+makes unchanged outer carriers available definitionally in token proofs.
+
+\lean{Copying/DepthLowering}{34}{36}{Lowering.label_input}
+
+\lean{Copying/DepthLowering}{38}{40}{Lowering.label_output}
+
+\lean{Copying/DepthLowering}{43}{44}{Lowering.graph}
+
+\lean{Copying/DepthLowering}{46}{47}{Lowering.graph_eq_lower}
+
+\termdef{lowering-representability}
+A label at allowance $d+1$ \emph{fits} at allowance $d$ when it is primitive,
+or when $d>0$ and every label in its boxed body fits one layer lower.
+At target allowance zero a box never fits. A graph fits when all its outer
+labels do. Thus this is a recursive depth bound on the actual graph, not an
+assumption that its syntactic allowance is minimal.
+
+Representability is invariant under recursive isomorphism. At the bottom
+layer equivalent labels have the same primitive/box case. At higher layers,
+related boxes have identical metadata and a body isomorphism; transport each
+body edge using its edge bijection and apply induction. The graph version
+uses the outer edge bijection, including its inverse for the forward
+universal quantifier. Every padded label fits by induction on allowance:
+a padded box has a padded body. Quantifying this label result gives both
+the uniform and original graph-padding certificates.
+
+\lean{Copying/DepthLowering}{50}{53}{Lowering.FitsLabel}
+
+\lean{Copying/DepthLowering}{56}{56}{Lowering.Fits}
+
+\lean{Copying/DepthLowering}{59}{86}{Lowering.fitsLabel_equiv}
+
+\lean{Copying/DepthLowering}{88}{95}{Lowering.fits_iso_iff}
+
+\lean{Copying/DepthLowering}{98}{108}{Lowering.fits_padding_label}
+
+\lean{Copying/DepthLowering}{110}{111}{Lowering.fits_graph}
+
+\lean{Copying/DepthLowering}{113}{114}{Lowering.fits_raise}
+
+\Needspace{12\baselineskip}
+\subsection{The two round trips and reflection of isomorphism}
+
+Truncation preserves recursive label equivalence even before restricting
+to representable graphs. Related primitives remain identical. Related boxes
+have the same metadata; at target zero their typed placeholders are identical,
+while at a higher target the induction hypothesis transports the body
+isomorphism. Consequently graph truncation transports an isomorphism using
+exactly its old vertex and edge bijections. Ordered incidence is unchanged.
+
+\lean{Copying/DepthLowering}{117}{147}{Lowering.label_equiv}
+
+\lean{Copying/DepthLowering}{150}{157}{Lowering.graphIso}
+
+Lowering a padded label recovers the original label up to recursive
+isomorphism. The primitive case is immediate. In the box case, apply induction
+to each body label and use identity outer vertex and edge bijections. The
+resulting graph round trip $L_d(P_d(G))\cong G$ also fixes every outer port.
+For the converse, $P_d(L_d(H))\cong H$, a representability certificate rules
+out the excessive-box case and supplies the induction hypotheses for every
+nested body. Its outer bijections are again identities. These proofs establish
+that the auxiliary placeholder does not alter representable graphs.
+
+\lean{Copying/DepthLowering}{160}{176}{Lowering.label_roundtrip}
+
+\lean{Copying/DepthLowering}{179}{185}{Lowering.roundtrip}
+
+\lean{Copying/DepthLowering}{188}{206}{Lowering.label_recover}
+
+\lean{Copying/DepthLowering}{209}{216}{Lowering.recover}
+
+\termdef{padding-image}
+Representability exactly characterizes the isomorphism-closed image of padding:
+\[
+ \mathsf{Fits}(H)\quad\Longleftrightarrow\quad
+ \exists G\text{ at allowance }d,\ P_d(G)\cong H.
+\]
+For the forward implication choose $G=L_d(H)$ and use recovery. For the reverse
+implication, padded graphs fit and representability transports through the
+specified isomorphism. Padding is also faithful on recursive isomorphism:
+from $P_d(G)\cong P_d(H)$, lower the isomorphism and compose with the two left
+round trips to obtain $G\cong H$. The converse uses the established padding
+congruence. No quotient or new graph equality is introduced.
+
+\lean{Copying/DepthLowering}{219}{223}{Lowering.fits_iff_image}
+
+\lean{Copying/DepthLowering}{226}{228}{Lowering.reflectIso}
+
+\lean{Copying/DepthLowering}{230}{236}{Lowering.padding_iso_iff}
+
+\Needspace{12\baselineskip}
+\subsection{Assembly, erased slots and search coordinates}
+
+Truncation commutes with actual serial assembly up to an isomorphism
+that retains each component tag and the shared interface vertices. Its source
+and target equations compose the two incidence maps; cases on an internal,
+input or output port establish that its attachment is unchanged. This is the
+same explicit finite serial construction used by the original translation.
+
+\lean{Copying/LoweringAssembly}{10}{51}{Lowering.serial_graph}
+
+For simultaneous expansion, truncate each filling and cast its boundary
+to the signature of the truncated host label. The signature equalities proved
+above justify these casts. Inserting such a cast port in the truncated host
+reaches exactly the old vertex. Internal ports retain their component tag;
+inputs and outputs retain their source or target index. The expansion
+isomorphism has identity outer bijections, and its two incidence equations
+follow by mapping this attachment identity over each edge's port list.
+Single-slot plugging has the same attachment argument. Retained host edges
+use their unchanged host embedding; inserted edges use the attachment identity.
+
+\lean{Copying/LoweringAssembly}{54}{58}{Lowering.expandFilling}
+
+\lean{Copying/LoweringAssembly}{61}{68}{Lowering.expand_insert}
+
+\lean{Copying/LoweringAssembly}{71}{90}{Lowering.expand_graph}
+
+\lean{Copying/LoweringAssembly}{93}{101}{Lowering.plug_insert}
+
+\lean{Copying/LoweringAssembly}{103}{129}{Lowering.plug_graph}
+
+A primitive corolla truncates to the same primitive corolla at the
+smaller allowance, by cases on allowance. Equality casts of the external
+interface commute with truncation by eliminating those equalities.
+Representability is unchanged by either the translation's interface casts
+or the graph constructor's reboundary operation: neither changes edge labels.
+Serial assembly fits exactly when both components fit, by inspecting its
+Boolean-tagged edge carrier. Tensor composition has the same equivalence,
+using the general tensor label characterization.
+
+\lean{Copying/LoweringAssembly}{133}{134}{Lowering.primitive}
+
+\lean{Copying/LoweringAssembly}{137}{139}{Lowering.castInterfaces}
+
+\lean{Copying/LoweringAssembly}{142}{143}{Lowering.fits_castInterfaces}
+
+\lean{Copying/LoweringAssembly}{145}{146}{Lowering.fits_reboundary}
+
+\lean{Copying/LoweringAssembly}{149}{155}{Lowering.fits_serial}
+
+\lean{Copying/LoweringAssembly}{158}{160}{Lowering.fits_tensor}
+
+\termdef{lowering-erased-slot}
+A plugged graph $C[e:=G]$ fits exactly when $G$ fits and every edge of $C$
+other than $e$ has a fitting label. There is deliberately no condition on the
+erased label of $e$. The proof splits the replacement's edge carrier into
+retained host edges and inserted edges. Likewise, simultaneous expansion fits
+exactly when every filling fits; every skeleton edge disappears. This avoids
+an unjustified restriction on the existing contextual-match relation.
+
+\lean{Copying/LoweringAssembly}{163}{171}{Lowering.fits_plug}
+
+\lean{Copying/LoweringAssembly}{174}{180}{Lowering.fits_expand}
+
+A box over an allowance-zero body cannot fit one layer lower: apply
+the proposed certificate to its unique edge to obtain false. A higher box fits
+exactly when its body fits, again by inspecting the unique edge. Truncating a
+higher box acts recursively on its body. The lambda-box equation also preserves
+the existing bound-first interface convention, using the interface-cast law.
+Combining these equations with serial assembly and primitive truncation gives
+the isomorphism for complete lambda payloads.
+
+\lean{Copying/LoweringAssembly}{183}{184}{Lowering.box_not_fits}
+
+\lean{Copying/LoweringAssembly}{187}{191}{Lowering.fits_box}
+
+\lean{Copying/LoweringAssembly}{194}{195}{Lowering.box}
+
+\lean{Copying/LoweringAssembly}{198}{201}{Lowering.lambdaBox}
+
+\lean{Copying/LoweringAssembly}{204}{208}{Lowering.lambdaPayload}
+
+On fitting labels, having a specified primitive label is equivalent
+before and after truncation. At allowance zero the only problematic case,
+a box turning into a hole, is excluded by the certificate; at higher allowances
+boxes remain boxes. For any predicate on primitives, the recursive all-labels
+predicate is therefore equivalent before and after truncation. The proof
+induces through box bodies and uses their fitting certificates. Its graph
+version quantifies over unchanged edge carriers. In particular, no focus,
+hole or non-language label is introduced into a fitting language graph.
+
+Intrinsic search transport uses identity port and edge bijections, this
+primitive-recognition equivalence, and unchanged source and target lists.
+External-input status is unchanged. The existing exact search-transport
+theorem therefore applies in both directions, with the actual token coordinate.
+
+\lean{Copying/LoweringAssembly}{211}{220}{Lowering.primitive_iff}
+
+\lean{Copying/LoweringAssembly}{223}{236}{Lowering.labelAll_iff}
+
+\lean{Copying/LoweringAssembly}{238}{242}{Lowering.allLabels_iff}
+
+\lean{Copying/LoweringAssembly}{245}{251}{Lowering.search}
+
+\Needspace{12\baselineskip}
+\subsection{Reflection of the operational side conditions}
+
+Stable graphs fit at every smaller positive-to-predecessor allowance:
+each stable edge is a primitive instance or passive operation, never a box.
+Truncation preserves its primitive label and stability classification. The
+existing theorem deriving the full stability predicate from these labels
+recovers the output and reachability clauses as well. Conversely, for a fitting
+graph, stable labels after truncation reflect to the original primitive labels,
+so the same argument proves stability of the original graph. Stability has not
+been weakened to an informal value test.
+
+\lean{Copying/LoweringPredicates}{11}{14}{Stable.fits}
+
+\lean{Copying/LoweringPredicates}{17}{22}{Stable.lower}
+
+\lean{Copying/LoweringPredicates}{24}{32}{Stable.lower_iff}
+
+\termdef{copyability-padding-reflection}
+A lambda payload at allowance one genuinely requires its box layer: serial
+representability would imply representability of that box, contradicting the
+bottom-layer box obstruction. At a higher allowance, a lambda payload fits
+exactly when its body does; the lambda head always fits, and the box/interface
+lemmas identify its body's condition.
+
+To lower any copyable graph, induct on its copyability derivation, retaining
+an equality that its allowance is a successor. The instance, constant,
+application, unary and binary cases truncate to their original primitive
+corollas. In the lambda case, target allowance zero is impossible by the
+obstruction. Otherwise the lambda-payload isomorphism identifies the result
+with a lambda over the truncated body, which is copyable by definition.
+No stability premise is imposed on that body. In the renaming case, pull
+representability back through the isomorphism, use induction, and transport
+copyability through the lowered isomorphism.
+
+\lean{Copying/LoweringPredicates}{38}{43}{Copyable.lambda_not_fits}
+
+\lean{Copying/LoweringPredicates}{46}{54}{Copyable.lambda_fits_iff}
+
+\lean{Copying/LoweringPredicates}{58}{90}{Copyable.lower}
+
+For a fitting graph, copyability of its lowering also implies original
+copyability: pad the copyable lowering using the established forward theorem
+and transport it along recovery. Thus copyability is equivalent on that
+fragment. Specializing to $P_d(G)$ and using the left round trip proves
+\[
+ \mathsf{Copyable}(P_d(G))\ \Longleftrightarrow\ \mathsf{Copyable}(G).
+\]
+Induction yields the result for any finite number of layers. Equality transport
+in the depth index is eliminated directly; combining it with repeated padding
+gives the exact pad-to-allowance equivalence. Extra allowance therefore cannot
+make a previously non-copyable payload eligible for the copy rule.
+
+\lean{Copying/LoweringPredicates}{93}{100}{Copyable.lower_iff}
+
+\lean{Copying/LoweringPredicates}{103}{109}{Copyable.raise_iff}
+
+\lean{Copying/LoweringPredicates}{111}{115}{Copyable.pad_iff}
+
+\lean{Copying/LoweringPredicates}{117}{118}{Copyable.castDepth_iff}
+
+\lean{Copying/LoweringPredicates}{120}{122}{Copyable.padTo_iff}
+
+\Needspace{12\baselineskip}
+\subsection{Every local match descends}
+
+The recovery isomorphism is first restated using the original recursive
+raising function. If a specified padded graph is isomorphic to a higher graph,
+lowering that isomorphism and composing with the inverse left round trip
+identifies the smaller graph with the lowering of the higher graph.
+
+Every local rule uses an ordered external input as its active port, which
+is fixed by any boundary-preserving graph isomorphism. Consequently a known
+smaller input-rooted rewrite transports through specified padded source and
+target isomorphisms to a rewrite between their lowerings. The target
+isomorphism also certifies representability of the higher target, because
+all padded graphs fit. This helper supplies both conclusions required by
+operational induction.
+
+\lean{Copying/LocalLowering}{13}{15}{Lowering.recover_raise}
+
+\lean{Copying/LocalLowering}{18}{20}{Lowering.fromRaised}
+
+\lean{Copying/LocalLowering}{27}{32}{Combined.lower_input_rule}
+
+\termdef{local-match-lowering}
+Suppose an actual primitive local rule takes $(G,v)$ to $(H,w)$ at allowance
+$d+1$ and $G$ fits at $d$. Then $H$ fits at $d$ and the actual contextual rewrite
+relation at allowance $d$ relates $(L_d(G),v)$ to $(L_d(H),w)$.
+The proof covers every constructor, as follows.
+\begin{enumerate}
+\item Allocation and assignment lower their stable argument. Stable graphs
+fit automatically. Their existing redex/reduct padding isomorphisms, followed
+by argument recovery, compare the smaller local rule to the given higher one.
+Assignment retains exactly the matched atom tree.
+\item Dereference and both atom-equality cases have entirely primitive
+local graphs. Their original padding equalities directly supply the smaller
+rule, with the same matched atom trees and indexed active input.
+\item Micro-beta extracts representability of the closure from the source's
+serial and tensor decomposition. At target zero its lambda box contradicts
+representability. Otherwise the lambda-body certificate and stable-argument
+certificate recover both smaller operands. The established before/after
+padding and congruence isomorphisms compare the two actual beta rules.
+\item Copying extracts the payload certificate from the source's serial
+decomposition. Copyability lowers by the new converse theorem; the existing
+copy-construction congruence and padding isomorphisms retain the same
+contraction-tree presentation on both sides. This is not yet a proof of
+independence between different possible tree matches.
+\item Unary and binary arithmetic use their established redex-padding and
+result-number isomorphisms. Their operands, operation codes and numeric
+results are unchanged.
+\end{enumerate}
+All cases use the preceding input-rooted helper. No local rule is added to
+make this proof succeed, and no source or target relation is redefined.
+
+\lean{Copying/LocalLowering}{36}{96}{Combined.local_lowering}
+
+\Needspace{12\baselineskip}
+\subsection{Contextual matches and exact finite runs}
+
+Induct on the existing contextual rewrite derivation. A local step is
+the preceding theorem. For recursive renaming, pull source representability
+back, apply induction, and push target representability and the lowered
+rewrite forward. For plugging, the exact representability characterization
+provides both the inserted-source certificate and the unchanged surviving-host
+certificates. Induction supplies the inserted-target certificate. The new
+attachment equations and plugging isomorphisms transport the lower rewrite
+at precisely the original inserted token coordinates. For simultaneous
+expansion, every source filling fits. Only the selected filling changes;
+induction handles it and equality handles the others. The expansion attachment
+law then transports the rewrite. This covers arbitrary nested derivations of
+the shallow contextual relation, not just canonical local redexes.
+
+\lean{Copying/CombinedLowering}{11}{51}{Combined.rewrite_lowering}
+
+A lowered state consists of the truncated graph and the same mode and
+vertex. Its finality condition is literally unchanged: backtracking at an
+external input. A search step lowers by the concrete search transport. A
+rewrite step lowers by contextual match descent, which also proves that its
+target still fits. Induction on finite runs therefore proves both endpoint
+representability and a run of exactly the original length between the
+lowered endpoints. The induction carries the source certificate through each
+step; no global preservation assertion is left as a hypothesis.
+
+\lean{Copying/CombinedLowering}{54}{54}{Combined.lowerState}
+
+\lean{Copying/CombinedLowering}{56}{57}{Combined.lowerState_final}
+
+\lean{Copying/CombinedLowering}{60}{67}{Combined.step_lowering}
+
+\lean{Copying/CombinedLowering}{70}{78}{Combined.run_lowering}
+
+The two graph round trips lift to state isomorphisms because their
+outer bijections are identities and thus fix even internal token vertices.
+An arbitrary state isomorphism also pads, using the already-proved graph
+padding transport while retaining its mode and vertex equations.
+
+\lean{Copying/CombinedLowering}{81}{84}{Combined.lower_pad_state}
+
+\lean{Copying/CombinedLowering}{87}{91}{Combined.pad_lower_state}
+
+\lean{Copying/CombinedLowering}{94}{98}{Combined.padStateIso}
+
+\termdef{execution-padding-reflection}
+Let $s$ have allowance $d$, and suppose $P_d(s)\steps{n}t$. Lower the entire
+run using the initial padded graph's certificate. This gives a run from
+$L_d(P_d(s))$ to $L_d(t)$ and proves that $t$ fits. Transport its starting state
+through the left round trip to $s$, obtaining a run $s\steps{n}u$ and a state
+isomorphism $L_d(t)\cong u$. Pad that isomorphism, reverse it, and compose with
+recovery of $t$ to obtain $P_d(u)\cong t$. Hence
+\[
+ P_d(s)\steps{n}t\quad\Longrightarrow\quad
+ \exists u,\ s\steps{n}u\ \land\ P_d(u)\cong t.
+\]
+There is no assumption that a rewrite match or a successor is unique.
+Finality transports through the endpoint isomorphism. Combining reflection
+with forward padding proves equivalence of successful termination at each
+exact cost $n$. The result includes zero-step runs.
+
+\lean{Copying/CombinedLowering}{102}{107}{Combined.run_reflect_padding}
+
+\lean{Copying/CombinedLowering}{110}{116}{Combined.terminatesIn_padding_iff}
+
+\Needspace{12\baselineskip}
+\subsection{Unbounded executions and observations}
+
+An unbounded run retains its original allowance. The existing bounded-run
+extraction theorem therefore turns a run from a padded unbounded state into a
+fixed-allowance run. Reflect that run by the preceding theorem and reinsert it
+into the unbounded machine. Its endpoint representation relation is obtained
+from the reflected endpoint state isomorphism.
+
+For any cost preorder $Q$, every successful higher run now has a successful
+lower run at the identical cost, which is related to itself by reflexivity of
+$Q$. This proves reverse quantitative refinement. Pairing it with forward
+refinement gives padding equivalence for every $Q$, not only the universal
+termination preorder. Induction and transitivity give initial-program
+equivalence under any finite padding. Specializing to one layer and the
+universal preorder discharges the concrete \texttt{RespectsPadding} interface.
+
+\lean{Copying/CombinedPaddingInvariant}{9}{15}{Combined.unbounded_run_reflect_padding}
+
+\lean{Copying/CombinedPaddingInvariant}{18}{22}{Combined.padding_refines_reverse}
+
+\lean{Copying/CombinedPaddingInvariant}{25}{27}{Combined.padding_equiv}
+
+\lean{Copying/CombinedPaddingInvariant}{30}{37}{Combined.initial_pad_equiv}
+
+\lean{Copying/CombinedPaddingInvariant}{40}{41}{Combined.execution_respectsPadding}
+
+\termdef{successful-cost-spectrum}
+The successful-cost spectrum of a closed program is the set of natural numbers
+$n$ for which its initial state has an $n$-step run to a final state. This set
+is equal before and after any finite padding. To prove either inclusion, apply
+the corresponding refinement with the equality cost order and eliminate the
+resulting equality of costs. Existentially quantifying the cost gives
+termination equivalence. Negating that equivalence also preserves
+nontermination; no classification of divergent executions is needed.
+
+\lean{Copying/CombinedPaddingInvariant}{44}{53}{Combined.initial_cost_pad_iff}
+
+\lean{Copying/CombinedPaddingInvariant}{56}{62}{Combined.terminates_pad_iff}
+
+For a closing context and an open fragment, first apply initial padding
+equivalence to the original closed filling. The established context-padding
+isomorphism identifies its padded graph with the filling of the padded context
+by the padded fragment. Concrete initial-isomorphism equivalence then gives
+exact-cost equivalence of those closed observations. The general observation
+reflection theorem can now be instantiated: contextual equivalence at a
+larger allowance reflects to the original allowance with both execution
+representation premises discharged.
+
+\lean{Copying/CombinedPaddingInvariant}{65}{72}{Combined.close_pad_equiv}
+
+\lean{Copying/CombinedPaddingInvariant}{75}{78}{Combined.equiv_of_pad}
+
+\termdef{concrete-term-congruence}
+The cofinal-allowance theorem now applies to the concrete combined execution:
+observational equivalence of terms is equivalent to contextual equivalence at
+arbitrarily large common adequate allowances. The existing proof includes all
+original certified closing contexts by padding them, and now both needed
+representation laws are established for the actual machine.
+Full congruence now applies to every original annotated term context,
+including terms with different minimum translation depths. The proof supplies
+concrete isomorphism and padding invariance to the general context theorem.
+Its premise is the terms' observational equivalence; the equivalence of
+Proposition~12.2 remains to be established.
+
+\lean{Copying/CombinedPaddingInvariant}{81}{85}{Combined.observationalEquiv_iff_cofinal}
+
+\lean{Copying/CombinedPaddingInvariant}{89}{92}{Combined.observationalEquiv_context}
+
+\Needspace{12\baselineskip}
+\subsection{Regressions, scope and remaining work}
+
+The bottom-layer regression rejects a lambda payload as representable
+without its only box layer. The positive nested-payload regression allows an
+arbitrary body and any finite extra allowance, deriving copyability from the
+new equivalence. The erased-slot regression allows a nonrepresentable box as
+a host slot when a fitting graph replaces it: the host has only one edge, so
+there are no surviving host labels to check. The unfilled host still fails
+representability. These distinguish actual box depth from irrelevant erased
+skeleton labels.
+
+\lean{Copying/LoweringExamples}{10}{11}{Lowering.Examples.lambda_needs_layer}
+
+\lean{Copying/LoweringExamples}{14}{17}{Lowering.Examples.nested_payload_copyable}
+
+\lean{Copying/LoweringExamples}{20}{26}{Lowering.Examples.erased_box_slot_fits}
+
+For every scoped term, padding followed by truncation satisfies the
+original translation-language predicate. This uses recursive all-labels
+reflection and the existing translation and padding safety proofs.
+For each of the two unchanged Proposition~12.2 terms, every certified closing
+context at its original minimum allowance and every finite padding preserve
+all successful costs. The environments are arbitrary variable and atom counts;
+there is no empty-environment restriction. The two assertions compare each
+program with its own padded representation, not with the other program.
+A final regression preserves nontermination of every closed contextual filling
+under padding. Its universal quantification includes admissible contexts
+with divergent callbacks or repeated closure use, but does not independently
+prove the behaviour of a particular such callback.
+
+\lean{Copying/LoweringExamples}{29}{33}{Lowering.Examples.translated_roundtrip_language}
+
+\lean{Copying/LoweringExamples}{37}{42}{Lowering.Examples.privateCell_observation_padding}
+
+\lean{Copying/LoweringExamples}{45}{50}{Lowering.Examples.constantResult_observation_padding}
+
+\lean{Copying/LoweringExamples}{55}{59}{Lowering.Examples.nontermination_padding}
+
+All 89 new declarations are included in the copying axiom audit. The
+full build checks 362 jobs; all three audits pass with 6 abstract, 477 graph
+and 1001 copying declarations, using only \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound}. There are no project axioms
+or unfinished proofs in this milestone.
+
+Appendix~B.1 no longer lists padding reflection or its observation and
+congruence consequences as unfinished. Matching independence, deterministic
+behaviour up to representation, refocusing, focused-graph correspondence,
+specimen locality and template robustness remain. The completed invariance
+law concerns the concrete combined relation as defined; correspondence with
+the paper must still be maintained if that relation needs correction.
+
+The updated estimate for Proposition~12.2 is about 78\% of the mathematical
+effort, with a broad plausible range of 60--88\% (26 October 2026). The change
+from 75\% reflects completion of a substantive semantic interface and its
+congruence consequences. This is a judgement about remaining proof difficulty,
+not a count of declarations or completed to-do bullets. The eleven-template
+argument and final Figure~22 chain retain substantial uncertainty.
+

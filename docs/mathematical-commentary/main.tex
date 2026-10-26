@@ -51,7 +51,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/d6087421cc0c39b94c1ab38ed637034e3767d54d}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/f8528a3b16425d196e88b575304d918ba366b723}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -59,7 +59,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{26 October 2026\\\small Source snapshot: \texttt{d608742}; Lean \texttt{4.35.0}}
+\date{26 October 2026\\\small Source snapshot: \texttt{f8528a3}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -107,8 +107,10 @@ copy request for arbitrary atom trees. The literal copy rule now preserves
 residual trees, nested boxes and shared stores, with proved representation laws.
 Stable assignment now preserves store identity and old contents with checked
 local execution, safety and representation laws. Both atom-equality cases now
-have exact local runs and context-stable store-identity outcomes. The remaining
-compute rules, full-machine laws and the template argument remain pending;
+have exact local runs and context-stable store-identity outcomes. Stable application and all arithmetic families complete the local rules.
+Exact padding reflection now discharges concrete execution-padding invariance
+and full term-context congruence. Full-machine laws and the template argument
+remain pending;
 Section~\ref{sec:copying-foundations} records the dependency map and proved
 prerequisites.
 \end{abstract}
@@ -212,6 +214,7 @@ prerequisites.
 \input{89-copying-application}
 \input{90-copying-combined}
 \input{91-arithmetic-padding}
+\input{92-padding-reflection}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}

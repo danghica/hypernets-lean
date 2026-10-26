@@ -13,9 +13,9 @@ every finite run, including their actual contextual matches. A run of length
 $n$ gives a run of exactly length $n$ after an unused allowance layer is added.
 Successful termination is preserved under arbitrarily many layers, and when
 both a closing context and its inserted program are padded. This proves one
-direction of the outstanding padding obligation. It does not reflect arbitrary
-runs from a larger allowance, so the two-sided execution-padding interface
-remains unproved. Neither direction has been inferred from determinism.
+direction of the padding obligation. The converse, not supplied by these
+forward constructions, is proved in Section~\ref{sec:copying-padding-reflection}.
+Neither direction is inferred from determinism.
 
 The terms of Proposition~12.2 and the Figure~16 translation are unchanged.
 The natural-number arithmetic convention below is explicit; no new numeric
@@ -411,11 +411,8 @@ of run lengths; they do not claim uniqueness of all combined executions.
 
 The full build checks 355 jobs. The three audits pass for 6 abstract,
 477 graph and 912 copying declarations, with only standard Lean logical
-axioms. Appendix~B.1 removes arithmetic construction and forward execution
-padding from the unfinished obligations, retaining reflection of padded
-matches/runs, matching independence, full-machine structural laws, template
-robustness and final assembly. Estimated progress by mathematical effort is
-about 75\%, broadly 60--85\% (26 October 2026). This is a judgement about proof
-difficulty; the remaining template and machine arguments still carry substantial
-uncertainty.
+axioms. At this milestone the estimate was about 75\% of mathematical effort,
+broadly 60--85\%. Section~\ref{sec:copying-padding-reflection} completes the
+converse padding argument, gives the updated estimate and records its new
+verification results. Appendix~B.1 retains only the unfinished tasks.
 
