@@ -107,3 +107,4 @@ import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 
 import Hypernets.Copying.ArithmeticExamples
+import Hypernets.Copying.LoweringExamples
