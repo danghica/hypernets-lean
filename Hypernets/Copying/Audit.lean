@@ -1,4 +1,4 @@
-import Hypernets.Copying.EqualityCoherenceExamples
+import Hypernets.Copying.AssignmentCoherenceExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -1263,3 +1263,83 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.EqualityCoherenceExamples.shared_decision
 #print axioms Hypernets.Copying.EqualityCoherenceExamples.distinct_decision
 #print axioms Hypernets.Copying.EqualityCoherenceExamples.omega_contents
+
+-- Assignment: target exchange, complete contextual coherence, exact costs and unchanged data.
+#print axioms Hypernets.Copying.TargetSwap.exchange
+#print axioms Hypernets.Copying.TargetSwap.exchange_left
+#print axioms Hypernets.Copying.TargetSwap.exchange_right
+#print axioms Hypernets.Copying.TargetSwap.exchange_other
+#print axioms Hypernets.Copying.TargetSwap.exchange_involutive
+#print axioms Hypernets.Copying.TargetSwap.permutation
+#print axioms Hypernets.Copying.TargetSwap.exchange_map
+#print axioms Hypernets.Copying.TargetSwap.reindex
+#print axioms Hypernets.Copying.TargetSwap.reindex_refl
+#print axioms Hypernets.Copying.TargetSwap.input_iff
+#print axioms Hypernets.Copying.TargetSwap.typed
+#print axioms Hypernets.Copying.TargetSwap.net
+#print axioms Hypernets.Copying.TargetSwap.rename
+#print axioms Hypernets.Copying.TargetSwap.host_target_ne
+#print axioms Hypernets.Copying.TargetSwap.insert_plug
+#print axioms Hypernets.Copying.TargetSwap.plug
+#print axioms Hypernets.Copying.TargetSwap.componentPermutation
+#print axioms Hypernets.Copying.TargetSwap.component_input
+#print axioms Hypernets.Copying.TargetSwap.component_typed
+#print axioms Hypernets.Copying.TargetSwap.family
+#print axioms Hypernets.Copying.TargetSwap.family_same
+#print axioms Hypernets.Copying.TargetSwap.family_other
+#print axioms Hypernets.Copying.TargetSwap.insert_family
+#print axioms Hypernets.Copying.TargetSwap.expand
+#print axioms Hypernets.Copying.Assignment.Match
+#print axioms Hypernets.Copying.Assignment.Match.map
+#print axioms Hypernets.Copying.Assignment.Match.unique
+#print axioms Hypernets.Copying.Assignment.Match.new_not_input
+#print axioms Hypernets.Copying.Assignment.Match.old_not_input
+#print axioms Hypernets.Copying.Assignment.Match.values_typed
+#print axioms Hypernets.Copying.Assignment.Match.swapped
+#print axioms Hypernets.Copying.Assignment.Match.head_ne_store
+#print axioms Hypernets.Copying.Assignment.Match.instance_ne_new
+#print axioms Hypernets.Copying.Assignment.Match.instance_ne_old
+#print axioms Hypernets.Copying.Assignment.Match.swapped_head_target
+#print axioms Hypernets.Copying.Assignment.Match.swapped_store_target
+#print axioms Hypernets.Copying.Assignment.Match.swapped_other_target
+#print axioms Hypernets.Copying.Assignment.Match.swapped_first
+#print axioms Hypernets.Copying.Assignment.Match.swapped_second
+#print axioms Hypernets.Copying.Assignment.Match.filler
+#print axioms Hypernets.Copying.Assignment.Match.canonical
+#print axioms Hypernets.Copying.Assignment.localMatch
+#print axioms Hypernets.Copying.Assignment.Match.canonical_rename
+#print axioms Hypernets.Copying.Assignment.Match.canonical_plug
+#print axioms Hypernets.Copying.Assignment.Match.canonical_expand_result
+#print axioms Hypernets.Copying.Assignment.Replacement.replaced
+#print axioms Hypernets.Copying.Assignment.Replacement.vertexTo
+#print axioms Hypernets.Copying.Assignment.Replacement.vertexFrom
+#print axioms Hypernets.Copying.Assignment.Replacement.vertices
+#print axioms Hypernets.Copying.Assignment.Replacement.edgeTo
+#print axioms Hypernets.Copying.Assignment.Replacement.edgeFrom
+#print axioms Hypernets.Copying.Assignment.Replacement.edges
+#print axioms Hypernets.Copying.Assignment.Replacement.map_frame
+#print axioms Hypernets.Copying.Assignment.Replacement.map_tree
+#print axioms Hypernets.Copying.Assignment.Replacement.beforeValueVertex
+#print axioms Hypernets.Copying.Assignment.Replacement.map_value
+#print axioms Hypernets.Copying.Assignment.Replacement.retained_target
+#print axioms Hypernets.Copying.Assignment.Replacement.iso
+#print axioms Hypernets.Copying.Assignment.Replacement.canonical_local
+#print axioms Hypernets.Copying.Combined.local_assignment_canonical
+#print axioms Hypernets.Copying.Combined.local_assignment_match
+#print axioms Hypernets.Copying.Combined.rewrite_assignment_match
+#print axioms Hypernets.Copying.Combined.rewrite_assignment_canonical
+#print axioms Hypernets.Copying.Combined.assignment_rewrite_deterministic
+#print axioms Hypernets.Copying.Combined.assignment_step_deterministic
+#print axioms Hypernets.Copying.Combined.assignment_cost_spectrum
+#print axioms Hypernets.Copying.Combined.assignment_unbounded_deterministic
+#print axioms Hypernets.Copying.Combined.assignment_unbounded_equiv
+#print axioms Hypernets.Copying.Assignment.value_returns
+#print axioms Hypernets.Copying.Assignment.contents_successor
+#print axioms Hypernets.Copying.Assignment.contents_exact_cost
+#print axioms Hypernets.Copying.Assignment.host_successor
+#print axioms Hypernets.Copying.AssignmentCoherenceExamples.storedTerm
+#print axioms Hypernets.Copying.AssignmentCoherenceExamples.storedTerm_exact_cost
+#print axioms Hypernets.Copying.AssignmentCoherenceExamples.translatedLiterals
+#print axioms Hypernets.Copying.AssignmentCoherenceExamples.translatedLiterals_exact_cost
+#print axioms Hypernets.Copying.AssignmentCoherenceExamples.overwrite_omega
+#print axioms Hypernets.Copying.AssignmentCoherenceExamples.translatedLiterals_successor
