@@ -38,11 +38,15 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{copying-assignment-interface}{Assignment interface}{One term input and the other atom-reference inputs, with one old-content term output followed by the new value outputs.}
 
+\glossaryentry{assignment-match}{Assignment match}{Source data identifying the assignment head, unique resolved store and ordered instance, new-value and old-value ports.}
+
 \glossaryentry{copying-assignment-resolution}{Assignment resolution preservation}{Exact preservation of the atom-routing count to the selected store before and after its term connection is updated.}
 
 \glossaryentry{copying-assignment-rule}{Assignment rule}{The stable Figure 19(c) update reconnecting the original store to the new value, weakening the instance and old contents, and returning unit.}
 
 \glossaryentry{copying-assignment-subsystem}{Assignment subsystem}{Intrinsic search plus the stable local assignment rule, with final normality and checked seven-step literal-value executions.}
+
+\glossaryentry{assignment-successor-coherence}{Assignment successor coherence}{Any two actual writes at the same request have recursively isomorphic complete successor graphs with matching resumed token positions.}
 
 \glossaryentry{atom-match-decision}{Atom-comparison decision}{A Boolean fixed by whether the two ordered arguments resolve to the same store occurrence.}
 
@@ -97,6 +101,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{copying-box-permutation-pair}{Box-permutation pair}{Typed body and outer permutations agreeing on free resources and fixing every bound output, with the bound-prefix offset explicit.}
 
 \glossaryentry{canonical-allocation-successor}{Canonical allocation successor}{The source host with its selected ref edge replaced by the original cell prefix, resuming search at the retained old wire.}
+
+\glossaryentry{canonical-assignment-successor}{Canonical assignment successor}{A proof construction that exchanges the new and old value targets, then replaces the assignment head by unit and two weakenings.}
 
 \glossaryentry{canonical-equality-successor}{Canonical equality successor}{The complete source graph with its comparison head replaced by a Boolean and two weakenings, resuming at the retained request wire.}
 
@@ -807,6 +813,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{successful-cost-spectrum}{Successful-cost spectrum}{All natural lengths of successful executions from a program initializer; this set is unchanged by finite padding.}
 
 \glossaryentry{indexed-port}{Target port}{A target-list vertex selected by a finite index in the edge label's output signature.}
+
+\glossaryentry{target-exchange-graph}{Target-exchange graph}{A graph with two equally typed non-input target endpoints exchanged, retaining all carriers, labels and source incidences.}
 
 \glossaryentry{wire}{Term wire}{The wire type $*$, distinguished from a thunk wire and used for ordinary operation inputs and term arguments.}
 

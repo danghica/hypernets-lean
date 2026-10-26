@@ -9,42 +9,48 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: complete reference-equality coherence and exact costs
+## Latest milestone: complete assignment coherence and exact costs
 
-Both reference-equality branches now have **proved successor-state coherence**
-in the actual combined machine. Independently chosen contextual matches at the
-same comparison request produce recursively isomorphic whole graphs and matching
-resumed token positions. The proof covers renaming, plugging and simultaneous
-assembly, retaining all instances, trees, stores and attached contents. It
-assumes neither machine determinism nor common matching decompositions.
+Assignment now has **proved successor-state coherence** in the actual combined
+machine. Independently chosen contextual writes at the same request produce
+recursively isomorphic complete graphs with matching resumed token positions.
+The proof reconnects the existing store to the new value, retains the old
+contents behind their weakening, and returns unit. It covers renaming, plugging
+and simultaneous expansion without assuming a common matching decomposition,
+global boundary injectivity, acyclicity or machine determinism.
 
-Comparison has **exactly the successful cost seven** with arbitrary stored
-contents under the full combined relation. New regressions attach the unchanged
-translation of any closed term, including self-application and nested boxes;
-the result holds at every padded allowance. Shared stores compare true, while
-different stores with identical contents compare false. Arbitrary typed host
-insertion is covered, including hosts that resume at an internal wire.
-The self-application regression proves comparison termination without executing
-the stored term; it does not independently prove that term's divergence.
+A typed target-exchange construction gives a canonical successor and an explicit
+isomorphism to the paper's original Figure 19(c) reduct. This is a proof device;
+the operational rules, stable-value requirement, Proposition 12.2 terms and
+Figure 16 translation are unchanged.
 
-This closes both equality branches within Appendix B.1's successor-coherence
-obligation. Allocation was completed previously. Dereference, assignment,
+A write of any stable value has **exactly the successful cost seven** with
+arbitrary attached old contents. Full-machine regressions retain the unchanged
+literal translations and the translation of any closed term as old data,
+including self-application and nested boxes, at every finite depth padding.
+The omega-data regression proves the write's termination without executing the
+old contents; it does not assert a separate divergence theorem for omega.
+These are explicit heap scenarios, not a claimed translation theorem for a
+whole surface assignment expression. Arbitrary typed hosts are also covered
+by successor coherence, including internal resumed request wires.
+
+This closes assignment within Appendix B.1's successor-coherence obligation.
+Allocation and both equality branches were completed previously. Dereference,
 application, arithmetic and copying still need successor comparison;
 full-machine refocusing, focused-graph correspondence, specimen locality,
 the eleven-template argument and Proposition 12.2 remain unfinished.
-The four broad remaining packages remain open. The proposition terms,
-Figure 16 translation and operational rules are unchanged.
+The four broad remaining packages stay open.
 
-Commentary Section 91 explains all 61 new declarations with immutable source
-links. Full build: 379 jobs. All three axiom audits pass (6 abstract, 477 graph,
-1,204 copying), using only Lean's standard logical axioms.
+Commentary Section 92 explains all 78 new declarations with immutable source
+links. Full build: 388 jobs. All three axiom audits pass (6 abstract, 477 graph,
+1,282 copying; 1,765 total), using only Lean's standard logical axioms.
 
 Estimated completion by mathematical effort: **roughly 50–65%, with low
 confidence**, as of 26 October 2026. The earlier **80% estimate is withdrawn**:
 it over-weighted infrastructure and under-weighted the remaining machine laws,
-dependent template proofs and final observational argument. Closing the two
-equality cases is substantive progress but does not justify a precise percentage
-increase. The estimate is not a declaration or TODO count.
+dependent template proofs and final observational argument. Completing assignment
+is substantive progress but does not justify a precise percentage increase.
+The estimate is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target
 

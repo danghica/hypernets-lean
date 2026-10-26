@@ -1,0 +1,512 @@
+\clearpage
+\section{Assignment successor coherence and exact costs}
+\label{sec:copying-assignment-coherence}
+The assignment case of Appendix~B.1's successor-coherence obligation is now
+proved for the actual context-closed combined machine. Any two writes from
+the same request produce recursively isomorphic complete successor graphs,
+with matching resumed token positions. This extends the earlier uniqueness
+of the selected store to uniqueness of the whole update. Allocation and both
+reference-equality branches were completed previously; dereference, application,
+arithmetic and copying remain to be compared.
+
+The operational rule remains Figure~19(c), described in
+\href{https://arxiv.org/html/1907.01257v5\#S10.SS1}{HTML Section~10.1}.
+It traces the reference through an arbitrary atom contraction tree, reconnects
+the existing store to the stable new value, weakens the old contents and the
+consumed instance, and returns unit. The paper explicitly allows the new value
+to refer to the same store, potentially forming a cycle. The new contextual
+proof assumes neither acyclicity of the surrounding graph nor global injectivity
+of its boundary attachments.
+
+The central proof construction exchanges two target endpoints, then replaces
+only the assignment head by unit and two weakenings. It is an auxiliary normal
+form for comparing the original reducts, not an additional transition rule.
+Neither Proposition~12.2's terms nor Figure~16's translation changes. The
+stable-value premise is retained in every actual local assignment step.
+The structural comparison is more general than that premise, which is useful
+for transporting it through arbitrary contexts.
+
+The dependency chain is: unique assignment match; typed target exchange;
+commutation with renaming, plugging and expansion; an explicit isomorphism to
+Figure~19(c); induction over actual rewrites; successor coherence and exact
+successful-cost laws. Four broad Appendix~B.1 packages remain open. The
+mathematical-effort estimate remains 50--65\%, with low confidence, since the
+remaining machine laws and the eleven-template argument are substantial.
+
+\Needspace{12\baselineskip}
+\subsection{Target exchange as a typed graph construction}
+
+For elements $a,b,x$ of a type, let $\tau_{a,b}(x)$ be $b$ if $x=a$,
+$a$ if $x=b$ but $x\ne a$, and $x$ otherwise. The left, right and other-element
+lemmas state these three actions. The right equation also covers $a=b$,
+by first splitting that equality. Applying the exchange twice returns $x$:
+split $x=a$, $x=b$, and the remaining case, and use those equations.
+Thus the exchange supplies both directions of a bijection, even when the
+selected elements coincide.
+
+\lean{Copying/TargetSwap}{9}{11}{TargetSwap.exchange}
+
+\lean{Copying/TargetSwap}{13}{13}{TargetSwap.exchange_left}
+
+\lean{Copying/TargetSwap}{14}{18}{TargetSwap.exchange_right}
+
+\lean{Copying/TargetSwap}{19}{20}{TargetSwap.exchange_other}
+
+\lean{Copying/TargetSwap}{22}{28}{TargetSwap.exchange_involutive}
+
+\lean{Copying/TargetSwap}{30}{31}{TargetSwap.permutation}
+
+For a map $f$, exchange commutes with $f$ at $x$ provided
+$f(x)=f(a)$ implies $x=a$ and $f(x)=f(b)$ implies $x=b$.
+These two restricted injectivity conditions suffice: split the same three
+cases, and in the remaining case use the conditions to exclude both image
+equalities. This formulation is crucial because an inserted graph's entire
+boundary map need not be injective.
+
+\lean{Copying/TargetSwap}{34}{42}{TargetSwap.exchange_map}
+
+\termdef{target-exchange-graph}
+More generally, let $p$ be a type-preserving permutation of a graph's ports
+that preserves the predicate of being an external input. The \emph{target
+reindexing} of $G$ retains its internal and edge carriers, labels and all
+source lists, and replaces each ordered target list $T_e$ by $p(T_e)$.
+Finiteness and source laws are inherited. Injectivity of $p$ gives target
+non-repetition and uniqueness. For coverage of a non-input port $v$, use the
+original coverage of $p^{-1}(v)$ and map that incidence forward. Preservation
+of input status supplies its side condition. Type preservation of $p$ proves
+target typing. Identity reindexing is equality of graphs, by the identity
+list-map law and proof irrelevance.
+
+\lean{Copying/TargetSwap}{45}{79}{TargetSwap.reindex}
+
+\lean{Copying/TargetSwap}{82}{86}{TargetSwap.reindex_refl}
+
+Exchanging two non-input ports preserves input classification: both selected
+ports remain non-inputs and all others are fixed. If their wire labels agree,
+the same three-way case split proves preservation of every port's label.
+The \emph{target-exchange graph} $S_{a,b}(G)$ instantiates reindexing with these
+proofs. It moves only target incidences; it is not a renaming of both ends
+of each wire.
+
+\lean{Copying/TargetSwap}{89}{97}{TargetSwap.input_iff}
+
+\lean{Copying/TargetSwap}{100}{108}{TargetSwap.typed}
+
+\lean{Copying/TargetSwap}{111}{113}{TargetSwap.net}
+
+\Needspace{12\baselineskip}
+\subsection{Transport through arbitrary attachments}
+
+A recursive isomorphism $f:G\cong H$ induces
+$S_{a,b}(G)\cong S_{f(a),f(b)}(H)$ using the same carrier bijections and label
+proofs. Sources are unchanged. For targets, compose the original target
+correspondence with the exchange-map lemma; the port bijection supplies
+its two injectivity conditions. Recursive box labels remain related by the
+original isomorphism.
+
+\lean{Copying/TargetSwapLocality}{9}{24}{TargetSwap.rename}
+
+A target of a retained host edge cannot equal the image of a non-input port
+of an inserted component. Such an equality would make that port an output
+of the component attached to a target of the replaced host edge. Target
+uniqueness in the original host would then identify the retained edge with
+the replaced edge, a contradiction. Also, target exchange inside the component
+does not change its attachment map: on internal, input and output ports this
+follows directly from the definition of plugging.
+
+\lean{Copying/TargetSwapLocality}{27}{34}{TargetSwap.host_target_ne}
+
+\lean{Copying/TargetSwapLocality}{37}{41}{TargetSwap.insert_plug}
+
+Consequently, exchanging the two inserted ports in $C[G]$ is isomorphic to
+$C[S_{a,b}(G)]$, with identity carrier bijections. Retained host targets avoid
+both selected ports by the preceding lemma. Inserted targets satisfy the
+exchange-map equation, using injectivity restricted to non-input ports;
+every actual target is a non-input port. Sources agree by the attachment-map
+lemma. This proves commutation with arbitrary typed plugging without a global
+boundary-injectivity or acyclicity premise.
+
+\lean{Copying/TargetSwapLocality}{44}{83}{TargetSwap.plug}
+
+For simultaneous expansion by a family $F$, choose one component $c$.
+The component permutation exchanges $a,b$ in $F(c)$ and is the identity in
+every other component. Its input and typing laws follow by splitting whether
+the component is $c$. Reindexing each $F(e)$ with this permutation defines a
+family $P$ with exactly the original carrier types. At $c$ it is the exchanged
+graph, and elsewhere it equals $F(e)$ by identity reindexing.
+
+\lean{Copying/TargetSwapExpansion}{9}{13}{TargetSwap.componentPermutation}
+
+\lean{Copying/TargetSwapExpansion}{15}{23}{TargetSwap.component_input}
+
+\lean{Copying/TargetSwapExpansion}{25}{33}{TargetSwap.component_typed}
+
+\lean{Copying/TargetSwapExpansion}{36}{42}{TargetSwap.family}
+
+\lean{Copying/TargetSwapExpansion}{44}{49}{TargetSwap.family_same}
+
+\lean{Copying/TargetSwapExpansion}{51}{57}{TargetSwap.family_other}
+
+The insertion maps of $F$ and $P$ agree on every port, by the three port
+cases. Exchanging the selected inserted endpoints in the expanded graph is
+therefore isomorphic to expanding $P$, again by identity carrier bijections.
+For targets within $c$, apply restricted injectivity and the exchange-map
+lemma. Targets in another component cannot hit the selected ports: uniqueness
+of the component owning a non-input target would force that component to be
+$c$. Those targets are fixed. Source and label equations are inherited.
+
+\lean{Copying/TargetSwapExpansion}{60}{65}{TargetSwap.insert_family}
+
+\lean{Copying/TargetSwapExpansion}{68}{111}{TargetSwap.expand}
+
+\Needspace{12\baselineskip}
+\subsection{Unique write data determined by the source}
+
+\termdef{assignment-match}
+An \emph{assignment match} at request port $v$ records an assignment head $e$,
+a store $s$, an instance wire $i$, new-value and old-value ports $n,o$, and a
+store-trace length $k$. Its evidence says: $v$ is a source of the assignment
+head, $s$ has the store label, the ordered target lists are
+$T_e=[i,n]$ and $T_s=[o]$, and operand zero resolves through the instance and
+atom tree to $s$ in $k$ contractions. It records source facts, not a choice
+of result or a replacement for the stable-value condition.
+
+\lean{Copying/AssignmentMatch}{9}{20}{Assignment.Match}
+
+Any incidence-preserving match embedding transports all these data and
+proofs. Ordered target lists transport componentwise; store resolution uses
+the previously proved operand transport theorem. Two matches at the same
+request are equal. Source-head uniqueness gives the same head; uniqueness
+of operand resolution gives the same store and trace length. Equality of
+the two ordered head target lists identifies $i,n$, and equality of the
+singleton store target lists identifies $o$. The remaining fields are proofs,
+so proof irrelevance completes equality of the records.
+
+\lean{Copying/AssignmentMatch}{24}{36}{Assignment.Match.map}
+
+\lean{Copying/AssignmentMatch}{39}{48}{Assignment.Match.unique}
+
+\Needspace{12\baselineskip}
+Both $n$ and $o$ occur as targets, hence neither is an external input.
+Target typing of the assignment and store labels shows both carry term
+wires.
+
+\lean{Copying/AssignmentMatch}{51}{54}{Assignment.Match.new_not_input}
+
+\lean{Copying/AssignmentMatch}{56}{59}{Assignment.Match.old_not_input}
+
+\lean{Copying/AssignmentMatch}{62}{70}{Assignment.Match.values_typed}
+
+These facts define the swapped graph $S_{n,o}(G)$ by the typed
+non-input target-exchange construction.
+
+\lean{Copying/AssignmentMatch}{73}{74}{Assignment.Match.swapped}
+
+\Needspace{12\baselineskip}
+The assignment head and store are distinct because their primitive labels
+differ. The instance wire differs from $n$ by non-repetition of the head's
+target list, and differs from $o$ by target uniqueness for the distinct head
+and store.
+
+\lean{Copying/AssignmentMatch}{77}{80}{Assignment.Match.head_ne_store}
+
+\lean{Copying/AssignmentMatch}{82}{85}{Assignment.Match.instance_ne_new}
+
+\lean{Copying/AssignmentMatch}{87}{92}{Assignment.Match.instance_ne_old}
+
+The exchanged head now targets $[i,o]$, and the same store now targets
+$[n]$. The exchange equations and the two instance inequalities prove these
+formulas. Every other edge retains its full ordered target list: if one of
+its targets were $n$ or $o$, target uniqueness would identify it with the
+head or store. The two indexed head-target lemmas extract $i$ and $o$ from
+$[i,o]$. They provide the precise attachment ports used by replacement.
+
+\lean{Copying/AssignmentMatch}{95}{100}{Assignment.Match.swapped_head_target}
+
+\lean{Copying/AssignmentMatch}{103}{107}{Assignment.Match.swapped_store_target}
+
+\lean{Copying/AssignmentMatch}{110}{120}{Assignment.Match.swapped_other_target}
+
+\lean{Copying/AssignmentMatch}{122}{128}{Assignment.Match.swapped_first}
+
+\lean{Copying/AssignmentMatch}{130}{136}{Assignment.Match.swapped_second}
+
+\termdef{canonical-assignment-successor}
+The \emph{canonical assignment successor} of a match $m$ is
+\[
+ W(G,m,v)=R(S_{n,o}(G),e,D_{()},v),
+\]
+where $D_{()}$ is the previously defined unit-and-two-weakenings graph and
+$R$ is the replacement state. Its filler is transported to the head's
+interface using the assignment label. Search resumes at the retained image
+of $v$. The two weakenings now attach to $i$ and $o$, whereas the original
+store attaches to $n$. No new store is allocated; the old contents persist
+behind their weakening.
+
+\lean{Copying/AssignmentMatch}{139}{143}{Assignment.Match.filler}
+
+\lean{Copying/AssignmentMatch}{146}{147}{Assignment.Match.canonical}
+
+Every original local assignment source supplies this match for any atom
+contraction tree and any new-value graph. The head and store are their actual
+expanded edge occurrences; the instance and new-value wires are the first
+two frame ports and the old-value wire is the first output. Labels and
+ordered targets are the defining incidence equations. The existing
+store-resolution theorem supplies a finite trace and its length; classical
+choice selects its witness. Uniqueness ensures no later result depends on
+this selection. No stability premise is needed merely to describe these
+source incidences.
+
+\lean{Copying/AssignmentMatch}{151}{167}{Assignment.localMatch}
+
+\Needspace{12\baselineskip}
+\subsection{Canonical updates commute with context formation}
+
+Renaming commutes with the canonical successor: first transport the target
+exchange through the recursive isomorphism, then apply replacement renaming.
+The filler boundary casts compose to the cast for the renamed match.
+The graph isomorphism carries the old request port to the new one, giving a
+state isomorphism, not only a graph comparison.
+
+\lean{Copying/AssignmentCanonicalTransport}{9}{19}{Assignment.Match.canonical_rename}
+
+Plugging commutes with the canonical successor by combining target-exchange
+locality with the previously proved replacement-plugging isomorphism.
+The attachment-map equation identifies the resumed token. Thus applying the
+canonical construction to the embedded match gives the same state, up to
+recursive isomorphism, as inserting its canonical successor into the host.
+
+\lean{Copying/AssignmentCanonicalTransport}{21}{37}{Assignment.Match.canonical_plug}
+
+For simultaneous expansion, suppose $F$ and $K$ agree away from $c$, and
+$W(F(c),m,v)$ is isomorphic as a state to the specified result in $K(c)$.
+First commute the target exchange into the selected component, giving the
+family $P$. Its selected member is isomorphic to the swapped $F(c)$ and its
+other members equal those of $K$. Replacement's expansion theorem then
+inserts the given component result. Equality of insertion maps identifies
+the token. This version permits the component successor to have an independent
+carrier representation, as actual contextual rewrites do.
+
+\lean{Copying/AssignmentCanonicalTransport}{40}{75}{Assignment.Match.canonical_expand_result}
+
+\Needspace{12\baselineskip}
+\subsection{Explicit comparison with the original local reduct}
+
+The abbreviation \texttt{replaced} denotes the graph of the canonical
+successor for the original local source. The forward internal-vertex map
+removes the additional sum tag introduced by head replacement, keeping all
+four frame vertices and every tree and value-component vertex. The inverse
+restores that tag. Primitive components and the replacement filler have no
+internal vertices, so their cases are empty. Case analysis proves both
+composites are identities and packages the maps as a bijection.
+
+\lean{Copying/AssignmentReplacement}{9}{10}{Assignment.Replacement.replaced}
+
+\lean{Copying/AssignmentReplacement}{12}{22}{Assignment.Replacement.vertexTo}
+
+\lean{Copying/AssignmentReplacement}{24}{35}{Assignment.Replacement.vertexFrom}
+
+\lean{Copying/AssignmentReplacement}{37}{53}{Assignment.Replacement.vertices}
+
+The edge map retains each instance, tree, store and value occurrence.
+The removed assignment occurrence is impossible in the retained-edge subtype.
+The three filler edges are sent respectively to the unit, discarded-instance
+weakening and discarded-old-value weakening of the original reduct. The
+inverse restores these three finite indices and the retained-edge tags.
+Enumeration of the three indices and the one-edge primitive components
+proves the two inverse laws, giving the edge bijection.
+
+\lean{Copying/AssignmentReplacement}{55}{65}{Assignment.Replacement.edgeTo}
+
+\lean{Copying/AssignmentReplacement}{67}{77}{Assignment.Replacement.edgeFrom}
+
+\lean{Copying/AssignmentReplacement}{79}{95}{Assignment.Replacement.edges}
+
+The vertex bijection carries every retained frame port to its corresponding
+port in the original reduct. For tree vertices, internal ports are immediate
+and boundary ports reduce to that frame equation. The new definition
+\texttt{beforeValueVertex} is the actual insertion map of the original value
+component, including its boundary. The analogous value-map lemma has the same
+proof by internal/input/output cases. Finally, every retained non-head,
+non-store edge has its original targets mapped into the replacement host,
+because the target exchange fixes its target list.
+
+\lean{Copying/AssignmentReplacement}{98}{104}{Assignment.Replacement.map_frame}
+
+\lean{Copying/AssignmentReplacement}{106}{115}{Assignment.Replacement.map_tree}
+
+\lean{Copying/AssignmentReplacement}{118}{120}{Assignment.Replacement.beforeValueVertex}
+
+\lean{Copying/AssignmentReplacement}{122}{131}{Assignment.Replacement.map_value}
+
+\lean{Copying/AssignmentReplacement}{133}{139}{Assignment.Replacement.retained_target}
+
+These bijections define a complete graph isomorphism to Figure~19(c)'s
+original reduct. Vertex and edge labels are preserved by cases. Tree and
+value source lists use their insertion-map lemmas, and the other sources
+are immediate. For targets, retained instance, tree and value edges use the
+unchanged-target lemma; the store uses its new singleton target $[n]$.
+The unit has no targets. The two weakenings use the indexed exchanged-head
+ports $i,o$. Thus both ordered incidence relations agree for every edge,
+not just at the store. The request input is fixed by the vertex map, so this
+lifts to a state isomorphism with the original resumed search state.
+
+This structural isomorphism allows any value graph. Actual operational
+application still requires that graph to be stable. In this language a stable
+local payload contains only passive primitive edges; box bodies can be
+attached beyond its thunk outputs in the host. The proof retains the entire
+payload and all recursively labelled surrounding components.
+
+\lean{Copying/AssignmentReplacement}{142}{220}{Assignment.Replacement.iso}
+
+\lean{Copying/AssignmentReplacement}{223}{226}{Assignment.Replacement.canonical_local}
+
+\Needspace{12\baselineskip}
+\subsection{From local comparison to every actual rewrite}
+
+For a local transition with an assignment match, inspect its rule constructor.
+Every non-assignment constructor has a different head label, contradicting
+source-head uniqueness. In the assignment case, match uniqueness identifies
+the given match with the original local match, and the explicit state
+isomorphism applies. A parallel inversion proves that an actual local step
+at an assignment head supplies a match. This is obtained from the rule,
+rather than assumed as a matching oracle.
+
+\lean{Copying/AssignmentCoherence}{9}{34}{Combined.local_assignment_canonical}
+
+\lean{Copying/AssignmentCoherence}{38}{60}{Combined.local_assignment_match}
+
+Every actual contextual assignment rewrite supplies a source match.
+Induct on the rewrite derivation. At a local step use local inversion.
+For renaming, plugging or simultaneous expansion, reflect the distinguished
+head into the rewritten component, apply induction, and transport the match
+out through the corresponding incidence-preserving embedding.
+
+\lean{Copying/AssignmentCoherence}{64}{80}{Combined.rewrite_assignment_match}
+
+\Needspace{10\baselineskip}
+The same induction compares every actual successor with the source match's
+canonical successor. At each contextual constructor, reflect the head and
+extract the inner match. Its transported match equals the supplied outer
+match by uniqueness. Apply induction in the component and then the canonical
+renaming, plugging or expansion theorem. Compose with the result renaming
+where the rewrite explicitly permits an independently represented target.
+No common contextual decomposition of two rewrites is assumed.
+
+\lean{Copying/AssignmentCoherence}{83}{108}{Combined.rewrite_assignment_canonical}
+
+\termdef{assignment-successor-coherence}
+\emph{Assignment successor coherence} says that two actual rewrites from the
+same assignment request have recursively isomorphic complete successors,
+preserving mode and token. Extract a match from the first rewrite, compare
+both results with its canonical successor, and compose one comparison's
+inverse with the other. The full one-step result follows because intrinsic
+search cannot start in rewrite mode; hence both steps must be rewrites.
+This is a theorem for one operation family, not an assumption of global
+machine determinism.
+
+\lean{Copying/AssignmentCoherence}{111}{118}{Combined.assignment_rewrite_deterministic}
+
+\lean{Copying/AssignmentCoherence}{121}{130}{Combined.assignment_step_deterministic}
+
+\Needspace{12\baselineskip}
+\subsection{Quantitative consequences and unbounded execution}
+
+If $s$ is an assignment request and $s\to t$ is any actual step, then
+\[
+ s\text{ terminates in }n
+ \quad\Longleftrightarrow\quad
+ \exists m,\ n=m+1\ \land\ t\text{ terminates in }m.
+\]
+The general coherent-step cost theorem applies because every alternative
+successor is state-isomorphic to $t$. Isomorphisms preserve exact finite runs
+and finality. Thus the statement concerns all successful costs, not merely
+one chosen run.
+
+\lean{Copying/AssignmentCoherence}{133}{137}{Combined.assignment_cost_spectrum}
+
+For closed unbounded states, each step is a lift of a bounded step.
+Destruct the two lifts, use bounded successor coherence, and lift the resulting
+state isomorphism to the proved representation relation. Representation
+invariance then gives observational equivalence of the successors for every
+cost preorder, including equality of costs. No finite-depth cutoff is added.
+
+\lean{Copying/AssignmentCoherence}{140}{149}{Combined.assignment_unbounded_deterministic}
+
+\lean{Copying/AssignmentCoherence}{152}{155}{Combined.assignment_unbounded_equiv}
+
+A stable new value returns at its actual inserted input in one intrinsic
+search step. This transports the existing stable-input return theorem through
+the local simultaneous expansion. With arbitrary contents attached to the
+old-value output and the new value's remaining outputs, every actual write
+successor agrees with the original updated graph and resumed token. Apply
+full assignment-step coherence to the actual serially embedded local write;
+its head is transported by the serial match embedding.
+
+\lean{Copying/AssignmentCost}{9}{11}{Assignment.value_returns}
+
+\lean{Copying/AssignmentCost}{14}{20}{Assignment.contents_successor}
+
+The entire local write, with these arbitrary attached contents, has exactly
+the successful cost seven. Five search steps visit the instance, return from
+it, visit the stable new value, return from it, and request assignment.
+One compute step updates the store, and one search step returns unit at the
+original input. Search determinism supplies an exact cost equivalence at
+each search step; assignment coherence supplies it at the compute step.
+The resulting state is final, whose only successful cost is zero.
+Substituting these seven equivalences proves both existence of the seven-step
+run and exclusion of every other successful cost. No evaluation of the old
+contents or the attached thunk bodies is required.
+
+\lean{Copying/AssignmentCost}{23}{46}{Assignment.contents_exact_cost}
+
+The arbitrary-host theorem inserts the original source and target into any
+single typed hole, transporting their interfaces along the specified
+equalities. Compare an arbitrary actual step with the explicitly plugged
+local write using assignment-step coherence. This preserves the complete
+host and permits the resumed request to be an internal wire; it does not
+assume that every such host is final or terminates in seven steps.
+
+\lean{Copying/AssignmentCost}{49}{59}{Assignment.host_successor}
+
+\Needspace{12\baselineskip}
+\subsection{Unchanged-translation regression scenarios}
+
+The closed program \texttt{storedTerm} places the unchanged Figure~16
+translation of an arbitrary closed term $t$ in the old cell and supplies a
+stable constant as the new value. It uses the depth of that translation;
+serial composition and the previously proved safety of both components
+establish focus and hole freedom. The exact-cost theorem gives successful
+cost seven for every finite padding. Its proof first reflects padded runs
+using the established exact padding theorem, identifies bounded and unbounded
+successful runs, then instantiates the arbitrary-contents cost law.
+These are heap-state scenarios, not an identification with the translation
+of an entire surface-language assignment expression.
+
+\lean{Copying/AssignmentCoherenceExamples}{9}{16}{AssignmentCoherenceExamples.storedTerm}
+
+\lean{Copying/AssignmentCoherenceExamples}{19}{28}{AssignmentCoherenceExamples.storedTerm_exact_cost}
+
+The program \texttt{translatedLiterals} retains the full original
+translations of both the old and new natural-number literals, including
+their distributors. Safety follows from their proved stability. The same
+padding and bounded/unbounded correspondences prove that its complete set
+of successful costs is precisely $\{7\}$ for any pair of literals.
+
+\lean{Copying/AssignmentCoherenceExamples}{31}{40}{AssignmentCoherenceExamples.translatedLiterals}
+
+\lean{Copying/AssignmentCoherenceExamples}{43}{53}{AssignmentCoherenceExamples.translatedLiterals_exact_cost}
+
+Specializing the first scenario to the literal $\Omega$ translation proves
+that overwriting this old data terminates in exactly seven steps at every
+allowance. It does not assert a separate divergence theorem for $\Omega$.
+Finally, every actual successor of the translated-literal write is isomorphic
+to the explicit updated heap, by the arbitrary-contents successor theorem.
+The earlier attachment equations identify the existing store with the new
+literal and the old weakening with the old literal; the two retained
+occurrences remain distinct. These checks concern the full combined machine,
+not the earlier restricted local assignment machine.
+
+\lean{Copying/AssignmentCoherenceExamples}{56}{59}{AssignmentCoherenceExamples.overwrite_omega}
+
+\lean{Copying/AssignmentCoherenceExamples}{62}{69}{AssignmentCoherenceExamples.translatedLiterals_successor}

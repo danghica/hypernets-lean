@@ -78,9 +78,13 @@ reference-equality branches now also have complete successor-state coherence
 for arbitrary contextual matches. Comparison has exactly seven successful
 steps with arbitrary attached contents, including unchanged translated terms
 and every finite padding (Section~\ref{sec:copying-equality-coherence}).
-Successor coherence for dereference, assignment, application, arithmetic and
-copying, focused-state correspondence, full-machine determinism, refocusing
-and the specimen interface remain unfinished.
+Assignment now also has complete contextual successor coherence, proved by
+typed target exchange and comparison with the original local reduct. Stable
+writes with arbitrary attached old contents have exactly seven successful
+steps, with translated-data regressions at every finite padding
+(Section~\ref{sec:copying-assignment-coherence}). Successor coherence for
+dereference, application, arithmetic and copying, focused-state correspondence,
+full-machine determinism, refocusing and the specimen interface remain unfinished.
 
 The earlier estimate of 80\% completion of Proposition~12.2 is withdrawn.
 The current cautious assessment is 50--65\% of mathematical effort, with low
