@@ -1,4 +1,4 @@
-import Hypernets.Copying.FullRenamingExamples
+import Hypernets.Copying.SearchTraceExamples
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -427,3 +427,36 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Examples.box_swap_not_iso
 #print axioms Hypernets.Copying.Examples.unshifted_box_pair_impossible
 #print axioms Hypernets.Copying.BoxPermutation.normalized
+
+-- Concrete search phase: operational laws, exact costs, and original translation.
+#print axioms Hypernets.Copying.Search.result_unique
+#print axioms Hypernets.Copying.Search.deterministic
+#print axioms Hypernets.Copying.Search.final_no_step
+#print axioms Hypernets.Copying.Search.terminal_run_unique
+#print axioms Hypernets.Copying.Search.Transport.step_iff
+#print axioms Hypernets.Copying.Search.Transport.trace_iff
+#print axioms Hypernets.Copying.Search.Transport.terminal_iff
+#print axioms Hypernets.Copying.Search.ofBoundaryIso
+#print axioms Hypernets.Copying.Search.backtrack_stable_edge
+#print axioms Hypernets.Copying.Search.recognized_primitive_stable
+#print axioms Hypernets.Copying.Search.endpoints_term
+#print axioms Hypernets.Copying.Search.padding_step_iff
+#print axioms Hypernets.Copying.Search.padTo_trace_iff
+#print axioms Hypernets.Copying.Search.plug_host
+#print axioms Hypernets.Copying.Search.plug_insert
+#print axioms Hypernets.Copying.Search.plug_host_trace
+#print axioms Hypernets.Copying.Search.plug_insert_trace
+#print axioms Hypernets.Copying.Search.machine_deterministic
+#print axioms Hypernets.Copying.Search.Transport.completes_at_iff
+#print axioms Hypernets.Copying.Search.padding_completion_iff
+#print axioms Hypernets.Copying.Search.term_contraction
+#print axioms Hypernets.Copying.Search.instance_return
+#print axioms Hypernets.Copying.Search.atom_contraction_no_search
+#print axioms Hypernets.Copying.Search.store_no_search
+#print axioms Hypernets.Copying.Search.contraction_ports
+#print axioms Hypernets.Copying.Search.instance_corolla
+#print axioms Hypernets.Copying.Search.abstraction_returns
+#print axioms Hypernets.Copying.Search.constantResult_exact_cost
+#print axioms Hypernets.Copying.Search.addition_trace
+#print axioms Hypernets.Copying.Search.addition_exact_cost
+#print axioms Hypernets.Copying.Search.addition_padded
