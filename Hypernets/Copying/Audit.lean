@@ -1,4 +1,4 @@
-import Hypernets.Copying.DereferenceExamples
+import Hypernets.Copying.CopyExamples
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -526,3 +526,44 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Dereference.stored_one_label
 #print axioms Hypernets.Copying.Dereference.stored_one_attachment
 #print axioms Hypernets.Copying.Dereference.canonical_copy_edges
+
+-- Literal Figure 17 copying and shared-store regressions.
+#print axioms Hypernets.Copying.CopyRule.residual_labels
+#print axioms Hypernets.Copying.CopyRule.tree_raise
+#print axioms Hypernets.Copying.CopyRule.residual_raise
+#print axioms Hypernets.Copying.CopyRule.rule_iff
+#print axioms Hypernets.Copying.CopyRule.copy_labels
+#print axioms Hypernets.Copying.CopyRule.copies_disjoint
+#print axioms Hypernets.Copying.CopyRule.tree_labels
+#print axioms Hypernets.Copying.CopyRule.residual_allLabels
+#print axioms Hypernets.Copying.CopyRule.before_allLabels
+#print axioms Hypernets.Copying.CopyRule.after_allLabels
+#print axioms Hypernets.Copying.CopyRule.focusFree_after
+#print axioms Hypernets.Copying.CopyRule.holeFree_after
+#print axioms Hypernets.Copying.CopyRule.final_normal
+#print axioms Hypernets.Copying.CopyRule.instance_returns
+#print axioms Hypernets.Copying.CopyRule.constant_returns
+#print axioms Hypernets.Copying.CopyRule.instance_run
+#print axioms Hypernets.Copying.CopyRule.constant_run
+#print axioms Hypernets.Copying.CopyRule.shared_instance_labels
+#print axioms Hypernets.Copying.CopyRule.shared_cell_label
+#print axioms Hypernets.Copying.CopyRule.shared_left_hop
+#print axioms Hypernets.Copying.CopyRule.shared_right_hop
+#print axioms Hypernets.Copying.CopyRule.shared_root_hop
+#print axioms Hypernets.Copying.CopyRule.shared_store_hop
+#print axioms Hypernets.Copying.CopyRule.shared_resolves
+#print axioms Hypernets.Copying.CopyRule.shared_resolves_unique
+#print axioms Hypernets.Copying.CopyRule.raise_reboundary
+#print axioms Hypernets.Copying.CopyRule.rule_upToIso
+#print axioms Hypernets.Copying.CopyRule.upToIso_congr
+#print axioms Hypernets.Copying.CopyRule.upToIso_raise
+#print axioms Hypernets.Copying.CopyRule.upToIso_pad
+#print axioms Hypernets.Copying.CopyRule.selected_input_weakened
+#print axioms Hypernets.Copying.CopyRule.residual_input_order
+#print axioms Hypernets.Copying.CopyRule.residual_sources
+#print axioms Hypernets.Copying.CopyRule.residual_targets
+#print axioms Hypernets.Copying.CopyRule.lambda_rule
+#print axioms Hypernets.Copying.CopyRule.lambda_box_preserved
+#print axioms Hypernets.Copying.CopyRule.application_rule
+#print axioms Hypernets.Copying.CopyRule.binary_residual_weakening
+#print axioms Hypernets.Copying.CopyRule.binary_shared_reference
