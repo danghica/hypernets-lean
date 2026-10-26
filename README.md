@@ -9,6 +9,24 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
+## Latest milestone: full translation renaming via BPerm
+
+`Translation.term_rename_via_boxPermutation` now covers **all original syntax**,
+including nested lambdas, unequal operand depths, and arbitrary finite variable/atom
+environments. Its conclusion records a finite structural derivation using the actual
+box-permutation rule, followed by an ordered isomorphism with exact resource action.
+This is not yet observational equivalence: machine laws and BPerm robustness remain open.
+The original terms and Figure 16 translation are unchanged.
+
+The concrete BPerm pair, typed bound/free interface correspondence, structural
+binding-freedom, and label invariants are proved. Negative regressions reject
+capture-changing permutations and treating box-output permutation as ordered isomorphism.
+A checked counterexample also documents the missing bound-prefix offset in the printed
+Definition 12.7(2). Commentary Section 78 explains the correction and every new proof.
+
+Full build: 289 jobs; all three axiom audits pass. Estimated completion by mathematical
+effort: **roughly 50–55%**, with broad uncertainty (35–65%), as of 26 October 2026.
+
 ## Proposition 12.2: current extension target
 
 The requested private-reference equivalence is **not yet proved**. The new
@@ -29,8 +47,8 @@ The Proposition 12.2 terms must remain unchanged. Translation follows Figure 16,
 including its single-use distributors, weakening, and ordered box interfaces.
 All seven Figure 16 clauses and the full recursive term translation now compile.
 Both unchanged proposition terms have concrete hypernets in arbitrary environments,
-with proved global language, focus-free, and hole-free properties. Graph-level
-renaming/substitution laws, context translation, the copying/store machine, and
+with proved global language, focus-free, and hole-free properties. Full-syntax bijective graph renaming is now proved via explicit BPerm derivations;
+non-bijective graph renaming, graph substitution, the copying/store machine, and
 the final equivalence remain open.
 
 Stable graphs (Definition 10.3) and copyable payloads (Definition 10.2) now
@@ -884,8 +902,8 @@ stability and nested binding-freedom, and recovery of the existing boundary-fixi
 recursive isomorphism when external positions are fixed. Concrete distributor
 compositions work for all resource/use counts and depths; mismatched swaps are
 rejected. The original terms and translation remain unchanged. Section 75
-explains the proofs. Whole-term renaming and the concrete copying machine remain
-open. The current mathematical-effort estimate is roughly **40–45%**, with a broad
+explains the proofs. At that milestone whole-term renaming and the concrete copying machine remained
+open. At that milestone the mathematical-effort estimate was roughly **40–45%**, with a broad
 uncertainty range of **30–50%**.
 
 
@@ -894,8 +912,8 @@ original unary operation and bijective translation renaming for arbitrarily long
 unary chains over atomic terms. It includes the original `ref 1`, `!x`, and atom
 dereference clauses with all distributors retained. Section 76 explains the
 proofs. Unary operations are removed from the remaining renaming cases in
-Appendix B; application, binary operations, and lambda boxes remain. The latest
-completion estimate is **about 45% by mathematical effort** (broad plausible range
+Appendix B; application, binary operations, and lambda boxes remained. At that milestone the
+completion estimate was **about 45% by mathematical effort** (broad plausible range
 **30–55%**), not a measured percentage of declarations.
 
 
@@ -905,7 +923,7 @@ negation, allocation, dereferencing, addition, subtraction, assignment, and atom
 equality. A common resource-action certificate discharges operand matching
 inside the induction. The original shuffle and both two-use forests are retained;
 constructor congruence also works at unequal padded allowances. Section 77 and
-Appendix B explain the remaining lambda-box interface correspondence. The latest
-estimate is **about 50% by mathematical effort** (broad plausible range **35–60%**).
+Appendix B then recorded the remaining lambda-box interface correspondence. That milestone
+estimated **about 50% by mathematical effort** (broad plausible range **35–60%**).
 The concrete copying machine, robustness templates, and Proposition 12.2 remain
 unfinished; these structural renaming results do not assert their semantics.

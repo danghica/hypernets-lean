@@ -30,17 +30,16 @@ is now an explicit extension target.
 \Needspace{14\baselineskip}
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-lambda-free-renaming}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-full-renaming}.
 They include context composition, structural padding and safety transport,
-and bijective translation renaming for all lambda-free terms. Completed proofs
+and full-syntax bijective translation renaming by explicit BPerm derivations. Completed proofs
 are excluded from the tasks below.
 The four remaining tasks are:
 \begin{enumerate}
 \item Prove the remaining operational invariants for stable and
-copyable graphs. Complete lambda-box bijective renaming, including
-its free-resource interface and ordered body-boundary correspondence. The
-existing recursive label relation fixes body boundaries; justify the required
-box-interface action explicitly, using the completed non-binding constructors. Prove non-bijective renaming
+copyable graphs. Give the completed structural renaming derivations their
+contextual-equivalence interpretation, using proved BPerm robustness and execution
+congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
 and graph-level substitution laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
 \item Define copying and extra search transitions and all example compute rules;
@@ -51,6 +50,8 @@ thereby discharging the hypotheses of the general contextual congruence theorem.
 Retain the zero-input qualification of Lemma~E.1.
 \item Prove all eleven template families' safety and robustness in Table~3's
 dependency order, including the indirect copying and garbage-collection dependencies.
+BPerm's concrete graph pair and structural binding-freedom are proved; its
+operational input-safety and forward/converse robustness remain.
 \item Prove the semantic weakening laws, assemble Figure~22's equivalence chain,
 and obtain Proposition~12.2 for arbitrary distinct-list environments.
 \end{enumerate}

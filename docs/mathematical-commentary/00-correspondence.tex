@@ -22,6 +22,17 @@ A kernel-checked proof establishes the formal proposition; it does not by
 itself establish that the proposition expresses every condition intended in
 the paper.
 
+
+The later copying development now proves full-syntax bijective translation
+renaming by explicit BPerm derivations (Section~\ref{sec:copying-full-renaming}).
+Those derivations are syntactic proof trees; their observational interpretation
+still requires machine and robustness laws. They do not identify box permutation
+with ordered isomorphism. The same section documents an indexing correction to
+PDF Definition~12.7(2): the body position of a free output includes the bound-prefix
+offset. Omitting it is inconsistent already with one bound and one free variable,
+as a checked counterexample shows. The Proposition~12.2 terms and Figure~16
+translation are unchanged.
+
 \Needspace{14\baselineskip}
 \subsection{The statement and its quantitative conclusion}
 
@@ -305,7 +316,8 @@ are covered, while their operational rules and the full proposition remain open.
 Section~\ref{sec:copying-lambda-free-renaming} completes bijective translation
 renaming for all lambda-free original terms and distinct-list scopes. Application
 and all binary constructors retain their original shuffle and two-use forests;
-constructor congruence also handles unequal padded allowances. The lambda-box
-interface correspondence, concrete execution laws, and final equivalence remain
-open. These representation theorems do not establish operational correctness of
+constructor congruence also handles unequal padded allowances. Section~\ref{sec:copying-full-renaming}
+subsequently establishes the lambda-box correspondence and the full syntax
+induction using explicit BPerm derivations. Concrete execution laws and the final
+equivalence remain open. These representation theorems do not establish operational correctness of
 allocation, dereferencing, assignment, or callback execution.
