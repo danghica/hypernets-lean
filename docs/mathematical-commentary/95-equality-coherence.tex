@@ -1,0 +1,394 @@
+\clearpage
+\section{Reference-equality successor coherence and exact costs}
+\label{sec:copying-equality-coherence}
+Both reference-equality branches now have complete successor-state coherence
+for the actual combined machine. Two independently chosen contextual matches
+at the same comparison request produce recursively isomorphic whole graphs,
+and the isomorphism preserves the resumed token. This closes both comparison
+cases of Appendix~B.1's machine obligation. It does not close the whole
+machine package: dereference, assignment, application, arithmetic and copying
+still require successor comparison, and refocusing and the specimen laws
+remain outstanding.
+
+The operational rule is still the paper's Figure~19(d), discussed in
+\href{https://arxiv.org/html/1907.01257v5\#S10.SS1}{HTML Section~10.1}.
+The two outcomes depend on whether the argument instances lead to the same
+store edge. The new proof compares the complete reducts, extending the earlier
+uniqueness of that Boolean decision. All original edges outside the comparison
+head are retained, including instances, contraction trees, stores and their
+attached contents. The replacement introduced below is a proof construction;
+it is not a new rule or a change to the language.
+
+The dependency chain is: unique source head and store decision; explicit
+local replacement isomorphisms; state-level substitution congruences from
+Section~\ref{sec:copying-allocation-coherence}; induction over actual rewrites;
+bounded and unbounded successor coherence; exact successful-cost laws.
+Neither Proposition~12.2's terms nor Figure~16's translation changes.
+The four broad remaining packages stay open. The cautious estimate remains
+50--65\% of mathematical effort, with low confidence: closing these two
+cases does not establish the dependent template argument.
+
+\Needspace{12\baselineskip}
+\subsection{A result with two explicit weakenings}
+
+The finite-index helpers say that a one-element type contains only zero,
+and that every element of the three-element type is zero, one or two.
+Their proofs use the bounds carried by each finite index. They support
+exhaustive incidence checks and inverse-map proofs below.
+
+\lean{Copying/DiscardResult}{9}{9}{DiscardResult.fin_one}
+
+\lean{Copying/DiscardResult}{10}{10}{DiscardResult.fin_three}
+
+\termdef{discard-result-graph}
+For a constant $c$, the \emph{result-and-discard graph} $D_c$ has interface
+$\star\to\star\otimes\star$, no internal vertices and three edges. Edge zero
+is the constant $c$, with the sole input as its source and no targets.
+Edges one and two are term weakenings, with no sources and with the first
+and second output, respectively, as their targets. The label, source and
+target functions specify precisely these three cases. The graph therefore
+returns a value while explicitly retaining the two old argument wires.
+
+\lean{Copying/DiscardResult}{13}{14}{DiscardResult.label}
+
+\lean{Copying/DiscardResult}{16}{16}{DiscardResult.source}
+
+\lean{Copying/DiscardResult}{17}{18}{DiscardResult.target}
+
+Enumerating the three edges proves well-formedness. Incidence lists are
+empty or singleton; only the constant uses the input and each weakening
+uses its own output. This gives uniqueness and coverage. Labels have exactly
+the specified interfaces, proving typing. Both carriers are finite.
+Primitive relabelling interprets $D_c$ at any depth allowance and preserves
+these properties.
+
+\lean{Copying/DiscardResult}{21}{73}{DiscardResult.base}
+
+\lean{Copying/DiscardResult}{76}{77}{DiscardResult.net}
+
+\Needspace{12\baselineskip}
+\subsection{The canonical equality successor}
+
+\termdef{canonical-equality-successor}
+Suppose $e$ in $G$ is labelled by atom equality, $v$ is the request wire, and
+$b$ is a Boolean. The \emph{canonical equality successor} is
+\[
+ E(G,e,v,b)=R(G,e,D_{\mathrm{bool}(b)},v),
+\]
+where $R$ is the replacement state of
+Section~\ref{sec:copying-allocation-coherence}. The filler first transports
+$D_{\mathrm{bool}(b)}$ along the interface equalities implied by the head label.
+Then $E$ replaces only $e$, resumes search at the retained image of $v$, and
+keeps every other edge occurrence. Defining this graph requires no termination
+or stability assumption about the stored contents. Its agreement with actual
+rewriting is a separate theorem below.
+
+\lean{Copying/EqualityReplacement}{9}{14}{AtomEquality.filler}
+
+\lean{Copying/EqualityReplacement}{17}{19}{AtomEquality.canonical}
+
+A recursive isomorphism $f:G\cong H$ carries the canonical successor to
+$E(H,f(e),f(v),b)$. Primitive labels are preserved by recursive isomorphism,
+so the renamed head has the same operation. Apply the proved replacement
+renaming construction. The two boundary casts on the filler compose to the
+single cast required in $H$; proof irrelevance identifies their equality
+witnesses. The state isomorphism transports both the graph and token.
+
+\lean{Copying/EqualityReplacement}{22}{34}{AtomEquality.canonical_rename}
+
+\Needspace{12\baselineskip}
+\subsection{The same-store local rule}
+
+The local head is the unique edge in the comparison component. Its label
+is atom equality and its source is the request input, proving the head
+predicate. The abbreviation \texttt{replaced} names the graph component of
+$E(G,e,v,\mathrm{true})$ for this local source, with an arbitrary matched
+contraction tree. No canonical presentation of that tree is required.
+
+\lean{Copying/EqualityReplacement}{38}{38}{AtomEquality.Same.head}
+
+\lean{Copying/EqualityReplacement}{39}{41}{AtomEquality.Same.head_at}
+
+\lean{Copying/EqualityReplacement}{44}{45}{AtomEquality.Same.replaced}
+
+The forward internal-vertex map retains each frame vertex and each
+contraction-tree vertex, while removing the extra sum tags introduced by
+one-edge plugging. The inverse restores these tags. Primitive corollas and
+$D_c$ have empty internal carriers, so all other cases are impossible.
+Case analysis proves the two composites are identities, yielding the
+internal-vertex bijection.
+
+\lean{Copying/EqualityReplacement}{48}{55}{AtomEquality.Same.vertexTo}
+
+\lean{Copying/EqualityReplacement}{57}{65}{AtomEquality.Same.vertexFrom}
+
+\lean{Copying/EqualityReplacement}{67}{78}{AtomEquality.Same.vertices}
+
+For edges, retain each left-instance, right-instance, tree and store
+occurrence. The old comparison edge is excluded by the subtype used for
+retained host edges. Send the three new edges to the result, left weakening
+and right weakening components of the original target. The inverse sends
+those components back to indices zero, one and two and restores every
+retained edge. Exhausting the finite indices proves both inverse laws;
+in the excluded-head case the retained-edge inequality gives a contradiction.
+
+\lean{Copying/EqualityReplacement}{81}{88}{AtomEquality.Same.edgeTo}
+
+\lean{Copying/EqualityReplacement}{90}{97}{AtomEquality.Same.edgeFrom}
+
+\lean{Copying/EqualityReplacement}{99}{111}{AtomEquality.Same.edges}
+
+The frame-port equation follows by splitting a port into input, internal
+vertex or output. The tree-port equation then splits the tree port: an
+internal port follows directly from the vertex map, while input and output
+ports reduce to the frame equation at the corresponding tree attachment.
+This checks the whole interface of an arbitrary tree, not only its root.
+
+\lean{Copying/EqualityReplacement}{113}{117}{AtomEquality.Same.map_frame}
+
+\lean{Copying/EqualityReplacement}{120}{127}{AtomEquality.Same.map_tree}
+
+Assemble the two bijections into a graph isomorphism. Internal wire labels
+and retained edge labels agree by construction. Primitive edge incidences
+reduce directly; tree incidences are lists of inserted ports, so mapping each
+entry uses the tree-port equation. The three fresh edges have exactly the
+sources and targets of the target result and weakenings. Finally, extend the
+graph isomorphism to a state isomorphism: both tokens have search mode and
+the same external input. This proves canonicality of the actual same-store
+local rule, with its complete retained tree and store.
+
+\lean{Copying/EqualityReplacement}{130}{163}{AtomEquality.Same.replacement_iso}
+
+\lean{Copying/EqualityReplacement}{166}{168}{AtomEquality.Same.canonical_local}
+
+\Needspace{12\baselineskip}
+\subsection{The distinct-store local rule}
+
+The distinct-store construction follows the same method with two arbitrary
+trees and two distinct store components. Its unique comparison head again
+satisfies the head predicate. Here \texttt{replaced} is the graph component
+of $E(G,e,v,\mathrm{false})$. These definitions select the original local
+rule's head and Boolean; they do not merge stores with equal contents.
+
+\lean{Copying/EqualityDifferentReplacement}{8}{8}{AtomEquality.Different.head}
+
+\lean{Copying/EqualityDifferentReplacement}{9}{11}{AtomEquality.Different.head_at}
+
+\lean{Copying/EqualityDifferentReplacement}{14}{15}{AtomEquality.Different.replaced}
+
+The vertex maps retain frame vertices and the separately tagged vertices
+of both trees. All other internal cases are empty. Restoring and deleting
+these tags proves the inverse laws. The edge maps retain both instances,
+both trees and both store occurrences. Only the comparison head is replaced;
+the three new indices map to result and argument weakenings. Exhaustive
+finite-index cases prove the edge maps inverse, while the retained-head
+case is excluded by its inequality proof.
+
+\lean{Copying/EqualityDifferentReplacement}{18}{27}{AtomEquality.Different.vertexTo}
+
+\lean{Copying/EqualityDifferentReplacement}{29}{39}{AtomEquality.Different.vertexFrom}
+
+\lean{Copying/EqualityDifferentReplacement}{41}{52}{AtomEquality.Different.vertices}
+
+\lean{Copying/EqualityDifferentReplacement}{55}{64}{AtomEquality.Different.edgeTo}
+
+\lean{Copying/EqualityDifferentReplacement}{66}{75}{AtomEquality.Different.edgeFrom}
+
+\lean{Copying/EqualityDifferentReplacement}{77}{89}{AtomEquality.Different.edges}
+
+The frame-port equation again fixes inputs, outputs and retained frame
+vertices. Separate left-tree and right-tree equations reduce boundary ports
+to that frame equation and internal ports to their own tagged vertex map.
+Thus neither tree can be confused with the other, even when their labels
+or presentations coincide.
+
+\lean{Copying/EqualityDifferentReplacement}{91}{95}{AtomEquality.Different.map_frame}
+
+\lean{Copying/EqualityDifferentReplacement}{98}{105}{AtomEquality.Different.map_tree}
+
+\lean{Copying/EqualityDifferentReplacement}{108}{115}{AtomEquality.Different.map_right_tree}
+
+The full graph isomorphism checks labels and incidence lists using both
+tree-port equations, and checks the three replacement edges directly.
+It extends to the actual successor state because the resumed input token
+is fixed. The statement compares complete successors, so retaining the
+second store and all its attachments is part of the conclusion.
+
+\lean{Copying/EqualityDifferentReplacement}{118}{161}{AtomEquality.Different.replacement_iso}
+
+\lean{Copying/EqualityDifferentReplacement}{164}{166}{AtomEquality.Different.canonical_local}
+
+\Needspace{12\baselineskip}
+\subsection{Independence of every actual contextual match}
+
+An actual rewrite at an atom-equality head supplies a store-identity
+decision. Apply the already proved recognition theorem to that rewrite;
+source-head uniqueness forces its recognised operation to be atom equality.
+The other operation constructors, including each arithmetic code, are
+incompatible. The remaining comparison recognition contains the required
+Boolean decision. No decision premise is added to the final coherence theorem.
+
+\lean{Copying/EqualityCoherence}{9}{17}{Combined.rewrite_equality_decision}
+
+To reflect a comparison into the changed component of a context, first
+reflect the unique head using the actual inner rewrite and its match
+embedding. Obtain an inner decision from that rewrite, transport it to the
+host, and compare it with the given host decision. Uniqueness of store
+resolution makes the Booleans equal. Thus the reflected head, its edge image
+and the decision are all justified without assuming globally injective
+boundary attachment.
+
+\lean{Copying/EqualityCoherence}{20}{28}{Combined.rewrite_equality_reflect}
+
+For a local rewrite, compare its distinguished head with the specified
+head. All non-comparison constructors contradict the operation label.
+In the same-store and distinct-store constructors, head uniqueness identifies
+the edge and decision uniqueness identifies the Boolean. The explicit local
+state isomorphism from the preceding subsections then applies.
+
+\lean{Copying/EqualityCoherence}{31}{67}{Combined.local_equality_canonical}
+
+Induct over the actual contextual rewrite derivation. The local case is
+settled above. In the renaming case, reflect the head and decision, apply the
+induction hypothesis, and compose with canonical renaming and the supplied
+renaming of the actual output. For plugging, reflect into the filler, use the
+induction hypothesis there, and compose replacement associativity with the
+lifted state isomorphism. For simultaneous expansion, reflect into the selected
+component; replacement/expansion interchange and equality of the other
+components yield the complete result. Every constructor of the actual rewrite
+relation is covered.
+
+\lean{Copying/EqualityCoherence}{70}{93}{Combined.rewrite_equality_canonical}
+
+\termdef{equality-successor-coherence}
+\emph{Equality successor coherence} says that any two actual rewrites from
+the same graph and request vertex, at an atom-equality head, have recursively
+isomorphic successor states. Derive the Boolean from the first rewrite;
+canonicality sends both successors to the same $E(G,e,v,b)$. Invert one
+isomorphism and compose with the other. This allows independently chosen
+hosts, tree presentations, context decompositions and output representations.
+It assumes neither machine determinism nor agreement of those choices.
+
+\lean{Copying/EqualityCoherence}{96}{107}{Combined.equality_rewrite_deterministic}
+
+In the full step relation, a source in rewrite mode cannot take a search
+step. Eliminating those cases reduces step coherence to rewrite coherence.
+For the unbounded allowance-indexed machine, each step lifts a bounded step
+at the same allowance, so bounded coherence gives represented successor
+states. The existing transport of executions along representation then gives
+successor equivalence for every cost preorder, including exact equality.
+This is equivalence of the successor executions; it is not yet the contextual
+equivalence asserted by Proposition~12.2.
+
+\lean{Copying/EqualityCoherence}{110}{119}{Combined.equality_step_deterministic}
+
+\lean{Copying/EqualityCoherence}{129}{138}{Combined.equality_unbounded_deterministic}
+
+\lean{Copying/EqualityCoherence}{141}{144}{Combined.equality_unbounded_equiv}
+
+\Needspace{12\baselineskip}
+\subsection{Exact costs and arbitrary hosts}
+
+For an admitted comparison step $s\to t$, successor coherence gives
+\[
+ \mathsf{TerminatesIn}(n,s)
+ \quad\Longleftrightarrow\quad
+ \exists m,\ n=m+1\ \land\ \mathsf{TerminatesIn}(m,t).
+\]
+A zero-step successful run would make $s$ final, contradicting its step.
+For a positive run, compare its first successor with $t$ by coherence and
+transport the remaining run at the same cost. Conversely, prepend the
+chosen comparison step. The generic cost lemma of the allocation milestone
+encapsulates this argument.
+
+\lean{Copying/EqualityCoherence}{122}{126}{Combined.equality_cost_spectrum}
+
+Serial attachment of a graph to a continuation preserves every actual
+search interaction, with the token carried by the left insertion map.
+This follows from the proved simultaneous-expansion search law, selecting
+the left component of the serial pattern.
+
+\lean{Copying/EqualityCost}{9}{19}{Search.serial_left}
+
+Attach arbitrary store contents to either comparison fragment. Map its
+head into the serial composition and lift the original local compute step.
+Full step coherence shows that every competing successor is isomorphic to
+this explicit successor. More generally, place the fragment in an arbitrary
+typed host edge, with equality casts for the matching interfaces. Head
+transport and contextual step transport give the same conclusion. There is
+no hypothesis that the inserted input remains an external input, so the host
+may resume execution after the comparison returns.
+
+\lean{Copying/EqualityCost}{22}{28}{AtomEquality.Same.contents_successor}
+
+\lean{Copying/EqualityCost}{75}{82}{AtomEquality.Different.contents_successor}
+
+\lean{Copying/EqualityCost}{60}{72}{AtomEquality.Same.host_successor}
+
+\lean{Copying/EqualityCost}{113}{123}{AtomEquality.Different.host_successor}
+
+For serially attached contents, the only successful comparison cost is
+seven. There are five preparatory search interactions: enter the left
+argument, return from its instance, move to the right argument, return from
+its instance, and request comparison. There is then one compute step and
+one return from the Boolean constant. The final input is external in this
+serial composition. Apply search-cost inversion five times, the comparison
+cost law once, and search-cost inversion once more; the final state has
+only zero successful cost. Finite arithmetic gives exactly seven and also
+constructs the run of that length. No stability, termination or acyclicity
+assumption about the stored contents is used. The statement excludes every
+alternative successful cost under the full combined relation, rather than
+merely exhibiting a seven-step local run.
+
+\lean{Copying/EqualityCost}{31}{57}{AtomEquality.Same.contents_exact_cost}
+
+\lean{Copying/EqualityCost}{85}{110}{AtomEquality.Different.contents_exact_cost}
+
+\Needspace{12\baselineskip}
+\subsection{Unchanged translated contents, nested boxes and padding}
+
+Successful costs in the unbounded machine are precisely the successful
+costs of a fixed bounded representative. Reflect an unbounded finite run to
+its original allowance, preserving the endpoint and finality; conversely,
+lift a bounded run. This general lemma is used in both regression families.
+
+\lean{Copying/EqualityCoherenceExamples}{9}{21}{Combined.successful_unbounded_iff}
+
+The first closed regression graph attaches the unchanged translation of
+an arbitrary closed term $t$ to a same-store comparison with a noncanonical
+binary atom tree. The second attaches two unchanged copies of that same
+translation to two distinct stores. It uses a tensor of the translated
+contents and one canonical one-input atom tree per store. Serial and tensor
+label-preservation laws, together with the existing translation theorems,
+prove focus freedom and hole freedom, so these are valid closed programs.
+The comparison redexes are explicitly constructed local graph scenarios;
+no claim identifies them with the whole translation of a surface comparison
+expression.
+
+\lean{Copying/EqualityCoherenceExamples}{24}{29}{EqualityCoherenceExamples.sharedContents}
+
+\lean{Copying/EqualityCoherenceExamples}{32}{41}{EqualityCoherenceExamples.distinctContents}
+
+Each regression has exactly the successful cost seven in the unbounded
+machine after any finite amount of depth padding. First use exact padding
+reflection, then the bounded/unbounded successful-cost correspondence, then
+the appropriate arbitrary-contents theorem. The serial input map fixes the
+external input, giving the original initialization state. Separately, map
+the local store decision into the serial graph: the shared-store result is
+true, and the distinct-store result is false despite identical contents.
+
+\lean{Copying/EqualityCoherenceExamples}{44}{51}{EqualityCoherenceExamples.shared_exact_cost}
+
+\lean{Copying/EqualityCoherenceExamples}{54}{61}{EqualityCoherenceExamples.distinct_exact_cost}
+
+\lean{Copying/EqualityCoherenceExamples}{64}{69}{EqualityCoherenceExamples.shared_decision}
+
+\lean{Copying/EqualityCoherenceExamples}{72}{80}{EqualityCoherenceExamples.distinct_decision}
+
+Specialise both cost results to the unchanged translation of
+$\Omega=(\lambda x.xx)(\lambda x.xx)$. Comparison terminates without
+executing the stored application or opening its boxes; this does not prove
+$\Omega$'s divergence. The arbitrary-term results also cover deeper nested boxes.
+
+\lean{Copying/EqualityCoherenceExamples}{83}{88}{EqualityCoherenceExamples.omega_contents}
+

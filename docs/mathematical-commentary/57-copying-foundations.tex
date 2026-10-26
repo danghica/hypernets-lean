@@ -76,9 +76,13 @@ runtime safety for complete finite runs (Section~\ref{sec:copying-selection}).
 Allocation now has complete successor-state coherence for independently
 chosen contextual matches, with exact-cost consequences and a unique successful
 cost for the literal translated reference expression
-(Section~\ref{sec:copying-allocation-coherence}). Successor coherence for the
-other compute families and copying, and the remaining complete-machine laws,
-are pending.
+(Section~\ref{sec:copying-allocation-coherence}). Both reference-equality
+branches now have complete successor-state coherence, including arbitrary
+hosts, whole store attachments and token positions. Their full-machine
+successful cost is exactly seven with arbitrary contents and finite padding
+(Section~\ref{sec:copying-equality-coherence}). Successor coherence for
+dereference, assignment, application, arithmetic and copying, and the remaining
+complete-machine laws, are pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its

@@ -9,41 +9,42 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: allocation successor coherence and exact costs
+## Latest milestone: complete reference-equality coherence and exact costs
 
-Allocation now has **proved successor-state coherence** in the actual combined
-machine. Arbitrarily chosen contextual matches at the same `ref` request
-produce recursively isomorphic complete graphs and matching resumed token
-positions. The proof covers renaming, shallow plugging and simultaneous
-assembly; it assumes neither common host decompositions nor machine determinism.
-The original stable-argument requirement is retained.
+Both reference-equality branches now have **proved successor-state coherence**
+in the actual combined machine. Independently chosen contextual matches at the
+same comparison request produce recursively isomorphic whole graphs and matching
+resumed token positions. The proof covers renaming, plugging and simultaneous
+assembly, retaining all instances, trees, stores and attached contents. It
+assumes neither machine determinism nor common matching decompositions.
 
-Every admitted allocation has a canonical successor obtained by replacing the
-selected ref edge with the original allocated-cell prefix. Allocation consumes
-exactly one transition, and its alternative successors agree for every cost
-preorder in the unbounded machine. The unchanged Figure 16 translation of
-`ref n` has **exactly the successful cost five**, at every padded allowance;
-this rules out alternative successful costs under the full combined relation.
-Arbitrary typed host insertion is covered as well.
+Comparison has **exactly the successful cost seven** with arbitrary stored
+contents under the full combined relation. New regressions attach the unchanged
+translation of any closed term, including self-application and nested boxes;
+the result holds at every padded allowance. Shared stores compare true, while
+different stores with identical contents compare false. Arbitrary typed host
+insertion is covered, including hosts that resume at an internal wire.
+The self-application regression proves comparison termination without executing
+the stored term; it does not independently prove that term's divergence.
 
-This closes the allocation part of Appendix B.1's successor-coherence task.
-The other compute families and copying still need successor comparison;
+This closes both equality branches within Appendix B.1's successor-coherence
+obligation. Allocation was completed previously. Dereference, assignment,
+application, arithmetic and copying still need successor comparison;
 full-machine refocusing, focused-graph correspondence, specimen locality,
-the eleven-template argument and Proposition 12.2 remain unfinished. None of
-the four broad remaining packages is claimed wholly closed. The proposition
-terms and their translations are unchanged.
+the eleven-template argument and Proposition 12.2 remain unfinished.
+The four broad remaining packages remain open. The proposition terms,
+Figure 16 translation and operational rules are unchanged.
 
-Commentary Section 90 explains all 39 new declarations with immutable source
-links. Full build: 373 jobs. All three axiom audits pass (6 abstract, 477 graph,
-1,143 copying), using only Lean's standard logical axioms. `scripts/check.sh`
-now includes the copying audit.
+Commentary Section 91 explains all 61 new declarations with immutable source
+links. Full build: 379 jobs. All three axiom audits pass (6 abstract, 477 graph,
+1,204 copying), using only Lean's standard logical axioms.
 
 Estimated completion by mathematical effort: **roughly 50–65%, with low
 confidence**, as of 26 October 2026. The earlier **80% estimate is withdrawn**:
 it over-weighted infrastructure and under-weighted the remaining machine laws,
-dependent template proofs and final observational argument. This milestone
-closes a substantive allocation obligation but does not justify a precise
-percentage increase. The estimate is not a declaration or TODO count.
+dependent template proofs and final observational argument. Closing the two
+equality cases is substantive progress but does not justify a precise percentage
+increase. The estimate is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target
 

@@ -572,3 +572,13 @@ regressions and arbitrary-host successor comparison. The full build passes
 declarations, using only the standard logical axioms listed above. The standard
 check script now runs all three audits.
 \lean{Copying/Audit}{1164}{1202}{Copying.Audit: allocation coherence and exact costs}
+
+
+The reference-equality milestone audits all 61 new declarations, covering both
+local replacement isomorphisms, complete contextual successor coherence,
+exact costs, arbitrary-host regressions and unchanged translated store contents.
+The full build passes 379 jobs. The audits now inspect 6 abstract, 477 graph
+and 1204 copying declarations, with only \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound}; no project-specific axioms
+or \texttt{sorryAx} occur.
+\lean{Copying/Audit}{1205}{1265}{Copying.Audit: reference-equality coherence and exact costs}
