@@ -1,4 +1,5 @@
-import Hypernets.Copying.ApplicationExamples
+import Hypernets.Copying.CombinedExamples
+import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -793,3 +794,87 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Application.rule_upToIso
 #print axioms Hypernets.Copying.Application.upToIso_congr
 #print axioms Hypernets.Copying.Application.upToIso_raise
+
+-- Contextual combined subsystem and exact unbounded execution.
+#print axioms Hypernets.Copying.Combined.Local
+#print axioms Hypernets.Copying.Combined.Rewrite
+#print axioms Hypernets.Copying.Combined.State
+#print axioms Hypernets.Copying.Combined.Step
+#print axioms Hypernets.Copying.Combined.final_normal
+#print axioms Hypernets.Copying.Combined.machine
+#print axioms Hypernets.Copying.Combined.local_step
+#print axioms Hypernets.Copying.Combined.rewrite_not_search
+#print axioms Hypernets.Copying.Combined.StateIso
+#print axioms Hypernets.Copying.Combined.StateIso.refl
+#print axioms Hypernets.Copying.Combined.StateIso.symm
+#print axioms Hypernets.Copying.Combined.StateIso.trans
+#print axioms Hypernets.Copying.Combined.StateIso.final_iff
+#print axioms Hypernets.Copying.Combined.step_transport
+#print axioms Hypernets.Copying.Combined.run_transport
+#print axioms Hypernets.Copying.Combined.TerminatesIn
+#print axioms Hypernets.Copying.Combined.terminatesIn_iso
+#print axioms Hypernets.Copying.Combined.plugState
+#print axioms Hypernets.Copying.Combined.step_plug
+#print axioms Hypernets.Copying.Combined.run_plug
+#print axioms Hypernets.Copying.Combined.serialLeft
+#print axioms Hypernets.Copying.Combined.serialRight
+#print axioms Hypernets.Copying.Combined.left_input
+#print axioms Hypernets.Copying.Combined.step_serialLeft
+#print axioms Hypernets.Copying.Combined.step_serialRight
+#print axioms Hypernets.Copying.Combined.run_serialLeft
+#print axioms Hypernets.Copying.Combined.run_serialRight
+#print axioms Hypernets.Copying.Combined.right_return_not_final
+#print axioms Hypernets.Copying.Combined.left_return_final
+#print axioms Hypernets.Copying.Combined.UnboundedState
+#print axioms Hypernets.Copying.Combined.UnboundedStep
+#print axioms Hypernets.Copying.Combined.unbounded_final_normal
+#print axioms Hypernets.Copying.Combined.unboundedMachine
+#print axioms Hypernets.Copying.Combined.execution
+#print axioms Hypernets.Copying.Combined.step_depth
+#print axioms Hypernets.Copying.Combined.run_depth
+#print axioms Hypernets.Copying.Combined.run_unbounded
+#print axioms Hypernets.Copying.Combined.run_bounded
+#print axioms Hypernets.Copying.Combined.run_unbounded_iff
+#print axioms Hypernets.Copying.Combined.Represents
+#print axioms Hypernets.Copying.Combined.represents_symm
+#print axioms Hypernets.Copying.Combined.represents_final
+#print axioms Hypernets.Copying.Combined.unbounded_step_transport
+#print axioms Hypernets.Copying.Combined.unbounded_run_transport
+#print axioms Hypernets.Copying.Combined.represents_refines
+#print axioms Hypernets.Copying.Combined.represents_equiv
+#print axioms Hypernets.Copying.Combined.execution_respectsIso
+#print axioms Hypernets.Copying.Combined.equiv_context
+#print axioms Hypernets.Copying.Combined.allocation_step
+#print axioms Hypernets.Copying.Combined.allocation_run
+#print axioms Hypernets.Copying.Combined.dereference_step
+#print axioms Hypernets.Copying.Combined.dereference_run
+#print axioms Hypernets.Copying.Combined.assignment_step
+#print axioms Hypernets.Copying.Combined.assignment_run
+#print axioms Hypernets.Copying.Combined.equality_step
+#print axioms Hypernets.Copying.Combined.equality_run
+#print axioms Hypernets.Copying.Combined.application_step
+#print axioms Hypernets.Copying.Combined.application_run
+#print axioms Hypernets.Copying.Combined.copying_step
+#print axioms Hypernets.Copying.Combined.copying_run
+#print axioms Hypernets.Copying.Combined.local_endpoints_term
+#print axioms Hypernets.Copying.Combined.rewrite_endpoints_term
+#print axioms Hypernets.Copying.Combined.step_endpoints_term
+#print axioms Hypernets.Copying.Combined.run_term
+#print axioms Hypernets.Copying.Combined.unbounded_step_term
+#print axioms Hypernets.Copying.Combined.reachable_term
+#print axioms Hypernets.Copying.Combined.Examples.referenceProgram
+#print axioms Hypernets.Copying.Combined.Examples.reference_run
+#print axioms Hypernets.Copying.Combined.Examples.reference_terminates
+#print axioms Hypernets.Copying.Combined.Examples.reference_representation
+#print axioms Hypernets.Copying.Combined.Examples.outerRef
+#print axioms Hypernets.Copying.Combined.Examples.nested
+#print axioms Hypernets.Copying.Combined.Examples.nestedAllocated
+#print axioms Hypernets.Copying.Combined.Examples.innerInput
+#print axioms Hypernets.Copying.Combined.Examples.enter_inner
+#print axioms Hypernets.Copying.Combined.Examples.return_to_outer
+#print axioms Hypernets.Copying.Combined.Examples.nested_run
+#print axioms Hypernets.Copying.Combined.Examples.inner_return_not_final
+#print axioms Hypernets.Copying.Combined.Examples.nested_endpoint_not_final
+#print axioms Hypernets.Copying.Combined.Examples.applicationProgram
+#print axioms Hypernets.Copying.Combined.Examples.application_run
+#print axioms Hypernets.Copying.Combined.Examples.application_terminates

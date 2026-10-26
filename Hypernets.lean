@@ -102,3 +102,6 @@ import Hypernets.Copying.AssignmentExamples
 import Hypernets.Copying.AtomEqualityExamples
 
 import Hypernets.Copying.ApplicationExamples
+
+import Hypernets.Copying.CombinedExamples
+import Hypernets.Copying.CombinedTyping
