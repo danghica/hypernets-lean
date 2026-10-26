@@ -1,4 +1,4 @@
-import Hypernets.Copying.DereferenceCoherenceExamples
+import Hypernets.Copying.ArithmeticCoherenceExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -1416,3 +1416,90 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.DereferenceCoherenceExamples.literal_cost_handoff
 #print axioms Hypernets.Copying.DereferenceCoherenceExamples.omega_cost_handoff
 #print axioms Hypernets.Copying.DereferenceCoherenceExamples.storedTerm_successor
+
+-- Arithmetic successor coherence, exact full-machine costs, and the two remaining families.
+#print axioms Hypernets.Copying.Arithmetic.InternalTargets
+#print axioms Hypernets.Copying.Arithmetic.Reduction
+#print axioms Hypernets.Copying.Arithmetic.Reduction.sameRange
+#print axioms Hypernets.Copying.Arithmetic.Reduction.sameRange_commute
+#print axioms Hypernets.Copying.Arithmetic.Reduction.vertexBijection
+#print axioms Hypernets.Copying.Arithmetic.Reduction.edgeBijection
+#print axioms Hypernets.Copying.Arithmetic.Reduction.vertex_commute
+#print axioms Hypernets.Copying.Arithmetic.Reduction.edge_commute
+#print axioms Hypernets.Copying.Arithmetic.Reduction.port_commute
+#print axioms Hypernets.Copying.Arithmetic.Reduction.iso
+#print axioms Hypernets.Copying.Arithmetic.Reduction.stateIso
+#print axioms Hypernets.Copying.Arithmetic.Reduction.port_comp
+#print axioms Hypernets.Copying.Arithmetic.Reduction.map_ports_comp
+#print axioms Hypernets.Copying.Arithmetic.Reduction.targetRename
+#print axioms Hypernets.Copying.Arithmetic.Reduction.sourceRename
+#print axioms Hypernets.Copying.Arithmetic.Reduction.targetRename_port
+#print axioms Hypernets.Copying.Arithmetic.Reduction.sourceRename_port
+#print axioms Hypernets.Copying.Arithmetic.Reduction.inserted_internal
+#print axioms Hypernets.Copying.Arithmetic.Reduction.plug_target
+#print axioms Hypernets.Copying.Arithmetic.Reduction.plug_adjacent_host
+#print axioms Hypernets.Copying.Arithmetic.Reduction.plug_adjacent_inner
+#print axioms Hypernets.Copying.Arithmetic.Reduction.plug_closed
+#print axioms Hypernets.Copying.Arithmetic.Reduction.plug_port
+#print axioms Hypernets.Copying.Arithmetic.Reduction.plug_host
+#print axioms Hypernets.Copying.Arithmetic.Reduction.plug
+#print axioms Hypernets.Copying.Arithmetic.Reduction.equalIso
+#print axioms Hypernets.Copying.Arithmetic.Reduction.fiberVertices
+#print axioms Hypernets.Copying.Arithmetic.Reduction.fiberEdges
+#print axioms Hypernets.Copying.Arithmetic.Reduction.fiber_vertices_same
+#print axioms Hypernets.Copying.Arithmetic.Reduction.fiber_edges_same
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expansionVertices
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expansionEdges
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expansion_port
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expansion_internal
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expansion_target
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expansion_adjacent_same
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expansion_adjacent_other
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expansion_closed
+#print axioms Hypernets.Copying.Arithmetic.Reduction.expand
+#print axioms Hypernets.Copying.Arithmetic.fin_two
+#print axioms Hypernets.Copying.Arithmetic.unary_internal_deleted
+#print axioms Hypernets.Copying.Arithmetic.binary_internal_deleted
+#print axioms Hypernets.Copying.Arithmetic.unary_internal_targets
+#print axioms Hypernets.Copying.Arithmetic.binary_internal_targets
+#print axioms Hypernets.Copying.Arithmetic.unary_adjacent_iff
+#print axioms Hypernets.Copying.Arithmetic.binary_adjacent_iff
+#print axioms Hypernets.Copying.Arithmetic.result_reduction
+#print axioms Hypernets.Copying.Arithmetic.unary_reduction
+#print axioms Hypernets.Copying.Arithmetic.binary_reduction
+#print axioms Hypernets.Copying.Arithmetic.Request
+#print axioms Hypernets.Copying.Arithmetic.Request.choice
+#print axioms Hypernets.Copying.Arithmetic.Request.result
+#print axioms Hypernets.Copying.Arithmetic.Request.choice_injective
+#print axioms Hypernets.Copying.Arithmetic.Certificate
+#print axioms Hypernets.Copying.Arithmetic.internalTargets_rename
+#print axioms Hypernets.Copying.Arithmetic.Certificate.rename
+#print axioms Hypernets.Copying.Arithmetic.Certificate.plug
+#print axioms Hypernets.Copying.Arithmetic.Certificate.expand
+#print axioms Hypernets.Copying.Arithmetic.unary_certificate
+#print axioms Hypernets.Copying.Arithmetic.binary_certificate
+#print axioms Hypernets.Copying.Combined.rewrite_recognition_reflect
+#print axioms Hypernets.Copying.Combined.local_arithmetic_certificate
+#print axioms Hypernets.Copying.Combined.rewrite_arithmetic_certificate
+#print axioms Hypernets.Copying.Combined.arithmetic_rewrite_deterministic
+#print axioms Hypernets.Copying.Combined.arithmetic_step_deterministic
+#print axioms Hypernets.Copying.Combined.arithmetic_cost_spectrum
+#print axioms Hypernets.Copying.Combined.arithmetic_unbounded_deterministic
+#print axioms Hypernets.Copying.Combined.arithmetic_unbounded_equiv
+#print axioms Hypernets.Copying.Combined.HigherOrderHead
+#print axioms Hypernets.Copying.Combined.rewrite_coherent_or_higherOrder
+#print axioms Hypernets.Copying.Combined.step_coherent_or_higherOrder
+#print axioms Hypernets.Copying.Combined.step_deterministic_away_higherOrder
+#print axioms Hypernets.Copying.Combined.cost_spectrum_away_higherOrder
+#print axioms Hypernets.Copying.Combined.unbounded_coherent_or_higherOrder
+#print axioms Hypernets.Copying.Search.serial_right
+#print axioms Hypernets.Copying.Arithmetic.unary_cost_iff
+#print axioms Hypernets.Copying.Arithmetic.binary_cost_iff
+#print axioms Hypernets.Copying.Arithmetic.unary_host_successor
+#print axioms Hypernets.Copying.Arithmetic.binary_host_successor
+#print axioms Hypernets.Copying.Arithmetic.Examples.unary_pad_cost_iff
+#print axioms Hypernets.Copying.Arithmetic.Examples.binary_pad_cost_iff
+#print axioms Hypernets.Copying.Arithmetic.Examples.underflow_result_and_cost
+#print axioms Hypernets.Copying.Arithmetic.Examples.negation_result_and_cost
+#print axioms Hypernets.Copying.Arithmetic.Examples.binary_host_handoff
+#print axioms Hypernets.Copying.Arithmetic.Examples.nested_cost_iff
