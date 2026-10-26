@@ -98,3 +98,5 @@ import Hypernets.Copying.DereferenceExamples
 import Hypernets.Copying.CopyExamples
 
 import Hypernets.Copying.AssignmentExamples
+
+import Hypernets.Copying.AtomEqualityExamples

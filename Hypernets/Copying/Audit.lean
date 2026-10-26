@@ -1,4 +1,4 @@
-import Hypernets.Copying.AssignmentExamples
+import Hypernets.Copying.AtomEqualityExamples
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -617,3 +617,81 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Assignment.discarded_literal
 #print axioms Hypernets.Copying.Assignment.old_new_disjoint
 #print axioms Hypernets.Copying.Assignment.one_to_two
+
+-- Figure 19(d): both outcomes, identity uniqueness and preserved contents.
+#print axioms Hypernets.Copying.AtomEquality.Same.otherInputs_nodup
+#print axioms Hypernets.Copying.AtomEquality.Same.mem_otherInputs
+#print axioms Hypernets.Copying.AtomEquality.Different.leftInputs_nodup
+#print axioms Hypernets.Copying.AtomEquality.Different.rightInputs_nodup
+#print axioms Hypernets.Copying.AtomEquality.Different.mem_leftInputs
+#print axioms Hypernets.Copying.AtomEquality.Different.mem_rightInputs
+#print axioms Hypernets.Copying.AtomEquality.Same.before_raise
+#print axioms Hypernets.Copying.AtomEquality.Same.after_raise
+#print axioms Hypernets.Copying.AtomEquality.Same.rule_raise
+#print axioms Hypernets.Copying.AtomEquality.Same.rule_pad
+#print axioms Hypernets.Copying.AtomEquality.Different.before_raise
+#print axioms Hypernets.Copying.AtomEquality.Different.after_raise
+#print axioms Hypernets.Copying.AtomEquality.Different.rule_raise
+#print axioms Hypernets.Copying.AtomEquality.Different.rule_pad
+#print axioms Hypernets.Copying.AtomEquality.tree_resolution_pair
+#print axioms Hypernets.Copying.AtomEquality.Same.resolves_left
+#print axioms Hypernets.Copying.AtomEquality.Same.resolves_right
+#print axioms Hypernets.Copying.AtomEquality.Same.left_resolution_count_iff
+#print axioms Hypernets.Copying.AtomEquality.Same.right_resolution_count_iff
+#print axioms Hypernets.Copying.AtomEquality.Different.resolves_left
+#print axioms Hypernets.Copying.AtomEquality.Different.resolves_right
+#print axioms Hypernets.Copying.AtomEquality.Different.left_resolution_count_iff
+#print axioms Hypernets.Copying.AtomEquality.Different.right_resolution_count_iff
+#print axioms Hypernets.Copying.AtomEquality.outcome_unique
+#print axioms Hypernets.Copying.AtomEquality.outcome_insert
+#print axioms Hypernets.Copying.AtomEquality.inserted_outcome_unique
+#print axioms Hypernets.Copying.AtomEquality.Same.true_before
+#print axioms Hypernets.Copying.AtomEquality.Same.true_after
+#print axioms Hypernets.Copying.AtomEquality.Same.cannot_return_false
+#print axioms Hypernets.Copying.AtomEquality.Different.stores_distinct_before
+#print axioms Hypernets.Copying.AtomEquality.Different.stores_distinct_after
+#print axioms Hypernets.Copying.AtomEquality.Different.false_before
+#print axioms Hypernets.Copying.AtomEquality.Different.false_after
+#print axioms Hypernets.Copying.AtomEquality.Different.cannot_return_true
+#print axioms Hypernets.Copying.AtomEquality.final_normal
+#print axioms Hypernets.Copying.AtomEquality.Same.search_left
+#print axioms Hypernets.Copying.AtomEquality.Same.left_returns
+#print axioms Hypernets.Copying.AtomEquality.Same.right_returns
+#print axioms Hypernets.Copying.AtomEquality.Same.search_right
+#print axioms Hypernets.Copying.AtomEquality.Same.ready
+#print axioms Hypernets.Copying.AtomEquality.Same.result_label
+#print axioms Hypernets.Copying.AtomEquality.Same.result_returns
+#print axioms Hypernets.Copying.AtomEquality.Same.comparison_run
+#print axioms Hypernets.Copying.AtomEquality.Different.search_left
+#print axioms Hypernets.Copying.AtomEquality.Different.left_returns
+#print axioms Hypernets.Copying.AtomEquality.Different.right_returns
+#print axioms Hypernets.Copying.AtomEquality.Different.search_right
+#print axioms Hypernets.Copying.AtomEquality.Different.ready
+#print axioms Hypernets.Copying.AtomEquality.Different.result_label
+#print axioms Hypernets.Copying.AtomEquality.Different.result_returns
+#print axioms Hypernets.Copying.AtomEquality.Different.comparison_run
+#print axioms Hypernets.Copying.AtomEquality.Same.left_weakened
+#print axioms Hypernets.Copying.AtomEquality.Same.right_weakened
+#print axioms Hypernets.Copying.AtomEquality.Same.store_boundary
+#print axioms Hypernets.Copying.AtomEquality.Same.other_references
+#print axioms Hypernets.Copying.AtomEquality.Different.left_weakened
+#print axioms Hypernets.Copying.AtomEquality.Different.right_weakened
+#print axioms Hypernets.Copying.AtomEquality.Different.store_boundaries
+#print axioms Hypernets.Copying.AtomEquality.Different.other_left_references
+#print axioms Hypernets.Copying.AtomEquality.Different.other_right_references
+#print axioms Hypernets.Copying.AtomEquality.Same.before_labels
+#print axioms Hypernets.Copying.AtomEquality.Same.after_labels
+#print axioms Hypernets.Copying.AtomEquality.Same.focusFree_sides
+#print axioms Hypernets.Copying.AtomEquality.Same.holeFree_sides
+#print axioms Hypernets.Copying.AtomEquality.Different.before_labels
+#print axioms Hypernets.Copying.AtomEquality.Different.after_labels
+#print axioms Hypernets.Copying.AtomEquality.Different.focusFree_sides
+#print axioms Hypernets.Copying.AtomEquality.Different.holeFree_sides
+#print axioms Hypernets.Copying.AtomEquality.outcome_serial_left
+#print axioms Hypernets.Copying.AtomEquality.Same.arbitrary_contents
+#print axioms Hypernets.Copying.AtomEquality.Same.noncanonical_run
+#print axioms Hypernets.Copying.AtomEquality.Different.arbitrary_contents
+#print axioms Hypernets.Copying.AtomEquality.Different.contents_cannot_identify_stores
+#print axioms Hypernets.Copying.AtomEquality.Different.identical_literal_labels
+#print axioms Hypernets.Copying.AtomEquality.Different.identical_literal_attachments
+#print axioms Hypernets.Copying.AtomEquality.Different.identical_contents_compare_false
