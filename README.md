@@ -9,30 +9,30 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: a combined contextual copying subsystem
+## Latest milestone: arithmetic and exact forward execution padding
 
-Allocation, dereference, assignment, atom equality, application and copying now
-run in one concrete subsystem. All six local machines embed with exact costs;
-steps and runs lift through shallow typed contexts. A checked allocation inside
-an active argument resumes the host operation without falsely treating the
-argument's return as program termination. Every reachable token is term typed.
+Unary minus, addition and subtraction now have concrete local rules in the
+combined copying machine. They execute in five or seven transitions; an
+11-step nested example performs both an inner and an outer arithmetic rewrite.
+The original natural-number domain is retained: subtraction truncates at zero,
+and the author's clarification `-x = 0 - x` therefore makes unary minus zero.
 The proposition's terms and Figure 16 translation are unchanged.
 
-A concrete allowance-indexed execution has exact bounded/unbounded finite-run
-correspondence and transports complete runs under recursive isomorphism. This
-discharges the isomorphism premise of graph-context congruence for this subsystem.
-Rewrite matching explicitly closes under representation isomorphism; uniqueness
-of decompositions is not claimed. Different padded allowances are not identified.
+Every combined rewrite, contextual match and finite run now pads forward at
+exactly the same cost. Arbitrary finite padding preserves successful program
+executions and closed observations. This includes the existing translated
+reference and original-body application examples. It does **not** yet reflect
+arbitrary runs from a larger allowance, so two-sided padding invariance remains open.
 
-Arithmetic, matching independence, full-machine determinism/refocusing/padding,
-specimen locality, template robustness and the final proposition remain unfinished.
-Commentary Section 86 explains all 82 new declarations and proofs. Appendix B
-removes the completed non-arithmetic integration obligations while retaining these
-full-machine tasks. Full build: 349 jobs. All three axiom audits pass
-(6 abstract, 477 graph, 830 copying), with no project axioms or unfinished proofs.
+Arithmetic construction is removed from Appendix B. Matching independence,
+determinism/refocusing, reverse padding transport, specimen locality, template
+robustness and Proposition 12.2 remain unfinished. Commentary Section 87 explains
+all 82 new declarations with immutable source links. Full build: 355 jobs.
+All three axiom audits pass (6 abstract, 477 graph, 912 copying), with no project
+axioms or unfinished proofs.
 
-Estimated completion by mathematical effort: **about 73%**, with broad uncertainty
-**58–83%**, as of 26 October 2026. This is a judgement, not a declaration count.
+Estimated completion by mathematical effort: **about 75%**, broadly **60–85%**,
+as of 26 October 2026. This is a judgement, not a declaration count.
 
 ## Proposition 12.2: current extension target
 

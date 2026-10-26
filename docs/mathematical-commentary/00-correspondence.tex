@@ -57,12 +57,20 @@ attachment (Section~\ref{sec:copying-atom-equality}). This compares actual
 store identities, not their contents. Stable micro-beta application now opens
 the actual lambda box, preserves free interfaces and supplies exact opening
 and body-search costs (Section~\ref{sec:copying-application}). A combined
-non-arithmetic subsystem now lifts all these local runs through shallow typed
+subsystem now lifts all these local runs through shallow typed
 contexts, retains exact costs and proves term-token typing. Its concrete
 allowance-indexed execution has proved isomorphism invariance and graph-context
-congruence (Section~\ref{sec:copying-combined}). Arithmetic, match independence,
-focused-state correspondence, deterministic combined behaviour, padding
-invariance, refocusing and the specimen interface remain unfinished.
+congruence (Section~\ref{sec:copying-combined}). Arithmetic rules and forward
+exact-cost padding of all combined runs are now proved
+(Section~\ref{sec:copying-arithmetic-padding}). Match independence, focused-state
+correspondence, deterministic combined behaviour, reverse padding transport,
+refocusing and the specimen interface remain unfinished.
+
+\Needspace{5\baselineskip}
+The arithmetic domain remains natural numbers, with subtraction truncated at
+zero. The author's clarification $-x=0-x$ therefore gives zero for every unary
+minus. This convention is explicit in the new rule; the original constant
+datatype, proposition terms and translation are unchanged.
 
 \Needspace{14\baselineskip}
 \subsection{The statement and its quantitative conclusion}
@@ -303,8 +311,9 @@ execution isomorphism invariance. The proposition's actual depths are three
 and two. Section~\ref{sec:copying-general-congruence} removes the depth
 restriction and proves general observational context congruence under the
 explicit execution isomorphism and padding laws. Section~\ref{sec:copying-combined}
-now discharges isomorphism invariance for the concrete non-arithmetic subsystem;
-padding and the full-machine extensions remain open. No equivalence of the
+now discharges isomorphism invariance for the concrete subsystem; Section~\ref{sec:copying-arithmetic-padding} now proves
+forward execution padding as well. Reverse padding transport and the
+full-machine laws remain open. No equivalence of the
 proposition programs is inferred.
 Earlier statements that no work remained for the paper's theorem should be
 read with this qualification: completion of the formal construction does not

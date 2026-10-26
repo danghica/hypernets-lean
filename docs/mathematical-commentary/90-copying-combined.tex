@@ -12,9 +12,10 @@ congruence theorem therefore applies to this instance without that premise.
 
 This is a subsystem milestone on the route to Proposition~12.2. The original
 terms, Figure~16 translation, stable-argument premises and copyability premises
-are unchanged. Arithmetic is still absent. Matching independence, deterministic
+are unchanged. Section~\ref{sec:copying-arithmetic-padding} adds arithmetic and
+forward exact-cost padding to this same machine. Matching independence, deterministic
 behaviour up to representation, refocusing, focused-graph correspondence,
-padding invariance and specimen locality are not proved for this combined
+reverse padding transport and specimen locality are not proved for this combined
 system. The named representation relation admits isomorphic presentations of
 each rewrite; this is an explicit semantic closure, not a theorem asserting
 unique raw graph matches. The final proposition and all template-robustness
@@ -25,15 +26,16 @@ obligations remain open.
 
 \termdef{combined-copying-subsystem}
 A local rule records two actual finite hypernets with the same ordered
-interface and one active coordinate on each side. Its seven constructors
-are reference creation, dereference, assignment, same-atom equality,
-different-atom equality, micro-beta and copying. Creation, assignment and
+interface and one active coordinate on each side. Its constructors are reference creation, dereference, assignment, same-atom
+equality, different-atom equality, micro-beta and copying, together with the
+unary and binary arithmetic constructors added in
+Section~\ref{sec:copying-arithmetic-padding}. Creation, assignment and
 micro-beta retain stability of the supplied value; copying retains copyability
 and its arbitrary residual contraction tree. The two equality constructors
 retain their separate finite graphs. The coordinates are their original term
 inputs. No constructor assumes termination or the desired equivalence.
 
-\lean{Copying/CombinedRules}{10}{31}{Combined.Local}
+\lean{Copying/CombinedRules}{10}{36}{Combined.Local}
 
 \termdef{shallow-rewrite-match}
 The rewrite relation is the least relation generated from these local pairs
@@ -53,7 +55,7 @@ the token into its body. Box opening is the actual micro-beta rule. Later
 binding-free template arguments must still justify their own restrictions;
 shallow closure alone does not prove template robustness.
 
-\lean{Copying/CombinedRules}{36}{54}{Combined.Rewrite}
+\lean{Copying/CombinedRules}{41}{59}{Combined.Rewrite}
 
 At fixed allowance $d$ and interfaces $I,O$, a state is a dependent pair
 of an actual hypernet and a search position on that graph. A transition is
@@ -63,13 +65,13 @@ target coordinate. Finality is backtracking at an external input. Search
 cannot continue there, and a rewrite requires a different focus mode;
 case analysis therefore proves final normality and supplies a machine.
 
-\lean{Copying/CombinedRules}{56}{56}{Combined.State}
+\lean{Copying/CombinedRules}{61}{61}{Combined.State}
 
-\lean{Copying/CombinedRules}{59}{61}{Combined.Step}
+\lean{Copying/CombinedRules}{64}{66}{Combined.Step}
 
-\lean{Copying/CombinedRules}{63}{71}{Combined.final_normal}
+\lean{Copying/CombinedRules}{68}{76}{Combined.final_normal}
 
-\lean{Copying/CombinedRules}{73}{76}{Combined.machine}
+\lean{Copying/CombinedRules}{78}{81}{Combined.machine}
 
 Every local rule becomes a transition by the local-match constructor
 followed by the rewrite-step constructor. Conversely, rewrite focus has no
@@ -77,9 +79,9 @@ intrinsic search successor, by the previously checked search theorem. Thus
 copying and compute are explicit graph-changing transitions; neither has
 been put into the older linear search or compute parameter.
 
-\lean{Copying/CombinedRules}{79}{80}{Combined.local_step}
+\lean{Copying/CombinedRules}{84}{85}{Combined.local_step}
 
-\lean{Copying/CombinedRules}{83}{84}{Combined.rewrite_not_search}
+\lean{Copying/CombinedRules}{88}{89}{Combined.rewrite_not_search}
 
 \Needspace{12\baselineskip}
 \subsection{State isomorphisms and exact costs}
@@ -191,8 +193,9 @@ closed graph literally and places search at its unique external term input.
 Here ``unbounded'' means there is no global upper bound on permitted finite
 allowances. It does not mean that different padded representations have been
 identified. Unlike the completed linear development, this subsystem is not
-yet quotiented by padding; invariance under changing the allowance remains
-an explicit unfinished obligation.
+yet quotiented by padding; forward exact-cost transport is now proved in
+Section~\ref{sec:copying-arithmetic-padding}, while reflection of runs from
+the larger allowance remains unfinished.
 
 \lean{Copying/CombinedExecution}{9}{9}{Combined.UnboundedState}
 
@@ -412,7 +415,7 @@ has already been matched through all surrounding distributors.
 
 \lean{Copying/CombinedExamples}{82}{83}{Combined.Examples.application_terminates}
 
-The full build checks 349 jobs. All three audits pass: 6 abstract,
+At this integration milestone, the full build checked 349 jobs and the audits passed: 6 abstract,
 477 graph and 830 copying declarations, with only standard Lean logical
 axioms. Appendix~B.1 removes the completed non-arithmetic context integration
 and its execution-isomorphism premise, while retaining the full-machine

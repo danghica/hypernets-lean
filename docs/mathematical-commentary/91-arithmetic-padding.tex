@@ -1,0 +1,421 @@
+\clearpage
+\section{Arithmetic and exact forward execution padding}
+\label{sec:copying-arithmetic-padding}
+All three arithmetic operations now have actual local graph rules and checked
+executions in the combined machine. Addition and subtraction evaluate both
+numeric arguments in order, perform one rewrite and return the numeric result
+in seven transitions. Unary minus takes five transitions. This completes the
+local rule families for the existing example alphabet; it does not prove
+unique matching, determinism or refocusing of the complete copying UAM.
+
+The same milestone proves forward padding of every combined transition and
+every finite run, including their actual contextual matches. A run of length
+$n$ gives a run of exactly length $n$ after an unused allowance layer is added.
+Successful termination is preserved under arbitrarily many layers, and when
+both a closing context and its inserted program are padded. This proves one
+direction of the outstanding padding obligation. It does not reflect arbitrary
+runs from a larger allowance, so the two-sided execution-padding interface
+remains unproved. Neither direction has been inferred from determinism.
+
+The terms of Proposition~12.2 and the Figure~16 translation are unchanged.
+The natural-number arithmetic convention below is explicit; no new numeric
+constant datatype or altered term translation is introduced.
+
+\Needspace{12\baselineskip}
+\subsection{Arithmetic meanings and literal local rules}
+
+\termdef{natural-arithmetic-convention}
+The existing constants carry natural numbers. Binary arithmetic codes select
+addition or subtraction and map to the corresponding original operation label.
+Their evaluation functions are $m+n$ and $m\mathbin{\dot{-}}n$, where
+$\dot{-}$ denotes natural subtraction truncated at zero. Unary minus is
+$0\mathbin{\dot{-}}n$. The project author clarified the intended equation
+$-x=0-x$ during this milestone; keeping the existing natural-number domain
+therefore makes its result zero for every $n$. This last fact is proved with
+Lean's natural-subtraction theorem, rather than built into the syntax.
+Figure~10(a) explicitly depicts binary arithmetic; the unary rule uses this
+clarified interpretation of Figure~13's unary operation.
+
+\lean{Copying/Arithmetic}{9}{11}{Arithmetic.BinaryCode}
+
+\lean{Copying/Arithmetic}{13}{15}{Arithmetic.BinaryCode.symbol}
+
+\lean{Copying/Arithmetic}{17}{19}{Arithmetic.BinaryCode.eval}
+
+\lean{Copying/Arithmetic}{22}{22}{Arithmetic.neg}
+
+\lean{Copying/Arithmetic}{24}{24}{Arithmetic.neg_eq_zero}
+
+\termdef{numeric-arithmetic-redex}
+A number is the original constant corolla, with one term input and no outputs.
+The unary redex is a unary-minus corolla serially connected to that number.
+The binary redex is the chosen arithmetic corolla connected to the ordered
+tensor of two number corollas. Their reducts are single number corollas with
+the computed result. Thus the binary construction is the three-edge to
+one-edge rule of Figure~10(a). The rule relation has one unary constructor
+and one constructor parameterized by the two binary codes. It does not accept
+Boolean, unit, function or reference operands as numbers. Their separate
+language operations and search behaviour remain present.
+
+\lean{Copying/Arithmetic}{26}{26}{Arithmetic.number}
+
+\lean{Copying/Arithmetic}{27}{28}{Arithmetic.unaryBefore}
+
+\lean{Copying/Arithmetic}{29}{29}{Arithmetic.unaryAfter}
+
+\lean{Copying/Arithmetic}{30}{31}{Arithmetic.binaryBefore}
+
+\lean{Copying/Arithmetic}{32}{32}{Arithmetic.binaryAfter}
+
+\lean{Copying/Arithmetic}{35}{37}{Arithmetic.Rule}
+
+A padded number corolla is literally the same primitive corolla at the
+next allowance. The established serial-padding isomorphism therefore gives
+unary-redex padding. Tensor padding and serial padding give binary-redex
+padding. Each result-padding equation is the number equation specialized to
+the computed result. The isomorphism form of number padding is obtained by
+rewriting that equality and taking the identity isomorphism. These facts
+supply the new arithmetic cases of combined operational padding below.
+
+\lean{Copying/Arithmetic}{39}{39}{Arithmetic.number_raise}
+
+\lean{Copying/Arithmetic}{41}{44}{Arithmetic.unaryBefore_raise}
+
+\lean{Copying/Arithmetic}{46}{46}{Arithmetic.unaryAfter_raise}
+
+\lean{Copying/Arithmetic}{48}{51}{Arithmetic.binaryBefore_raise}
+
+\lean{Copying/Arithmetic}{53}{54}{Arithmetic.binaryAfter_raise}
+
+\lean{Copying/Arithmetic}{67}{70}{Arithmetic.number_raise_iso}
+
+Searching a number corolla returns immediately at the same external
+input. The proof supplies its actual edge, source membership and the primitive
+entry equation. A number is a stable constant, whose established stability
+consequences prove absence of focus and hole labels. This certifies its
+safety independently of any termination equivalence.
+
+\lean{Copying/Arithmetic}{57}{60}{Arithmetic.number_returns}
+
+\lean{Copying/Arithmetic}{63}{64}{Arithmetic.safe_number}
+
+\Needspace{12\baselineskip}
+\subsection{Ordered search and concrete computation}
+
+The unary head and numeric-value selectors name the two actual edges;
+the argument selector names their internal connection. Entry searches that
+connection. The numeric edge returns the token, and backtracking through the
+unary head requests rewriting at the external input. Each proof checks
+incidence and the relevant entry or resume function, separately for allowance
+zero and positive allowances where the primitive carrier presentations differ.
+
+\lean{Copying/ArithmeticExecution}{9}{9}{Arithmetic.unaryHead}
+
+\lean{Copying/ArithmeticExecution}{10}{10}{Arithmetic.unaryValue}
+
+\lean{Copying/ArithmeticExecution}{11}{11}{Arithmetic.unaryArgument}
+
+\lean{Copying/ArithmeticExecution}{13}{17}{Arithmetic.unary_enter}
+
+\lean{Copying/ArithmeticExecution}{19}{23}{Arithmetic.unary_value_returns}
+
+\lean{Copying/ArithmeticExecution}{25}{30}{Arithmetic.unary_ready}
+
+The binary selectors name the operation head, either operand edge
+and either ordered internal argument coordinate. The five search steps are:
+enter the left argument, return from its number, resume into the right
+argument, return from its number, and request rewriting at the root. The
+argument indices are zero and one, and their bounds are proved from the
+operation's arity. These are ordered incidence proofs, not an evaluation
+oracle.
+
+\lean{Copying/ArithmeticExecution}{32}{33}{Arithmetic.binaryHead}
+
+\lean{Copying/ArithmeticExecution}{34}{38}{Arithmetic.binaryValue}
+
+\lean{Copying/ArithmeticExecution}{39}{40}{Arithmetic.binaryArgument}
+
+\lean{Copying/ArithmeticExecution}{42}{46}{Arithmetic.binary_enter}
+
+\lean{Copying/ArithmeticExecution}{48}{52}{Arithmetic.binary_left_returns}
+
+\lean{Copying/ArithmeticExecution}{54}{59}{Arithmetic.binary_search_right}
+
+\lean{Copying/ArithmeticExecution}{61}{65}{Arithmetic.binary_right_returns}
+
+\lean{Copying/ArithmeticExecution}{67}{72}{Arithmetic.binary_ready}
+
+Inversion of an arithmetic rule chooses its actual combined local
+constructor. The existing local-match constructor then supplies a combined
+rewrite from rewrite focus to search focus on the result. Appending that
+transition and the one-step number return to the three or five search steps
+gives the five- and seven-step executions. No standalone arithmetic execution
+parameter is assumed. Since these rules are in the original combined
+relation, its already-proved contextual lifting, recursive-isomorphism
+transport, finite-run representation and token-typing theorems now cover
+arithmetic too.
+
+\lean{Copying/ArithmeticExecution}{75}{79}{Arithmetic.rule_step}
+
+\lean{Copying/ArithmeticExecution}{82}{87}{Arithmetic.unary_run}
+
+\lean{Copying/ArithmeticExecution}{90}{96}{Arithmetic.binary_run}
+
+The input graphs satisfy the translation language's label predicate:
+every primitive is an operation, and serial and tensor composition preserve
+that predicate. Consequently the established language safety theorems yield
+focus-free and hole-free certificates. Evaluating the actual finite edge
+enumerations proves that a binary redex has three edges and its result one,
+while a unary redex has two edges and its result one. The proofs hold for
+all allowances and all natural operands.
+
+\lean{Copying/ArithmeticExecution}{98}{100}{Arithmetic.unary_language}
+
+\lean{Copying/ArithmeticExecution}{102}{105}{Arithmetic.binary_language}
+
+\lean{Copying/ArithmeticExecution}{108}{110}{Arithmetic.binary_edge_counts}
+
+\lean{Copying/ArithmeticExecution}{112}{114}{Arithmetic.unary_edge_counts}
+
+\Needspace{12\baselineskip}
+\subsection{Padding contextual attachments without moving the token}
+
+\termdef{padding-attachment-law}
+Uniform padding keeps each outer vertex and edge carrier and relabels its
+edges, recursively padding box bodies. For a simultaneously expanded host,
+the padded filling of an edge is the padded component with interface equality
+casts supplied by the label-padding laws. Those casts are necessary because
+the hole signature is indexed by the host edge's label. They change no port
+index or wire type.
+
+\lean{Copying/PaddingInteractions}{10}{14}{Padding.expandFilling}
+
+The expansion attachment equation says that inserting the appropriately
+cast component port into the padded host reaches exactly the original vertex.
+For an internal port both sides are the same tagged component vertex. For
+an input or output, both sides use the same host source or target position.
+Case analysis on ports and the incidence-index definitions proves the equation.
+The expansion-padding isomorphism uses identity vertex and edge bijections;
+labels agree, and its source and target equations follow by composing list
+maps and applying that attachment equation to each port.
+
+\lean{Copying/PaddingInteractions}{17}{24}{Padding.expand_insert}
+
+\lean{Copying/PaddingInteractions}{27}{46}{Padding.expand_graph}
+
+Single-slot replacement has the analogous attachment equation. The
+host embedding is unchanged and a cast inserted input or output reaches the
+same host boundary incidence. The corresponding padding isomorphism again
+uses identity outer bijections. Host-edge incidence commutes with the host
+embedding; inserted-edge incidence commutes by the attachment equation.
+The source filler requires no gratuitous boundary cast, which lets this
+isomorphism compare the actual graphs used by the rewrite constructor.
+
+\lean{Copying/PaddingInteractions}{49}{57}{Padding.plug_insert}
+
+\lean{Copying/PaddingInteractions}{59}{85}{Padding.plug_graph}
+
+Uniform padding also supplies a concrete search-transport structure.
+Both port and edge bijections are identities. Case analysis on the allowance
+and original label proves that an edge has a specified primitive label before
+padding exactly when it has that same primitive label afterwards. Source and
+target lists are unchanged, and external-input status is unchanged. The
+previous search-transport theorem can therefore be reused without modifying
+intrinsic search.
+
+\lean{Copying/PaddingInteractions}{88}{97}{Padding.search}
+
+\Needspace{12\baselineskip}
+\subsection{Every combined rewrite and run pads forward}
+
+First, replacing ordered interfaces by equal lists transports a rewrite
+and casts its active coordinates. After eliminating the interface equalities,
+the proof constructs identity-carrier isomorphisms to the reboundaried graphs
+and invokes the existing representation closure. A separate helper observes
+that graph isomorphisms fix each indexed external input. Another helper
+expresses a previously proved rule-side padding isomorphism using uniform
+padding instead of the equivalent original raising function.
+
+\lean{Copying/CombinedPadding}{10}{26}{Combined.rewrite_reboundary}
+
+\lean{Copying/CombinedPadding}{29}{31}{Combined.rewrite_input_iso}
+
+\lean{Copying/CombinedPadding}{34}{36}{Combined.graphIsoOfRaise}
+
+Every local rule pads forward. For allocation, assignment, micro-beta
+and copying, the proof uses their actual redex and reduct padding
+isomorphisms. Stability transports by the proved stability-padding equivalence;
+copyability transports by its proved padding theorem. Dereference and the two
+atom-equality cases agree directly with their next-allowance primitive graphs.
+The unary and binary arithmetic cases use the new redex and number padding
+laws. All active ports are external term inputs at this local stage, so their
+coordinates agree by the input-isomorphism helper. No side condition is
+dropped or replaced by a machine-determinism assumption.
+
+\lean{Copying/CombinedPadding}{39}{69}{Combined.local_padding}
+
+A recursive graph isomorphism lifts through uniform padding with its
+original outer bijections. The recursive label-equivalence padding theorem
+supplies its only new field; all incidence and internal-label laws are
+unchanged. Induction on a contextual rewrite now handles every constructor.
+The local case is the theorem above. The renaming case uses padded
+isomorphisms. For replacement, cast the padded component's interfaces,
+rewrite in the padded host, and rename through the replacement-padding
+isomorphisms; the attachment equations identify the actual token coordinates.
+For simultaneous expansion, all unselected components remain equal after
+padding, and the corresponding expansion isomorphisms finish the same argument.
+This establishes forward transport for arbitrary finite shallow matches.
+
+\lean{Copying/CombinedPadding}{72}{79}{Combined.graphIso}
+
+\lean{Copying/CombinedPadding}{82}{108}{Combined.rewrite_padding}
+
+\termdef{forward-execution-padding}
+Padding a state increases its allowance and pads its actual graph, while
+retaining its mode and port. Finality is therefore equivalent before and
+after this state transformation. A combined step lifts by cases: intrinsic
+search uses the uniform search transport, and a graph-changing step uses
+rewrite padding. Induction lifts every run to its literal padded endpoints,
+with unchanged length. A successful run retains its final endpoint, giving
+preservation of successful termination at each exact cost.
+
+\lean{Copying/CombinedPadding}{111}{111}{Combined.padState}
+
+\lean{Copying/CombinedPadding}{113}{114}{Combined.padState_final}
+
+\lean{Copying/CombinedPadding}{117}{123}{Combined.step_padding}
+
+\lean{Copying/CombinedPadding}{126}{130}{Combined.run_padding}
+
+\lean{Copying/CombinedPadding}{132}{135}{Combined.terminatesIn_padding}
+
+\Needspace{12\baselineskip}
+\subsection{Unbounded programs and padded observations}
+
+The unbounded-state padding function adds one to its allowance and
+applies the fixed-allowance state transformation. Finality remains equivalent.
+Inverting an unbounded step and applying fixed-allowance step padding gives
+one lifted transition. Run induction gives the same number of unbounded
+transitions. For any cost preorder $Q$, successful source runs therefore
+witness refinement to the padded state using $Q(n,n)$. This is a forward
+refinement theorem, not a two-sided equivalence.
+
+\lean{Copying/CombinedPaddingExecution}{8}{8}{Combined.padUnbounded}
+
+\lean{Copying/CombinedPaddingExecution}{10}{11}{Combined.padUnbounded_final}
+
+\lean{Copying/CombinedPaddingExecution}{13}{15}{Combined.unbounded_step_padding}
+
+\lean{Copying/CombinedPaddingExecution}{17}{21}{Combined.unbounded_run_padding}
+
+\lean{Copying/CombinedPaddingExecution}{24}{27}{Combined.padding_refines}
+
+Padding an initialized closed program agrees with initializing its
+original padded program object. The proof applies equality congruence to
+the graph-padding equality, with the search input fixed explicitly. Induction
+on the number of added layers composes one-step refinements; no additional
+machine transitions are introduced by this proof. Successful termination
+then follows for every finite padding by applying the exact-cost refinement
+to the original successful run.
+
+\lean{Copying/CombinedPaddingExecution}{29}{31}{Combined.padding_initial}
+
+\lean{Copying/CombinedPaddingExecution}{34}{41}{Combined.initial_pad_refines}
+
+\lean{Copying/CombinedPaddingExecution}{44}{48}{Combined.terminates_pad}
+
+Initial states of recursively isomorphic closed graphs have the same
+search mode and external input, so the previously proved representation
+relation gives equivalence for every cost preorder, including exact cost.
+To pad a closed observation, first pad the already closed program using the
+new forward refinement. The established context-filling padding isomorphism
+then identifies that padded program with the result of closing the padded
+fragment in the padded context. Composing with exact isomorphism invariance
+proves forward preservation of all successful observation costs.
+
+\lean{Copying/CombinedPaddingExecution}{51}{54}{Combined.initial_iso}
+
+\lean{Copying/CombinedPaddingExecution}{57}{63}{Combined.close_pad_refines}
+
+The converse needs an additional proof: an arbitrary run from a padded
+graph may use a match presented at the larger allowance, and that match must
+be reflected to the smaller representation. None of the forward constructors
+provides this inversion automatically. Until reflection is proved, the
+execution does not satisfy \texttt{RespectsPadding}; the cofinal observation
+criterion and general semantic weakening cannot be concluded from this
+milestone alone.
+
+\Needspace{12\baselineskip}
+\subsection{Arithmetic and representation regressions}
+
+The unary and binary local redexes define actual closed-program objects,
+using the language safety certificates proved above. Their finite runs lift
+to the unbounded machine and give explicit five- and seven-transition
+termination witnesses. These program objects denote the literal local
+redex graphs. They are not advertised as the complete Figure~16 translations
+of arithmetic expressions with surrounding environment distributors.
+
+\lean{Copying/ArithmeticExamples}{11}{13}{Arithmetic.Examples.unaryProgram}
+
+\lean{Copying/ArithmeticExamples}{15}{17}{Arithmetic.Examples.binaryProgram}
+
+\lean{Copying/ArithmeticExamples}{19}{20}{Arithmetic.Examples.unary_terminates}
+
+\lean{Copying/ArithmeticExamples}{22}{23}{Arithmetic.Examples.binary_terminates}
+
+The unary-result theorem substitutes the proved zero result into its
+actual endpoint state. The subtraction-underflow theorem does the same for
+every pair $m\leq n$, using natural subtraction. Endpoint-state congruence is
+used because the state contains a graph and a vertex on that graph. Addition
+and subtraction with a zero right operand both return $n$ in seven steps.
+All these regressions quantify over arbitrary natural numbers and allowances.
+
+\lean{Copying/ArithmeticExamples}{26}{33}{Arithmetic.Examples.unary_result}
+
+\lean{Copying/ArithmeticExamples}{36}{43}{Arithmetic.Examples.subtraction_underflow}
+
+\lean{Copying/ArithmeticExamples}{45}{48}{Arithmetic.Examples.addition_zero}
+
+\lean{Copying/ArithmeticExamples}{50}{53}{Arithmetic.Examples.subtraction_zero}
+
+A contextual regression connects an outer unary-minus corolla to a
+binary arithmetic redex. Its argument selector is the actual right-component
+insertion coordinate. The outer head enters that argument in one search step.
+The right-serial run-lifting theorem executes all seven inner transitions,
+including its graph-changing arithmetic rule. Backtracking then resumes the
+outer head, which performs its own rewrite and numeric return. The resulting
+trace has $1+7+1+1+1=11$ transitions. This checks interaction of two real
+rewrites across a contextual boundary, not merely an isolated compute step.
+
+\lean{Copying/ArithmeticExamples}{56}{57}{Arithmetic.Examples.nested}
+
+\lean{Copying/ArithmeticExamples}{59}{60}{Arithmetic.Examples.innerInput}
+
+\lean{Copying/ArithmeticExamples}{62}{66}{Arithmetic.Examples.nested_enter}
+
+\lean{Copying/ArithmeticExamples}{69}{76}{Arithmetic.Examples.nested_run}
+
+The original translated reference program still terminates after any
+finite padding, by the new general termination theorem. The application
+regression with a literal translated constant body retains a successful run
+of exactly seven transitions after any padding. Every binary arithmetic redex
+also retains its exact seven-transition cost at arbitrarily higher allowances.
+These proofs use the exact-cost refinement directly and eliminate its equality
+of run lengths; they do not claim uniqueness of all combined executions.
+
+\lean{Copying/ArithmeticExamples}{79}{81}{Arithmetic.Examples.translated_reference_pad}
+
+\lean{Copying/ArithmeticExamples}{84}{92}{Arithmetic.Examples.application_pad_cost}
+
+\lean{Copying/ArithmeticExamples}{95}{103}{Arithmetic.Examples.binary_pad_cost}
+
+The full build checks 355 jobs. The three audits pass for 6 abstract,
+477 graph and 912 copying declarations, with only standard Lean logical
+axioms. Appendix~B.1 removes arithmetic construction and forward execution
+padding from the unfinished obligations, retaining reflection of padded
+matches/runs, matching independence, full-machine structural laws, template
+robustness and final assembly. Estimated progress by mathematical effort is
+about 75\%, broadly 60--85\% (26 October 2026). This is a judgement about proof
+difficulty; the remaining template and machine arguments still carry substantial
+uncertainty.
+
