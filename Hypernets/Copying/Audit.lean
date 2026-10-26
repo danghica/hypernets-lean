@@ -1,4 +1,4 @@
-import Hypernets.Copying.SelectionExamples
+import Hypernets.Copying.AllocationCoherenceExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -1159,3 +1159,44 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.SelectionExamples.embedded_number_no_rewrite
 #print axioms Hypernets.Copying.SelectionExamples.privateCell_runs_safe
 #print axioms Hypernets.Copying.SelectionExamples.constantResult_runs_safe
+
+-- Allocation successor coherence, exact costs and original-translation regressions.
+#print axioms Hypernets.Copying.Combined.StateIso.cast_state
+#print axioms Hypernets.Copying.Combined.StateIso.plug
+#print axioms Hypernets.Copying.Combined.StateIso.ofEq
+#print axioms Hypernets.Copying.Combined.StateIso.expand
+#print axioms Hypernets.Copying.Combined.head_reboundary
+#print axioms Hypernets.Copying.Combined.Replacement.state
+#print axioms Hypernets.Copying.Combined.Replacement.plug
+#print axioms Hypernets.Copying.Combined.Replacement.expand
+#print axioms Hypernets.Copying.Combined.Replacement.rename
+#print axioms Hypernets.Copying.Combined.Replacement.expand_result
+#print axioms Hypernets.Copying.reboundary_comp
+#print axioms Hypernets.Copying.Allocation.head
+#print axioms Hypernets.Copying.Allocation.head_at
+#print axioms Hypernets.Copying.Allocation.filler
+#print axioms Hypernets.Copying.Allocation.canonical
+#print axioms Hypernets.Copying.Allocation.canonical_rename
+#print axioms Hypernets.Copying.Allocation.canonical_local
+#print axioms Hypernets.Copying.Combined.rewrite_head_reflect
+#print axioms Hypernets.Copying.Combined.local_allocation_canonical
+#print axioms Hypernets.Copying.Combined.rewrite_allocation_canonical
+#print axioms Hypernets.Copying.Combined.allocation_rewrite_deterministic
+#print axioms Hypernets.Copying.Combined.allocation_step_canonical
+#print axioms Hypernets.Copying.Combined.allocation_step_deterministic
+#print axioms Hypernets.Copying.Combined.allocation_step_to_canonical
+#print axioms Hypernets.Copying.Combined.allocation_cost_iff
+#print axioms Hypernets.Copying.Combined.allocation_unbounded_deterministic
+#print axioms Hypernets.Copying.Combined.allocation_unbounded_equiv
+#print axioms Hypernets.Copying.Combined.search_successor_unique
+#print axioms Hypernets.Copying.Combined.final_cost_iff
+#print axioms Hypernets.Copying.Combined.coherent_step_cost_iff
+#print axioms Hypernets.Copying.Combined.search_cost_iff
+#print axioms Hypernets.Copying.Combined.allocation_cost_spectrum
+#print axioms Hypernets.Copying.AllocationCoherenceExamples.reference_head
+#print axioms Hypernets.Copying.AllocationCoherenceExamples.reference_allocate
+#print axioms Hypernets.Copying.AllocationCoherenceExamples.reference_successor
+#print axioms Hypernets.Copying.AllocationCoherenceExamples.reference_exact_cost
+#print axioms Hypernets.Copying.AllocationCoherenceExamples.reference_unbounded_exact_cost
+#print axioms Hypernets.Copying.AllocationCoherenceExamples.reference_padded_exact_cost
+#print axioms Hypernets.Copying.AllocationCoherenceExamples.host_allocation_successor
