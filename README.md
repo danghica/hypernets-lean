@@ -9,23 +9,26 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: full translation renaming via BPerm
+## Latest milestone: concrete copying search
 
-`Translation.term_rename_via_boxPermutation` now covers **all original syntax**,
-including nested lambdas, unequal operand depths, and arbitrary finite variable/atom
-environments. Its conclusion records a finite structural derivation using the actual
-box-permutation rule, followed by an ordered isomorphism with exact resource action.
-This is not yet observational equivalence: machine laws and BPerm robustness remain open.
-The original terms and Figure 16 translation are unchanged.
+The copying UAM now has concrete intrinsic search rules for the full example
+operation alphabet, term contractions and instances. Proved laws include
+determinism, term-wire typing, stable-primitive recognition, exact run transport
+under recursive isomorphism and depth padding, and shallow plugging preservation.
+The original translation checks a five-step ordered search trace for `1 + 2`
+and one-step outer-lambda return for Proposition 12.2's right-hand program in
+arbitrary environments. Rewrite mode hands off to pending copy/compute phases.
 
-The concrete BPerm pair, typed bound/free interface correspondence, structural
-binding-freedom, and label invariants are proved. Negative regressions reject
-capture-changing permutations and treating box-output permutation as ordered isomorphism.
-A checked counterexample also documents the missing bound-prefix offset in the printed
-Definition 12.7(2). Commentary Section 78 explains the correction and every new proof.
+This is a search-phase milestone, not the full copying machine. Copy and store
+computation, full refocusing/specimen laws, template robustness and the final
+proposition remain unfinished. The original terms and Figure 16 translation
+are unchanged. Full-syntax structural bijective renaming via BPerm remains proved.
+Commentary Section 79 explains every new declaration and proof; Appendix B
+removes the completed search-definition obligation.
 
-Full build: 289 jobs; all three axiom audits pass. Estimated completion by mathematical
-effort: **roughly 50–55%**, with broad uncertainty (35–65%), as of 26 October 2026.
+Full build: 298 jobs. All three axiom audits pass (6 abstract, 477 graph, 428 copying).
+Estimated completion by mathematical effort: **about 55%**, with broad uncertainty
+**40–65%**, as of 26 October 2026. This is a judgement, not a declaration count.
 
 ## Proposition 12.2: current extension target
 
@@ -62,8 +65,8 @@ isomorphism invariance. Plugging closure is proved at arbitrary nesting depth
 when the replaced hole has an input, as every translated term hole does. A
 checked finite counterexample shows why unrestricted closure at zero-input
 holes does not follow from the literal source-based definition. Observations
-and lambda-context congruence are still pending; all five Appendix B.1 items
-remain open.
+and lambda-context congruence still require the full execution laws; four
+Appendix B.1 work packages remain open.
 
 The commentary's section **Copying and store: foundations for Proposition 12.2**
 contains the dependency map; **Ordered distributors and graph assembly**

@@ -51,7 +51,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/711053ce55aafdd69157b1eb5d290ee1284e7548}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/4c87070fd0ea31b7851e181f82c80215123ae6ed}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -59,7 +59,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{25 October 2026\\\small Source snapshot: \texttt{585baee}; Lean \texttt{4.35.0}}
+\date{26 October 2026\\\small Source snapshot: \texttt{4c87070}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -99,7 +99,8 @@ original typed graphs.
 The copying/store extension for Proposition~12.2 now has scoped syntax,
 capture-avoiding substitution algebra, a separate typed graph hierarchy,
 canonical contraction trees, recursive renaming, and nested replacement laws.
-The copying machine, term translation and template argument remain pending;
+The full Figure~16 translation and intrinsic copying search laws are now checked.
+Copy and compute transitions, full-machine laws and the template argument remain pending;
 Section~\ref{sec:copying-foundations} records the dependency map and proved
 prerequisites.
 \end{abstract}
@@ -194,6 +195,7 @@ prerequisites.
 \input{80-unary-renaming}
 \input{81-lambda-free-renaming}
 \input{82-full-renaming}
+\input{83-copying-search}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}

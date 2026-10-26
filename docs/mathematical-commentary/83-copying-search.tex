@@ -1,0 +1,370 @@
+\clearpage
+\section{Concrete search for the copying UAM}
+\label{sec:copying-search-phase}
+This milestone defines the intrinsic search interactions on the copying graph
+hierarchy and proves their operational laws. It covers the operation-search
+rules of Figure~9 and the additional term-contraction and instance interactions
+of Figure~18 (PDF p.~37). It uses the complete example operation alphabet.
+Copying itself (Figure~17), substitution of stable arguments, and the compute
+rules, including Figure~19 store updates, remain separate obligations.
+
+The representation is a token mode and a wire of an actual typed hypernet.
+The graph remains fixed during a search transition. No copying transition is
+encoded as a linear compute step. A rewrite token suspends this phase; it is
+not a successful value and does not mean the full copying machine is stuck.
+An eventual concrete specimen instance must connect these coordinates with
+focused graph states and combine them with copy and compute transitions.
+
+\Needspace{12\baselineskip}
+\subsection{Incidence rules and determinism}
+
+\termdef{copying-search-phase}
+The argument count is zero for constants and lambda, one for unary operations,
+and two for application and binary operations. In particular, lambda's thunk
+output is not an evaluated argument. Primitive labels are injective at every
+depth: at depth zero project from the lifted label; at successor depth use
+injectivity of the primitive summand. A position is a pair $(m,v)$ of mode and
+vertex.
+
+\lean{Copying/Search}{9}{12}{Copying.Operation.arguments}
+
+\lean{Copying/Search}{14}{18}{Copying.primitiveLabel_injective}
+
+\lean{Copying/Search}{21}{21}{Search.Position}
+
+Entry at an operation with no evaluated arguments returns its finishing
+mode at the same wire; otherwise it searches target zero. Entry at either
+input of a term contraction produces rewrite mode at that input. Entry at an
+instance produces backtrack mode at the same wire. Atom contractions, weakening,
+stores, focus edges and holes have no entry instruction. On return from
+argument $i$, the resume function searches argument $i+1$ if it exists among
+the evaluated arguments; otherwise it uses the operation's finishing mode.
+The optional result makes an absent target an absent transition.
+
+\lean{Copying/Search}{25}{31}{Search.enter}
+
+\lean{Copying/Search}{35}{37}{Search.resume}
+
+The transition relation requires an actual incident edge. An entry witness
+gives its exact primitive label, the current vertex in its source list, and
+the entry equation. A return witness gives an operation edge with singleton
+source, an index strictly below its argument count, the current vertex at
+that target index, and the resume equation. Thus neither a label guess nor an
+arbitrary adjacency suffices. Both entry and resume commute with every vertex
+map: optional list lookup commutes with mapping, and all other branches retain
+the same mode and mapped vertex. Injectivity is unnecessary for these two laws.
+
+\lean{Copying/Search}{40}{47}{Search.Step}
+
+\lean{Copying/Search}{50}{55}{Search.enter_map}
+
+\lean{Copying/Search}{57}{60}{Search.resume_map}
+
+For determinism, compare two entry witnesses using uniqueness of the edge
+sourcing a given vertex; label injectivity then identifies their instructions.
+For two return witnesses, target uniqueness identifies the edge, singleton
+sources identify the root, and the duplicate-free target list identifies the
+argument index. The two instruction equations give equal successors. Entry
+and return cannot overlap because their source modes differ. The result-uniqueness
+lemma allows explicitly equal source positions; determinism is its reflexive case.
+
+There is no search step out of rewrite mode. Backtrack at an external input
+also has no step, since an input cannot be an edge target. Finally, two finite
+search runs from the same source to normal endpoints have equal endpoints and
+equal lengths, by the generic deterministic trace theorem.
+
+\lean{Copying/Search}{63}{91}{Search.result_unique}
+
+\lean{Copying/Search}{93}{94}{Search.deterministic}
+
+\lean{Copying/Search}{96}{97}{Search.no_rewrite}
+
+\lean{Copying/Search}{99}{103}{Search.final_no_step}
+
+\lean{Copying/Search}{106}{109}{Search.terminal_run_unique}
+
+\Needspace{12\baselineskip}
+\subsection{Exact transport across graph representations}
+
+\termdef{copying-search-transport}
+A search transport consists of bijections on vertices and edges, preservation
+and reflection of each primitive label, exact preservation of the ordered
+source and target lists, and preservation and reflection of input status.
+It may relate different depth allowances. No box-body equation is required by
+this interface because search does not enter boxes. It is a sufficient
+interface for search only, not a replacement for recursive graph isomorphism.
+Its position bijection preserves modes. Its inverse uses the inverse carrier
+bijections, the reversed primitive equivalence, and mapped-list inverse laws.
+
+\lean{Copying/SearchTransport}{10}{19}{Search.Transport}
+
+\lean{Copying/SearchTransport}{21}{25}{Search.Transport.positions}
+
+\lean{Copying/SearchTransport}{27}{37}{Search.Transport.symm}
+
+Transport a step by mapping its incident edge and vertices. List membership,
+indexed lookup and singleton sources are preserved, and the entry/resume map
+lemmas supply the result equation. Applying the inverse transport proves
+reflection. Induction on a finite trace gives correspondence at exactly the
+same number of steps. Normality follows in both directions by transporting any
+hypothetical outgoing step back to the original graph.
+
+\lean{Copying/SearchTransport}{40}{52}{Search.Transport.step}
+
+\lean{Copying/SearchTransport}{55}{61}{Search.Transport.step_iff}
+
+\lean{Copying/SearchTransport}{63}{65}{Search.Transport.trace_iff}
+
+\lean{Copying/SearchTransport}{67}{75}{Search.Transport.terminal_iff}
+
+Recursive label equivalence preserves and reflects equality with each
+primitive label: primitive cases are literal equality and box cases cannot
+be primitives. Hence a typed boundary isomorphism supplies a concrete search
+transport using its carrier bijections and incidence laws. This proves search
+invariance under the existing recursive isomorphism discipline without
+identifying box permutation with ordered isomorphism.
+
+\lean{Copying/SearchTransport}{79}{90}{Search.primitive_equiv}
+
+\lean{Copying/SearchTransport}{93}{100}{Search.ofBoundaryIso}
+
+\Needspace{12\baselineskip}
+\subsection{Value recognition and wire typing}
+
+An entry or resume result in search mode belongs to the interacting edge's
+target list, by the successful optional lookup. Consequently no step produces
+search mode at an external input. For a backtrack entry result, case analysis
+on the primitive and operation proves that its vertex is the unchanged root
+and its label is a stable primitive. Conversely, a return witness has an
+argument index and therefore an active operation; its resume instruction
+cannot produce backtrack mode.
+
+\lean{Copying/SearchValues}{8}{21}{Search.enter_search_mem}
+
+\lean{Copying/SearchValues}{23}{32}{Search.resume_search_mem}
+
+\lean{Copying/SearchValues}{35}{40}{Search.no_initial_target}
+
+\lean{Copying/SearchValues}{43}{48}{Search.enter_backtrack}
+
+\lean{Copying/SearchValues}{51}{52}{Search.argument_active}
+
+\lean{Copying/SearchValues}{55}{63}{Search.resume_not_backtrack}
+
+\termdef{copying-search-value-recognition}
+It follows that every transition producing backtrack mode identifies an
+actual passive-operation or instance edge. Its source is exactly the singleton
+containing the returned vertex: the typed source length is one, and source
+membership identifies that unique element. This is operational recognition of
+a stable primitive, not an assumed machine law.
+An interface equality cast preserves every shallow label predicate by equality
+elimination. Applied to the primitive corolla and the already proved stability
+criterion, this shows that the recognised primitive, isolated as its own
+corolla with the required input interface, is a stable graph. It does not
+claim that an arbitrary surrounding graph is stable.
+
+\lean{Copying/SearchValues}{67}{80}{Search.backtrack_stable_edge}
+
+\lean{Copying/SearchValues}{83}{86}{Search.labels_cast}
+
+\lean{Copying/SearchValues}{89}{94}{Search.recognized_primitive_stable}
+
+Typing is checked against the actual signatures. Successful entry has
+only term sources; given a term root, its result wire is term. Every evaluated
+argument index selects a term wire in the operation output signature. Resume
+therefore also preserves term type. These finite signature facts are proved
+by cases on the complete operation and primitive alphabets. For an actual
+step, map its instruction equation along the graph's vertex-label function
+and use the source/target typing equations. Both endpoint vertices then have
+term type. In particular, the instance's atom output and lambda's thunk output
+cannot become searched arguments.
+
+\lean{Copying/SearchTyping}{8}{14}{Search.enter_input_term}
+
+\lean{Copying/SearchTyping}{16}{21}{Search.enter_output_term}
+
+\lean{Copying/SearchTyping}{24}{29}{Search.argument_type}
+
+\lean{Copying/SearchTyping}{31}{38}{Search.resume_output_term}
+
+\lean{Copying/SearchTyping}{41}{69}{Search.endpoints_term}
+
+\Needspace{12\baselineskip}
+\subsection{Padding and shallow context insertion}
+
+One recursive raise supplies an actual search transport: outer vertex and
+edge carriers are unchanged, primitive labels remain the same primitive,
+ordered incidence is unchanged, and input status is unchanged. This argument
+uses the definition of padding, not determinism. Identity transports and
+composition are built from the corresponding bijections; the primitive,
+incidence and input equations compose. Iterate this construction for padding
+by $n$, transport across a depth-index equality by equality elimination, and
+compose the two for padding to an arbitrary common allowance. Step reflection
+and exact trace correspondence follow from the transport theorems.
+
+\lean{Copying/SearchPadding}{9}{26}{Search.padding}
+
+\lean{Copying/SearchPadding}{30}{36}{Search.Transport.refl}
+
+\lean{Copying/SearchPadding}{38}{49}{Search.Transport.trans}
+
+\lean{Copying/SearchPadding}{53}{55}{Search.pad}
+
+\lean{Copying/SearchPadding}{57}{58}{Search.castDepth}
+
+\lean{Copying/SearchPadding}{60}{61}{Search.padTo}
+
+\lean{Copying/SearchPadding}{63}{65}{Search.padding_step_iff}
+
+\lean{Copying/SearchPadding}{67}{71}{Search.padTo_trace_iff}
+
+A successful entry edge cannot be a hole: label injectivity would identify
+its primitive with a hole, whose entry instruction is absent. When filling a
+shallow hole, a host interaction therefore retains its edge; return interactions
+also retain their operation edge. Map its vertices along the host attachment
+map. The plugging incidence equations and the entry/resume map laws prove the
+same transition in the filled graph. For an interaction inside the filling,
+use the inserted edge and inserted-vertex map instead. Neither map is assumed
+to be injective. Induction transports whole host or inserted traces without
+changing their lengths. These are preservation laws for shallow plugging;
+reflection, nested specimen classification and full-machine locality remain
+additional obligations.
+
+\lean{Copying/SearchLocality}{8}{16}{Search.search_ne_hole}
+
+\lean{Copying/SearchLocality}{20}{42}{Search.plug_host}
+
+\lean{Copying/SearchLocality}{45}{61}{Search.plug_insert}
+
+\lean{Copying/SearchLocality}{64}{71}{Search.plug_host_trace}
+
+\lean{Copying/SearchLocality}{73}{79}{Search.plug_insert_trace}
+
+\Needspace{12\baselineskip}
+\subsection{The phase machine and exact observations}
+
+\termdef{copying-search-completion}
+Successful phase completion means backtrack mode at an external input. The
+phase machine has exactly the search relation as its step relation and this
+completion predicate as finality. Final normality is the input obstruction
+proved above; determinism is the concrete search theorem. Generic counted
+machine runs and graph traces coincide by induction on their constructors.
+
+A transport preserves completion because it preserves mode and input status.
+Combining this with exact trace transport gives exact machine-run correspondence.
+For existential successful runs, an arbitrary target endpoint is pulled back
+through the inverse position bijection; conversely map the original endpoint
+forward. Thus successful runs exist at cost $n$ on one side exactly when they
+do on the other. Instantiating the transport by arbitrary padding proves the
+corresponding operational padding theorem for this phase. No full copying
+execution instance is manufactured from it.
+
+\lean{Copying/SearchMachine}{10}{11}{Search.Completed}
+
+\lean{Copying/SearchMachine}{14}{21}{Search.machine}
+
+\lean{Copying/SearchMachine}{23}{24}{Search.machine_deterministic}
+
+\lean{Copying/SearchMachine}{27}{40}{Search.steps_iff_trace}
+
+\lean{Copying/SearchMachine}{42}{43}{Search.Transport.completed_iff}
+
+\lean{Copying/SearchMachine}{45}{47}{Search.Transport.machine_steps_iff}
+
+\lean{Copying/SearchMachine}{50}{61}{Search.Transport.completes_at_iff}
+
+\lean{Copying/SearchMachine}{65}{69}{Search.padding_completion_iff}
+
+\Needspace{12\baselineskip}
+\subsection{Regressions on the original translated graphs}
+
+The term-contraction and instance rules specialise the entry constructor
+with the exact Figure~18 instructions. A no-entry lemma rules out a competing
+witness: source uniqueness identifies its edge and primitive-label injectivity
+identifies its instruction, contradicting absence of an entry result. It
+excludes search at atom contractions and stores. Concrete corolla regressions
+cover both ordered term-contraction inputs and the instance input at every
+depth, using their explicit source lists.
+
+\lean{Copying/SearchExamples}{10}{12}{Search.term_contraction}
+
+\lean{Copying/SearchExamples}{15}{17}{Search.instance_return}
+
+\lean{Copying/SearchExamples}{20}{31}{Search.no_entry}
+
+\lean{Copying/SearchExamples}{33}{35}{Search.atom_contraction_no_search}
+
+\lean{Copying/SearchExamples}{37}{39}{Search.store_no_search}
+
+\lean{Copying/SearchExamples}{42}{45}{Search.contraction_ports}
+
+\lean{Copying/SearchExamples}{47}{50}{Search.instance_corolla}
+
+For any translated abstraction body, the outer lambda edge is an actual
+edge of the two serial assemblies. Its source is the external input; its
+zero argument count returns backtrack there. The original box and single-use
+distributors remain in place. This applies to the unchanged right-hand side
+of Proposition~12.2 for every environment size $(k,h)$. Its one-step trace
+ends at a normal input, so deterministic terminal-run uniqueness proves that
+every successfully completed search run from this initial state has exactly
+one step and that same endpoint. This says nothing yet about callbacks or
+repeated use of the returned closure.
+
+\lean{Copying/SearchExamples}{53}{58}{Search.abstraction_returns}
+
+\lean{Copying/SearchExamples}{61}{63}{Search.constantResult_search}
+
+\lean{Copying/SearchExamples}{66}{73}{Search.constantResult_exact_cost}
+
+For an ordered multi-argument test, take the literal Figure~16 translation
+of $1+2$ in the empty environment. The graph definition retains all
+distributors. Its named head, left constant and right constant edges are the
+corresponding finite assembly coordinates; argument $i$ is target $i$ of the
+head, rather than a separately invented vertex.
+
+\lean{Copying/SearchTraceExamples}{9}{10}{Search.additionGraph}
+
+\lean{Copying/SearchTraceExamples}{12}{12}{Search.additionHead}
+
+\lean{Copying/SearchTraceExamples}{13}{13}{Search.additionLeft}
+
+\lean{Copying/SearchTraceExamples}{14}{14}{Search.additionRight}
+
+\lean{Copying/SearchTraceExamples}{15}{16}{Search.additionArgument}
+
+The five checked transitions are: enter the head and search the left
+constant; return from that constant; resume at the head and search the right
+constant; return from it; finish the head in rewrite mode at the root. Each
+proof gives the actual edge, primitive label, ordered source and target
+positions, and reduced instruction equation. The trace concatenates these
+five witnesses. Since rewrite mode has no outgoing search step, every normal
+search run from the same initial state has this endpoint and length five.
+The padding trace theorem transports this concrete run to every larger depth
+allowance. No arithmetic computation or store mutation is claimed by the test.
+
+\lean{Copying/SearchTraceExamples}{19}{22}{Search.addition_enter}
+
+\lean{Copying/SearchTraceExamples}{25}{28}{Search.addition_left}
+
+\lean{Copying/SearchTraceExamples}{31}{32}{Search.addition_next}
+
+\lean{Copying/SearchTraceExamples}{35}{38}{Search.addition_right}
+
+\lean{Copying/SearchTraceExamples}{41}{42}{Search.addition_finish}
+
+\lean{Copying/SearchTraceExamples}{45}{47}{Search.addition_trace}
+
+\lean{Copying/SearchTraceExamples}{50}{53}{Search.addition_exact_cost}
+
+\lean{Copying/SearchTraceExamples}{56}{60}{Search.addition_padded}
+
+The full build checks 298 jobs. All three axiom audits pass: six abstract,
+477 graph and 428 copying declarations, with only the standard logical axioms
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} where used.
+Appendix~B removes the completed search-definition obligation while retaining
+the copy, compute, refocusing and full specimen-interface tasks. Estimated
+completion of Proposition~12.2 is about 55\% by mathematical effort, with a
+broad 40--65\% uncertainty range (26 October 2026). This is a judgement about
+the remaining mathematics, not a ratio of declarations or pages; the template
+robustness proofs still carry substantial uncertainty.
+

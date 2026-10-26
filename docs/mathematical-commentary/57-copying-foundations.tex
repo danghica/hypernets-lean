@@ -39,10 +39,14 @@ renaming argument, not whole-term renaming.
 Section~\ref{sec:copying-boundary-iso} adds a separate typed boundary-isomorphism
 interface and the original distributor's explicit resource automorphism.
 Selected-resource and all atomic bijective-renaming cases are proved
-(Section~\ref{sec:copying-atomic-renaming}). Composite-term and non-bijective
-renaming, graph-level substitution and remaining operational invariants are pending.
-\item \textbf{Pending machine:} the copy rule (Figure~17), extra search rules
-(Figure~18), store rules (Figure~19), and arithmetic/application behaviour.
+(Section~\ref{sec:copying-atomic-renaming}). Full-syntax bijective renaming is now proved by explicit BPerm derivations
+(Section~\ref{sec:copying-full-renaming}); its semantic interpretation,
+non-bijective graph renaming, graph-level substitution and operational invariants remain pending.
+\item \textbf{Checked search, pending full machine:} operation search and the
+extra search rules (Figure~18) now have concrete incidence rules, determinism,
+typing, value recognition, exact isomorphism/padding transport and shallow
+plugging preservation (Section~\ref{sec:copying-search-phase}). The copy rule
+(Figure~17), store rules (Figure~19), and arithmetic/application behaviour remain pending.
 These must yield an unbounded deterministic refocusing copying machine and
 a proved concrete specimen-system instance. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its
@@ -56,7 +60,7 @@ allowance criterion additionally assume one-step execution padding invariance
 term-context congruence is proved under isomorphism invariance in
 Section~\ref{sec:copying-term-congruence}; Section~\ref{sec:copying-general-congruence}
 removes the depth restriction using common-allowance graph isomorphisms.
-The machine's isomorphism/padding laws and the paper-correspondence obligations
+The full machine's isomorphism/padding laws and the paper-correspondence obligations
 of Section~\ref{sec:paper-correspondence} remain pending. Unrestricted
 zero-input-hole closure is refuted, as recorded in Appendix~B.1.
 \item \textbf{Pending templates:} Table~3 requires contraction associativity,

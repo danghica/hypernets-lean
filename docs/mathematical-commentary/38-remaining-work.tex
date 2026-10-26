@@ -30,9 +30,11 @@ is now an explicit extension target.
 \Needspace{14\baselineskip}
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-full-renaming}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-search-phase}.
 They include context composition, structural padding and safety transport,
-and full-syntax bijective translation renaming by explicit BPerm derivations. Completed proofs
+full-syntax bijective translation renaming by explicit BPerm derivations,
+and concrete intrinsic search with determinism, typing, value recognition, exact
+isomorphism/padding transport and shallow plugging preservation. Completed proofs
 are excluded from the tasks below.
 The four remaining tasks are:
 \begin{enumerate}
@@ -42,10 +44,11 @@ contextual-equivalence interpretation, using proved BPerm robustness and executi
 congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
 and graph-level substitution laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
-\item Define copying and extra search transitions and all example compute rules;
+\item Define copying transitions and all example compute rules;
 prove the unbounded machine's determinism, refocusing and specimen locality,
 including independence of the copy rule from its contraction-tree match.
-Prove execution invariance under recursive isomorphism and one-step padding,
+Extend the proved search laws to the combined transition relation and focused
+graph representation. Prove full execution invariance under recursive isomorphism and one-step padding,
 thereby discharging the hypotheses of the general contextual congruence theorem.
 Retain the zero-input qualification of Lemma~E.1.
 \item Prove all eleven template families' safety and robustness in Table~3's
