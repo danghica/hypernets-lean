@@ -1,4 +1,4 @@
-import Hypernets.Copying.AssignmentCoherenceExamples
+import Hypernets.Copying.DereferenceCoherenceExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -1343,3 +1343,76 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.AssignmentCoherenceExamples.translatedLiterals_exact_cost
 #print axioms Hypernets.Copying.AssignmentCoherenceExamples.overwrite_omega
 #print axioms Hypernets.Copying.AssignmentCoherenceExamples.translatedLiterals_successor
+
+-- Dereference and all store operations: complete coherence and exact handoff to copying.
+#print axioms Hypernets.Copying.ReadStub.fin_four
+#print axioms Hypernets.Copying.ReadStub.label
+#print axioms Hypernets.Copying.ReadStub.source
+#print axioms Hypernets.Copying.ReadStub.target
+#print axioms Hypernets.Copying.ReadStub.base
+#print axioms Hypernets.Copying.ReadStub.net
+#print axioms Hypernets.Copying.TargetSwap.embedded_not_input
+#print axioms Hypernets.Copying.TargetSwap.state
+#print axioms Hypernets.Copying.TargetSwap.cast_not_input
+#print axioms Hypernets.Copying.TargetSwap.cast_typed
+#print axioms Hypernets.Copying.TargetSwap.state_cast
+#print axioms Hypernets.Copying.TargetSwap.state_congr
+#print axioms Hypernets.Copying.TargetSwap.state_plug
+#print axioms Hypernets.Copying.TargetSwap.state_expand_result
+#print axioms Hypernets.Copying.Dereference.Match
+#print axioms Hypernets.Copying.Dereference.Match.map
+#print axioms Hypernets.Copying.Dereference.Match.unique
+#print axioms Hypernets.Copying.Dereference.Match.contents_not_input
+#print axioms Hypernets.Copying.Dereference.Match.contents_typed
+#print axioms Hypernets.Copying.Dereference.Match.filler
+#print axioms Hypernets.Copying.Dereference.Match.grafted
+#print axioms Hypernets.Copying.Dereference.Match.fresh
+#print axioms Hypernets.Copying.Dereference.Match.retained
+#print axioms Hypernets.Copying.Dereference.Match.fresh_not_input
+#print axioms Hypernets.Copying.Dereference.Match.retained_not_input
+#print axioms Hypernets.Copying.Dereference.Match.endpoints_typed
+#print axioms Hypernets.Copying.Dereference.Match.canonical
+#print axioms Hypernets.Copying.Dereference.localMatch
+#print axioms Hypernets.Copying.Dereference.Match.graft_rename
+#print axioms Hypernets.Copying.Dereference.Match.canonical_rename
+#print axioms Hypernets.Copying.Dereference.Match.canonical_plug
+#print axioms Hypernets.Copying.Dereference.Match.canonical_expand_result
+#print axioms Hypernets.Copying.Dereference.Replacement.replaced
+#print axioms Hypernets.Copying.Dereference.Replacement.vertexTo
+#print axioms Hypernets.Copying.Dereference.Replacement.vertexFrom
+#print axioms Hypernets.Copying.Dereference.Replacement.vertices
+#print axioms Hypernets.Copying.Dereference.Replacement.edgeTo
+#print axioms Hypernets.Copying.Dereference.Replacement.edgeFrom
+#print axioms Hypernets.Copying.Dereference.Replacement.edges
+#print axioms Hypernets.Copying.Dereference.Replacement.map_tree
+#print axioms Hypernets.Copying.Dereference.Replacement.exchange_tree
+#print axioms Hypernets.Copying.Dereference.Replacement.iso
+#print axioms Hypernets.Copying.Dereference.Replacement.canonical_local
+#print axioms Hypernets.Copying.Combined.local_dereference_canonical
+#print axioms Hypernets.Copying.Combined.local_dereference_match
+#print axioms Hypernets.Copying.Combined.rewrite_dereference_match
+#print axioms Hypernets.Copying.Combined.rewrite_dereference_canonical
+#print axioms Hypernets.Copying.Combined.dereference_rewrite_deterministic
+#print axioms Hypernets.Copying.Combined.dereference_step_deterministic
+#print axioms Hypernets.Copying.Combined.dereference_cost_spectrum
+#print axioms Hypernets.Copying.Combined.dereference_unbounded_deterministic
+#print axioms Hypernets.Copying.Combined.dereference_unbounded_equiv
+#print axioms Hypernets.Copying.Combined.StoreHead
+#print axioms Hypernets.Copying.Combined.store_rewrite_deterministic
+#print axioms Hypernets.Copying.Combined.store_step_deterministic
+#print axioms Hypernets.Copying.Combined.store_cost_spectrum
+#print axioms Hypernets.Copying.Combined.store_unbounded_deterministic
+#print axioms Hypernets.Copying.Combined.store_unbounded_equiv
+#print axioms Hypernets.Copying.Dereference.contents_successor
+#print axioms Hypernets.Copying.Dereference.contents_cost_handoff
+#print axioms Hypernets.Copying.Dereference.contents_prefix
+#print axioms Hypernets.Copying.Dereference.contents_no_early_success
+#print axioms Hypernets.Copying.Dereference.host_successor
+#print axioms Hypernets.Copying.DereferenceCoherenceExamples.storedTerm
+#print axioms Hypernets.Copying.DereferenceCoherenceExamples.pending
+#print axioms Hypernets.Copying.DereferenceCoherenceExamples.storedTerm_cost_handoff
+#print axioms Hypernets.Copying.DereferenceCoherenceExamples.storedTerm_prefix
+#print axioms Hypernets.Copying.DereferenceCoherenceExamples.storedTerm_no_early_success
+#print axioms Hypernets.Copying.DereferenceCoherenceExamples.literal_cost_handoff
+#print axioms Hypernets.Copying.DereferenceCoherenceExamples.omega_cost_handoff
+#print axioms Hypernets.Copying.DereferenceCoherenceExamples.storedTerm_successor

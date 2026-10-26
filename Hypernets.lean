@@ -112,3 +112,4 @@ import Hypernets.Copying.SelectionExamples
 import Hypernets.Copying.AllocationCoherenceExamples
 import Hypernets.Copying.EqualityCoherenceExamples
 import Hypernets.Copying.AssignmentCoherenceExamples
+import Hypernets.Copying.DereferenceCoherenceExamples
