@@ -1,4 +1,4 @@
-import Hypernets.Copying.CopyExamples
+import Hypernets.Copying.AssignmentExamples
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -567,3 +567,53 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.CopyRule.application_rule
 #print axioms Hypernets.Copying.CopyRule.binary_residual_weakening
 #print axioms Hypernets.Copying.CopyRule.binary_shared_reference
+
+-- Figure 19(c): stable assignment, exact routing and preserved old contents.
+#print axioms Hypernets.Copying.Assignment.otherInputs_nodup
+#print axioms Hypernets.Copying.Assignment.mem_otherInputs
+#print axioms Hypernets.Copying.Assignment.valueOutputs_nodup
+#print axioms Hypernets.Copying.Assignment.mem_valueOutputs
+#print axioms Hypernets.Copying.Assignment.rule_iff
+#print axioms Hypernets.Copying.Assignment.value_labels
+#print axioms Hypernets.Copying.Assignment.store_labels
+#print axioms Hypernets.Copying.Assignment.tree_labels
+#print axioms Hypernets.Copying.Assignment.tree_hop_before
+#print axioms Hypernets.Copying.Assignment.tree_hop_after
+#print axioms Hypernets.Copying.Assignment.enters_before
+#print axioms Hypernets.Copying.Assignment.enters_after
+#print axioms Hypernets.Copying.Assignment.root_before
+#print axioms Hypernets.Copying.Assignment.root_after
+#print axioms Hypernets.Copying.Assignment.resolves_both
+#print axioms Hypernets.Copying.Assignment.resolution_count_iff
+#print axioms Hypernets.Copying.Assignment.store_unique_before
+#print axioms Hypernets.Copying.Assignment.store_unique_after
+#print axioms Hypernets.Copying.Assignment.search_instance
+#print axioms Hypernets.Copying.Assignment.instance_returns
+#print axioms Hypernets.Copying.Assignment.search_value
+#print axioms Hypernets.Copying.Assignment.ready
+#print axioms Hypernets.Copying.Assignment.unit_returns
+#print axioms Hypernets.Copying.Assignment.final_normal
+#print axioms Hypernets.Copying.Assignment.constant_returns
+#print axioms Hypernets.Copying.Assignment.constant_run
+#print axioms Hypernets.Copying.Assignment.updated_content
+#print axioms Hypernets.Copying.Assignment.value_sources
+#print axioms Hypernets.Copying.Assignment.value_targets
+#print axioms Hypernets.Copying.Assignment.value_output_order
+#print axioms Hypernets.Copying.Assignment.old_content_weakened
+#print axioms Hypernets.Copying.Assignment.instance_weakened
+#print axioms Hypernets.Copying.Assignment.other_references_preserved
+#print axioms Hypernets.Copying.Assignment.old_contents_retained
+#print axioms Hypernets.Copying.Assignment.attached_store_unique
+#print axioms Hypernets.Copying.Assignment.rule_upToIso
+#print axioms Hypernets.Copying.Assignment.upToIso_raise
+#print axioms Hypernets.Copying.Assignment.upToIso_pad
+#print axioms Hypernets.Copying.Assignment.before_labels
+#print axioms Hypernets.Copying.Assignment.after_labels
+#print axioms Hypernets.Copying.Assignment.stable_assignment_safe
+#print axioms Hypernets.Copying.Assignment.after_not_stable
+#print axioms Hypernets.Copying.Assignment.translated_value_returns
+#print axioms Hypernets.Copying.Assignment.translated_value_run
+#print axioms Hypernets.Copying.Assignment.updated_literal
+#print axioms Hypernets.Copying.Assignment.discarded_literal
+#print axioms Hypernets.Copying.Assignment.old_new_disjoint
+#print axioms Hypernets.Copying.Assignment.one_to_two

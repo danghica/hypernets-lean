@@ -96,3 +96,5 @@ import Hypernets.Copying.AllocationStoreExamples
 import Hypernets.Copying.DereferenceExamples
 
 import Hypernets.Copying.CopyExamples
+
+import Hypernets.Copying.AssignmentExamples
