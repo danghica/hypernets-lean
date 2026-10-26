@@ -92,3 +92,5 @@ import Hypernets.Copying.FullRenamingExamples
 import Hypernets.Copying.SearchTraceExamples
 
 import Hypernets.Copying.AllocationStoreExamples
+
+import Hypernets.Copying.DereferenceExamples

@@ -1,4 +1,4 @@
-import Hypernets.Copying.AllocationStoreExamples
+import Hypernets.Copying.DereferenceExamples
 import Hypernets.Copying.AtomicRenaming
 import Hypernets.Copying.FullTranslationExamples
 import Hypernets.Copying.TranslationExamples
@@ -495,3 +495,34 @@ import Hypernets.Copying.TracingExamples
 
 #print axioms Hypernets.Copying.Allocation.stable_allocation_safe
 #print axioms Hypernets.Copying.Allocation.after_not_stable
+
+-- General local dereference, arbitrary atom trees, exact resolution, and copy handoff.
+#print axioms Hypernets.Copying.Dereference.rule_iff
+#print axioms Hypernets.Copying.Dereference.tree_labels
+#print axioms Hypernets.Copying.Dereference.rule_raise
+#print axioms Hypernets.Copying.Dereference.requests_copy
+#print axioms Hypernets.Copying.Dereference.resolves_both
+#print axioms Hypernets.Copying.Dereference.resolution_count_iff
+#print axioms Hypernets.Copying.Dereference.store_unique_before
+#print axioms Hypernets.Copying.Dereference.store_unique_after
+#print axioms Hypernets.Copying.Dereference.read_run
+#print axioms Hypernets.Copying.Dereference.read_pending_copy
+#print axioms Hypernets.Copying.Dereference.instance_discarded
+#print axioms Hypernets.Copying.Dereference.shared_store_result
+#print axioms Hypernets.Copying.Dereference.before_other_input
+#print axioms Hypernets.Copying.Dereference.after_other_input
+#print axioms Hypernets.Copying.Dereference.rename_store
+#print axioms Hypernets.Copying.Dereference.rule_pad
+#print axioms Hypernets.Copying.Dereference.focusFree_sides
+#print axioms Hypernets.Copying.Dereference.holeFree_sides
+#print axioms Hypernets.Copying.Dereference.content_label
+#print axioms Hypernets.Copying.Dereference.content_attachment
+#print axioms Hypernets.Copying.Dereference.content_store_unique
+#print axioms Hypernets.Copying.Dereference.canonical_resolves_before
+#print axioms Hypernets.Copying.Dereference.canonical_resolves_after
+#print axioms Hypernets.Copying.Dereference.binary_resolves_before
+#print axioms Hypernets.Copying.Dereference.binary_other_reference
+#print axioms Hypernets.Copying.Dereference.binary_read_run
+#print axioms Hypernets.Copying.Dereference.stored_one_label
+#print axioms Hypernets.Copying.Dereference.stored_one_attachment
+#print axioms Hypernets.Copying.Dereference.canonical_copy_edges
