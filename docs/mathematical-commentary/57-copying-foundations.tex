@@ -44,7 +44,7 @@ Selected-resource and all atomic bijective-renaming cases are proved
 non-bijective graph renaming, graph-level substitution and the remaining
 operational invariants remain pending. Recursive label safety and stable-input
 inertness are now proved in Section~\ref{sec:copying-selection}.
-\item \textbf{Checked machine laws, pending specimen instance:} operation search and the
+\item \textbf{Checked machine laws and coordinate specimen instance:} operation search and the
 extra search rules (Figure~18) now have concrete incidence rules, determinism,
 typing, value recognition, exact isomorphism/padding transport and shallow
 plugging preservation (Section~\ref{sec:copying-search-phase}). Reference creation (Figure~19(a)) now has its actual stable-argument pair,
@@ -111,12 +111,20 @@ operation cases: dereference, assignment, reference equality, application and
 arithmetic. The full finite and unbounded machines are refocusing without any
 compute-law premise. Every reachable state, including every finite prefix of
 an infinite execution, has a pure-search witness on its own current graph.
-The concrete specimen interface and locality laws, focused-graph correspondence,
-templates and final observational argument remain unfinished.
-The proved determinism up to representation and these refocusing results must
-be integrated with the concrete specimen laws for the robustness theorem. Copy transitions replace the
-linear machine's substitution transitions; they must not be hidden in its
-existing compute parameter.
+Section~\ref{sec:copying-specimens} constructs the coordinate specimen system
+and proves synchronized-search locality for the complete unbounded machine.
+Recursive paired fillings retain full box bodies and ordered interfaces.
+The machine is literally deterministic on classes under recursive isomorphism
+and depth padding; every class run reflects from any fixed original source
+with its exact length. All existing binding-free observations are unchanged.
+The remaining correspondence work is to relate these certificates to explicitly
+focused graphs and unique-hole tuples, and to construct them for every original
+addressed closing-context filling. The eleven template proofs, semantic
+weakening and final Figure~22 argument also remain open.
+The concrete instance now supplies every abstract machine-law and specimen
+locality field. Output closure, safety and robustness remain conditions to
+prove for each template. Copy transitions retain their own concrete rules;
+they are not hidden in the linear machine's existing compute parameter.
 \item \textbf{Contextual interface:} binding-free closure at sourced holes,
 binding-freedom of all translated term contexts, sole-hole certificates and
 addressed context composition are checked. Graph-context congruence has an

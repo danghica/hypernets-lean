@@ -1,0 +1,665 @@
+\clearpage
+\section{Concrete copying specimens and exact class semantics}
+\label{sec:copying-specimens}
+The combined copying UAM now supplies a concrete instance of the abstract
+specimen interface. Its synchronized context-step law is proved from actual
+recursive graph fillings. Its machine is deterministic on classes under
+recursive graph isomorphism and depth padding, and every class execution
+reflects to an execution from any chosen original representative with exactly
+the same length. All existing binding-free program and term observations are
+therefore preserved. The terms of Proposition~12.2, Figure~16's translation,
+the complete operation alphabet and all rule premises are unchanged.
+
+The locality argument follows the three conclusions of PDF Lemma~F.5
+(HTML Lemma~39, \href{https://arxiv.org/html/1907.01257v5\#A6}{Appendix~F}):
+the two filled states agree on finality; output closure prevents a jointly
+rooted token from exiting a hole; and a settled specimen can synchronize a
+step on both sides to a remote specimen. Here tokens are typed coordinates
+on a shared focus-free context. Filling certificates recurse through original
+box bodies and retain their complete ordered interfaces.
+
+The proved dependency chain is: ordered incidence preservation and boundary
+reflection; one-way operation-path obstruction; recursive paired fillings;
+exact representation bisimulation and literal class determinism; synchronized
+specimen traversal; the concrete interface; forward and converse quantitative
+robustness conclusions for certified initial fillings. In particular,
+determinism is not used to infer reverse padding: the already proved
+match-reflection theorem supplies that essential direction.
+
+There are two boundaries to this milestone. First, correspondence between
+these coordinate certificates and the paper's explicitly focused graphs,
+unique-hole inventories and replacement tuples remains to be proved. In
+particular, every original addressed binding-free closing context must be
+connected to the paired-filling certificates used here. Initial lifting is
+proved for certified fillings, not yet for that entire observation class.
+Second, the concrete template families still require their output-closure,
+input-safety and forward/converse robustness proofs. The generic results below
+retain those application conditions and do not assert Proposition~12.2.
+Appendix~B.1 removes the completed interface and locality obligations while
+retaining these correspondence and template tasks. A cautious estimate is
+60--70\% of the total mathematical effort, with low confidence.
+
+\Needspace{12\baselineskip}
+\subsection{Retaining the actual ordered interactions}
+
+\termdef{copying-retained-interaction}
+A \emph{retained copying interaction} for an edge $e$ of a context $C$ is a
+certificate that its replacement component has just one edge, whose source
+list is the complete ordered input boundary and whose target list is the
+complete ordered output boundary. Its label is a specified primitive exactly
+when the original label is that primitive. This permits rebuilding a box's
+body while keeping the box opaque to outer search. It does not assume a
+search simulation. The position map sends a token $(m,v)$ to $(m,h(v))$, where
+$h$ is the expansion's canonical host embedding.
+
+\lean{Copying/ExpansionSearch}{12}{17}{Search.Expansion.Retained}
+
+\lean{Copying/ExpansionSearch}{19}{19}{Search.Expansion.position}
+
+For a retained interaction, the expanded edge's source and target lists
+are precisely the original lists mapped by the host embedding. Substituting
+the certificate's complete boundary lists into the expansion incidence
+formula proves both equalities. These are ordered-list equalities, so they
+preserve the argument index used by returning search.
+
+\lean{Copying/ExpansionSearch}{21}{26}{Search.Expansion.Retained.source_eq}
+
+\lean{Copying/ExpansionSearch}{28}{33}{Search.Expansion.Retained.target_eq}
+
+The preservation condition requires a retained certificate for each
+interactive primitive edge of the context. The origin condition requires
+every interactive edge of a replacement component either to come from such
+a retained copy or to replace an original hole. These two structural
+conditions have different roles: preservation lifts context search, whereas
+origins account for every possible filled-graph search interaction.
+
+\lean{Copying/ExpansionSearch}{36}{37}{Search.Expansion.Preserves}
+
+\lean{Copying/ExpansionSearch}{40}{42}{Search.Expansion.Origins}
+
+Every context search step lifts under preservation. In an entering step,
+the retained source equation supplies the same source attachment and the
+entering function commutes with its vertex map. In a backtracking step, the
+target equation retains the same ordered argument index, while the source
+equation retains the operation head. Naturality of the resume function then
+gives exactly the mapped successor.
+
+\lean{Copying/ExpansionSearch}{44}{58}{Search.Expansion.step}
+
+A position is entering when its vertex belongs to a hole's source list,
+and exiting when it belongs to a hole's target list. The relevant boundary
+predicate is mode-sensitive: entering in search mode, or exiting in
+backtracking mode. These predicates inspect the actual original hole edge;
+they do not require distinct hole names or injective attachments.
+
+\lean{Copying/ExpansionSearch}{60}{60}{Search.Expansion.Entering}
+
+\lean{Copying/ExpansionSearch}{61}{61}{Search.Expansion.Exiting}
+
+\lean{Copying/ExpansionSearch}{62}{62}{Search.Expansion.Boundary}
+
+If an expanded source or target incidence meets an old host vertex, the
+owning component's original edge has the corresponding incidence at that
+vertex. The proof splits the local vertex into input, output and internal
+cases. Fresh internal tags cannot equal an old host tag; the two boundary
+cases reduce to the original port maps. These ownership lemmas also apply
+when a hole's source and target are attached to the same host vertex.
+
+\lean{Copying/ExpansionSearch}{64}{70}{Search.Expansion.source_owner}
+
+\lean{Copying/ExpansionSearch}{72}{78}{Search.Expansion.target_owner}
+
+An actual search step starting at a host position either reflects to an
+original context step, with exactly the mapped successor, or starts at the
+mode-sensitive hole boundary. To prove this, classify the interacting edge
+by its origin. A hole origin gives the boundary alternative by ownership.
+A retained origin has the original primitive label and ordered incidences.
+Injectivity of the host map recovers the source membership, or the singleton
+source and the returning argument index, and hence the original rule.
+Combining this reflection with preservation gives an exact one-step
+equivalence away from the boundary.
+
+\lean{Copying/ExpansionSearch}{82}{127}{Search.Expansion.reflect_or_boundary}
+
+\lean{Copying/ExpansionSearch}{129}{134}{Search.Expansion.step_iff}
+
+\Needspace{12\baselineskip}
+\subsection{One-wayness and the jointly rooted boundary obstruction}
+
+\termdef{copying-one-way}
+A copying hypernet is \emph{one-way} when none of its term outputs is
+operation-reachable from an input. The reachability predicate was obtained
+from the actual search-history invariant. The path correspondence below
+shows that this is exactly the paper's absence of an operation-only path
+from a term input to a term output, rather than an additional restriction
+on atom or thunk inputs.
+
+\lean{Copying/OneWay}{8}{10}{OneWay}
+
+A component vertex which is not an input cannot become a global input
+after insertion. Target coverage gives it an incoming component edge, and
+that incidence survives insertion; global inputs have no incoming target.
+This fact supplies the base obstruction in the path-extraction proof.
+
+\lean{Copying/OneWay}{18}{21}{Search.Expansion.insert_not_input}
+
+Suppose an inserted vertex is operation-reachable in the expanded graph.
+Then every component vertex representing that occurrence is operation-reachable
+inside its component. Induct on global reachability. A local input already
+has a trivial path. Otherwise target coverage gives a local predecessor;
+target uniqueness identifies it with the final global operation edge.
+The operation's singleton source identifies the preceding occurrence, to
+which the induction hypothesis applies. This proof needs neither global
+acyclicity nor an injective hole attachment.
+
+Consequently, attaching a term output of a one-way component to a host
+vertex prevents operation reachability at that host occurrence: extraction
+would contradict the component's one-way property.
+
+\lean{Copying/OneWay}{25}{55}{Search.Expansion.extract_at}
+
+\lean{Copying/OneWay}{58}{65}{Search.Expansion.oneWay_target}
+
+For paired replacements, output closure requires that at every original
+hole at least one of the two components is one-way. The choice may differ
+from hole to hole. If both filled tokens are rooted and their common host
+vertex has term type, that vertex cannot be a hole target. Indeed, rootedness
+gives operation reachability on both sides; use whichever side is one-way
+at the selected hole to obtain a contradiction.
+
+\lean{Copying/OneWay}{68}{70}{Search.Expansion.OutputClosedPair}
+
+\lean{Copying/OneWay}{72}{79}{Search.Expansion.not_exiting}
+
+A settled token is either backtracking or searching away from hole
+inputs. For jointly rooted paired fillings, it is away from the entire
+mode-sensitive boundary: settledness excludes search entry, and the preceding
+obstruction excludes backtracking exit. Independently, a context search step
+always ends remote. If it ends in rewrite mode, its vertex is the source
+of a genuine operation or term contraction; source uniqueness prevents it
+from being the source of a hole as well. All other modes are remote by
+definition.
+
+\lean{Copying/OneWay}{81}{90}{Search.Expansion.settled_away}
+
+\lean{Copying/OneWay}{93}{122}{Search.Expansion.remote_target}
+
+\Needspace{10\baselineskip}
+An operation label in the recursive alphabet is exactly a primitive
+operation label. Case analysis on depth and on the label proves the
+equivalence. Induction then identifies the reachability predicate with an
+actual reverse operation trace to an input: a reachability constructor adds
+the corresponding operation edge, and a trace constructor recovers the
+operation's singleton source and the preceding reachability proof.
+
+\lean{Copying/OneWayPaths}{7}{20}{isOperation_iff}
+
+\lean{Copying/OneWayPaths}{24}{41}{Search.operationReachable_iff}
+
+Every nonempty operation trace ending at an external input has a term
+input there, since the last operation's unique source has term type. The
+proof follows the trace to its final edge. An output-to-input trace cannot
+be empty, because these boundary constructors are disjoint. Reversing the
+edge list therefore proves the promised equivalence: one-wayness holds
+exactly when there is no forward operation path from a term input to a
+term output, at any interface or depth.
+
+\lean{Copying/OneWayPaths}{45}{62}{Search.operationTrace_input_term}
+
+\lean{Copying/OneWayPaths}{66}{77}{oneWay_iff_paths}
+
+\Needspace{12\baselineskip}
+\subsection{Related replacements inside original boxes}
+
+A copying pre-template is a family of relations on actual hypernets,
+indexed by depth and the two ordered interfaces. Related graphs must both
+be globally focus-free, including all nested bodies.
+\termdef{copying-output-closed-template}
+An \emph{output-closed copying pre-template} requires each related pair to
+have a one-way member. This condition is on proposed template instances;
+it is not an assumed law of the copying machine.
+
+\lean{Copying/DeepFillings}{9}{11}{PreTemplate}
+
+\lean{Copying/DeepFillings}{13}{14}{PreTemplate.OutputClosed}
+
+A label copy has one specified edge with a literal specified label,
+complete ordered boundary incidences, and no other edges. The canonical
+corolla supplies such a certificate directly. If the label is recursively
+focus-free, the whole graph is focus-free, because every edge is the
+specified edge. A label copy of an original context edge also supplies a
+retained-interaction certificate by its label equality.
+
+\lean{Copying/DeepFillings}{17}{22}{LabelCopy}
+
+\lean{Copying/DeepFillings}{24}{26}{LabelCopy.corolla}
+
+\lean{Copying/DeepFillings}{28}{30}{LabelCopy.focusFree}
+
+\lean{Copying/DeepFillings}{32}{38}{LabelCopy.retained}
+
+A label copy of a non-operation is one-way. Every term output is a
+target of its sole edge. Operation reachability at such a target would
+contradict the earlier non-operation-target obstruction. This argument is
+useful even for retained holes, which are non-operation labels.
+
+\lean{Copying/DeepFillings}{40}{45}{LabelCopy.oneWay}
+
+\termdef{copying-recursive-filling}
+A \emph{recursive paired copying filling} expands a common context by two
+families of edge components, with a certificate at each original edge.
+The certificate has three constructors. A retained edge is replaced on both
+sides by a literal label copy. An original hole is replaced by an actual
+pre-template pair. An original box is replaced by two complete box edges
+with the same bound-variable, free-variable and free-atom interfaces, whose
+bodies are recursively paired fillings of the original body.
+
+The two mutually defined predicates express these graph equations and edge
+certificates. Recursion descends through original boxes only: a newly inserted
+hole replacement is not traversed again. At this stage distinct names and
+exact original-hole tuples are not part of the certificate. Those paper
+correspondence obligations remain explicit.
+
+\lean{Copying/DeepFillings}{48}{53}{DeepFilling}
+
+\lean{Copying/DeepFillings}{56}{70}{DeepFillingEdge}
+
+If the original context is globally focus-free, both recursively filled
+graphs are focus-free. Induct on depth. Retained copies use the original
+label property; actual hole replacements use the pre-template property;
+rebuilt boxes use the induction hypothesis for their complete bodies.
+Expansion then assembles these local properties at every edge.
+
+\lean{Copying/DeepFillings}{74}{96}{DeepFilling.focusFree}
+
+A rebuilt box retains outer search interactions even when its body
+changes: neither old nor new box label is a primitive label, and the full
+boundary lists remain fixed. It follows by cases on an edge certificate
+that every component pair either has retained-interaction certificates on
+both sides or is a related replacement at an actual original hole.
+
+\lean{Copying/DeepFillings}{99}{106}{LabelCopy.retainedBox}
+
+\lean{Copying/DeepFillings}{109}{116}{DeepFillingEdge.origin}
+
+The structural certificates now imply both search-preservation conditions
+and both origin conditions. An interactive original primitive cannot be a
+hole; all its certified copies must therefore be retained. Conversely, the
+origin classification accounts for every interactive inserted edge.
+Output closure of the pre-template gives paired output closure at all
+original holes. A genuinely filled hole uses its related pair; a retained
+hole is itself one-way by the non-operation argument; a box cannot be a
+hole. No operational simulation is included as certificate data.
+
+\lean{Copying/DeepFillings}{119}{134}{deepFilling_search}
+
+\lean{Copying/DeepFillings}{138}{144}{deepFilling_outputClosed}
+
+\Needspace{12\baselineskip}
+\subsection{An exact machine on representation classes}
+
+The representation relation is the equivalence relation generated by
+recursive state isomorphism and one level of depth padding. It includes
+reflexivity, symmetry and transitivity explicitly. These generators are
+structural representation changes, not additional machine transitions.
+Finality and search rootedness are invariant under every generator and
+hence under their equivalence closure, by induction on its derivation.
+
+\lean{Copying/StateClasses}{9}{14}{Combined.Representation}
+
+\lean{Copying/StateClasses}{18}{24}{Combined.Representation.final_iff}
+
+\lean{Copying/StateClasses}{26}{34}{Combined.Representation.rooted_iff}
+
+Every representation equivalence is an exact one-step bisimulation.
+For recursive isomorphism, use the existing full-machine transport in both
+directions. For padding, forward transport is already proved. In the reverse
+direction apply the earlier exact padded-run reflection theorem to the
+one-step run; its reflected first step supplies the required old successor,
+and its representation equation aligns the results. Reflexivity is immediate;
+symmetry exchanges the two directions; transitivity composes witnesses.
+The transport lemma exposes the forward half of this result.
+
+This proof depends essentially on reverse matching and run reflection.
+Successor determinism alone would not justify eliminating padding.
+
+\lean{Copying/StateClasses}{38}{73}{Combined.Representation.bisimulation}
+
+\lean{Copying/StateClasses}{75}{76}{Combined.Representation.transport}
+
+\termdef{copying-representation-class}
+A \emph{copying representation class} is the quotient of unbounded states
+by this generated equivalence relation. The setoid packages its three
+equivalence laws, and the constructor maps each actual state to its class.
+Finality and rootedness descend to the quotient using the invariance proofs;
+their truth does not depend on the chosen representative.
+
+\lean{Copying/StateClasses}{79}{81}{Combined.representationSetoid}
+
+\lean{Copying/StateClasses}{83}{83}{Combined.StateClass}
+
+\lean{Copying/StateClasses}{86}{86}{Combined.StateClass.ofState}
+
+\lean{Copying/StateClasses}{88}{89}{Combined.StateClass.Final}
+
+\lean{Copying/StateClasses}{90}{90}{Combined.StateClass.Rooted}
+
+A class step means that some representatives are related by exactly one
+original unbounded-machine step. Every original step therefore projects.
+Conversely, given a class step and any chosen source representative, the
+bisimulation transports its witnessed step back to that representative,
+producing an actual successor in the required target class. Thus changing
+representatives cannot enable a transition unavailable at the chosen source.
+
+\lean{Copying/StateClasses}{94}{94}{Combined.StateClass.Step}
+
+\lean{Copying/StateClasses}{96}{96}{Combined.StateClass.project}
+
+\lean{Copying/StateClasses}{99}{103}{Combined.StateClass.reflect}
+
+To prove literal determinism of the class relation, reflect two class
+steps to the same original source. Existing successor coherence makes their
+actual successors recursively isomorphic, so the quotient identifies them.
+A final class has no successor, because reflecting one would contradict
+original final normality. These facts construct a genuine abstract machine
+and discharge its deterministic-machine property without any additional
+semantic premise.
+
+\lean{Copying/StateClasses}{105}{109}{Combined.StateClass.deterministic}
+
+\lean{Copying/StateClasses}{111}{114}{Combined.StateClass.final_normal}
+
+\lean{Copying/StateClasses}{116}{119}{Combined.StateClass.machine}
+
+\lean{Copying/StateClasses}{121}{121}{Combined.StateClass.machine_deterministic}
+
+\Needspace{12\baselineskip}
+Rootedness is preserved by class steps: choose the witnessed actual
+transition and apply full unbounded refocusing. Induction projects each
+original run with its exact length. The reverse induction first reflects
+one class step from the specified source, then continues from its actual
+successor. Consequently every class run has an actual representative run
+of the same length from any fixed original starting state, and therefore
+at that state's original finite allowance.
+
+\lean{Copying/StateClasses}{123}{126}{Combined.StateClass.rooted_step}
+
+\lean{Copying/StateClasses}{128}{132}{Combined.StateClass.project_run}
+
+\lean{Copying/StateClasses}{136}{145}{Combined.StateClass.reflect_run}
+
+A class has a successful run of length $n$ if and only if its chosen
+original representative does. Project or reflect the run and use finality
+invariance. Applying these exact correspondences to both sides of quantitative
+refinement proves its equivalence for every cost relation $Q$. The class
+execution initializes by projecting the unchanged original program state.
+Padding contributes no counted transition and introduces no new successful
+cost.
+
+\lean{Copying/StateClasses}{147}{154}{Combined.StateClass.successful_iff}
+
+\lean{Copying/StateClasses}{157}{167}{Combined.StateClass.refines_iff}
+
+\lean{Copying/StateClasses}{170}{172}{Combined.StateClass.execution}
+
+\Needspace{12\baselineskip}
+\subsection{The concrete specimen and its locality law}
+
+A full transition from a non-rewrite token is necessarily an actual
+search step on the unchanged graph. This follows by cases on the combined
+transition: the contextual rewrite constructor requires rewrite mode, so
+cannot occur. The statement extracts both the genuine search witness and
+the exact successor-state equation.
+
+\lean{Copying/Specimens}{9}{14}{Combined.nonrewrite_search}
+
+\termdef{copying-specimen}
+A \emph{copying coordinate specimen} consists of a depth, a focus-free context
+with sole term input and no outputs, two edge-component families with recursive
+paired-filling certificates, hole-freedom proofs for both expanded graphs,
+and a term-typed token on the original context. It also records membership
+in an explicit predicate of allowed contexts. Its left and right states
+are the actual unbounded filled graphs at the host image of the token.
+Its entering predicate is the original context's hole-source predicate.
+
+\lean{Copying/Specimens}{19}{32}{Specimen}
+
+\lean{Copying/Specimens}{37}{37}{Specimen.leftState}
+
+\lean{Copying/Specimens}{38}{38}{Specimen.rightState}
+
+\lean{Copying/Specimens}{39}{39}{Specimen.Entering}
+
+\Needspace{12\baselineskip}
+Both filled graphs are globally focus-free by the recursive-filling
+theorem. Relocating a specimen changes only its token and typing proof;
+the context, its allowed-membership proof, every component and every
+filling certificate remain the same. The two filled states agree on finality:
+their modes coincide, and the host embedding preserves exactly which
+vertices are external inputs.
+
+\lean{Copying/Specimens}{41}{42}{Specimen.filled_free}
+
+\lean{Copying/Specimens}{45}{46}{Specimen.relocate}
+
+\lean{Copying/Specimens}{48}{51}{Specimen.same_final}
+
+\termdef{copying-specimen-locality}
+\emph{Copying specimen locality} says that if an output-closed specimen is
+jointly rooted and settled, and either actual state can step, then both
+states can take one full-machine step to the two sides of a remote successor
+specimen. Derive preservation, origins and paired output closure from the
+filling certificates. Settledness and joint rootedness place the token away
+from the hole boundary. Its mode is not rewrite, so the enabled transition
+is search. Boundary reflection recovers one actual context step; preservation
+lifts that same step to both filled graphs. Its target has term type and is
+remote, so relocating the original specimen constructs the required successor.
+
+This proves synchronized search in the full machine; rewriting at an entering
+request is handled by template safety and robustness, not by this locality
+lemma. Since relocation keeps the context unchanged, no plugging-closure
+assumption is needed for this step. That observation does not settle the
+separate global context-closure audit in Appendix~B.
+
+\lean{Copying/Specimens}{55}{80}{Specimen.context_step}
+
+The initial specimen relocates the token to search at the sole input.
+Both filled sides are rooted by the zero-step search witness. A class step
+from a specified non-rewrite original state can also be reflected to actual
+search at that exact depth: first reflect the class step, then use the
+non-rewrite extraction lemma. This additional statement makes the fixed-source
+interpretation explicit.
+
+\lean{Copying/Specimens}{83}{83}{Specimen.initial}
+
+\lean{Copying/Specimens}{85}{86}{Specimen.initial_rooted}
+
+\lean{Copying/Specimens}{91}{99}{Combined.StateClass.search_of_nonrewrite}
+
+The concrete specimen system uses representation classes of the actual
+left and right states, the original token mode and entering predicate, and
+the descended rootedness predicate. Full refocusing proves its rooted-step
+field; common host-boundary classification proves its finality field.
+For its context-step field, reflect the enabled class step to the chosen
+original state, apply concrete locality, and project both resulting steps.
+Thus every abstract interface field is proved. Output closure remains the
+pre-template application condition. Any certified initial specimen supplies
+the abstract lifting witness because it is remote and jointly rooted.
+
+\lean{Copying/Specimens}{107}{123}{Specimens.system}
+
+\lean{Copying/Specimens}{126}{129}{Specimens.initial_lifting}
+
+Apply the abstract forward sufficiency theorem to this concrete system
+and its proved deterministic machine. The quantitative class-refinement
+correspondence transfers its conclusion back to actual unbounded states.
+The only remaining premises are the proposed template's input safety,
+robustness, the reasonable cost triple, and the specified lifting relation.
+The converse theorem uses robustness of the opposite system and the original
+converse-cost safety condition. No determinism, refocusing or context-locality
+law is left as an application premise.
+
+\lean{Copying/Specimens}{133}{139}{Specimens.sufficiency}
+
+\lean{Copying/Specimens}{142}{148}{Specimens.sufficiency_converse}
+
+\Needspace{12\baselineskip}
+\subsection{The original observations and the exact initial-filling conclusion}
+
+\termdef{copying-observation-correspondence}
+The \emph{copying class observation correspondence} identifies the old and
+new executions on all existing observations. First, successful-run equivalence
+gives termination equivalence. Then quantify state refinement over the same
+original binding-free closing contexts to obtain contextual refinement and
+equivalence. Finally quantify over the original terms' adequate depth
+allowances and use their unchanged translations. This proves equivalence
+of the two term-observation predicates without weakening their context class
+or assuming termination.
+
+\lean{Copying/ClassObservations}{7}{8}{Combined.StateClass.terminates_iff}
+
+\lean{Copying/ClassObservations}{10}{12}{Combined.StateClass.contextual_refines_iff}
+
+\lean{Copying/ClassObservations}{14}{16}{Combined.StateClass.contextual_equiv_iff}
+
+\lean{Copying/ClassObservations}{20}{23}{Combined.StateClass.observationalEquiv_iff}
+
+A state and its padded state have equal classes, directly by the padding
+generator. More generally, any representation equivalence preserves successful
+execution at each exact cost, by quotient equality and successful-run
+correspondence. This includes arbitrary finite alternations of padding,
+its reverse, and recursive renaming.
+
+\lean{Copying/ClassObservations}{26}{27}{Combined.StateClass.padding_eq}
+
+\lean{Copying/ClassObservations}{31}{35}{Combined.StateClass.representation_successful_iff}
+
+Given an allowed focus-free context and a recursive paired filling with
+hole-free results $G,H$, construct its initial coordinate specimen. Output
+closure, both input-safety clauses, both robustness clauses and a reasonable
+cost triple then imply quantitative equivalence of the actual initial
+unbounded states of $G$ and $H$. The proof composes initial lifting with the
+two concrete sufficiency theorems.
+
+This is the exact scope of the current initial-filling result. The observation
+correspondences above already range over all original closing contexts, but
+using this result for each of them still requires constructing their paired
+filling certificates. It is not a theorem that every proposed graph relation
+is observationally equivalent, and no one of the eleven required template
+families has been discharged by the generic implication.
+
+\lean{Copying/ClassObservations}{43}{57}{Specimens.equivalence_of_filling}
+
+\Needspace{12\baselineskip}
+\subsection{Concrete boundary, box and cost regressions}
+
+The regression pre-template relates two numeric corollas at a common
+depth. Its relation records the actual natural numbers and graph equalities;
+both sides are focus-free. It is output-closed because their output interfaces
+are empty. This relation tests locality only: no safety or robustness claim
+is made for arbitrary pairs of different numbers.
+
+\lean{Copying/SpecimenExamples}{10}{11}{SpecimenExamples.NumberPair}
+
+\lean{Copying/SpecimenExamples}{13}{15}{SpecimenExamples.numbers}
+
+\lean{Copying/SpecimenExamples}{17}{19}{SpecimenExamples.numbers_closed}
+
+\Needspace{16\baselineskip}
+The outer example context is unary negation applied to an actual term
+hole. Its replacement family retains the negation edge and inserts the
+chosen numeric corolla at the hole. These choices give the recursive
+edge certificates for a pair of numbers and construct a genuine specimen,
+with focus freedom, hole freedom and token typing checked on the actual
+expanded graphs.
+
+\lean{Copying/SpecimenExamples}{21}{21}{SpecimenExamples.hole}
+
+\lean{Copying/SpecimenExamples}{22}{23}{SpecimenExamples.context}
+
+\lean{Copying/SpecimenExamples}{25}{31}{SpecimenExamples.family}
+
+\lean{Copying/SpecimenExamples}{33}{37}{SpecimenExamples.paired}
+
+\lean{Copying/SpecimenExamples}{39}{50}{SpecimenExamples.specimen}
+
+The internal argument is the serial attachment between the operation
+and the hole. Direct incidence calculations prove the context's entering
+step to this argument and its returning step from backtracking there to
+rewrite at the outer head. The entry target is an actual hole boundary;
+this confirms why unrestricted search reflection would be incorrect.
+
+\lean{Copying/SpecimenExamples}{52}{53}{SpecimenExamples.argument}
+
+\lean{Copying/SpecimenExamples}{55}{58}{SpecimenExamples.context_enter}
+
+\lean{Copying/SpecimenExamples}{60}{61}{SpecimenExamples.context_resume}
+
+\lean{Copying/SpecimenExamples}{64}{65}{SpecimenExamples.entry_crosses_boundary}
+
+Both numeric fillings have a two-search-step path to backtracking at
+the internal argument: enter the outer operation, then return from its
+numeric value. Thus the returned pair is jointly rooted. Applying the
+proved specimen-locality theorem yields synchronized full-machine steps
+to a remote specimen. The local return is not globally final, because the
+internal attachment is not the external input.
+
+\lean{Copying/SpecimenExamples}{68}{79}{SpecimenExamples.returned_rooted}
+
+\lean{Copying/SpecimenExamples}{83}{92}{SpecimenExamples.synchronized_return}
+
+\lean{Copying/SpecimenExamples}{94}{96}{SpecimenExamples.local_return_not_final}
+
+Induction on the padding count identifies every padded initial program
+with its original representation class. The existing unchanged translated
+application execution then gives a successful class run of exactly seven
+steps at every finite padding, by exact successful-run correspondence.
+This checks costs on a real application, rather than only on structural
+corollas.
+
+\lean{Copying/SpecimenExamples}{99}{107}{SpecimenExamples.initial_padding_class}
+
+\lean{Copying/SpecimenExamples}{111}{115}{SpecimenExamples.application_class_cost}
+
+Unary negation's operation graph is not one-way: its source input reaches
+its term output through the operation itself. A term weakening graph, which
+also has a term output, is one-way because its incoming edge is not an
+operation. These positive and negative cases show that the predicate is
+not merely using the absence of outputs in the numeric regression.
+
+\lean{Copying/SpecimenExamples}{117}{122}{SpecimenExamples.negation_not_oneWay}
+
+\lean{Copying/SpecimenExamples}{125}{126}{SpecimenExamples.weakening_oneWay}
+
+\Needspace{23\baselineskip}
+At depth zero, fill a literal term-hole body with each numeric corolla;
+the family and its recursive filling witness are explicit. Enclose the
+original body in a box with zero bound and free variables and atoms. The
+outer families are literal copies of the resulting complete box labels,
+and the boxed constructor supplies their recursive filling certificate.
+The two bodies may differ. Outer search has no step through either filled
+box, since a box label is not a primitive search label. This checks the
+body-rebuilding case and its opacity separately from the translated
+application-cost regression.
+
+\lean{Copying/SpecimenExamples}{128}{128}{SpecimenExamples.bodyContext}
+
+\lean{Copying/SpecimenExamples}{129}{129}{SpecimenExamples.bodyFamily}
+
+\lean{Copying/SpecimenExamples}{131}{133}{SpecimenExamples.body_filling}
+
+\lean{Copying/SpecimenExamples}{135}{135}{SpecimenExamples.boxedContext}
+
+\lean{Copying/SpecimenExamples}{136}{137}{SpecimenExamples.boxedFamily}
+
+\lean{Copying/SpecimenExamples}{141}{145}{SpecimenExamples.boxed_filling}
+
+\lean{Copying/SpecimenExamples}{147}{152}{SpecimenExamples.boxed_search_opaque}
+
+The complete build passes 460 jobs. All 2458 axiom audits pass: 6 abstract,
+477 graph and 1975 copying declarations, including all 112 declarations in
+this chapter. Dependencies are confined to \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound}; no project-specific axiom
+or omitted proof is introduced. The focused/tuple/context correspondence,
+eleven-template argument, semantic weakening and final Figure~22 chain remain
+the main work toward Proposition~12.2.

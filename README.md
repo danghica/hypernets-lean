@@ -9,44 +9,45 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: full finite and unbounded refocusing
+## Latest milestone: concrete copying specimens and exact class semantics
 
-**The original combined copying machine is now proved refocusing for its full
-operation alphabet, without an assumed compute-refocusing law.** Every actual
-contextual rewrite preserves search rootedness on the complete successor graph:
-copying, allocation, dereference, assignment, both reference-equality branches,
-application, unary negation, addition and subtraction.
+**The full copying UAM now has a concrete specimen system with proved
+synchronized-search locality.** Related fillings recurse through original
+box bodies and retain complete ordered interfaces. A one-way path obstruction
+excludes hole exits for jointly rooted specimens; actual search reflects
+through the shared context and lifts to both filled graphs.
 
-A reusable exact prefix-replay theorem handles partial retained occurrences,
-including arithmetic deletion and complete box opening. Search history proves
-that the prefix never uses the deleted frame. Store target exchange preserves
-all other interacting incidences. Every finite execution from an initial
-program stays rooted; the same holds at every position of any infinite
-execution, without a termination premise. Earlier successor determinism up to
-recursive representation and exact padding laws remain available.
+The unbounded machine is now literally deterministic on classes under recursive
+graph isomorphism and depth padding. Every class execution reflects from any
+chosen original representative at exactly the same cost. This uses the proved
+reverse-padding matching theorem, not determinism alone. All existing
+binding-free program and term observations are unchanged. The abstract forward
+and converse robustness conclusions now apply to certified initial fillings
+without assumed determinism, refocusing or locality laws.
 
-Checked regressions cover nested lambda opening under a reference host, the
-original variable body's internal copying request, arithmetic deletion under
-an enclosing operation, and rooted successful writes and both equality branches
-with arbitrary unchanged translated store contents at every finite padding.
-Proposition 12.2's terms, Figure 16's translation, and the original stability and
-copyability premises are unchanged.
+Regressions check an actual internal boundary and synchronized local return,
+a local return that is not globally final, recursively rebuilt boxes opaque
+to outer search, nontrivial one-wayness, and the unchanged translated
+application's exact seven-step cost at every padding. Proposition 12.2's terms,
+Figure 16's translation, and all stability/copyability premises are preserved.
 
-Appendix B.1 **removes refocusing from the open obligations**. Its four broad
-packages remain open: further invariants and semantic renaming/substitution
-laws; the concrete specimen instance/locality and focused-graph correspondence;
-the eleven-template argument; semantic weakening and Figure 22.
+Appendix B.1 **removes specimen construction and locality from the open work**.
+Its four broad packages still include: further invariants and semantic
+renaming/substitution laws; focused-graph and original-hole tuple correspondence,
+including certificates for every addressed closing-context filling; the eleven
+template families; semantic weakening and Figure 22. The current robustness
+bridge retains template-specific safety/robustness assumptions.
 **Proposition 12.2 remains unproved.**
 
-Commentary Section 98 explains all 41 new declarations with immutable source
-links. Full build: 452 jobs. All axiom audits pass (6 abstract, 477 graph,
-1,863 copying; 2,346 total), using only Lean's standard logical axioms.
+Commentary Section 99 explains all 112 new declarations with immutable source
+links. Full build: 460 jobs. All 2,458 axiom audits pass (6 abstract, 477 graph,
+1,975 copying), with no `sorryAx` or project-specific axioms.
 
-Estimated completion by mathematical effort remains **roughly 55–70%, with low
+Estimated completion by mathematical effort: **roughly 60–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-Full refocusing closes a major machine-law obligation, but the specimen,
-template and final observational arguments still carry substantial uncertainty.
-The estimate is not a declaration or TODO count.
+The concrete interface is a major prerequisite, but the eleven template proofs
+and remaining context correspondence still carry substantial uncertainty.
+This is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target
 
@@ -59,7 +60,8 @@ Ordered distributors now assemble these trees with the exact input permutation
 `i + k*j`, including zero resources and zero uses. Generic parallel assembly
 preserves and reflects component paths; serial assembly connects typed shared
 interfaces. Tree/distributor acyclicity and label-predicate closure are proved. The combined copying execution now includes all local operation families;
-its complete-machine laws and the example equivalence remain unfinished. Arbitrary contraction trees
+its determinism, refocusing and coordinate specimen interface are proved; the
+paper-correspondence obligations and example equivalence remain unfinished. Arbitrary contraction trees
 now have proved root reachability and unique terminal traces. Atom-store
 resolution is unique, invariant under renaming and depth padding, and checked
 in a cyclic-store graph without assuming the whole host is acyclic.
@@ -69,8 +71,8 @@ including its single-use distributors, weakening, and ordered box interfaces.
 All seven Figure 16 clauses and the full recursive term translation now compile.
 Both unchanged proposition terms have concrete hypernets in arbitrary environments,
 with proved global language, focus-free, and hole-free properties. Full-syntax bijective graph renaming is now proved via explicit BPerm derivations;
-non-bijective graph renaming, graph substitution, the remaining copying/store
-machine laws, and the final equivalence remain open.
+non-bijective graph renaming, graph substitution, the remaining correspondence
+and template proofs, and the final equivalence remain open.
 
 Stable graphs (Definition 10.3) and copyable payloads (Definition 10.2) now
 have separate predicates and proved structural/renaming properties. The actual

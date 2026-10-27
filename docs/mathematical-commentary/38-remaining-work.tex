@@ -30,20 +30,15 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-full-refocusing}.
-Execution-padding invariance, term-context congruence, runtime safety and
-source selection are proved. Complete successor coherence now covers every
-store and arithmetic operation, application, and copying. The full finite and
-unbounded machines have proved successor determinism up to recursive
-representation, together with exact prefix costs and unique successful-run
-lengths. The original copying construction, all copyability and stability
-premises, and the unchanged variable-body copy request are retained.
-Full refocusing is now proved for every actual contextual rewrite, including
-copying and every store, application and arithmetic operation. Every state
-reached from an initial program is rooted on its own current graph, without
-a compute-law assumption. Exact search history and prefix replay are proved,
-as are rootedness representation and padding laws. Completed tasks are omitted from the list
-below.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-specimens}.
+The full copying machine now has proved successor coherence, refocusing,
+deterministic representation-class semantics, and a concrete coordinate
+specimen system with synchronized-search locality. Exact execution costs and
+existing binding-free observations are preserved. Initial lifting and both
+robustness conclusions are proved for certified recursive paired fillings,
+with template safety and robustness as application conditions. The terms of
+Proposition~12.2 and Figure~16's translation are unchanged. Completed tasks
+are omitted below.
 The four remaining tasks are:
 \begin{enumerate}
 \item Prove any further stability/copyability invariants required by the
@@ -53,12 +48,13 @@ contextual-equivalence interpretation, using proved BPerm robustness and executi
 congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
 and graph-level substitution laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
-\item Establish specimen locality for the complete unbounded machine and
-construct the concrete specimen-system instance using the proved full refocusing
-and successor determinism up to representation. Prove correspondence with the paper's focused
-graph representation and preserve the completed execution-isomorphism and
-exact padding-invariance laws through any necessary semantic corrections.
-Retain the zero-input qualification of Lemma~E.1.
+\item Prove correspondence between the coordinate specimens and the paper's
+explicitly focused graphs, unique-hole inventories and replacement tuples.
+Connect every original addressed binding-free closing-context filling to a
+recursive paired-filling certificate, extending initial lifting to that entire
+observation class. Preserve the proved execution-isomorphism, exact padding
+and observation laws through any necessary semantic corrections. Retain the
+zero-input qualification of Lemma~E.1.
 \item Prove all eleven template families' safety and robustness in Table~3's
 dependency order, including the indirect copying and garbage-collection dependencies.
 BPerm's concrete graph pair and structural binding-freedom are proved; its
