@@ -1,4 +1,4 @@
-import Hypernets.Copying.CopyResidualExamples
+import Hypernets.Copying.BetaResidualExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -2296,3 +2296,72 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.BoxPermutation.ResidualExamples.token_internal
 #print axioms Hypernets.Copying.BoxPermutation.ResidualExamples.hosted_diamond
 #print axioms Hypernets.Copying.BoxPermutation.ResidualExamples.self_application
+
+-- Padding, stable filling rigidity and genuine BPerm beta residual specimens.
+#print axioms Hypernets.Copying.LabelCopy.input
+#print axioms Hypernets.Copying.LabelCopy.output
+#print axioms Hypernets.Copying.LabelCopy.iso
+#print axioms Hypernets.Copying.LabelCopy.padding
+#print axioms Hypernets.Copying.FillingWitness.of_copies
+#print axioms Hypernets.Copying.FillingWitness.boxedCopies
+#print axioms Hypernets.Copying.InterfacePermutation.raise
+#print axioms Hypernets.Copying.BoxPermutation.Step.raise
+#print axioms Hypernets.Copying.BoxPermutation.UpToIso.raise
+#print axioms Hypernets.Copying.BoxPermutation.template_raise
+#print axioms Hypernets.Copying.PreTemplate.PaddingClosed
+#print axioms Hypernets.Copying.BoxPermutation.template_paddingClosed
+#print axioms Hypernets.Copying.FillingWitness.paddedExpansion
+#print axioms Hypernets.Copying.FillingWitness.raised_exists
+#print axioms Hypernets.Copying.FillingWitness.raise
+#print axioms Hypernets.Copying.FillingWitness.pad
+#print axioms Hypernets.Copying.stableLabels_iso
+#print axioms Hypernets.Copying.PreTemplate.PreservesStableLabels
+#print axioms Hypernets.Copying.BoxPermutation.UpToIso.not_stable_labels
+#print axioms Hypernets.Copying.BoxPermutation.template_preservesStableLabels
+#print axioms Hypernets.Copying.DeepFillingEdge.stable_labels_iff
+#print axioms Hypernets.Copying.DeepFilling.stable_labels_iff
+#print axioms Hypernets.Copying.FillingWitness.stable_iff
+#print axioms Hypernets.Copying.BoxPermutation.stable_edge_retained
+#print axioms Hypernets.Copying.BoxPermutation.stable_expansion_iso
+#print axioms Hypernets.Copying.BoxPermutation.stable_witness_iso
+#print axioms Hypernets.Copying.FillingWitness.splice
+#print axioms Hypernets.Copying.FillingWitness.betaBefore
+#print axioms Hypernets.Copying.FillingWitness.openBody
+#print axioms Hypernets.Copying.FillingWitness.betaAfter
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.diamond
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.opening
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.source
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.target
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.step
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.quasi
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.quasi_opposite
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.robust_case
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.robust_case_opposite
+#print axioms Hypernets.Copying.BoxPermutation.DeepBeta.residual_spectra_at
+#print axioms Hypernets.Copying.BoxPermutation.MixedBeta.sourceWitness
+#print axioms Hypernets.Copying.BoxPermutation.MixedBeta.successorIso
+#print axioms Hypernets.Copying.BoxPermutation.MixedBeta.residualWitness
+#print axioms Hypernets.Copying.BoxPermutation.MixedBeta.redex_costs_at
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.argument
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.argumentWitness
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.residual
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.mixed_opening
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.padded_residual
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.lambda_argument_opening
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.omega
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.self_application_opening
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.outsideLeft
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.outsideRight
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.outsideWitness
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.host
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.selected
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.family
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.familyWitness
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.others
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.filled_closed
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.token_internal
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.frameSource
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.frameTarget
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.hosted_diamond
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.hosted_robust_case
+#print axioms Hypernets.Copying.BoxPermutation.BetaResidualExamples.hosted_converse_case
