@@ -15,9 +15,10 @@ exact successful costs in every typed host from the redex input.
 The dependency is relevant to the application-overlap cases in the paper's
 \href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS6}{Appendix H.3.6}.
 These local results and the copying results of
-Section~\ref{sec:copying-residual-specimens} still need an exhaustive overlap
-classification for arbitrary original specimens, transfer for the remaining
-operations, and universal forward/converse robustness assembly. Full BPerm
+Section~\ref{sec:copying-residual-specimens} are extended by the source-overlap
+classification of Section~\ref{sec:copying-overlap-classification}. Matching
+whole-graph operation transfers, general residual certificates and universal
+forward/converse robustness assembly remain open. Full BPerm
 robustness and Proposition~12.2 remain unproved. No syntax, translation clause,
 local rewrite rule, stability condition or observation class is changed.
 
@@ -367,11 +368,12 @@ stable-filling rigidity are reusable prerequisites. The mixed-host example
 also instantiates the transfer with a genuinely independent residual
 contribution at another hole.
 
-What remains for full BPerm is to start from an arbitrary original specimen
-and arbitrary actual rewrite, derive the relevant overlap decomposition,
-and construct every required matching rewrite and residual component.
-The remaining operation transfers and universal assembly still belong to
-Appendix~B.1. The local results do not silently supply this classification.
+Section~\ref{sec:copying-overlap-classification} subsequently proves the
+source-overlap classification for arbitrary original specimens and actual
+rewrites. Full BPerm still needs matching whole-graph rewrites and residual
+components for all those classified cases. The remaining operation transfers
+and universal assembly still belong to Appendix~B.1; the local results in this
+section alone do not discharge them.
 The final Proposition~12.2 equivalence chain is not proved.
 
 The full build passes 494 jobs. All 2780 axiom audits pass, including all

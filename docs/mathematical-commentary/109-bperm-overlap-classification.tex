@@ -1,0 +1,412 @@
+\clearpage
+\section{Classifying BPerm overlaps and two operational templates}
+\label{sec:copying-overlap-classification}
+The new result starts from an arbitrary actual contextual rewrite on the
+left side of an original BPerm specimen. It extracts an original local rule
+occurrence and classifies its source: a primitive-only footprint with a
+constructed matching occurrence on the right, an application head, or a
+copying head. The application case has a complete three-edge frame whose
+box contribution is retained, shallow, or recursively deep. Copying's
+counted sharing paths reflect into the original context with their lengths
+unchanged. No overlap classification is assumed as an extra specimen field.
+
+This implements the source analysis needed for the BPerm cases of the paper's
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS6}{Appendix H.3.6}.
+It does not yet construct every right-hand \emph{whole-graph rewrite} or its
+residual specimen. In particular, an incidence-preserving match does not
+include the surrounding replacement context. This distinction is an explicit
+remaining obligation in Appendix~B.1. Separately, the micro-beta and
+reference-creation pre-templates from the paper's
+\href{https://arxiv.org/html/1907.01257v5\#S12.SS2}{Section 12.2}
+now have proved output closure, global focus freedom, and actual compute
+steps. Their input safety and robustness remain open. The original terms,
+translation, operation rules and stable-argument premises are unchanged.
+
+\Needspace{12\baselineskip}
+\subsection{Outer provenance in the original recursive filling}
+\termdef{bperm-outer-provenance}
+Let $C$ be the original common context and $L,R$ its certified filling
+families. Write $C[L]$ and $C[R]$ for their simultaneous expansions.
+An outer edge of $C[L]$ is a pair $(e,x)$, where $e$ is an edge of $C$ and
+$x$ is an edge of $L_e$. Call $e$ its \emph{owner}. A literal BPerm endpoint
+has one outer box edge and no internal vertices; its body is unrestricted.
+The property \texttt{NoOuterPrimitive} says that no outer edge has a primitive
+label. These three facts persist under independent recursive isomorphisms
+on the two endpoints: use the edge bijection, the map into the empty
+internal carrier, and preservation of box-versus-primitive labels.
+
+\lean{Copying/BoxPermutationOrigins}{10}{11}{NoOuterPrimitive}
+\lean{Copying/BoxPermutationOrigins}{15}{35}{UpToIso.outer_shape}
+
+Now inspect an original \texttt{DeepFillingEdge} certificate. A retained
+contribution is its original labelled corolla. A shallow contribution is a
+BPerm pair and has the shape just proved. A recursively boxed contribution
+is again a single box corolla. Thus every component has at most one edge and
+has no internal vertices. If an actual component edge is primitive, the
+shallow and boxed cases are impossible: only the retained constructor
+remains, giving both original \texttt{LabelCopy} certificates and the exact
+primitive label in $C$.
+
+\lean{Copying/BoxPermutationOrigins}{41}{50}{primitive_retained}
+\lean{Copying/BoxPermutationOrigins}{53}{58}{component_singleton}
+\lean{Copying/BoxPermutationOrigins}{60}{65}{component_no_internal}
+
+The owner projection on actual edges is injective: equal owners place both
+edges in a singleton component. Every actual outer vertex is the image of
+a vertex of $C$ under the host inclusion; the putative internal-component
+case is empty. The final provenance theorem packages the original primitive
+label together with both corolla certificates. None of these statements
+requires that a particular redex has already been selected.
+
+\lean{Copying/BoxPermutationOrigins}{68}{72}{owner_injective}
+\lean{Copying/BoxPermutationOrigins}{76}{84}{vertex_origin}
+\lean{Copying/BoxPermutationOrigins}{87}{93}{primitive_origin}
+
+\Needspace{12\baselineskip}
+\subsection{Reflecting and reconstructing primitive occurrences}
+\termdef{bperm-primitive-footprint}
+A \emph{primitive footprint} is an outer graph all of whose edge labels are
+primitive. It imposes no restriction on the enclosing host. Define a map
+$\pi_L:C[L].V\to C.V$ by undoing the host inclusion on internal host vertices,
+inputs and outputs. The remaining vertex case is eliminated by the preceding
+empty-carrier result. Both inverse equations hold by cases on vertices.
+For every primitive edge $(e,x)$, its ordered source and target lists project
+under $\pi_L$ to the corresponding lists of $e$. This follows from its
+retained-corolla certificate and the inverse equations, not merely from
+unordered adjacency.
+
+\lean{Copying/BPermPrimitiveMatching}{10}{11}{PrimitiveFootprint}
+\lean{Copying/BPermPrimitiveMatching}{19}{23}{PrimitiveMatching.down}
+\lean{Copying/BPermPrimitiveMatching}{25}{25}{PrimitiveMatching.down_host}
+\lean{Copying/BPermPrimitiveMatching}{27}{31}{PrimitiveMatching.host_down}
+\lean{Copying/BPermPrimitiveMatching}{33}{42}{PrimitiveMatching.source_down}
+\lean{Copying/BPermPrimitiveMatching}{44}{53}{PrimitiveMatching.target_down}
+
+Let $f:A\hookrightarrow C[L]$ be an actual \texttt{MatchEmbedding} with
+primitive footprint $A$. Reflect it into $C$ by composing its vertex map
+with $\pi_L$ and projecting each edge to its owner. Edge injectivity follows
+from injectivity of $f$ and of the owner projection. Primitive labels and
+both ordered incidence equations follow from provenance and the list laws
+above. Boundary ports are allowed to alias on attachment, just as in the
+original occurrence interface.
+
+\lean{Copying/BPermPrimitiveMatching}{59}{71}{PrimitiveMatching.reflect}
+
+For every edge of $A$, provenance supplies a right retained-corolla
+certificate. Choose these proved certificates and map that edge to the
+chosen edge at the same owner in $C[R]$. Map its vertices by the reflected
+occurrence followed by the right host inclusion. This constructs the
+opposite occurrence, with every source and target position preserved.
+The selected input token maps to the same original host coordinate on both
+sides. A footprint edge whose label is not a hole cannot belong to a shallow
+replacement: otherwise equality of primitive labels would make it a hole.
+Classical choice selects structural certificates already proved to exist;
+it assumes no operational or observational conclusion.
+
+\lean{Copying/BPermPrimitiveMatching}{73}{77}{PrimitiveMatching.rightCopy}
+\lean{Copying/BPermPrimitiveMatching}{80}{94}{PrimitiveMatching.across}
+\lean{Copying/BPermPrimitiveMatching}{96}{102}{PrimitiveMatching.across_host}
+\lean{Copying/BPermPrimitiveMatching}{104}{109}{PrimitiveMatching.avoids_shallow}
+
+\Needspace{12\baselineskip}
+\subsection{The complete application frame}
+\termdef{bperm-box-origin}
+For a selected actual box edge, \texttt{BoxOrigin} records one of three
+original certificates: an unchanged retained box, a shallow BPerm pair at an
+original hole, or a recursively filled original box with its actual related
+bodies. The classification is obtained by cases on the existing edge
+certificate. A retained primitive label cannot be recursively equivalent to
+the selected box. Consequently a shallow case is an original hole and the
+other cases are original boxes. In the deep case, focus freedom of the
+original body and its recorded recursive filling construct a
+\texttt{FillingWitness} for the two actual bodies.
+
+\lean{Copying/BPermOverlapClassification}{11}{22}{BoxOrigin}
+\lean{Copying/BPermOverlapClassification}{26}{37}{box_origin}
+\lean{Copying/BPermOverlapClassification}{41}{47}{BoxOrigin.hole_or_box}
+\lean{Copying/BPermOverlapClassification}{50}{54}{BoxOrigin.deep_witness}
+
+An \texttt{Application.Match} records the application edge, lambda edge,
+box edge, their joining wires and the selected body. Its
+\texttt{Classification} asserts that the first two edges are retained
+primitive labels, records \texttt{BoxOrigin} for the third, and proves that
+only the third can have a shallow-hole owner. Apply primitive provenance
+to the application and lambda labels; either would contradict the label
+of a hole. Distinct frame edges have distinct owners by the previous
+injectivity theorem. This is a classification of the frame; the stable
+argument and the rest of the host still need their residual assembly.
+
+\lean{Copying/BPermOverlapClassification}{63}{70}{ApplicationOverlap.Classification}
+\lean{Copying/BPermOverlapClassification}{71}{84}{ApplicationOverlap.classify}
+\lean{Copying/BPermOverlapClassification}{86}{88}{ApplicationOverlap.same_owner}
+
+Given an arbitrary actual rewrite with an application head, the existing
+rewrite inversion theorem supplies a complete opening certificate, including
+the independently represented successor. Classify its actual matched frame
+as above. The conclusion is therefore quantified over real contextual
+rewrites, not only over a caller-supplied bare three-edge picture.
+
+\lean{Copying/BPermOverlapClassification}{91}{99}{ApplicationOverlap.rewrite_classified}
+
+\Needspace{12\baselineskip}
+\subsection{Sharing paths and the original rewrite head}
+If adjacency leaves a primitive edge of $C[L]$, it reflects into $C$ even
+when the next edge is a shallow permuted box. Project the common wire;
+use the primitive target-list equation and the general source-owner law
+for expansion. The same argument reflects a primitive head at its token.
+
+\lean{Copying/BPermPathClassification}{14}{23}{adjacent_origin}
+\lean{Copying/BPermPathClassification}{25}{29}{head_origin}
+
+A copying hop leaves a term contraction or weakening. Each of these labels
+is retained by provenance, so both its label condition and adjacency
+reflect. Mapping an entire inductive trace along the owner projection keeps
+its exact number $n$ of hops. A full copying resolution additionally records
+its starting source and primitive payload label; these reflect by the same
+source-owner and primitive-provenance laws. These are exact \emph{graph-path}
+lengths, not newly asserted machine-run costs.
+
+\lean{Copying/BPermPathClassification}{32}{36}{copy_hop_origin}
+\lean{Copying/BPermPathClassification}{39}{42}{copy_path_origin}
+\lean{Copying/BPermPathClassification}{44}{51}{copy_resolution_origin}
+
+Every actual rewrite already has a proved recognized operation choice.
+Reflect its head to $C$; inspecting the choice constructors shows that this
+head cannot be a hole. Thus every rule family starts at a retained original
+primitive. For application, its recorded joining wires witness the two
+adjacencies application--lambda and lambda--box. Reflect them and compose
+them into an exact two-hop trace in the original context.
+
+\lean{Copying/BPermPathClassification}{55}{66}{rewrite_head_origin}
+\lean{Copying/BPermPathClassification}{80}{90}{ApplicationOverlap.frame_path}
+\lean{Copying/BPermPathClassification}{92}{93}{ApplicationOverlap.counted_frame_path}
+
+\Needspace{12\baselineskip}
+\subsection{Exhaustion of the actual rewrite rules}
+Primitive corollas have primitive footprints. So do graphs obtained by
+lifting an entirely primitive alphabet and stable arguments, since stability
+requires a primitive stable label at every outer edge. Expansion preserves
+the property componentwise, and serial and tensor composition are its two
+specialisations.
+
+\lean{Copying/PrimitiveRuleFootprints}{9}{10}{PrimitiveFootprint.primitive}
+\lean{Copying/PrimitiveRuleFootprints}{12}{14}{PrimitiveFootprint.relabel}
+\lean{Copying/PrimitiveRuleFootprints}{16}{17}{PrimitiveFootprint.stable}
+\lean{Copying/PrimitiveRuleFootprints}{19}{21}{PrimitiveFootprint.expand}
+\lean{Copying/PrimitiveRuleFootprints}{23}{26}{PrimitiveFootprint.serial}
+\lean{Copying/PrimitiveRuleFootprints}{28}{32}{PrimitiveFootprint.tensor}
+
+Allocation combines a primitive ref head with its original stable argument.
+Assignment expands its original pattern with the stable argument, primitive
+heads and atom tree. Dereference and both equality patterns are lifts of
+primitive-alphabet graphs. Unary arithmetic combines its head and numeric
+argument; binary arithmetic combines its head with two numeric arguments.
+Each therefore has a proved primitive footprint. The original stability
+hypotheses for allocation and assignment are retained.
+
+\lean{Copying/PrimitiveRuleFootprints}{34}{35}{PrimitiveFootprint.allocation}
+\lean{Copying/PrimitiveRuleFootprints}{37}{41}{PrimitiveFootprint.assignment}
+\lean{Copying/PrimitiveRuleFootprints}{43}{44}{PrimitiveFootprint.dereference}
+\lean{Copying/PrimitiveRuleFootprints}{46}{47}{PrimitiveFootprint.same}
+\lean{Copying/PrimitiveRuleFootprints}{49}{50}{PrimitiveFootprint.different}
+\lean{Copying/PrimitiveRuleFootprints}{52}{53}{PrimitiveFootprint.unary}
+\lean{Copying/PrimitiveRuleFootprints}{55}{56}{PrimitiveFootprint.binary}
+
+Case analysis on \texttt{Combined.Local} now exhausts the local rules:
+seven constructor families have primitive footprints; beta has its actual
+application head; copying has its actual term-contraction head.
+Next induct on \texttt{Combined.Rewrite}. A local rewrite has the identity
+occurrence. Renaming, plugging and expansion compose the inductively
+extracted occurrence with their existing incidence-preserving embeddings.
+This produces a real local source rule and its match at the original token
+for every contextual rewrite derivation.
+
+\lean{Copying/PrimitiveRuleFootprints}{63}{75}{Combined.Local.footprint_cases}
+\lean{Copying/PrimitiveRuleFootprints}{79}{92}{Combined.Rewrite.local_source}
+
+\termdef{primitive-match-pair}
+A \texttt{PrimitiveMatchPair} contains an original local compute rule with
+primitive source footprint, its actual occurrences on the two sides, and
+identifications of their active input with the two corresponding tokens.
+It contains neither a right-hand contextual rewrite nor a residual filling.
+The construction above supplies this pair in the primitive case. In the
+other two cases, transport the local application or copying head through
+the extracted occurrence. Thus the three alternatives cover every actual
+rewrite on $C[L]$.
+
+\lean{Copying/BPermRewriteClassification}{11}{14}{PrimitiveMatchPair}
+\lean{Copying/BPermRewriteClassification}{18}{33}{rewrite_cases}
+
+\termdef{bperm-source-classification}
+If the selected primitive head is neither application nor term contraction,
+uniqueness of the edge consuming the token rules out the latter two
+alternatives, leaving the constructed primitive match pair. Finally,
+specialise to the original \texttt{Specimen} record. Its recursive edge
+certificates provide every structural premise; the inverse host equation
+identifies the right token with the record's original token coordinate.
+There is no added assumption on which local rule or overlap the specimen
+admits. Turning these source cases into matching whole-graph reductions and
+residual specimens remains a further proof obligation.
+
+\lean{Copying/BPermRewriteClassification}{37}{49}{rewrite_basic_case}
+\lean{Copying/BPermRewriteClassification}{52}{59}{specimen_rewrite_cases}
+
+\Needspace{12\baselineskip}
+\subsection{Operation paths under composition}
+\termdef{operation-path-composition}
+Recall that a graph is one-way when no term output is reachable from an
+input by an operation-only path. If every output is an atom or thunk wire,
+there is no term output to test. Recursive isomorphisms transport operation
+paths by induction on their input and argument constructors, using label and
+ordered incidence preservation; applying the inverse proves invariance of
+one-wayness.
+
+\lean{Copying/OneWayComposition}{9}{15}{oneWay_of_stable_outputs}
+\lean{Copying/OneWayComposition}{19}{26}{Search.OperationReachable.map_iso}
+\lean{Copying/OneWayComposition}{31}{34}{OneWay.iso_iff}
+
+If the right factor $H$ of a serial composite is one-way, a path to an
+external term output would reflect into $H$ through the existing expansion
+path theorem. The composite is therefore one-way, with no restriction on
+its left factor. A box is one-way because its sole input is a thunk and an
+operation-only path to a term output would require a term input.
+
+\lean{Copying/OneWayComposition}{38}{44}{OneWay.serial_right}
+\lean{Copying/OneWayComposition}{47}{53}{OneWay.box}
+
+For arbitrary parallel composition, including typed boundary shuffles,
+operation reachability at a vertex of a component reflects into that
+component. Induct on the path. An initial external input can belong only to
+an input of that component. At an argument step, injectivity of the parallel
+vertex map identifies the edge's component with the chosen one. Its local
+source list is a singleton; the mapped source equation identifies its root,
+and the induction hypothesis reflects the preceding path. Consequently a
+term output of the composite lies in a component with a corresponding term
+output and reflected path, contradicting that component's one-wayness.
+Binary tensor is the two-component case.
+
+\lean{Copying/OneWayComposition}{63}{89}{Search.Parallel.extract}
+\lean{Copying/OneWayComposition}{94}{105}{OneWay.parallel}
+\lean{Copying/OneWayComposition}{107}{112}{OneWay.tensor}
+
+\Needspace{12\baselineskip}
+\subsection{Micro-beta and reference creation}
+For micro-beta, write the original source graph as application composed
+with the tensor of a closure and stable argument $G$. The closure is lambda
+composed with the original body box. Its box is one-way, hence so is the
+closure by serial composition. Stability makes every output of $G$ an atom
+or thunk, so $G$ is one-way too. Tensor and serial composition prove
+one-wayness of the entire beta source. The body can have free term outputs;
+this proof is not an assumption that its output list is empty.
+
+\lean{Copying/OperationalTemplates}{13}{20}{Application.before_oneWay}
+
+\termdef{operational-pretemplate}
+\texttt{Kind} selects micro-beta or reference creation. The relation
+\texttt{Literal} contains precisely the corresponding original before/after
+graphs, with the original stable-argument premise and, for beta, focus freedom
+of the body. The relation \texttt{Pair} closes these pairs under independently
+chosen ordered recursive representations of the two graphs. It does not
+change the rule graphs, their interfaces or their evaluation behaviour.
+
+\lean{Copying/OperationalTemplates}{25}{27}{OperationalTemplates.Kind}
+\lean{Copying/OperationalTemplates}{30}{36}{OperationalTemplates.Literal}
+\lean{Copying/OperationalTemplates}{39}{42}{OperationalTemplates.Pair}
+
+Focus freedom of a beta pair follows from the body and stable-argument label
+laws through its original frame and splice. For reference creation, the ref
+head, stable argument and allocation prefix introduce no focus label.
+The beta source is one-way by the preceding proof. The reference source is
+one-way because stability supplies its unchanged output list with no term
+wire. Transfer both facts through the endpoint isomorphisms. The
+\texttt{template} constructor packages the pair relation and its focus-free
+law; \texttt{template\_outputClosed} chooses the proved left one-way endpoint.
+This discharges output closure for both concrete operational pre-templates,
+without any robustness, simulation or termination premise.
+
+\lean{Copying/OperationalTemplates}{44}{54}{OperationalTemplates.Literal.focusFree}
+\lean{Copying/OperationalTemplates}{58}{62}{OperationalTemplates.Literal.outputClosed}
+\lean{Copying/OperationalTemplates}{64}{68}{OperationalTemplates.Pair.focusFree}
+\lean{Copying/OperationalTemplates}{70}{73}{OperationalTemplates.Pair.outputClosed}
+\lean{Copying/OperationalTemplates}{76}{78}{OperationalTemplates.template}
+\lean{Copying/OperationalTemplates}{82}{83}{OperationalTemplates.template_outputClosed}
+
+Inspecting either literal constructor also proves that its input interface
+is the singleton term list and that its erased graphs are connected by an
+original local compute rule. Renaming the endpoints yields an actual
+contextual rewrite for every represented pair. More specifically, both
+sides use the same external input coordinate: the combined machine moves
+from rewrite mode to search mode there. These facts tie the new relations
+to the existing operational semantics. They do not replace the unproved
+input-safety and universal robustness obligations.
+
+\lean{Copying/OperationalTemplates}{86}{87}{OperationalTemplates.Literal.input}
+\lean{Copying/OperationalTemplates}{90}{94}{OperationalTemplates.Literal.compute}
+\lean{Copying/OperationalTemplates}{98}{103}{OperationalTemplates.Pair.compute}
+\lean{Copying/OperationalTemplates}{106}{112}{OperationalTemplates.Pair.entry}
+
+\Needspace{12\baselineskip}
+\subsection{Concrete regression instances}
+The existing mixed nested body certificate is assembled with a stable
+argument before beta. Transport its actual local application match back
+through the assembly isomorphism. The complete frame classifier applies to
+this original context and preserves its two-hop path. A separate example
+uses a stable lambda head as argument and a free term output of the body;
+output zero is a term wire and is proved unreachable by operation-only
+paths, testing the non-vacuous part of beta output closure.
+
+\lean{Copying/OverlapClassificationExamples}{9}{9}{OverlapExamples.betaWitness}
+\lean{Copying/OverlapClassificationExamples}{10}{11}{OverlapExamples.betaMatch}
+\lean{Copying/OverlapClassificationExamples}{15}{16}{OverlapExamples.mixed_beta_classified}
+\lean{Copying/OverlapClassificationExamples}{19}{20}{OverlapExamples.mixed_beta_path}
+\lean{Copying/OverlapClassificationExamples}{24}{28}{OverlapExamples.lambda_term_output_blocked}
+
+Reference creation accepts the unchanged translation of every numeric
+argument, via the existing proof of its stability. The micro-beta template
+also includes the original translated self-application body. Its focus
+freedom follows from translation; no termination claim is made about its
+continuation.
+
+\lean{Copying/OverlapClassificationExamples}{31}{35}{OverlapExamples.reference_pair}
+\lean{Copying/OverlapClassificationExamples}{39}{44}{OverlapExamples.recursive_beta_pair}
+
+The arithmetic regression selects the actual $7+11$ redex in one slot of
+the earlier two-slot host. The other slot carries an independently related
+pair of graphs with genuine deep and shallow BPerm contributions. Retain
+the arithmetic graph reflexively and flatten the paired host certificate.
+Embed the actual arithmetic occurrence in the left expansion, then construct
+its full opposite match by primitive reconstruction. To test the universal
+classifier as well, perform the literal arithmetic compute step under the
+original expansion rule and rename its source into the certified common
+context. Its binary-add head excludes beta and copying, so the classifier
+returns the primitive match pair. The test deliberately keeps the independent
+right-hand BPerm contribution different from the left one.
+
+\lean{Copying/OverlapClassificationExamples}{46}{46}{OverlapExamples.arithmetic}
+\lean{Copying/OverlapClassificationExamples}{48}{49}{OverlapExamples.arithmeticWitness}
+\lean{Copying/OverlapClassificationExamples}{53}{53}{OverlapExamples.arithmeticHost}
+\lean{Copying/OverlapClassificationExamples}{55}{57}{OverlapExamples.arithmeticMatch}
+\lean{Copying/OverlapClassificationExamples}{60}{62}{OverlapExamples.arithmeticAcross}
+\lean{Copying/OverlapClassificationExamples}{66}{81}{OverlapExamples.arithmetic_rewrite_classified}
+
+\Needspace{12\baselineskip}
+\subsection{Completed obligations and remaining boundary}
+The completed source classification is universal over the original
+contextual rewrite derivation and original specimen data. Primitive
+occurrences, the complete beta frame and exact sharing paths have proved
+provenance. The two operational templates have proved output closure.
+For full BPerm robustness, the next obligation is to recover compatible
+replacement contexts, construct matching right-hand whole-graph rewrites
+in the classified cases, and build their residual specimen certificates.
+Those constructions must handle stable operands and mixed copying payloads,
+then support both universal robustness directions. Source matching alone
+cannot discharge them. The other template safety/robustness proofs,
+correspondence audits, semantic weakening and Figure~22 remain open.
+
+The full build passes 503 jobs. All 2869 axiom reports pass, including all
+89 new declarations: 6 abstract, 494 graph and 2369 copying audits. Only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} occur.
+Proposition~12.2 is still unproved. The completion estimate remains roughly
+60--70\% of mathematical effort, with low confidence. Source classification
+removes a concrete obstacle, but the universal residual construction and
+remaining template proofs still prevent a defensible higher estimate.
