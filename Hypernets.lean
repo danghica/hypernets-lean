@@ -126,3 +126,5 @@ import Hypernets.Copying.CopyResidualExamples
 import Hypernets.Copying.BetaResidualExamples
 import Hypernets.Copying.OverlapClassificationExamples
 import Hypernets.Copying.FullBPermExamples
+import Hypernets.Copying.SemanticRenamingExamples
+import Hypernets.Copying.OperationalInputSafetyExamples

@@ -1,4 +1,4 @@
-import Hypernets.Copying.FullBPermExamples
+import Hypernets
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -2561,3 +2561,86 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.BoxPermutation.transport_expanded
 #print axioms Hypernets.Copying.BoxPermutation.transport_rewrite
 #print axioms Hypernets.Copying.BoxPermutation.primitive_transport
+
+-- Semantic renaming and operational input-safety milestone.
+#print axioms Hypernets.Copying.FillingWitness.singleExpansion
+#print axioms Hypernets.Copying.FillingWitness.plug
+#print axioms Hypernets.Copying.FillingWitness.replaceBox
+#print axioms Hypernets.Copying.FillingWitness.plugAt
+#print axioms Hypernets.Copying.FillingWitness.closing
+#print axioms Hypernets.Copying.DeepFilling.allLabels_iff
+#print axioms Hypernets.Copying.FillingWitness.allLabels_iff
+#print axioms Hypernets.Copying.BoxPermutation.filling_allLabels
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.focusFree
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.allLabels
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.refl
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.single
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.trans
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.symm
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.serial
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.tensor
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.length_le_sum
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.parallel
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.boxed
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.interfaces
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.raise
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.depthCast
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.pad
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.fillingChain_exists
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.fillingChain
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.exact_equiv
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.termination_count
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.exact_equiv
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.termination_count
+#print axioms Hypernets.Copying.BoxPermutation.FillingChain.plugAt
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.contextual_exact
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.contextual_count
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.contextual_termination
+#print axioms Hypernets.Copying.BoxPermutation.Renaming.paddedDerivation
+#print axioms Hypernets.Copying.Translation.padded_term_rename_derivation
+#print axioms Hypernets.Copying.OpenProgram.permute
+#print axioms Hypernets.Copying.renamedProgram
+#print axioms Hypernets.Copying.Translation.term_rename_contextual_exact
+#print axioms Hypernets.Copying.Translation.term_rename_contextual_count
+#print axioms Hypernets.Copying.Translation.term_rename_contextual_termination
+#print axioms Hypernets.Copying.Translation.named_rename_contextual_exact
+#print axioms Hypernets.Copying.Examples.nestedRenaming_contextual_exact
+#print axioms Hypernets.Copying.Examples.unequalDepthRenaming_contextual_exact
+#print axioms Hypernets.Copying.Examples.unequalDepthRenaming_contextual_count
+#print axioms Hypernets.Copying.Examples.privateCell_contextualRenaming
+#print axioms Hypernets.Copying.Examples.constantResult_contextualRenaming
+#print axioms Hypernets.Copying.Examples.privateCell_named_contextualRenaming
+#print axioms Hypernets.Copying.Allocation.entry_trace
+#print axioms Hypernets.Copying.OperationalTemplates.Kind.searchCost
+#print axioms Hypernets.Copying.OperationalTemplates.Literal.entry_trace
+#print axioms Hypernets.Copying.OperationalTemplates.Pair.entry_prefix
+#print axioms Hypernets.Copying.OperationalTemplates.Pair.input
+#print axioms Hypernets.Copying.OperationalSafety.replace
+#print axioms Hypernets.Copying.OperationalSafety.replace_selected
+#print axioms Hypernets.Copying.OperationalSafety.replace_other
+#print axioms Hypernets.Copying.OperationalSafety.remaining
+#print axioms Hypernets.Copying.OperationalSafety.remaining_iso
+#print axioms Hypernets.Copying.OperationalSafety.consumed_not_entering
+#print axioms Hypernets.Copying.OperationalSafety.remaining_edges
+#print axioms Hypernets.Copying.OperationalSafety.search_run
+#print axioms Hypernets.Copying.OperationalSafety.consume
+#print axioms Hypernets.Copying.OperationalSafety.inputSafe_of_plugging
+#print axioms Hypernets.Copying.OperationalTemplates.template_inputSafe_cost
+#print axioms Hypernets.Copying.OperationalTemplates.template_bindingFree_inputSafe_cost
+#print axioms Hypernets.Copying.OperationalTemplates.template_inputSafe
+#print axioms Hypernets.Copying.OperationalTemplates.template_bindingFree_inputSafe
+#print axioms Hypernets.Copying.OperationalTemplates.template_bindingFree_inputSafe_improvement
+#print axioms Hypernets.Copying.OperationalSafety.Examples.isolated
+#print axioms Hypernets.Copying.OperationalSafety.Examples.isolated_consumed
+#print axioms Hypernets.Copying.OperationalSafety.Examples.referencePair
+#print axioms Hypernets.Copying.OperationalSafety.Examples.referenceLeft_closed
+#print axioms Hypernets.Copying.OperationalSafety.Examples.referenceSpecimen
+#print axioms Hypernets.Copying.OperationalSafety.Examples.reference_consumed
+#print axioms Hypernets.Copying.OperationalSafety.Examples.betaArgument
+#print axioms Hypernets.Copying.OperationalSafety.Examples.betaArgument_stable
+#print axioms Hypernets.Copying.OperationalSafety.Examples.betaPair
+#print axioms Hypernets.Copying.OperationalSafety.Examples.beta_sides_closed
+#print axioms Hypernets.Copying.OperationalSafety.Examples.betaSpecimen
+#print axioms Hypernets.Copying.OperationalSafety.Examples.beta_consumed
+#print axioms Hypernets.Copying.OperationalSafety.Examples.beta_next_requests_copy
