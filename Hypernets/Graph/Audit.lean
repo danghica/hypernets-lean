@@ -1,3 +1,4 @@
+import Hypernets.Graph.ParallelExpansion
 import Hypernets.Graph.UnboundedTheorem
 import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.PaperEncodingExamples
@@ -525,3 +526,22 @@ import Hypernets.Graph.ObservationExamples
 #print axioms Hypernets.Linear.Unbounded.paper_sufficiency_converse
 #print axioms Hypernets.Linear.Unbounded.common_representatives
 #print axioms Hypernets.Linear.Unbounded.theorem6
+
+-- Recursive expansion and genuine BPerm copying residual specimens.
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.flat
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.vertices
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.edges
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.map_host
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.map_middle
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.sourcePort
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.targetPort
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.map_insert
+#print axioms Hypernets.Graph.Net.ExpansionAssoc.iso
+#print axioms Hypernets.Graph.Net.ParallelExpansion.family
+#print axioms Hypernets.Graph.Net.ParallelExpansion.vertices
+#print axioms Hypernets.Graph.Net.ParallelExpansion.edges
+#print axioms Hypernets.Graph.Net.ParallelExpansion.map_host
+#print axioms Hypernets.Graph.Net.ParallelExpansion.sourcePort
+#print axioms Hypernets.Graph.Net.ParallelExpansion.targetPort
+#print axioms Hypernets.Graph.Net.ParallelExpansion.map_insert
+#print axioms Hypernets.Graph.Net.ParallelExpansion.iso
