@@ -752,5 +752,23 @@ closure, and mixed-host regressions. The full build passes 503 jobs. All
 \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} occur;
 there is no \texttt{sorryAx} or project-specific axiom. The audits do not
 turn the constructed opposite matches into assumed whole-graph rewrites.
-Full BPerm robustness and Proposition~12.2 remain unproved.
+Full BPerm robustness was still open at that milestone and is completed below;
+Proposition~12.2 remains unproved.
 \lean{Copying/Audit}{2370}{2458}{Copying.Audit: overlap classification and operational output closure}
+
+
+\Needspace{14\baselineskip}
+The full BPerm milestone audits all 110 new declarations, including whole-graph
+source normalisation, pointed residual assembly, exhaustive beta/copying
+transport, reversal through actual permuted contexts, both universal robustness
+theorems and exact-cost execution equivalence. The full build passes 525 jobs.
+All 2979 reports pass: 6 abstract, 501 graph and 2472 copying audits. Only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} occur;
+no \texttt{sorryAx} or project-specific axiom is used. The final robustness
+theorems have no local-transfer or residual-certificate premise. The mixed-host
+regressions exercise actual rewrites at an internal token beside an independently
+changed surrounding component. BPerm robustness is complete for the concrete
+specimen encoding; Proposition~12.2 and the correspondence tasks in Appendix~B
+remain open.
+\lean{Graph/Audit}{550}{556}{Graph.Audit: general expansion transport}
+\lean{Copying/Audit}{2461}{2563}{Copying.Audit: full BPerm robustness and exact execution}

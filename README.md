@@ -9,37 +9,36 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: BPerm source-overlap classification
+## Latest milestone: full BPerm robustness
 
-**Every actual contextual rewrite in an original BPerm specimen now has a
-proved source classification.** Basic-operation footprints have constructed
-matches on the opposite side with their ordered ports preserved. Application
-frames are classified into retained, shallow and deep box contributions;
-copying paths reflect to the original context with their exact lengths.
+**Full forward and converse BPerm robustness are proved for every original
+specimen of the concrete copying UAM.** All classified primitive, shallow,
+deep and mixed overlaps now yield an actual matching whole-graph rewrite
+and an original residual filling at the actual resumed token. The final
+theorems have no local-transfer, replacement-context or residual hypothesis.
 
-**Micro-beta and reference creation now have concrete output-closed
-pre-templates**, preserving their original stable-argument rules. Actual
-compute steps connect their endpoints, including after independent recursive
-renaming. A mixed nested beta example, a non-vacuous free-term-output example,
-and arithmetic rewriting beside an independent BPerm contribution are checked.
+The proof retains the complements in the original rewrite derivations,
+normalises original fillings to actual edge decorations, handles every
+beta and copyable-payload case, and reverses filling certificates using real
+permuted contexts. Each compute step matches one compute step. Applying the
+proved sufficiency theorem gives exact successful-transition counts for
+arbitrary original closed paired fillings. Mixed-host regressions exercise
+an internal token beside independently changed nested/shallow contributions.
 The original terms, Figure 16 translation and machine rules are unchanged.
 
-Appendix B.1 removes these completed obligations. **Full BPerm robustness
-remains open:** the classified matches still need compatible replacement
-contexts, matching whole-graph rewrites and residual specimens in every case,
-followed by universal forward/converse assembly. Micro-beta and reference
-creation still need input safety and robustness. The other template families,
-paper correspondence, semantic renaming/substitution, weakening and Figure 22
-remain in the four broader packages. **Proposition 12.2 is unproved.**
+Appendix B.1 removes the completed BPerm obligation. Ten other template
+families, paper correspondence, semantic renaming/substitution, weakening
+and Figure 22 remain in four broader work packages. **Proposition 12.2 is
+still unproved.**
 
-Commentary Section 105 explains all 89 new declarations with immutable links.
-Full build: 503 jobs. All 2,869 axiom audits pass (6 abstract, 494 graph,
-2,369 copying), with no `sorryAx` or project-specific axioms.
+Commentary Section 106 explains all 110 new declarations with immutable links.
+Full build: 525 jobs. All 2,979 axiom audits pass (6 abstract, 501 graph,
+2,472 copying), with no `sorryAx` or project-specific axioms.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-Source classification closes a concrete gap; the difficulty of the remaining
-universal residual and template proofs does not yet justify a higher estimate.
+BPerm is now complete, but the remaining template families and Figure 22 have
+uneven and still uncertain proof costs; declaration counts do not measure them.
 
 ## Proposition 12.2: current extension target
 

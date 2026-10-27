@@ -1,0 +1,429 @@
+\clearpage
+\section{Full BPerm robustness by whole-graph rewrites}
+\label{sec:copying-full-bperm}
+\termdef{full-bperm-robustness}
+Both directions of BPerm robustness are now proved for every original
+recursive specimen of the concrete copying UAM. The conclusion includes an
+actual rewrite of the opposite whole graph and an original residual specimen
+at the actual resumed token. No matching-context, local-diagram, residual,
+or robustness hypothesis remains in the final theorems.
+
+This closes the BPerm part of the paper's Table~3 and
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS6}{Appendix H.3.6}.
+The proof follows its primitive, opening and copying overlap distinction.
+It strengthens the earlier source classification by using the actual rewrite
+derivation to retain the complement of each redex. The Lean transition
+system, original BPerm pair, stability/copyability premises, terms and
+Figure~16 translation are unchanged. All contexts are allowed in this
+BPerm result; the eventual term observations impose their original
+binding-free restriction separately. The remaining ten template families,
+correspondence work, semantic substitution/weakening and Figure~22 chain are
+not consequences already established by this milestone.
+
+Let $S$ denote the original BPerm specimen system. For arbitrary cost orders
+$Q,P,R$, the final results are
+\[
+ S.\mathsf{Robust}(Q,P,R),\qquad
+ S^{\mathrm{op}}.\mathsf{Robust}(Q,P,R).
+\]
+A matching case uses $k=0$ additional left steps and $l=1$ right step.
+Its cost side condition is just $Q(1,1)$, hence reflexivity suffices.
+The residual is first proved with equality on representation classes;
+reflexive refinement then supplies the requested $P,R$ comparisons.
+The exact-cost instance therefore agrees with the equality row of Table~3.
+
+\lean{Copying/FullBPermRobustness}{32}{59}{template_robust}
+\lean{Copying/FullBPermRobustness}{63}{91}{template_robust_converse}
+
+\subsection{Atomic contributions and actual edgewise replacements}
+\termdef{atomic-bperm-contribution}
+An atomic contribution is a pair $A,B$ justified by one of three substantive
+constructions: a recursive isomorphism; the original shallow BPerm relation;
+or two boxes whose bodies have an original recursive filling witness.
+Two administrative constructors compose endpoint isomorphisms and transport
+equal interface lists. They change neither a rule nor an ordered port list.
+Induction converts each atomic certificate into a genuine
+\texttt{FillingWitness}. Conversely, inspecting an original edge certificate
+extracts such an atom: retain its corolla isomorphism, its actual shallow
+pair, or its recursively filled box body and endpoint corolla maps.
+
+\lean{Copying/AtomicFillings}{12}{21}{AtomicPair}
+\lean{Copying/AtomicFillings}{25}{34}{AtomicPair.witness}
+\lean{Copying/AtomicFillings}{67}{85}{atomic_of_edge}
+
+If the source has only primitive outer labels, an atomic contribution is
+rigid. A shallow BPerm contribution and a boxed contribution both contain a
+box edge, contradicting that hypothesis. The remaining isomorphism case is
+immediate; the administrative cases transport the same argument. This proof
+is about primitive footprints, not an assumption that every BPerm pair is
+an ordered isomorphism.
+
+\lean{Copying/AtomicFillings}{37}{63}{AtomicPair.primitive_rigid}
+
+\termdef{bperm-decoration}
+A decoration $D$ of $G$ assigns to every actual edge $e$ a replacement
+$D_e$, with an atomic certificate from the labelled corolla of $e$ to $D_e$.
+Its graph is the simultaneous expansion $G[D]$. The identity decoration
+assigns the original corollas; collapsing these gives an explicit identity
+isomorphism. Expanding the atomic filling witnesses and composing that
+collapse proves that $G$ and $G[D]$ have an original filling witness whenever
+$G$ is focus-free. For a primitive footprint every component is rigid;
+the component isomorphisms assemble to $G\cong G[D]$. Its vertex map is
+exactly the host inclusion, an essential fact for matching the active token.
+
+\lean{Copying/DecoratedFillings}{9}{12}{Decoration}
+\lean{Copying/DecoratedFillings}{17}{17}{Decoration.graph}
+\lean{Copying/DecoratedFillings}{19}{21}{Decoration.identity}
+\lean{Copying/DecoratedFillings}{23}{24}{Decoration.identityIso}
+\lean{Copying/DecoratedFillings}{27}{29}{Decoration.witness}
+\lean{Copying/DecoratedFillings}{32}{34}{Decoration.primitiveIso}
+\lean{Copying/DecoratedFillings}{36}{38}{Decoration.primitiveIso_vertex}
+
+\subsection{Normalising every original source specimen}
+A recursive isomorphism pulls an ordered corolla certificate back along its
+edge bijection. Consequently the left member of every shallow BPerm pair,
+and then every original retained, shallow or boxed filling component,
+is an ordered corolla. Its edge may have a different label from the common
+context's hole, but its input and output signatures agree with that hole.
+These facts are extracted from certificates, rather than imposed on specimens.
+
+\lean{Copying/CorollaNormalisation}{11}{23}{LabelCopy.ofIso}
+\lean{Copying/CorollaNormalisation}{27}{33}{UpToIso.left_copy}
+\lean{Copying/CorollaNormalisation}{36}{43}{leftCopy}
+
+\termdef{bperm-source-normalisation}
+For a common context $C$ with filling families $L,R$, choose the actual
+left label $a_e$ and its corolla certificate at each edge. Relabel $C$ by
+$a_e$, keeping its vertices, edges and incidences; call the result $A$.
+Collapsing $C[L]$ gives an explicit isomorphism $C[L]\cong A$.
+Reinterface each $R_e$ by the proved signature equalities to obtain a
+decoration of $A$. Its atomic evidence is the extracted original edge
+certificate, with the same equality transports. Thus no shallow permutation
+is replaced by an ordered isomorphism.
+
+\lean{Copying/CorollaNormalisation}{49}{49}{SourceNormalisation.labels}
+\lean{Copying/CorollaNormalisation}{50}{50}{SourceNormalisation.copies}
+\lean{Copying/CorollaNormalisation}{53}{55}{SourceNormalisation.source}
+\lean{Copying/CorollaNormalisation}{57}{59}{SourceNormalisation.leftIso}
+\lean{Copying/CorollaNormalisation}{63}{64}{SourceNormalisation.right}
+\lean{Copying/CorollaNormalisation}{66}{72}{SourceNormalisation.decoration}
+
+The right comparison needs an expansion isomorphism whose skeleton labels
+may differ but whose corresponding signatures are equal. A bijective map
+is made into a bijection by choosing inverses; dependent sums of edge and
+component bijections then give the expanded edge carrier. Expanded vertices
+are the sum of the host vertices and component interiors. The host and
+inserted-port equations verify their incidence maps, including the equality
+casts on component boundaries. Mapping each source and target list proves
+the resulting expansion isomorphism.
+
+\lean{Graph/ExpansionTransport}{10}{15}{Bijection.ofBijective}
+\lean{Graph/ExpansionTransport}{18}{30}{Bijection.sigmaMap}
+\lean{Graph/ExpansionTransport}{43}{44}{Net.ExpansionTransport.vertices}
+\lean{Graph/ExpansionTransport}{46}{47}{Net.ExpansionTransport.edges}
+\lean{Graph/ExpansionTransport}{49}{51}{Net.ExpansionTransport.map_host}
+\lean{Graph/ExpansionTransport}{54}{67}{Net.ExpansionTransport.map_insert}
+\lean{Graph/ExpansionTransport}{71}{94}{Net.ExpansionTransport.iso}
+
+Apply this construction to the identity incidence map from the relabelled
+skeleton to $C$ and to each double interface-cast round trip. It gives
+$A[D]\cong C[R]$. Both source-normalisation isomorphisms have explicit
+host-token equations. They identify the actual coordinates used by a rewrite,
+not just the unpointed graphs.
+
+\lean{Copying/CorollaNormalisation}{75}{81}{SourceNormalisation.skeleton}
+\lean{Copying/CorollaNormalisation}{83}{92}{SourceNormalisation.rightIso}
+\lean{Copying/CorollaNormalisation}{94}{95}{SourceNormalisation.left_token}
+\lean{Copying/CorollaNormalisation}{97}{99}{SourceNormalisation.right_token}
+
+\subsection{Retaining complements and residual token positions}
+\termdef{pointed-residual-filling}
+A pointed filling from $(G,v)$ to $(H,w)$ consists of an original filling
+witness, a vertex of its common context, and equations saying that the two
+endpoint maps send that vertex to $v,w$. Its token is in search mode after
+a rewrite. Boundary inputs give such certificates immediately. A reflexive
+certificate works for any focus-free graph and any internal or boundary
+vertex. Composing endpoint isomorphisms transports both equations, by
+composition of vertex maps.
+
+\lean{Copying/DecoratedFillings}{42}{47}{PointedFilling}
+\lean{Copying/DecoratedFillings}{51}{52}{PointedFilling.input}
+\lean{Copying/DecoratedFillings}{55}{56}{PointedFilling.refl}
+\lean{Copying/DecoratedFillings}{59}{75}{PointedFilling.congr}
+
+Simultaneous expansion of component witnesses can resume inside a selected
+component's common context. The resulting point is its inserted vertex.
+For an internal vertex the coordinate equality is definitional; for an input
+or output it follows from the expansion host-position laws. A pointed closed
+certificate yields the original equality-up-to quasi-specimen: pull the
+term typing back through the endpoint isomorphism and host inclusion, then
+apply the original quasi-specimen construction. Rootedness remains handled
+by that definition.
+
+\lean{Copying/PointedFillingAssembly}{10}{27}{PointedFilling.expandAt}
+\lean{Copying/PointedFillingAssembly}{31}{44}{PointedFilling.quasi}
+
+A dependent replacement family changes exactly one assigned graph. At the
+selected edge it is the replacement; at every other edge it is the old
+family member. These two equations let us combine a selected actual rewrite,
+its pointed residual, and all independently supplied surrounding residuals.
+The assembled right rewrite uses the original expansion constructor.
+The assembled residual follows the selected common-context point, so the
+resumed token need not be an outer boundary input.
+
+\lean{Copying/PointedExpansion}{10}{18}{PointedFilling.replace}
+\lean{Copying/PointedExpansion}{20}{23}{PointedFilling.replace_selected}
+\lean{Copying/PointedExpansion}{25}{28}{PointedFilling.replace_other}
+\lean{Copying/PointedExpansion}{32}{69}{PointedFilling.assemble}
+
+\termdef{expanded-rewrite-presentation}
+For the induction, an expanded rewrite has the original local, recursive
+renaming and simultaneous-expansion constructors. Every such derivation is
+an original rewrite. Ordinary plugging is derivable: fill all unselected
+edges with identity corollas, peel the selected component out, and collapse
+the remaining corollas. The selected inserted-port equation follows by
+cancelling the peeling isomorphism with its inverse. Renaming the expanded
+step along these two isomorphisms gives the original plug step at its exact
+source and target tokens. Induction on the original rewrite therefore gives
+the converse presentation theorem. This is an equivalence of presentations,
+not a change to the machine's transition relation.
+
+\lean{Copying/ExpandedRewrite}{9}{21}{Combined.ExpandedRewrite}
+\lean{Copying/ExpandedRewrite}{25}{29}{Combined.ExpandedRewrite.actual}
+\lean{Copying/ExpandedRewrite}{32}{41}{Combined.ExpandedRewrite.peel}
+\lean{Copying/ExpandedRewrite}{43}{66}{Combined.ExpandedRewrite.peel_insert}
+\lean{Copying/ExpandedRewrite}{69}{93}{Combined.ExpandedRewrite.plug}
+\lean{Copying/ExpandedRewrite}{97}{103}{Combined.Rewrite.expanded}
+
+A decoration pulls back through a recursive source isomorphism by its edge
+bijection and the corresponding signature equalities. Expansion transport
+provides the whole-graph comparison, with its host-token law. For an expanded
+source, restrict a decoration to each already-present component. Expansion
+associativity regroups the resulting graph and proves the equation for a
+token inserted into the selected component. Thus the induction carries the
+actual complement supplied by the rewrite derivation.
+
+\lean{Copying/DecorationTransport}{12}{20}{Decoration.pull}
+\lean{Copying/DecorationTransport}{22}{29}{Decoration.pullIso}
+\lean{Copying/DecorationTransport}{31}{33}{Decoration.pullIso_host}
+\lean{Copying/DecorationTransport}{41}{43}{Decoration.component}
+\lean{Copying/DecorationTransport}{45}{46}{Decoration.groupedIso}
+\lean{Copying/DecorationTransport}{49}{54}{Decoration.groupedIso_insert}
+
+The local transfer proposition explicitly asks for an actual right rewrite
+and a pointed original residual. Assuming that proposition temporarily,
+induction on expanded rewrites proves whole-graph transfer: use the local
+case, pull back in the renaming case, and restrict/regroup/assemble in the
+expansion case. The equivalent rewrite presentation removes the temporary
+presentation choice. Primitive-only sources discharge the local obligation
+by the rigidity isomorphism and the unchanged reduct's reflexive certificate.
+The later theorem \texttt{local\_transport} discharges the temporary local
+hypothesis exhaustively; it is not a premise of full robustness.
+
+\lean{Copying/WholeRewriteTransport}{11}{14}{LocalTransport}
+\lean{Copying/WholeRewriteTransport}{17}{56}{transport_expanded}
+\lean{Copying/WholeRewriteTransport}{59}{63}{transport_rewrite}
+\lean{Copying/WholeRewriteTransport}{67}{76}{primitive_transport}
+
+\subsection{Canonical box cases and unchanged local operations}
+\termdef{canonical-bperm-box-view}
+An atomic normal form collects all endpoint representation changes. It is
+an isomorphism, a literal shallow pair with its two endpoint maps, or a boxed
+body filling with its endpoint maps. Interface equality transports are
+retained explicitly. Congruence composes the maps; interface transport
+eliminates equalities; inspection of the original shallow witness gives the
+literal pair; induction normalises an arbitrary atomic certificate.
+
+\lean{Copying/AtomicNormalForm}{10}{24}{AtomicNormal}
+\lean{Copying/AtomicNormalForm}{28}{33}{AtomicNormal.congr}
+\lean{Copying/AtomicNormalForm}{35}{38}{AtomicNormal.interfaces}
+\lean{Copying/AtomicNormalForm}{41}{48}{UpToIso.normal}
+\lean{Copying/AtomicNormalForm}{51}{60}{AtomicPair.normal}
+
+When the source is a particular box $\Box B$, its view is retained, deep
+with a witness $B\leadsto C$, or shallow with a boundary isomorphism
+$B\to C$ and its exact free-output action. The proof compares the source
+box label with the normal form's box label. Recursive label equivalence
+forces the same binder and free-interface metadata and supplies the body
+isomorphism. In the deep case compose that isomorphism with the body witness;
+in the shallow case compose it with the inverse boundary permutation.
+The right endpoint map still includes the outer inverse compensation.
+
+\lean{Copying/AtomicBoxView}{8}{15}{BoxView}
+\lean{Copying/AtomicBoxView}{19}{45}{AtomicPair.boxView}
+
+Translated lambda boxes use $k+1$ in the body interface, whereas the generic
+box constructor uses $1+k$. The cast round-trip lemma proves that the two
+equality transports cancel. Undoing the source-body cast transports a
+boundary isomorphism and its output action; the proof is equality elimination.
+The lambda view then has the same three cases at the original translation's
+interface. Uniqueness of the pair's inner action identifies it with the
+one-bound-wire action required by the existing opening diagram.
+
+\lean{Copying/LambdaBoxView}{9}{11}{cast_roundtrip}
+\lean{Copying/LambdaBoxView}{13}{15}{undoBodyCast}
+\lean{Copying/LambdaBoxView}{17}{21}{undoBodyCast_action}
+\lean{Copying/LambdaBoxView}{23}{29}{LambdaView}
+\lean{Copying/LambdaBoxView}{32}{58}{AtomicPair.lambdaView}
+
+Decorations distribute over the actual graph constructors. A decorated
+corolla collapses to its selected filling by peeling and the corolla plug
+unit. Serial left/right decorations are restrictions to the original two
+slots, and their comparison is expansion associativity. Tensor left/right
+decorations restrict to the two branch tags; parallel expansion gives their
+comparison. Equality-interface transport is undone by equality elimination.
+The tensor congruence used below assembles the two component isomorphisms.
+
+\lean{Copying/DecorationAssembly}{9}{12}{Decoration.corollaIso}
+\lean{Copying/DecorationAssembly}{14}{16}{Decoration.serialLeft}
+\lean{Copying/DecorationAssembly}{18}{20}{Decoration.serialRight}
+\lean{Copying/DecorationAssembly}{22}{28}{Decoration.serialIso}
+\lean{Copying/DecorationAssembly}{30}{33}{Decoration.tensorLeft}
+\lean{Copying/DecorationAssembly}{35}{38}{Decoration.tensorRight}
+\lean{Copying/DecorationAssembly}{40}{47}{Decoration.tensorIso}
+\lean{Copying/DecorationAssembly}{50}{53}{Decoration.unboundary}
+\lean{Copying/BetaDecoration}{9}{11}{tensor_congr}
+
+For beta, \texttt{withBox} is the literal application graph with just its
+lambda box varied. Its congruence follows from serial and tensor congruence.
+The decoration's box slot is obtained by selecting the application operands,
+the lambda operand and its box. All other local contributions are primitive:
+the application edge, lambda edge and the mandatory stable argument.
+Their rigidity isomorphisms therefore identify the decorated source with
+this actual variable-box graph. Moving the shallow inverse compensation
+through lambda, tensor and application gives the previously proved
+compensated source, with the same ordered free and argument output blocks.
+
+\lean{Copying/BetaDecoration}{17}{19}{BetaDecoration.withBox}
+\lean{Copying/BetaDecoration}{21}{23}{BetaDecoration.withBox_congr}
+\lean{Copying/BetaDecoration}{27}{27}{BetaDecoration.boxes}
+\lean{Copying/BetaDecoration}{30}{37}{BetaDecoration.sourceIso}
+\lean{Copying/BetaDecoration}{40}{49}{BetaDecoration.compensated}
+
+Now inspect the lambda view. The retained case uses the original beta step
+and a reflexive residual. The deep case opens the paired bodies, preserving
+the recursively filled witness through the original depth increase and
+bound-output splice. The shallow case uses the original interface-permuted
+beta step and its compensated successor isomorphism, hence a genuine
+residual witness. Focus freedom of the body is extracted from the source;
+stability of the argument is the original rule premise, not a conclusion
+inferred from linear semantics. Every case resumes at input zero of the
+local reduct, ready for arbitrary surrounding assembly.
+
+\lean{Copying/BetaDecoration}{53}{76}{BetaDecoration.transport}
+
+For copying a lambda payload, select its box slot and collapse only the
+primitive contraction tree and lambda head. The three box views give a
+retained copy step, a deep copy step whose two branches both contain the
+body filling, or the shallow compensated copy step with separately certified
+residual branches. The contraction tree and the output distributors remain
+the original constructions. For the complete copyable datatype, instance,
+constant, application, unary and binary payloads are primitive. The lambda
+case is the preceding proof. Recursive renaming pulls the decoration back
+along the whole copying source isomorphism and transports the entire
+successor and pointed residual along the copying successor isomorphism.
+Thus every constructor of copyability is handled.
+
+\lean{Copying/CopyDecoration}{13}{13}{CopyDecoration.boxes}
+\lean{Copying/CopyDecoration}{15}{21}{CopyDecoration.sourceIso}
+\lean{Copying/CopyDecoration}{23}{49}{CopyDecoration.lambda_transport}
+\lean{Copying/CopyDecoration}{53}{85}{CopyDecoration.transport}
+
+Exhaustive case analysis on the original local-rule datatype now proves local
+transfer: allocation, dereference, assignment, both equality tests and both
+arithmetic families use their primitive footprints; beta and copying use
+the proved diagrams above. Substitution into the whole-graph induction removes
+its local hypothesis. Finally the source-normalisation isomorphisms transport
+an arbitrary original $C[L]$ rewrite to a decoration and the matched rewrite
+back to $C[R]$, preserving the actual host token on both sides.
+
+\lean{Copying/BPermForwardTransport}{10}{21}{local_transport}
+\lean{Copying/BPermForwardTransport}{24}{27}{rewrite_transport}
+\lean{Copying/BPermForwardTransport}{31}{52}{filling_rewrite}
+
+\subsection{Converse transfer without assuming symmetry of the raw pair}
+\termdef{reversed-bperm-filling}
+First, an external typed output permutation acts on a filling witness by
+putting it inside an actual permuted corolla context. Expanding its component
+witness and using the single-expansion and permuted-corolla plug isomorphisms
+identifies both endpoints with the externally permuted graphs.
+
+To reverse a shallow pair, start with the inverse pair on its unpermuted
+body, apply the original outer inverse permutation to both endpoints, and
+cancel the resulting double outer permutation. Compose the original endpoint
+isomorphisms. This constructs a genuine reversed filling; it does not assert
+that the directed raw BPerm relation itself is symmetric.
+
+\lean{Copying/PermutedFilling}{10}{38}{FillingWitness.permuted}
+\lean{Copying/PermutedFilling}{46}{60}{UpToIso.reverseWitness}
+
+A reversal stores a reversed filling for every original common-context edge.
+Expanding these components and exchanging the original endpoint isomorphisms
+gives a reversed whole witness. The new common point is the host image of
+the old point, so its endpoint coordinates are exactly exchanged. Construct
+these components by recursion on box depth: retained corollas reverse by
+isomorphism, shallow pairs use the preceding construction, and boxed pairs
+recursively reverse their actual body witness and rebuild the two box
+corollas. The recursion decreases the depth at each boxed call. Applying
+this construction to a pointed filling proves its symmetry while retaining
+both exact token coordinates.
+
+\lean{Copying/ReverseFillings}{9}{10}{Reversal}
+\lean{Copying/ReverseFillings}{15}{16}{Reversal.witness}
+\lean{Copying/ReverseFillings}{19}{24}{Reversal.pointed}
+\lean{Copying/ReverseFillings}{29}{45}{reverseFilling}
+\lean{Copying/ReverseFillings}{48}{52}{PointedFilling.symm}
+
+Forward pointed rewrite transport pulls the supplied step back through the
+left endpoint isomorphism, applies the completed common-context rewrite
+theorem, and pushes the matched step through the right endpoint isomorphism.
+The point equations cancel the inverse maps. For converse transport, reverse
+the source certificate, apply this forward theorem to the actual right step,
+and reverse the resulting residual. The residual is thus returned in the
+original left-to-right template orientation.
+
+\lean{Copying/PointedRewriteTransport}{10}{32}{PointedFilling.rewrite}
+\lean{Copying/PointedRewriteTransport}{36}{40}{PointedFilling.rewrite_converse}
+
+\subsection{Robustness, exact execution and regression checks}
+Every original specimen yields a pointed filling directly from its existing
+context, edge certificates and host token. A representation-class step from
+rewrite mode reflects to an actual finite-depth rewrite: class reflection
+preserves the allowance, and the search alternative is impossible in rewrite
+mode. Apply forward or converse pointed transport to that actual rewrite.
+Rewrite preservation proves both residual graphs hole-free; endpoint typing
+supplies the resumed term token. The pointed residual therefore supplies the
+original equality-up-to quasi-specimen. Projection gives matching class
+steps; machine determinism identifies any independently presented successor
+with the constructed one. This proves the second robustness disjunct with
+$k=0,l=1$, in both directions, for every specimen and cost-order triple.
+
+\lean{Copying/FullBPermRobustness}{10}{16}{specimenPointed}
+\lean{Copying/FullBPermRobustness}{20}{28}{class_rewrite}
+
+The initial search coordinates of any closed paired filling are rooted and
+remote. Its actual filling witness therefore supplies the original lifting.
+Apply the already proved sufficiency-of-robustness theorem in both directions,
+using BPerm input safety and the exact reasonable cost triple. This gives
+exact quantitative equivalence of the actual unbounded initial states.
+Unfolding the two refinements proves equality of the successful-run spectra:
+for each $n$, one graph terminates in $n$ transitions if and only if the other
+does. No termination assumption on callbacks or box bodies is needed.
+This is a theorem about arbitrary certified closed graph fillings; it does
+not by itself complete the remaining structural derivations or Figure~22.
+
+\lean{Copying/BPermExactExecution}{10}{23}{filling_initial_lifting}
+\lean{Copying/BPermExactExecution}{27}{35}{filling_exact_equiv}
+\lean{Copying/BPermExactExecution}{39}{52}{filling_termination_count}
+
+The new regressions instantiate universal transfer in a host whose active
+position is internal and whose other component contains separately changed
+shallow and nested BPerm contributions. One performs arithmetic; the other
+opens a deeply related beta body. Both conclusions contain an actual right
+whole-graph rewrite and a constructed original residual, improving the earlier
+opposite-match-only regression. The final check records that the chosen host
+token is not an input boundary coordinate.
+
+\lean{Copying/FullBPermExamples}{11}{25}{FullExamples.arithmetic_mixed_host}
+\lean{Copying/FullBPermExamples}{29}{44}{FullExamples.beta_mixed_host}
+\lean{Copying/FullBPermExamples}{47}{49}{FullExamples.host_token_not_input}
