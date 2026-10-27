@@ -119,3 +119,4 @@ import Hypernets.Copying.CopyCoherenceExamples
 import Hypernets.Copying.RefocusingExamples
 import Hypernets.Copying.FullRefocusingExamples
 import Hypernets.Copying.SpecimenExamples
+import Hypernets.Copying.ContextualRobustnessExamples

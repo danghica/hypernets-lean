@@ -1,4 +1,4 @@
-import Hypernets.Copying.SpecimenExamples
+import Hypernets.Copying.ContextualRobustnessExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -2050,3 +2050,41 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.SpecimenExamples.boxedFamily
 #print axioms Hypernets.Copying.SpecimenExamples.boxed_filling
 #print axioms Hypernets.Copying.SpecimenExamples.boxed_search_opaque
+
+-- Original addressed contexts, quantitative contextual robustness, and term observations.
+#print axioms Hypernets.Copying.LabelCopy.no_internal
+#print axioms Hypernets.Copying.FillingCollapse.vertices
+#print axioms Hypernets.Copying.FillingCollapse.edges
+#print axioms Hypernets.Copying.FillingCollapse.source
+#print axioms Hypernets.Copying.FillingCollapse.target
+#print axioms Hypernets.Copying.FillingCollapse.identity
+#print axioms Hypernets.Copying.FillingCollapse.relabel
+#print axioms Hypernets.Copying.SingleExpansion.family
+#print axioms Hypernets.Copying.SingleExpansion.selected
+#print axioms Hypernets.Copying.SingleExpansion.retained
+#print axioms Hypernets.Copying.SingleExpansion.iso
+#print axioms Hypernets.Copying.LabelCopy.reboundary
+#print axioms Hypernets.Copying.BoxExpansion.component
+#print axioms Hypernets.Copying.BoxExpansion.copy
+#print axioms Hypernets.Copying.BoxExpansion.family
+#print axioms Hypernets.Copying.BoxExpansion.iso
+#print axioms Hypernets.Copying.BoxExpansion.paired
+#print axioms Hypernets.Copying.AddressedFillings.paired
+#print axioms Hypernets.Copying.AddressedFillings.closing
+#print axioms Hypernets.Copying.Combined.StateClass.initial_iso
+#print axioms Hypernets.Copying.Specimens.bindingFreeContexts
+#print axioms Hypernets.Copying.Specimens.closing_initial_lifting
+#print axioms Hypernets.Copying.Specimens.contextual_refines
+#print axioms Hypernets.Copying.Specimens.contextual_refines_converse
+#print axioms Hypernets.Copying.Specimens.contextual_equiv
+#print axioms Hypernets.Copying.Specimens.contextual_termination
+#print axioms Hypernets.Copying.Specimens.term_equiv
+#print axioms Hypernets.Copying.ContextTranslation.closing_context
+#print axioms Hypernets.Copying.ContextTranslation.closing_specimens
+#print axioms Hypernets.Copying.Specimens.term_equiv_cofinal
+#print axioms Hypernets.Copying.Specimens.term_context_equiv
+#print axioms Hypernets.Copying.ContextualRobustnessExamples.numbers_initial
+#print axioms Hypernets.Copying.ContextualRobustnessExamples.focusFreePairs
+#print axioms Hypernets.Copying.ContextualRobustnessExamples.focusFreePairs_not_closed
+#print axioms Hypernets.Copying.ContextualRobustnessExamples.nested_binders
+#print axioms Hypernets.Copying.ContextualRobustnessExamples.sourced_hole_required
