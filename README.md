@@ -9,44 +9,40 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: concrete copying specimens and exact class semantics
+## Latest milestone: robustness over all original closing contexts
 
-**The full copying UAM now has a concrete specimen system with proved
-synchronized-search locality.** Related fillings recurse through original
-box bodies and retain complete ordered interfaces. A one-way path obstruction
-excludes hole exits for jointly rooted specimens; actual search reflects
-through the shared context and lifts to both filled graphs.
+**The concrete copying robustness theorem now concludes quantitative contextual
+refinement over every original binding-free closing context.** Each original
+sole-hole address, including addresses inside boxes, supplies a recursive
+paired-filling certificate with explicit isomorphisms to the actual fillings.
+This proves initial lifting for the entire existing observation class.
 
-The unbounded machine is now literally deterministic on classes under recursive
-graph isomorphism and depth padding. Every class execution reflects from any
-chosen original representative at exactly the same cost. This uses the proved
-reverse-padding matching theorem, not determinism alone. All existing
-binding-free program and term observations are unchanged. The abstract forward
-and converse robustness conclusions now apply to certified initial fillings
-without assumed determinism, refocusing or locality laws.
+The forward and converse theorems retain their quantitative cost conditions
+and template-specific output closure, safety and robustness. Machine
+determinism, refocusing, locality and the context certificates are proved.
+Term observations and full term-context congruence use the unchanged Figure 16
+translation; arbitrarily large common allowances suffice for template membership.
 
-Regressions check an actual internal boundary and synchronized local return,
-a local return that is not globally final, recursively rebuilt boxes opaque
-to outer search, nontrivial one-wayness, and the unchanged translated
-application's exact seven-step cost at every padding. Proposition 12.2's terms,
-Figure 16's translation, and all stability/copyability premises are preserved.
+Regressions include arbitrary numeral pairs in arbitrary closing contexts,
+two distinct bound-variable fillings beneath two actual translated lambdas,
+and a negative check that structural filling alone does not establish output
+closure. No equivalence of arbitrary numerals or bound variables is asserted.
+The Proposition 12.2 terms and all stability/copyability premises are preserved.
 
-Appendix B.1 **removes specimen construction and locality from the open work**.
-Its four broad packages still include: further invariants and semantic
-renaming/substitution laws; focused-graph and original-hole tuple correspondence,
-including certificates for every addressed closing-context filling; the eleven
-template families; semantic weakening and Figure 22. The current robustness
-bridge retains template-specific safety/robustness assumptions.
+Appendix B.1 **removes the closing-context certificate and initial-lifting
+obligation**. Its four broader packages remain: further invariants and semantic
+renaming/substitution laws; focused-graph and unique-hole tuple correspondence;
+the eleven template families; semantic weakening and Figure 22.
 **Proposition 12.2 remains unproved.**
 
-Commentary Section 99 explains all 112 new declarations with immutable source
-links. Full build: 460 jobs. All 2,458 axiom audits pass (6 abstract, 477 graph,
-1,975 copying), with no `sorryAx` or project-specific axioms.
+Commentary Section 100 explains all 36 new declarations with immutable source
+links. Full build: 465 jobs. All 2,494 axiom audits pass (6 abstract, 477 graph,
+2,011 copying), with no `sorryAx` or project-specific axioms.
 
-Estimated completion by mathematical effort: **roughly 60–70%, with low
+Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-The concrete interface is a major prerequisite, but the eleven template proofs
-and remaining context correspondence still carry substantial uncertainty.
+This milestone closes the universal observation connection; the eleven template
+proofs and remaining paper correspondence still carry substantial uncertainty.
 This is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target

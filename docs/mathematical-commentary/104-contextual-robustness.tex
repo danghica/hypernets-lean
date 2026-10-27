@@ -1,0 +1,278 @@
+\clearpage
+\section{Copying robustness for every original closing context}
+\label{sec:copying-contextual-robustness}
+The concrete copying robustness theorem now concludes contextual refinement
+for the entire original observation class. A caller no longer needs to supply
+a recursive filling certificate for each observation. We construct that
+certificate from the context's existing sole-hole address, prove that its
+results are recursively isomorphic to the actual addressed fillings, and
+identify their initial states in the proved representation-class machine.
+This closes the addressed-closing-context connection left open in
+Section~\ref{sec:copying-specimens}.
+
+The conclusion uses \texttt{Combined.execution.Refines} and
+\texttt{Combined.execution.Equiv} on actual open program graphs, for arbitrary
+variable and atom interfaces. It quantifies over all original binding-free
+closing contexts, including arbitrary surrounding depth and nested box holes.
+Forward and converse robustness retain their quantitative cost relations.
+Only at the termination corollary do we specialize to the universal cost
+relation. The original Proposition~12.2 terms, Figure~16 translation and all
+machine rules are unchanged.
+
+This is the concrete observation-level use of PDF Theorem~8.11 (HTML
+Theorem~6, \href{https://arxiv.org/html/1907.01257v5\#S8.SS4}{Section~8.4}).
+It retains output closure, input safety and robustness as hypotheses on a
+template. It does not prove any of the eleven template families automatically.
+Correspondence with explicitly focused paper graphs, unique-hole inventories
+and replacement tuples remains separate. In particular, the current specimen
+interface ranges over binding-free contexts with recursive certificates;
+relating that domain to the paper's tuple-based template obligations is still
+required. No final example equivalence is asserted here.
+
+\Needspace{10\baselineskip}
+\subsection{Collapsing copies of retained edges}
+\termdef{copying-corolla-collapse}
+A \emph{corolla collapse} removes the auxiliary carrier names introduced by
+expanding an edge into a literal copy of itself. A \texttt{LabelCopy}
+certificate says that there is exactly one edge and that its source and
+target lists are the full ordered boundaries. Such a component has no internal
+vertices: source coverage would place an internal vertex on the sole edge's
+source list, whereas every entry on that list is a boundary input. These are
+disjoint constructors of the vertex type.
+
+\lean{Copying/FillingCollapse}{9}{14}{LabelCopy.no_internal}
+
+For a host $C$ and a family of certified corollas $F_e$, an internal vertex of
+$C[F]$ is either an original host vertex or an internal vertex of some $F_e$.
+The latter case is impossible. Thus the vertex bijection keeps the host
+vertex and its inverse inserts the host summand. An edge is a pair $(e,x)$;
+its image is $e$, and the inverse chooses the certified sole edge of $F_e$.
+The certificate's uniqueness equation proves that these functions are inverse.
+
+\lean{Copying/FillingCollapse}{22}{26}{FillingCollapse.vertices}
+\lean{Copying/FillingCollapse}{28}{32}{FillingCollapse.edges}
+
+To check ordered incidence, substitute the component's full boundary list
+into the expansion source or target formula. Each boundary input is attached
+to the corresponding original source port, and each boundary output to the
+corresponding original target port. The collapse cancels the host embedding.
+Mapping the finite list of all boundary indices therefore returns the
+original list, in its original order. This proves both equations, including
+nullary edges and repeated wire types.
+
+\lean{Copying/FillingCollapse}{34}{42}{FillingCollapse.source}
+\lean{Copying/FillingCollapse}{44}{52}{FillingCollapse.target}
+
+\Needspace{8\baselineskip}
+If every copied label is the original label, these bijections and incidence
+equations give an ordinary graph isomorphism $C[F]\cong C$. More generally,
+if each copied label is a prescribed replacement label of the same ordered
+signature, they give $C[F]\cong C[\ell]$, where $C[\ell]$ is the host with
+those edge labels replaced. The edge-label equation follows from the sole-edge
+certificate. No semantic equivalence or box permutation is used.
+
+\lean{Copying/FillingCollapse}{55}{61}{FillingCollapse.identity}
+\lean{Copying/FillingCollapse}{64}{72}{FillingCollapse.relabel}
+
+\Needspace{12\baselineskip}
+\subsection{One addressed replacement and its enclosing boxes}
+\termdef{copying-single-expansion}
+The \emph{single-replacement expansion family} at edge $e$ uses the actual
+replacement $H$ at $e$ and a literal label corolla at every other edge.
+The dependent equality in the selected branch preserves its exact signature.
+At $e$ the family is $H$; away from $e$ it has a retained-copy certificate.
+
+\lean{Copying/FillingCollapse}{80}{83}{SingleExpansion.family}
+\lean{Copying/FillingCollapse}{85}{87}{SingleExpansion.selected}
+\lean{Copying/FillingCollapse}{89}{91}{SingleExpansion.retained}
+
+The simultaneous expansion of this family is recursively isomorphic to the
+original single-edge plug $C[e:=H]$. To prove this, peel the selected expansion
+out using the generic expansion-peeling isomorphism. The residual expansion
+copies all surviving host edges and all inserted edges. Corolla collapse
+removes precisely that residual expansion. Composing the two isomorphisms
+proves the claim, with the original inserted graph intact.
+
+\lean{Copying/FillingCollapse}{94}{103}{SingleExpansion.iso}
+
+At a box address, the operation changes the box body while retaining its
+binding count and variable and atom interface. A literal box containing the
+new body has the same ordered signature as the old box. We first transport
+its boundary equality, then use it as the selected expansion component.
+Boundary transport preserves a label-copy certificate: eliminate the two
+interface equalities and use the identity-boundary equation.
+
+\lean{Copying/AddressedFillings}{8}{13}{LabelCopy.reboundary}
+\lean{Copying/AddressedFillings}{20}{22}{BoxExpansion.component}
+\lean{Copying/AddressedFillings}{24}{25}{BoxExpansion.copy}
+\lean{Copying/AddressedFillings}{27}{27}{BoxExpansion.family}
+
+Corolla collapse with the prescribed box label gives a recursive isomorphism
+to the original \texttt{replaceBox} construction.
+All other labels and all outer incidence lists are retained. If the two new
+bodies already have a recursive paired-filling certificate, the selected edge
+uses its boxed constructor; every other edge uses the retained constructor.
+Thus paired filling propagates through an enclosing original box.
+
+\lean{Copying/AddressedFillings}{31}{50}{BoxExpansion.iso}
+\lean{Copying/AddressedFillings}{53}{62}{BoxExpansion.paired}
+
+\termdef{copying-addressed-certificate}
+An \emph{addressed filling certificate} for a template pair $(G,H)$ and an
+original sole-hole site $s$ consists of graphs $L,R$, a recursive paired
+filling of the original context producing $L,R$, and isomorphisms
+\[
+ L\cong \operatorname{plugAt}(s,G),\qquad
+ R\cong \operatorname{plugAt}(s,H).
+\]
+We prove its existence by induction on the site. At a shallow hole, use the
+single-replacement families and the template pair at the selected edge.
+At an address inside a box, apply the induction hypothesis to its body,
+propagate the resulting paired certificate through the box, and compose
+box-expansion collapse with recursive isomorphism under body replacement.
+This induction follows the actual address; it never substitutes a different
+observation context.
+
+\lean{Copying/AddressedFillings}{69}{90}{AddressedFillings.paired}
+
+For a closing context and hole-free open programs, the existing sole-hole
+filling theorem makes both actual results hole-free. Recursive isomorphism
+reflects this property to $L,R$. Consequently the certificate has all the
+global hole-freedom proofs needed by the concrete specimen interface.
+Focus freedom follows from the pre-template and the original context.
+
+\lean{Copying/AddressedFillings}{94}{100}{AddressedFillings.closing}
+
+\Needspace{12\baselineskip}
+\subsection{Initial lifting and contextual robustness}
+\termdef{copying-closing-lifting}
+The \emph{closing-context initial lifting} is a rooted, remote specimen witness
+whose projections are the actual initial observations of $C[G]$ and $C[H]$.
+First, any recursive isomorphism of whole closed graphs maps their search
+input-zero coordinates to one another. It therefore yields a state
+representation relation and equality of their representation classes. This
+is an equality of machine states, not an added transition or a cost allowance.
+
+\lean{Copying/ContextualRobustness}{10}{12}{StateClass.initial_iso}
+
+The allowed-context predicate is exactly binding freedom. For every original
+closing context $C$, extract the preceding addressed certificate, replace
+its actual initial states by the equal class representatives, and expose the
+outer expansion constructor. The context's binding-freedom and focus-freedom
+proofs, paired components and hole-free results construct a concrete specimen.
+The previously proved initial-lifting theorem supplies its rooted remote
+witness. Transport back along the class equalities proves the desired lifting
+for the original observations.
+
+\lean{Copying/ContextualRobustness}{17}{19}{Specimens.bindingFreeContexts}
+\lean{Copying/ContextualRobustness}{24}{37}{Specimens.closing_initial_lifting}
+
+\termdef{copying-contextual-robustness}
+The \emph{concrete contextual robustness theorem} now says the following.
+Let $T$ be output closed, let $(Q,P,R)$ be a reasonable cost triple, and
+suppose the concrete specimen system for $T$ is input safe and robust for
+these costs. If the actual open program graphs $G,H$ are a pair of $T$, then
+$G$ contextually refines $H$ for $Q$. For each original closing context,
+apply forward sufficiency to its constructed initial lifting. There is no
+remaining premise about determinism, refocusing, padding invariance, locality,
+or existence of observation certificates.
+
+\lean{Copying/ContextualRobustness}{41}{46}{Specimens.contextual_refines}
+
+The converse uses the opposite specimen system and its robustness proof.
+Its input-safety condition uses $Q^{-1}$, exactly as in the abstract theorem;
+it is not replaced by forward safety for arbitrary costs. Combining these
+two conclusions gives quantitative contextual equivalence of the actual open
+graphs. Each direction ranges over the complete original observation class.
+
+\Needspace{4\baselineskip}
+\lean{Copying/ContextualRobustness}{49}{55}{Specimens.contextual_refines_converse}
+\lean{Copying/ContextualRobustness}{59}{67}{Specimens.contextual_equiv}
+
+Specialize to the proved reasonable triple consisting of universal final
+cost, improvement on the left, and universal right auxiliary cost. The
+universal relation equals its converse. The observation characterization then
+gives termination of $C[G]$ if and only if termination of $C[H]$ for every
+original $C$. No assumption that callbacks or either computation terminate is
+introduced. Stuckness remains a negative observation, as before.
+
+\lean{Copying/ContextualRobustness}{71}{78}{Specimens.contextual_termination}
+
+For terms, require that their original translated graphs belong to the
+proved template at each adequate common depth. Apply the contextual theorem
+at each such depth. This gives exactly the existing term observational
+equivalence, with both variable and atom environments unrestricted.
+The template membership hypothesis is an application obligation, not a
+translation-correctness axiom or the desired observational equivalence itself.
+
+\lean{Copying/ContextualRobustness}{82}{91}{Specimens.term_equiv}
+
+\Needspace{12\baselineskip}
+\subsection{Translated contexts, cofinal allowances and regressions}
+For any original closing term context, the previously proved graph-filling
+law supplies a graph context with the actual translated host, a sole hole and
+binding freedom. Packaging it as a closing context retains literal host
+identity and the reconstruction law: supplying the suitably padded original
+fragment returns the interpretation of the original filled term, up to
+recursive isomorphism at equal depth. Bound variables remain in the annotated
+hole's interface. Combining this law with closing-context initial lifting
+gives actual specimen witnesses for all such translated contexts.
+
+\lean{Copying/TranslatedSpecimens}{11}{18}{ContextTranslation.closing_context}
+\lean{Copying/TranslatedSpecimens}{23}{33}{ContextTranslation.closing_specimens}
+
+One can weaken the term membership premise to arbitrarily large common
+allowances. Given any lower bound, choose the related translated pair above
+that bound and apply quantitative contextual robustness there. The concrete
+cofinal-observation theorem then gives equivalence at every adequate allowance,
+using the already proved exact padding reflection. Thus the argument imposes
+no new depth-stability axiom on the template.
+
+\lean{Copying/TranslatedSpecimens}{40}{52}{Specimens.term_equiv_cofinal}
+
+Finally, every original term context preserves the resulting equivalence.
+First derive equivalence of the two terms by the template theorem, then apply
+the proved concrete term-context congruence. This works beneath binders and
+when the terms have different minimal translation depths. Both isomorphism
+and padding premises of the older abstract congruence result are already
+discharged by the concrete copying execution.
+
+\lean{Copying/TranslatedSpecimens}{57}{65}{Specimens.term_context_equiv}
+
+The first regression constructs initial lifting for arbitrary numeral pairs
+in every original closing context, at every allowance. This deliberately
+checks the structural bridge only; it does not assert robustness or
+equivalence of arbitrary numerals.
+
+\lean{Copying/ContextualRobustnessExamples}{11}{16}{ContextualRobustnessExamples.numbers_initial}
+
+A second deliberately broad pre-template relates any two focus-free graphs.
+It is suitable for testing structural certificates but is not output closed:
+relate the negation corolla to itself and apply the already checked positive
+operation path from its input to its output. Neither side is one way.
+This negative regression prevents treating structural certificate construction
+as a proof of the semantic template premises.
+
+\lean{Copying/ContextualRobustnessExamples}{19}{21}{ContextualRobustnessExamples.focusFreePairs}
+\lean{Copying/ContextualRobustnessExamples}{24}{29}{ContextualRobustnessExamples.focusFreePairs_not_closed}
+
+The nested-binder regression uses the actual context $\lambda.\lambda.[-]$,
+whose hole has two bound variables in scope. It fills that hole with index
+zero on the left and index one on the right. The addressed bridge gives a
+paired certificate, and composing each side's isomorphism with the original
+translation-filling law recovers its respective unchanged term translation.
+The test does not identify these two terms or claim they are equivalent.
+A final check derives the sourced-hole property for every closing context
+from its sole-hole address and its nonempty term-input interface. The
+zero-input exception to Lemma~E.1 has not been erased.
+
+\lean{Copying/ContextualRobustnessExamples}{34}{54}{ContextualRobustnessExamples.nested_binders}
+\lean{Copying/ContextualRobustnessExamples}{57}{59}{ContextualRobustnessExamples.sourced_hole_required}
+
+Appendix~B.1 now omits the completed closing-context certificate and initial
+lifting obligation. Four broader work packages remain, including the other
+paper-correspondence checks, the eleven template families, semantic weakening
+and Figure~22. The estimate remains 60--70\% of total mathematical effort,
+with low confidence. This milestone removes a universal observation obligation;
+it does not justify estimating the remaining template proofs by declaration
+counts.
