@@ -114,3 +114,4 @@ import Hypernets.Copying.EqualityCoherenceExamples
 import Hypernets.Copying.AssignmentCoherenceExamples
 import Hypernets.Copying.DereferenceCoherenceExamples
 import Hypernets.Copying.ArithmeticCoherenceExamples
+import Hypernets.Copying.ApplicationCoherenceExamples
