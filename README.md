@@ -9,46 +9,43 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: arithmetic coherence; only application and copying comparisons remain
+## Latest milestone: application coherence; copying is the sole remaining comparison
 
-**Arithmetic now has complete successor-state coherence** in the actual combined
-machine, covering unary natural negation, addition and truncated subtraction.
-The proof accounts for deleted operand edges and internal wires, all retained
-host edges and recursive boxes, and the resumed token. It applies to arbitrary
-renaming, plugging and simultaneous expansion. Source-relative deletion
-certificates are derived from the original rules; they add no operational premise.
+**Application now has complete successor-state coherence** in the original
+combined machine. The proof includes the entire opened body, its ordered
+variable and atom attachments, every retained host occurrence and the resumed
+token. It compares independently represented box bodies and covers arbitrary
+recursive renaming, plugging and simultaneous expansion. Opening certificates
+are derived from actual rewrites; they add no operational premise.
 
-An **exhaustive machine theorem** now proves that every pair of successors is
-coherent or originates at an application or copying request. Together with the
-completed store comparisons, this isolates the two remaining computation
-families for full-machine successor coherence. It does not establish those
-missing cases or full-machine determinism.
+An **exhaustive machine theorem** now shows that every pair of successors is
+coherent or originates at a copying request. Store, arithmetic and application
+comparisons are complete. Copying coherence and the other global machine laws
+remain unfinished.
 
-Every successful unary arithmetic redex run costs exactly **5 steps**, and every
-binary redex run costs exactly **7**, at every finite depth padding. Binary
-arithmetic attached below an arbitrary host has an exact seven-step handoff to
-the host continuation. A nested expression, whose inner computation changes
-the graph before the outer computation resumes, has exactly **11** successful
-steps. Underflow and the agreed natural negation `0-n` retain their result laws.
-These are explicit arithmetic redex graphs, not modified term translations.
-Proposition 12.2's terms and Figure 16's translation are unchanged.
+Every successful application execution has exactly **6 steps plus the cost of
+its actual opened-body continuation**. This law also holds under an arbitrary
+serial host and makes no assumption that the body terminates. Constant and
+nested-lambda bodies have exactly **7 successful steps**. The unchanged variable
+translation reaches its original copying request after seven steps and cannot
+already have terminated. Reference arguments and all finite paddings of the
+closed constant-body program retain the exact cost. Proposition 12.2's terms,
+Figure 16's translation, and the original stability premise are unchanged.
 
-Appendix B.1 removes arithmetic from outstanding successor comparisons.
-Application and copying, full-machine refocusing, focused-graph correspondence,
-specimen locality, the eleven-template argument and Proposition 12.2 remain
-unfinished. The four broad remaining packages stay open.
+Appendix B.1 removes application from outstanding successor comparisons. Its
+four broad remaining packages stay open: further invariants and semantic
+renaming/substitution laws; copying coherence and global machine/specimen laws;
+the eleven-template argument; semantic weakening and the Figure 22 proof.
 
-Commentary Section 94 explains all 85 new declarations with immutable source
-links. Full build: 406 jobs. All three axiom audits pass (6 abstract, 477 graph,
-1,438 copying; 1,921 total), using only Lean's standard logical axioms.
+Commentary Section 95 explains all 115 new declarations with immutable source
+links. Full build: 419 jobs. All three axiom audits pass (6 abstract, 477 graph,
+1,553 copying; 2,036 total), using only Lean's standard logical axioms.
 
 Estimated completion by mathematical effort: **roughly 50–65%, with low
-confidence**, as of 26 October 2026. The earlier **80% estimate is withdrawn**:
-it over-weighted infrastructure and under-weighted the remaining machine laws,
-dependent template proofs and final observational argument. The arithmetic
-milestone closes a substantial subtask but does not justify narrowing the
-uncertainty or mechanically raising the estimate. This is not a declaration
-or TODO count.
+confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
+Application coherence closes a substantial subtask; the remaining copying,
+global machine, template and observational proofs still prevent a defensible
+narrower estimate. This is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target
 

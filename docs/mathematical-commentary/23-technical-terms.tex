@@ -34,6 +34,14 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{copying-term-context}{Annotated term context}{A lambda-context whose hole and outer scopes are separately indexed, retaining variables bound around the hole.}
 
+\glossaryentry{application-cost-handoff}{Application cost handoff}{Exactly six transitions precede the actual opened-body continuation, both locally and under an arbitrary serial host.}
+
+\glossaryentry{application-opening-certificate}{Application opening certificate}{A source match, a realization by the whole successor graph, and the exact resumed-token equation; derived from the original rewrite relation.}
+
+\glossaryentry{application-source-match}{Application source match}{The actual application, lambda and box frame, its two internal wires, argument attachment and recursively identified body.}
+
+\glossaryentry{application-successor-coherence}{Application successor coherence}{Any two actual contextual application rewrites of one source request produce recursively isomorphic entire successor states.}
+
 \glossaryentry{arbitrary-contraction-tree}{Arbitrary contraction tree}{A finite acyclic contraction/weakening graph with one output; connection to its unique root is derived.}
 
 \glossaryentry{arithmetic-cost-handoff}{Arithmetic cost handoff}{Binary arithmetic attached below an arbitrary host contributes exactly seven steps before the host continuation resumes.}
@@ -235,6 +243,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{copying-canonical-tree}{Copying canonical tree}{The ordered right-spine graph of Definition 10.1, with one weakening and one contraction per input.}
 
 \glossaryentry{copying-closing-observation}{Copying closing observation}{Initialization of the actual graph obtained by filling a concrete binding-free, single-hole closing context.}
+
+\glossaryentry{copying-coherence-frontier}{Copying coherence frontier}{The exhaustive theorem that successors of the original machine are coherent unless the source is a rewrite-mode term-contraction request.}
 
 \glossaryentry{copying-global-label}{Copying global label predicate}{A primitive-label property required on every edge at every box depth.}
 
@@ -444,7 +454,7 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{graph-body-package}{Graph-body package}{A named body graph and its actual output count, determined by its own ordered interface.}
 
-\glossaryentry{higher-order-head}{Higher-order head}{An application or term-contraction head: the two computation families whose complete successor comparison remains open.}
+\glossaryentry{higher-order-head}{Higher-order head}{An application or term-contraction head, used by the historical two-family coherence classification; application is now discharged by the copying-only classification.}
 
 \glossaryentry{hole-boundary}{Hole boundary}{A searching coordinate at an original shallow hole source, or a backtracking coordinate at one of its targets.}
 
@@ -571,6 +581,10 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{one-way}{One-way hypernet}{A hypernet with no operation path from a term input to a term output; paths to thunk outputs are permitted.}
 
 \glossaryentry{opened-search-slot}{Opened search slot}{A selected edge relabelled by a typed hole, giving exactly one shallow hole when the original host is hole-free.}
+
+\glossaryentry{opening-presentation}{Opening presentation}{Ambient old-source and new-body occurrences, with retention predicates and ordered incidence data describing a complete beta result.}
+
+\glossaryentry{opening-realization}{Opening realization}{Injective maps from a genuine graph onto exactly the retained presentation occurrences, preserving wire labels, recursive edge labels and ordered incidences.}
 
 \glossaryentry{operation-kind}{Operation kind}{The active/passive classification; finishing produces rewrite/backtrack mode respectively.}
 

@@ -1,0 +1,657 @@
+\clearpage
+\section{Application coherence and the remaining copying case}
+\label{sec:copying-application-coherence}
+Application now has complete successor-state coherence in the original combined
+copying machine. Two actual rewrites at the same application request produce
+recursively isomorphic complete graphs and corresponding resumed tokens.
+The proof includes arbitrary renaming, plugging and simultaneous expansion,
+and permits the two matches to describe the actual boxed body by different
+recursively isomorphic graphs. Together with the preceding store and arithmetic
+results, this leaves copying as the sole remaining family for successor
+coherence. Global determinism, refocusing, specimen locality and the template
+argument still require further proofs.
+
+The operational rule and its stability premise remain unchanged. Opening a
+lambda exposes its full padded body, preserves its ordered variable and atom
+attachments, and connects the first bound variable to the stable argument.
+It does not simplify the Figure~16 distributors. In particular, an original
+translated variable requests copying after beta; it does not immediately
+become its argument. The two terms in Proposition~12.2 are unchanged.
+
+The quantitative result applies to every successful run of the full machine:
+application contributes exactly six transitions before the actual opened-body
+state. The same law holds under an arbitrary serial host. Constant and
+nested-lambda bodies have exactly seven successful transitions, while a
+variable body has seven plus the successful cost of its remaining copy request.
+No body-termination assumption occurs in the six-step law.
+
+The proof dependency chain is: unique source frame and box body; an explicit
+presentation of all surviving and newly exposed occurrences; a realization of
+that presentation by the original beta reduct; transport through every rewrite
+constructor; comparison of independently represented bodies; whole-state
+coherence; exact costs; and the exhaustive copying-only classification.
+The presentations and certificates below are mathematical proof data derived
+from actual rewrites. They add no premise to the transition relation.
+
+Appendix~B.1 removes application from its outstanding successor comparisons.
+Its four broad work packages remain open. The estimated completion remains
+roughly 50--65\% of mathematical effort, with low confidence: this closes a
+substantial machine-law subtask but leaves the dependent template and final
+observational arguments unresolved.
+
+\Needspace{12\baselineskip}
+\subsection{Presenting the complete result}
+
+\termdef{opening-presentation}
+A \emph{partial incidence presentation} $P$ consists of ambient sets $V_P$ and
+$E_P$, vertex and edge labels, predicates selecting the retained vertices and
+edges, and ordered source and target lists in the ambient port space.
+The ambient data need not itself be a well-formed graph: incidence lists for
+deleted occurrences are harmless proof data. This allows one space to name
+both the old source occurrences and all newly exposed body occurrences.
+
+\lean{Copying/OpeningPresentation}{10}{18}{Opening.Presentation}
+
+\termdef{opening-realization}
+A \emph{realization} of $P$ by a genuine hypernet $H$ consists of injections
+$j_V:V_H\to V_P$ and $j_E:E_H\to E_P$ whose images are exactly the selected
+occurrences. It preserves internal wire labels, relates edge labels by the
+recursive relation \texttt{LabelEquiv}, and satisfies
+\[
+\widehat j_V(\operatorname{src}_H(e))=\operatorname{src}_P(j_E(e)),\qquad
+\widehat j_V(\operatorname{tgt}_H(e))=\operatorname{tgt}_P(j_E(e)).
+\]
+Port extension fixes the external input and output indices, and acts by $j_V$
+on internal vertices. The equations are equalities of ordered lists.
+
+\lean{Copying/OpeningPresentation}{21}{31}{Opening.Realization}
+
+Two realizations of the same presentation determine bijections between their
+vertex sets and between their edge sets. Send an occurrence to the unique
+occurrence with the same ambient image; exact image equality gives existence,
+and injectivity gives uniqueness and the inverse equations. The vertex and
+edge commuting lemmas express equality of these images. The port commuting
+lemma follows by cases on internal, input and output ports.
+
+\lean{Copying/OpeningPresentation}{36}{38}{Opening.Realization.vertexBijection}
+
+\lean{Copying/OpeningPresentation}{39}{41}{Opening.Realization.edgeBijection}
+
+\lean{Copying/OpeningPresentation}{43}{45}{Opening.Realization.vertex_commute}
+
+\lean{Copying/OpeningPresentation}{47}{49}{Opening.Realization.edge_commute}
+
+\lean{Copying/OpeningPresentation}{51}{53}{Opening.Realization.port_commute}
+
+These bijections constitute a recursive graph isomorphism. Labels agree
+through their common ambient labels; recursive edge-label comparisons compose
+by symmetry and transitivity. To compare source or target lists, embed both
+lists in the presentation, use the realization equations and commuting laws,
+and cancel the injective port map. If the resumed tokens have the same ambient
+image, the vertex bijection also maps one token to the other; with both modes
+set to search this gives a state isomorphism.
+
+\lean{Copying/OpeningPresentation}{56}{75}{Opening.Realization.iso}
+
+\lean{Copying/OpeningPresentation}{77}{82}{Opening.Realization.stateIso}
+
+A realization can be pulled back along any recursive isomorphism $K\cong H$.
+Compose its injections with the isomorphism's bijections. The inverse maps
+supply all required preimages, and composing the label and incidence laws
+proves that $K$ realizes the same presentation.
+
+\lean{Copying/OpeningPresentation}{85}{101}{Opening.Realization.rename}
+
+\Needspace{12\baselineskip}
+\subsection{The source frame and its actual body}
+
+\termdef{application-source-match}
+An \emph{application source match} records three source edges: the application
+$a$, its lambda $\ell$, and the lambda's box $b$. It also records internal
+function and thunk wires $f,t$, and the argument attachment $q$. The application
+head is at the requested token $v$, and the ordered incidences are
+\[
+\operatorname{tgt}(a)=[f,q],\quad
+\operatorname{src}(\ell)=[f],\quad \operatorname{tgt}(\ell)=[t],\quad
+\operatorname{src}(b)=[t].
+\]
+The lambda label is the actual primitive lambda. The box label is recursively
+related to the actual body $B$, with one bound term variable, $k$ free term
+variables and $h$ free atoms. Equality casts reconcile $k+1$ with $1+k$; they
+do not permute the ordered ports. Stability is required by the actual local
+transition, not duplicated in this auxiliary source-shape record.
+
+\lean{Copying/ApplicationMatch}{9}{23}{Application.Match}
+
+Two matches of the same source and requested port have identical frame data.
+Unique head selection identifies their application edges. Comparing the two
+ordered target lists identifies the function wire and argument port. Unique
+source ownership identifies the lambda edge at that function wire; its target
+identifies the thunk wire, and source ownership again identifies the box edge.
+The actual label of this unique box then relates the two candidate bodies.
+The relation \texttt{BoxRelated} fixes their binder/interface metadata and
+supplies a recursive isomorphism of the full bodies.
+
+\lean{Copying/ApplicationMatch}{30}{46}{Application.Match.shape_unique}
+
+\lean{Copying/ApplicationMatch}{49}{56}{Application.Match.bodies_related}
+
+The box signature proves that the list $q::\operatorname{tgt}(b)$ has length
+$1+|\Gamma|+|\Delta|$. This is exactly the opened body's output interface.
+The body-port map sends a body internal vertex to a new occurrence, its unique
+input to the old request port $v$, and output $i$ to entry $i$ of this list.
+Thus output zero reaches the argument; the remaining outputs retain the
+original box's ordered free term and atom attachments.
+
+\lean{Copying/ApplicationMatch}{58}{64}{Application.Match.output_length}
+
+\lean{Copying/ApplicationMatch}{67}{70}{Application.Match.bodyPort}
+
+The presentation for a match has ambient sets
+\[
+V_G+V_{\operatorname{open}(B)},\qquad E_G+E_{\operatorname{open}(B)}.
+\]
+It retains every old vertex except $f,t$, every old edge except $a,\ell,b$,
+and every newly exposed body vertex and edge. Old occurrences retain their
+labels and ordered incidence lists; body occurrences use their actual labels
+and the body-port map just defined. Here $\operatorname{open}(B)$ is precisely
+the existing depth-raised, interface-cast body used by the original reduct.
+
+\lean{Copying/ApplicationMatch}{73}{89}{Application.Match.presentation}
+
+\Needspace{12\baselineskip}
+\subsection{The original beta reduct realizes the presentation}
+
+The local source match selects the application, lambda and box in the
+existing \texttt{before} graph. Its fields reduce directly to the source
+construction. The local realization maps the reduct's argument-connection
+wire to the original argument wire, its body internals to new occurrences,
+and its argument internals to the corresponding old source occurrences.
+The edge map similarly sends body edges to new occurrences and argument edges
+to old occurrences.
+
+\lean{Copying/ApplicationOpeningLocal}{8}{22}{Application.localMatch}
+
+\lean{Copying/ApplicationOpeningLocal}{25}{33}{Application.openingVertices}
+
+\lean{Copying/ApplicationOpeningLocal}{35}{41}{Application.openingEdges}
+
+The vertex and edge maps are injective by disjointness of the tagged summands
+and injectivity within each summand. Their exact-image lemmas are stronger
+than injectivity: every old occurrence except the two frame wires and three
+frame edges has a preimage, and every body occurrence has a preimage.
+The proofs enumerate the finite frame indices and the host/body summands;
+no assumption about the body's size, termination or absence of nested boxes
+is used.
+
+\lean{Copying/ApplicationOpeningLocal}{43}{57}{Application.opening_vertices_injective}
+
+\lean{Copying/ApplicationOpeningLocal}{59}{69}{Application.opening_edges_injective}
+
+\lean{Copying/ApplicationOpeningLocal}{71}{101}{Application.opening_vertex_range}
+
+\lean{Copying/ApplicationOpeningLocal}{103}{127}{Application.opening_edge_range}
+
+The serial-output lemma states that an output port of a right serial
+component remains the corresponding output of the serial composite. Applying
+it through the local construction proves that the actual box's target list is
+the free environment ports, in order. The body-port comparison then checks
+internal, input and output cases; at output zero it obtains the argument
+connection, and at successor indices it obtains the free environment port.
+The argument-port comparison follows the same cases using the existing
+argument embedding and right-serial output law.
+
+\lean{Copying/ApplicationOpeningLocal}{131}{137}{Application.right_serial_output}
+
+\lean{Copying/ApplicationOpeningLocal}{140}{152}{Application.local_box_targets}
+
+\lean{Copying/ApplicationOpeningLocal}{155}{168}{Application.opening_body_port}
+
+\lean{Copying/ApplicationOpeningLocal}{171}{188}{Application.opening_argument_port}
+
+The complete local realization combines the injections and exact images.
+For a body edge, the source and target equations follow by mapping the
+body-port comparison over its ordered lists. For an argument edge, use the
+argument-port comparison instead. Labels are exactly the construction's
+labels, including every nested body box. This proves that the original
+\texttt{after} graph realizes the full source-relative presentation.
+
+\lean{Copying/ApplicationOpeningLocal}{191}{235}{Application.opening_realization}
+
+\Needspace{12\baselineskip}
+\subsection{Occurrences and changes of presentation}
+
+An occurrence map consists of maps on ports, internal vertices and edges.
+The latter two maps are injective, internal ports map to their indicated
+internal occurrences, wire labels are preserved, edge labels are recursively
+related, and source and target lists commute with the port map. It does not
+require arbitrary boundary attachments to be injective.
+
+\lean{Copying/OpeningOccurrence}{8}{18}{Opening.Occurrence}
+
+Forgetting the additional recursive-label and internal-vertex information
+gives the existing primitive matching embedding. A recursive isomorphism gives
+an occurrence map by its bijections. Plugging gives one by the selected
+component summand; simultaneous expansion gives one by tagging each component
+occurrence with the selected edge index. Their label and incidence laws are
+those of the actual graph constructions.
+
+\lean{Copying/OpeningOccurrence}{22}{28}{Opening.Occurrence.matchEmbedding}
+
+\lean{Copying/OpeningOccurrence}{30}{40}{Opening.Occurrence.ofIso}
+
+\lean{Copying/OpeningOccurrence}{42}{54}{Opening.Occurrence.plug}
+
+\lean{Copying/OpeningOccurrence}{56}{68}{Opening.Occurrence.expand}
+
+Mapping a source match along an occurrence map preserves all frame equations.
+Primitive head and lambda labels use the matching embedding, while the box
+comparison uses the full recursive label relation. The ambient origin-port
+map sends old occurrences through the occurrence map and keeps new body
+occurrences fixed; external ports follow the occurrence's boundary attachment.
+It commutes with embedding an old port. The body-port compatibility lemma
+holds internally and at the body input by definition, and at each output by
+mapping the ordered argument-plus-box-target list.
+
+\lean{Copying/OpeningOccurrence}{78}{91}{Application.Match.map}
+
+\lean{Copying/OpeningOccurrence}{94}{100}{Application.Match.originPort}
+
+\lean{Copying/OpeningOccurrence}{102}{104}{Application.Match.origin_old}
+
+\lean{Copying/OpeningOccurrence}{106}{118}{Application.Match.bodyPort_map}
+
+An isomorphism of presentations consists of ambient vertex and edge
+bijections preserving the retention predicates, labels and ordered incidence
+lists. Composing a realization with these bijections transports it to the
+new presentation. Inverses prove the exact-image conditions; the remaining
+conditions follow by composition.
+
+\lean{Copying/OpeningPresentationIso}{8}{16}{Opening.Presentation.Iso}
+
+\lean{Copying/OpeningPresentationIso}{19}{40}{Opening.Realization.transport}
+
+For a recursively renamed source, the origin-port map is the port extension
+of the sum of its vertex bijection with the identity on new body vertices.
+This gives the source-renaming presentation isomorphism. Old label and
+incidence equations come from the source isomorphism; new body incidences use
+the body-port compatibility lemma.
+
+\lean{Copying/OpeningPresentationIso}{48}{53}{Application.Match.origin_iso}
+
+\lean{Copying/OpeningPresentationIso}{56}{97}{Application.Match.renamePresentation}
+
+For two matches of one source, a recursive isomorphism between their opened
+bodies also induces a presentation isomorphism. It is the identity on old
+occurrences and the body isomorphism on new ones. The body-port comparison
+uses unique frame and argument data: internal ports follow the body bijection,
+inputs agree at $v$, and outputs use the identical ordered attachment list.
+Retention predicates agree because the removed frame occurrences are unique.
+Labels and ordered incidences then follow from the body isomorphism.
+
+\lean{Copying/OpeningPresentationIso}{100}{110}{Application.Match.bodyPort_congr}
+
+\lean{Copying/OpeningPresentationIso}{113}{146}{Application.Match.bodyPresentation}
+
+\Needspace{12\baselineskip}
+\subsection{Complete certificates and independent bodies}
+
+\termdef{application-opening-certificate}
+An \emph{opening certificate} for $G,v\longrightarrow H,w$ records a source
+match, a realization of its presentation by $H$, and the token equation
+$\widehat j_V(w)=\operatorname{inl}(v)$. Thus it determines the full graph and
+where execution resumes. The original local rule supplies such a certificate
+using the local realization and its input-token equation.
+
+\lean{Copying/ApplicationOpeningCertificate}{8}{12}{Application.OpeningCertificate}
+
+\lean{Copying/ApplicationOpeningCertificate}{15}{19}{Application.local_certificate}
+
+Equal interface casts can be removed from a recursive graph isomorphism:
+eliminate the interface equalities, after which the original isomorphism has
+the required type. To rename both sides of a certificate, transport its
+presentation along the source isomorphism and pull back its realization along
+the inverse successor isomorphism. Port-map composition and the successor
+inverse equation prove the renamed token equation.
+
+\lean{Copying/ApplicationOpeningCertificate}{22}{24}{Application.cast_iso_reflect}
+
+\lean{Copying/ApplicationOpeningCertificate}{31}{42}{Application.OpeningCertificate.rename}
+
+Two opening certificates for the same source request are coherent even when
+their body graphs and interface metadata are supplied independently. The
+unique source box first identifies the metadata and relates the cast bodies.
+Remove the casts, raise the resulting recursive isomorphism through depth
+padding, and restore the opened-body interface cast. This gives the required
+isomorphism between the actual opened bodies. Transport one realization
+through its induced presentation isomorphism, then compare the two
+realizations of one presentation. Their token equations agree on the old
+source port, yielding the complete state isomorphism.
+
+\lean{Copying/ApplicationOpeningCertificate}{45}{59}{Application.OpeningCertificate.coherent}
+
+\Needspace{12\baselineskip}
+\subsection{Transport through arbitrary plugging}
+
+The auxiliary shift map sends an old component occurrence to the old
+component summand of the host, and keeps a new body occurrence new:
+$A+B\to(C+A)+B$. It is injective. Its old- and new-image equivalences identify
+preimages in the corresponding summands, and its disjointness lemma excludes
+old host occurrences from its image. All four proofs split the sum constructors.
+
+\lean{Copying/ApplicationOpeningPlug}{8}{10}{Opening.shift}
+
+\lean{Copying/ApplicationOpeningPlug}{12}{13}{Opening.shift_injective}
+
+\lean{Copying/ApplicationOpeningPlug}{15}{16}{Opening.shift_old}
+
+\lean{Copying/ApplicationOpeningPlug}{18}{19}{Opening.shift_new}
+
+\lean{Copying/ApplicationOpeningPlug}{21}{21}{Opening.shift_not_host}
+
+The plugged vertex and edge injections keep old host occurrences in their
+host summands and shift the selected component's certified images. The
+injectivity lemmas use host/component disjointness, shift injectivity and the
+original certificate's injectivity. The range lemmas split host, old component
+and new body occurrences: the host is retained in full, and the component and
+body cases reduce to the original exact-image equations.
+
+\lean{Copying/ApplicationOpeningPlug}{32}{34}{Application.OpeningCertificate.plugVertices}
+
+\lean{Copying/ApplicationOpeningPlug}{36}{38}{Application.OpeningCertificate.plugEdges}
+
+\lean{Copying/ApplicationOpeningPlug}{40}{45}{Application.OpeningCertificate.plug_vertices_injective}
+
+\lean{Copying/ApplicationOpeningPlug}{47}{52}{Application.OpeningCertificate.plug_edges_injective}
+
+\lean{Copying/ApplicationOpeningPlug}{54}{61}{Application.OpeningCertificate.plug_vertex_range}
+
+\lean{Copying/ApplicationOpeningPlug}{63}{70}{Application.OpeningCertificate.plug_edge_range}
+
+The host-port lemma preserves the same host attachment under the new
+injection. The component-port lemma commutes with insertion and the ambient
+origin-port map. Both follow by port cases: internal component ports shift,
+while boundary ports use the host-port law. The source and target presentation
+lemmas treat old edges using the occurrence's list equations and new edges
+using the body-port compatibility law.
+
+\lean{Copying/ApplicationOpeningPlug}{72}{74}{Application.OpeningCertificate.plug_host_port}
+
+\lean{Copying/ApplicationOpeningPlug}{76}{89}{Application.OpeningCertificate.plug_component_port}
+
+\lean{Copying/ApplicationOpeningPlug}{91}{102}{Application.OpeningCertificate.plug_source}
+
+\lean{Copying/ApplicationOpeningPlug}{104}{115}{Application.OpeningCertificate.plug_target}
+
+The plugged realization uses these maps and range laws. Host edge labels and
+incidences are retained; component labels come from the original realization,
+and their incidences follow by composing the component-port and presentation
+list equations. The resulting opening certificate uses the mapped source
+match; its token equation is the component-port equation applied to the
+original token equation. Thus arbitrary typed plugging preserves complete
+opening certificates.
+
+\lean{Copying/ApplicationOpeningPlug}{118}{162}{Application.OpeningCertificate.plugRealization}
+
+\lean{Copying/ApplicationOpeningPlug}{164}{171}{Application.OpeningCertificate.plug}
+
+\Needspace{12\baselineskip}
+\subsection{Transport through simultaneous expansion}
+
+The expansion proof first handles dependent occurrence sets. Fix component
+sets $F_e,K_e$, a selected index $h$, a map $K_h\to F_h+N$, and bijections
+$K_e\cong F_e$ for $e\ne h$. The tag map sends an old selected occurrence to
+its pair $(h,x)$ and leaves a new occurrence in $N$. It is injective by
+disjointness and injectivity of dependent-pair construction.
+
+\lean{Copying/OpeningFiber}{11}{13}{Opening.Fiber.tag}
+
+\lean{Copying/OpeningFiber}{15}{20}{Opening.Fiber.tag_injective}
+
+The lifted map on $\sum_e K_e$ applies the selected map and tagging at $h$,
+and the given bijection at every other index. Its same-index and other-index
+lemmas expose these two clauses. A selected tag cannot be an old occurrence
+at another index: equality of dependent pairs would equate their indices.
+The lifted map is injective by four cases on whether the two indices equal
+$h$. The two mixed cases use this disjointness; the selected case uses the
+selected injection; the other case uses index equality followed by the
+corresponding bijection's injectivity.
+
+\lean{Copying/OpeningFiber}{22}{25}{Opening.Fiber.lift}
+
+\lean{Copying/OpeningFiber}{27}{28}{Opening.Fiber.lift_same}
+
+\lean{Copying/OpeningFiber}{29}{30}{Opening.Fiber.lift_other}
+
+\lean{Copying/OpeningFiber}{32}{35}{Opening.Fiber.tag_not_other}
+
+\lean{Copying/OpeningFiber}{37}{57}{Opening.Fiber.lift_injective}
+
+The range at an old selected occurrence is exactly the range of the selected
+map at that old occurrence. The same is true for a new occurrence. In each
+forward direction, an index other than $h$ is ruled out by its tag; the
+reverse direction supplies index $h$. Every old non-selected occurrence has
+a preimage obtained using its component bijection's inverse.
+
+\lean{Copying/OpeningFiber}{59}{70}{Opening.Fiber.range_same}
+
+\lean{Copying/OpeningFiber}{72}{82}{Opening.Fiber.range_extra}
+
+\lean{Copying/OpeningFiber}{84}{86}{Opening.Fiber.range_other}
+
+For actual expansion, the unchanged-family premise supplies a recursive
+isomorphism $K_e\cong F_e$ at each non-selected index. Apply the dependent
+construction separately to vertices and edges, using the opening realization
+at the selected index. Whole-graph vertices retain the outer host summand and
+shift the component fibers; whole-graph edges are just the edge fibers.
+Their injectivity follows from the dependent injection lemma and host/fiber
+disjointness.
+
+\lean{Copying/ApplicationOpeningExpansion}{14}{15}{Application.OpeningCertificate.otherIso}
+
+\lean{Copying/ApplicationOpeningExpansion}{17}{18}{Application.OpeningCertificate.fiberVertices}
+
+\lean{Copying/ApplicationOpeningExpansion}{19}{20}{Application.OpeningCertificate.fiberEdges}
+
+\lean{Copying/ApplicationOpeningExpansion}{21}{23}{Application.OpeningCertificate.expansionVertices}
+
+\lean{Copying/ApplicationOpeningExpansion}{24}{24}{Application.OpeningCertificate.expansionEdges}
+
+\lean{Copying/ApplicationOpeningExpansion}{26}{31}{Application.OpeningCertificate.expansion_vertices_injective}
+
+\lean{Copying/ApplicationOpeningExpansion}{32}{34}{Application.OpeningCertificate.expansion_edges_injective}
+
+The expanded range lemmas keep every outer host vertex and every occurrence
+of a non-selected component. At the selected component they reduce to its
+certificate's exact images; new body occurrences use the new-range lemma.
+Distinct component indices ensure that none of the unchanged occurrences is
+mistaken for a deleted application, lambda, box, function wire or thunk wire.
+
+\lean{Copying/ApplicationOpeningExpansion}{36}{55}{Application.OpeningCertificate.expansion_vertex_range}
+
+\lean{Copying/ApplicationOpeningExpansion}{57}{74}{Application.OpeningCertificate.expansion_edge_range}
+
+The host-port equation fixes host attachments. The selected-component port
+equation uses the certificate and its ambient origin map; the other-component
+port equation uses the corresponding recursive isomorphism. Internal cases
+use the appropriate dependent-map clause, and boundary cases reduce to the
+host-port equation. The expanded presentation's source and target laws then
+follow for old selected edges from the occurrence equations and for new body
+edges from body-port compatibility.
+
+\lean{Copying/ApplicationOpeningExpansion}{76}{78}{Application.OpeningCertificate.expansion_host_port}
+
+\lean{Copying/ApplicationOpeningExpansion}{80}{90}{Application.OpeningCertificate.expansion_selected_port}
+
+\lean{Copying/ApplicationOpeningExpansion}{92}{100}{Application.OpeningCertificate.expansion_other_port}
+
+\lean{Copying/ApplicationOpeningExpansion}{102}{113}{Application.OpeningCertificate.expansion_source}
+
+\lean{Copying/ApplicationOpeningExpansion}{115}{126}{Application.OpeningCertificate.expansion_target}
+
+The expanded realization combines these injections, images and port laws.
+At a selected edge it uses the original realization's recursive label and
+incidence equations. At every other edge it uses the unchanged component's
+recursive isomorphism. Its token equation follows from the selected port law
+and the original certificate. This constructs a certificate for every actual
+simultaneous-expansion rewrite, preserving all other component contents.
+
+\lean{Copying/ApplicationOpeningExpansion}{128}{192}{Application.OpeningCertificate.expansionRealization}
+
+\lean{Copying/ApplicationOpeningExpansion}{194}{201}{Application.OpeningCertificate.expand}
+
+\Needspace{12\baselineskip}
+\subsection{Derivation from the unchanged transition relation}
+
+An opening witness hides the actual opened box's depth, interface counts and
+body graph while retaining its full certificate. Two witnesses for one source
+request are coherent by unpacking their certificates and applying the
+independent-body comparison. This existential packaging permits induction over
+the machine's depth-indexed rewrite relation.
+
+\lean{Copying/ApplicationCoherence}{9}{12}{Application.OpeningWitness}
+
+\lean{Copying/ApplicationCoherence}{14}{19}{Application.OpeningWitness.coherent}
+
+For an actual local transition recognized as application, the beta case
+supplies the original local certificate. Every other local constructor is
+excluded by unique head recognition: its primitive label differs from
+application. Stability is still present in the beta constructor.
+Induction over an arbitrary actual rewrite then produces its witness. The
+local case is just proved. For renaming, plugging and expansion, recognition
+reflects into the selected component, the induction hypothesis produces its
+witness, and the corresponding certificate transport constructs the result.
+
+\lean{Copying/ApplicationCoherence}{26}{55}{Combined.local_application_certificate}
+
+\lean{Copying/ApplicationCoherence}{59}{74}{Combined.rewrite_application_certificate}
+
+\termdef{application-successor-coherence}
+\emph{Application successor coherence} states: if a source request is at an
+application head and has two actual rewrite successors, those complete search
+states are recursively isomorphic. Derive a witness from each rewrite and
+compare them. For full machine steps, a search transition from rewrite mode is
+impossible, so both steps reduce to the rewrite theorem. No global determinism
+assumption, template law or body-termination assumption is used.
+
+\lean{Copying/ApplicationCoherence}{77}{81}{Combined.application_rewrite_deterministic}
+
+\lean{Copying/ApplicationCoherence}{83}{90}{Combined.application_step_deterministic}
+
+For a chosen actual application step $s\to t$, the successful-cost spectrum
+satisfies $T_n(s)\iff\exists m\,(n=m+1\land T_m(t))$. A successful zero-step
+run cannot start at a state with a transition. Any nonempty successful run
+has a first successor isomorphic to $t$, and execution-isomorphism invariance
+transports its remaining cost; the reverse direction prepends the chosen step.
+Unbounded application steps lift finite-depth steps, so their successors are
+related by the existing representation relation. Representation equivalence
+then gives their machine equivalence for every cost order.
+
+\lean{Copying/ApplicationCoherence}{92}{95}{Combined.application_cost_spectrum}
+
+\lean{Copying/ApplicationCoherence}{97}{104}{Combined.application_unbounded_deterministic}
+
+\lean{Copying/ApplicationCoherence}{106}{109}{Combined.application_unbounded_equiv}
+
+\Needspace{12\baselineskip}
+\subsection{Only copying remains in successor coherence}
+
+\termdef{copying-coherence-frontier}
+The \emph{copying coherence frontier} is an exhaustive theorem about the
+existing machine. Two actual rewrites either have recursively isomorphic
+successors or share a term-contraction head. Start from the earlier exhaustive
+classification into coherent, application or copying cases, and discharge the
+application case by the new theorem. For full steps, search successors are
+unique, rewrite/search overlap is impossible, and the rewrite classification
+applies otherwise.
+
+\lean{Copying/CombinedCopyingFrontier}{9}{16}{Combined.rewrite_coherent_or_copying}
+
+\lean{Copying/CombinedCopyingFrontier}{18}{28}{Combined.step_coherent_or_copying}
+
+Consequently, excluding a rewrite-mode term-contraction request suffices for
+successor coherence and for the exact one-step successful-cost decomposition.
+The two corollaries resolve the copying alternative and apply the existing
+coherent-step cost lemma. The unbounded classification follows by unpacking
+both lifted steps and lifting the resulting state isomorphism. None of these
+results resolves the remaining copying alternative.
+
+\lean{Copying/CombinedCopyingFrontier}{30}{33}{Combined.step_deterministic_away_copying}
+
+\lean{Copying/CombinedCopyingFrontier}{35}{39}{Combined.cost_spectrum_away_copying}
+
+\lean{Copying/CombinedCopyingFrontier}{41}{49}{Combined.unbounded_coherent_or_copying}
+
+\Needspace{12\baselineskip}
+\subsection{Exact application costs and host continuations}
+
+\termdef{application-cost-handoff}
+An \emph{application cost handoff} is the exact law
+\[
+T_n(\operatorname{before}(B,G),\mathsf{search},0)
+\iff \exists r\;\bigl(n=r+6\ \land\
+T_r(\operatorname{after}(B,G),\mathsf{search},0)\bigr),
+\]
+where $G$ satisfies the original stability premise. Apply the exact search-cost
+law to the five pre-compute transitions, then application coherence to the
+beta transition. Collect the six successor equations by natural-number
+arithmetic. Conversely, prepend these six steps to any successful reduct run.
+Existentially forgetting the exact cost gives termination equivalence between
+the initial and opened-body states. In particular, failure of the reduct to
+terminate cannot be hidden by application.
+
+\lean{Copying/ApplicationCost}{9}{20}{Application.opening_cost_iff}
+
+\lean{Copying/ApplicationCost}{24}{30}{Application.opening_terminates_iff}
+
+For an arbitrary typed plugged host, reboundary and plug the original beta
+step. The mapped source head remains application, so the step-coherence theorem
+compares every possible successor with this actual plugged reduct. For an
+arbitrary serial host, transport the five search steps and beta transition to
+their actual host attachments. Apply the same cost decomposition to obtain
+six plus the successful cost of the hosted reduct. The continuation may
+compute further, diverge or get stuck; its success is not presumed.
+
+\lean{Copying/ApplicationCost}{33}{44}{Application.host_successor}
+
+\lean{Copying/ApplicationCost}{48}{66}{Application.host_handoff}
+
+\Needspace{12\baselineskip}
+\subsection{Regressions with unchanged translated bodies}
+
+A translated constant with one unused parameter returns in one search step
+after opening. A translated nested lambda likewise returns in one search step
+without opening its inner box. Applying the six-step handoff and the exact
+zero-cost law at the final state proves that both initial applications have
+successful cost exactly seven, for every stable argument with the required
+interface. These are all-run statements in the full combined machine.
+
+\lean{Copying/ApplicationCoherenceExamples}{9}{17}{Application.Examples.constant_cost_iff}
+
+\lean{Copying/ApplicationCoherenceExamples}{19}{27}{Application.Examples.nested_cost_iff}
+
+The translated variable retains its original $D_{1,1}$ distributor. Its next
+search transition after beta is a copy request, so its successful spectrum is
+seven plus that request's spectrum. If the total were at most seven, the
+remaining cost would be zero. A zero-step run cannot be successful at rewrite
+mode, proving the no-early-success regression. This deliberately leaves the
+actual remaining copying computation to the copying development.
+
+\lean{Copying/ApplicationCoherenceExamples}{31}{38}{Application.Examples.variable_cost_iff}
+
+\lean{Copying/ApplicationCoherenceExamples}{41}{48}{Application.Examples.variable_no_early_success}
+
+A reference argument retains its atom attachment and satisfies the existing
+stable-instance lemma, so the constant-body result specializes to successful
+cost seven. Finally, the existing closed constant-body application program
+has this same exact cost in the unbounded machine after every finite depth
+padding: use the already proved initial-cost padding equivalence and exact
+finite/unbounded successful-run correspondence, then the constant cost theorem.
+Concrete divergent callbacks and repeated closure use still require the
+remaining copying and template development; these results do not claim those
+end-to-end regressions.
+
+\lean{Copying/ApplicationCoherenceExamples}{51}{53}{Application.Examples.reference_argument_cost_iff}
+
+\lean{Copying/ApplicationCoherenceExamples}{56}{60}{Application.Examples.constant_pad_cost_iff}
+
