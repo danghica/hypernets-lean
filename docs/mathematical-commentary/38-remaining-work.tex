@@ -30,7 +30,7 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-box-permutation-overlaps}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-residual-specimens}.
 The full copying machine now has proved successor coherence, refocusing,
 deterministic representation-class semantics, and a concrete coordinate
 specimen system with synchronized-search locality. Exact execution costs and
@@ -44,6 +44,10 @@ are omitted below. BPerm output closure, operational input safety and its
 local beta-opening diagram are proved. The local shallow copying diagram now
 tracks both residual boxes, and beta opening has equal exact whole-host costs
 from the redex input (Section~\ref{sec:copying-box-permutation-overlaps}).
+The shallow and all-deep copying diagrams now have genuine recursive residual
+certificates, including assembly with mixed contributions and original
+quasi-specimen packaging. The closed all-deep copying case has proved forward
+and converse robustness conclusions (Section~\ref{sec:copying-residual-specimens}).
 The four remaining tasks are:
 \begin{enumerate}
 \item Prove any further stability/copyability invariants required by the
@@ -61,10 +65,11 @@ zero-input qualification of Lemma~E.1.
 \item Complete the remaining output-closure, input-safety and
 forward/converse robustness obligations for the eleven template families in Table~3's dependency order, including the
 indirect copying and garbage-collection dependencies.
-For BPerm, prove deep-overlap transfer and mixed shallow/deep copying cases,
-construct residual specimen certificates for the proved local diagrams, and
-assemble forward/converse robustness. The structural two-copy derivation
-does not itself supply that semantic residual argument.
+For BPerm, prove the remaining deep-operation transfer cases, including beta
+opening, and show that every overlap of an arbitrary original specimen admits
+the required shallow/deep or mixed decomposition. Discharge the component
+rewrite and residual-certificate premises of the proved framed transfer law
+in all these cases, then assemble universal forward/converse robustness.
 \item Prove the semantic weakening laws, assemble Figure~22's equivalence chain,
 and obtain Proposition~12.2 for arbitrary distinct-list environments.
 \end{enumerate}

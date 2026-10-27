@@ -9,37 +9,37 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: BPerm copying and exact contextual beta costs
+## Latest milestone: genuine BPerm copying residual specimens
 
-**The local BPerm copying diagram is proved, and beta opening now preserves
-all exact successful costs in arbitrary typed hosts, from the redex input.**
-Copying uses the original rule on both sides: one compute step, or two transitions
-including search. The residual derivation explicitly accounts for both surviving
-boxes, the matched contraction tree and both original resource distributors.
-The boundary map fixes every external input and retains both copy branches.
+**Shallow and all-deep copying now have genuine recursive residual certificates,
+and the closed all-deep copying case satisfies forward and converse robustness.**
+The certificates retain both copies, the original contraction tree and the term
+and atom distributors. They construct the existing specimen system's actual
+quasi-specimens, including tokens internal to an enclosing host.
 
-Beta opening uses six transitions on each side followed by recursively
-isomorphic states. Proved machine successor coherence cancels these equal
-prefixes inside a surrounding graph, so the cost comparison includes the host's
-continuation. Copying similarly reduces source cost comparison to residual
-cost comparison; that residual semantic obligation remains explicit.
-The Proposition 12.2 terms, Figure 16 translation and machine rules are unchanged.
+Proved expansion flattening and parallel distribution compose arbitrary shallow
+and nested contributions. A framed transfer theorem lifts actual matched local
+rewrites while retaining certified contributions elsewhere. Regression examples
+include nontrivial variable/atom swaps, mixed-depth occurrences, a real unary
+host, and self-application without a termination assumption. The Proposition
+12.2 terms, Figure 16 translation and machine rules are unchanged.
 
-Appendix B.1 removes the local shallow copying diagram from outstanding work.
-**Full BPerm robustness remains open:** deep overlaps, mixed shallow/deep
-copying and residual specimen certificates still need proofs. The other template
-families, paper correspondence, semantic renaming/substitution, weakening and
-Figure 22 remain in the four broader packages. **Proposition 12.2 is unproved.**
+Appendix B.1 removes the completed copying residual-certificate obligation.
+**Full BPerm robustness remains open:** exhaustive overlap decomposition and
+transfer for the remaining operations, including deep beta, must still connect
+every original specimen to these proved cases. The other template families,
+paper correspondence, semantic renaming/substitution, weakening and Figure 22
+remain in the four broader packages. **Proposition 12.2 is unproved.**
 
-Commentary Section 102 explains all 57 new declarations with immutable links.
-Full build: 476 jobs. All 2,619 axiom audits pass (6 abstract, 477 graph,
-2,136 copying), with no `sorryAx` or project-specific axioms.
+Commentary Section 103 explains all 94 new declarations with immutable links.
+Full build: 485 jobs. All 2,713 axiom audits pass (6 abstract, 494 graph,
+2,213 copying), with no `sorryAx` or project-specific axioms.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-This milestone closes the local shallow copying diagram, but not an entire
-remaining template family. The substantial uncertainty in the other template
-proofs and paper correspondence does not justify a higher percentage yet.
+This closes the copying residual-certificate gap, but not a whole remaining
+template family. The difficulty of the other template proofs and paper
+correspondence still makes a higher estimate unjustified.
 
 ## Proposition 12.2: current extension target
 

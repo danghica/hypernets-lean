@@ -1,0 +1,458 @@
+\clearpage
+\section{Recursive copying residuals and genuine specimens}
+\label{sec:copying-residual-specimens}
+The copying diagrams of Section~\ref{sec:copying-box-permutation-overlaps}
+now have genuine recursive filling certificates. Both surviving branches are
+represented by the original \texttt{DeepFillingEdge} constructors, and the
+resulting closed residuals give the original specimen system's quasi-specimens.
+There is also a forward and converse robustness-case theorem for closed
+all-deep copying, with arbitrary certified bodies and every genuine unary
+contraction-tree presentation. The structural certificate construction itself
+allows arbitrary tree arity, arbitrary free variable and atom interfaces, and
+arbitrary nesting depth.
+
+The mathematical advance is the passage from a structural derivation to the
+particular recursive certificate consumed by the robustness framework.
+Previously it was not enough to know that a residual had been assembled from
+BPerm pairs: the required common context, paired filling families and token
+coordinates still had to be supplied. They are now constructed explicitly.
+The assembly and transfer results admit simultaneous shallow and deep
+contributions. They do not prove that every overlap of an arbitrary original
+specimen admits the required decomposition. Deep beta and the remaining
+operation cases, that exhaustive decomposition, and the assembly of universal
+forward/converse BPerm robustness remain unfinished. Proposition~12.2 is
+therefore still unproved. No program, translation clause, stability premise,
+copyability premise or machine rule is changed.
+
+\subsection{Flattening nested expansion}
+\termdef{recursive-expansion-flattening}
+Let $C$ be a typed finite host, $F_e$ a graph at each host edge, and $H_{e,f}$
+a graph at each edge of $F_e$. Write $C[F]$ for simultaneous expansion. The
+flattened family is $\widehat H_{(e,f)}=H_{e,f}$. There is an ordered,
+boundary-fixing isomorphism
+\[
+ (C[F])[\widehat H]\cong C[e\mapsto F_e[H_e]].
+\]
+Its internal vertices are reassociated by
+\[
+ (V_C+\textstyle\sum_e V_{F_e})+
+   \textstyle\sum_{(e,f)}V_{H_{e,f}}
+ \cong V_C+\textstyle\sum_e(V_{F_e}+\sum_f V_{H_{e,f}}),
+\]
+and its edge bijection sends $((e,f),g)$ to $(e,(f,g))$.
+The definitions \texttt{flat}, \texttt{vertices} and \texttt{edges} give these
+maps and their inverses. Their two inverse laws are immediate on each tagged
+summand. All external positions remain fixed.
+
+\lean{Graph/ExpansionAssociativity}{14}{14}{ExpansionAssoc.flat}
+\lean{Graph/ExpansionAssociativity}{16}{27}{ExpansionAssoc.vertices}
+\lean{Graph/ExpansionAssociativity}{29}{34}{ExpansionAssoc.edges}
+
+\Needspace{12\baselineskip}
+The host-coordinate equation says that embedding a vertex of $C$ twice agrees
+with embedding it once after reassociation. The middle-coordinate equation
+says the same for a vertex of $F_e$. For internal vertices these are the
+corresponding tag equations. At inputs and outputs, the middle equation reduces
+to the host equation at the relevant source or target port. The two port lemmas
+unfold incidence-list mapping and identify the port of $(e,f)$ with the insertion
+of the corresponding port of $f$.
+
+\lean{Graph/ExpansionAssociativity}{36}{39}{ExpansionAssoc.map_host}
+\lean{Graph/ExpansionAssociativity}{41}{48}{ExpansionAssoc.map_middle}
+\lean{Graph/ExpansionAssociativity}{50}{52}{ExpansionAssoc.sourcePort}
+\lean{Graph/ExpansionAssociativity}{54}{56}{ExpansionAssoc.targetPort}
+
+The insertion equation now handles a vertex of $H_{e,f}$: internal vertices
+follow reassociation, whereas boundary vertices use a port lemma followed by
+the middle equation. Finally \texttt{iso} combines the two carrier bijections.
+Vertex and edge labels are unchanged; mapping each ordered source or target
+list gives equality pointwise by the insertion equation. This proof imposes
+no acyclicity or absence-of-self-loops condition on the host.
+
+\lean{Graph/ExpansionAssociativity}{59}{69}{ExpansionAssoc.map_insert}
+\lean{Graph/ExpansionAssociativity}{72}{87}{ExpansionAssoc.iso}
+
+\subsection{Expansion through finite parallel assembly}
+\termdef{parallel-filling-assembly}
+Let $C_a$ be a finite family of contexts with a chosen ordered boundary shuffle
+$B$, and let $F_{a,e}$ be their edge fillings. Expansion commutes with their
+original parallel assembly:
+\[
+ (\mathop{\|}\nolimits_B C_a)[(a,e)\mapsto F_{a,e}]
+ \cong \mathop{\|}\nolimits_B(C_a[F_a]).
+\]
+The definition \texttt{family} supplies the flattened family. The vertex
+bijection sends a tagged host vertex to the same component's host summand,
+and a tagged inserted vertex to that component's inserted summand. The edge
+bijection reassociates $((a,e),g)$ to $(a,(e,g))$. The explicit inverse maps
+verify both inverse equations by cases.
+
+\lean{Graph/ParallelExpansion}{14}{14}{ParallelExpansion.family}
+\lean{Graph/ParallelExpansion}{16}{21}{ParallelExpansion.vertices}
+\lean{Graph/ParallelExpansion}{23}{28}{ParallelExpansion.edges}
+
+The host embedding law respects the original shuffle at inputs and outputs.
+The source- and target-port equations unfold the mapped incidence lists.
+For an inserted boundary vertex these equations reduce compatibility to the
+host embedding law; inserted internal vertices are immediate. The final
+isomorphism checks ordered incidence by mapping the insertion law over each
+list. Neither the shuffle nor the enumeration of components is replaced.
+
+\lean{Graph/ParallelExpansion}{30}{34}{ParallelExpansion.map_host}
+\lean{Graph/ParallelExpansion}{36}{38}{ParallelExpansion.sourcePort}
+\lean{Graph/ParallelExpansion}{40}{42}{ParallelExpansion.targetPort}
+\lean{Graph/ParallelExpansion}{44}{55}{ParallelExpansion.map_insert}
+\lean{Graph/ParallelExpansion}{57}{72}{ParallelExpansion.iso}
+
+\subsection{Explicit recursive filling witnesses}
+\termdef{recursive-filling-witness}
+For a pre-template $T$ and graphs $G,H:I\to O$, a
+\texttt{FillingWitness} consists of a focus-free common context $C$, two
+edge families $L,R$, an original \texttt{DeepFillingEdge} certificate at every
+edge of $C$, and boundary-fixing recursive isomorphisms
+\[
+ C[L]\cong G,\qquad C[R]\cong H.
+\]
+The edge certificates distinguish retained corollas, actual template pairs
+at holes, and recursive fillings within boxes. This structure is proof data
+about graph assembly, not a new semantic relation or an extra constructor of
+\texttt{DeepFilling}. The lemma \texttt{paired} packages the original expansion
+constructor. The lemma \texttt{focusFree} applies its established recursive
+focus-freedom theorem and transports that property along the endpoint
+isomorphisms. The construction \texttt{congr} composes only those endpoint
+isomorphisms, preserving all common-context data.
+
+\lean{Copying/FillingWitness}{12}{21}{FillingWitness}
+\lean{Copying/FillingWitness}{26}{28}{FillingWitness.paired}
+\lean{Copying/FillingWitness}{31}{33}{FillingWitness.focusFree}
+\lean{Copying/FillingWitness}{36}{38}{FillingWitness.congr}
+
+\Needspace{12\baselineskip}
+The reflexive witness retains each original edge as its own labelled corolla;
+corolla collapse gives the endpoint isomorphisms. An existing
+\texttt{DeepFilling} proof with a focus-free context and specified endpoint
+isomorphisms also proves existence of a witness. The definition
+\texttt{ofDeepFilling} selects such a witness using classical choice; its type
+asserts the endpoints, not definitional equality with the supplied context.
+For an actual $T$-pair, \texttt{of\_rel} is more explicit: it uses a single
+hole corolla with the supplied natural-number name, fills it on the two sides,
+and collapses the surrounding corolla. Thus the chosen name is real context
+data. Equal-interface reindexing, in both the graph and translation APIs,
+follows by equality elimination and introduces no new filling rule.
+
+\lean{Copying/FillingWitness}{41}{48}{FillingWitness.refl}
+\lean{Copying/FillingWitness}{51}{53}{FillingWitness.ofDeepFilling}
+\lean{Copying/FillingWitness}{56}{73}{FillingWitness.of_rel}
+\lean{Copying/FillingWitness}{75}{77}{FillingWitness.reboundary}
+\lean{Copying/FillingWitness}{79}{81}{FillingWitness.interfaces}
+
+\subsection{Assembly without new certificate axioms}
+Suppose each edge $e$ of a host $C$ has a witness for $G_e,H_e$. First expand
+$C$ by the witness contexts. Its edges are pairs $(e,f)$, so use the original
+left and right family at $f$ and the original recursive edge certificate there.
+The new context is focus-free because each inserted context is focus-free.
+Flattening followed by componentwise endpoint isomorphisms proves that the
+resulting endpoints are $C[G]$ and $C[H]$. The host itself may contain holes:
+all its edges have been expanded by the supplied focus-free contexts.
+
+\lean{Copying/FillingAssembly}{11}{28}{FillingWitness.expand}
+
+Finite parallel assembly uses the same argument and the parallel-expansion
+isomorphism. Tensor is its Boolean-family instance with the original ordered
+concatenation. Serial assembly expands the existing two-edge serial pattern;
+the two components' interfaces already provide the required typing. Consequently
+one component may contain shallow pairs and another arbitrarily nested pairs.
+
+\lean{Copying/FillingAssembly}{31}{48}{FillingWitness.parallel}
+\lean{Copying/FillingAssembly}{51}{57}{FillingWitness.tensor}
+\lean{Copying/FillingAssembly}{60}{66}{FillingWitness.serial}
+
+For a box, keep the original bound-variable, free-variable and atom counts,
+and place the witness context inside that box. Its sole edge gets the existing
+\texttt{boxed} certificate, whose inner proof is \texttt{paired}. The left
+and right labels contain the actual expanded bodies. Relabelled corolla
+collapse and congruence of boxing identify them with the intended endpoint
+boxes. The construction does not evaluate inside a box or erase its body.
+
+\lean{Copying/FillingAssembly}{69}{82}{FillingWitness.boxed}
+
+\subsection{Both branches of the literal copying rule}
+\termdef{copying-residual-filling}
+Let $T$ have $n+1$ term inputs. A certified pair $G,H:*\to E_{k,h}$ has a
+certified source pair by serially preceding it with the unchanged contraction
+tree. The tree's primitive-label theorem supplies its focus-free reflexive
+witness. To certify the two-copy assembly, independently supply an active and
+a retained witness for the same endpoint pair. Their contexts and hole names
+may differ. Parallel assembly combines the active witness with the original
+residual tree followed by the retained witness, then applies the original
+boundary reindexing. The residual tree's focus-freedom follows from its
+contraction and weakening labels.
+
+\lean{Copying/CopyFillingWitness}{11}{15}{FillingWitness.copyingBefore}
+\lean{Copying/CopyFillingWitness}{19}{27}{FillingWitness.copies}
+
+The complete \texttt{copyingAfter} witness appends the unchanged two-use term
+and atom distributors. Their label invariants supply the reflexive witness;
+both copies and both distributor sorts remain actual graph components.
+The lambda-payload witness prefixes the original lambda operation to a boxed
+witness, with the same interface cast as the existing translation. Applying
+this construction to a body witness and using it in both copy branches gives
+\texttt{deepCopy}. There is no termination assumption on either body.
+
+\lean{Copying/CopyFillingWitness}{31}{37}{FillingWitness.copyingAfter}
+\lean{Copying/CopyFillingWitness}{41}{44}{FillingWitness.lambdaPayload}
+\lean{Copying/CopyFillingWitness}{47}{51}{FillingWitness.deepCopy}
+
+For the shallow BPerm case, let $f:B\to C$ be an ordered body boundary
+isomorphism with precisely the free action $p$ and fixed bound argument, and
+assume $B$ focus-free. The earlier lambda-pair theorem gives a genuine
+BPerm pair for the box and its externally compensated partner.
+\texttt{payloadWitness} places that pair in a named hole and prefixes the
+unchanged lambda head. Its focus-freedom follows from the body and interface
+cast. The source witness adds the actual contraction tree and moves the
+compensation to the outer boundary using the proved serial isomorphism.
+
+\lean{Copying/CopyFillingWitness}{62}{67}{BoxPermutation.Copying.payloadWitness}
+\lean{Copying/CopyFillingWitness}{70}{74}{BoxPermutation.Copying.sourceWitness}
+
+\Needspace{10\baselineskip}
+The residual witness uses names $0$ and $1$ for the two independently constructed
+branch witnesses. The proved naturality of the complete copying reduct moves
+the compensation to its external outputs. This supplies actual recursive
+certificates for the previously proved shallow copying diagram. It does not
+assume semantic soundness of the old structural derivation.
+For all-deep bodies, \texttt{deep\_diamond} pairs two original copying steps
+with the newly constructed residual witness. Lambda shape proves both
+copyability premises; arbitrary body certificates are duplicated literally.
+
+\lean{Copying/CopyFillingWitness}{78}{83}{BoxPermutation.Copying.residualWitness}
+\lean{Copying/CopyFillingWitness}{87}{93}{BoxPermutation.Copying.deep_diamond}
+
+\subsection{From a witness to an original quasi-specimen}
+\termdef{unrestricted-bperm-contexts}
+The paper proves BPerm robustness over unrestricted contexts in
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS6}{Appendix~H.3.6}.
+Binding-free contexts are a later requirement for certain operational templates,
+not a restriction to impose on these copying residuals. Accordingly
+\texttt{allContexts} is the predicate constantly true. This is an allowed-context
+parameter of the existing specimen system; it does not change the machine,
+its rootedness predicate, or its observation definition.
+
+\lean{Copying/FillingSpecimens}{11}{11}{Specimens.allContexts}
+
+For a token $q=(m,v)$ in the common context, first embed $v$ in each expansion,
+then map it by the corresponding endpoint isomorphism. These are
+\texttt{leftPosition} and \texttt{rightPosition}; the mode is unchanged.
+Boundary-fixing isomorphisms and host insertion imply that an input position
+remains that same input on both sides, by definitional equality.
+
+\lean{Copying/FillingSpecimens}{17}{18}{FillingWitness.leftPosition}
+\lean{Copying/FillingSpecimens}{19}{20}{FillingWitness.rightPosition}
+\lean{Copying/FillingSpecimens}{22}{23}{FillingWitness.leftPosition_input}
+\lean{Copying/FillingSpecimens}{25}{26}{FillingWitness.rightPosition_input}
+
+For closed-interface endpoints $G,H:*\to\varnothing$, assume both are
+hole-free and that the context token has term type. The witness then constructs
+an original \texttt{Specimen}: its context and edge families are exactly those
+already supplied; global hole-freedom of the expansions follows by the endpoint
+isomorphisms. The two state comparison lemmas identify its projections with the
+actual endpoint states in the representation-class machine. Their proofs use
+quotient soundness for recursive state isomorphism, preserving both mode and
+vertex. There is no change to the quotient relation.
+
+\lean{Copying/FillingSpecimens}{29}{42}{FillingWitness.specimen}
+\lean{Copying/FillingSpecimens}{44}{48}{FillingWitness.specimen_left}
+\lean{Copying/FillingSpecimens}{50}{54}{FillingWitness.specimen_right}
+
+\Needspace{17\baselineskip}
+If the mode is not rewrite and $T$ is output-closed, these identities give a
+quasi-specimen up to equality. In detail, assume the two rootedness hypotheses
+from the existing definition of \texttt{Quasi}, use the constructed specimen,
+and transport rootedness through the state identities. The two endpoint
+relations are those same identities in the required orientations. The opposite
+system uses the same specimen with exchanged projections and rootedness
+proofs; no symmetry premise on $T$ is required. Specialising the token to
+search at the sole input gives \texttt{initial\_quasi}.
+
+\lean{Copying/FillingSpecimens}{58}{72}{FillingWitness.quasi}
+\lean{Copying/FillingSpecimens}{76}{90}{FillingWitness.quasi_opposite}
+\lean{Copying/FillingSpecimens}{93}{97}{FillingWitness.initial_quasi}
+
+For a witness built by host expansion, a token at an original host vertex maps
+exactly to that vertex's embedding in the corresponding endpoint expansion.
+This follows from the flattening host equation and the componentwise
+isomorphism, or directly by cases on the vertex. Thus
+\texttt{expanded\_quasi} applies at every typed non-rewrite host token, including
+internal host vertices. It requires hole-freedom of both whole expanded graphs,
+not a claim that a local return is globally final.
+
+\lean{Copying/FillingSpecimens}{100}{105}{FillingWitness.expand_leftPosition}
+\lean{Copying/FillingSpecimens}{107}{112}{FillingWitness.expand_rightPosition}
+\lean{Copying/FillingSpecimens}{116}{128}{FillingWitness.expanded_quasi}
+
+\subsection{Framed transfer and exact one-step robustness cases}
+\termdef{framed-residual-transfer}
+Let $C:*\to\varnothing$ be a common host, and suppose its selected edge is
+filled by a genuine rewrite on each side. Other component fillings are
+unchanged within each side, but may differ between sides. Suppose the two
+local targets return search to the same selected input position, and every
+pair of target components has a recursive filling witness. Then
+\texttt{framed\_rewrite} proves an original full-machine step on each expanded
+host and an equality-up-to quasi-specimen for the residuals. Each step is an
+instance of the existing simultaneous-expansion rewrite constructor. Its
+return vertex is the host source port at that selected input; the port-label
+law supplies its term typing. The residual follows from
+\texttt{expanded\_quasi}. Components outside the rewritten slot can contain
+arbitrary shallow and deep certified contributions.
+
+\lean{Copying/FramedFillingTransfer}{14}{33}{FillingWitness.framed_rewrite}
+
+Equality-up-to implies refinement-up-to for any cost preorders $P,R$:
+substitute the equal states, then use reflexivity of machine refinement.
+The lemma \texttt{quasi\_exchange} reverses equality-up-to by keeping the same
+specimen and swapping its projections, roots and equality orientations.
+Both facts are independent of a particular graph template.
+
+\lean{Copying/FramedFillingTransfer}{37}{44}{FillingWitness.quasi_refines}
+\lean{Copying/FramedFillingTransfer}{48}{52}{FillingWitness.quasi_exchange}
+
+\termdef{matched-copying-robustness-case}
+Now let $s\to u$ and $t\to v$ be actual representation-class machine steps,
+with an equality-up-to residual between $u$ and $v$. For any independently
+presented step $s\to u'$, the proved determinism theorem gives $u'=u$.
+Choose $k=0$ additional steps on the left and $l=1$ on the right. Then
+$Q(1+k,l)$ is $Q(1,1)$ and holds by reflexivity of the cost preorder. The
+right path is the supplied step, and the residual is converted to
+refinement-up-to. This proves exactly the existential, non-stuck branch of
+the robustness conclusion for this matched case, with no determinism axiom.
+
+\lean{Copying/FramedFillingTransfer}{57}{65}{FillingWitness.matching_robust_case}
+
+\Needspace{14\baselineskip}
+For the closed all-deep copying instance, take any certified bodies
+$B,C:*\to E_{1,0}$ and any genuine tree $T$ with one input. The definitions
+\texttt{source} and \texttt{target} are the original pre-copy graph in rewrite
+mode and the original post-copy graph in search mode, each at input zero.
+The \texttt{step} theorem projects the literal local copy step to the proved
+class machine. The auxiliary hole-freedom lemma follows through lambda-head
+assembly, the original interface cast and boxing.
+
+\lean{Copying/DeepCopyRobustness}{11}{14}{BoxPermutation.DeepCopy.payload_closed}
+\lean{Copying/DeepCopyRobustness}{19}{20}{BoxPermutation.DeepCopy.source}
+\lean{Copying/DeepCopyRobustness}{21}{22}{BoxPermutation.DeepCopy.target}
+\lean{Copying/DeepCopyRobustness}{25}{27}{BoxPermutation.DeepCopy.step}
+
+Hole-freedom of each body gives hole-freedom of the copy reduct. Apply the
+new deep-copy witness and the initial quasi-specimen construction to obtain
+\texttt{quasi}; exchange the specimen projections for
+\texttt{quasi\_opposite}. The two robustness-case theorems combine these
+residuals with the two literal copying steps and the preceding matched-case
+argument. They quantify over every cost-preorder triple and every independent
+successor of the appropriate source. The closed-interface specialisation uses
+one tree input; the underlying residual certificate and local deep diagram
+retain arbitrary arity and open environments.
+
+\lean{Copying/DeepCopyRobustness}{30}{35}{BoxPermutation.DeepCopy.quasi}
+\lean{Copying/DeepCopyRobustness}{37}{42}{BoxPermutation.DeepCopy.quasi_opposite}
+\lean{Copying/DeepCopyRobustness}{46}{52}{BoxPermutation.DeepCopy.robust_case}
+\lean{Copying/DeepCopyRobustness}{55}{61}{BoxPermutation.DeepCopy.robust_case_opposite}
+
+\subsection{Nontrivial and host-internal checks}
+The shallow regression constructs a residual witness for the earlier nested
+body with a swap of both free variables and free atoms, for every tree arity
+and presentation. A second swap exchanges two free term ports with no atoms.
+The seed is the unchanged translation of variable zero in a three-variable
+environment; \texttt{changedSeed} applies the bound-fixing body action.
+The named leaf witness is the shallow BPerm payload certificate for this pair.
+
+\lean{Copying/CopyResidualExamples}{11}{13}{BoxPermutation.ResidualExamples.shallow}
+\lean{Copying/CopyResidualExamples}{15}{16}{BoxPermutation.ResidualExamples.swap}
+\lean{Copying/CopyResidualExamples}{18}{18}{BoxPermutation.ResidualExamples.seed}
+\lean{Copying/CopyResidualExamples}{19}{19}{BoxPermutation.ResidualExamples.changedSeed}
+\lean{Copying/CopyResidualExamples}{21}{23}{BoxPermutation.ResidualExamples.leaf}
+
+\Needspace{20\baselineskip}
+The graph \texttt{shallowBody} is a translated lambda. Applying the same
+nontrivial free action gives \texttt{changedShallow}; its payload witness
+is shallow at depth two. In the mixed assembly, the left component is this shallow witness and the
+right is the earlier leaf witness below one additional lambda box. The graphs
+\texttt{mixedLeft} and \texttt{mixedRight} retain a real binary-addition head
+and the original tensor assembly. The definition \texttt{mixed} certifies both
+components together. This is a structural copying regression; addition is
+not being asserted to successfully consume lambda values.
+
+\lean{Copying/CopyResidualExamples}{25}{26}{BoxPermutation.ResidualExamples.shallowBody}
+\lean{Copying/CopyResidualExamples}{27}{27}{BoxPermutation.ResidualExamples.changedShallow}
+\lean{Copying/CopyResidualExamples}{28}{30}{BoxPermutation.ResidualExamples.shallowPayload}
+\lean{Copying/CopyResidualExamples}{32}{34}{BoxPermutation.ResidualExamples.mixedLeft}
+\lean{Copying/CopyResidualExamples}{35}{38}{BoxPermutation.ResidualExamples.mixedRight}
+\lean{Copying/CopyResidualExamples}{42}{43}{BoxPermutation.ResidualExamples.mixed}
+
+The two additional original lambda payloads bind the first two of the three
+free term ports, producing \texttt{closedLeftBody} and
+\texttt{closedRightBody} with one remaining bound-argument port. The witness
+\texttt{closedBody} follows by two lambda-payload assemblies. Hole-freedom of
+the seed follows from translation; hole-freedom on its compensated side follows
+from the already proved primitive-label invariance of the structural BPerm
+pair. The shallow pair uses the same argument. Tensor, serial and lambda
+assembly prove \texttt{mixed\_closed} and \texttt{closed\_body\_closed}.
+The theorem \texttt{closed\_copy\_quasi} then checks both actual quasi-specimen
+orientations after the final outer copying step. Mixed shallow/deep occurrence
+inside the body is thus retained in both copies; this test does not replace
+the missing exhaustive mixed-overlap theorem.
+
+\lean{Copying/CopyResidualExamples}{45}{45}{BoxPermutation.ResidualExamples.closedLeftBody}
+\lean{Copying/CopyResidualExamples}{46}{46}{BoxPermutation.ResidualExamples.closedRightBody}
+\lean{Copying/CopyResidualExamples}{49}{50}{BoxPermutation.ResidualExamples.closedBody}
+\lean{Copying/CopyResidualExamples}{52}{55}{BoxPermutation.ResidualExamples.seed_closed}
+\lean{Copying/CopyResidualExamples}{57}{60}{BoxPermutation.ResidualExamples.shallow_closed}
+\lean{Copying/CopyResidualExamples}{62}{68}{BoxPermutation.ResidualExamples.mixed_closed}
+\lean{Copying/CopyResidualExamples}{71}{73}{BoxPermutation.ResidualExamples.closed_body_closed}
+\lean{Copying/CopyResidualExamples}{76}{84}{BoxPermutation.ResidualExamples.closed_copy_quasi}
+
+Finally, \texttt{host} is unary negation followed by a named closed hole at
+depth five; \texttt{selected} is that hole. The family retains negation and
+inserts a supplied closed graph in the selected slot. Its witness family
+retains the former and uses the supplied certificate for the latter. The
+\texttt{others} lemma proves equality of every unselected component by the
+Boolean edge tag and uniqueness of the selected corolla edge. Expansion
+preserves hole-freedom by cases on that same tag. The selected source port is
+an internal vertex, as checked by \texttt{token\_internal}.
+
+\lean{Copying/CopyResidualExamples}{86}{88}{BoxPermutation.ResidualExamples.host}
+\lean{Copying/CopyResidualExamples}{89}{89}{BoxPermutation.ResidualExamples.selected}
+\lean{Copying/CopyResidualExamples}{90}{96}{BoxPermutation.ResidualExamples.family}
+\lean{Copying/CopyResidualExamples}{98}{103}{BoxPermutation.ResidualExamples.familyWitness}
+\lean{Copying/CopyResidualExamples}{105}{110}{BoxPermutation.ResidualExamples.others}
+\lean{Copying/CopyResidualExamples}{112}{118}{BoxPermutation.ResidualExamples.filled_closed}
+\lean{Copying/CopyResidualExamples}{120}{121}{BoxPermutation.ResidualExamples.token_internal}
+
+\Needspace{11\baselineskip}
+The hosted diagram instantiates the actual framed-rewrite theorem with the
+two literal copy steps and the mixed body's deep-copy certificate. It proves
+both whole-host transitions and their residual quasi-specimen at the internal
+vertex. A final witness uses the unchanged translation of self-application;
+constructing its copying residual needs no totality or callback-termination
+assumption. None of these finite-prefix checks asserts that self-application,
+or the enclosing arithmetic examples, terminates.
+
+\lean{Copying/CopyResidualExamples}{125}{141}{BoxPermutation.ResidualExamples.hosted_diamond}
+\lean{Copying/CopyResidualExamples}{144}{146}{BoxPermutation.ResidualExamples.self_application}
+
+\subsection{Milestone boundary}
+The completed obligation is genuine recursive residual certification for the
+shallow and all-deep copying diagrams, including assembly with mixed
+contributions and original quasi-specimen packaging. The closed all-deep case
+also has the complete forward/converse robustness conclusion. The transfer
+result still takes the actual matched rewrite pair and its component
+certificates as hypotheses. They must be constructed for every overlap of
+an arbitrary original specimen; deep opening and the remaining operation
+cases also need their corresponding transfer arguments. These are the precise
+remaining BPerm tasks in Appendix~B.1. No whole-template robustness hypothesis
+has been discharged by merely renaming a structural derivation.
+
+The full build passes 485 jobs and all 2713 axiom audits, including all 94 new
+declarations. Only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound} occur. Estimated completion of the Proposition~12.2 project
+remains 60--70\% of mathematical effort, with low confidence: this milestone
+closes a specific proof gap but not an entire remaining template family.
