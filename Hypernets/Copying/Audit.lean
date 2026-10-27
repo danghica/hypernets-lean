@@ -1,4 +1,4 @@
-import Hypernets.Copying.BoxPermutationOpeningExamples
+import Hypernets.Copying.BoxPermutationOverlapExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -2158,3 +2158,62 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.nested_opening
 #print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.nested_successor_costs
 #print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.argument_retained
+
+-- BPerm copying naturality, residual diagrams, and exact contextual overlap costs.
+#print axioms Hypernets.Copying.BoundaryIso.reboundary
+#print axioms Hypernets.Copying.BoundaryIso.reboundary_edges
+#print axioms Hypernets.Copying.BoundaryIso.reboundary_input
+#print axioms Hypernets.Copying.BoundaryIso.reboundary_output
+#print axioms Hypernets.Copying.CopyRule.Boundary.retained
+#print axioms Hypernets.Copying.CopyRule.Boundary.retained_input
+#print axioms Hypernets.Copying.CopyRule.Boundary.retained_output
+#print axioms Hypernets.Copying.CopyRule.Boundary.raw
+#print axioms Hypernets.Copying.CopyRule.Boundary.copies
+#print axioms Hypernets.Copying.CopyRule.Boundary.copies_output
+#print axioms Hypernets.Copying.CopyRule.Boundary.copies_input
+#print axioms Hypernets.Copying.CopyRule.Boundary.compatible
+#print axioms Hypernets.Copying.CopyRule.Boundary.after
+#print axioms Hypernets.Copying.CopyRule.Boundary.after_input
+#print axioms Hypernets.Copying.CopyRule.Boundary.after_output
+#print axioms Hypernets.Copying.CopyRule.Boundary.after_leftEdge
+#print axioms Hypernets.Copying.CopyRule.Boundary.after_rightEdge
+#print axioms Hypernets.Copying.CopyRule.Boundary.after_residualEdge
+#print axioms Hypernets.Copying.CopyRule.Boundary.permuted
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.reboundary
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.copies
+#print axioms Hypernets.Copying.BoxPermutation.Derivation.copyingAfter
+#print axioms Hypernets.Copying.BoxPermutation.Copying.compensatedPayload
+#print axioms Hypernets.Copying.BoxPermutation.Copying.payloadIso
+#print axioms Hypernets.Copying.BoxPermutation.Copying.payload_pair
+#print axioms Hypernets.Copying.BoxPermutation.Copying.source_pair
+#print axioms Hypernets.Copying.BoxPermutation.Copying.residual_pair
+#print axioms Hypernets.Copying.BoxPermutation.Copying.copy_diamond
+#print axioms Hypernets.Copying.BoxPermutation.Copying.initial_diamond
+#print axioms Hypernets.Copying.BoxPermutation.Copying.boxEdge
+#print axioms Hypernets.Copying.BoxPermutation.Copying.residual_box_labels
+#print axioms Hypernets.Copying.BoxPermutation.Copying.residual_boxes_distinct
+#print axioms Hypernets.Copying.BoxPermutation.Copying.permuted_copying
+#print axioms Hypernets.Copying.Combined.castInterfaces
+#print axioms Hypernets.Copying.Combined.run_castInterfaces
+#print axioms Hypernets.Copying.Combined.StateIso.castInterfaces
+#print axioms Hypernets.Copying.Combined.equal_prefix_costs
+#print axioms Hypernets.Copying.Combined.equal_prefix_costs_plug
+#print axioms Hypernets.Copying.Combined.equal_prefix_spectra_iff
+#print axioms Hypernets.Copying.Combined.equal_prefix_costs_at
+#print axioms Hypernets.Copying.Combined.equal_prefix_spectra_at
+#print axioms Hypernets.Copying.BoxPermutation.Opening.successorIso
+#print axioms Hypernets.Copying.BoxPermutation.Opening.redex_costs
+#print axioms Hypernets.Copying.BoxPermutation.Opening.redex_costs_at
+#print axioms Hypernets.Copying.BoxPermutation.Opening.redex_termination_at
+#print axioms Hypernets.Copying.BoxPermutation.Copying.residual_spectra_at
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.changedBody
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.nested_copying
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.binary_boxes
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.unary_copying
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.third_input_fixed
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.nested_redex_costs
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.host
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.hole
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.hosted_redex_costs
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.selfApplication
+#print axioms Hypernets.Copying.BoxPermutation.OverlapExamples.self_application_copying

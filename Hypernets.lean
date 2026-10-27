@@ -121,3 +121,4 @@ import Hypernets.Copying.FullRefocusingExamples
 import Hypernets.Copying.SpecimenExamples
 import Hypernets.Copying.ContextualRobustnessExamples
 import Hypernets.Copying.BoxPermutationOpeningExamples
+import Hypernets.Copying.BoxPermutationOverlapExamples
