@@ -1,4 +1,4 @@
-import Hypernets.Copying.ContextualRobustnessExamples
+import Hypernets.Copying.BoxPermutationOpeningExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -2088,3 +2088,73 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.ContextualRobustnessExamples.focusFreePairs_not_closed
 #print axioms Hypernets.Copying.ContextualRobustnessExamples.nested_binders
 #print axioms Hypernets.Copying.ContextualRobustnessExamples.sourced_hole_required
+
+-- No-term-input safety, external permutation execution, and the BPerm / beta overlap.
+#print axioms Hypernets.Copying.PreTemplate.NoTermInputs
+#print axioms Hypernets.Copying.oneWay_of_no_term_inputs
+#print axioms Hypernets.Copying.PreTemplate.NoTermInputs.outputClosed
+#print axioms Hypernets.Copying.DeepFillingEdge.relation_at_hole
+#print axioms Hypernets.Copying.Specimen.not_entering
+#print axioms Hypernets.Copying.Specimens.inputSafe_of_no_term_inputs
+#print axioms Hypernets.Copying.BoxPermutation.template
+#print axioms Hypernets.Copying.BoxPermutation.template_no_term_inputs
+#print axioms Hypernets.Copying.BoxPermutation.template_outputClosed
+#print axioms Hypernets.Copying.BoxPermutation.template_inputSafe
+#print axioms Hypernets.Copying.TypedPermutation.blocks
+#print axioms Hypernets.Copying.TypedPermutation.append
+#print axioms Hypernets.Copying.TypedPermutation.append_left
+#print axioms Hypernets.Copying.TypedPermutation.append_right
+#print axioms Hypernets.Copying.Application.SpliceBoundary.bodyInsert
+#print axioms Hypernets.Copying.Application.SpliceBoundary.argumentInsert
+#print axioms Hypernets.Copying.Application.SpliceBoundary.rawBodyInsert
+#print axioms Hypernets.Copying.Application.SpliceBoundary.rawArgumentInsert
+#print axioms Hypernets.Copying.Application.SpliceBoundary.body_insert
+#print axioms Hypernets.Copying.Application.SpliceBoundary.argument_insert
+#print axioms Hypernets.Copying.Application.SpliceBoundary.ports
+#print axioms Hypernets.Copying.Application.SpliceBoundary.Action
+#print axioms Hypernets.Copying.Application.SpliceBoundary.body_commutes
+#print axioms Hypernets.Copying.Application.SpliceBoundary.argument_commutes
+#print axioms Hypernets.Copying.Application.SpliceBoundary.edges
+#print axioms Hypernets.Copying.Application.SpliceBoundary.iso
+#print axioms Hypernets.Copying.Application.SpliceBoundary.compensate
+#print axioms Hypernets.Copying.InterfacePermutation.PlugContext.context
+#print axioms Hypernets.Copying.InterfacePermutation.PlugContext.insert
+#print axioms Hypernets.Copying.InterfacePermutation.PlugContext.iso
+#print axioms Hypernets.Copying.InterfacePermutation.rewrite
+#print axioms Hypernets.Copying.InterfacePermutation.state
+#print axioms Hypernets.Copying.InterfacePermutation.step
+#print axioms Hypernets.Copying.InterfacePermutation.run
+#print axioms Hypernets.Copying.InterfacePermutation.final_iff
+#print axioms Hypernets.Copying.InterfacePermutation.roundtripState
+#print axioms Hypernets.Copying.InterfacePermutation.terminatesIn_iff
+#print axioms Hypernets.Copying.TypedPermutation.append_symm
+#print axioms Hypernets.Copying.TypedPermutation.symm_refl
+#print axioms Hypernets.Copying.InterfacePermutation.serial
+#print axioms Hypernets.Copying.InterfacePermutation.tensor
+#print axioms Hypernets.Copying.InterfacePermutation.reflIso
+#print axioms Hypernets.Copying.InterfacePermutation.tensor_left
+#print axioms Hypernets.Copying.TypedPermutation.cast_trans
+#print axioms Hypernets.Copying.BoxPermutation.Opening.interface
+#print axioms Hypernets.Copying.BoxPermutation.Opening.bodyPermutation
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Action
+#print axioms Hypernets.Copying.BoxPermutation.Opening.openIso
+#print axioms Hypernets.Copying.BoxPermutation.Opening.open_action
+#print axioms Hypernets.Copying.BoxPermutation.Opening.lambda_pair
+#print axioms Hypernets.Copying.BoxPermutation.Opening.source_pair
+#print axioms Hypernets.Copying.BoxPermutation.Opening.afterIso
+#print axioms Hypernets.Copying.BoxPermutation.Opening.afterCompensated
+#print axioms Hypernets.Copying.BoxPermutation.Opening.argument_edge
+#print axioms Hypernets.Copying.BoxPermutation.Opening.beta_diamond
+#print axioms Hypernets.Copying.BoxPermutation.Opening.opening_diamond
+#print axioms Hypernets.Copying.BoxPermutation.Opening.permuted_action
+#print axioms Hypernets.Copying.BoxPermutation.Opening.permuted_opening
+#print axioms Hypernets.Copying.BoxPermutation.Opening.successor_costs
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.swap
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.nestedBody
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.argument
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.swaps_variable
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.swaps_atom
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.fixes_bound
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.nested_opening
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.nested_successor_costs
+#print axioms Hypernets.Copying.BoxPermutation.Opening.Examples.argument_retained
