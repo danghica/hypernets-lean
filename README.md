@@ -9,43 +9,44 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: application coherence; copying is the sole remaining comparison
+## Latest milestone: copying coherence completes successor determinism
 
-**Application now has complete successor-state coherence** in the original
-combined machine. The proof includes the entire opened body, its ordered
-variable and atom attachments, every retained host occurrence and the resumed
-token. It compares independently represented box bodies and covers arbitrary
-recursive renaming, plugging and simultaneous expansion. Opening certificates
-are derived from actual rewrites; they add no operational premise.
+**Copying now has complete successor-state coherence** in the original combined
+machine. Independent matches may use different contraction-tree boundaries and
+recursively isomorphic payload descriptions. Their complete reducts are proved
+recursively isomorphic, including the retained tree, nested boxes, original
+distributors, host occurrences and resumed token. The proof covers recursive
+renaming, plugging and simultaneous expansion, and derives every certificate
+from an actual rewrite.
 
-An **exhaustive machine theorem** now shows that every pair of successors is
-coherent or originates at a copying request. Store, arithmetic and application
-comparisons are complete. Copying coherence and the other global machine laws
-remain unfinished.
+This closes the final case of **successor determinism for the full combined
+machine**, up to recursive graph representation, including its unbounded
+version. Every finite execution prefix contributes exactly its length to any
+successful run; every successful run from one state has the same cost.
 
-Every successful application execution has exactly **6 steps plus the cost of
-its actual opened-body continuation**. This law also holds under an arbitrary
-serial host and makes no assumption that the body terminates. Constant and
-nested-lambda bodies have exactly **7 successful steps**. The unchanged variable
-translation reaches its original copying request after seven steps and cannot
-already have terminated. Reference arguments and all finite paddings of the
-closed constant-body program retain the exact cost. Proposition 12.2's terms,
-Figure 16's translation, and the original stability premise are unchanged.
+Copying a constant, reference instance or lambda takes exactly **3 transitions**
+from the selected tree input: search, copy, return. Arbitrary payloads have an
+exact **2-step handoff** to their actual reduct, including under a serial host.
+Checked regressions cover nested lambda bodies, shared-reference store identity,
+and all finite paddings of a closed constant-copying graph. The original
+copyability and stability premises, Proposition 12.2's terms, and Figure 16's
+translation are unchanged.
 
-Appendix B.1 removes application from outstanding successor comparisons. Its
-four broad remaining packages stay open: further invariants and semantic
-renaming/substitution laws; copying coherence and global machine/specimen laws;
-the eleven-template argument; semantic weakening and the Figure 22 proof.
+Appendix B.1 removes copying coherence and unbounded determinism up to
+representation. Its four broad packages remain open: further invariants and
+semantic renaming/substitution laws; refocusing, focused-state correspondence
+and specimen locality; the eleven-template argument; semantic weakening and
+Figure 22. **Proposition 12.2 remains unproved.**
 
-Commentary Section 95 explains all 115 new declarations with immutable source
-links. Full build: 419 jobs. All three axiom audits pass (6 abstract, 477 graph,
-1,553 copying; 2,036 total), using only Lean's standard logical axioms.
+Commentary Section 96 explains all 167 new declarations with immutable source
+links. Full build: 436 jobs. All three axiom audits pass (6 abstract, 477 graph,
+1,720 copying; 2,203 total), using only Lean's standard logical axioms.
 
-Estimated completion by mathematical effort: **roughly 50–65%, with low
+Estimated completion by mathematical effort: **roughly 55–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-Application coherence closes a substantial subtask; the remaining copying,
-global machine, template and observational proofs still prevent a defensible
-narrower estimate. This is not a declaration or TODO count.
+The completed successor comparison is substantial, but refocusing, specimen,
+template and observational proofs still carry considerable uncertainty. This
+estimate is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target
 
@@ -68,8 +69,8 @@ including its single-use distributors, weakening, and ordered box interfaces.
 All seven Figure 16 clauses and the full recursive term translation now compile.
 Both unchanged proposition terms have concrete hypernets in arbitrary environments,
 with proved global language, focus-free, and hole-free properties. Full-syntax bijective graph renaming is now proved via explicit BPerm derivations;
-non-bijective graph renaming, graph substitution, the copying/store machine, and
-the final equivalence remain open.
+non-bijective graph renaming, graph substitution, the remaining copying/store
+machine laws, and the final equivalence remain open.
 
 Stable graphs (Definition 10.3) and copyable payloads (Definition 10.2) now
 have separate predicates and proved structural/renaming properties. The actual
@@ -947,5 +948,6 @@ inside the induction. The original shuffle and both two-use forests are retained
 constructor congruence also works at unequal padded allowances. Section 77 and
 Appendix B then recorded the remaining lambda-box interface correspondence. That milestone
 estimated **about 50% by mathematical effort** (broad plausible range **35–60%**).
-The concrete copying machine, robustness templates, and Proposition 12.2 remain
-unfinished; these structural renaming results do not assert their semantics.
+The remaining concrete machine laws, robustness templates, and Proposition 12.2
+are unfinished; the latest milestone above records the completed successor
+determinism. These structural renaming results do not assert template semantics.

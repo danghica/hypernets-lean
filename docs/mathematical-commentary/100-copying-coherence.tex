@@ -1,0 +1,905 @@
+\clearpage
+\section{Copying coherence and complete successor determinism}
+\label{sec:copying-successor-coherence}
+Copying now completes successor coherence for the original combined machine.
+For any two transitions $s\to t$ and $s\to u$, the entire successor states
+$t$ and $u$ are recursively isomorphic, including their token positions.
+The result covers independently chosen contraction-tree boundaries, all
+copyable payload families, recursive renaming, plugging, and simultaneous
+expansion. It lifts to the unbounded machine's representation relation.
+No determinism or certificate premise is added to the transition relation.
+
+The construction leaves Proposition~12.2's terms, the Figure~16 translation,
+the original copyability condition, and every stability condition unchanged.
+An isomorphic normal presentation of a payload is used only inside the proof.
+Lambda bodies remain complete recursive graphs; their contents are neither
+executed nor replaced by an interface summary when copying.
+
+\termdef{copying-successor-coherence}
+\emph{Copying successor coherence} means that all actual copying rewrites at
+one source request produce recursively isomorphic complete successor states.
+The key observation is that the literal reduct retains every original
+vertex and edge. It changes the selected source attachment to a fresh weakening
+wire and redirects the payload's ordered output attachments through the
+original distributors. One fresh payload copy and the distributor machinery
+are then added. Thus the result can be described relative to the entire source
+graph, without making the chosen tree boundary part of the description.
+
+The proof does not assert that two independently chosen contraction trees are
+isomorphic or even have the same number of external inputs. Instead it proves
+that each literal local reduct, and then each contextual reduct, realizes the
+same source-relative incidence description, up to recursive payload isomorphism.
+This distinguishes the result from the earlier transport theorem, which
+assumed a supplied isomorphism of tree presentations.
+
+The dependency chain is: payload normal forms and rigidity; unique active
+source frame and payload endpoint; a presentation retaining the whole source;
+a certificate for the literal reduct; transport through every constructor of
+\texttt{Rewrite}; comparison of two independently derived certificates; and
+complete successor determinism. Exact-cost consequences follow from the
+already proved transport of executions and finality along recursive isomorphism.
+
+Appendix~B.1 removes copying successor coherence and unbounded determinism up
+to representation from its outstanding obligations. Refocusing, specimen
+locality, the focused-graph correspondence, the template arguments, semantic
+weakening and Figure~22 remain open. The estimated completion is roughly
+55--70\% of mathematical effort, with low confidence. This range is a judgement
+about the remaining proofs, not a fraction of declarations or completed list
+entries; Proposition~12.2 is still unproved.
+
+\Needspace{12\baselineskip}
+\subsection{Normal presentations of copyable payloads}
+
+\termdef{copying-payload-normal-form}
+A \emph{copying payload normal form} is either a single primitive payload or
+the literal lambda edge followed by its boxed body. The datatype of plain
+codes distinguishes instance, constant, application, unary and binary
+operations. It retains the precise constant or operation parameter.
+The variable-interface sizes are respectively $0,0,2,1,2$; only an instance
+has an atom output, with atom-interface size one. The primitive map selects
+the original label, and the graph map constructs its original one-edge corolla
+at depth $d$. These definitions do not restrict copying to passive operations.
+
+\lean{Copying/CopyPayloadNormal}{8}{14}{CopyRule.PlainCode}
+
+\lean{Copying/CopyPayloadNormal}{16}{19}{CopyRule.PlainCode.variables}
+
+\lean{Copying/CopyPayloadNormal}{21}{23}{CopyRule.PlainCode.atoms}
+
+\lean{Copying/CopyPayloadNormal}{25}{30}{CopyRule.PlainCode.primitive}
+
+\lean{Copying/CopyPayloadNormal}{32}{38}{CopyRule.PlainCode.net}
+
+The primitive map is injective: case analysis on two codes reduces label
+equality to equality of their constructors and parameters. No plain code has
+the lambda primitive. These facts will exclude a plain/lambda ambiguity at a
+shared payload head.
+
+\lean{Copying/CopyPayloadNormal}{40}{41}{CopyRule.PlainCode.primitive_injective}
+
+\lean{Copying/CopyPayloadNormal}{42}{42}{CopyRule.PlainCode.not_lambda}
+
+The distinguished plain edge is the sole edge of its corolla. Its label and
+source incidence prove that it is the head at input zero. Its source list is
+exactly that singleton; its target list enumerates all environment outputs in
+order. The proofs inspect the depth representation and primitive constructor;
+none rearranges the boundary.
+
+\lean{Copying/CopyPayloadNormal}{44}{44}{CopyRule.PlainCode.edge}
+
+\lean{Copying/CopyPayloadNormal}{45}{46}{CopyRule.PlainCode.head}
+
+\lean{Copying/CopyPayloadNormal}{47}{47}{CopyRule.PlainCode.source}
+
+\lean{Copying/CopyPayloadNormal}{48}{48}{CopyRule.PlainCode.target}
+
+The indexed family of normal forms records the graph just described, including
+the full body parameter in its lambda constructor. Every graph satisfying the
+existing \texttt{Copyable} predicate is recursively isomorphic to one of these
+forms. Induction on copyability is direct in its six generating cases; in a
+renaming case, compose the inverse supplied renaming with the induction
+hypothesis. The existence of a normal form is therefore derived from the
+original rule premise.
+
+\lean{Copying/CopyPayloadNormal}{50}{52}{CopyRule.NormalForm}
+
+\lean{Copying/CopyPayloadNormal}{54}{66}{CopyRule.normal_form}
+
+For a normal form, the head is its primitive edge. The tail is that same edge
+in a plain payload and the box edge in a lambda payload. The recorded primitive
+is the plain label or lambda. The head is incident to input zero, its entire
+source list is that singleton, and the tail targets enumerate the environment
+outputs. For lambda, the latter equation follows through the right serial
+insertion of the box. Every normal form satisfies the original copyability
+predicate, by its corresponding constructor.
+
+\lean{Copying/CopyPayloadNormal}{67}{69}{CopyRule.NormalForm.head}
+
+\lean{Copying/CopyPayloadNormal}{70}{72}{CopyRule.NormalForm.tail}
+
+\lean{Copying/CopyPayloadNormal}{73}{75}{CopyRule.NormalForm.primitive}
+
+\lean{Copying/CopyPayloadNormal}{77}{80}{CopyRule.NormalForm.head_at}
+
+\lean{Copying/CopyPayloadNormal}{81}{84}{CopyRule.NormalForm.head_source}
+
+\lean{Copying/CopyPayloadNormal}{85}{92}{CopyRule.NormalForm.tail_target}
+
+\lean{Copying/CopyPayloadNormal}{94}{102}{CopyRule.NormalForm.copyable}
+
+\Needspace{12\baselineskip}
+\subsection{Rigidity of two payload occurrences}
+
+Occurrence embeddings compose by composing their port, internal-vertex and
+edge maps. Injection and label preservation compose, and the ordered incidence
+equations follow from the composition law for list mapping. The right component
+of a serial graph has its canonical occurrence embedding: internal vertices
+and edges receive the right-component tag, while boundary ports are attached
+by serial insertion. These maps are injective on internal vertices and edges;
+boundary ports are allowed to be attached by the context.
+
+\lean{Copying/CopyPayloadRigidity}{8}{19}{Opening.Occurrence.comp}
+
+\lean{Copying/CopyPayloadRigidity}{21}{35}{Opening.Occurrence.serialRight}
+
+The relation \texttt{PayloadRelated} simultaneously asserts equality of the
+variable and atom interface counts and recursive isomorphism of the complete
+payloads. Its constructor uses the same counts on both sides, so elimination
+also identifies the dependent interface types.
+
+\lean{Copying/CopyPayloadRigidity}{38}{40}{CopyRule.PayloadRelated}
+
+A literal lambda payload has one internal thunk wire between its head and box
+tail. The head's target and tail's source are both the singleton containing
+this wire. The definition and equations follow directly from serial composition.
+
+\lean{Copying/CopyPayloadRigidity}{44}{45}{CopyRule.NormalForm.lambdaWire}
+
+\lean{Copying/CopyPayloadRigidity}{46}{47}{CopyRule.NormalForm.lambda_head_target}
+
+\lean{Copying/CopyPayloadRigidity}{48}{49}{CopyRule.NormalForm.lambda_tail_source}
+
+Suppose two normal payload occurrences in $G$ have the same head edge.
+Their primitive labels agree. If both are plain, primitive injectivity identifies
+the codes and the payloads; the tail equality is the given head equality.
+A mixed plain/lambda case is impossible. If both are lambdas, the head's
+singleton target identifies the image of the thunk wire. Uniqueness of the
+edge consuming that wire identifies the box tails. Their recursive box-label
+relation then supplies equal interface counts and an isomorphism of the entire
+bodies. Serial composition with the common lambda corolla yields the payload
+isomorphism. This proves both \texttt{PayloadRelated} and equality of the actual
+tail-edge images, without assuming an agreement between the two body descriptions.
+
+\lean{Copying/CopyPayloadRigidity}{51}{86}{CopyRule.NormalForm.related}
+
+\Needspace{12\baselineskip}
+\subsection{The uniquely determined source data}
+
+The selected input can be the first or second source of its binary
+contraction. The list \texttt{selectedSources} records this order with a
+Boolean: false means $[v,u]$, and true means $[u,v]$.
+
+\termdef{copying-successor-match}
+A \emph{copying successor match} consists of a normal payload occurrence in
+$G$, the active contraction edge, this source-position Boolean, the other
+source port, and a proved copy-resolution trace from the selected port $v$ to
+the payload head. The active edge has the term-contraction label and exactly
+the recorded source list. The match records no particular contraction-tree
+boundary. Its tail is the image of the normal payload's tail.
+
+\lean{Copying/CopySuccessorMatch}{9}{10}{CopyRule.selectedSources}
+
+\lean{Copying/CopySuccessorMatch}{12}{26}{CopyRule.SuccessorMatch}
+
+\lean{Copying/CopySuccessorMatch}{28}{28}{CopyRule.SuccessorMatch.tail}
+
+The active-edge label and source list establish its head-at-$v$ property.
+Source-list duplicate freedom proves that $v$ and the other source differ.
+For two matches, source uniqueness first identifies the active edge. Equality
+of its two ordered source lists then identifies the Boolean and the other
+source. Opposite Boolean cases would repeat $v$, contradicting duplicate
+freedom.
+
+\lean{Copying/CopySuccessorMatch}{30}{33}{CopyRule.SuccessorMatch.head_at}
+
+\lean{Copying/CopySuccessorMatch}{35}{38}{CopyRule.SuccessorMatch.distinct}
+
+\lean{Copying/CopySuccessorMatch}{40}{49}{CopyRule.SuccessorMatch.frame_unique}
+
+The two copy-resolution traces have the same source port, so the previously
+proved resolution uniqueness identifies their payload heads. Payload rigidity
+then identifies interface counts, relates the complete payloads recursively,
+and identifies their actual tails. The tail target list has exactly the
+environment length, since occurrence embeddings preserve incidence lists and
+the normal tail enumerates those outputs.
+
+\lean{Copying/CopySuccessorMatch}{51}{55}{CopyRule.SuccessorMatch.payload_unique}
+
+\lean{Copying/CopySuccessorMatch}{57}{58}{CopyRule.SuccessorMatch.output_length}
+
+Any occurrence embedding of $G$ into a larger graph transports this match.
+Compose the payload occurrence, map the active edge and source ports, preserve
+the Boolean, and transport the resolution trace. Source-list equality follows
+by mapping the recorded ordered pair; primitive preservation supplies the label.
+
+\lean{Copying/CopySuccessorMatch}{60}{68}{CopyRule.SuccessorMatch.map}
+
+\Needspace{12\baselineskip}
+\subsection{A presentation retaining the complete source graph}
+
+The output-index map is precisely the existing pair-boundary permutation,
+with the existing interface equality cast. It sends an output of either copy
+to the matching position in the two term blocks followed by the two atom
+blocks. No new permutation convention is introduced.
+
+\lean{Copying/CopySuccessorPresentation}{9}{12}{CopyRule.copyOutput}
+
+The fresh internal vertices comprise a second payload's internal vertices,
+one weakening wire, the ordered output-link wires of both copies, and the
+internal vertices of the original environment distributor with multiplicity
+two. The fresh edges comprise the second payload's edges, one weakening edge,
+and that distributor's edges. These are disjoint sums, so each kind has a
+separate tag.
+
+\lean{Copying/CopySuccessorPresentation}{14}{15}{CopyRule.AddedVertex}
+
+\lean{Copying/CopySuccessorPresentation}{16}{21}{CopyRule.AddedEdge}
+
+The weakening and output-link ports name their respective fresh wires.
+A fresh payload port maps internal vertices into the clone, its sole input to
+the old selected source $v$, and its outputs to the left-copy links. A distributor
+port maps internal vertices into its fresh component, inputs to the ordered
+links, and outputs to the original tail's ordered target list. The proved
+length equation justifies every target-list index.
+
+\lean{Copying/CopySuccessorPresentation}{23}{23}{CopyRule.SuccessorMatch.weakPort}
+
+\lean{Copying/CopySuccessorPresentation}{24}{25}{CopyRule.SuccessorMatch.linkPort}
+
+\lean{Copying/CopySuccessorPresentation}{27}{30}{CopyRule.SuccessorMatch.copyPort}
+
+\lean{Copying/CopySuccessorPresentation}{32}{35}{CopyRule.SuccessorMatch.distributorPort}
+
+\termdef{copying-source-presentation}
+The \emph{source-relative copying presentation} has ambient carriers
+\[
+ V_G+V_{\mathrm{added}},\qquad E_G+E_{\mathrm{added}}.
+\]
+Every retention predicate is true. Old labels are retained; fresh labels come
+from the payload, weakening and original distributor. On old edges, sources
+are unchanged except that the selected source of the active contraction is
+replaced by the fresh weakening wire, in the same ordered position. Targets
+are unchanged except that the tail's outputs now enter the right-copy links.
+The fresh copy receives $v$, the weakening has empty source and its fresh wire
+as target, and the distributor connects the links to the old output attachments.
+All these equations concern entire ordered incidence lists.
+
+\lean{Copying/CopySuccessorPresentation}{37}{67}{CopyRule.SuccessorMatch.presentation}
+
+\termdef{copying-successor-certificate}
+A \emph{complete copying certificate} records a source match, a realization
+of its presentation by the actual successor graph, and the equation sending
+the resumed token to the old image of $v$. A realization preserves labels
+recursively, has exactly the indicated image, and preserves source and target
+lists. The certificate is proof data to be constructed from every actual
+rewrite; it is not an additional rule premise.
+
+\lean{Copying/CopySuccessorPresentation}{70}{74}{CopyRule.SuccessorCertificate}
+
+\Needspace{12\baselineskip}
+\subsection{Carrier bijections for the literal reduct}
+
+The vertex map from the literal reduct to the presentation sends the residual
+tree and retained payload to their original source occurrences. It sends the
+active copy to the fresh payload summand, the residual weakening wire to the
+fresh weakening summand, the serial joining wires to the output-link summand,
+and the distributor vertices to their own summand. The inverse reconstructs
+the nested serial and parallel tags from each of these alternatives.
+
+\lean{Copying/CopySuccessorCarriers}{9}{27}{CopyRule.successorVertices}
+
+\lean{Copying/CopySuccessorCarriers}{29}{40}{CopyRule.successorVertexInverse}
+
+The edge map follows the same assignment: retained tree and retained payload
+edges go to the old graph, while active-copy, weakening and distributor edges
+go to their fresh summands. Its inverse reconstructs the original nested edge
+tags. The vertex and edge maps are bijections. Both inverse equations are
+proved by cases on depth and the disjoint-sum/component tags; the output-link
+case respects the existing interface casts.
+
+\lean{Copying/CopySuccessorCarriers}{42}{57}{CopyRule.successorEdges}
+
+\lean{Copying/CopySuccessorCarriers}{59}{68}{CopyRule.successorEdgeInverse}
+
+\lean{Copying/CopySuccessorCarriers}{70}{101}{CopyRule.successorVertexBijection}
+
+\lean{Copying/CopySuccessorCarriers}{103}{126}{CopyRule.successorEdgeBijection}
+
+A two-element source list containing the selected port can be written as one
+of the two ordered forms $[v,u]$ and $[u,v]$. Inspect its two entries and the
+membership proof to select the Boolean and other port. The local match uses
+this fact on the actual active contraction supplied by the tree. The payload
+occurs as the right serial component, and the existing trace theorem proves
+resolution through the tree to its head.
+
+\lean{Copying/CopySuccessorLocalMatch}{8}{19}{CopyRule.selected_sources_exists}
+
+\lean{Copying/CopySuccessorLocalMatch}{21}{43}{CopyRule.localSuccessorMatch}
+
+Every target of a non-tail edge of a normal payload is internal. There is no
+such edge in a plain payload; in a lambda payload the only non-tail edge is
+the head and its only target is the thunk wire. This small fact is essential
+when showing that the retained copy changes only the tail's external outputs.
+
+\lean{Copying/CopySuccessorLocalMatch}{45}{61}{CopyRule.NormalForm.nonTail_targets_internal}
+
+\Needspace{12\baselineskip}
+\subsection{Ports and ordered incidences of the literal construction}
+
+A left serial output and the matching right serial input become the same
+internal joining wire, indexed by that interface position. These equations
+are proved from the serial pattern at each depth. They are boundary equations,
+not a graph-rewriting simplification.
+
+\lean{Copying/CopySuccessorPorts}{8}{14}{CopyRule.serial_left_output}
+
+\lean{Copying/CopySuccessorPorts}{16}{24}{CopyRule.serial_right_input}
+
+The pair insertion maps a port into the original parallel pair with its
+original boundary cast. The active insertion takes the left payload into the
+outer serial composition. The retained insertion first enters the right
+payload after the residual tree, then the right parallel component, and then
+the outer composition. The tree insertion similarly passes through the residual
+frame, retained serial component and outer pair. These are the literal nested
+attachment maps of the existing copying rule.
+
+\lean{Copying/CopySuccessorPorts}{26}{28}{CopyRule.pairInsert}
+
+\lean{Copying/CopySuccessorPorts}{30}{31}{CopyRule.activeInsert}
+
+\lean{Copying/CopySuccessorPorts}{32}{34}{CopyRule.retainedInsert}
+
+\lean{Copying/CopySuccessorPorts}{35}{38}{CopyRule.treeInsert}
+
+Pair outputs have the previously specified pair-boundary indices. The active
+copy's input is external input zero. The retained residual input $i$ becomes
+external input $i+1$, because input zero has been assigned to the active copy.
+Unfolding the boundary permutation proves the equations, with finite-index
+equality established by equality of their natural-number values.
+
+\lean{Copying/CopySuccessorPorts}{40}{44}{CopyRule.pair_output}
+
+\lean{Copying/CopySuccessorPorts}{46}{50}{CopyRule.pair_left_input}
+
+\lean{Copying/CopySuccessorPorts}{52}{60}{CopyRule.pair_right_input}
+
+After the vertex bijection, the active insertion agrees with the presentation's
+fresh-copy port map. Internal ports are immediate; the input case uses the
+left-input equation, and outputs use the pair-output and serial-joining laws.
+Retained payload internal and input ports map to their original source
+occurrences. Its outputs instead map to the right-copy links. These last
+ports are precisely the attachments that will be reconnected by the distributor.
+
+\lean{Copying/CopySuccessorPorts}{62}{75}{CopyRule.active_port}
+
+\lean{Copying/CopySuccessorPorts}{77}{78}{CopyRule.retained_internal}
+
+\lean{Copying/CopySuccessorPorts}{80}{84}{CopyRule.retained_input}
+
+\lean{Copying/CopySuccessorPorts}{86}{91}{CopyRule.retained_output}
+
+The residual tree's internal and output ports map to their old source
+occurrences. Its selected input zero maps to the new weakening wire. The
+residual-frame input $i+1$ maps to residual external input $i$, and the full
+outer construction restores it to source external input $i+1$. Thus all
+unselected tree inputs preserve their original order. The proofs unfold the
+residual frame and use the pair-input equations.
+
+\lean{Copying/CopySuccessorPorts}{93}{94}{CopyRule.tree_internal}
+
+\lean{Copying/CopySuccessorPorts}{96}{100}{CopyRule.tree_output}
+
+\lean{Copying/CopySuccessorPorts}{102}{103}{CopyRule.tree_zero}
+
+\lean{Copying/CopySuccessorPorts}{105}{110}{CopyRule.residual_succ}
+
+\lean{Copying/CopySuccessorPorts}{112}{122}{CopyRule.tree_succ}
+
+The diversion map sends exactly $v$ to the weakening wire and every other
+source port to its old occurrence. Mapping an old edge's source list by this
+function gives the presentation source list. For the active edge this is its
+ordered pair and distinctness theorem; for any other edge, incidence uniqueness
+prevents it from containing $v$. The tree attachment map agrees with this
+diversion: inspect internal, output, selected-input and other-input cases.
+
+\lean{Copying/CopySuccessorSource}{8}{12}{CopyRule.divertedPort}
+
+\lean{Copying/CopySuccessorSource}{14}{29}{CopyRule.SuccessorMatch.source_divert}
+
+\lean{Copying/CopySuccessorSource}{31}{50}{CopyRule.tree_port}
+
+The local tail targets are the original external outputs in order, since the
+payload is the right serial component. Therefore the literal distributor
+attachment, after the vertex bijection, agrees with the presentation's
+attachment map: internal vertices and inputs are direct, and outputs use
+this tail-target equation at the same finite index.
+
+\lean{Copying/CopySuccessorSource}{52}{60}{CopyRule.local_tail_targets}
+
+\lean{Copying/CopySuccessorSource}{62}{74}{CopyRule.distributor_port}
+
+The retained tree-edge name follows its residual-frame, serial and parallel
+tags. The added-weakening edge name follows the same enclosing tags but selects
+the residual weakening instead.
+
+\lean{Copying/CopySuccessorIncidences}{9}{10}{CopyRule.keptTreeEdge}
+
+\lean{Copying/CopySuccessorIncidences}{11}{12}{CopyRule.addedWeakening}
+
+The active copy's source and target lists are the original payload lists
+mapped by active insertion. The retained copy has the analogous equations
+with retained insertion. The retained tree has them with tree insertion.
+Each proof composes the literal list maps in the construction, so ordering
+and repeated use of boundary attachments are preserved exactly. The new
+weakening has empty source and the singleton residual image of the selected
+tree input as target.
+
+\lean{Copying/CopySuccessorIncidences}{14}{18}{CopyRule.active_source}
+
+\lean{Copying/CopySuccessorIncidences}{20}{24}{CopyRule.active_target}
+
+\lean{Copying/CopySuccessorIncidences}{26}{30}{CopyRule.retained_source}
+
+\lean{Copying/CopySuccessorIncidences}{32}{36}{CopyRule.retained_target}
+
+\lean{Copying/CopySuccessorIncidences}{38}{42}{CopyRule.kept_tree_source}
+
+\lean{Copying/CopySuccessorIncidences}{44}{48}{CopyRule.kept_tree_target}
+
+\lean{Copying/CopySuccessorIncidences}{50}{50}{CopyRule.added_weakening_source}
+
+\lean{Copying/CopySuccessorIncidences}{51}{52}{CopyRule.added_weakening_target}
+
+\Needspace{12\baselineskip}
+\subsection{The complete local certificate}
+
+The local match's tail is the right serial image of the payload tail. No
+payload edge is the active contraction: the established outer-label
+classification of copyable graphs excludes term-contraction labels there.
+These facts separate the old-tree and old-payload cases of the incidence proof.
+
+\lean{Copying/CopySuccessorLocal}{10}{10}{CopyRule.local_tail_eq}
+
+\lean{Copying/CopySuccessorLocal}{12}{17}{CopyRule.local_active_not_payload}
+
+For every ambient edge, take its inverse image in the actual reduct and map
+its entire source list by the vertex bijection. The result is exactly the
+presentation source list. Old tree edges use diversion; old payload edges
+use retained insertion and cannot be active; new payload edges use active
+insertion; weakening and distributor edges use their attachment equations.
+The target proof has the same cases, but distinguishes the payload tail from
+other payload edges. Tail targets become right-copy links, and non-tail
+targets remain internal. This proves both incidence laws without discarding
+any residual tree or host occurrence.
+
+\lean{Copying/CopySuccessorLocal}{19}{57}{CopyRule.local_source}
+
+\lean{Copying/CopySuccessorLocal}{59}{110}{CopyRule.local_target}
+
+The local realization combines the two carrier bijections, exact image
+properties, wire labels, recursively related edge labels, and the two ordered
+incidence theorems. Exact image is surjectivity because all retention predicates
+are true. The local certificate uses this realization and the local source
+match. Its token equation holds because input zero maps to its old external
+port. The entire original \texttt{after} graph is thus certified.
+
+\lean{Copying/CopySuccessorLocal}{112}{156}{CopyRule.localRealization}
+
+\lean{Copying/CopySuccessorLocal}{158}{162}{CopyRule.local_certificate}
+
+\Needspace{12\baselineskip}
+\subsection{Transport through occurrences and recursive renaming}
+
+For an occurrence $f:G\hookrightarrow N$, the origin-port map sends old
+ports through $f$ and fixes each kind of newly added port. The origin-edge map
+similarly sends old edges through $f$ and fixes fresh edges. On old ports,
+this agrees with ordinary occurrence attachment followed by old-source
+inclusion. These definitions allow the source presentation to move with a
+context without changing its fresh component.
+
+\lean{Copying/CopySuccessorOccurrence}{10}{15}{CopyRule.SuccessorMatch.originPort}
+
+\lean{Copying/CopySuccessorOccurrence}{17}{19}{CopyRule.SuccessorMatch.originEdge}
+
+\lean{Copying/CopySuccessorOccurrence}{21}{23}{CopyRule.SuccessorMatch.origin_old}
+
+Fresh-copy attachments commute with the origin-port map by cases on the
+payload port. Distributor attachments commute too: their output case uses the
+occurrence's target-list equation, list indexing through a map, and the proved
+output length. This argument permits boundary attachment by the host.
+
+\lean{Copying/CopySuccessorOccurrence}{25}{30}{CopyRule.SuccessorMatch.copyPort_map}
+
+\lean{Copying/CopySuccessorOccurrence}{32}{43}{CopyRule.SuccessorMatch.distributorPort_map}
+
+Every source and target list of the presentation commutes with these origin
+maps. For old edges, injectivity of the occurrence edge map preserves the
+active-edge and tail-edge tests. For fresh payload and distributor edges use
+the attachment equations. The weakening case is immediate. Thus the complete
+incidence description is natural under occurrences, not just under bijections.
+
+\lean{Copying/CopySuccessorOccurrence}{45}{64}{CopyRule.SuccessorMatch.source_map}
+
+\lean{Copying/CopySuccessorOccurrence}{66}{85}{CopyRule.SuccessorMatch.target_map}
+
+For recursive isomorphism, the origin-port map is the port extension of the
+old-vertex bijection plus identity on fresh vertices. This gives an isomorphism
+of presentations, with the corresponding sum bijection on edges. Wire labels,
+recursive edge labels and ordered incidences are preserved by the preceding
+laws. A certificate can therefore be renamed on both source and result:
+transport its presentation, rename its realization, and compose the port
+equations for its token.
+
+\lean{Copying/CopySuccessorOccurrence}{87}{92}{CopyRule.SuccessorMatch.origin_iso}
+
+\lean{Copying/CopySuccessorOccurrence}{94}{117}{CopyRule.SuccessorMatch.renamePresentation}
+
+\lean{Copying/CopySuccessorOccurrence}{119}{130}{CopyRule.SuccessorCertificate.rename}
+
+\Needspace{12\baselineskip}
+\subsection{Transport through a single plugged context}
+
+The plugged vertex map retains host vertices as old host vertices; on an
+inserted successor it uses the local realization and shifts its old tags into
+the plugged source graph, leaving the fresh tags fresh. The edge map retains
+all non-hole host edges and treats inserted edges analogously. Disjoint host,
+old-component and fresh-component tags, together with local injection, prove
+both maps injective.
+
+\lean{Copying/CopySuccessorPlug}{13}{15}{CopyRule.SuccessorCertificate.plugVertices}
+
+\lean{Copying/CopySuccessorPlug}{17}{19}{CopyRule.SuccessorCertificate.plugEdges}
+
+\lean{Copying/CopySuccessorPlug}{21}{26}{CopyRule.SuccessorCertificate.plug_vertices_injective}
+
+\lean{Copying/CopySuccessorPlug}{28}{33}{CopyRule.SuccessorCertificate.plug_edges_injective}
+
+Both maps have the entire ambient presentation as their image. For a host
+occurrence choose that occurrence itself; for an old or fresh component
+occurrence choose a preimage under the local realization. The omitted hole
+is absent on both sides of plugging. Hence the image equations agree with
+the presentation's universally true retention predicates.
+
+\lean{Copying/CopySuccessorPlug}{35}{42}{CopyRule.SuccessorCertificate.plug_vertex_range}
+
+\lean{Copying/CopySuccessorPlug}{44}{51}{CopyRule.SuccessorCertificate.plug_edge_range}
+
+Host ports commute with old-source inclusion by cases on their port kind.
+Inserted component ports commute with the local realization followed by the
+origin-port map; boundary cases reduce to host attachments, and internal
+cases follow the disjoint tags. The source and target equations for inserted
+ambient edges then follow from presentation naturality under the plugging
+occurrence.
+
+\lean{Copying/CopySuccessorPlug}{53}{55}{CopyRule.SuccessorCertificate.plug_host_port}
+
+\lean{Copying/CopySuccessorPlug}{57}{70}{CopyRule.SuccessorCertificate.plug_component_port}
+
+\lean{Copying/CopySuccessorPlug}{72}{76}{CopyRule.SuccessorCertificate.plug_source}
+
+\lean{Copying/CopySuccessorPlug}{78}{82}{CopyRule.SuccessorCertificate.plug_target}
+
+The plugged realization uses these maps, injection, image and port laws.
+For a surviving host edge its original incidence lists are untouched; it cannot
+be the active edge or tail because those belong to the inserted component.
+For an inserted edge, use local realization followed by occurrence naturality.
+Labels are preserved in the same two cases. The resulting plugged certificate
+uses the transported source match and maps its resumed token through the host
+attachment. This proves closure for the actual plugging constructor.
+
+\lean{Copying/CopySuccessorPlug}{85}{131}{CopyRule.SuccessorCertificate.plugRealization}
+
+\lean{Copying/CopySuccessorPlug}{133}{140}{CopyRule.SuccessorCertificate.plug}
+
+\Needspace{12\baselineskip}
+\subsection{Comparison of independently described payloads}
+
+A recursive payload isomorphism acts on fresh payload vertices and edges;
+it fixes the weakening, link and distributor summands. Its port extension
+commutes with fresh-copy attachments, and with distributor attachments when
+the two actual tail edges agree. The latter hypothesis ensures that both
+presentations reconnect to the same ordered host targets.
+
+\lean{Copying/CopySuccessorComparison}{10}{10}{CopyRule.SuccessorMatch.addedVertices}
+
+\lean{Copying/CopySuccessorComparison}{11}{11}{CopyRule.SuccessorMatch.addedEdges}
+
+\lean{Copying/CopySuccessorComparison}{13}{19}{CopyRule.SuccessorMatch.copyPort_congr}
+
+\lean{Copying/CopySuccessorComparison}{21}{29}{CopyRule.SuccessorMatch.distributorPort_congr}
+
+The presentation comparison is identity on the complete old graph and the
+just-defined bijection on the fresh part. Match-frame uniqueness identifies
+the active edge, source position and other port. Tail equality identifies
+the redirected old target list. The payload isomorphism checks cloned labels
+and incidence lists recursively; the distributor and weakening components
+are unchanged. This constructs an isomorphism of the entire presentations.
+
+\lean{Copying/CopySuccessorComparison}{31}{86}{CopyRule.SuccessorMatch.payloadPresentation}
+
+For two certificates at one source request, payload uniqueness supplies
+matching interface counts, the recursive payload isomorphism and tail equality.
+Transport the first realization along the presentation comparison. It and the
+second realization now have exactly the same ambient image, so the general
+realization-comparison theorem constructs their recursive graph isomorphism.
+Both token equations name the old selected port, which the comparison fixes.
+The result is a state isomorphism, not merely agreement of payload heads.
+
+\lean{Copying/CopySuccessorComparison}{88}{99}{CopyRule.SuccessorCertificate.coherent}
+
+\Needspace{12\baselineskip}
+\subsection{Transport through simultaneous expansion}
+
+The existing dependent-fiber map uses a selected map at the changed filling
+and bijections at every other filling. If the selected map is surjective,
+so is the whole map into old fibers plus fresh occurrences. An old selected
+fiber uses the selected preimage; another old fiber uses its bijection inverse;
+a fresh occurrence also uses the selected preimage. This general lemma is
+used for both vertices and edges.
+
+\lean{Copying/CopySuccessorExpansion}{7}{25}{Opening.Fiber.surjective}
+
+For an unchanged filling, equality of source and target fillings supplies
+a recursive identity-transport isomorphism in the required direction.
+The vertex and edge fiber maps use the certificate at the selected hole and
+these isomorphisms elsewhere. The full expansion vertex map additionally
+retains host vertices; the expansion edge map is the edge fiber map, since
+expansion replaces every host edge by its filling.
+
+\lean{Copying/CopySuccessorExpansion}{27}{28}{CopyRule.SuccessorCertificate.otherIso}
+
+\lean{Copying/CopySuccessorExpansion}{30}{31}{CopyRule.SuccessorCertificate.fiberVertices}
+
+\lean{Copying/CopySuccessorExpansion}{32}{33}{CopyRule.SuccessorCertificate.fiberEdges}
+
+\lean{Copying/CopySuccessorExpansion}{34}{36}{CopyRule.SuccessorCertificate.expansionVertices}
+
+\lean{Copying/CopySuccessorExpansion}{37}{37}{CopyRule.SuccessorCertificate.expansionEdges}
+
+Fiber injection proves expansion-edge injection. Expansion-vertex injection
+also distinguishes the retained host summand from all fiber and fresh summands.
+Fiber surjectivity and local exact images prove the corresponding whole-image
+properties; host vertices again supply their own preimages. Every ambient
+occurrence is therefore represented exactly once.
+
+\lean{Copying/CopySuccessorExpansion}{39}{44}{CopyRule.SuccessorCertificate.expansion_vertices_injective}
+
+\lean{Copying/CopySuccessorExpansion}{45}{47}{CopyRule.SuccessorCertificate.expansion_edges_injective}
+
+\lean{Copying/CopySuccessorExpansion}{49}{62}{CopyRule.SuccessorCertificate.expansion_vertex_range}
+
+\lean{Copying/CopySuccessorExpansion}{64}{71}{CopyRule.SuccessorCertificate.expansion_edge_range}
+
+There are three port equations. Host ports commute with old inclusion.
+Ports in the selected successor filling commute with its realization and
+source occurrence. Ports in any other filling commute with that filling's
+unchanged isomorphism and then its old inclusion. Internal cases follow the
+fiber maps; input and output cases reduce to the common host attachment.
+
+\lean{Copying/CopySuccessorExpansion}{73}{75}{CopyRule.SuccessorCertificate.expansion_host_port}
+
+\lean{Copying/CopySuccessorExpansion}{77}{87}{CopyRule.SuccessorCertificate.expansion_selected_port}
+
+\lean{Copying/CopySuccessorExpansion}{89}{97}{CopyRule.SuccessorCertificate.expansion_other_port}
+
+Source and target lists of the selected ambient component commute with its
+fiber tag by occurrence naturality. For a different fiber, sources and targets
+remain the original filling lists attached to the host. The active and tail
+edge tests cannot select those edges: equality would identify two distinct
+fiber tags. These four equations separate changed and unchanged fillings in
+the whole incidence proof.
+
+\lean{Copying/CopySuccessorExpansion}{99}{104}{CopyRule.SuccessorCertificate.expansion_source}
+
+\lean{Copying/CopySuccessorExpansion}{106}{111}{CopyRule.SuccessorCertificate.expansion_target}
+
+\lean{Copying/CopySuccessorExpansion}{113}{119}{CopyRule.SuccessorCertificate.outside_source}
+
+\lean{Copying/CopySuccessorExpansion}{121}{127}{CopyRule.SuccessorCertificate.outside_target}
+
+The expansion realization combines these maps and image laws. At the selected
+fiber, labels and incidences follow the local realization and selected-port
+law; at another fiber, they follow its equality-transport isomorphism and
+other-port law. The expansion certificate adds the transported source match
+and token equation. No assumptions about the other fillings' computations
+are introduced; their equality is exactly the existing expansion constructor's
+premise.
+
+\lean{Copying/CopySuccessorExpansion}{129}{193}{CopyRule.SuccessorCertificate.expansionRealization}
+
+\lean{Copying/CopySuccessorExpansion}{195}{202}{CopyRule.SuccessorCertificate.expand}
+
+\Needspace{12\baselineskip}
+\subsection{From actual rewrites to complete machine determinism}
+
+The proposition \texttt{SuccessorWitness} existentially hides the payload
+counts and graph while retaining a complete certificate. Any two witnesses
+at the same source request give isomorphic successor states by certificate
+comparison. For an actual local copy rule, normalize its copyable payload,
+construct the normal local certificate, and transport it back along the
+proved isomorphisms of the literal before and after constructions. Thus an
+arbitrary original copyable payload, not just its normal presentation,
+obtains a witness.
+
+\lean{Copying/CopyCoherence}{7}{10}{CopyRule.SuccessorWitness}
+
+\lean{Copying/CopyCoherence}{12}{17}{CopyRule.SuccessorWitness.coherent}
+
+\lean{Copying/CopyCoherence}{19}{28}{CopyRule.local_witness}
+
+An actual rewrite already supplies a recognized head. If an occurrence
+embedding exhibits a head at the mapped request, unique source incidence
+identifies its primitive with that recognized head. This reflects existence
+of the requested primitive head back to the source. For a local rewrite whose
+head is a term contraction, all non-copy constructors contradict their own
+proved operation heads. The remaining copy constructor supplies the local
+witness just established.
+
+\lean{Copying/CopyCoherence}{30}{36}{Combined.rewrite_head_exists_reflect}
+
+\lean{Copying/CopyCoherence}{38}{50}{Combined.local_copy_certificate}
+
+Induction on the original rewrite derivation now gives a copying witness
+for every rewrite at a term-contraction head. The local case uses the local
+certificate theorem; recursive renaming, plugging and expansion reflect the
+head to the induction hypothesis and apply the corresponding certificate
+transport. Consequently any two actual copying rewrites at that request have
+recursively isomorphic whole results and corresponding search tokens.
+
+\lean{Copying/CopyCoherence}{53}{68}{Combined.rewrite_copy_certificate}
+
+\lean{Copying/CopyCoherence}{71}{74}{Combined.copying_rewrite_deterministic}
+
+\termdef{combined-successor-determinism}
+\emph{Complete successor determinism up to representation} asserts
+\[
+ s\to t\ \wedge\ s\to u\quad\Longrightarrow\quad
+ \operatorname{Nonempty}(\operatorname{StateIso}(t,u)).
+\]
+The earlier exhaustive rewrite classification either already provides the
+successor isomorphism or identifies a common copying head. The new copying
+comparison resolves that final alternative, proving rewrite determinism.
+For full steps, two search successors are literally equal, search and rewrite
+cannot overlap in focus mode, and two rewrites use the completed theorem.
+This is an unconditional theorem about the existing transition relation;
+it makes no template, refocusing or termination assumption.
+
+\lean{Copying/CopyCoherence}{77}{82}{Combined.rewrite_deterministic}
+
+\lean{Copying/CopyCoherence}{85}{91}{Combined.step_deterministic}
+
+For any actual step $s\to t$, successful termination in $n$ steps from $s$
+is equivalent to successful termination in $m$ steps from $t$, with $n=m+1$.
+The forward direction compares the first step of the successful run with the
+chosen step, then transports its remaining run along the successor isomorphism.
+The reverse direction prefixes the chosen step. Existing final-normality and
+representation-transport lemmas justify the zero-length and finality cases.
+
+\lean{Copying/CopyCoherence}{93}{95}{Combined.cost_spectrum}
+
+Every unbounded step is a lift of one finite-depth step. Two such steps from
+the same unbounded state have the same depth and interfaces, so the completed
+finite theorem lifts to \texttt{Represents} between their successors. Previously
+proved representation invariance then gives observational state equivalence
+for every cost order $Q$, in particular exact costs. Literal equality of
+named graph carriers is not claimed; recursive representation is the conclusion.
+
+\lean{Copying/CopyCoherence}{97}{101}{Combined.unbounded_deterministic}
+
+\lean{Copying/CopyCoherence}{103}{105}{Combined.unbounded_successors_equiv}
+
+\Needspace{12\baselineskip}
+\subsection{Exact costs of copying and of arbitrary finite prefixes}
+
+\termdef{combined-exact-prefix-cost}
+An \emph{exact prefix cost law} says that for any actual finite run
+$s\steps{r}t$,
+\[
+ \operatorname{TerminatesIn}(n,s)
+ \quad\Longleftrightarrow\quad
+ \exists m\;(n=m+r\ \wedge\operatorname{TerminatesIn}(m,t)).
+\]
+Induct on the given prefix. The empty prefix is immediate; the successor
+case uses the one-step spectrum theorem and adds its one transition to the
+inductive cost. Apply this law to a successful run ending in a final state.
+Final normality forces any successful continuation there to have length zero,
+so every successful run from the same source has the same length. This
+uniqueness concerns the entire combined machine, including copying.
+
+\lean{Copying/CopyCost}{8}{20}{Combined.run_cost_spectrum}
+
+\lean{Copying/CopyCost}{23}{32}{Combined.successful_cost_unique}
+
+Every selected input of a genuine contraction tree requests copying in one
+search transition: use its proved active term-contraction head and the existing
+search-entry rule. The actual local copying step then gives the exact
+one-transition cost equation from rewrite mode to the literal reduct in
+search mode. Composing search entry with this equation gives two transitions
+from the original search state to the reduct's continuation. These equations
+also hold if no successful continuation exists.
+
+\lean{Copying/CopyCost}{35}{39}{CopyRule.requests_copy}
+
+\lean{Copying/CopyCost}{42}{46}{CopyRule.copying_cost_iff}
+
+\lean{Copying/CopyCost}{49}{57}{CopyRule.initial_cost_iff}
+
+Under an arbitrary serial host, transport this two-transition run using the
+existing context law and apply the general prefix-cost theorem. The continuation
+is the actual reduct attached at the same host position. In particular an
+internal return is not silently declared final; its remaining host execution
+is still counted.
+
+\lean{Copying/CopyCost}{60}{67}{CopyRule.host_handoff}
+
+The active fresh lambda returns in one search step without examining its
+body. Its copied head label is lambda; its source list is the original head's
+singleton mapped by active insertion, hence the selected input. The original
+lambda entry rule returns there. This argument applies to arbitrary body
+graphs and arbitrary nesting, independently of whether a later application
+of the body would terminate.
+
+\lean{Copying/CopyCost}{70}{82}{CopyRule.lambda_returns}
+
+If the actual copied payload has this immediate return transition, then its
+initial successful cost is exactly three: one search transition, one copying
+transition, and the return. The exact two-step continuation law reduces the
+claim to the return law and zero cost at the final external input. Constants
+and instances use their existing return theorems; lambdas use the new theorem.
+The resulting three cost equivalences quantify over every successful run of
+the full machine and every matched contraction tree.
+
+\lean{Copying/CopyCost}{85}{95}{CopyRule.passive_cost_iff}
+
+\lean{Copying/CopyCost}{97}{100}{CopyRule.constant_cost_iff}
+
+\lean{Copying/CopyCost}{102}{105}{CopyRule.instance_cost_iff}
+
+\lean{Copying/CopyCost}{107}{110}{CopyRule.lambda_cost_iff}
+
+\Needspace{12\baselineskip}
+\subsection{Semantic regression scenarios and the remaining boundary}
+
+The closed constant-copying program uses the existing one-input canonical
+contraction tree and original constant corolla. Its focus- and hole-freedom
+come from the established tree/payload label-safety theorem. Every successful
+run of this program in the unbounded machine, at every finite padding, costs
+exactly three. Exact padding reflection reduces the assertion to its original
+depth, exact finite-run representation reduces it to the combined finite
+machine, and the constant cost theorem finishes the proof. This graph is a
+copying-rule regression; no claim identifies it with a new term translation.
+
+\lean{Copying/CopyCoherenceExamples}{8}{14}{CopyRule.Examples.constantProgram}
+
+\lean{Copying/CopyCoherenceExamples}{17}{21}{CopyRule.Examples.constant_pad_cost_iff}
+
+Copying a lambda whose body is the unchanged translated nested-lambda body
+also has exact cost three. This is an instance of the arbitrary-body theorem;
+it ensures that copying and returning the outer function do not execute either
+body. Separately, the two distinct copied reference instances in the existing
+shared-store graph must resolve to the same cell, with three trace hops each.
+Compare any proposed resolutions with the previously constructed traces by
+store-resolution uniqueness. Thus the coherence argument remains compatible
+with reference aliasing, rather than treating copying as store allocation.
+
+\lean{Copying/CopyCoherenceExamples}{24}{27}{CopyRule.Examples.nested_lambda_cost_iff}
+
+\lean{Copying/CopyCoherenceExamples}{30}{37}{CopyRule.Examples.shared_reference_unique}
+
+These regressions prove copying costs, preservation of nested bodies and
+store identity, and compatibility with the separately proved depth-padding
+semantics. They do not constitute the Figure~22 contextual-equivalence proof,
+a refocusing theorem, or robustness of the copying template. In particular,
+repeated closure applications and divergent callbacks still have to be handled
+in the general specimen and template arguments. The present milestone supplies
+the unconditional successor-determinism law those arguments require.

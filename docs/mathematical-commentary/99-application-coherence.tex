@@ -7,9 +7,10 @@ recursively isomorphic complete graphs and corresponding resumed tokens.
 The proof includes arbitrary renaming, plugging and simultaneous expansion,
 and permits the two matches to describe the actual boxed body by different
 recursively isomorphic graphs. Together with the preceding store and arithmetic
-results, this leaves copying as the sole remaining family for successor
-coherence. Global determinism, refocusing, specimen locality and the template
-argument still require further proofs.
+results, this milestone isolated copying as the sole remaining family for
+successor coherence. Section~\ref{sec:copying-successor-coherence} now resolves
+that case and proves complete successor determinism up to representation.
+Refocusing, specimen locality and the template argument remain open.
 
 The operational rule and its stability premise remain unchanged. Opening a
 lambda exposes its full padded body, preserves its ordered variable and atom
@@ -34,10 +35,9 @@ The presentations and certificates below are mathematical proof data derived
 from actual rewrites. They add no premise to the transition relation.
 
 Appendix~B.1 removes application from its outstanding successor comparisons.
-Its four broad work packages remain open. The estimated completion remains
-roughly 50--65\% of mathematical effort, with low confidence: this closes a
-substantial machine-law subtask but leaves the dependent template and final
-observational arguments unresolved.
+Its four broad work packages remain open. The current assessment after the
+subsequent copying milestone is in Section~\ref{sec:copying-successor-coherence};
+the dependent template and final observational arguments are still unresolved.
 
 \Needspace{12\baselineskip}
 \subsection{Presenting the complete result}
@@ -554,7 +554,7 @@ then gives their machine equivalence for every cost order.
 \lean{Copying/ApplicationCoherence}{106}{109}{Combined.application_unbounded_equiv}
 
 \Needspace{12\baselineskip}
-\subsection{Only copying remains in successor coherence}
+\subsection{The historical reduction to the copying case}
 
 \termdef{copying-coherence-frontier}
 The \emph{copying coherence frontier} is an exhaustive theorem about the
@@ -574,7 +574,7 @@ successor coherence and for the exact one-step successful-cost decomposition.
 The two corollaries resolve the copying alternative and apply the existing
 coherent-step cost lemma. The unbounded classification follows by unpacking
 both lifted steps and lifting the resulting state isomorphism. None of these
-results resolves the remaining copying alternative.
+results alone resolves the copying alternative; Section~\ref{sec:copying-successor-coherence} supplies its complete proof.
 
 \lean{Copying/CombinedCopyingFrontier}{30}{33}{Combined.step_deterministic_away_copying}
 
