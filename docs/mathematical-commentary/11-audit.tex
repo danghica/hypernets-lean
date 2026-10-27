@@ -695,3 +695,17 @@ jobs. All 2562 audits pass: 6 abstract, 477 graph and 2079 copying declarations.
 Their only axiom dependencies are \texttt{propext}, \texttt{Classical.choice}
 and \texttt{Quot.sound}; there is no project-specific axiom or \texttt{sorryAx}.
 \lean{Copying/Audit}{2093}{2160}{Copying.Audit: BPerm safety and exact-cost beta opening}
+
+
+\Needspace{12\baselineskip}
+The next BPerm milestone audits all 57 new declarations: literal copy-reduct
+boundary naturality and edge actions, the two residual structural pairs,
+actual one-step and two-step copying diagrams, exact equal-prefix cancellation,
+whole-host beta-redex costs and the copying residual cost handoff. Regressions
+include both free sorts, nested boxes, unary and binary trees, a retained third
+input, a genuine unary host, and the unchanged translation of self-application.
+The full build passes 476 jobs. All 2619 audits pass: 6 abstract, 477 graph and
+2136 copying declarations. Only \texttt{propext}, \texttt{Classical.choice}
+and \texttt{Quot.sound} occur; no project-specific axiom or \texttt{sorryAx}
+is used. The residual semantic obligation is not hidden behind an axiom.
+\lean{Copying/Audit}{2163}{2219}{Copying.Audit: BPerm copying and contextual overlap costs}

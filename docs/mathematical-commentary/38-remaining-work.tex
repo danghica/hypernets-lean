@@ -30,7 +30,7 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-box-permutation-opening}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-box-permutation-overlaps}.
 The full copying machine now has proved successor coherence, refocusing,
 deterministic representation-class semantics, and a concrete coordinate
 specimen system with synchronized-search locality. Exact execution costs and
@@ -41,8 +41,9 @@ observation corollaries cover that full observation class, with template output
 closure, safety and robustness as application conditions. The terms of
 Proposition~12.2 and Figure~16's translation are unchanged. Completed tasks
 are omitted below. BPerm output closure, operational input safety and its
-local beta-opening diagram are now proved
-(Section~\ref{sec:copying-box-permutation-opening}).
+local beta-opening diagram are proved. The local shallow copying diagram now
+tracks both residual boxes, and beta opening has equal exact whole-host costs
+from the redex input (Section~\ref{sec:copying-box-permutation-overlaps}).
 The four remaining tasks are:
 \begin{enumerate}
 \item Prove any further stability/copyability invariants required by the
@@ -60,8 +61,10 @@ zero-input qualification of Lemma~E.1.
 \item Complete the remaining output-closure, input-safety and
 forward/converse robustness obligations for the eleven template families in Table~3's dependency order, including the
 indirect copying and garbage-collection dependencies.
-For BPerm, prove the remaining copying and deep-overlap transfer cases,
-construct residual specimens, and assemble forward/converse robustness.
+For BPerm, prove deep-overlap transfer and mixed shallow/deep copying cases,
+construct residual specimen certificates for the proved local diagrams, and
+assemble forward/converse robustness. The structural two-copy derivation
+does not itself supply that semantic residual argument.
 \item Prove the semantic weakening laws, assemble Figure~22's equivalence chain,
 and obtain Proposition~12.2 for arbitrary distinct-list environments.
 \end{enumerate}

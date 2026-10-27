@@ -9,36 +9,37 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: BPerm safety and its beta-opening diagram
+## Latest milestone: BPerm copying and exact contextual beta costs
 
-**Box permutation now has proved output closure, operational input safety,
-and its local beta-opening diagram.** The diagram uses the original application
-rule: one compute step on each side, or six transitions including search,
-followed by recursively isomorphic successors and identical exact continuation
-costs. It covers arbitrary free variable/atom interfaces and nested bodies,
-retains every argument edge, and keeps the stable-argument premise.
+**The local BPerm copying diagram is proved, and beta opening now preserves
+all exact successful costs in arbitrary typed hosts, from the redex input.**
+Copying uses the original rule on both sides: one compute step, or two transitions
+including search. The residual derivation explicitly accounts for both surviving
+boxes, the matched contraction tree and both original resource distributors.
+The boundary map fixes every external input and retains both copy branches.
 
-External interface permutations now preserve exact successful costs for the
-entire combined machine. This is proved through its existing context-closure
-rule, including copying and store operations. A structural source derivation
-connects the diagram to the literal Figure 21 BPerm pair. Regression witnesses
-swap both free resource sorts, fix the bound wire and retain a nested lambda.
-The Proposition 12.2 terms, translation and machine rules are unchanged.
+Beta opening uses six transitions on each side followed by recursively
+isomorphic states. Proved machine successor coherence cancels these equal
+prefixes inside a surrounding graph, so the cost comparison includes the host's
+continuation. Copying similarly reduces source cost comparison to residual
+cost comparison; that residual semantic obligation remains explicit.
+The Proposition 12.2 terms, Figure 16 translation and machine rules are unchanged.
 
-Appendix B.1 removes BPerm output closure and input safety from the outstanding
-obligations. **Full BPerm robustness remains open**, especially copying/deep
-overlaps and residual specimen construction. The four broader packages still
-include the other template families, paper correspondence, semantic
-renaming/substitution, weakening and Figure 22. **Proposition 12.2 is unproved.**
+Appendix B.1 removes the local shallow copying diagram from outstanding work.
+**Full BPerm robustness remains open:** deep overlaps, mixed shallow/deep
+copying and residual specimen certificates still need proofs. The other template
+families, paper correspondence, semantic renaming/substitution, weakening and
+Figure 22 remain in the four broader packages. **Proposition 12.2 is unproved.**
 
-Commentary Section 101 explains all 68 new declarations with immutable links.
-Full build: 471 jobs. All 2,562 axiom audits pass (6 abstract, 477 graph,
-2,079 copying), with no `sorryAx` or project-specific axioms.
+Commentary Section 102 explains all 57 new declarations with immutable links.
+Full build: 476 jobs. All 2,619 axiom audits pass (6 abstract, 477 graph,
+2,136 copying), with no `sorryAx` or project-specific axioms.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-The remaining template proofs and paper correspondence still carry substantial
-uncertainty; this estimate is not a declaration or TODO count.
+This milestone closes the local shallow copying diagram, but not an entire
+remaining template family. The substantial uncertainty in the other template
+proofs and paper correspondence does not justify a higher percentage yet.
 
 ## Proposition 12.2: current extension target
 

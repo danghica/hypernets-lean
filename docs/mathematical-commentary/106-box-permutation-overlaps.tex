@@ -1,0 +1,332 @@
+\clearpage
+\section{Box permutation through copying and contextual opening}
+\label{sec:copying-box-permutation-overlaps}
+This milestone proves the local copying overlap for BPerm and strengthens
+its beta overlap to an exact comparison of whole-host execution costs.
+Together with Section~\ref{sec:copying-box-permutation-opening}, the two local
+compute diagrams now cover the shallow lambda cases identified in the paper's
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS6}{Appendix~H.3.6}:
+a contraction tree copying a lambda payload, and application opening its box.
+The copying rule is still Figure~17, and the application rule retains its
+stable-argument premise. The full operation alphabet, original program terms
+and Figure~16 translation are unchanged.
+
+There is an essential difference between the endpoints of the two diagrams.
+Beta opening eliminates the compared outer boxes and gives recursively
+isomorphic successor states. Copying produces two surviving BPerm pairs.
+The new proof assembles those pairs into a structural residual derivation and
+tracks their distinct actual edges. It does not identify that derivation with
+observational equivalence, or with a fully certified residual specimen.
+Deep-overlap transfer, mixed shallow/deep copying contributions, the residual
+specimen certificates and the final forward/converse robustness argument
+remain open. Thus this section completes the local shallow copying diagram,
+not the whole BPerm template proof or Proposition~12.2.
+
+\Needspace{14\baselineskip}
+\subsection{The complete copy reduct and its boundary action}
+\termdef{copying-reduct-boundary-naturality}
+Write $E_{k,h}$ for the ordered environment interface of $k$ term wires followed
+by $h$ atom wires. Let $T$ be any genuine term contraction tree with $n+1$
+inputs, and let $G,H:*\to E_{k,h}$ be payload-shaped graphs with a typed boundary
+isomorphism $f:G\to H$. A boundary isomorphism preserves ordered incidences,
+wire types and boundary roles but may permute external positions. Its singleton
+input action is necessarily the identity; write $p=f_{\mathrm{out}}$ for its
+free-output action.
+
+The literal reduct $A_T(G)$ contains an active copy of $G$, a retained copy fed
+by the residual tree, and the original two-use variable and atom distributors.
+The residual tree is the matched tree $T$ with its selected input supplied by
+a weakening. It is not replaced by a canonical tree. Naturality constructs a
+boundary isomorphism $A_T(G)\to A_T(H)$ fixing all $n+1$ inputs and acting by
+$p$ on the final outputs. This statement concerns graph assembly; it does not
+assert that arbitrary payloads or their external permutations are copyable.
+
+The auxiliary \texttt{reboundary} operation reindexes equal boundary lists
+without changing the edge or internal carriers. Its isomorphism uses the
+original port and edge maps after equality elimination; source and target
+preservation reduce to the identity boundary cast. The three transport lemmas
+state explicitly that the edge bijection is unchanged and input/output actions
+are the original actions with the corresponding finite-index casts.
+
+\lean{Copying/CopyBoundaryNaturality}{8}{19}{BoundaryIso.reboundary}
+\lean{Copying/CopyBoundaryNaturality}{21}{23}{BoundaryIso.reboundary_edges}
+\lean{Copying/CopyBoundaryNaturality}{25}{29}{BoundaryIso.reboundary_input}
+\lean{Copying/CopyBoundaryNaturality}{31}{35}{BoundaryIso.reboundary_output}
+
+\Needspace{12\baselineskip}
+The retained branch is $R_T;G$, where $R_T$ is the original residual tree.
+Glue its identity boundary isomorphism to $f$. Compatibility at the common
+singleton interface follows because $f$ fixes the sole input. The resulting
+\texttt{retained} map fixes every residual input and inherits $f$'s output action.
+The \texttt{raw} construction then assembles $f$ on the active branch and this
+retained map on the other branch. It uses the original Boolean branch family
+and the original middle-block output shuffle. Finally \texttt{copies} reindexes
+the equal input and output lists into the interfaces used by Figure~17.
+
+\lean{Copying/CopyBoundaryNaturality}{44}{45}{CopyRule.Boundary.retained}
+\lean{Copying/CopyBoundaryNaturality}{47}{49}{CopyRule.Boundary.retained_input}
+\lean{Copying/CopyBoundaryNaturality}{51}{53}{CopyRule.Boundary.retained_output}
+\lean{Copying/CopyBoundaryNaturality}{55}{61}{CopyRule.Boundary.raw}
+\lean{Copying/CopyBoundaryNaturality}{63}{64}{CopyRule.Boundary.copies}
+
+\Needspace{12\baselineskip}
+For a branch $b$ and an original output index $j$, let $\iota_b(j)$ be its
+position after that shuffle. The output lemma proves
+\[
+ \iota_b(j)\longmapsto\iota_b(p(j)).
+\]
+It follows by the parallel embedding equation, using $f$ on the active branch
+and the retained-output lemma on the other. The input lemma splits each input
+index into its Boolean branch and local position. In the active branch it uses
+the singleton-input identity; in the retained branch it uses the residual-input
+identity. Joining the split index restores the original position. This proves
+pointwise preservation of the active input and every unselected input, including
+$n=0$.
+
+\lean{Copying/CopyBoundaryNaturality}{67}{86}{CopyRule.Boundary.copies_output}
+\lean{Copying/CopyBoundaryNaturality}{89}{115}{CopyRule.Boundary.copies_input}
+
+The existing typed distributor automorphism acts on each of its two uses by
+$p$ and on its final interface by $p$. Every incoming index is some
+$\iota_b(j)$, so the preceding output equation proves the compatibility needed
+to glue the two-copy graph to that distributor. The definition \texttt{after}
+is precisely this serial gluing. Its outer input action is inherited from the
+copies, and its outer output action from the distributor.
+
+\lean{Copying/CopyBoundaryNaturality}{118}{126}{CopyRule.Boundary.compatible}
+\lean{Copying/CopyBoundaryNaturality}{129}{130}{CopyRule.Boundary.after}
+\lean{Copying/CopyBoundaryNaturality}{132}{136}{CopyRule.Boundary.after_input}
+\lean{Copying/CopyBoundaryNaturality}{138}{142}{CopyRule.Boundary.after_output}
+
+\Needspace{16\baselineskip}
+The edge laws give additional information beyond existence of an isomorphism.
+An edge in the active copy maps to the corresponding active-copy edge under
+$f$; an edge in the retained copy maps to the retained-copy edge under the same
+$f$. Every residual-tree and weakening edge is fixed. These follow by unfolding
+the serial and parallel edge maps and the proved invariance of the edge map
+under boundary reindexing. Hence the map neither interchanges the two copies
+nor changes the matched tree presentation.
+
+\lean{Copying/CopyBoundaryNaturality}{145}{147}{CopyRule.Boundary.after_leftEdge}
+\lean{Copying/CopyBoundaryNaturality}{150}{152}{CopyRule.Boundary.after_rightEdge}
+\lean{Copying/CopyBoundaryNaturality}{155}{161}{CopyRule.Boundary.after_residualEdge}
+
+For a typed external permutation $p$, specialise $f$ to the canonical boundary
+isomorphism $G\to pG$. Realise the resulting output action by an external
+permutation and invert the comparison. This gives a boundary-fixing recursive
+isomorphism
+\[
+ A_T(pG)\cong pA_T(G).
+\]
+All original distributors remain in both graphs. In particular, this is not
+an additional copying rule with a weakened copyability premise.
+
+\lean{Copying/CopyBoundaryNaturality}{165}{177}{CopyRule.Boundary.permuted}
+
+\Needspace{14\baselineskip}
+\subsection{A literal BPerm pair through two copies}
+\termdef{copying-two-copy-derivation}
+Recall that \texttt{BoxPermutation.Derivation} is the explicit structural
+closure of literal BPerm steps and recursive isomorphisms. Its constructors
+alone make no semantic soundness claim. The new boundary-reindexing lemma
+follows by equality elimination. Its \texttt{copies} lemma applies the same
+supplied derivation once to the active payload and once to the payload behind
+the unchanged residual tree. Parallel assembly and boundary reindexing finish
+that proof. The \texttt{copyingAfter} lemma appends the identity derivation of
+the unchanged distributor. These proofs expose both uses of the supplied pair.
+
+\lean{Copying/BoxPermutationCopying}{12}{14}{BoxPermutation.Derivation.reboundary}
+\lean{Copying/BoxPermutationCopying}{18}{25}{BoxPermutation.Derivation.copies}
+\lean{Copying/BoxPermutationCopying}{27}{29}{BoxPermutation.Derivation.copyingAfter}
+
+Let $B,C:*\to E_{k+1,h}$ be bodies related by a boundary isomorphism $f$ which
+fixes the bound output and acts as $p$ on the free outputs. The condition is
+exactly \texttt{Opening.Action} from the preceding section. Let $L(B)$ denote
+the original lambda head followed by its original box. The compensated payload
+is the lambda head followed by $p^{-1}$ applied to the free outputs of $C$'s
+box. Moving this compensation past the lambda head gives the recursive
+isomorphism from the compensated payload to $p^{-1}L(C)$.
+
+\Needspace{20\baselineskip}
+The body action supplies a genuine BPerm pair between the two boxes. Prepending
+the common lambda head gives \texttt{payload\_pair}; prepending the common
+contraction tree and moving the compensation outside gives
+\texttt{source\_pair}. Applying the two-copy closure lemma gives a residual
+derivation to the reduct of the compensated payload. Copy-construction
+isomorphism invariance, followed by the new boundary naturality theorem, moves
+the compensation outside the whole reduct. This is \texttt{residual\_pair}.
+
+\lean{Copying/BoxPermutationCopying}{38}{42}{BoxPermutation.Copying.compensatedPayload}
+\lean{Copying/BoxPermutationCopying}{44}{45}{BoxPermutation.Copying.payloadIso}
+\lean{Copying/BoxPermutationCopying}{47}{49}{BoxPermutation.Copying.payload_pair}
+\lean{Copying/BoxPermutationCopying}{51}{55}{BoxPermutation.Copying.source_pair}
+\lean{Copying/BoxPermutationCopying}{59}{64}{BoxPermutation.Copying.residual_pair}
+
+\Needspace{14\baselineskip}
+\subsection{The actual copying transitions and surviving boxes}
+\termdef{copying-bperm-copy-diamond}
+Both $L(B)$ and $L(C)$ satisfy the original copyability predicate by its lambda
+constructor, independently of their bodies. Consequently the diagram has actual
+compute transitions
+\[
+ \begin{aligned}
+  \operatorname{before}_T(L(B))&\longrightarrow A_T(L(B)),\\
+  p^{-1}\operatorname{before}_T(L(C))&\longrightarrow p^{-1}A_T(L(C)).
+ \end{aligned}
+\]
+Both tokens start in rewrite mode at the selected tree input and finish there
+in search mode. The first transition is the original local copying rule;
+the second is that same rule transported through the already-proved external
+permutation context. The theorem also supplies the structural residual
+derivation just constructed. It never applies the copyability predicate to an
+arbitrarily externally permuted operation corolla.
+
+Prepending the genuine contraction-search transition gives
+\texttt{initial\_diamond}: exactly two original machine transitions on each
+side, beginning in search mode. No termination or stability condition on the
+box body is needed, and $T$ is an arbitrary contraction-tree presentation.
+
+\lean{Copying/BoxPermutationCopying}{68}{79}{BoxPermutation.Copying.copy_diamond}
+\lean{Copying/BoxPermutationCopying}{83}{97}{BoxPermutation.Copying.initial_diamond}
+
+The \texttt{boxEdge} coordinate is the box's original corolla edge inserted to
+the right of the lambda head. The residual-label theorem instantiates the
+literal copying label law at this edge: both copies retain the complete original
+box label, including nested contents. The disjointness theorem instantiates the
+copy construction's distinct-branch theorem, so the two occurrences remain
+different even when their labels are equal.
+
+Finally, choose $C$ to be the original body $B$ with the canonical bound-fixing
+extension of $p$. Its action condition holds by construction. The theorem
+\texttt{permuted\_copying} therefore gives both source and residual structural
+derivations without a further body-action hypothesis.
+
+\lean{Copying/BoxPermutationCopying}{100}{101}{BoxPermutation.Copying.boxEdge}
+\lean{Copying/BoxPermutationCopying}{105}{109}{BoxPermutation.Copying.residual_box_labels}
+\lean{Copying/BoxPermutationCopying}{111}{113}{BoxPermutation.Copying.residual_boxes_distinct}
+\lean{Copying/BoxPermutationCopying}{116}{124}{BoxPermutation.Copying.permuted_copying}
+
+\Needspace{14\baselineskip}
+\subsection{Cancelling equal prefixes in whole-host executions}
+\termdef{copying-equal-prefix-costs}
+Write $\mathsf{Term}_c(s)$ for termination of state $s$ in exactly $c$ original
+machine transitions. Proved successor coherence gives, for every actual prefix
+$s\xrightarrow{n}u$,
+\[
+ \mathsf{Term}_c(s)\quad\Longleftrightarrow\quad
+ \exists r,\ c=r+n\ \land\ \mathsf{Term}_r(u).
+\]
+This is a property of the concrete machine, not an added determinism premise.
+If also $t\xrightarrow{n}v$ and $u,v$ are recursively isomorphic as states,
+transport of exact successful costs across that isomorphism identifies the
+right-hand expressions. Thus the sources have the same exact successful costs.
+The theorem \texttt{equal\_prefix\_costs} is this argument. To obtain its
+\texttt{plug} version, first lift both actual prefixes and their endpoint state
+isomorphism through the typed host slot, then apply the argument to the whole
+host machine. This order avoids treating local return as global finality.
+
+\Needspace{16\baselineskip}
+The state interface-cast operation, its run lemma and its isomorphism lemma
+only eliminate equalities between ordered boundary lists. They make the slot
+interface equations explicit without inserting transitions or modifying graphs.
+
+\lean{Copying/EqualPrefixCosts}{11}{12}{Combined.castInterfaces}
+\lean{Copying/EqualPrefixCosts}{14}{17}{Combined.run_castInterfaces}
+\lean{Copying/EqualPrefixCosts}{19}{22}{Combined.StateIso.castInterfaces}
+\lean{Copying/EqualPrefixCosts}{26}{30}{Combined.equal_prefix_costs}
+\lean{Copying/EqualPrefixCosts}{35}{41}{Combined.equal_prefix_costs_plug}
+
+\Needspace{12\baselineskip}
+A stronger cancellation statement does not require endpoint isomorphism:
+\[
+ \bigl(\forall c,\ \mathsf{Term}_c(s)\leftrightarrow\mathsf{Term}_c(t)\bigr)
+ \ \Longleftrightarrow\
+ \bigl(\forall r,\ \mathsf{Term}_r(u)\leftrightarrow\mathsf{Term}_r(v)\bigr).
+\]
+The reverse implication applies the prefix equation on both sides. For the
+forward implication, inspect the source comparison at cost $r+n$ and cancel
+$n$ in the resulting natural-number equalities. The two \texttt{at} variants
+combine these arguments with explicit interface casts and actual plugging.
+They apply to arbitrary typed outer slots, without requiring local finality to
+be preserved by insertion.
+
+\lean{Copying/EqualPrefixCosts}{45}{56}{Combined.equal_prefix_spectra_iff}
+\lean{Copying/EqualPrefixCosts}{59}{68}{Combined.equal_prefix_costs_at}
+\lean{Copying/EqualPrefixCosts}{72}{82}{Combined.equal_prefix_spectra_at}
+
+\Needspace{14\baselineskip}
+\subsection{Quantitative conclusions for the two overlaps}
+\termdef{copying-contextual-redex-costs}
+For beta opening, the compensated graph isomorphism from the preceding section
+also preserves the search mode and the selected input token; this defines
+\texttt{successorIso}. Each source reaches its successor in six transitions.
+Equal-prefix cancellation therefore proves \texttt{redex\_costs}, equality of
+all exact successful costs of the two original application sources. Its
+\texttt{at} version places the entire comparison in an arbitrary matching host
+slot; existentially quantifying the common cost gives termination equivalence.
+The stable argument is still a premise of both actual beta prefixes. The body
+may contain arbitrary operations or nested boxes, and need not terminate.
+
+These hosted statements start with the token at the inserted application's
+input. They are stronger than equality of isolated successor costs, but do not
+claim that every evaluation of an arbitrary box context has already been
+classified into this local case. That classification remains part of template
+robustness.
+
+\lean{Copying/BoxPermutationOverlapCosts}{15}{21}{BoxPermutation.Opening.successorIso}
+\lean{Copying/BoxPermutationOverlapCosts}{25}{30}{BoxPermutation.Opening.redex_costs}
+\lean{Copying/BoxPermutationOverlapCosts}{35}{45}{BoxPermutation.Opening.redex_costs_at}
+\lean{Copying/BoxPermutationOverlapCosts}{49}{58}{BoxPermutation.Opening.redex_termination_at}
+
+For copying, the two-transition prefixes give a different, precisely delimited
+conclusion. In every matching host, equality of all source costs is equivalent
+to equality of all residual costs. This is \texttt{residual\_spectra\_at}.
+It retains the semantic residual comparison as an obligation; the structural
+derivation proved above does not discharge it by itself. This is the cost
+handoff needed when the residual pairs are eventually placed into the general
+robustness argument.
+
+\lean{Copying/BoxPermutationOverlapCosts}{69}{84}{BoxPermutation.Copying.residual_spectra_at}
+
+\Needspace{14\baselineskip}
+\subsection{Concrete boundary and context checks}
+The regression body from the preceding section contains a nested lambda,
+an application and an atom use. Its permutation swaps two free variables and
+two atoms while fixing the bound output. \texttt{changedBody} uses the actual
+interface permutation of this original translation. The \texttt{nested\_copying}
+theorem instantiates the two-transition diagram for every genuine contraction
+tree, retaining its residual derivation. The binary-tree check proves the two
+box occurrences distinct; the unary-tree check covers no residual external
+inputs. A three-input tree checks that input position two is fixed by the
+complete reduct's boundary action.
+
+\lean{Copying/BoxPermutationOverlapExamples}{11}{11}{BoxPermutation.OverlapExamples.changedBody}
+\lean{Copying/BoxPermutationOverlapExamples}{15}{23}{BoxPermutation.OverlapExamples.nested_copying}
+\lean{Copying/BoxPermutationOverlapExamples}{26}{30}{BoxPermutation.OverlapExamples.binary_boxes}
+\lean{Copying/BoxPermutationOverlapExamples}{33}{37}{BoxPermutation.OverlapExamples.unary_copying}
+\lean{Copying/BoxPermutationOverlapExamples}{40}{44}{BoxPermutation.OverlapExamples.third_input_fixed}
+
+\Needspace{18\baselineskip}
+The full redex cost comparison is instantiated with the nested body and the
+original stable unit argument. The host is a real unary-negation operation
+followed by a typed hole, whose edge coordinate is supplied explicitly.
+The hosted cost theorem follows from the general hosted beta comparison with
+reflexive interface equalities. In this host the inserted application's input
+is internal, so the check exercises the situation in which local return is
+not global termination.
+
+\lean{Copying/BoxPermutationOverlapExamples}{47}{51}{BoxPermutation.OverlapExamples.nested_redex_costs}
+\lean{Copying/BoxPermutationOverlapExamples}{55}{57}{BoxPermutation.OverlapExamples.host}
+\lean{Copying/BoxPermutationOverlapExamples}{59}{59}{BoxPermutation.OverlapExamples.hole}
+\lean{Copying/BoxPermutationOverlapExamples}{61}{68}{BoxPermutation.OverlapExamples.hosted_redex_costs}
+
+\Needspace{10\baselineskip}
+Finally \texttt{selfApplication} is the scoped syntax
+$(\lambda x.x\,x)(\lambda x.x\,x)$ in the same nonempty free environment.
+The final regression applies the residual derivation theorem to its literal
+translation and the same nontrivial free permutation. This checks that nested
+self-application is retained and that no body-termination premise has entered
+the copying proof. It is not a separate divergence theorem for that syntax.
+
+\lean{Copying/BoxPermutationOverlapExamples}{72}{73}{BoxPermutation.OverlapExamples.selfApplication}
+\lean{Copying/BoxPermutationOverlapExamples}{75}{81}{BoxPermutation.OverlapExamples.self_application_copying}

@@ -53,7 +53,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/e09a12c89fb1e6674301a73e6fc1db4ff80c4fd8}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/ef509dd46c52cd550ccdd3fc609b18fb7643c2a1}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -61,7 +61,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{27 October 2026\\\small Source snapshot: \texttt{e09a12c}; Lean \texttt{4.35.0}}
+\date{27 October 2026\\\small Source snapshot: \texttt{ef509dd}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -262,6 +262,7 @@ prerequisites.
 \input{103-copying-specimens}
 \input{104-contextual-robustness}
 \input{105-box-permutation-opening}
+\input{106-box-permutation-overlaps}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
