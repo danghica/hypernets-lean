@@ -9,37 +9,36 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: genuine BPerm copying residual specimens
+## Latest milestone: deep BPerm beta residuals
 
-**Shallow and all-deep copying now have genuine recursive residual certificates,
-and the closed all-deep copying case satisfies forward and converse robustness.**
-The certificates retain both copies, the original contraction tree and the term
-and atom distributors. They construct the existing specimen system's actual
-quasi-specimens, including tokens internal to an enclosing host.
+**Local deep beta now preserves genuine recursive filling certificates, and
+its closed cases satisfy forward and converse robustness.** The proofs admit
+arbitrary nested bodies and separately certified arguments. Stability of the
+right argument is derived from the left; more strongly, stable BPerm-related
+fragments are recursively isomorphic.
 
-Proved expansion flattening and parallel distribution compose arbitrary shallow
-and nested contributions. A framed transfer theorem lifts actual matched local
-rewrites while retaining certified contributions elsewhere. Regression examples
-include nontrivial variable/atom swaps, mixed-depth occurrences, a real unary
-host, and self-application without a termination assumption. The Proposition
-12.2 terms, Figure 16 translation and machine rules are unchanged.
+The actual template and recursive certificates are proved closed under depth
+padding. A shallow permuted box with an independently certified stable argument
+has isomorphic beta successors and equal exact whole-host costs from the redex
+input. A mixed-host regression fires beta while retaining a separate nontrivial
+BPerm contribution elsewhere. The original terms, Figure 16 translation,
+stability conditions and machine rules are unchanged.
 
-Appendix B.1 removes the completed copying residual-certificate obligation.
-**Full BPerm robustness remains open:** exhaustive overlap decomposition and
-transfer for the remaining operations, including deep beta, must still connect
-every original specimen to these proved cases. The other template families,
-paper correspondence, semantic renaming/substitution, weakening and Figure 22
-remain in the four broader packages. **Proposition 12.2 is unproved.**
+Appendix B.1 removes the completed local deep beta transfer obligation.
+**Full BPerm robustness remains open:** arbitrary specimen/rewrite overlaps
+still require exhaustive decomposition, remaining operation transfers and
+universal forward/converse assembly. The other template families, paper
+correspondence, semantic renaming/substitution, weakening and Figure 22 remain
+in the four broader packages. **Proposition 12.2 is unproved.**
 
-Commentary Section 103 explains all 94 new declarations with immutable links.
-Full build: 485 jobs. All 2,713 axiom audits pass (6 abstract, 494 graph,
-2,213 copying), with no `sorryAx` or project-specific axioms.
+Commentary Section 104 explains all 67 new declarations with immutable links.
+Full build: 494 jobs. All 2,780 axiom audits pass (6 abstract, 494 graph,
+2,280 copying), with no `sorryAx` or project-specific axioms.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-This closes the copying residual-certificate gap, but not a whole remaining
-template family. The difficulty of the other template proofs and paper
-correspondence still makes a higher estimate unjustified.
+The local beta gap is closed, but the remaining universal template proofs and
+paper correspondence do not yet justify a higher estimate.
 
 ## Proposition 12.2: current extension target
 

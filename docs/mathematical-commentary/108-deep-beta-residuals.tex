@@ -1,0 +1,382 @@
+\clearpage
+\section{Deep beta residuals and stability of BPerm fillings}
+\label{sec:copying-beta-residuals}
+This section closes the local deep beta residual-certificate obligation.
+An arbitrary recursively certified pair of bodies may be opened by the
+original micro-beta rule, preserving a genuine recursive filling certificate
+for the exposed bodies. Independently certified arguments are allowed;
+stability on the left implies stability on the right. For closed, hole-free
+bodies this gives an original quasi-specimen and the forward and converse
+robustness conclusions for every independently chosen source successor.
+A shallow permuted box can also be combined with a separately certified
+stable argument: its actual successors are recursively isomorphic, with
+exact successful costs in every typed host from the redex input.
+
+The dependency is relevant to the application-overlap cases in the paper's
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS6}{Appendix H.3.6}.
+These local results and the copying results of
+Section~\ref{sec:copying-residual-specimens} still need an exhaustive overlap
+classification for arbitrary original specimens, transfer for the remaining
+operations, and universal forward/converse robustness assembly. Full BPerm
+robustness and Proposition~12.2 remain unproved. No syntax, translation clause,
+local rewrite rule, stability condition or observation class is changed.
+
+\Needspace{12\baselineskip}
+\subsection{Corollas with their actual interfaces}
+A \texttt{LabelCopy} certificate describes a graph with one edge, no internal
+vertices, and the original ordered boundary ports of a given label.
+The input and output lemmas recover its interface from that label's signature:
+apply the graph's source/target typing equations to the certified port lists.
+This is needed when a recursive box certificate is reconstructed at interfaces
+that were not syntactically written as that signature.
+
+\lean{Copying/FillingTransport}{10}{13}{LabelCopy.input}
+\lean{Copying/FillingTransport}{15}{18}{LabelCopy.output}
+
+Two such corollas at the same boundary are recursively isomorphic whenever
+their labels are recursively equivalent. The internal-vertex map is the unique
+map between empty carriers; the edge map takes the unique edge to the unique
+edge. The inverse equations use uniqueness, label compatibility uses the
+given label equivalence, and each port list is fixed position by position.
+Uniform depth padding retains the chosen edge and all its ports, changing
+only its label. This constructs the padded \texttt{LabelCopy}.
+
+\lean{Copying/FillingTransport}{21}{36}{LabelCopy.iso}
+\lean{Copying/FillingTransport}{39}{45}{LabelCopy.padding}
+
+The constructor \texttt{of\_copies} starts from the reflexive filling of the
+left corolla and transports the right endpoint along this isomorphism.
+The constructor \texttt{boxedCopies} takes an actual paired body certificate,
+boxes it, and transports both resulting corollas to the given representations.
+Its interface equalities are derived by the input/output lemmas above.
+It introduces neither a new filling constructor nor a semantic equivalence
+assumption.
+
+\lean{Copying/FillingTransport}{52}{54}{FillingWitness.of_copies}
+\lean{Copying/FillingTransport}{58}{66}{FillingWitness.boxedCopies}
+
+\Needspace{12\baselineskip}
+\subsection{Padding the relation and the recursive certificate}
+\termdef{bperm-filling-padding}
+Write $\uparrow G$ for the original one-level increase of box allowance.
+The external output action by a typed permutation $p$ commutes with padding:
+\[
+ \uparrow(G\cdot p)=(\uparrow G)\cdot p.
+\]
+After replacing padding by its uniform graph presentation, both sides have
+identical carriers and labels. Equality of incidence maps follows by checking
+internal vertices, inputs and outputs. Applying this identity to the two
+literal sides of a BPerm pair proves closure of the raw relation.
+Transporting the two endpoint isomorphisms gives closure up to recursive
+representation; focus freedom is preserved by the existing padding law.
+Thus the actual BPerm template, not merely a structural derivation relation,
+is closed under padding.
+
+\lean{Copying/BoxPermutationPadding}{9}{20}{InterfacePermutation.raise}
+\lean{Copying/BoxPermutationPadding}{24}{28}{Step.raise}
+\lean{Copying/BoxPermutationPadding}{30}{33}{UpToIso.raise}
+\lean{Copying/BoxPermutationPadding}{35}{37}{template_raise}
+
+For an arbitrary pre-template $T$, \texttt{PaddingClosed} denotes precisely
+$T(G,H)\Rightarrow T(\uparrow G,\uparrow H)$. The BPerm instance is the theorem
+just proved. To lift an entire filling, first reassemble separately padded
+component certificates in the padded host. Their label-signature equalities
+supply the necessary boundary casts. Padding commutes with simultaneous
+expansion up to the previously proved ordered graph isomorphism, so the
+result has the intended expanded endpoints.
+
+\lean{Copying/FillingPadding}{9}{10}{PreTemplate.PaddingClosed}
+\lean{Copying/FillingPadding}{12}{13}{template_paddingClosed}
+\lean{Copying/FillingPadding}{19}{28}{FillingWitness.paddedExpansion}
+
+\Needspace{12\baselineskip}
+Induction on the available box depth proves existence of a padded witness.
+For a retained edge, use its padded corolla certificates and preserved focus
+freedom. For a filled hole, use the proved padding closure of $T$. For a boxed
+edge, recurse on its actual inner filling and reconstruct the two represented
+box corollas. The last case cannot occur at depth zero. Reassembly and padding
+of the original endpoint isomorphisms finish the induction.
+\texttt{raise} selects this constructed witness, and \texttt{pad} iterates it
+for any natural number of padding levels. Classical choice here selects
+proved structural data; it supplies no machine or template law.
+
+\lean{Copying/FillingPadding}{32}{66}{FillingWitness.raised_exists}
+\lean{Copying/FillingPadding}{68}{70}{FillingWitness.raise}
+\lean{Copying/FillingPadding}{72}{76}{FillingWitness.pad}
+
+\Needspace{12\baselineskip}
+\subsection{Stability is preserved, and stable BPerm fillings are rigid}
+\termdef{stable-filling-preservation}
+First, the property that every outer edge has a stable label is invariant
+under recursive isomorphism. For the forward direction, choose the inverse
+image of an edge and use preservation of label equivalence; for the reverse
+direction use the forward edge map. A pre-template
+\texttt{PreservesStableLabels} if each of its pairs preserves this property.
+Each literal BPerm side contains a box edge, whereas a stable label must be
+an instance edge or a passive primitive operation. Hence neither endpoint
+of a BPerm pair up to isomorphism can satisfy this outer-label property.
+The implication in either direction is therefore valid, proving the required
+preservation law for the actual BPerm template.
+
+\lean{Copying/FillingStability}{9}{16}{stableLabels_iso}
+\lean{Copying/FillingStability}{18}{20}{PreTemplate.PreservesStableLabels}
+\lean{Copying/FillingStability}{23}{38}{UpToIso.not_stable_labels}
+\lean{Copying/FillingStability}{40}{43}{template_preservesStableLabels}
+
+The edge-level filling lemma has three cases. Retained corollas have the same
+label. A filled hole uses the pre-template's preservation law. A boxed
+contribution has a box on both sides and so cannot have only stable labels.
+Quantifying this result over each component edge gives the corresponding
+law for simultaneous deep filling. Transport across a witness's endpoint
+isomorphisms then gives
+\[
+ W_T(G,H)\quad\Longrightarrow\quad
+   \bigl(\operatorname{Stable}(G)\iff\operatorname{Stable}(H)\bigr).
+\]
+Here $W_T$ abbreviates an actual \texttt{FillingWitness}, and the preservation
+law for $T$ is required. The original output-type and reachability clauses of
+stability are retained: they follow from the transferred label restriction
+by the existing alphabet-specific \texttt{Stable.of\_labels} theorem.
+
+\lean{Copying/FillingStability}{45}{69}{DeepFillingEdge.stable_labels_iff}
+\lean{Copying/FillingStability}{71}{80}{DeepFilling.stable_labels_iff}
+\lean{Copying/FillingStability}{84}{89}{FillingWitness.stable_iff}
+
+\termdef{stable-bperm-rigidity}
+For BPerm there is a stronger structural result:
+\[
+ W_{\mathrm{BPerm}}(G,H)\ \land\ \operatorname{Stable}(G)
+ \quad\Longrightarrow\quad G\cong_{\mathrm{deep}}H.
+\]
+To prove it, examine each edge certificate in the witness's common context.
+A shallow template filling is impossible by the box obstruction above.
+A recursively boxed filling is impossible for the same reason at its outer
+edge. Only a retained corolla remains. Both expansions therefore collapse to
+the same original context by the existing corolla-collapse isomorphism.
+Composing these collapses with the endpoint isomorphisms proves the claim.
+This does not identify general BPerm pairs with ordered isomorphisms: the
+additional flat-stability hypothesis is essential.
+
+\lean{Copying/StableFillingRigidity}{10}{21}{stable_edge_retained}
+\lean{Copying/StableFillingRigidity}{24}{30}{stable_expansion_iso}
+\lean{Copying/StableFillingRigidity}{34}{37}{stable_witness_iso}
+
+\Needspace{12\baselineskip}
+\subsection{Before and after the actual beta rewrite}
+\termdef{deep-beta-filling}
+Let $B,C$ be depth-$d$ bodies with ordered outputs
+$\operatorname{env}(k+1,h)$, and let $G,H$ be depth-$(d+1)$ arguments with one
+term input and a common arbitrary output list $O$. Suppose $W_T(B,C)$ and
+$W_T(G,H)$ are given. The splice constructor expands the original two-slot
+splice pattern with these two certificates. It connects exactly bound output
+zero; all remaining body outputs and all argument outputs keep their order.
+The source constructor puts a retained application head before the tensor
+of the boxed body certificate and the argument certificate. Thus it certifies
+the actual graphs \texttt{Application.before}, including their original boxes.
+
+\lean{Copying/BetaFillingWitness}{11}{17}{FillingWitness.splice}
+\lean{Copying/BetaFillingWitness}{19}{23}{FillingWitness.betaBefore}
+
+Assume now that $T$ is padding-closed. Opening the body uses exactly the
+original increase of depth allowance and
+the equality $\operatorname{env}(k+1,h)=\mathsf{term}::\operatorname{env}(k,h)$.
+The padding theorem and an interface cast give its certificate. Splicing with
+the argument yields
+\[
+ W_T\bigl(\operatorname{after}(B,G),\operatorname{after}(C,H)\bigr).
+\]
+Unlike shallow opening, these residual endpoints need not be isomorphic:
+they can retain arbitrary nested template occurrences. The certificate uses
+the original recursive filling relation and has no termination hypothesis.
+
+\lean{Copying/BetaFillingWitness}{25}{28}{FillingWitness.openBody}
+\lean{Copying/BetaFillingWitness}{32}{36}{FillingWitness.betaAfter}
+
+\Needspace{12\baselineskip}
+For BPerm, assume only $\operatorname{Stable}(G)$ on the arguments. The
+stability theorem derives $\operatorname{Stable}(H)$. Apply the actual beta
+rule independently on both sides: each rewrite token at the redex input
+becomes a search token at that input in the corresponding \texttt{after}
+graph. The preceding construction certifies the residual pair. Starting with
+a search token instead gives the original six-transition search-and-compute
+prefix on each side. These are actual combined-machine runs, with equal
+lengths and unchanged rule premises.
+
+\lean{Copying/BetaFillingWitness}{45}{54}{DeepBeta.diamond}
+\lean{Copying/BetaFillingWitness}{57}{66}{DeepBeta.opening}
+
+\Needspace{12\baselineskip}
+\subsection{Quasi-specimens and the robustness conclusion}
+\termdef{deep-beta-robustness-case}
+With $k=h=0$ and $O=[]$, assume both bodies hole-free. The definitions
+\texttt{source} and \texttt{target} package before/rewrite and after/search
+as unbounded states. The step theorem projects literal beta to the deterministic
+representation-class machine. The residual certificate gives an original
+quasi-specimen up to equality: hole freedom follows from the bodies and stable
+arguments, and each target is a rooted initial search state.
+
+\lean{Copying/DeepBetaRobustness}{11}{13}{DeepBeta.source}
+\lean{Copying/DeepBetaRobustness}{14}{16}{DeepBeta.target}
+\lean{Copying/DeepBetaRobustness}{18}{21}{DeepBeta.step}
+\lean{Copying/DeepBetaRobustness}{24}{30}{DeepBeta.quasi}
+\Needspace{6\baselineskip}
+Exchanging the paired filling gives the converse system's quasi-specimen.
+
+\lean{Copying/DeepBetaRobustness}{32}{36}{DeepBeta.quasi_opposite}
+
+Given any independently chosen successor $u$ of the left source, determinism
+identifies it with the constructed left target. For any cost preorders
+$Q,P,R$, choose zero further steps from $u$ and one step from the right source.
+Then $Q(1+0,1)$ follows from reflexivity, and the residual equality
+quasi-specimen lifts to one up to the two refinement preorders. This proves
+the complete quantitative robustness conclusion for this source pair.
+The converse proof exchanges sides and uses derived stability on the right.
+The theorem is universally quantified over bodies, certified arguments and
+independent successors; it is still a case theorem, not the whole template's
+robustness quantification over arbitrary specimens.
+
+\lean{Copying/DeepBetaRobustness}{40}{49}{DeepBeta.robust_case}
+\lean{Copying/DeepBetaRobustness}{51}{60}{DeepBeta.robust_case_opposite}
+
+For arbitrary free interfaces and a typed enclosing host, the six-step runs
+also give an exact cancellation result: equality of all successful costs
+from the two before/search states is equivalent to equality of all successful
+costs from the two after/search states. Both whole-host prefixes have the
+same length, so subtracting or adding six proves the two implications.
+This result records the remaining residual comparison explicitly. It does
+not assume or assert general semantic soundness of a BPerm filling.
+
+\lean{Copying/DeepBetaRobustness}{64}{79}{DeepBeta.residual_spectra_at}
+
+\Needspace{12\baselineskip}
+\subsection{A shallow box with an independently certified argument}
+\termdef{mixed-beta-transfer}
+Now take an actual box-permutation action from $B$ to $C$, with free-interface
+permutation $p$, a focus-free body $B$, and a separate certificate
+$W_{\mathrm{BPerm}}(G,H)$.
+The source witness combines the previously constructed shallow payload
+witness with the argument witness, then with the retained application head.
+The tensor and serial interface-action laws move the compensation to the
+external boundary. Its endpoints are the actual left before graph and the
+right before graph compensated by $(p\oplus 1_O)^{-1}$.
+
+\lean{Copying/MixedBetaResidual}{13}{23}{MixedBeta.sourceWitness}
+
+If $G$ is stable, stable-filling rigidity gives $G\cong_{\mathrm{deep}}H$.
+Compose the earlier compensated beta-opening isomorphism for the common
+argument $G$ with application congruence along this argument isomorphism.
+The resulting successor-state isomorphism fixes the input search token.
+A reflexive filling of the left target, transported along its graph part,
+gives an actual residual witness. Focus freedom of the body is required by
+this witness construction; stability supplies argument focus freedom.
+
+\lean{Copying/MixedBetaResidual}{25}{33}{MixedBeta.successorIso}
+\lean{Copying/MixedBetaResidual}{36}{41}{MixedBeta.residualWitness}
+
+Apply the original six-step runs on both sides, compensate the right-hand
+run, and use the successor isomorphism. The existing equal-prefix theorem
+then proves equality of every exact successful cost after inserting the two
+redexes in any typed host, starting at the inserted redex input.
+Only left-hand stability is assumed. No termination of a callback, box body
+or host continuation is assumed, and this statement does not quantify over
+arbitrary token positions elsewhere in the host.
+
+\lean{Copying/MixedBetaResidual}{44}{58}{MixedBeta.redex_costs_at}
+
+\Needspace{12\baselineskip}
+\subsection{Nested, padded and genuinely framed checks}
+\termdef{mixed-beta-regression}
+The first regression uses the preceding section's nontrivial mixed body:
+a shallow permutation in one component and a permutation below another box
+in the other. The argument is the depth-five unit constant and has its
+reflexive certificate. Applying \texttt{betaAfter} constructs the residual;
+the right program has the original six-step opening prefix. Iterated padding
+retains this certificate for every additional allowance.
+
+\lean{Copying/BetaResidualExamples}{9}{9}{BetaResidualExamples.argument}
+\lean{Copying/BetaResidualExamples}{10}{11}{BetaResidualExamples.argumentWitness}
+\lean{Copying/BetaResidualExamples}{14}{14}{BetaResidualExamples.residual}
+\lean{Copying/BetaResidualExamples}{16}{20}{BetaResidualExamples.mixed_opening}
+\lean{Copying/BetaResidualExamples}{23}{23}{BetaResidualExamples.padded_residual}
+
+A separate prefix check uses a passive lambda head as the stable argument.
+Its thunk output remains exposed, so a surrounding context may attach a
+callback of its choice. The full lambda payload including its box is not
+being declared stable. Another check defines self-application $\Omega$ in
+the unchanged term syntax and opens its unchanged translation as a body in
+six transitions. This proves only the finite opening prefix; it makes no
+claim here about the continuation's termination or divergence.
+
+\lean{Copying/BetaResidualExamples}{27}{31}{BetaResidualExamples.lambda_argument_opening}
+\lean{Copying/BetaResidualExamples}{33}{33}{BetaResidualExamples.omega}
+\lean{Copying/BetaResidualExamples}{37}{43}{BetaResidualExamples.self_application_opening}
+
+\Needspace{12\baselineskip}
+For the framed regression, the unselected contribution is itself a
+nontrivial pair: take the original unary-tree copying reduct of the two
+closed mixed lambda payloads. The deep-copy constructor supplies its witness.
+The host is a binary addition head followed by two closed holes, numbered
+20 and 21; select the first hole. This is a typed finite host with an actual
+internal redex position, not merely a renamed redex-input graph.
+
+\lean{Copying/BetaResidualExamples}{46}{46}{BetaResidualExamples.outsideLeft}
+\lean{Copying/BetaResidualExamples}{47}{47}{BetaResidualExamples.outsideRight}
+\lean{Copying/BetaResidualExamples}{48}{49}{BetaResidualExamples.outsideWitness}
+\lean{Copying/BetaResidualExamples}{51}{53}{BetaResidualExamples.host}
+\lean{Copying/BetaResidualExamples}{54}{54}{BetaResidualExamples.selected}
+
+\Needspace{18\baselineskip}
+The family puts a retained corolla at the addition head, the active redex
+or reduct in the first hole, and the independent contribution in the second.
+Its certificate dispatches to reflexivity, the active certificate and the
+outside certificate respectively. The other-edge lemma proves that changing
+the active graph leaves every unselected component unchanged: split the
+host's two Boolean tags, and use uniqueness of the selected corolla edge.
+Hole freedom follows componentwise through expansion. The selected source
+port is internal, as seen directly from the serial-assembly tag.
+
+\lean{Copying/BetaResidualExamples}{56}{65}{BetaResidualExamples.family}
+\lean{Copying/BetaResidualExamples}{67}{76}{BetaResidualExamples.familyWitness}
+\lean{Copying/BetaResidualExamples}{78}{86}{BetaResidualExamples.others}
+\lean{Copying/BetaResidualExamples}{88}{97}{BetaResidualExamples.filled_closed}
+\lean{Copying/BetaResidualExamples}{99}{100}{BetaResidualExamples.token_internal}
+
+The framed source and target states use that very host port, mapped into
+the expansion, with rewrite and search modes respectively. Instantiate the
+proved framed-rewrite transfer with the two actual local beta steps and the
+componentwise residual witness. This gives both actual whole-host transitions
+and an original quasi-specimen at the internal vertex. Project the two steps
+to classes and apply determinism as above to obtain forward and converse
+robustness conclusions for every independent whole-host successor.
+The unselected BPerm contribution differs between the two executions and is
+retained in their residual certificate. No termination of the enclosing
+arithmetic computation is asserted.
+
+\lean{Copying/BetaResidualExamples}{102}{104}{BetaResidualExamples.frameSource}
+\lean{Copying/BetaResidualExamples}{105}{107}{BetaResidualExamples.frameTarget}
+\lean{Copying/BetaResidualExamples}{111}{130}{BetaResidualExamples.hosted_diamond}
+\lean{Copying/BetaResidualExamples}{132}{139}{BetaResidualExamples.hosted_robust_case}
+\lean{Copying/BetaResidualExamples}{141}{148}{BetaResidualExamples.hosted_converse_case}
+
+\Needspace{12\baselineskip}
+\subsection{Completed obligation and remaining boundary}
+The local deep beta transfer, its genuine residual certificates, both closed
+robustness cases, and the shallow beta case with a separately certified
+stable argument are now proved. Padding of actual recursive certificates and
+stable-filling rigidity are reusable prerequisites. The mixed-host example
+also instantiates the transfer with a genuinely independent residual
+contribution at another hole.
+
+What remains for full BPerm is to start from an arbitrary original specimen
+and arbitrary actual rewrite, derive the relevant overlap decomposition,
+and construct every required matching rewrite and residual component.
+The remaining operation transfers and universal assembly still belong to
+Appendix~B.1. The local results do not silently supply this classification.
+The final Proposition~12.2 equivalence chain is not proved.
+
+The full build passes 494 jobs. All 2780 axiom audits pass, including all
+67 new declarations; only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound} occur. Estimated completion remains 60--70\% of
+mathematical effort, with low confidence. This removes a concrete beta proof
+gap, but the difficulty of the remaining universal template arguments still
+prevents a defensible narrower or higher estimate.
