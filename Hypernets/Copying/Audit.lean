@@ -1,4 +1,4 @@
-import Hypernets.Copying.RefocusingExamples
+import Hypernets.Copying.FullRefocusingExamples
 import Hypernets.Copying.CombinedExamples
 import Hypernets.Copying.CombinedTyping
 import Hypernets.Copying.AtomicRenaming
@@ -1893,3 +1893,46 @@ import Hypernets.Copying.TracingExamples
 #print axioms Hypernets.Copying.Combined.RefocusingExamples.translated_reference_result_rooted
 #print axioms Hypernets.Copying.Combined.RefocusingExamples.translated_addition_request_rooted
 #print axioms Hypernets.Copying.Combined.RefocusingExamples.translated_addition_rooted_padding
+
+-- Complete operation refocusing and unconditional rootedness of the full machine.
+#print axioms Hypernets.Copying.Search.Interactive
+#print axioms Hypernets.Copying.Search.enter_interactive
+#print axioms Hypernets.Copying.Search.Uses
+#print axioms Hypernets.Copying.Search.mapPosition
+#print axioms Hypernets.Copying.Search.uses_visit
+#print axioms Hypernets.Copying.Search.uses_stack
+#print axioms Hypernets.Copying.Search.uses_parent_visit
+#print axioms Hypernets.Copying.Search.Interactive.ne_store
+#print axioms Hypernets.Copying.Search.lift_step
+#print axioms Hypernets.Copying.Search.lift_prefix
+#print axioms Hypernets.Copying.Search.rooted_of_frames
+#print axioms Hypernets.Copying.Assignment.Match.rooted
+#print axioms Hypernets.Copying.Dereference.Match.retained_target
+#print axioms Hypernets.Copying.Dereference.Match.rooted
+#print axioms Hypernets.Copying.Combined.equality_rooted
+#print axioms Hypernets.Copying.Combined.assignment_rooted
+#print axioms Hypernets.Copying.Combined.dereference_rooted
+#print axioms Hypernets.Copying.Application.OpeningCertificate.rooted
+#print axioms Hypernets.Copying.Combined.application_rooted
+#print axioms Hypernets.Copying.Arithmetic.NumberArgument.consumer
+#print axioms Hypernets.Copying.Arithmetic.Request.deleted_operations
+#print axioms Hypernets.Copying.Arithmetic.Reduction.rooted
+#print axioms Hypernets.Copying.Arithmetic.Certificate.rooted
+#print axioms Hypernets.Copying.Combined.arithmetic_rooted
+#print axioms Hypernets.Copying.Combined.rewrite_rooted
+#print axioms Hypernets.Copying.Combined.step_rootedFrom
+#print axioms Hypernets.Copying.Combined.refocusing
+#print axioms Hypernets.Copying.Combined.run_rootedFrom
+#print axioms Hypernets.Copying.Combined.unbounded_refocusing
+#print axioms Hypernets.Copying.Combined.unbounded_run_rooted
+#print axioms Hypernets.Copying.Combined.execution_rooted
+#print axioms Hypernets.Copying.Combined.infinite_run_rooted
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.unaryHost
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.unary_enters
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.application_host_rooted
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.nested_lambda_host_rooted
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.variable_host_copy_rooted
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.arithmetic_host_return_rooted
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.arithmetic_host_return_not_final
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.overwrite_rooted_result
+#print axioms Hypernets.Copying.Combined.FullRefocusingExamples.equality_rooted_results
