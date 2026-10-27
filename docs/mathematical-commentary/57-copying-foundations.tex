@@ -102,9 +102,18 @@ machine has successor determinism up to recursive state isomorphism, and the
 unbounded machine up to its representation relation. Exact prefix costs and
 unique successful-run lengths are proved without extra machine-law premises
 (Section~\ref{sec:copying-successor-coherence}).
-The remaining machine work is refocusing, the focused-state correspondence
-and the concrete specimen-system interface. The proved determinism up to
-representation must be integrated with those laws for the robustness theorem. Copy transitions replace the
+
+Section~\ref{sec:copying-intrinsic-refocusing} now proves refocusing for
+search, every actual contextual copying rewrite, and every actual allocation.
+Copying replays the original search prefix with exactly its final trigger
+removed. Exact search history, including backtracking, also proves refocusing
+for replacement of a single operation head. Rootedness is preserved and
+reflected by recursive representation and finite padding. Full finite and
+unbounded refocusing is reduced equivalently to dereference, assignment,
+equality, application and arithmetic; those cases, focused-state correspondence
+and the specimen interface remain unfinished.
+The proved determinism up to representation and these refocusing results must
+be integrated with the concrete specimen laws for the robustness theorem. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its
 existing compute parameter.
 \item \textbf{Contextual interface:} binding-free closure at sourced holes,

@@ -99,8 +99,16 @@ machine has successor determinism up to recursive state isomorphism, and the
 unbounded machine up to its representation relation. Exact prefix costs and
 unique successful-run lengths are proved without extra machine-law premises
 (Section~\ref{sec:copying-successor-coherence}).
-Focused-state correspondence, refocusing and the specimen interface remain
-unfinished; successor determinism up to representation is now discharged.
+
+Section~\ref{sec:copying-intrinsic-refocusing} now proves refocusing for
+search, every actual contextual copying rewrite, and every actual allocation.
+Copying replays the original search prefix with exactly its final trigger
+removed. Exact search history, including backtracking, also proves refocusing
+for replacement of a single operation head. Rootedness is preserved and
+reflected by recursive representation and finite padding. Full finite and
+unbounded refocusing is reduced equivalently to dereference, assignment,
+equality, application and arithmetic; those cases, focused-state correspondence
+and the specimen interface remain unfinished.
 
 The earlier estimate of 80\% completion of Proposition~12.2 is withdrawn.
 The current cautious assessment is 55--70\% of mathematical effort, with low

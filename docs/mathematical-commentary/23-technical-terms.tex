@@ -250,17 +250,29 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{copying-global-label}{Copying global label predicate}{A primitive-label property required on every edge at every box depth.}
 
+\glossaryentry{copying-intrinsic-refocusing}{Copying intrinsic refocusing}{Preservation of search rootedness by the original search and copying transitions, proved through retained-occurrence prefix replay.}
+
+\glossaryentry{copying-operation-reachability}{Copying operation reachability}{Reachability from an external input using only operation edges; a necessary invariant of rooted search, not a definition of rootedness.}
+
 \glossaryentry{copying-payload-normal-form}{Copying payload normal form}{An original primitive corolla or literal lambda with its complete boxed body; every copyable payload is recursively isomorphic to such a graph.}
 
+\glossaryentry{copying-prefix-refocusing-cost}{Copying refocusing cost}{The exact law that the new graph reaches its resumed copy token in one fewer search step than the old graph needed to reach the rewrite request.}
+
 \glossaryentry{copying-replacement-closure}{Copying replacement closure}{Closure of a graph class under well-typed replacement at any selected edge, including inside boxes.}
+
+\glossaryentry{copying-retained-occurrence}{Copying retained occurrence}{An old source vertex or edge identified inside the actual reduct through its successor certificate, with precise exceptions to preserved incidences.}
 
 \glossaryentry{copying-runtime-alphabet}{Copying runtime alphabet}{The translation alphabet extended with stores, closed under all combined executions at every recursive depth.}
 
 \glossaryentry{copying-scoped-term}{Copying scoped term}{A term with separate finite variable and atom indices; lambda extends only the variable scope.}
 
+\glossaryentry{copying-search-barrier}{Copying search barrier}{A sharing edge before the retained payload excludes operation reachability there and prevents the rooted search prefix from using changed payload incidences.}
+
 \glossaryentry{copying-search-completion}{Copying search completion}{Backtrack mode at an external input; the successful finality predicate of the search-only phase machine.}
 
 \glossaryentry{copying-search-phase}{Copying search phase}{Intrinsic token traversal on the copying graph hierarchy; rewrite mode suspends the phase for pending copy or compute transitions.}
+
+\glossaryentry{copying-search-rootedness}{Copying search rootedness}{Existence of a pure-search run from a specified external input on the current graph of the state.}
 
 \glossaryentry{copying-search-transport}{Copying search transport}{Carrier bijections preserving primitive labels, ordered incidence and input status, which preserve and reflect search runs at exact costs.}
 
@@ -467,6 +479,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{ports}{Graph signature}{The assignment of an ordered input-label list and output-label list to each operation label.}
 
 \glossaryentry{graph-body-package}{Graph-body package}{A named body graph and its actual output count, determined by its own ordered interface.}
+
+\glossaryentry{copying-head-replacement-refocusing}{Head replacement refocusing}{Replacing one operation edge by a graph with the same interface preserves rooted search at its retained source port.}
 
 \glossaryentry{higher-order-head}{Higher-order head}{An application or term-contraction head used in a historical two-family classification; both families now have complete successor coherence.}
 
@@ -767,6 +781,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{search-step}{Search step}{The coordinate relation implementing the five rules of Fig. 9(a--e), with no substitution or compute transitions.}
 
 \glossaryentry{search-visit}{Search visit}{An exact chronological split of an initial execution at a search-mode coordinate.}
+
+\glossaryentry{copying-search-visit}{Search visit (copying)}{An exact factorization of an input-rooted search run through search mode at a specified vertex, recording its earlier occurrence in the run.}
 
 \glossaryentry{search-only-machine}{Search-only machine}{A machine on state classes containing search transitions and boundary finality, but no substitution or computation transitions.}
 

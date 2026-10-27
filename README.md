@@ -9,43 +9,43 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: copying coherence completes successor determinism
+## Latest milestone: contextual copying and allocation refocusing
 
-**Copying now has complete successor-state coherence** in the original combined
-machine. Independent matches may use different contraction-tree boundaries and
-recursively isomorphic payload descriptions. Their complete reducts are proved
-recursively isomorphic, including the retained tree, nested boxes, original
-distributors, host occurrences and resumed token. The proof covers recursive
-renaming, plugging and simultaneous expansion, and derives every certificate
-from an actual rewrite.
+**Every actual copying rewrite and reference allocation now preserves search
+rootedness in arbitrary surrounding graphs.** Search rootedness means reaching
+the token by search alone on the state's own current graph. The proof replays
+the relevant prefix on the changed graph; it does not assume that the reduct
+is rooted. Copying has an exact cost law: its resumed search uses the original
+prefix length minus the final copying trigger.
 
-This closes the final case of **successor determinism for the full combined
-machine**, up to recursive graph representation, including its unbounded
-version. Every finite execution prefix contributes exactly its length to any
-successful run; every successful run from one state has the same cost.
+The development also proves exact search history, including backtracking, and
+a reusable theorem for replacement of a single operation head. The original
+combined transition relation is partitioned into intrinsic search/copying and
+operation compute steps. **Full finite and unbounded refocusing is reduced
+equivalently to the remaining operation families:** dereference, assignment,
+equality, application and arithmetic. Allocation is discharged. Rootedness
+respects recursive graph representation and finite depth padding.
 
-Copying a constant, reference instance or lambda takes exactly **3 transitions**
-from the selected tree input: search, copy, return. Arbitrary payloads have an
-exact **2-step handoff** to their actual reduct, including under a serial host.
-Checked regressions cover nested lambda bodies, shared-reference store identity,
-and all finite paddings of a closed constant-copying graph. The original
-copyability and stability premises, Proposition 12.2's terms, and Figure 16's
-translation are unchanged.
+Checked regressions cover a copy request at an internal token beneath a
+reference-operation host, its non-final return, the unchanged translation of
+reference creation, and translated addition at every finite padding. The
+original copying construction, stability/copyability premises, Proposition
+12.2's terms and Figure 16's translation are unchanged.
 
-Appendix B.1 removes copying coherence and unbounded determinism up to
-representation. Its four broad packages remain open: further invariants and
-semantic renaming/substitution laws; refocusing, focused-state correspondence
-and specimen locality; the eleven-template argument; semantic weakening and
-Figure 22. **Proposition 12.2 remains unproved.**
+Appendix B.1 removes copying and allocation from the refocusing obligations.
+Its four broad packages remain open: further invariants and semantic
+renaming/substitution laws; remaining operation refocusing, focused-state
+correspondence and specimen locality; the eleven-template argument; semantic
+weakening and Figure 22. **Proposition 12.2 remains unproved.**
 
-Commentary Section 96 explains all 167 new declarations with immutable source
-links. Full build: 436 jobs. All three axiom audits pass (6 abstract, 477 graph,
-1,720 copying; 2,203 total), using only Lean's standard logical axioms.
+Commentary Section 97 explains all 102 new declarations with immutable source
+links. Full build: 446 jobs. All axiom audits pass (6 abstract, 477 graph,
+1,822 copying; 2,305 total), using only Lean's standard logical axioms.
 
-Estimated completion by mathematical effort: **roughly 55–70%, with low
+Estimated completion by mathematical effort remains **roughly 55–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-The completed successor comparison is substantial, but refocusing, specimen,
-template and observational proofs still carry considerable uncertainty. This
+This milestone discharges substantial machine-law work, but the specimen,
+template and observational arguments retain considerable uncertainty. The
 estimate is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target

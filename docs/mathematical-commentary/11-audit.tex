@@ -633,3 +633,13 @@ and 1720 copying declarations (2203 total). Their only axiom dependencies are
 \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}; no
 project-specific axiom or \texttt{sorryAx} occurs.
 \lean{Copying/Audit}{1625}{1791}{Copying.Audit: complete copying and machine successor coherence}
+
+The refocusing milestone audits all 102 new declarations: rooted search,
+operation reachability, retained-payload barriers, exact copying-prefix replay,
+the intrinsic/extrinsic partition, exact search history, single-head replacement,
+contextual allocation refocusing, remaining-operation reductions, padding laws
+and regressions. The full build passes 446 jobs. The audits contain 6 abstract,
+477 graph and 1822 copying declarations (2305 total), all passing with only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}.
+No project-specific axiom or \texttt{sorryAx} occurs.
+\lean{Copying/Audit}{1794}{1895}{Copying.Audit: intrinsic and allocation refocusing}
