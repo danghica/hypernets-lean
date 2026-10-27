@@ -40,9 +40,11 @@ Section~\ref{sec:copying-boundary-iso} adds a separate typed boundary-isomorphis
 interface and the original distributor's explicit resource automorphism.
 Selected-resource and all atomic bijective-renaming cases are proved
 (Section~\ref{sec:copying-atomic-renaming}). Full-syntax bijective renaming is now proved by explicit BPerm derivations
-(Section~\ref{sec:copying-full-renaming}); its semantic interpretation,
-non-bijective graph renaming, graph-level substitution and the remaining
-operational invariants remain pending. Recursive label safety and stable-input
+(Section~\ref{sec:copying-full-renaming}); their exact-cost contextual
+interpretation and the resulting semantic bijective-renaming law are now
+proved in Section~\ref{sec:copying-semantic-renaming}. Non-bijective graph
+renaming, graph-level substitution and the remaining operational invariants
+remain pending. Recursive label safety and stable-input
 inertness are now proved in Section~\ref{sec:copying-selection}.
 \item \textbf{Checked machine laws and coordinate specimen instance:} operation search and the
 extra search rules (Figure~18) now have concrete incidence rules, determinism,
@@ -185,10 +187,15 @@ reference creation are proved in Section~\ref{sec:copying-overlap-classification
 Full BPerm whole-graph matching, general pointed residual assembly and both
 robustness directions are proved in Section~\ref{sec:copying-full-bperm},
 with exact successful-transition counts for closed paired fillings.
+Micro-beta and reference creation now also have input safety for unrestricted
+and binding-free contexts, retaining the six/four-step versus zero-step
+comparison (Section~\ref{sec:copying-operational-safety}).
 \item \textbf{Pending templates:} Table~3 requires contraction associativity,
 commutativity and idempotence; copying and garbage collection;
 pulling contractions and pulling weakening; micro-beta; reference creation;
-and parametricity. Their safety and robustness proofs use the transfer results
+and parametricity. Micro-beta and reference creation have output closure and
+input safety; their forward/converse robustness remains pending. The other
+eight families still require their template obligations. These proofs use the transfer results
 of Appendices~G--H. Prove base structural templates before the dependent
 copying, box-pulling and parametricity arguments; do not assume their contextual
 consequences in a circular proof.

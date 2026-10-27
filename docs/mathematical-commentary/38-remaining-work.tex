@@ -30,36 +30,84 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-full-bperm}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-operational-safety}.
 The copying machine's determinism, refocusing, coordinate specimen laws and
 execution/observation representation laws are proved. BPerm now has output
 closure, input safety, and full forward/converse robustness: every original
 specimen has matching whole-graph rewrites and pointed residual certificates,
 including all primitive, shallow, deep and mixed cases. Its closed paired
 fillings preserve exact successful-transition counts. Micro-beta and reference
-creation have concrete output-closed pre-templates. These completed obligations
-are omitted below. The original terms and Figure~16 translation are unchanged.
-Four broader work packages remain:
+creation have concrete output-closed pre-templates and input safety in both
+unrestricted and binding-free contexts. Structural BPerm derivations and
+full-syntax bijective renaming now preserve exact closing-observation costs. The original terms and
+Figure~16 translation are unchanged.
+
+The four work packages below retain completed tasks and subtasks with
+strikethrough; unstruck entries remain open. A completed prerequisite does not
+discharge a broader task unless its full conclusion has been proved.
+% Progress policy: retain completed tasks and subtasks; wrap their plain-text
+% descriptions in \completedtask rather than deleting them. Keep references
+% outside the macro so that PDF links remain ordinary clickable text.
 \begin{enumerate}
+\item \textbf{Stability, renaming and substitution.}
+Preserve the terms of Proposition~12.2 and the translation of Figure~16.
+\begin{itemize}
+\item \completedtask{Prove recursive label safety and stable-input inertness.}
 \item Prove any further stability/copyability invariants required by the
-specimen and template arguments beyond recursive label safety and stable-input
-inertness. Give the completed structural renaming derivations their
-contextual-equivalence interpretation, using proved BPerm robustness and execution
-congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
-and graph-level substitution laws. Preserve the terms
-of Proposition~12.2 and the translation of Figure~16.
+specimen and template arguments.
+\item \completedtask{Construct the structural bijective-renaming derivations.}
+\item \completedtask{Give these derivations their contextual-equivalence
+interpretation using proved BPerm robustness and execution congruence.}
+The result preserves exact successful-transition counts in every original
+closing context; see Section~\ref{sec:copying-semantic-renaming}. Box
+permutations are not identified with ordered isomorphisms.
+\item Prove non-bijective renaming and graph-level substitution laws.
+\end{itemize}
+\item \textbf{Specimens and observations.}
+\begin{itemize}
+\item \completedtask{Prove copying-machine determinism, refocusing and the
+coordinate specimen laws.}
+\item \completedtask{Prove execution-isomorphism, exact padding and observation
+representation laws.}
 \item Prove correspondence between the coordinate specimens and the paper's
 explicitly focused graphs, unique-hole inventories and replacement tuples.
-Preserve the proved execution-isomorphism, exact padding
-and observation laws through any necessary semantic corrections. Retain the
-zero-input qualification of Lemma~E.1.
-\item Complete the remaining output-closure, input-safety and
-forward/converse robustness obligations for the ten template families other than BPerm, in Table~3's dependency order, including the
-indirect copying and garbage-collection dependencies.
-For micro-beta and reference creation, output
-closure is complete; prove input safety and forward/converse robustness.
-\item Prove the semantic weakening laws, assemble Figure~22's equivalence chain,
-and obtain Proposition~12.2 for arbitrary distinct-list environments.
+Preserve the completed execution and observation laws through any necessary
+semantic corrections, and retain the zero-input qualification of Lemma~E.1.
+\end{itemize}
+\item \textbf{Template proofs.}
+Follow Table~3's dependency order, including the indirect copying and
+garbage-collection dependencies.
+\begin{itemize}
+\item \completedtask{Prove BPerm output closure and input safety.}
+\item \completedtask{Classify every BPerm source overlap, including primitive,
+shallow, deep and mixed cases.}
+\item \completedtask{Recover compatible replacement contexts and construct
+matching whole-graph rewrites for stable operands and shallow, deep or mixed
+copying payloads.}
+\item \completedtask{Construct pointed residual specimen certificates in every
+classified case, discharging the component-rewrite and residual premises of
+the framed transfer law.}
+\item \completedtask{Assemble universal forward and converse BPerm robustness
+and derive exact counts of successful transitions for closed paired fillings.}\par
+See Section~\ref{sec:copying-full-bperm} for these completed BPerm obligations.
+\item \completedtask{Construct concrete output-closed pre-templates for
+micro-beta and reference creation.}
+See Section~\ref{sec:copying-overlap-classification}.
+\item \completedtask{Prove input safety for micro-beta and reference creation
+in unrestricted and binding-free contexts.}
+See Section~\ref{sec:copying-operational-safety}; the quantitative prefix
+comparisons are retained.
+\item Prove forward/converse robustness for micro-beta and reference creation.
+\item Prove output closure, input safety and forward/converse robustness for
+the other eight template families.
+\end{itemize}
+\item \textbf{Weakening and the final example.}
+\begin{itemize}
+\item \completedtask{Prove the syntactic weakening and substitution identities.}
+\item Prove the semantic weakening laws.
+\item Assemble Figure~22's equivalence chain.
+\item Obtain Proposition~12.2 for arbitrary distinct-list environments.
+\end{itemize}
 \end{enumerate}
 Completed syntactic weakening and substitution identities do not discharge the
 semantic weakening item. No claim of completion is made until the final

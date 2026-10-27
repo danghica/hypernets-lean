@@ -1,0 +1,215 @@
+\clearpage
+\section{Input safety of micro-beta and reference creation}
+\label{sec:copying-operational-safety}
+The two operational pre-templates now have full input safety, both in
+unrestricted contexts and in the original binding-free context class.
+The proof follows the entered-hole consumption argument of
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS2}{Appendix H.3.2}:
+execute the selected left-hand operation, absorb its right-hand graph into
+the common context, and retain every other paired filling. The resulting
+token is settled. The residual right state represents the original right
+state and therefore requires zero machine transitions. This is the
+settled-specimen case of input safety, not an assumed
+equivalence of the two operational terms.
+
+For micro-beta the exact prefix consists of five search transitions and one
+compute transition; for reference creation it consists of three search
+transitions and one compute transition. These six/four-step counts concern
+the literal operational pre-template graphs. They need not equal the total
+cost of a translated term with additional distributors and its continuation.
+The original stable-argument premises, lambda-body focus freedom, compute
+rules and term translation are retained. Forward and converse robustness
+of these two template families remain separate obligations.
+
+\subsection{Exact entry prefixes at the original input}
+\termdef{operational-entry-prefix}
+An \emph{operational entry prefix} starts with a search token at the unique
+term input, performs the original search rules, executes the local operation,
+and resumes search at that same input in the right-hand graph.
+For reference creation, the first search transition reaches the stable
+argument, the second recognises its stable head and returns in backtrack
+mode, and the third switches to rewrite mode at the reference operation.
+Existence of the stable head and its input incidence follow from the
+proved stability lemmas. This argument works for every stable graph,
+not only for a constant translation.
+
+\lean{Copying/OperationalInputSafety}{14}{36}{Allocation.entry_trace}
+
+The function \texttt{Kind.searchCost} records five for micro-beta and three
+for reference creation. The literal entry-trace theorem uses the existing
+micro-beta search trace or the new allocation trace according to the
+template kind. It produces an index in the actual input interface, together
+with exactly the stated number of search steps.
+
+\lean{Copying/OperationalInputSafety}{41}{43}{Kind.searchCost}
+\lean{Copying/OperationalInputSafety}{46}{52}{Literal.entry_trace}
+
+An operational pair may use independent carrier names on its two sides.
+Transport the search trace through the inverse source isomorphism and the
+local compute transition through both endpoint isomorphisms. Recursive
+isomorphisms fix each boundary position, so the starting and resumed input
+indices agree. The original literal pair has input interface consisting of
+one term wire; the wrapper preserves that interface. Consequently every
+entered source position is this same unique input.
+
+\lean{Copying/OperationalInputSafety}{55}{72}{Pair.entry_prefix}
+\lean{Copying/OperationalInputSafety}{75}{77}{Pair.input}
+
+\Needspace{11\baselineskip}
+\subsection{Absorbing a consumed hole into the common context}
+\termdef{consumed-hole-residual}
+Let $C$ be the original specimen context, let $e$ be its entered hole,
+and let $L_f,R_f$ be its two actual filling families. Write $H=R_e$.
+Define the replacement family $K$ by $K_e=H$ and $K_f=L_f$ for $f\ne e$.
+The dependent definition transports only the selected edge's interface;
+the selected and nonselected equations are proved by the corresponding
+equality test. Thus $C[K]$ is precisely the result of replacing this one
+component, while the original right-hand state remains $C[R]$.
+
+\lean{Copying/OperationalInputSafety}{83}{89}{OperationalSafety.replace}
+\lean{Copying/OperationalInputSafety}{91}{92}{replace_selected}
+\lean{Copying/OperationalInputSafety}{94}{95}{replace_other}
+
+The new common context is $C'=C[e\leftarrow H]$, obtained by the actual
+single-edge plugging operation. Its remaining filling families assign the
+old components to every surviving original edge. Each newly inserted edge
+of $H$ receives its own original labelled corolla on both sides. These
+families are called \texttt{remaining}; no new specimen constructor is
+introduced. The expansion-peeling isomorphism identifies the left result
+$C'[\mathrm{remaining}(L)]$ with $C[K]$, and the right result with $C[R]$.
+Its host-vertex equation also identifies the resumed token, rather than
+merely comparing unpointed graphs.
+
+\lean{Copying/OperationalInputSafety}{99}{108}{OperationalSafety.remaining}
+\lean{Copying/OperationalInputSafety}{111}{133}{remaining_iso}
+
+The resumed search token cannot be entering another hole in $C'$. For a
+surviving original edge, injectivity of the host inclusion and uniqueness
+of an edge sourcing a vertex would force that edge to be $e$, which was
+removed. For an inserted edge, a hole label contradicts hole freedom of
+$H$. This proves settlement at the actual original input coordinate.
+Every surviving edge keeps its old recursive filling certificate: retained
+edges, genuinely filled holes and recursively paired boxes are handled
+separately. Newly inserted edges have the reflexive corolla certificate.
+
+\lean{Copying/OperationalInputSafety}{137}{155}{consumed_not_entering}
+\lean{Copying/OperationalInputSafety}{158}{174}{remaining_edges}
+
+\subsection{The pointed residual specimen and its machine runs}
+A finite search trace becomes a run of the combined machine by replacing
+each search step with its original combined-search constructor. Induction
+preserves the length exactly. For the selected hole, lift this run through
+its actual expansion inclusion and append the one contextual compute step.
+The endpoints are $C[L]$ and $C[K]$, with the search token at the
+corresponding host source position.
+
+\lean{Copying/OperationalInputSafety}{177}{182}{search_run}
+
+The theorem \texttt{consume} assembles the original residual specimen $D$.
+Its context is $C'$, its families are the two remaining families, and its
+token is the host image of the original entered source. Focus freedom follows
+from plugging the focus-free right component into the original context.
+Hole freedom on the left follows from preservation by the actual rewrite;
+hole freedom on the right follows from the unchanged original right graph.
+Transport these properties through the two expansion-peeling isomorphisms.
+Term typing follows from the unchanged host-vertex label.
+
+The two pointed isomorphisms then give equalities of representation classes.
+Projecting the finite run proves
+\[
+ [S_L]\steps{c+1}[D_L],\qquad [D_R]=[S_R],
+ \qquad c\in\{5,3\}.
+\]
+The token of $D$ is a search token and is not entering. Other original
+shallow or deep paired components remain present with their original
+certificates. The theorem is uniform in the chosen context class; its one
+class-specific premise is that $C'$ belongs to that class. The final
+input-safety theorems below discharge this premise.
+
+\lean{Copying/OperationalInputSafety}{187}{283}{OperationalSafety.consume}
+
+\subsection{Discharging the context and quantitative obligations}
+For an arbitrary entering original specimen, its hole relation is recovered
+from the selected edge certificate and global hole freedom. The input port
+is recovered from actual source-list membership. The unique-input result
+identifies it with the input used by the exact entry prefix.
+Apply the preceding residual construction and choose the settled-specimen
+case of input safety, with $c$ additional left steps after the first and
+zero right steps. The resulting quantitative requirement is exactly
+$Q(c+1,0)$. The equivalence-up-to parameter $P$ is arbitrary because this
+case uses actual residual endpoints.
+
+\lean{Copying/OperationalInputSafety}{287}{315}{inputSafe_of_plugging}
+
+For the unrestricted context class, membership of $C'$ is immediate.
+For the binding-free class, global hole freedom of the original right state
+implies hole freedom of $H$; together with its focus freedom this makes $H$
+binding-free. The entered hole has a source, so the already proved
+sourced-hole plugging theorem applies. This does not assume the invalid
+unrestricted closure statement for zero-input holes. Both final quantitative
+theorems retain only the explicit arithmetic comparison $Q(c+1,0)$.
+
+\lean{Copying/OperationalInputSafety}{321}{326}{template_inputSafe_cost}
+\lean{Copying/OperationalInputSafety}{331}{339}{template_bindingFree_inputSafe_cost}
+
+\termdef{operational-input-safety}
+Specialising $Q$ to the universal cost relation proves input safety of both
+operational families in each context class, with no remaining semantic
+premise. For the binding-free class, the improvement relation also applies:
+the right prefix has cost zero, which is no greater than the left cost.
+This retains a quantitative comparison before costs are forgotten for
+termination equivalence. Exact-cost input safety is not claimed here:
+six or four transitions are not equal to zero.
+
+\lean{Copying/OperationalInputSafety}{343}{346}{template_inputSafe}
+\lean{Copying/OperationalInputSafety}{349}{352}{template_bindingFree_inputSafe}
+\lean{Copying/OperationalInputSafety}{356}{359}{template_bindingFree_inputSafe_improvement}
+
+\subsection{Original-specimen regression examples}
+The isolated-specimen constructor places an actual closed operational pair
+in the two fillings of one sourced term-hole corolla. Its output interface
+is empty, and the context is binding-free. Focus freedom comes from the
+pair; the supplied endpoint hole-freedom proofs make the complete fillings
+hole-free. The token starts at the original term input. Applying
+\texttt{consume} to this specimen and discharging sourced-hole plugging
+gives a genuine settled residual with the exact prefix and unchanged right
+representation class.
+
+\lean{Copying/OperationalInputSafetyExamples}{13}{30}{Examples.isolated}
+\lean{Copying/OperationalInputSafetyExamples}{34}{49}{isolated_consumed}
+
+For reference creation, use the unchanged translated natural-number
+constant as the stable argument. The operational pair is the literal
+allocation rule with identity endpoint isomorphisms. Hole freedom of its
+left side follows from serial assembly of the reference operation and
+the translated constant; hole freedom of its right side follows from the
+allocation construction. These proofs build the original specimen, and
+the general consumption theorem supplies exactly four transitions to its
+settled residual.
+
+\lean{Copying/OperationalInputSafetyExamples}{51}{54}{referencePair}
+\lean{Copying/OperationalInputSafetyExamples}{56}{59}{referenceLeft_closed}
+\lean{Copying/OperationalInputSafetyExamples}{61}{63}{referenceSpecimen}
+\lean{Copying/OperationalInputSafetyExamples}{67}{74}{reference_consumed}
+
+For micro-beta, use the original translated variable body, including its
+single-use distributor, with the same constant translation raised to the
+required allowance. Stability survives raising. The actual application
+rule gives the pair, and its proved safety laws give hole freedom on both
+sides. The corresponding original binding-free specimen consumes its
+entered hole in exactly six transitions.
+
+\lean{Copying/OperationalInputSafetyExamples}{78}{78}{betaArgument}
+\lean{Copying/OperationalInputSafetyExamples}{80}{81}{betaArgument_stable}
+\lean{Copying/OperationalInputSafetyExamples}{83}{87}{betaPair}
+\lean{Copying/OperationalInputSafetyExamples}{89}{94}{beta_sides_closed}
+\lean{Copying/OperationalInputSafetyExamples}{96}{97}{betaSpecimen}
+\lean{Copying/OperationalInputSafetyExamples}{100}{106}{beta_consumed}
+
+Settlement is relative to the residual specimen context, not a claim that
+execution has finished. In this beta example, the very next original
+search transition requests copying from the retained variable-body
+distributor. The checked transition confirms that consumption has not
+silently performed the later copying or substituted the argument eagerly.
+
+\lean{Copying/OperationalInputSafetyExamples}{110}{113}{beta_next_requests_copy}

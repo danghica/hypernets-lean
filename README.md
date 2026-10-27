@@ -9,36 +9,40 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: full BPerm robustness
+## Latest milestone: semantic renaming and operational input safety
 
-**Full forward and converse BPerm robustness are proved for every original
-specimen of the concrete copying UAM.** All classified primitive, shallow,
-deep and mixed overlaps now yield an actual matching whole-graph rewrite
-and an original residual filling at the actual resumed token. The final
-theorems have no local-transfer, replacement-context or residual hypothesis.
+**Full-syntax bijective renaming now preserves exact successful-run costs in
+all original binding-free closing graph contexts.** Every structural BPerm
+derivation is interpreted by a finite chain of original filling certificates.
+Each link lifts through arbitrary addressed occurrences, including nested boxes;
+full BPerm robustness then supplies exact machine equivalence. The unchanged
+renamed translation has its external resource permutation explicitly compensated,
+so the original context retains the same resource connections.
 
-The proof retains the complements in the original rewrite derivations,
-normalises original fillings to actual edge decorations, handles every
-beta and copyable-payload case, and reverses filling certificates using real
-permuted contexts. Each compute step matches one compute step. Applying the
-proved sufficiency theorem gives exact successful-transition counts for
-arbitrary original closed paired fillings. Mixed-host regressions exercise
-an internal token beside independently changed nested/shallow contributions.
+**Micro-beta and reference creation now have input safety** in both unrestricted
+and binding-free contexts. Their original six/four-transition prefixes consume
+the entered hole into a genuine settled residual specimen, retaining all other
+shallow and deep fillings. The right representation class takes zero transitions.
+Sourced-hole plugging discharges binding-free closure, and the quantitative
+improvement comparison is retained. The beta regression still requests copying
+afterward; the proof does not perform eager substitution or claim termination.
+
 The original terms, Figure 16 translation and machine rules are unchanged.
+Appendix B.1 now **retains completed tasks and subtasks with strikethrough**.
+Semantic bijective renaming and these two input-safety obligations are marked
+complete. Operational robustness, eight other template families, paper
+correspondence, non-bijective renaming/substitution, semantic weakening and the
+Figure 22 chain remain. **Proposition 12.2 is still unproved.**
 
-Appendix B.1 removes the completed BPerm obligation. Ten other template
-families, paper correspondence, semantic renaming/substitution, weakening
-and Figure 22 remain in four broader work packages. **Proposition 12.2 is
-still unproved.**
-
-Commentary Section 106 explains all 110 new declarations with immutable links.
-Full build: 525 jobs. All 2,979 axiom audits pass (6 abstract, 501 graph,
-2,472 copying), with no `sorryAx` or project-specific axioms.
+Commentary Sections 107–108 explain all 81 new declarations with immutable links.
+Full build: **534 jobs**. All **3,060 axiom audits** pass (6 abstract, 501 graph,
+2,553 copying), with no `sorryAx` or project-specific axioms.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-BPerm is now complete, but the remaining template families and Figure 22 have
-uneven and still uncertain proof costs; declaration counts do not measure them.
+These proofs close important reusable dependencies, but remaining template
+robustness and the final semantic chain have uncertain proof costs; declaration
+or checklist counts do not measure them.
 
 ## Proposition 12.2: current extension target
 
@@ -61,7 +65,8 @@ The Proposition 12.2 terms must remain unchanged. Translation follows Figure 16,
 including its single-use distributors, weakening, and ordered box interfaces.
 All seven Figure 16 clauses and the full recursive term translation now compile.
 Both unchanged proposition terms have concrete hypernets in arbitrary environments,
-with proved global language, focus-free, and hole-free properties. Full-syntax bijective graph renaming is now proved via explicit BPerm derivations;
+with proved global language, focus-free, and hole-free properties. Full-syntax bijective graph renaming now has exact-cost contextual semantics
+via explicit BPerm derivations and inverse external resource compensation;
 non-bijective graph renaming, graph substitution, the remaining correspondence
 and template proofs, and the final equivalence remain open.
 

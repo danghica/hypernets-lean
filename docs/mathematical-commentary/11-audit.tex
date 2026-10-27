@@ -772,3 +772,24 @@ specimen encoding; Proposition~12.2 and the correspondence tasks in Appendix~B
 remain open.
 \lean{Graph/Audit}{550}{556}{Graph.Audit: general expansion transport}
 \lean{Copying/Audit}{2461}{2563}{Copying.Audit: full BPerm robustness and exact execution}
+
+
+\Needspace{14\baselineskip}
+The semantic-renaming and operational-safety milestone audits all 81 new
+declarations. Every structural BPerm derivation is interpreted by a finite
+chain of original filling certificates, lifted through arbitrary addressed
+closing contexts, and given exact-cost execution semantics. Full-syntax
+bijective renaming then uses the unchanged translated terms with explicit
+external resource compensation. The operational proofs construct genuine
+settled residual specimens for micro-beta and reference creation in both
+unrestricted and binding-free contexts, retaining six/four-step prefix costs.
+The concrete beta regression still requests copying after consumption.
+
+The full build passes 534 jobs. All 3060 reports pass: 6 abstract, 501 graph
+and 2553 copying audits. Only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound} occur; no \texttt{sorryAx} or project-specific axiom is
+used. The final semantic-renaming and input-safety results have no pending
+machine, robustness or context-closure premise. Operational robustness and
+Proposition~12.2 remain open. Appendix~B.1 now retains completed tasks and
+subtasks using strikethrough instead of deleting them.
+\lean{Copying/Audit}{2566}{2646}{Copying.Audit: semantic renaming and operational input safety}

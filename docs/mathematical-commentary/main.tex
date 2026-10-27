@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{xcolor}
 \usepackage{enumitem}
+\usepackage[normalem]{ulem}
 \usepackage{microtype}
 \usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!55!black]{hyperref}
 \usepackage{bookmark}
@@ -53,7 +54,10 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/5b4c88e9ed321ee9b1a1af7475553bb4ea029682}
+% Keep completed Appendix B.1 tasks in place; use plain prose inside this macro.
+% ulem permits line breaks, while normalem preserves the meaning of \emph.
+\newcommand{\completedtask}[1]{\sout{#1}}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/ef63be51a8a3fc52d28e83c0dca0c73ad2ae8531}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -61,7 +65,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{27 October 2026\\\small Source snapshot: \texttt{5b4c88e}; Lean \texttt{4.35.0}}
+\date{27 October 2026\\\small Source snapshot: \texttt{ef63be5}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -267,6 +271,8 @@ prerequisites.
 \input{108-deep-beta-residuals}
 \input{109-bperm-overlap-classification}
 \input{110-full-bperm-robustness}
+\input{111-semantic-renaming}
+\input{112-operational-input-safety}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -277,7 +283,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/5b4c88e9ed321ee9b1a1af7475553bb4ea029682}{Repository at revision \texttt{5b4c88e}}.
+\href{https://github.com/danghica/hypernets-lean/tree/ef63be51a8a3fc52d28e83c0dca0c73ad2ae8531}{Repository at revision \texttt{ef63be5}}.
 \end{thebibliography}
 \clearpage
 \appendix

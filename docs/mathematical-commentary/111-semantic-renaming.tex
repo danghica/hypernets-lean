@@ -1,0 +1,376 @@
+\clearpage
+\section{Semantic soundness of structural derivations and resource renaming}
+\label{sec:copying-semantic-renaming}
+The full BPerm robustness theorem now gives an operational meaning to every
+structural BPerm derivation between admissible open programs. Its conclusion
+quantifies over all the original binding-free closing graph contexts, including
+contexts whose selected occurrence lies beneath arbitrarily many boxes.
+Successful runs correspond with exactly the same number of machine transitions.
+Applying this result to the existing full-syntax renaming derivation proves
+semantic invariance under bijective renaming of both variables and atoms, with
+the external resource permutation explicitly compensated.
+
+This completes the semantic interpretation of the structural bijective-renaming
+derivations in Appendix~\ref{app:remaining-work}. The terms, distributors, boxes,
+padding and Figure~16 translation retain their existing definitions. In
+particular, a permutation of free-resource positions is an explicit wiring
+operation outside the translated graph. No claim identifies a nontrivial box
+permutation with an ordered graph isomorphism. Non-bijective renaming, semantic
+substitution and weakening, the remaining template proofs and the equivalence
+between the two different terms of Proposition~12.2 are still separate tasks.
+
+The proof has three stages. First, interpret a structural derivation by a finite
+chain of original recursive filling certificates. Second, lift each certificate
+through the chosen addressed graph context. Third, apply full BPerm robustness
+to each closed link and compose the resulting exact machine equivalences.
+Only the machine equivalences are composed transitively; no transitivity law
+is added to the original filling relation.
+
+\subsection{Primitive-label properties along recursive fillings}
+Let $P$ be any predicate on primitive labels. Assume that each pair in a
+pre-template preserves the assertion that every primitive label satisfies $P$.
+Then every original recursive paired filling preserves that assertion too.
+The surrounding context itself need not satisfy $P$: for example, its hole
+labels may fail $P$ even though filling those holes produces hole-free graphs.
+
+The proof is induction on the box allowance. At allowance zero, each component
+is either a retained corolla, whose two labels are equal, or a genuine filled
+hole, where the template hypothesis applies. At a successor allowance there
+is also a boxed component. Read the label property inside the source box,
+apply the induction hypothesis to its body filling, and rebuild the target
+box. Every expanded edge is an original component edge, so these component
+equivalences assemble into the result for the expanded graph.
+
+\lean{Copying/DerivationFillings}{14}{57}{DeepFilling.allLabels_iff}
+
+A filling witness also contains recursive isomorphisms from the expansions
+to the actual endpoints. Primitive-label invariance under those isomorphisms
+transports the preceding equivalence to the endpoints. BPerm preserves every
+primitive-label predicate, since it changes box interfaces and the associated
+wiring without changing the primitive labels in the bodies. Its specialization
+therefore needs no additional predicate-preservation premise.
+
+\lean{Copying/DerivationFillings}{59}{65}{FillingWitness.allLabels_iff}
+\lean{Copying/DerivationFillings}{69}{72}{filling_allLabels}
+
+\Needspace{11\baselineskip}
+\subsection{Finite chains of original certificates}
+\termdef{finite-bperm-filling-chain}
+A \emph{finite BPerm filling chain} from $G$ to $H$, at a common interface
+and allowance, consists of a natural number $N$, graphs $G_i$ for all
+$i\in\mathbb N$, and original filling witnesses between every $G_i$ and
+$G_{i+1}$, with
+\[
+ G_0=G,\qquad G_i=H\quad\text{whenever }N\leq i.
+\]
+The constant tail lets a completed component remain unchanged while another
+component continues its derivation. The number $N$ bounds the structural
+certificate chain; it is not a count of machine transitions.
+
+\lean{Copying/DerivationFillings}{76}{81}{FillingChain}
+
+Every $G_i$ is focus-free because it is the left endpoint of an original
+filling witness. Induction on $i$ also proves that $G$ and $G_i$ satisfy
+exactly the same universal primitive-label properties: the base case uses
+$G_0=G$, and the successor case composes the equivalence for the next witness.
+Taking $P$ to exclude holes will later make every intermediate closed graph
+an admissible machine input.
+
+\lean{Copying/DerivationFillings}{85}{86}{FillingChain.focusFree}
+\lean{Copying/DerivationFillings}{88}{92}{FillingChain.allLabels}
+
+The reflexive chain has bound zero and constantly repeats its focus-free
+endpoint, using the original unchanged-edge corollas for every certificate.
+A single original witness gives a chain of bound one: use that witness at
+index zero and repeat its right endpoint thereafter. Its focus freedom is a
+consequence of the supplied witness, so the tail needs no new assumption.
+
+\lean{Copying/DerivationFillings}{95}{100}{FillingChain.refl}
+\lean{Copying/DerivationFillings}{103}{112}{FillingChain.single}
+
+Concatenating chains of bounds $N$ and $M$ gives bound $N+M$. Before $N$ use
+the first chain, and from $N$ onward use index $i-N$ of the second. At the
+junction, the first chain's endpoint equation and the second chain's initial
+equation identify the common graph. The proof also handles $N=0$ explicitly.
+Thus each link remains one of the supplied original certificates.
+
+\lean{Copying/DerivationFillings}{116}{135}{FillingChain.trans}
+
+Reversal uses graph $G_{N-i}$, where subtraction is truncated at zero.
+Before the bound, reverse the corresponding original filling by the previously
+proved \texttt{reverseFilling} construction. At and after the bound the graph
+is constantly $G_0$, so use its reflexive certificate. This construction uses
+proved reversal of whole filling witnesses and does not assume symmetry of
+the directed raw BPerm pair.
+
+\lean{Copying/DerivationFillings}{138}{150}{FillingChain.symm}
+
+\termdef{bperm-chain-synchronisation}
+\emph{Chain synchronization} applies a graph constructor pointwise to chains
+whose completed tails repeat their endpoints. For serial composition and
+binary tensor, use the larger of the two bounds. By that point both component
+chains are constant, and the existing serial or tensor operation on original
+filling witnesses supplies every link. Their start and finish equations follow
+by substituting the component endpoint equations.
+
+\lean{Copying/DerivationFillings}{153}{160}{FillingChain.serial}
+\lean{Copying/DerivationFillings}{162}{169}{FillingChain.tensor}
+
+For a finite parallel family, sum the component bounds over the supplied
+enumeration. Each component bound is at most this sum. The elementary bound
+lemma is induction on the enumeration list: an occurrence is either its head,
+where nonnegativity suffices, or in its tail, where the induction hypothesis
+applies. Repetitions in the enumeration are harmless. The parallel chain uses
+the existing common boundary assembly, and advances all components at the
+same index. Completeness of the enumeration proves that every component has
+reached its endpoint by the chosen sum; the parallel filling construction
+supplies each link.
+
+\lean{Copying/DerivationFillings}{173}{182}{FillingChain.length_le_sum}
+\lean{Copying/DerivationFillings}{186}{199}{FillingChain.parallel}
+
+Boxing a chain preserves its bound and boxes each graph with the same binding
+metadata; the original boxed-witness construction supplies its links.
+Transporting equal input and output interface lists similarly transports
+every graph and certificate without changing the bound. Raising the
+representation allowance applies the existing raising operation to every
+graph, and uses BPerm's proved padding closure to raise each original witness.
+These three constructions inherit their endpoint equations pointwise.
+
+\lean{Copying/DerivationFillings}{201}{209}{FillingChain.boxed}
+\lean{Copying/DerivationFillings}{211}{218}{FillingChain.interfaces}
+\lean{Copying/DerivationFillings}{220}{226}{FillingChain.raise}
+
+Transport along an equality of allowance indices is equality elimination:
+after identifying the indices it is the original chain. Padding by an
+arbitrary number of levels is recursion on that number, with the original
+chain at zero and one more raising operation at the successor. These operations
+change representation allowance without adding structural chain links.
+
+\lean{Copying/DerivationFillings}{228}{230}{FillingChain.depthCast}
+\lean{Copying/DerivationFillings}{232}{235}{FillingChain.pad}
+
+Every structural BPerm derivation whose source is focus-free now has such a
+finite chain. Induct on the derivation. An isomorphism changes one endpoint
+of a reflexive original witness; a BPerm rule supplies a genuine filled-hole
+witness. Symmetry and transitivity use the chain operations above. Serial,
+tensor and finite parallel derivations use their synchronized chains; boxing,
+interface transport and raising use their pointwise constructions. Where the
+induction moves to components, extract their focus freedom from that of the
+assembled source. For symmetry and the second part of transitivity, use the
+already proved focus-freedom invariance of structural derivations. The final
+definition selects one of the chains whose existence has just been proved.
+Classical choice selects certificate data here; it supplies no semantic premise.
+
+\lean{Copying/DerivationFillings}{241}{274}{Derivation.fillingChain_exists}
+\lean{Copying/DerivationFillings}{276}{278}{Derivation.fillingChain}
+
+\subsection{Lifting certificates through addressed graph contexts}
+\termdef{addressed-filling-transport}
+\emph{Addressed filling transport} places both endpoints of an original
+recursive filling witness into the same selected occurrence of a focus-free
+host. It works for any pre-template and any well-typed addressed occurrence;
+the occurrence may lie inside nested original boxes.
+
+For a shallow edge $e$ of a host $C$, first form the simultaneous expansion
+that inserts the left or right endpoint at $e$ and the original corolla at
+every other edge. Use the supplied witness at $e$. For every other edge use
+the retained-corolla certificates; focus freedom follows by reading that
+edge's original label in $C$. The expansion operation on filling witnesses
+assembles these components. The proved single-expansion isomorphisms then
+identify the two endpoints with the actual single-edge plugs.
+
+\lean{Copying/AddressedWitness}{11}{27}{FillingWitness.singleExpansion}
+\lean{Copying/AddressedWitness}{30}{34}{FillingWitness.plug}
+
+For an enclosing box, use the body witness to obtain witnesses between the
+two rebuilt box corollas. Keep its bound-variable count, free-variable count,
+free-atom count and outer incidences fixed. Insert that component into the
+host expansion, then use the box-expansion isomorphisms to identify the
+endpoints with the actual box replacements.
+
+\lean{Copying/AddressedWitness}{37}{44}{FillingWitness.replaceBox}
+
+Induction on the address now proves the general result. A shallow address
+uses single-edge plugging. For an address inside a box, extract focus freedom
+of the original body from the host, apply the induction hypothesis there,
+and rebuild the enclosing box by the preceding construction. No new filling
+constructor is required. Specializing to a closing observation context uses
+the focus-freedom component of its original binding-free hypothesis.
+
+\lean{Copying/AddressedWitness}{48}{58}{FillingWitness.plugAt}
+\lean{Copying/AddressedWitness}{61}{63}{FillingWitness.closing}
+
+Finally apply this operation to every graph and every link of a filling chain,
+using the same host and address throughout. Its bound is unchanged, and
+its endpoint equations follow by applying the plug operation to the old
+endpoint equations. This yields a chain between the actual addressed fillings
+of the original two endpoints.
+
+\lean{Copying/ContextualDerivation}{11}{18}{FillingChain.plugAt}
+
+\subsection{Exact execution and the full observation class}
+\termdef{structural-bperm-semantic-soundness}
+The \emph{semantic soundness of a structural BPerm derivation} states that
+admissible open endpoints are exactly equivalent in the original copying
+machine under every allowed binding-free closing graph context. Here
+``exactly'' refers to successful machine-transition counts, not to equality
+of the endpoint graphs or their final returned graph representations.
+
+First consider a chain at closed interface $[\mathsf{term}]\to[]$, whose
+source contains no holes. Label preservation proves that all intermediate
+graphs contain no holes. Each adjacent original filling witness therefore
+satisfies the premises of the full BPerm exact-execution theorem from
+Section~\ref{sec:copying-full-bperm}. Induction on the chain index composes the
+two directions of these machine refinements. At index zero use reflexivity;
+at a successor compose the previous comparison with the next link. At the
+chain bound, the finish equation identifies the graph with the target.
+
+\lean{Copying/DerivationExecution}{13}{29}{FillingChain.exact_equiv}
+
+Unfolding exact refinement gives a useful count-by-count statement. For each
+$n$, a successful run of exactly $n$ transitions exists from the source if
+and only if such a run exists from the target. In either direction the
+refinement provides a target count $m$ and its exact-cost equality with $n$;
+substitute that equality to obtain the stated count. Applying these two results
+to the chain extracted from a focus-free structural derivation gives their
+closed-derivation forms. Hole freedom is required only at the source; it is
+proved for the rest of the chain.
+
+\lean{Copying/DerivationExecution}{33}{46}{FillingChain.termination_count}
+\lean{Copying/DerivationExecution}{50}{54}{Derivation.exact_equiv}
+\lean{Copying/DerivationExecution}{56}{60}{Derivation.termination_count}
+
+Now let $G,H$ be open programs and $s$ a structural derivation between their
+graphs. Given any original closing context $C$, extract a chain for $s$ and
+lift it at $C$'s designated occurrence. Binding freedom provides the host's
+focus freedom. The context's unique-hole inventory and the source program's
+hole freedom prove that $C[G]$ has no holes. Apply the closed-chain theorem
+to conclude exact equivalence of the initial machine states of $C[G]$ and
+$C[H]$. Quantification over $C$ is precisely the existing definition of
+contextual equivalence; there is no restriction to translated term contexts
+and no bound on the surrounding context's nesting beyond its own finite
+representation.
+
+\lean{Copying/ContextualDerivation}{22}{27}{Derivation.contextual_exact}
+
+The contextual count theorem applies the same lifted-chain argument to the
+explicit successful-run formula. Forgetting costs then proves termination-based
+contextual equivalence: from a successful observation, take its finite count,
+transfer that count, and retain the resulting successful observation. The
+reverse implication is identical with the endpoints exchanged. These results
+assume neither endpoint nor callback terminates. They characterize successful
+termination, and do not separately identify divergence and stuckness.
+
+\lean{Copying/ContextualDerivation}{31}{36}{Derivation.contextual_count}
+\lean{Copying/ContextualDerivation}{39}{49}{Derivation.contextual_termination}
+
+\subsection{Semantic renaming with explicit boundary compensation}
+\termdef{compensated-semantic-renaming}
+Let $t$ have $k$ free-variable positions and $h$ atom positions. Let $\rho$
+and $\alpha$ be bijections of these two finite sets, and write $p$ for the
+typed output permutation combining them. Write $\lbrack\!\lbrack t\rbrack\!\rbrack_d$
+for the original translation padded to an allowance $d$ at least the syntactic
+depth of $t$. The \emph{compensated renamed program} is
+\[
+ \mathsf{perm}_{p^{-1}}
+   \bigl(\lbrack\!\lbrack \mathsf{rename}_{\rho,\alpha}(t)\rbrack\!\rbrack_d\bigr).
+\]
+The inverse outer permutation reconnects each renamed resource to its original
+context position. The two sorts are kept separate, and the variable renaming
+under a binder fixes the newly bound variable. Compensation is an actual
+external output-wiring operation; it does not alter the definition of term
+translation or license permutation of the bound prefix.
+
+The existing structural renaming certificate has a derivation followed by a
+boundary action, potentially presented at heterogeneous allowance indices.
+Pad that certificate first to one common sufficient allowance. Its existing
+derivation theorem then yields the desired compensated endpoints directly;
+the now-equal allowance cast simplifies away. Applying this construction to
+the full-syntax translation renaming certificate gives a structural derivation
+between $\lbrack\!\lbrack t\rbrack\!\rbrack_d$ and the displayed compensated graph.
+The previously proved preservation of syntactic depth supplies the same
+allowance bound for the renamed term.
+
+\lean{Copying/SemanticRenamingPadding}{11}{20}{BoxPermutation.Renaming.paddedDerivation}
+\lean{Copying/SemanticRenamingPadding}{24}{31}{Translation.padded_term_rename_derivation}
+
+Permuting an admissible open program changes only its external output
+positions. Its primitive labels, and hence its proofs of focus freedom and
+hole freedom, are unchanged. The definition of \texttt{renamedProgram}
+applies this operation with $p^{-1}$ to the unchanged renamed translation
+at the selected sufficient allowance.
+
+\lean{Copying/SemanticRenaming}{12}{16}{OpenProgram.permute}
+\lean{Copying/SemanticRenaming}{20}{25}{renamedProgram}
+
+Apply contextual soundness of structural derivations to the padded renaming
+derivation. It proves, for every original term and every sufficient $d$,
+\[
+ \lbrack\!\lbrack t\rbrack\!\rbrack_d
+ \simeq_{\mathrm{exact}}
+ \mathsf{perm}_{p^{-1}}
+   \bigl(\lbrack\!\lbrack \mathsf{rename}_{\rho,\alpha}(t)\rbrack\!\rbrack_d\bigr).
+\]
+The proof uses all constructors of the existing term syntax through its
+already established structural renaming theorem, including nested lambdas,
+application, every unary operation and every binary operation. All original
+closing graph contexts are quantified, so the statement is not limited to
+closed terms or to contexts with terminating callbacks.
+
+\lean{Copying/SemanticRenaming}{29}{34}{Translation.term_rename_contextual_exact}
+
+The count-by-count form and the cost-forgetting form are direct applications
+of the corresponding contextual derivation theorems to the same derivation.
+In the first, choose an arbitrary closing context and count $n$; the successful
+run formula holds in both directions at that exact count. In the second,
+forget the count while retaining successful termination. The named-environment
+form instantiates $k,h$ with the lengths of the given distinct variable and
+atom lists and applies the same exact theorem. Neither list must be empty,
+and no extra hypothesis is placed on the translated term.
+
+\lean{Copying/SemanticRenaming}{38}{47}{Translation.term_rename_contextual_count}
+\lean{Copying/SemanticRenaming}{51}{56}{Translation.term_rename_contextual_termination}
+\lean{Copying/SemanticRenaming}{60}{66}{Translation.named_rename_contextual_exact}
+
+\subsection{Regression instances and the Proposition 12.2 boundary}
+The first regression uses the existing term with two nested lambdas around
+an application of a free variable to an atom. At allowance two, simultaneously
+swap the two ambient variable positions and the two atom positions, and apply
+the exact semantic renaming theorem. The second places that term beside the
+unit constant in an application, and compares at allowance three. Its branches
+have original allowances zero and two, so it exercises the original maximum
+padding inside application and an additional outer padding level. Both
+proofs are instances of the general theorem, with the concrete depth bounds
+checked by computation.
+
+\lean{Copying/SemanticRenamingExamples}{12}{17}{nestedRenaming_contextual_exact}
+\lean{Copying/SemanticRenamingExamples}{21}{26}{unequalDepthRenaming_contextual_exact}
+
+The count regression chooses any closing graph context for that latter
+program and any natural number $n$. Its conclusion states the equivalence
+of the two explicit final-run predicates at count $n$, by the general
+contextual count theorem. The context's own structure, effects and nesting
+remain universally quantified subject to its original closing-context laws.
+
+\lean{Copying/SemanticRenamingExamples}{30}{40}{unequalDepthRenaming_contextual_count}
+
+Finally, apply exact semantic renaming separately to the unchanged two terms
+of Proposition~12.2. Their syntactic definitions use no ambient variable or
+atom, so renaming those ambient positions reduces to the same original term.
+The resulting statements compare each translated term with its own externally
+permuted graph, for arbitrary $k,h$, bijections and sufficient allowance.
+They retain the original let/ref/lambda/sequence/dereference expression on
+the left and the original lambda/sequence/constant expression on the right.
+The named private-cell instance specializes its arbitrary scope sizes to the
+lengths of distinct-list environments.
+
+\lean{Copying/SemanticRenamingExamples}{44}{51}{privateCell_contextualRenaming}
+\lean{Copying/SemanticRenamingExamples}{55}{62}{constantResult_contextualRenaming}
+\lean{Copying/SemanticRenamingExamples}{66}{74}{privateCell_named_contextualRenaming}
+
+These last results concern each term's resource renaming independently.
+They do not identify the two different terms with each other. Establishing
+that equivalence still requires the remaining template obligations and the
+Figure~22 chain, followed by the semantic weakening argument for the final
+general-environment proposition.
