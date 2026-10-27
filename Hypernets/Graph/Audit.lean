@@ -1,4 +1,4 @@
-import Hypernets.Graph.ParallelExpansion
+import Hypernets.Graph.ExpansionTransport
 import Hypernets.Graph.UnboundedTheorem
 import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.PaperEncodingExamples
@@ -545,3 +545,12 @@ import Hypernets.Graph.ObservationExamples
 #print axioms Hypernets.Graph.Net.ParallelExpansion.targetPort
 #print axioms Hypernets.Graph.Net.ParallelExpansion.map_insert
 #print axioms Hypernets.Graph.Net.ParallelExpansion.iso
+
+-- Full BPerm whole-graph rewrite transport, residuals and robustness.
+#print axioms Hypernets.Graph.Bijection.ofBijective
+#print axioms Hypernets.Graph.Bijection.sigmaMap
+#print axioms Hypernets.Graph.Net.ExpansionTransport.vertices
+#print axioms Hypernets.Graph.Net.ExpansionTransport.edges
+#print axioms Hypernets.Graph.Net.ExpansionTransport.map_host
+#print axioms Hypernets.Graph.Net.ExpansionTransport.map_insert
+#print axioms Hypernets.Graph.Net.ExpansionTransport.iso

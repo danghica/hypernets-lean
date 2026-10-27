@@ -125,3 +125,4 @@ import Hypernets.Copying.BoxPermutationOverlapExamples
 import Hypernets.Copying.CopyResidualExamples
 import Hypernets.Copying.BetaResidualExamples
 import Hypernets.Copying.OverlapClassificationExamples
+import Hypernets.Copying.FullBPermExamples
