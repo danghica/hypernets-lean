@@ -1,0 +1,351 @@
+\clearpage
+\section{Box permutation: safety and beta opening}
+\label{sec:copying-box-permutation-opening}
+This milestone discharges two complete obligations for the concrete BPerm
+pre-template: output closure and operational input safety. It also proves the
+local application overlap: opening the two related lambda boxes takes one
+compute step on each side and produces recursively isomorphic graphs after
+compensating the free-interface permutation. Including search, both paths have
+exactly six transitions. Their successors have the same exact successful
+continuation costs. Bodies may contain nested boxes and arbitrary operations;
+the argument retains the original stability premise.
+
+The proof follows the no-term-input criterion in the paper's
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS2}{Appendix~H.3.2}
+and the application-opening case in
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS6}{Appendix~H.3.6}.
+These appendix numbers agree between PDF and HTML. BPerm itself is the literal
+Figure~21 pair already constructed earlier. The local diagram is one ingredient
+of its Table~3 robustness proof; it does not establish the full specimen-wide
+robustness predicate. Copying overlaps, deep overlaps, residual specimen
+construction and converse robustness remain to be assembled.
+
+The distinction between external interface permutation and permutation inside
+a closed box is essential. The former has a new exact-cost machine theorem,
+proved using existing context closure. The latter is still the BPerm template
+whose full semantic justification remains unfinished. No new machine rule,
+term equation or translation clause is introduced.
+
+\subsection{A typed barrier to entering a template}
+\termdef{copying-no-term-inputs}
+A pre-template $T$ has \emph{no term inputs} if, whenever $T(G,H)$ holds,
+every entry of their common input interface differs from the term wire type.
+Such a graph is one way: a term-input-to-term-output operation path would need
+a term input, contradicting the interface condition. The left graph alone
+therefore witnesses the disjunction required by output closure. The same
+reasoning applies to the right graph, although that extra fact is unnecessary.
+
+\lean{Copying/TemplateInputSafety}{10}{11}{PreTemplate.NoTermInputs}
+\lean{Copying/TemplateInputSafety}{14}{18}{oneWay_of_no_term_inputs}
+\lean{Copying/TemplateInputSafety}{21}{22}{PreTemplate.NoTermInputs.outputClosed}
+
+To use this typing observation operationally, consider a shallow hole of an
+actual specimen whose left filling is globally hole free. Its recursive edge
+certificate cannot be a retained corolla: the retained edge would still have
+the hole label, violating hole freedom. Nor can it be a box certificate, since
+a primitive hole label and a box label are disjoint. The certificate must be
+a genuine related replacement, hence supplies $T(F_e,K_e)$.
+
+If the specimen's term token entered that hole, its coordinate would occur
+on the hole's source list. The ordered source-port typing equation would then
+make the corresponding replacement input a term wire. This contradicts the
+no-term-input condition. Thus entering is impossible, including when other
+replacements are deep inside boxes. Input safety follows by eliminating its
+entering premise, for every allowed-context predicate and every pair of cost
+relations. There is no assumption of termination or of robustness in this proof.
+
+\lean{Copying/TemplateInputSafety}{26}{37}{DeepFillingEdge.relation_at_hole}
+\lean{Copying/TemplateInputSafety}{42}{47}{Specimen.not_entering}
+\lean{Copying/TemplateInputSafety}{52}{56}{Specimens.inputSafe_of_no_term_inputs}
+
+\Needspace{10\baselineskip}
+The BPerm pre-template relates graphs by the previously defined literal box
+permutation up to recursive isomorphism, and requires focus freedom on the left.
+Preservation of primitive-label predicates supplies focus freedom on the right.
+Destructing a BPerm witness reveals the common input interface
+$[\mathsf{thunk}(n)]$. Its sole entry cannot be a term wire. Applying the two
+general results proves BPerm output closure and operational input safety.
+The latter is quantified over arbitrary $Q,P$, so it also supplies the
+$Q^{\mathrm{op}},P$ instance needed by the converse sufficiency theorem.
+
+\lean{Copying/TemplateInputSafety}{60}{62}{BoxPermutation.template}
+\lean{Copying/TemplateInputSafety}{64}{75}{BoxPermutation.template_no_term_inputs}
+\lean{Copying/TemplateInputSafety}{77}{77}{BoxPermutation.template_outputClosed}
+\lean{Copying/TemplateInputSafety}{80}{82}{BoxPermutation.template_inputSafe}
+
+\subsection{Two free-output blocks and the bound-output splice}
+For typed permutations $p$ of $F$ and $q$ of $O$, the block action on tagged
+indices applies $p$ on the left and $q$ on the right. Conjugating by the
+existing split/join bijection gives a typed permutation $p\oplus q$ of $F{+\!+}O$.
+The inverse laws follow componentwise. Typing follows from the split/join
+label equations and the typing laws of $p,q$. Its two action lemmas state that
+joining a left or right index commutes with the corresponding permutation.
+
+\lean{Copying/SpliceBoundary}{9}{14}{TypedPermutation.blocks}
+\lean{Copying/SpliceBoundary}{17}{25}{TypedPermutation.append}
+\lean{Copying/SpliceBoundary}{27}{29}{TypedPermutation.append_left}
+\lean{Copying/SpliceBoundary}{30}{32}{TypedPermutation.append_right}
+
+Let $B$ have input $[\mathsf{term}]$ and outputs $\mathsf{term}::F$, and let
+$V$ have input $[\mathsf{term}]$ and outputs $O$. The existing micro-beta splice
+connects output zero of $B$ to the input of $V$. Its remaining outputs are
+$F{+\!+}O$. The explicit body embedding sends the input to the outer input,
+body internals to their tagged summand, bound output zero to the shared wire,
+and each free output to the left output block. The argument embedding sends
+its input to that same shared wire, its internals to the other tagged summand,
+and its outputs to the right output block.
+
+The two raw embeddings are the original simultaneous-expansion insertions.
+Case analysis proves them equal to the explicit formulas. The input interface
+has exactly one index. For body outputs, the proof splits index zero from a
+successor index and uses the original splice pattern's target list. For
+argument outputs it uses that pattern's right target block. These equations
+ensure that the following comparison is about the literal existing splice.
+
+\lean{Copying/SpliceBoundary}{38}{43}{Application.SpliceBoundary.bodyInsert}
+\lean{Copying/SpliceBoundary}{45}{50}{Application.SpliceBoundary.argumentInsert}
+\lean{Copying/SpliceBoundary}{52}{54}{Application.SpliceBoundary.rawBodyInsert}
+\lean{Copying/SpliceBoundary}{56}{58}{Application.SpliceBoundary.rawArgumentInsert}
+\lean{Copying/SpliceBoundary}{60}{72}{Application.SpliceBoundary.body_insert}
+\lean{Copying/SpliceBoundary}{74}{87}{Application.SpliceBoundary.argument_insert}
+
+\Needspace{10\baselineskip}
+\termdef{copying-splice-action}
+A \emph{bound-fixing splice action} consists of a boundary isomorphism
+$f:B\to C$ whose output action is $1\oplus p$: the bound output is fixed and
+the free tail follows $p$. On spliced vertices, use $f$ on body internals,
+identity on the shared wire and argument internals, identity on the outer
+input, and $p\oplus 1_O$ on outputs. The displayed inverse uses the inverse
+component maps, proving a genuine bijection.
+
+The body-embedding square commutes by three cases. Internal vertices follow
+$f$; the sole input is fixed; on outputs the action premise fixes zero and
+moves each successor index according to $p$. The argument-embedding square
+commutes pointwise, using the right-block action lemma on its outputs.
+The edge bijection applies $f$ to body edges and fixes argument edges.
+
+\lean{Copying/SpliceBoundary}{89}{113}{Application.SpliceBoundary.ports}
+\lean{Copying/SpliceBoundary}{116}{116}{Application.SpliceBoundary.Action}
+\lean{Copying/SpliceBoundary}{118}{141}{Application.SpliceBoundary.body_commutes}
+\lean{Copying/SpliceBoundary}{143}{151}{Application.SpliceBoundary.argument_commutes}
+\lean{Copying/SpliceBoundary}{153}{159}{Application.SpliceBoundary.edges}
+
+These bijections define a boundary isomorphism between the two splices.
+Vertex typing and boundary roles are checked by summands. Labels follow $f$
+on body edges and reflexivity on argument edges. For each source or target
+list, expand the original insertion formula, apply $f$'s incidence equation,
+and use the appropriate commuting square pointwise. This preserves list order.
+Finally apply the inverse external action to the target splice. Compensation
+fixes every external boundary position, yielding the stronger recursive
+isomorphism used by the machine's representation laws.
+
+\lean{Copying/SpliceBoundary}{162}{203}{Application.SpliceBoundary.iso}
+\lean{Copying/SpliceBoundary}{206}{211}{Application.SpliceBoundary.compensate}
+
+\subsection{External permutations preserve exact machine costs}
+\termdef{copying-permutation-context}
+For a symbol $o:I\to O$ and a typed permutation $p$ of $O$, form a
+\emph{permutation corolla context} by applying $p$ to the corolla's outputs.
+Plugging a graph $G:I\to O$ into its sole edge introduces an empty host-vertex
+summand and an impossible surviving-host-edge summand. The existing left-unit
+bijections remove those summands. The insertion equation says that this
+projection fixes internal vertices and inputs and sends output $i$ to $p(i)$.
+Mapping that equation along each incidence list gives a recursive isomorphism
+from the filled context to the actual interface-permuted graph.
+
+\lean{Copying/PermutationExecution}{13}{13}{InterfacePermutation.PlugContext.context}
+\lean{Copying/PermutationExecution}{15}{25}{InterfacePermutation.PlugContext.insert}
+\lean{Copying/PermutationExecution}{28}{44}{InterfacePermutation.PlugContext.iso}
+
+Choose $o$ to be a typed hole with the required interfaces. Any existing
+combined-machine rewrite lifts into this corolla by the original
+\texttt{Rewrite.plug} constructor. Rename both filled graphs by the proved
+corolla isomorphisms. The insertion equation identifies the resulting active
+coordinates with their permuted coordinates. This proves rewrite transport
+for all operation families at once. Allocation, store access, copying and
+beta retain exactly the premises in the original supplied rewrite.
+
+The state action keeps the token's mode and moves its vertex by the interface
+action. Search steps transport by the existing boundary-isomorphism search
+law; compute steps use the corolla argument just proved. Induction on a finite
+run preserves its length. Finality is equivalent because the mode is unchanged
+and the interface action preserves the input-vertex predicate.
+
+\lean{Copying/PermutationExecution}{49}{72}{InterfacePermutation.rewrite}
+\lean{Copying/PermutationExecution}{75}{76}{InterfacePermutation.state}
+\lean{Copying/PermutationExecution}{78}{82}{InterfacePermutation.step}
+\lean{Copying/PermutationExecution}{85}{90}{InterfacePermutation.run}
+\lean{Copying/PermutationExecution}{92}{96}{InterfacePermutation.final_iff}
+
+\termdef{copying-interface-costs}
+Applying $p$ and then $p^{-1}$ gives a state isomorphic to the original state:
+the graph comparison is the existing roundtrip isomorphism, modes agree, and
+the token equation is the inverse law on outputs and identity elsewhere.
+Consequently the \emph{exact successful cost spectrum} is unchanged:
+\[
+ \mathsf{TerminatesIn}(n,p\cdot s)
+ \quad\Longleftrightarrow\quad \mathsf{TerminatesIn}(n,s).
+\]
+Forward run transport proves one implication. For the other, transport a run
+back by $p^{-1}$ and use the roundtrip state isomorphism. Both final states and
+the exact number $n$ are preserved. This theorem is about external resource
+positions; it does not equate differently permuted closed box bodies.
+
+\lean{Copying/PermutationExecution}{98}{110}{InterfacePermutation.roundtripState}
+\lean{Copying/PermutationExecution}{114}{121}{InterfacePermutation.terminatesIn_iff}
+
+\subsection{Moving compensation through the original assembly}
+Inverting a block permutation inverts each component; the identity permutation
+is its own inverse. Both equations follow from the explicit inverse functions.
+In serial assembly, a permutation of the last component's outputs is compatible
+with the preceding component because its input action is identity. The serial
+boundary isomorphism therefore has identity input action and the prescribed
+output action. Factoring it through actual interface permutation gives a
+fixed-boundary recursive isomorphism.
+
+\lean{Copying/PermutationAssembly}{9}{10}{TypedPermutation.append_symm}
+\lean{Copying/PermutationAssembly}{11}{11}{TypedPermutation.symm_refl}
+\lean{Copying/PermutationAssembly}{16}{29}{InterfacePermutation.serial}
+
+For tensor assembly, tensor the two component boundary isomorphisms. Split an
+arbitrary boundary index into its tagged component. The existing tensor input
+and output action lemmas then identify the input action as identity and the
+output action as $p\oplus q$. Factoring this action again gives a recursive
+isomorphism. The identity output permutation is itself recursively isomorphic
+to the original graph, since it fixes all boundaries. Composing that comparison
+on the right component specializes the tensor theorem to a left-only action
+while retaining the literal original right component.
+
+\lean{Copying/PermutationAssembly}{32}{60}{InterfacePermutation.tensor}
+\lean{Copying/PermutationAssembly}{63}{64}{InterfacePermutation.reflIso}
+\lean{Copying/PermutationAssembly}{67}{70}{InterfacePermutation.tensor_left}
+
+\subsection{The actual BPerm and application graphs}
+The translated raw lambda body has output interface $E_{k+1,h}$, whereas the
+splice exposes $\mathsf{term}::E_{k,h}$. Their equality follows from the
+replicate-and-append definition of $E$. Equality casts compose without changing
+numerical positions. Define the raw body permutation by casting $1\oplus p$
+back across this equality. Its action predicate specifies the output action
+of a supplied body boundary isomorphism $f$.
+
+The opening comparison raises $f$ through one representation allowance and
+performs the very same interface cast as \texttt{Application.openBody}.
+Padding preserves the output action; composing the casts cancels them, so
+the opened comparison has precisely the bound-fixing splice action. This
+connects the general splice proof to the unchanged application definition.
+
+\lean{Copying/BoxPermutationOpening}{10}{11}{TypedPermutation.cast_trans}
+\lean{Copying/BoxPermutationOpening}{17}{18}{BoxPermutation.Opening.interface}
+\lean{Copying/BoxPermutationOpening}{21}{26}{BoxPermutation.Opening.bodyPermutation}
+\lean{Copying/BoxPermutationOpening}{29}{29}{BoxPermutation.Opening.Action}
+\lean{Copying/BoxPermutationOpening}{31}{32}{BoxPermutation.Opening.openIso}
+\lean{Copying/BoxPermutationOpening}{34}{42}{BoxPermutation.Opening.open_action}
+
+Casting $f$ instead to the original lambda-box interface supplies the body
+action of the canonical BPerm pair with one bound output. The previously proved
+box rule then relates the two actual lambda boxes, with inverse compensation
+outside the right box. Lift this pair through the lambda corolla, tensor with
+the unchanged argument, and then through the application corolla. The serial
+and tensor compensation isomorphisms identify the right-hand source as the
+literal application of the changed body with the combined external inverse
+action. This source comparison is explicitly a structural BPerm derivation,
+not an assumed observational equivalence.
+
+\lean{Copying/BoxPermutationOpening}{45}{52}{BoxPermutation.Opening.lambda_pair}
+\lean{Copying/BoxPermutationOpening}{57}{68}{BoxPermutation.Opening.source_pair}
+
+Apply the splice theorem to the opened body comparison. The first result is a
+boundary isomorphism with output action $p\oplus1_O$. The compensated result
+is a boundary-fixing recursive isomorphism. Its edge equation fixes every
+argument edge individually. In particular, the proof has not erased an unused
+argument or replaced its store-related edges.
+
+\lean{Copying/BoxPermutationOpening}{71}{73}{BoxPermutation.Opening.afterIso}
+\lean{Copying/BoxPermutationOpening}{77}{80}{BoxPermutation.Opening.afterCompensated}
+\lean{Copying/BoxPermutationOpening}{83}{85}{BoxPermutation.Opening.argument_edge}
+
+\Needspace{16\baselineskip}
+\subsection{Equal-cost beta and opening diagrams}
+\termdef{copying-beta-permutation-diamond}
+Write $L_B(V)$ for the original application redex and $R_B(V)$ for its original
+opened splice. Put $q=p\oplus1_O$. For a stable argument $V$, the
+\emph{BPerm beta-opening diagram} consists of
+\[
+\begin{array}{ccc}
+ (L_B(V),\mathsf{rewrite},\mathsf{in}_0)&\steps{1}&
+ (R_B(V),\mathsf{search},\mathsf{in}_0)\\
+ q^{-1}\!\cdot(L_C(V),\mathsf{rewrite},\mathsf{in}_0)&\steps{1}&
+ q^{-1}\!\cdot(R_C(V),\mathsf{search},\mathsf{in}_0).
+\end{array}
+\]
+The sources are connected by the structural derivation just proved. The
+target graphs are recursively isomorphic, and the resumed input tokens agree.
+The upper transition is the existing local beta rule. The lower is that rule
+for $C$, transported by the proved external-permutation theorem. The target
+comparison is the compensated splice isomorphism. Thus the computation steps
+are real combined-machine transitions, not abstract robustness hypotheses.
+
+\lean{Copying/BoxPermutationOpening}{89}{100}{BoxPermutation.Opening.beta_diamond}
+
+The original opening execution has five search transitions followed by beta.
+Embedding it into the combined machine gives six transitions on the upper
+path; external permutation transports the corresponding six-transition lower
+path. The diagram does not assert termination of either body. It is valid
+with arbitrary callbacks and recursive box contents, provided the argument
+is stable as the original beta rule requires.
+
+\lean{Copying/BoxPermutationOpening}{104}{117}{BoxPermutation.Opening.opening_diamond}
+
+For a literal interface-permuted body $C=p_{\rm body}\cdot B$, the required
+body isomorphism and action equation are supplied by the permutation
+construction itself. Hence the packaged theorem needs only $B,V,p$ and the
+original stability proof: it produces the structural source relation, both
+six-step runs and the successor isomorphism. There is no unproved matching,
+determinism, robustness or translation-correctness premise hidden in this
+instance. The successor state isomorphism further gives equality of all exact
+successful continuation costs in either direction. This is a result about
+the successors; it is not the full BPerm contextual-equivalence theorem.
+
+\lean{Copying/BoxPermutationOpening}{120}{122}{BoxPermutation.Opening.permuted_action}
+\lean{Copying/BoxPermutationOpening}{126}{146}{BoxPermutation.Opening.permuted_opening}
+\lean{Copying/BoxPermutationOpening}{149}{157}{BoxPermutation.Opening.successor_costs}
+
+\Needspace{30\baselineskip}
+\subsection{Regression witnesses and remaining dependencies}
+The regression permutation swaps two free variables and independently swaps
+two atoms. Its separate action equations show that neither block acts
+trivially. The raw body's bound output still stays at zero, checked directly
+from the prefix-extension and cast formulas. The body is the original
+translation of a lambda containing an application and an atom occurrence,
+with three variables and two atoms in the surrounding scope. Thus opening
+the outer application retains a further closed lambda box. Its stable
+argument is the literal unit graph at the matching allowance.
+
+\lean{Copying/BoxPermutationOpeningExamples}{10}{11}{BoxPermutation.Opening.Examples.swap}
+\lean{Copying/BoxPermutationOpeningExamples}{14}{15}{BoxPermutation.Opening.Examples.nestedBody}
+\lean{Copying/BoxPermutationOpeningExamples}{17}{17}{BoxPermutation.Opening.Examples.argument}
+\lean{Copying/BoxPermutationOpeningExamples}{19}{21}{BoxPermutation.Opening.Examples.swaps_variable}
+\lean{Copying/BoxPermutationOpeningExamples}{23}{25}{BoxPermutation.Opening.Examples.swaps_atom}
+\lean{Copying/BoxPermutationOpeningExamples}{28}{31}{BoxPermutation.Opening.Examples.fixes_bound}
+
+Instantiating the packaged diagram proves the compensated nested example's
+six-transition execution. Instantiating the successor theorem proves identical
+successful continuation costs for every $n$. The edge regression identifies
+the surviving unit-argument edge under the comparison. These checks exercise
+both resource sorts, bound/free separation, a nested box and the actual
+combined machine, without modifying the translation or proposition terms.
+
+\lean{Copying/BoxPermutationOpeningExamples}{34}{40}{BoxPermutation.Opening.Examples.nested_opening}
+\lean{Copying/BoxPermutationOpeningExamples}{43}{47}{BoxPermutation.Opening.Examples.nested_successor_costs}
+\lean{Copying/BoxPermutationOpeningExamples}{50}{54}{BoxPermutation.Opening.Examples.argument_retained}
+
+Appendix~B.1 removes BPerm output closure and input safety from its pending
+obligations, and records this local application diagram as complete. Its
+third work package still requires the remaining BPerm overlaps and their
+assembly into forward and converse robustness, as well as the other template
+families. In particular, duplicating or discarding boxes and transferring
+relations beneath nested boxes require further proofs. The focused-graph
+correspondence, semantic renaming/substitution, weakening and Figure~22
+assembly remain open. Estimated completion remains 60--70\% of mathematical
+effort, with low confidence; counting these declarations would overstate how
+much of the difficult template work has been discharged.

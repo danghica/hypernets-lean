@@ -90,6 +90,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{body-consistency}{Body consistency}{The condition that box edges with literally equal contents have equal external binder metadata; needed by naive binder erasure.}
 
+\glossaryentry{copying-splice-action}{Bound-fixing splice action}{A body boundary isomorphism that fixes the argument output and permutes only the free tail, inducing an exact comparison of opened splices.}
+
 \glossaryentry{copying-bound-splice}{Bound-output splice}{A two-component graph connecting body output zero to the argument input while retaining separate ordered free-body and argument output blocks.}
 
 \glossaryentry{copying-boundary-components}{Boundary carrier actions}{The separately extracted bijections of internal vertices, input positions, and output positions of a typed boundary isomorphism.}
@@ -117,6 +119,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{box-replacement}{Box-label replacement}{Changing the body of one selected box edge while retaining its binding metadata and all outer incidence data.}
 
 \glossaryentry{copying-box-permutation-pair}{Box-permutation pair}{Typed body and outer permutations agreeing on free resources and fixing every bound output, with the bound-prefix offset explicit.}
+
+\glossaryentry{copying-beta-permutation-diamond}{BPerm beta-opening diagram}{The original beta step on each side of a box permutation, with equal cost and recursively isomorphic successors after free-interface compensation.}
 
 \glossaryentry{canonical-allocation-successor}{Canonical allocation successor}{The source host with its selected ref edge replaced by the original cell prefix, resuming search at the retained old wire.}
 
@@ -402,6 +406,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{combined-exact-prefix-cost}{Exact prefix cost law}{A given finite prefix contributes exactly its length to every successful run, even when its successor has no successful continuation.}
 
+\glossaryentry{copying-interface-costs}{Exact successful cost spectrum}{The set of lengths of successful finite runs from a state; proved invariant under external interface permutation.}
+
 \glossaryentry{copying-execution-isomorphism}{Execution isomorphism invariance}{The requirement that recursively isomorphic closed graph presentations agree on successful termination.}
 
 \glossaryentry{copying-execution-padding}{Execution padding invariance}{The explicit requirement that padding an admissible closed program once preserves its successful termination observation.}
@@ -604,6 +610,8 @@ claim that a concrete UAM interpretation has already been constructed.
 
 \glossaryentry{natural-arithmetic-convention}{Natural arithmetic convention}{Addition and truncated subtraction on the existing natural constants; unary minus is zero minus its operand, hence zero.}
 
+\glossaryentry{copying-no-term-inputs}{No-term-input pre-template}{A relation whose fragments have no term-typed inputs; this entails output closure and operational input safety.}
+
 \glossaryentry{non-self-loop}{Non-self-loop hole}{A selected edge whose source and target lists are disjoint; this condition permits reflection of inserted paths.}
 
 \glossaryentry{determinism}{Normal state}{A state with no outgoing transition, whether or not it is successfully final.}
@@ -683,6 +691,8 @@ claim that a concrete UAM interpretation has already been constructed.
 \glossaryentry{path}{Path}{A nonempty edge list whose consecutive edges are adjacent. Repeated edges are allowed; this predicate does not specify endpoint vertices.}
 
 \glossaryentry{pattern-matching}{Pattern matching}{An isomorphism between a plugged finite focus fragment and an actual state, equivalent to focussed coordinate realization.}
+
+\glossaryentry{copying-permutation-context}{Permutation corolla context}{A one-edge typed context whose output attachments implement an external interface permutation when its edge is replaced.}
 
 \glossaryentry{site}{Plugging site}{An address selecting an edge, possibly inside boxes, indexed by the required local depth bound and replacement interface.}
 

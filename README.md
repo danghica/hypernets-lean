@@ -9,41 +9,36 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: robustness over all original closing contexts
+## Latest milestone: BPerm safety and its beta-opening diagram
 
-**The concrete copying robustness theorem now concludes quantitative contextual
-refinement over every original binding-free closing context.** Each original
-sole-hole address, including addresses inside boxes, supplies a recursive
-paired-filling certificate with explicit isomorphisms to the actual fillings.
-This proves initial lifting for the entire existing observation class.
+**Box permutation now has proved output closure, operational input safety,
+and its local beta-opening diagram.** The diagram uses the original application
+rule: one compute step on each side, or six transitions including search,
+followed by recursively isomorphic successors and identical exact continuation
+costs. It covers arbitrary free variable/atom interfaces and nested bodies,
+retains every argument edge, and keeps the stable-argument premise.
 
-The forward and converse theorems retain their quantitative cost conditions
-and template-specific output closure, safety and robustness. Machine
-determinism, refocusing, locality and the context certificates are proved.
-Term observations and full term-context congruence use the unchanged Figure 16
-translation; arbitrarily large common allowances suffice for template membership.
+External interface permutations now preserve exact successful costs for the
+entire combined machine. This is proved through its existing context-closure
+rule, including copying and store operations. A structural source derivation
+connects the diagram to the literal Figure 21 BPerm pair. Regression witnesses
+swap both free resource sorts, fix the bound wire and retain a nested lambda.
+The Proposition 12.2 terms, translation and machine rules are unchanged.
 
-Regressions include arbitrary numeral pairs in arbitrary closing contexts,
-two distinct bound-variable fillings beneath two actual translated lambdas,
-and a negative check that structural filling alone does not establish output
-closure. No equivalence of arbitrary numerals or bound variables is asserted.
-The Proposition 12.2 terms and all stability/copyability premises are preserved.
+Appendix B.1 removes BPerm output closure and input safety from the outstanding
+obligations. **Full BPerm robustness remains open**, especially copying/deep
+overlaps and residual specimen construction. The four broader packages still
+include the other template families, paper correspondence, semantic
+renaming/substitution, weakening and Figure 22. **Proposition 12.2 is unproved.**
 
-Appendix B.1 **removes the closing-context certificate and initial-lifting
-obligation**. Its four broader packages remain: further invariants and semantic
-renaming/substitution laws; focused-graph and unique-hole tuple correspondence;
-the eleven template families; semantic weakening and Figure 22.
-**Proposition 12.2 remains unproved.**
-
-Commentary Section 100 explains all 36 new declarations with immutable source
-links. Full build: 465 jobs. All 2,494 axiom audits pass (6 abstract, 477 graph,
-2,011 copying), with no `sorryAx` or project-specific axioms.
+Commentary Section 101 explains all 68 new declarations with immutable links.
+Full build: 471 jobs. All 2,562 axiom audits pass (6 abstract, 477 graph,
+2,079 copying), with no `sorryAx` or project-specific axioms.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-This milestone closes the universal observation connection; the eleven template
-proofs and remaining paper correspondence still carry substantial uncertainty.
-This is not a declaration or TODO count.
+The remaining template proofs and paper correspondence still carry substantial
+uncertainty; this estimate is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target
 
