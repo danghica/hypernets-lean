@@ -18,7 +18,8 @@ is then discharged within the latter branch. Full refocusing is proved
 equivalent to refocusing for precisely the remaining operation-headed rewrites
 other than reference creation, both at finite allowance and for the unbounded
 machine. This is a reduction of outstanding obligations, not a proof that all
-operations refocus.
+operations refocus. Section~\ref{sec:copying-full-refocusing} subsequently
+discharges every remaining concrete operation case.
 
 The paper correspondence is the copying branch of PDF Lemma~10.4
 (HTML Lemma~9, \href{https://arxiv.org/html/1907.01257v5\#S10.SS3}{Section~10.3})
@@ -50,8 +51,9 @@ compute families are an explicit premise only in the full-run corollaries.
 \end{enumerate}
 The terms of Proposition~12.2, Figure~16's translation, the transition relation,
 and all original stability and copyability conditions are unchanged.
-The focused-graph correspondence, specimen locality, remaining operation
-refocusing, templates and final equivalence chain are still open. The estimate
+The focused-graph correspondence, specimen locality, templates and final
+equivalence chain remain open. Section~\ref{sec:copying-full-refocusing}
+completes operation refocusing. The estimate
 remains 55--70\% of mathematical effort, with low confidence; no percentage is
 inferred from this section's 102 declarations.
 
@@ -348,9 +350,9 @@ obligation. No global upper bound on future box depth is asserted.
 \lean{Copying/IntrinsicRefocusing}{104}{112}{Combined.unbounded_refocusing_iff_compute}
 
 Once compute refocusing is supplied, induction over an actual finite run
-preserves rootedness at its endpoint. The compute-refocusing hypothesis is
-explicit and still unresolved in general; this corollary is not presented as
-an unconditional full-machine theorem.
+preserves rootedness at its endpoint. The compute-refocusing hypothesis is explicit in this corollary.
+Section~\ref{sec:copying-full-refocusing} supplies it for the concrete machine
+and proves the unconditional full-run theorem.
 
 \lean{Copying/IntrinsicRefocusing}{115}{120}{Combined.run_rooted}
 
@@ -480,9 +482,10 @@ is an equivalence, not merely a sufficient-condition theorem.
 Lift the remaining relation to unbounded states and repeat the same
 argument at each step's finite allowance. Finally, induction preserves
 rootedness along any finite combined run once refocusing of this remaining
-relation has been proved. The explicit premise still covers dereference,
-assignment, equality, application and arithmetic; the statement assumes
-neither their truth nor termination of their continuations.
+relation has been proved. This version retains an explicit premise covering dereference, assignment,
+equality, application and arithmetic. Section~\ref{sec:copying-full-refocusing}
+now discharges it for the concrete machine, without assuming termination
+of any continuation.
 
 \lean{Copying/AllocationRefocusing}{41}{43}{Combined.UnboundedRemainingComputeStep}
 
@@ -565,5 +568,6 @@ All 102 declarations above are included in the axiom audit. The full build
 passes 446 jobs, and 2305 axiom checks pass: 6 abstract, 477 graph and 1822
 copying declarations. Only \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound} occur. Appendix~B.1 removes the discharged copying and
-allocation refocusing sub-obligations; its remaining operation, specimen,
-template and final-assembly obligations remain explicit.
+allocation refocusing sub-obligations. Section~\ref{sec:copying-full-refocusing}
+now removes the other operation-refocusing cases as well. Specimen, template
+and final-assembly obligations remain explicit.

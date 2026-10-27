@@ -51,7 +51,7 @@
 \newcommand{\quasi}[2]{\mathsf{Quasi}_G(#1,#2)}
 \newcommand{\safe}[2]{\mathsf{InputSafe}_G(#1,#2)}
 \newcommand{\robust}[3]{\mathsf{Robust}_G(#1,#2,#3)}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/dbb4d4c74246f75eadc91f502478068f5443cdb5}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/bab714a1946a6963c86b6475185792972a975dd5}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -59,7 +59,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{27 October 2026\\\small Source snapshot: \texttt{dbb4d4c}; Lean \texttt{4.35.0}}
+\date{27 October 2026\\\small Source snapshot: \texttt{bab714a}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -128,15 +128,17 @@ complete source-relative certificates for independently chosen tree and payload
 matches. The full finite and unbounded machines have proved successor
 determinism up to recursive representation. Every successful run has a unique
 cost; constants, instances and lambdas take exactly three transitions from the
-selected copying input. Contextual copying and allocation now preserve
-search rootedness. Exact search history and prefix replay reduce full refocusing
-to the remaining operation families. Specimen locality and the template argument
-remain open.
+selected copying input. Full refocusing is now proved for every actual
+contextual rewrite, including copying and the complete operation alphabet.
+Every state reached from an initial program is search-rooted on its own
+current graph; no compute-refocusing premise remains. Prefix replay handles
+store target exchange, arithmetic deletion and complete box opening.
+Specimen locality and the template argument remain open.
 Application's exact six-step handoff preserves the whole opened body and host;
 its stable premise, the terms and Figure~16's translation are unchanged.
 Exact padding reflection now discharges concrete execution-padding invariance
-and full term-context congruence. Full-machine laws and the template argument
-remain pending;
+and full term-context congruence. The concrete specimen instance, focused-graph
+correspondence and template argument remain pending;
 Section~\ref{sec:copying-foundations} records the dependency map and proved
 prerequisites.
 \end{abstract}
@@ -250,6 +252,7 @@ prerequisites.
 \input{99-application-coherence}
 \input{100-copying-coherence}
 \input{101-intrinsic-refocusing}
+\input{102-full-refocusing}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -260,7 +263,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/dbb4d4c74246f75eadc91f502478068f5443cdb5}{Repository at revision \texttt{dbb4d4c}}.
+\href{https://github.com/danghica/hypernets-lean/tree/bab714a1946a6963c86b6475185792972a975dd5}{Repository at revision \texttt{bab714a}}.
 \end{thebibliography}
 \clearpage
 \appendix

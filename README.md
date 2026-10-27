@@ -9,44 +9,44 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: contextual copying and allocation refocusing
+## Latest milestone: full finite and unbounded refocusing
 
-**Every actual copying rewrite and reference allocation now preserves search
-rootedness in arbitrary surrounding graphs.** Search rootedness means reaching
-the token by search alone on the state's own current graph. The proof replays
-the relevant prefix on the changed graph; it does not assume that the reduct
-is rooted. Copying has an exact cost law: its resumed search uses the original
-prefix length minus the final copying trigger.
+**The original combined copying machine is now proved refocusing for its full
+operation alphabet, without an assumed compute-refocusing law.** Every actual
+contextual rewrite preserves search rootedness on the complete successor graph:
+copying, allocation, dereference, assignment, both reference-equality branches,
+application, unary negation, addition and subtraction.
 
-The development also proves exact search history, including backtracking, and
-a reusable theorem for replacement of a single operation head. The original
-combined transition relation is partitioned into intrinsic search/copying and
-operation compute steps. **Full finite and unbounded refocusing is reduced
-equivalently to the remaining operation families:** dereference, assignment,
-equality, application and arithmetic. Allocation is discharged. Rootedness
-respects recursive graph representation and finite depth padding.
+A reusable exact prefix-replay theorem handles partial retained occurrences,
+including arithmetic deletion and complete box opening. Search history proves
+that the prefix never uses the deleted frame. Store target exchange preserves
+all other interacting incidences. Every finite execution from an initial
+program stays rooted; the same holds at every position of any infinite
+execution, without a termination premise. Earlier successor determinism up to
+recursive representation and exact padding laws remain available.
 
-Checked regressions cover a copy request at an internal token beneath a
-reference-operation host, its non-final return, the unchanged translation of
-reference creation, and translated addition at every finite padding. The
-original copying construction, stability/copyability premises, Proposition
-12.2's terms and Figure 16's translation are unchanged.
+Checked regressions cover nested lambda opening under a reference host, the
+original variable body's internal copying request, arithmetic deletion under
+an enclosing operation, and rooted successful writes and both equality branches
+with arbitrary unchanged translated store contents at every finite padding.
+Proposition 12.2's terms, Figure 16's translation, and the original stability and
+copyability premises are unchanged.
 
-Appendix B.1 removes copying and allocation from the refocusing obligations.
-Its four broad packages remain open: further invariants and semantic
-renaming/substitution laws; remaining operation refocusing, focused-state
-correspondence and specimen locality; the eleven-template argument; semantic
-weakening and Figure 22. **Proposition 12.2 remains unproved.**
+Appendix B.1 **removes refocusing from the open obligations**. Its four broad
+packages remain open: further invariants and semantic renaming/substitution
+laws; the concrete specimen instance/locality and focused-graph correspondence;
+the eleven-template argument; semantic weakening and Figure 22.
+**Proposition 12.2 remains unproved.**
 
-Commentary Section 97 explains all 102 new declarations with immutable source
-links. Full build: 446 jobs. All axiom audits pass (6 abstract, 477 graph,
-1,822 copying; 2,305 total), using only Lean's standard logical axioms.
+Commentary Section 98 explains all 41 new declarations with immutable source
+links. Full build: 452 jobs. All axiom audits pass (6 abstract, 477 graph,
+1,863 copying; 2,346 total), using only Lean's standard logical axioms.
 
 Estimated completion by mathematical effort remains **roughly 55–70%, with low
 confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-This milestone discharges substantial machine-law work, but the specimen,
-template and observational arguments retain considerable uncertainty. The
-estimate is not a declaration or TODO count.
+Full refocusing closes a major machine-law obligation, but the specimen,
+template and final observational arguments still carry substantial uncertainty.
+The estimate is not a declaration or TODO count.
 
 ## Proposition 12.2: current extension target
 

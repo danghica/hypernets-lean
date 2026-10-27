@@ -1,0 +1,364 @@
+\clearpage
+\section{Full refocusing of the copying machine}
+\label{sec:copying-full-refocusing}
+The original combined copying machine is now proved refocusing for every
+operation in its alphabet. The result holds at every finite depth allowance
+and for the unbounded execution. It has no assumed compute-refocusing,
+matching-independence or successor-rootedness premise. The search and copying
+cases, and reference allocation, were discharged in
+Section~\ref{sec:copying-intrinsic-refocusing}. Here we discharge every remaining
+case: dereference, assignment, both reference-equality branches, application,
+unary negation, addition and subtraction.
+
+\termdef{copying-full-refocusing}
+\emph{Full copying refocusing} means that every actual machine transition from
+a state rooted by search on its own graph leads to a state rooted by search on
+its own new graph. More generally, this theorem holds for any external input
+of any fixed interface, not only for closed programs. Every reachable state
+therefore has its own pure-search witness. No assumption that execution
+eventually terminates is needed.
+
+This closes the coordinate-machine refocusing obligation corresponding to
+PDF Lemma~12.4 (HTML Lemma~13,
+\href{https://arxiv.org/html/1907.01257v5\#S12.SS1}{Section~12.1}), using the
+copying analysis of PDF Lemma~10.4 (HTML Lemma~9). The earlier-search-visit
+argument is PDF Lemma~C.5 (HTML Lemma~24); the prefix-replay reasoning follows
+the stationary-transition proof of PDF Lemma~C.8 (HTML Lemma~27), in
+\href{https://arxiv.org/html/1907.01257v5\#A3}{Appendix~C}.
+The general stationary-transition theorem for arbitrary fragments is not
+asserted here. Instead, the actual successor descriptions prove exactly the
+preservation facts used by each concrete rule.
+
+The dependency map is now: exact search history and absence of earlier visits
+to the pending head; a common-occurrence search replay theorem; operation-specific
+survivor and incidence facts from the already proved successor certificates;
+rootedness for all rewrite families; exhaustive rule recognition; finite and
+unbounded refocusing; rootedness throughout executions. Search determinism is
+already proved and is used to exclude earlier cycles. No template equivalence
+is assumed anywhere in this chain.
+
+Appendix~B.1 removes refocusing from the outstanding machine-law work. The
+concrete specimen interface and its locality laws, correspondence with the
+paper's explicit focused graphs, the eleven-template argument, semantic
+weakening and Figure~22 remain open. Successor determinism remains stated up
+to recursive representation; this chapter does not identify named graph
+carriers by literal equality. The original terms, Figure~16 translation,
+copyability conditions and stable-argument premises are unchanged.
+The estimate remains roughly 55--70\% of mathematical effort, with low
+confidence: closing refocusing does not measure the size of the remaining
+specimen, template and observational proofs.
+
+\Needspace{12\baselineskip}
+\subsection{Which edge can a search interaction use?}
+
+\termdef{copying-interactive-primitive}
+An \emph{interactive copying primitive} is an instance edge, a term contraction,
+or an operation. Case analysis on the actual entering function proves that
+whenever it returns a search successor, its primitive belongs to this class.
+Atom contractions, weakening, stores, holes and focus labels have no such
+entering interaction. Returning interactions already require an operation.
+
+\lean{Copying/PrefixReplay}{8}{9}{Search.Interactive}
+
+\lean{Copying/PrefixReplay}{11}{22}{Search.enter_interactive}
+
+\Needspace{10\baselineskip}
+\termdef{copying-used-incidence}
+A \emph{used search incidence} records the two ways the token can interact with
+an edge: search mode at a source, or backtracking mode at one of its ordered
+targets. This is a predicate on the existing graph and token, not an additional
+transition rule. The auxiliary position map keeps the mode and applies a
+chosen function to the token vertex.
+
+\lean{Copying/PrefixReplay}{25}{27}{Search.Uses}
+
+\lean{Copying/PrefixReplay}{29}{29}{Search.mapPosition}
+
+If a used edge has singleton source $v$, the current history records an
+earlier search visit to $v$. In search mode, the token is $v$ itself; in
+backtracking mode, the history-stack parent theorem recovers the source's
+visit. The same two cases recover the history stack at $v$. Consequently,
+if $v$ is an argument of another operation with source $u$, using the first
+edge implies an earlier visit to $u$. This last statement will exclude
+arithmetic operands and the lambda edge of an application frame from the
+prefix before their parent operation.
+
+\lean{Copying/PrefixReplay}{32}{38}{Search.uses_visit}
+
+\lean{Copying/PrefixReplay}{41}{47}{Search.uses_stack}
+
+\lean{Copying/PrefixReplay}{50}{53}{Search.uses_parent_visit}
+
+No interactive primitive is a store: the three cases of the predicate are
+disjoint from the store constructor. This excludes the selected store edge
+from every interaction which is replayed, even though that edge's target
+may change during a read or write.
+
+\lean{Copying/PrefixReplay}{56}{57}{Search.Interactive.ne_store}
+
+\Needspace{12\baselineskip}
+\subsection{Replay through a common space of occurrences}
+
+\termdef{copying-common-occurrence-replay}
+\emph{Search replay through retained occurrences} compares two graphs using
+maps $f:V_G\to W$ and $g:V_H\to W$, where $g$ is injective. The common set
+$W$ may include both old host vertices and newly exposed body vertices. There
+need not be a total embedding of the source graph into the reduct: arithmetic
+and application genuinely delete vertices and edges.
+
+For a search interaction on $G$, suppose its actually used primitive edge
+has an edge in $H$ with the same primitive label and with source and target
+lists equal after applying $f$ and $g$. If the current tokens agree in $W$,
+then the interaction lifts to $H$ and the next tokens agree there too.
+For an entering step, injectivity recovers source membership, and naturality
+of the entering function supplies the successor. For a return, equality of
+mapped singleton sources supplies the corresponding operation source;
+equality of the ordered target lists recovers the same argument index.
+Naturality of the resume function then supplies the return successor.
+Thus the proof preserves the actual search rule and argument order.
+
+\lean{Copying/PrefixReplay}{60}{102}{Search.lift_step}
+
+Consider a prefix ending in search at a pending head $v$, followed by a run
+to a rewrite state. At every strict prefix position, the history cannot
+already contain a visit to $v$: that would give a positive cycle before a
+search normal form, contradicting the exact-length uniqueness proved in
+Section~\ref{sec:copying-intrinsic-refocusing}. Assume that every edge used
+under this history condition has the retained frame required by the one-step
+lemma. Induction lifts the prefix, with exactly its original length. The
+induction also extends the source run, so the next application receives the
+actual updated history, not an assumed reachability condition.
+
+\lean{Copying/PrefixReplay}{105}{123}{Search.lift_prefix}
+
+\Needspace{10\baselineskip}
+To obtain rootedness, split the rooted source request at its earlier search
+visit to the request vertex. Apply prefix lifting from the initial input,
+whose two images in $W$ agree. The certificate's resumed-token equation and
+injectivity of $g$ identify the lifted endpoint with search at the actual
+successor token. This theorem leaves explicit frame-survival obligations;
+the following sections prove them for the concrete rules.
+
+\lean{Copying/PrefixReplay}{126}{139}{Search.rooted_of_frames}
+
+\Needspace{12\baselineskip}
+\subsection{Store writes, reads and identity tests}
+
+The canonical assignment successor exchanges the old and new store-value
+attachments, then replaces the assignment head by unit and weakenings.
+The pre-head prefix cannot use the assignment edge, since doing so would
+record an earlier visit to the pending head. It cannot use the store edge,
+which is non-interactive. Every other edge retains its label and source list,
+and the previously proved target-exchange theorem preserves its entire ordered
+target list. Taking the replacement host map as $f$ and the identity as $g$
+therefore proves the canonical write successor rooted. The retained store is
+not replaced by a fresh store or by its contents.
+
+\lean{Copying/StoreRefocusing}{9}{27}{Assignment.Match.rooted}
+
+The canonical read successor first grafts the literal sharing construction
+at the read head, then exchanges a fresh feedback wire with the old store
+contents wire. Every retained edge other than the head and store has unchanged
+targets. Indeed, a retained host target cannot equal the fresh graft vertex;
+and if it equalled the old contents wire, uniqueness of the incoming edge
+would identify its edge with the selected store. The exchange therefore fixes
+every entry in the ordered target list. Excluding the head by history and the
+store by non-interactivity permits prefix replay and proves the canonical
+read successor rooted.
+
+\lean{Copying/StoreRefocusing}{30}{42}{Dereference.Match.retained_target}
+
+\lean{Copying/StoreRefocusing}{45}{62}{Dereference.Match.rooted}
+
+An actual reference comparison supplies its Boolean decision and an
+isomorphism from the corresponding canonical successor. That successor is
+single-head replacement by the Boolean result and two weakenings, so the
+previous head-replacement theorem proves it rooted. Transporting rootedness
+along the state isomorphism handles either branch without assuming a decision.
+
+For assignment and dereference, extract the source match from the actual
+rewrite, apply the canonical rootedness theorem above, and use the already
+proved whole-successor isomorphism. These three public theorems quantify over
+arbitrary contexts and actual results. The write's original stable-argument
+premise remains in the rewrite relation; no additional premise is imposed on
+the caller.
+
+\lean{Copying/StoreRefocusing}{64}{69}{Combined.equality_rooted}
+
+\lean{Copying/StoreRefocusing}{71}{76}{Combined.assignment_rooted}
+
+\lean{Copying/StoreRefocusing}{78}{83}{Combined.dereference_rooted}
+
+\Needspace{12\baselineskip}
+\subsection{Application deletes a frame and exposes its body}
+
+An application-opening certificate describes the complete reduct in the
+common occurrence space consisting of old host vertices and vertices of the
+opened body. Its realization into this space is injective. The pre-head prefix
+uses none of the three removed edges. It cannot use the application head
+because that would record an earlier visit to the request. It cannot use the
+lambda edge because its singleton source is an argument of that application;
+the parent-visit lemma would again record the request. It cannot interact with
+the box edge, because a recursive box label is not a primitive label.
+
+Every other old edge survives with unchanged ordered sources, targets and
+primitive label. The realization's range theorem supplies the surviving edge,
+and its incidence equations supply the replay frame. The token equation then
+proves rootedness at the exposed body's actual input. This argument retains
+the complete recursive body, including nested boxes; it neither executes the
+body during opening nor replaces it by an interface summary.
+
+\lean{Copying/ApplicationRefocusing}{8}{36}{Application.OpeningCertificate.rooted}
+
+Every actual application rewrite already yields such a complete opening
+certificate. Applying its rootedness theorem discharges application refocusing
+in the full host. The original stable argument condition is retained in the
+underlying micro-beta rule, even though the prefix-replay argument itself
+only needs the certificate's frame and token facts.
+
+\lean{Copying/ApplicationRefocusing}{39}{43}{Combined.application_rooted}
+
+\Needspace{12\baselineskip}
+\subsection{Arithmetic deletes its immediate operands}
+
+If a selected argument is a numeric edge, any consumer of its argument wire
+is that same edge, by source uniqueness. Thus it has the numeric operation
+label. A recognized unary arithmetic request has exactly one target, at index
+zero; a binary request has exactly two, at indices zero and one. Inspecting
+these indices and applying the numeric-argument fact proves that every edge
+adjacent to the arithmetic head is an operation. This is derived from the
+actual numeric operands; it is not assumed for arbitrary adjacent edges.
+
+\lean{Copying/ArithmeticRefocusing}{8}{14}{Arithmetic.NumberArgument.consumer}
+
+\lean{Copying/ArithmeticRefocusing}{17}{38}{Arithmetic.Request.deleted_operations}
+
+An arithmetic reduction certificate identifies surviving vertices and edges
+with their original occurrences. It retains exactly the edges not adjacent
+to the head; the head itself survives with its result label and no targets.
+For pre-head replay, the selected head is excluded by the earlier-visit
+condition. Every deleted adjacent edge is also excluded: it is an operation
+with a singleton source among the head's targets, so interacting with it would
+imply an earlier visit to the head. The range theorem therefore supplies a
+surviving edge for every interaction that the prefix actually uses.
+
+Use $W=V_G$, $f$ the identity and $g$ the reduction's injective vertex map.
+The retained-edge label and incidence equations give the required frames;
+the token equation identifies the resumed result. This proves rootedness
+even though operand vertices and edges were actually removed.
+
+\lean{Copying/ArithmeticRefocusing}{41}{63}{Arithmetic.Reduction.rooted}
+
+\Needspace{10\baselineskip}
+For an arithmetic certificate, uniqueness of the head aligns the original
+recognition data with the certificate's selected edge. The request's operand
+data then discharges the deleted-operation property, allowing the reduction
+rootedness theorem to apply. Finally, every actual arithmetic rewrite supplies
+the certificate. This proves the public theorem for unary negation, addition
+and subtraction, in arbitrary hosts and without altering their natural-number
+semantics.
+
+\lean{Copying/ArithmeticRefocusing}{66}{75}{Arithmetic.Certificate.rooted}
+
+\lean{Copying/ArithmeticRefocusing}{81}{85}{Combined.arithmetic_rooted}
+
+\Needspace{12\baselineskip}
+\subsection{The unconditional finite and unbounded theorems}
+
+Every actual contextual rewrite supplies one of the exhaustive original rule
+choices. Case analysis applies the proved theorem for allocation, read, write,
+comparison, application, copying, unary arithmetic or binary arithmetic.
+Consequently every actual rewrite preserves search rootedness. A full-machine
+step is either such a rewrite or unchanged-graph search; appending a search
+step proves the latter case. This yields preservation from any external input.
+Specializing to the sole input of a closed state proves finite refocusing
+without a compute-law hypothesis.
+
+\lean{Copying/FullRefocusing}{7}{21}{Combined.rewrite_rooted}
+
+\lean{Copying/FullRefocusing}{24}{28}{Combined.step_rootedFrom}
+
+\lean{Copying/FullRefocusing}{31}{33}{Combined.refocusing}
+
+Induction over a finite run now preserves rootedness from its fixed external
+input, using the unconditional one-step theorem at each transition. An
+unbounded transition is represented at one finite allowance; applying finite
+refocusing proves unbounded refocusing. Another induction gives rootedness
+throughout unbounded runs. No common bound on all possible programs is needed,
+and no change is made to the existing representation or padding relations.
+
+\lean{Copying/FullRefocusing}{36}{41}{Combined.run_rootedFrom}
+
+\lean{Copying/FullRefocusing}{44}{46}{Combined.unbounded_refocusing}
+
+\lean{Copying/FullRefocusing}{49}{53}{Combined.unbounded_run_rooted}
+
+\termdef{copying-reachable-rootedness}
+\emph{Reachable copying rootedness} asserts that every state reached from a
+closed program has a pure-search witness on its own current graph. The initial
+state has the zero-step witness, and unbounded run preservation proves the
+claim for every finite execution length. Given an infinite sequence of actual
+steps from an initial program, induction on its index proves the same property
+at every position. This last theorem does not assert that an infinite run
+exists, or that any particular callback diverges; it shows that refocusing
+requires no termination premise.
+
+\lean{Copying/FullRefocusing}{56}{58}{Combined.execution_rooted}
+
+\lean{Copying/FullRefocusing}{61}{67}{Combined.infinite_run_rooted}
+
+\Needspace{12\baselineskip}
+\subsection{Nested and store-data regression proofs}
+
+A unary host is the original primitive operation graph with its explicit
+single-input, single-output interface. Its entering search step moves the
+token to the argument's internal attachment. This is verified directly from
+the source and target incidences at either depth form.
+
+\lean{Copying/FullRefocusingExamples}{8}{9}{Combined.FullRefocusingExamples.unaryHost}
+
+\lean{Copying/FullRefocusingExamples}{12}{17}{Combined.FullRefocusingExamples.unary_enters}
+
+Place an application below a reference-allocation host. One host-entry step
+and the existing six-step opening execution produce the opened body at an
+internal search token. Full run preservation proves this token rooted.
+Instantiating with the unchanged nested-lambda translation verifies that
+recursive bodies are covered. Instantiating with the original variable-body
+translation and its next search step yields a rooted internal copying request;
+the variable still triggers actual copying after opening.
+
+\lean{Copying/FullRefocusingExamples}{20}{30}{Combined.FullRefocusingExamples.application_host_rooted}
+
+\lean{Copying/FullRefocusingExamples}{33}{37}{Combined.FullRefocusingExamples.nested_lambda_host_rooted}
+
+\lean{Copying/FullRefocusingExamples}{40}{45}{Combined.FullRefocusingExamples.variable_host_copy_rooted}
+
+Place binary arithmetic below unary negation. The host-entry step followed
+by the seven-step binary computation leaves a rooted backtracking token at the
+internal argument. The existing finality theorem shows that it is not final:
+the enclosing operation must still resume. This checks rootedness across a
+real deleting rewrite without confusing a local return with global completion.
+
+\lean{Copying/FullRefocusingExamples}{48}{54}{Combined.FullRefocusingExamples.arithmetic_host_return_rooted}
+
+\lean{Copying/FullRefocusingExamples}{56}{59}{Combined.FullRefocusingExamples.arithmetic_host_return_not_final}
+
+The store regressions combine actual seven-step successful executions with
+the new rootedness theorem. A write over an arbitrary unchanged translated old
+term has a rooted final result at every finite padding. Both shared-reference
+and distinct-reference comparisons also have rooted final results with their
+unchanged translated contents, again at every finite padding. The arbitrary
+old term may be the existing literal omega translation; these statements do
+not claim to prove its divergence. The stored program is not evaluated merely
+to establish the write or comparison result.
+
+\lean{Copying/FullRefocusingExamples}{62}{66}{Combined.FullRefocusingExamples.overwrite_rooted_result}
+
+\lean{Copying/FullRefocusingExamples}{69}{80}{Combined.FullRefocusingExamples.equality_rooted_results}
+
+The full build passes 452 jobs. All 2346 axiom audits pass: 6 abstract,
+477 graph and 1863 copying declarations, including all 41 declarations in this
+chapter. The only axiom dependencies are \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound}. Proposition~12.2 remains
+unproved until the specimen, template and final observational obligations in
+Appendix~B.1 are completed.

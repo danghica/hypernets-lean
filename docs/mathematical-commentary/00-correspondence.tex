@@ -100,20 +100,21 @@ unbounded machine up to its representation relation. Exact prefix costs and
 unique successful-run lengths are proved without extra machine-law premises
 (Section~\ref{sec:copying-successor-coherence}).
 
-Section~\ref{sec:copying-intrinsic-refocusing} now proves refocusing for
-search, every actual contextual copying rewrite, and every actual allocation.
-Copying replays the original search prefix with exactly its final trigger
-removed. Exact search history, including backtracking, also proves refocusing
-for replacement of a single operation head. Rootedness is preserved and
-reflected by recursive representation and finite padding. Full finite and
-unbounded refocusing is reduced equivalently to dereference, assignment,
-equality, application and arithmetic; those cases, focused-state correspondence
-and the specimen interface remain unfinished.
+Section~\ref{sec:copying-intrinsic-refocusing} proves refocusing for search,
+copying and allocation, together with exact search history, single-head
+replacement and rootedness representation/padding laws.
+Section~\ref{sec:copying-full-refocusing} now discharges all remaining
+operation cases: dereference, assignment, reference equality, application and
+arithmetic. The full finite and unbounded machines are refocusing without any
+compute-law premise. Every reachable state, including every finite prefix of
+an infinite execution, has a pure-search witness on its own current graph.
+The concrete specimen interface and locality laws, focused-graph correspondence,
+templates and final observational argument remain unfinished.
 
 The earlier estimate of 80\% completion of Proposition~12.2 is withdrawn.
 The current cautious assessment is 55--70\% of mathematical effort, with low
-confidence. The template argument and remaining machine laws are substantial
-proof obligations; declaration counts do not measure their difficulty.
+confidence. The template and specimen arguments remain substantial proof obligations;
+declaration counts do not measure their difficulty.
 
 The new recognition predicate records proved facts about the existing source
 graph. It is not a new reduction rule or a replacement for stability and

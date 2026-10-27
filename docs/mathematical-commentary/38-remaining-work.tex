@@ -30,7 +30,7 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-intrinsic-refocusing}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-full-refocusing}.
 Execution-padding invariance, term-context congruence, runtime safety and
 source selection are proved. Complete successor coherence now covers every
 store and arithmetic operation, application, and copying. The full finite and
@@ -38,9 +38,11 @@ unbounded machines have proved successor determinism up to recursive
 representation, together with exact prefix costs and unique successful-run
 lengths. The original copying construction, all copyability and stability
 premises, and the unchanged variable-body copy request are retained.
-Search, contextual copying and allocation now preserve search rootedness.
-Exact search history and prefix replay are proved, as are rootedness
-representation and padding laws. Completed tasks are omitted from the list
+Full refocusing is now proved for every actual contextual rewrite, including
+copying and every store, application and arithmetic operation. Every state
+reached from an initial program is rooted on its own current graph, without
+a compute-law assumption. Exact search history and prefix replay are proved,
+as are rootedness representation and padding laws. Completed tasks are omitted from the list
 below.
 The four remaining tasks are:
 \begin{enumerate}
@@ -51,10 +53,9 @@ contextual-equivalence interpretation, using proved BPerm robustness and executi
 congruence rather than identifying box permutations with ordered isomorphisms. Prove non-bijective renaming
 and graph-level substitution laws. Preserve the terms
 of Proposition~12.2 and the translation of Figure~16.
-\item Prove refocusing for the remaining operation families: dereference,
-assignment, equality, application and arithmetic. Establish specimen locality
-for the complete unbounded machine and integrate the proved successor
-determinism up to representation into the concrete specimen-system instance. Prove correspondence with the paper's focused
+\item Establish specimen locality for the complete unbounded machine and
+construct the concrete specimen-system instance using the proved full refocusing
+and successor determinism up to representation. Prove correspondence with the paper's focused
 graph representation and preserve the completed execution-isomorphism and
 exact padding-invariance laws through any necessary semantic corrections.
 Retain the zero-input qualification of Lemma~E.1.

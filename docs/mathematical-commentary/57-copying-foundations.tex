@@ -44,7 +44,7 @@ Selected-resource and all atomic bijective-renaming cases are proved
 non-bijective graph renaming, graph-level substitution and the remaining
 operational invariants remain pending. Recursive label safety and stable-input
 inertness are now proved in Section~\ref{sec:copying-selection}.
-\item \textbf{Checked search, pending full machine:} operation search and the
+\item \textbf{Checked machine laws, pending specimen instance:} operation search and the
 extra search rules (Figure~18) now have concrete incidence rules, determinism,
 typing, value recognition, exact isomorphism/padding transport and shallow
 plugging preservation (Section~\ref{sec:copying-search-phase}). Reference creation (Figure~19(a)) now has its actual stable-argument pair,
@@ -103,15 +103,16 @@ unbounded machine up to its representation relation. Exact prefix costs and
 unique successful-run lengths are proved without extra machine-law premises
 (Section~\ref{sec:copying-successor-coherence}).
 
-Section~\ref{sec:copying-intrinsic-refocusing} now proves refocusing for
-search, every actual contextual copying rewrite, and every actual allocation.
-Copying replays the original search prefix with exactly its final trigger
-removed. Exact search history, including backtracking, also proves refocusing
-for replacement of a single operation head. Rootedness is preserved and
-reflected by recursive representation and finite padding. Full finite and
-unbounded refocusing is reduced equivalently to dereference, assignment,
-equality, application and arithmetic; those cases, focused-state correspondence
-and the specimen interface remain unfinished.
+Section~\ref{sec:copying-intrinsic-refocusing} proves refocusing for search,
+copying and allocation, together with exact search history, single-head
+replacement and rootedness representation/padding laws.
+Section~\ref{sec:copying-full-refocusing} now discharges all remaining
+operation cases: dereference, assignment, reference equality, application and
+arithmetic. The full finite and unbounded machines are refocusing without any
+compute-law premise. Every reachable state, including every finite prefix of
+an infinite execution, has a pure-search witness on its own current graph.
+The concrete specimen interface and locality laws, focused-graph correspondence,
+templates and final observational argument remain unfinished.
 The proved determinism up to representation and these refocusing results must
 be integrated with the concrete specimen laws for the robustness theorem. Copy transitions replace the
 linear machine's substitution transitions; they must not be hidden in its
