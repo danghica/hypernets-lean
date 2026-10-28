@@ -1,0 +1,559 @@
+\clearpage
+\section{Contraction idempotence in all observing contexts}
+\label{sec:copying-contraction-idempotence}
+The next completed structural dependency of Proposition~12.2 is the Idem
+family of Figure~21, for both term and atom sharing. Two weakenings feeding
+a contraction are contextually equivalent to one weakening of the same sort.
+The proof establishes output closure, input safety, full forward and converse
+robustness, and exact successful-transition counts in every original closing
+context. Observing sites may be nested under arbitrarily many boxes. No
+binding-free restriction is imposed on the observation class.
+
+\begin{theorem}[Contraction-idempotence contextual equivalence]
+Let $s\in\{\mathsf{term},\mathsf{atom}\}$, let $W_s$ be weakening and $C_s$
+contraction, and set
+\[
+ L_s=(W_s\otimes W_s);C_s : \epsilon\Rightarrow s,
+ \qquad R_s=W_s : \epsilon\Rightarrow s.
+\]
+At every original addressed occurrence in a focus-free observing graph,
+if the two filled graphs are closed, replacing $L_s$ with $R_s$ preserves
+successful termination at every exact number of machine transitions.
+The same holds for arbitrary simultaneous recursive Idem fillings.
+\end{theorem}
+The original graph interface and the two literal fragments are retained.
+The theorem is applied to actual fragment replacement, since these fragments
+have no inputs and are not themselves one-term-input open programs.
+In particular, it does not follow from a representation identification:
+the left graph has three edges and the right graph one.
+
+\paragraph{Why this milestone advances the example.}
+Table~3 makes Idem a prerequisite of pulling weakening out of a box
+($\mathrm{BPullW}$), while Section~12.3 uses these two laws to prove semantic
+weakening. Those weakening laws extend the closed Figure~22 example to the
+arbitrary distinct-list environments in Proposition~12.2. Idem also supports
+box-contraction pulling and parametricity. This section completes its full
+template obligation; box-pulling, semantic weakening and the remaining
+Figure~22 links are still separate tasks.
+
+\paragraph{Correspondence with the paper's proof.}
+Appendix~H.3.1 proves Idem robustness by choosing a maximal applicable sharing
+tree and applying the tree-preservation transfer property of Corollary~H.8(3)
+(HTML Corollary~47(3)). Here the same robustness strategy is implemented using
+proved successor coherence and the already constructed selected-path
+occurrences. Rematching a smaller occurrence leaves uninspected sibling
+branches attached at its boundary; coherence identifies its result with the
+independently supplied actual successor. No copying or compute rule changes.
+The nullary argument below explains why this smaller occurrence avoids every
+shallow Idem replacement. This is a difference in proof organization, not in
+the equation or its observation class.
+
+\subsection{The literal contraction-idempotence template}
+\termdef{literal-contraction-idempotence}
+Fix a sharing sort $s$, either term or atom. Write $w_s$ for the actual
+weakening corolla with interface $[]\to[s]$, and $c_s$ for the actual
+contraction corolla with interface $[s,s]\to[s]$. The two graphs of
+Figure~21's Idem family are
+\[
+ L_s=(w_s\otimes w_s);c_s,
+ \qquad R_s=w_s.
+\]
+Here tensor is ordered juxtaposition and the semicolon is the existing
+serial graph constructor. Thus $L_s$ contains two distinct weakening edges,
+the two wires joining them to the ordered contraction inputs, and the
+contraction itself. Both graphs have empty input interface and one output
+of sort $s$. These definitions retain the literal graphs at every depth
+allowance; no distributor or translated term is simplified in their definition.
+
+\lean{Copying/ContractionIdempotence}{14}{16}{ContractionIdempotence.left}
+\lean{Copying/ContractionIdempotence}{19}{20}{ContractionIdempotence.right}
+\par\penalty0
+
+
+The relation called \texttt{Step} contains these two sort-indexed instances.
+Despite its name, it is a structural graph-pair relation, not a machine
+transition. Its closure \texttt{UpToIso} relates $G$ to $H$ when $G$ is
+recursively isomorphic to some literal left side and the corresponding
+literal right side is recursively isomorphic to $H$. The two carrier
+renamings are independent and preserve every ordered interface position.
+Neither relation assumes the desired contextual equivalence.
+
+\lean{Copying/ContractionIdempotence}{23}{25}{ContractionIdempotence.Step}
+\lean{Copying/ContractionIdempotence}{29}{32}{ContractionIdempotence.UpToIso}
+\par\penalty0
+
+
+If a predicate on primitive labels holds of weakening and contraction of
+sort $s$, it holds throughout $L_s$: first combine the two weakening
+corollas by the tensor label lemma, then append the contraction by the
+serial label lemma. On $R_s$ the weakening hypothesis alone suffices.
+Specializing these facts to exclusion of focus and hole primitives proves
+both graphs focus-free and hole-free. Inspection of the single rule
+constructor proves its input interface is empty. These three properties
+pass to \texttt{UpToIso}: recursive isomorphisms preserve label predicates,
+and the external interfaces are already fixed by the isomorphism types.
+
+\lean{Copying/ContractionIdempotence}{36}{43}{ContractionIdempotence.left_allLabels}
+\lean{Copying/ContractionIdempotence}{46}{48}{ContractionIdempotence.right_allLabels}
+\lean{Copying/ContractionIdempotence}{50}{55}{ContractionIdempotence.Step.focusFree}
+\lean{Copying/ContractionIdempotence}{57}{62}{ContractionIdempotence.Step.holeFree}
+\lean{Copying/ContractionIdempotence}{65}{67}{ContractionIdempotence.Step.input}
+\lean{Copying/ContractionIdempotence}{69}{73}{ContractionIdempotence.UpToIso.focusFree}
+\lean{Copying/ContractionIdempotence}{75}{79}{ContractionIdempotence.UpToIso.holeFree}
+\lean{Copying/ContractionIdempotence}{81}{83}{ContractionIdempotence.UpToIso.input}
+\par\penalty0
+
+
+The Idem pre-template uses precisely \texttt{UpToIso} as its relation and
+the proved focus-freedom statement as its structural certificate. Taking
+identity isomorphisms exhibits every literal pair as a template instance.
+
+\lean{Copying/ContractionIdempotence}{87}{89}{ContractionIdempotence.template}
+\lean{Copying/ContractionIdempotence}{92}{93}{ContractionIdempotence.literal}
+\par\penalty0
+
+
+\paragraph{Admissibility and representation allowance.}
+The empty-interface theorem proves \texttt{NoInputs}, and hence the weaker
+\texttt{NoTermInputs} property. Output closure follows because an
+operation-only path starting at an external term input cannot exist.
+Input safety is equally direct: an entering token would supply a source
+port of a template hole, contradicting that hole's empty input interface.
+This argument works for every allowed-context class and every pair of
+cost orders; it assumes no simulation or robustness theorem.
+
+\lean{Copying/ContractionIdempotenceLaws}{11}{11}{ContractionIdempotence.template_noInputs}
+\lean{Copying/ContractionIdempotenceLaws}{13}{13}{ContractionIdempotence.template_noTermInputs}
+\lean{Copying/ContractionIdempotenceLaws}{15}{15}{ContractionIdempotence.template_outputClosed}
+\lean{Copying/ContractionIdempotenceLaws}{19}{22}{ContractionIdempotence.template_inputSafe}
+\par\penalty0
+
+
+An extra representation allowance preserves the single weakening literally.
+For the left side, commute padding through serial assembly, tensor assembly,
+and each primitive corolla. The serial constructor may use a different
+internal carrier presentation, so the result is an ordered recursive
+isomorphism rather than an asserted literal graph equality. These two
+results show that a padded literal pair is again an Idem pair up to
+isomorphism. Compose with the padded isomorphisms of an arbitrary existing
+pair to prove \texttt{UpToIso.raise}, and therefore padding closure of the
+pre-template. All three left-side edges survive this construction.
+
+\lean{Copying/ContractionIdempotenceLaws}{26}{31}{ContractionIdempotence.left_raise}
+\lean{Copying/ContractionIdempotenceLaws}{34}{35}{ContractionIdempotence.right_raise}
+\lean{Copying/ContractionIdempotenceLaws}{39}{44}{ContractionIdempotence.Step.raise}
+\lean{Copying/ContractionIdempotenceLaws}{46}{52}{ContractionIdempotence.UpToIso.raise}
+\lean{Copying/ContractionIdempotenceLaws}{54}{54}{ContractionIdempotence.template_paddingClosed}
+\par\penalty0
+
+
+
+\subsection{Nullary pre-templates and their safety}
+\termdef{nullary-template}
+A pre-template $T$ is \emph{nullary} when every related pair $G\,T\,H$ has
+literally the empty common input interface. This is a property of its graph
+relation. Exchanging endpoints preserves it. It implies the previously
+formalized no-term-input property, since an index into the empty input list
+cannot exist. Output closure follows: there is no operation path from a term
+input to an output. The original input-safety condition is consequently
+vacuous for any context class and any cost parameters. These conclusions
+supply their proofs to the existing specimen machinery; they do not assume
+execution equivalence.
+\lean{Copying/NullaryTemplates}{10}{11}{PreTemplate.NoInputs}
+\lean{Copying/NullaryTemplates}{14}{15}{PreTemplate.NoInputs.converse}
+\lean{Copying/NullaryTemplates}{18}{23}{PreTemplate.NoInputs.noTermInputs}
+\lean{Copying/NullaryTemplates}{26}{27}{PreTemplate.NoInputs.outputClosed}
+\par\penalty0
+\lean{Copying/NullaryTemplates}{31}{34}{PreTemplate.NoInputs.inputSafe}
+\subsection{A nullary replacement cannot absorb a sourced footprint}
+\termdef{nullary-ancestry-retention}
+Fix genuine recursive filling certificates for two expansions $C[L]$ and
+$C[R]$ of a nullary pre-template. Suppose an actual expanded edge consumes
+a vertex which is the image of an original vertex of $C$. That edge cannot
+belong to a shallow replacement: such an incidence would supply an input
+index of the replacement, contradicting its empty input interface. It must
+therefore come from a retained outer edge. Its target vertices are images
+of original vertices as well.
+
+Induction along an actual edge ancestry repeats this argument at each next
+source incidence. It proves that every encountered outer edge is retained,
+and reflects the entire ancestry into the original context. When the left
+expanded graph is hole-free, a retained original hole cannot remain
+unfilled. A source at such a hole would again supply an impossible input.
+Thus neither the original sourced edge nor any of its descendants lies
+in a shallow hole. The proof does not require a rooted history, binding
+freedom, or an acyclic surrounding context.
+\lean{Copying/NullaryFootprint}{14}{20}{NullaryOverlap.source_retained}
+\lean{Copying/NullaryFootprint}{24}{36}{NullaryOverlap.ancestor_retained}
+\lean{Copying/NullaryFootprint}{39}{45}{NullaryOverlap.source_not_hole}
+\lean{Copying/NullaryFootprint}{49}{60}{NullaryOverlap.ancestor_not_hole}
+\par\penalty0
+
+\subsection{Selected atom trees for all store rules}
+Read follows an instance edge through the selected atom-sharing path to its
+store. Its reader consumes the original token vertex, so the preceding
+retention theorem applies to the reader and every edge downstream from it.
+A selected subtree occurrence carries an actual ancestry from its inspected
+input to each selected sharing edge. Extending it through the unchanged read
+frame therefore retains the whole rematched source, including its instance
+and store, while leaving irrelevant sibling branches outside that source.
+
+Assignment has the same selected store path and also the original stable
+new value. Every edge of that value consumes the value's sole term input,
+so all of it is directly downstream of the assignment head. Its complete
+ordered output interface, including thunk outputs, is retained. This proves
+the two selected-source exclusion lemmas.
+\lean{Copying/NullaryStoreFootprint}{20}{50}{NullaryOverlap.read_subtree_avoids}
+\lean{Copying/NullaryStoreFootprint}{54}{92}{NullaryOverlap.assignment_subtree_avoids}
+For equality of two references resolving to one store, the two selected
+inputs may merge at a sharing contraction. The genuine two-input subtree
+contains the union of their ancestries. Both instance edges are downstream
+of the comparator; every selected sharing edge is downstream of at least
+one instance, and the store is downstream of a successful resolution.
+For references to different stores, make the same argument separately in
+the two atom trees. The complete occurrence preserves distinct store edges,
+the false decision, and the order of the two content outputs. These are
+retainedness proofs for the original machine sources, not new store rules.
+\lean{Copying/NullaryStoreFootprint}{96}{149}{NullaryOverlap.same_subtree_avoids}
+\lean{Copying/NullaryStoreFootprint}{155}{221}{NullaryOverlap.different_subtrees_avoids}
+Finally, discharge all selected-subtree premises from arbitrary original
+rule occurrences. For read and assignment take the minimal spine from input
+zero to the root, extend its full-label occurrence through the corresponding
+frame, and compose with the original outer match. For same-store equality
+use two-input subtree extraction with the original inputs zero and one
+first in the new boundary order. For different-store equality take one
+minimal spine in each tree. In every case the active comparison or operation
+input maps to the original token vertex, and the preceding lemmas prove
+avoidance of shallow holes. No smaller match is supplied by the caller.
+\lean{Copying/NullaryStoreFootprint}{227}{240}{NullaryOverlap.read_occurrence}
+\lean{Copying/NullaryStoreFootprint}{244}{260}{NullaryOverlap.assignment_occurrence}
+\lean{Copying/NullaryStoreFootprint}{264}{274}{NullaryOverlap.same_occurrence}
+\lean{Copying/NullaryStoreFootprint}{278}{294}{NullaryOverlap.different_occurrence}
+\par\penalty0
+
+\subsection{Pointed residuals in unrestricted contexts}
+\termdef{unrestricted-pointed-residual}
+The finite-cut construction already supplies a genuine recursive residual
+witness with the computed graft as its common-context geometry. A local
+common-context resume vertex has an explicit image in this graft. Applying
+the original unrestricted quasi-specimen construction at that vertex gives
+the two actual resumed states. All matched and untouched hole names, nested
+box bodies and ordered ports are preserved by the established pointed
+correspondence lemmas. Since the allowed-context predicate is true, no
+binding-path condition is needed on this graft.
+
+The unrestricted input diamond first lifts the actual local rewrite to the
+left graph and the constructed paired local rewrite to the right graph.
+Both return through the same local input coordinate. Machine preservation
+proves hole freedom of both resulting whole graphs; the pointed residual
+then gives the original quasi-specimen at their exact search tokens.
+This is the common transfer interface for all nine cases below.
+\lean{Copying/AllContextResiduals}{10}{29}{RetainedFootprint.pointedResidual_allContexts_quasi}
+\lean{Copying/AllContextResiduals}{34}{58}{RetainedFootprint.allContexts_input_diamond}
+\subsection{Primitive footprints and unrestricted residuals}
+Let $T$ be a pre-template, let $C$ be an original common context with
+recursive filling families $L,R$, and suppose the left expansion is
+hole-free. In the footprint results below, $T$ has no inputs. A complete
+occurrence $f:A\to C[L]$ preserves all primitive and recursive labels,
+incidence rows and edge identities. Suppose its selected local source
+port attaches to an original context vertex, and every edge of $A$ is a
+descendant of an edge consuming that port. The nullary ancestry barrier
+then excludes every such edge from an original shallow hole. Map each
+local ancestry path through $f$, starting with the mapped source incidence,
+and apply that barrier. This proves avoidance for the complete footprint;
+no binding freedom, rooted execution history or non-entry assumption is
+supplied to this lemma.
+
+\lean{Copying/NullaryPrimitiveOverlap}{18}{28}{NullaryOverlap.sourced_ancestors_avoid}
+\par\penalty0
+
+
+For allocation, the source consists of the reference head and the original
+stable argument. The head is its own ancestor. Each argument edge consumes
+the stable argument's input, which is attached directly to the reference
+head's output, so it is a one-edge descendant. For unary arithmetic, the
+only other edge is the numeric operand; the existing exact adjacency
+classification supplies its path. For binary arithmetic, the same
+classification covers both ordered numeric operands and either original
+binary arithmetic code. Applying the preceding general result gives
+complete retained footprints for all three cases, retaining the literal
+stable operand and operation parameters.
+
+\lean{Copying/NullaryPrimitiveOverlap}{32}{50}{NullaryOverlap.allocation_avoids}
+\lean{Copying/NullaryPrimitiveOverlap}{53}{61}{NullaryOverlap.unary_avoids}
+\lean{Copying/NullaryPrimitiveOverlap}{65}{74}{NullaryOverlap.binary_avoids}
+\par\penalty0
+
+
+\termdef{nullary-primitive-residual}
+The residual theorem is slightly more general than these nullary footprint
+lemmas. It accepts any certified retained complete primitive footprint,
+not a nullarity hypothesis. Let the original local rewrite be
+\[
+ A,\operatorname{input}(i)\longrightarrow
+ B,\operatorname{input}(i),
+\]
+where input $i$ has term type. Primitive rigidity identifies the actual
+right-filled local source with $A$ up to recursive isomorphism, so it
+constructs the same original local rewrite on the right. It does not
+assume that a paired local rewrite exists. Focus freedom of $C$ and the
+recursive certificates imply focus freedom of $C[L]$; restricting through
+the complete occurrence proves $A$ focus-free, and actual rewrite
+preservation then proves $B$ focus-free.
+
+Use the reflexive filling witness on $B$ as the common local residual.
+The existing complete cut and pointed graft constructions give actual
+rewrites of $C[L]$ and $C[R]$, preserving every unmatched original filling.
+They resume at the same original local input embedded into their respective
+grafts. Their whole successors are hole-free by rewrite preservation.
+The common residual is admissible in the unrestricted context class, so
+no guarded-output condition or binding-free cut hypothesis is required.
+The conclusion contains both actual whole-graph rewrites and an
+identity-refined quasi-specimen for their resumed search states.
+
+\lean{Copying/NullaryPrimitiveResiduals}{23}{42}{RetainedFootprint.primitive_allContexts_input_diamond}
+\par\penalty0
+
+
+Finally, compare an arbitrary supplied whole-machine successor with this
+constructed left rewrite using the already proved successor determinism.
+The left needs zero additional transitions and the right takes its
+constructed single transition. Thus the local cost requirement is
+$Q(1+0,1)$, available for every cost order by reflexivity. The quasi-specimen
+can be enlarged from identity refinements to the two requested execution
+refinements, again by reflexivity. This proves the full quantitative case,
+not merely an existence statement for a conveniently chosen successor.
+Exchanging the two actual rewrites proves the corresponding converse case
+in the opposite of the original specimen system. The exchange uses no
+symmetry assumption on $T$.
+
+\lean{Copying/NullaryPrimitiveResiduals}{46}{62}{RetainedFootprint.primitive_allContexts_robust_case}
+\lean{Copying/NullaryPrimitiveResiduals}{66}{83}{RetainedFootprint.primitive_allContexts_converse_robust_case}
+\par\penalty0
+\subsection{Automatic binding freedom for nullary fillings}
+\termdef{nullary-context-binding-freedom}
+Let $T$ be a pre-template whose related graphs have empty input interfaces.
+Although the observation class is unrestricted, a common context that gives
+a closed recursive $T$-filling has a useful derived property: it is
+binding-free. This statement is about the actual certified context, and
+imposes no additional restriction on the class of observations.
+
+First, any positive edge-ancestry path ending at an edge provides a source
+of that final edge. Prove this by induction along the path. If the final
+edge is a shallow hole of the common context, hole freedom of the expanded
+left graph excludes an unfilled retained hole. Its certificate therefore
+contains an actual $T$-pair. Nullarity makes its input interface empty,
+so the common context's typing law makes its source list empty. This
+contradicts the path's source witness and proves shallow binding freedom.
+The same argument shows that no common-context token can enter such a hole,
+regardless of the token's mode or wire type.
+
+\lean{Copying/NullaryBindingFree}{13}{22}{NullaryOverlap.strictAncestor_source}
+\lean{Copying/NullaryBindingFree}{26}{36}{NullaryOverlap.shallow_bindingFree}
+\lean{Copying/NullaryBindingFree}{40}{49}{NullaryOverlap.not_entering}
+For recursive binding freedom, induct on the depth allowance. At depth
+zero the preceding shallow argument suffices. At positive depth, retained
+box corollas have hole-free bodies because the actual expanded left graph
+is hole-free. Filled shallow holes cannot be boxes. For an originally boxed
+recursive certificate, the outer focus-freedom assumption and the actual
+closed filled body give exactly the induction hypotheses. Applying this
+result through a filling witness's left endpoint isomorphism establishes
+binding freedom of its literal common context.
+
+\lean{Copying/NullaryBindingFree}{54}{83}{DeepFilling.nullary_bindingFree}
+\lean{Copying/NullaryBindingFree}{87}{89}{FillingWitness.nullary_bindingFree}
+\subsection{Actual beta and copying footprints}
+Every outer beta edge has a forward path from its application head. The
+lambda is adjacent to the application, the box is adjacent to the lambda,
+and each edge in the stable argument has the argument's sole term input
+as a source. Mapping these paths through the original complete occurrence
+and applying nullary source-ancestry retention proves that the entire beta
+footprint avoids shallow replacements. The body inside the box remains
+arbitrary and may contain recursive template occurrences.
+
+For copying, derive binding freedom and non-entry from the nullary filling,
+then apply the already proved minimal-spine construction. Its result is an
+actual occurrence of the original copying rule with a selected contraction
+spine and the complete copyable payload. All selected edges are retained;
+uninspected sibling branches of the originally supplied tree stay in the
+computed complement. Normalizing the payload uses only a proved recursive
+representation isomorphism. It changes neither the copying rule nor the
+surrounding graph.
+
+\lean{Copying/NullaryDeepOverlap}{13}{52}{NullaryOverlap.beta_avoids}
+\lean{Copying/NullaryDeepOverlap}{56}{69}{NullaryOverlap.minimal_copy_occurrence}
+\subsection{Local reducts and unrestricted residual specimens}
+The preceding automatic binding-freedom result permits reuse of the generic
+retained-decoration construction. In the beta case, extract the actual
+paired box body, pad it using the template's padding-closure theorem, expose
+its bound output, and splice the unchanged stable argument. In the copying
+case, inspect every original copyability constructor; primitive payloads
+are rigid and lambda payloads duplicate their actual recursively paired
+bodies. These constructions supply genuine local rewrites in the paired
+source expansion and filling witnesses between their reducts. The exact
+host-port equation identifies the resumed input on both sides.
+
+\lean{Copying/NullaryDeepLocal}{12}{27}{NullaryResidual.beta_local}
+\lean{Copying/NullaryDeepLocal}{31}{46}{NullaryResidual.copying_local}
+The final beta and copying cases place these local diagrams in the computed
+common complement. The unrestricted input diamond constructs both actual
+whole-graph rewrites and an equality-up-to quasi-specimen for the original
+all-context system. No graft-admissibility premise is needed in this context
+class. The copying case first constructs its retained smaller occurrence;
+no footprint certificate is supplied by the caller.
+
+Each quantitative theorem accepts an independently supplied actual
+representation-class successor. Proved successor determinism identifies it
+with the constructed left reduct. The comparison uses zero additional left
+steps and one actual right rewrite, followed by the constructed residual.
+Thus these branches work for arbitrary cost preorders; taking exact cost
+later yields the required count-preserving robustness. There are no
+rootedness, binding-freedom or overlap assumptions in these public branch
+theorems. Beta requires template padding closure, and copying keeps the
+original copyability premise without strengthening it.
+
+\lean{Copying/NullaryDeepResiduals}{12}{32}{NullaryResidual.beta}
+\lean{Copying/NullaryDeepResiduals}{36}{58}{NullaryResidual.copying}
+\subsection{Universal robustness in both directions}
+For any nullary padding-closed pre-template, the actual local-rule case
+analysis now covers all nine original constructors. Allocation and arithmetic
+use their proved complete retained footprints. Read, assignment and the two
+equality decisions first construct the selected atom-tree occurrences.
+Deep beta and copying use the actual recursive decoration and paired local
+residual just proved. Original stability and copyability hypotheses pass
+unchanged to the original rules. Each case relates any independently
+supplied source successor to a constructed opposite-side rewrite using zero
+extra source transitions and one target transition.
+
+An arbitrary contextual rewrite yields its own complete local occurrence,
+which discharges the extraction premises of that case analysis. An arbitrary
+representation-class successor reflects to a finite actual step. Search is
+impossible in rewrite mode; hence that step is one of the covered rewrites.
+\lean{Copying/NullaryRobustness}{21}{69}{NullaryResidual.local_case}
+\lean{Copying/NullaryRobustness}{72}{83}{NullaryResidual.rewrite_case}
+\lean{Copying/NullaryRobustness}{87}{100}{NullaryResidual.class_step}
+The forward universal theorem applies this result to the original specimen's
+context, recursive certificates, focus freedom and closed expanded graphs.
+The existence of a matching transition and residual is proved for every
+successor, with no extra match, ancestry, non-entry or binding-freedom premise.
+
+For the converse, reverse the actual filling certificates. Nullarity and
+padding closure hold in the reversed direction. The same exhaustive argument
+constructs an ordinary forward transition on the original left side.
+Convert its reversed-template quasi-specimen to the opposite of the original
+specimen system by swapping filling families in the unchanged context. The
+conversion preserves arbitrary refinement-up-to relations in their original
+orientation. Both universal conclusions hold for arbitrary cost orders;
+their substantive local comparison is reflexivity at $Q(1+0,1)$.
+\lean{Copying/NullaryRobustness}{105}{111}{Specimens.converse_quasi_rel}
+\lean{Copying/NullaryRobustness}{115}{137}{PreTemplate.NoInputs.robust}
+\lean{Copying/NullaryRobustness}{140}{165}{PreTemplate.NoInputs.robust_converse}
+\subsection{Exact execution in unrestricted addressed contexts}
+A closed recursively filled pair supplies an initial lifting for the original
+all-context specimen system. Construct its specimen at the common external
+term input in search mode. The filling witness's actual endpoint isomorphisms
+identify the two filled states with the stated graphs, and both are rooted
+by the empty initial search. This initial-lifting result is generic and does
+not assume nullarity or binding freedom.
+
+\lean{Copying/NullaryExecution}{12}{27}{FillingWitness.allContexts_initial_lifting}
+For a padding-closed nullary template, its proved input safety and full
+forward and converse robustness discharge the hypotheses of sufficiency
+with the exact cost triple. Therefore any original closed paired filling
+has exact quantitative execution equivalence. Unpack the two refinements:
+if one side has a successful run of length $n$, the other refinement supplies
+a successful run whose length must also be $n$. Applying the reverse
+refinement proves the converse. Neither successful termination nor any
+behaviour of the surrounding computation is a premise.
+
+\lean{Copying/NullaryExecution}{35}{43}{NullaryExecution.filling_exact_equiv}
+\lean{Copying/NullaryExecution}{47}{60}{NullaryExecution.filling_termination_count}
+To obtain an observation theorem for an individual nullary fragment, take
+any original addressed site in a focus-free observing graph with external
+interface $\star\Rightarrow\epsilon$. The site's depth, input interface and
+output interface are arbitrary. A genuine template pair supplies a filling
+witness at the site, and addressed closure rebuilds each enclosing box and
+retains every other context edge. If the two resulting filled graphs are
+hole-free, the preceding exact theorem applies. This quantifies over all
+such original contexts, including sites beneath arbitrarily many boxes,
+and imposes no binding-free restriction. The addressed count theorem states
+the same conclusion separately for every successful transition count.
+
+\lean{Copying/NullaryExecution}{65}{70}{NullaryExecution.addressed_exact_equiv}
+\lean{Copying/NullaryExecution}{74}{79}{NullaryExecution.addressed_termination_count}
+\subsection{The complete contraction-idempotence theorem}
+\termdef{contraction-idempotence-equivalence}
+Instantiate the generic results with the literal Figure~21 Idem template.
+Its proved empty input interface discharges nullarity, and its proved
+padding law discharges the only additional closure hypothesis. Consequently
+Idem and its converse are robust for all original unrestricted specimens
+and all nine copying-machine rule constructors. Both term and atom sharing
+sorts are included in the one template.
+
+\lean{Copying/ContractionIdempotenceEquivalence}{10}{12}{ContractionIdempotence.template_robust}
+\lean{Copying/ContractionIdempotenceEquivalence}{15}{17}{ContractionIdempotence.template_robust_converse}
+Arbitrary closed recursive Idem fillings now have exact execution
+equivalence and agree at every successful count. This includes many
+simultaneous occurrences and occurrences inside boxes that are later opened
+or copied. The comparison retains the literal two weakenings and contraction
+on one side and the single weakening on the other. These graphs are not
+identified by representation isomorphism: their primitive labels and edge
+counts differ. The equality is instead the proved semantic conclusion about
+successful machine observations.
+
+\lean{Copying/ContractionIdempotenceEquivalence}{21}{25}{ContractionIdempotence.filling_exact_equiv}
+\lean{Copying/ContractionIdempotenceEquivalence}{28}{32}{ContractionIdempotence.filling_termination_count}
+Finally, each original Idem pair, including independent ordered carrier
+renamings, can be substituted at any addressed position of any closed
+observing context. Its two filled graphs have exact quantitative equivalence
+and identical successful-transition counts. Since the pair has empty input
+interface, this substantive context theorem is stated for addressed
+fragment replacement, rather than incorrectly treating the pair itself as
+a one-term-input open program. It supplies the full Idem dependency needed
+by the box-weakening and later semantic weakening arguments; those further
+arguments remain separate obligations.
+
+\lean{Copying/ContractionIdempotenceEquivalence}{37}{42}{ContractionIdempotence.addressed_exact_equiv}
+\lean{Copying/ContractionIdempotenceEquivalence}{46}{51}{ContractionIdempotence.addressed_termination_count}
+\subsection{Concrete regressions for both sharing sorts and copied boxes}
+Close a term output with the original unit constant and an atom output with
+an original store followed by unit. The general label lemma for these
+consumers follows by primitive and serial composition. Place the literal
+Idem fragment followed by this consumer beside an executable constant-seven
+root. The resulting observing graph has one term input and no outputs,
+so it is an actual executable example for either wire sort.
+\lean{Copying/ContractionIdempotenceExamples}{12}{14}{ContractionIdempotence.Examples.finish}
+\lean{Copying/ContractionIdempotenceExamples}{16}{22}{ContractionIdempotence.Examples.finish_allLabels}
+\lean{Copying/ContractionIdempotenceExamples}{26}{27}{ContractionIdempotence.Examples.program}
+The literal pair is not recursively isomorphic: transporting its contraction
+label to the one-edge right graph would identify contraction with weakening.
+A genuine recursive witness places this pair in the stated observing context,
+and primitive composition proves hole freedom. Its actual common context is
+binding-free as a derived consequence of nullarity; the semantic theorem
+still quantifies over unrestricted observations.
+\lean{Copying/ContractionIdempotenceExamples}{31}{37}{ContractionIdempotence.Examples.left_not_iso}
+\lean{Copying/ContractionIdempotenceExamples}{41}{47}{ContractionIdempotence.Examples.programWitness}
+\lean{Copying/ContractionIdempotenceExamples}{49}{54}{ContractionIdempotence.Examples.program_holeFree}
+\lean{Copying/ContractionIdempotenceExamples}{58}{60}{ContractionIdempotence.Examples.program_bindingFree}
+\par\penalty0
+
+For either fragment, the executable root performs exactly one original
+search transition and is final in backtrack mode. The exact-cost recurrence
+proves that every successful finite run has count one, including arbitrary
+contextual rewrite presentations. Independently, applying the completed Idem
+semantic theorem to the actual recursive witness proves exact unbounded
+execution equivalence of the two closed examples.
+\lean{Copying/ContractionIdempotenceExamples}{64}{67}{ContractionIdempotence.Examples.program_returns}
+\lean{Copying/ContractionIdempotenceExamples}{71}{78}{ContractionIdempotence.Examples.program_exact_cost}
+\lean{Copying/ContractionIdempotenceExamples}{82}{88}{ContractionIdempotence.Examples.program_exact_equiv}
+A second recursive witness inserts each literal Idem pair into a genuine
+lambda body with an unused bound output. Applying the established deep-copy
+witness construction keeps the pair in both copied residual bodies, with the
+original output distributors. The final theorem constructs the two actual
+original copying steps for these lambdas, for both term and atom sharing.
+It requires no evaluation of the body in advance. Together these regressions
+check concrete executable contexts, the distinction from representation
+isomorphism, and the copying/deep-box dependency of the generic proof.
+\lean{Copying/ContractionIdempotenceExamples}{92}{93}{ContractionIdempotence.Examples.bodyWitness}
+\lean{Copying/ContractionIdempotenceExamples}{97}{98}{ContractionIdempotence.Examples.copiedBodyWitness}
+\lean{Copying/ContractionIdempotenceExamples}{102}{117}{ContractionIdempotence.Examples.body_copy_steps}

@@ -9,40 +9,39 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: full operational robustness and contextual equivalence
+## Latest milestone: contraction idempotence in all observing contexts
 
-**Micro-beta and reference creation now satisfy universal forward and converse
-robustness** for the original binding-free specimen system. Every eligible
-right rewrite constructs an actual matching left rewrite and an admissible
-pointed residual. All nine unchanged local rules are covered, including
-arbitrary deep beta/copying and all store cases.
+**The full contraction-idempotence template is proved for both term and atom
+wires.** Two weakenings feeding a contraction are contextually equivalent to
+one weakening, with exact successful-transition counts in every original
+closing context, including sites nested beneath boxes.
 
-The converse construction selects the sharing paths actually inspected by the
-rule. Same-store equality uses their two-input union; unused sibling branches
-remain boundary attachments. Neither a matching rewrite nor residual
-admissibility is supplied as a hypothesis.
+Output closure, input safety, forward/converse robustness and the contextual
+consequences are all proved. The underlying generic theorem covers nullary,
+padding-closed templates in unrestricted contexts and all nine original
+copying-machine rules. Actual matching rewrites and pointed residuals are
+constructed, preserving the original stability and copyability premises.
 
-**Contextual improvement and termination equivalence now follow for both
-families**, in every original binding-free closing context and for arbitrary
-recursive paired fillings. Directed quantitative comparisons are retained;
-costs are forgotten only for termination equivalence.
+This closes one of the eight remaining template families. Idem is a direct
+prerequisite for pulling weakening through boxes and then proving the semantic
+weakening laws needed for Proposition 12.2's arbitrary environments.
+**Seven template families, correspondence, semantic weakening and Figure 22
+remain open. Proposition 12.2 is unproved.**
 
-**Remaining:** the other eight template families, paper correspondence,
-semantic weakening and Figure 22. **Proposition 12.2 is unproved.**
 The original terms, Figure 16 translation and machine rules are unchanged.
-Appendix B.1 retains completed tasks and subtasks with strikethrough.
-Commentary Section 112 explains this milestone, with immutable links to all
-109 new declarations in 19 modules.
+Appendix B.1 retains completed tasks with strikethrough. Commentary Section
+113 explains all 90 new declarations in 16 modules with immutable Lean links,
+including how selected-path rematching implements the paper's tree argument.
 
-Full build: **628 jobs**. All **3,716 axiom audits** pass (6 abstract,
-504 graph, 3,206 copying); no `sorryAx` or project-specific axioms.
-Independent review checked the universal theorem and its original premises.
+Full build: **644 jobs**. All **3,806 axiom audits** pass (6 abstract, 504 graph,
+3,296 copying); no `sorryAx` or project-specific axioms. The new modules have
+no warnings. Regressions cover both wire sorts, exact closed-program costs,
+non-isomorphism of the literal graphs, and actual copying of boxed Idem bodies.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 28 October 2026. The earlier **80% estimate is withdrawn**.
-Both operational families are now discharged, but eight further template
-families and the final equivalence chain still have uncertain proof costs.
-Declaration and checklist counts do not measure this effort.
+Idem is complete, but the seven further families and the final equivalence
+chain still have uncertain proof costs; checklist counts do not measure effort.
 
 ## Proposition 12.2: current extension target
 

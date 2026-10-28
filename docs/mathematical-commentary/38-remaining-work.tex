@@ -30,7 +30,7 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-operational-converse-robustness}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-contraction-idempotence}.
 Machine determinism, refocusing, coordinate specimen laws and execution
 representation are proved. BPerm has full robustness and exact-cost
 consequences; structural derivations and bijective renaming preserve closing
@@ -40,8 +40,11 @@ binding-free specimens. All nine original local rules are covered; every
 eligible right rewrite has a constructed matching left rewrite and an
 admissible residual. Contextual improvement and termination equivalence now
 follow for both families, including arbitrary recursive paired fillings.
-The other eight template families, correspondence, semantic weakening and
-the final Figure~22 chain remain open. The original terms and Figure~16
+Contraction idempotence now also has full output closure, input safety,
+forward/converse robustness and exact-cost contextual equivalence for both
+sharing sorts in unrestricted original contexts. The other seven template
+families, correspondence, semantic weakening and the final Figure~22 chain
+remain open. The original terms and Figure~16
 translation are unchanged.
 
 The four work packages below retain completed tasks and subtasks with
@@ -145,12 +148,24 @@ contextual consequences now have no safety or robustness assumptions.
 \end{itemize}
 \item Prove output closure, input safety and forward/converse robustness for
 the other eight template families.
+\begin{itemize}
+\item {\raggedright\completedtask{Prove contraction-idempotence output closure, input safety,
+forward/converse robustness and contextual equivalence for both term and atom wires.}\par}
+The result preserves exact successful-transition counts at arbitrary original
+addressed sites, including inside boxes; see
+Section~\ref{sec:copying-contraction-idempotence}.
+\item Complete contraction associativity and commutativity, copying, garbage
+collection, pulling contraction and weakening through boxes, and parametricity.
+These seven families remain open.
+\end{itemize}
 \end{itemize}
 \Needspace{12\baselineskip}
 \item \textbf{Weakening and the final example.}
 \begin{itemize}
 \item \completedtask{Prove the syntactic weakening and substitution identities.}
 \item Prove the semantic weakening laws.
+Idem is now established; pulling weakening through a box remains the next
+direct prerequisite for the paper's syntax induction.
 \item Assemble Figure~22's equivalence chain.
 \item Obtain Proposition~12.2 for arbitrary distinct-list environments.
 \end{itemize}
