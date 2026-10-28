@@ -228,3 +228,21 @@ import Hypernets.Copying.OperationalContextualEquivalence
 import Hypernets.Copying.ReadTreeRematch
 import Hypernets.Copying.SelectedContractionSubtree
 import Hypernets.Copying.TwoInputContractionSubtree
+
+-- Contraction idempotence and unrestricted nullary-template robustness.
+import Hypernets.Copying.AllContextResiduals
+import Hypernets.Copying.ContractionIdempotence
+import Hypernets.Copying.ContractionIdempotenceEquivalence
+import Hypernets.Copying.ContractionIdempotenceExamples
+import Hypernets.Copying.ContractionIdempotenceLaws
+import Hypernets.Copying.NullaryBindingFree
+import Hypernets.Copying.NullaryDeepLocal
+import Hypernets.Copying.NullaryDeepOverlap
+import Hypernets.Copying.NullaryDeepResiduals
+import Hypernets.Copying.NullaryExecution
+import Hypernets.Copying.NullaryFootprint
+import Hypernets.Copying.NullaryPrimitiveOverlap
+import Hypernets.Copying.NullaryPrimitiveResiduals
+import Hypernets.Copying.NullaryRobustness
+import Hypernets.Copying.NullaryStoreFootprint
+import Hypernets.Copying.NullaryTemplates
