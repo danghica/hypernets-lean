@@ -1,4 +1,4 @@
-import Hypernets.Graph.ExpansionTransport
+import Hypernets
 import Hypernets.Graph.UnboundedTheorem
 import Hypernets.Graph.ExpansionSearchExamples
 import Hypernets.Graph.PaperEncodingExamples
@@ -554,3 +554,8 @@ import Hypernets.Graph.ObservationExamples
 #print axioms Hypernets.Graph.Net.ExpansionTransport.map_host
 #print axioms Hypernets.Graph.Net.ExpansionTransport.map_insert
 #print axioms Hypernets.Graph.Net.ExpansionTransport.iso
+
+-- Constructive operational transfer milestone.
+#print axioms Hypernets.Graph.Bijection.ofComplement
+#print axioms Hypernets.Graph.Bijection.ofComplement_inl
+#print axioms Hypernets.Graph.Bijection.ofComplement_inr

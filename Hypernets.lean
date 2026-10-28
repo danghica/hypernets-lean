@@ -128,3 +128,29 @@ import Hypernets.Copying.OverlapClassificationExamples
 import Hypernets.Copying.FullBPermExamples
 import Hypernets.Copying.SemanticRenamingExamples
 import Hypernets.Copying.OperationalInputSafetyExamples
+
+-- Constructive operational transfer milestone.
+import Hypernets.Copying.BindingCopyOverlap
+import Hypernets.Copying.BindingFillingBeta
+import Hypernets.Copying.BindingFillingBoxes
+import Hypernets.Copying.BindingFillingPadding
+import Hypernets.Copying.BindingFillingPlug
+import Hypernets.Copying.BindingFillingWitness
+import Hypernets.Copying.BindingFreeOverlap
+import Hypernets.Copying.BindingSplice
+import Hypernets.Copying.CompleteMatchCut
+import Hypernets.Copying.CompleteMatchRealization
+import Hypernets.Copying.CompleteMatchRewrite
+import Hypernets.Copying.LocalRewriteOccurrence
+import Hypernets.Copying.MatchEmbeddingGeometry
+import Hypernets.Copying.OperationalDeepExamples
+import Hypernets.Copying.OperationalDeepRobustness
+import Hypernets.Copying.OperationalDeepTransfer
+import Hypernets.Copying.OperationalTemplateLaws
+import Hypernets.Copying.RetainedFootprint
+import Hypernets.Copying.RetainedFootprintFrame
+import Hypernets.Copying.RetainedFootprintNormalisation
+import Hypernets.Copying.RetainedFrameTransfer
+import Hypernets.Copying.RetainedRewriteTransfer
+import Hypernets.Copying.RewriteCutFactorization
+import Hypernets.Graph.ComplementBijection
