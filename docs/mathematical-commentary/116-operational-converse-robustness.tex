@@ -1,0 +1,706 @@
+\clearpage
+\section{Universal converse operational robustness}
+\label{sec:copying-operational-converse-robustness}
+This section closes the converse obligation left in
+Section~\ref{sec:copying-operational-forward-robustness}. For both micro-beta
+and reference creation, every eligible right-hand machine rewrite now has a
+constructed matching left-hand rewrite and an admissible residual specimen.
+The proof covers all nine original local rules, arbitrary stable operands,
+recursive beta bodies and copyable payloads, and sharing trees with unused
+branches crossing template fillings. No paired occurrence, matching rewrite,
+residual-admissibility or machine-determinism hypothesis is added to the
+universal theorem. The earlier proved machine laws are used as lemmas.
+The terms of Proposition~12.2 and their Figure~16 translation are unchanged.
+
+\termdef{operational-converse-robustness}
+\begin{theorem}[Universal converse operational robustness]
+Let $T$ be either original operational pre-template, and let $Q,P,U$ be cost
+orders. The opposite of its binding-free specimen system satisfies robustness
+with costs $(Q,P,U)$. Given an eligible specimen and a right-hand rewrite,
+the proof constructs one left-hand rewrite and a pointed quasi-specimen in
+the opposite system. It uses zero additional right-hand transitions and one
+left-hand transition, so the local cost inequality is $Q(1+0,1)$.
+\end{theorem}
+Here eligibility is precisely the original robustness definition: both
+specimen states are rooted, the focus is in rewrite mode and is not entering
+a template hole. Binding freedom and closed expanded graphs come from the
+original specimen type. These are the intended contextual restrictions,
+not new residual certificates supplied by an application. The proof uses
+the original left search history to control evaluated arguments even though
+the supplied step is on the right. Reversing the directed template does not
+supply an unproved converse one-way property.
+
+\paragraph{Proof strategy.}
+Extract a complete local occurrence from the actual right rewrite. For
+arithmetic, allocation and beta, prove its needed outer edges are retained
+from the original common context. For copying, read and assignment, select
+only the sharing path inspected by the rule. For equality of two references
+to one store, select the union of the two inspected paths; for distinct
+stores, select a path in each tree. Extend these selections to complete
+occurrences of the unchanged original rule sources. Unused sibling branches
+become boundary attachments rather than extra retainedness assumptions.
+
+Reverse the filling certificates, transfer the retained occurrence, and
+construct two ordinary forward machine rewrites. Prove that their computed
+common residual context is binding-free, then turn its reversed-template
+specimen into a specimen for the opposite of the original system. Successor
+determinism identifies the initially supplied right successor with the one
+constructed from the smaller occurrence. Thus rematching never substitutes
+a different execution for the given step. The final exhaustive dispatch and
+representation-class reflection establish the theorem.
+
+\subsection{The opposite specimen system}
+\termdef{opposite-residual-specimen}
+For a directed pre-template $T$, let $T^{\mathrm{op}}(G,H)$ mean $T(H,G)$.
+Output closure is symmetric: if one of the pair's graphs is one-way, the
+same disjunction holds after exchanging them. Hence output closure for $T$
+implies output closure for $T^{\mathrm{op}}$.
+
+A specimen for $T^{\mathrm{op}}$ becomes an original $T$-specimen by keeping
+its context and token, swapping its two filling families, and reversing
+each recursive filling certificate. The closedness proofs swap with the
+graphs and the allowed-context proof is unchanged. Consequently an
+identity-refined quasi-specimen for $T^{\mathrm{op}}$ yields an
+identity-refined quasi-specimen for the opposite of the original system.
+This construction requires no symmetry of $T$.
+
+The converse input diamond applies the generic retained-footprint diagram
+to the reversed certificates. Its two steps remain ordinary machine
+rewrites. The common residual graph and its binding freedom are constructed
+before applying the preceding specimen conversion. The active input and
+its resumed position are preserved by the complete occurrence and the
+computed cut. This lemma is the common interface for recursively filled
+beta and copying sources.
+\lean{Copying/ConverseSpecimenTransfer}{12}{15}{PreTemplate.OutputClosed.converse}
+\lean{Copying/ConverseSpecimenTransfer}{19}{31}{Specimen.unconverse}
+\lean{Copying/ConverseSpecimenTransfer}{35}{41}{Specimens.converse_quasi}
+\lean{Copying/ConverseSpecimenTransfer}{46}{72}{RetainedFootprint.converse_input_diamond}
+\par\penalty0
+
+\subsection{Extending selected trees to complete equality sources}
+\termdef{equality-tree-rematching}
+A tree occurrence used for equality must preserve each inspected input and
+the root output. In the same-store case it preserves input indices $0$ and
+$1$; in the distinct-store case each of the two occurrences preserves its
+input $0$. These are proved properties of the selected subtrees below,
+not assumptions on an arbitrary outer machine match.
+
+For the same-store frame, map tree edges by the selected occurrence and
+leave the comparator, two instance edges and store edge unchanged. The port
+map fixes the operation's active input, store output and frame vertices;
+it maps tree internals by the occurrence and sends each other external input
+to its corresponding old tree vertex. The tree-port compatibility lemma
+checks the two distinguished inputs, all remaining inputs, the root and
+internal vertices separately. It then proves preservation of every source
+and target row. Edge injectivity follows from the disjoint frame tags and
+the tree occurrence's injectivity. Primitive labels and complete recursive
+labels are preserved, yielding a full occurrence of the unchanged equality
+source. Its active-input equation is definitional.
+\lean{Copying/EqualityTreeRematch}{11}{20}{AtomEquality.Same.TreeRematch.ports}
+\lean{Copying/EqualityTreeRematch}{22}{27}{AtomEquality.Same.TreeRematch.edges}
+\lean{Copying/EqualityTreeRematch}{34}{51}{AtomEquality.Same.TreeRematch.tree_ports}
+\lean{Copying/EqualityTreeRematch}{53}{89}{AtomEquality.Same.TreeRematch.embedding}
+\par\penalty0
+\par\penalty0
+\lean{Copying/EqualityTreeRematch}{91}{94}{AtomEquality.Same.TreeRematch.occurrence}
+\lean{Copying/EqualityTreeRematch}{96}{96}{AtomEquality.Same.TreeRematch.occurrence_input}
+For distinct stores, use separate tree port and edge maps in the two tagged
+components. The external atom inputs split into the left and right tree
+blocks, so the second block is reindexed by subtracting the first block's
+length. The left-tree and right-tree compatibility lemmas verify these
+index calculations and the two fixed roots. The remaining frame edges
+are unchanged. The same incidence, injectivity and complete-label checks
+give the full two-tree occurrence and its exact active-input equation.
+\lean{Copying/EqualityTreeRematch}{107}{121}{AtomEquality.Different.TreeRematch.ports}
+\lean{Copying/EqualityTreeRematch}{123}{130}{AtomEquality.Different.TreeRematch.edges}
+\lean{Copying/EqualityTreeRematch}{139}{154}{AtomEquality.Different.TreeRematch.left_tree_ports}
+\lean{Copying/EqualityTreeRematch}{157}{173}{AtomEquality.Different.TreeRematch.right_tree_ports}
+\par\penalty0
+\par\penalty0
+\lean{Copying/EqualityTreeRematch}{175}{223}{AtomEquality.Different.TreeRematch.embedding}
+\lean{Copying/EqualityTreeRematch}{225}{228}{AtomEquality.Different.TreeRematch.occurrence}
+\lean{Copying/EqualityTreeRematch}{230}{230}{AtomEquality.Different.TreeRematch.occurrence_input}
+\subsection{Reversing retained local certificates without reversing computation}
+The converse proof starts from an actual local rule occurrence in the
+\emph{right} expanded graph $C[R]$. Reverse the recursive certificates to
+obtain fillings for the directed relation $T^{\mathrm{op}}$, with the same
+literal common context $C$ and the same two actual graph families in
+opposite order. This does not assume that $T$ is symmetric and does not
+reverse a machine transition. Instead, construct an ordinary forward
+machine transition in $C[L]$ and relate the two resulting states through
+the opposite of the original specimen system.
+
+\paragraph{Generic local transfer.}
+The retained local construction is generalized to an arbitrary pre-template
+$T$. For beta, pad the actual paired body together with its binding-free
+common context, expose its bound output, and splice the unchanged stable
+argument. Template padding closure is the only additional generic
+hypothesis. The stable argument's reflexive witness has its actual graph
+as common context, and that graph is hole-free, so the previously proved
+splice theorem establishes binding freedom of this local residual.
+
+Restricting the decoration to the original lambda box gives the box view.
+The source isomorphism retains every other original component, including
+the full stable argument. In the retained case, transport the original
+beta rule along this isomorphism. In the recursive case, apply the original
+beta rule to the paired body and use the padded, opened and spliced
+witness just constructed. Both branches produce an actual rule step with
+the correct input resume coordinate.
+
+\lean{Copying/GenericRetainedLocal}{12}{21}{RetainedLocalTransfer.betaResidual}
+\lean{Copying/GenericRetainedLocal}{27}{27}{RetainedLocalTransfer.Beta.boxes}
+\lean{Copying/GenericRetainedLocal}{29}{37}{RetainedLocalTransfer.Beta.sourceIso}
+\lean{Copying/GenericRetainedLocal}{41}{58}{RetainedLocalTransfer.Beta.transport}
+For copying, a primitive footprint is rigid, so its paired local rule is
+obtained by isomorphism transport. The lambda case inspects the original
+box and either retains it or duplicates its actual paired body witness.
+The latter's common context is binding-free and has no shallow holes;
+recursive body holes remain under boxes. Induction over every original
+copyability constructor includes instance and constant payloads, active
+application and arithmetic payloads, lambdas, and representation changes.
+The representation case transports the source decoration and the resulting
+actual rule step. This generic copying theorem needs no closure condition
+on the template itself.
+
+\lean{Copying/GenericRetainedLocal}{64}{75}{RetainedLocalTransfer.Copying.primitive_transport}
+\lean{Copying/GenericRetainedLocal}{81}{81}{RetainedLocalTransfer.Copying.boxes}
+\lean{Copying/GenericRetainedLocal}{83}{89}{RetainedLocalTransfer.Copying.sourceIso}
+\lean{Copying/GenericRetainedLocal}{91}{110}{RetainedLocalTransfer.Copying.lambda_transport}
+\par\penalty0
+
+\par\penalty0
+\lean{Copying/GenericRetainedLocal}{114}{149}{RetainedLocalTransfer.Copying.transport}
+\paragraph{Actual right-occurrence extraction.}
+Padding closure is preserved by reversing the pair relation: apply the
+original padding theorem to the pair with its endpoints exchanged. Given
+an actual complete right occurrence whose footprint avoids shallow holes,
+its reversed certificates determine the retained decoration. Apply generic
+copying or beta local transport, then identify the decorated source with
+the exact reverse skeleton expansion using the proved host-port equation.
+The output is an actual left local rule and a reversed filling witness
+between the actual two reducts. Copying also supplies absence of shallow
+holes in the residual context.
+
+For beta, prove admissibility of the actual cut determined by the right
+occurrence. Its reflected input port equals the original common-context
+token by injectivity of the expansion host map. Reflect the original
+\emph{left} rooted search to this same common-context coordinate. The
+rooted-cut theorem then uses the right beta source's guarded-or-thunk
+outputs and the original operational holes' term input interfaces.
+Thus the proof never needs a one-way property of the right operational
+filling or a new rootedness hypothesis about a synthesized source graph.
+
+\lean{Copying/ConverseDeepExtraction}{12}{13}{PreTemplate.PaddingClosed.converse}
+\lean{Copying/ConverseDeepExtraction}{24}{40}{OperationalTemplates.ConverseResidual.copying_local}
+\lean{Copying/ConverseDeepExtraction}{56}{68}{OperationalTemplates.ConverseResidual.beta_local}
+\lean{Copying/ConverseDeepExtraction}{75}{101}{OperationalTemplates.ConverseResidual.beta_frame_binding}
+\subsection{A retained minimal spine for every actual copying occurrence}
+The supplied copying tree may contain irrelevant sibling branches whose
+edges originate in shallow right fillings. The proof rematches the actual
+source with its selected contraction spine and its complete payload.
+A counted adjacency trace gives an uncounted ancestry path by induction
+on the trace. The already proved minimal occurrence has an exact selected
+input, fixes the original payload coordinates, and gives a counted path
+from that input's contraction to every retained spine edge.
+
+Map these paths through the supplied whole-graph occurrence. The active
+contraction is retained because the common-context token is not entering
+a hole. Binding freedom then excludes shallow holes along each selected
+spine path. Every payload edge is likewise excluded by the proved
+copying-payload barrier, including the lambda's boxed tail. Together these
+arguments establish avoidance for the complete smaller footprint; they
+make no assertion about uninspected sibling branches.
+
+For an arbitrary copyable payload, first use its proved recursive
+representation isomorphism to a normal form, construct the smaller
+occurrence there, and compose with the supplied original occurrence.
+The result is an actual full-label occurrence of an original copying
+source at the exact same host token, with proved copyability and proved
+footprint avoidance. Normalization changes only the proof's representation
+of the matched source, not the actual machine or its transition rules.
+
+\lean{Copying/ConverseCopyFootprint}{17}{21}{BindingOverlap.trace_ancestor}
+\lean{Copying/ConverseCopyFootprint}{25}{77}{BindingOverlap.normal_minimal_copy_occurrence}
+\lean{Copying/ConverseCopyFootprint}{82}{94}{BindingOverlap.minimal_copy_occurrence}
+\paragraph{Universal converse copying case.}
+Apply this minimal-spine theorem to the reversed certificates. Extract the
+actual left local copy step and the reversed residual witness. The original
+copyable source guards every output attachment; the residual is binding-free
+and has no shallow holes, so the open guarded graft theorem proves binding
+freedom of the actual common-context replacement. The converse input diamond
+constructs both whole-graph rewrites and an equality-up-to quasi-specimen
+for the \emph{opposite of the original system}.
+
+The quantitative theorem accepts any independently supplied right
+successor. Proved successor determinism identifies it with the constructed
+right reduct. It uses zero additional right steps and one actual left
+rewrite, then the original opposite quasi-specimen. The theorem requires
+neither a left match nor a retained footprint certificate from the caller;
+it covers every original finite tree presentation and copyable payload.
+
+\lean{Copying/ConverseCopyResidual}{19}{37}{OperationalTemplates.ConverseResidual.copying_diamond}
+\lean{Copying/ConverseCopyResidual}{41}{55}{OperationalTemplates.ConverseResidual.copying}
+\subsection{Converse arithmetic, allocation and arbitrary deep beta}
+Unary and binary arithmetic use the original left search history to prove
+that the actual right head and its evaluated numeric operands all belong
+to retained common-context edges. The generic sink diamond applies to the
+reversed certificates. Allocation uses the same readiness argument for its
+unchanged stable operand, then the guarded-or-thunk replacement theorem
+preserves its full output interface. Stable lambdas and instances remain
+included. In each case, convert the residual for reversed certificates
+into an opposite-system residual for the original directed template;
+then apply the proved matching quantitative argument to the independently
+supplied right successor.
+
+\lean{Copying/ConverseRetainedResiduals}{20}{36}{OperationalTemplates.ConverseResidual.unary}
+\lean{Copying/ConverseRetainedResiduals}{39}{56}{OperationalTemplates.ConverseResidual.binary}
+\lean{Copying/ConverseRetainedResiduals}{60}{78}{OperationalTemplates.ConverseResidual.allocation}
+For beta, the complete right footprint is derived from the original left
+search history, including both application arguments and the actual
+lambda box. The reversed local extraction allows an arbitrary recursively
+filled body and retains the actual stable argument. The rooted cut proof
+above establishes admissibility; plugging the actual local body residual
+into that cut then yields the original opposite quasi-specimen at the
+exact resume ports. The quantitative corollary again takes zero additional
+right steps and one left rewrite. These public theorems require actual
+right local occurrences, which every original contextual rewrite supplies;
+no left occurrence, overlap assumption, framed decomposition or residual
+admissibility premise remains.
+
+\lean{Copying/ConverseRetainedResiduals}{92}{107}{OperationalTemplates.ConverseResidual.beta_diamond}
+\lean{Copying/ConverseRetainedResiduals}{111}{125}{OperationalTemplates.ConverseResidual.beta}
+\subsection{Retained atom-equality transfer}
+The final transfer for each atom-equality rule starts with an actual retained
+right occurrence, whose footprint is supplied by the separate rematching
+proof. The same-store rule retains the true result and its one store output;
+the distinct-store rule retains the false result and both distinct store
+outputs. Apply the generic guarded diamond to the reversed recursive
+certificates, using the original source's proved output guards and the
+actual reduct's focus and hole freedom. Convert its quasi-specimen back to
+the opposite of the original system. Proved determinism then treats any
+independently supplied right successor. These two helpers require footprint
+avoidance; the complete equality theorems discharge that premise using the
+selected-subtree construction.
+
+\lean{Copying/ConverseEqualityTransfer}{17}{35}{OperationalTemplates.ConverseResidual.retained_same}
+\lean{Copying/ConverseEqualityTransfer}{39}{57}{OperationalTemplates.ConverseResidual.retained_different}
+\subsection{Extracting the two selected atom ancestries}
+\termdef{selected-contraction-subtree}
+The converse equality argument must retain the paths selected by the two
+already evaluated reference instances. An arbitrary presentation of the original
+atom tree may also include branches which lie inside a shallow template filling.
+Those branches cannot simply be declared to belong to the common context. We
+instead construct a smaller tree containing the selected paths and expose every
+other attachment as a boundary input. This is a local occurrence of an unchanged
+machine rule: its selected atom inputs and its store output have the original
+coordinates, and its sharing edges retain their ordered incidences.
+
+\paragraph{Forward-closed selections.}
+Let $T$ be a finite contraction tree of sharing sort $s$. A selection consists
+of a predicate $P$ on its edges, closed under forward adjacency, together with
+$P(r)$ for the root edge $r$. The selected vertices are exactly those incident
+to a selected edge; the selected edges are the edges satisfying $P$.
+The vertex and edge carriers therefore remain finite subsets of the original
+carriers. The ordered source and target lists are inherited without changing
+the underlying ports. Lean packages these data as
+\lean{Copying/SelectedContractionSubtree}{10}{13}{ContractionTree.Selection}
+\lean{Copying/SelectedContractionSubtree}{18}{19}{Selection.Incident}
+\lean{Copying/SelectedContractionSubtree}{21}{21}{Selection.Vertex}
+\lean{Copying/SelectedContractionSubtree}{22}{22}{Selection.Edge}
+\par\penalty0
+The incidence definitions are
+\lean{Copying/SelectedContractionSubtree}{24}{25}{Selection.source}
+\lean{Copying/SelectedContractionSubtree}{26}{27}{Selection.target}
+Their elements carry proofs of membership in the selected vertex set. Erasing
+these proofs gives exactly the original ordered source and target lists:
+\lean{Copying/SelectedContractionSubtree}{29}{30}{Selection.source_val}
+\lean{Copying/SelectedContractionSubtree}{31}{32}{Selection.target_val}
+\par\penalty0
+Consequently, membership in either selected incidence list is equivalent to
+membership in the corresponding original list. The proofs map a membership
+witness through the subtype projection in one direction and restore its
+incident-vertex certificate in the other:
+\lean{Copying/SelectedContractionSubtree}{34}{41}{Selection.mem_source}
+\lean{Copying/SelectedContractionSubtree}{42}{49}{Selection.mem_target}
+A selected vertex is a new input precisely when no selected edge produces it.
+The output remains the original sole output; the selected root certifies its
+presence. These definitions are
+\lean{Copying/SelectedContractionSubtree}{51}{51}{Selection.Input}
+\lean{Copying/SelectedContractionSubtree}{53}{53}{Selection.output}
+Every selected vertex has wire type $s$, since it occurs in an original
+sharing-edge source or target. In the source case a weakening is impossible,
+while a contraction has only $s$-typed inputs; both possible labels have one
+$s$-typed output. This proves
+\lean{Copying/SelectedContractionSubtree}{55}{67}{Selection.label}
+\par\penalty0
+
+Every selected vertex other than the original output is consumed by a selected
+edge. If it already occurs in a selected source there is nothing to prove.
+Otherwise it is produced by a selected edge, and original source coverage
+provides its consumer. Forward closure selects that consumer. Conversely, the
+original graph prohibits consuming the output. Thus the output is exactly the
+only vertex lacking a source incidence. The root produces this output, so it
+cannot also be an input. These boundary facts are
+\lean{Copying/SelectedContractionSubtree}{69}{87}{Selection.source_coverage}
+\lean{Copying/SelectedContractionSubtree}{89}{91}{Selection.output_not_input}
+Choose a finite list containing each new input exactly once. The resulting
+set presentation has that input order, the original output, the selected
+carriers, and the inherited incidence lists. Distinctness and uniqueness of
+incidence follow from their original counterparts; the two boundary-coverage
+laws follow from the preceding argument and the definition of a new input.
+All typing obligations follow by erasing the subtype certificates. This is the
+fully verified graph construction
+\lean{Copying/SelectedContractionSubtree}{94}{162}{Selection.setNet}
+It makes a classical finite choice of presentation, without adding a transition
+or changing any operation.
+
+\paragraph{The actual local occurrence.}
+Normalizing the set presentation gives the usual tagged internal/input/output
+ports. Decode such a port and then forget its membership certificate to obtain
+its original vertex. Applying this map to either normalized incidence row
+recovers the original row, because encoding followed by decoding is the
+identity. An adjacency witness therefore also maps to an original adjacency
+witness. The relevant declarations are
+\lean{Copying/SelectedContractionSubtree}{168}{169}{Selection.ports}
+\lean{Copying/SelectedContractionSubtree}{171}{176}{Selection.source_ports}
+\lean{Copying/SelectedContractionSubtree}{178}{183}{Selection.target_ports}
+\lean{Copying/SelectedContractionSubtree}{185}{193}{Selection.adjacent}
+\par\penalty0
+The normalized graph is itself a contraction tree. Its labels are inherited;
+a cyclic selected path would map injectively on edges to a cyclic original
+path, contradicting the original acyclicity proof. The inclusion preserves
+all edge labels and ordered incidences, and hence gives a complete local
+occurrence at every box depth. It sends input position $i$ to the $i$th chosen
+boundary vertex and sends output zero to the original output zero:
+\lean{Copying/SelectedContractionSubtree}{196}{205}{Selection.tree}
+\lean{Copying/SelectedContractionSubtree}{208}{217}{Selection.occurrence}
+\lean{Copying/SelectedContractionSubtree}{219}{221}{Selection.occurrence_input}
+\lean{Copying/SelectedContractionSubtree}{223}{224}{Selection.occurrence_output}
+\par\penalty0
+
+\paragraph{Two prescribed inputs.}
+A finite selected boundary can be ordered with any two distinct prescribed
+inputs $a,b$ first. Enumerate all selected inputs, remove repetitions, filter
+out $a$ and $b$, and prepend them in that order. The remaining list has no
+repetitions, and the final list contains exactly the inputs. The local
+finite-list induction removes an element only when it already appears in the
+inductively obtained list, thereby preserving membership. This proves
+\lean{Copying/TwoInputContractionSubtree}{31}{62}{Selection.two_input_order}
+the elementary finite-list proof is
+\lean{Copying/TwoInputContractionSubtree}{9}{25}{distinct_members}
+For an original input $i$, an edge is \emph{from $i$} if the input is consumed
+by some edge $a$ and a finite counted adjacency trace runs from $a$ to that
+edge. Select the union of the predicates for two inputs $i,j$. Appending one
+adjacency to a trace proves forward closure; the original input-to-root theorem
+shows that the root is selected. Each specified input remains a new boundary
+input: its original consumer is selected, and no original edge can target an
+original input. These facts are formalized by
+\lean{Copying/TwoInputContractionSubtree}{68}{69}{ContractionTree.FromInput}
+\lean{Copying/TwoInputContractionSubtree}{78}{85}{ContractionTree.twoSelection}
+\lean{Copying/TwoInputContractionSubtree}{88}{99}{ContractionTree.twoSelection_input}
+\par\penalty0
+The elementary trace-extension induction is
+\lean{Copying/TwoInputContractionSubtree}{71}{75}{trace_last}
+\begin{theorem}[Two-input subtree extraction]
+For distinct input coordinates $i,j$ of any finite contraction tree $T$ and
+any depth $d$, there are $h$, a contraction tree $U$ with $h+2$ inputs, and a
+complete local occurrence $f:U\hookrightarrow T$ at depth $d$ such that
+$f(0)=i$, $f(1)=j$, and the sole output is fixed. Every selected edge $f(e)$
+has a counted original ancestry from $i$ or from $j$.
+\end{theorem}
+Take the preceding union selection, order its new inputs with $i,j$ first,
+and apply the normalized-tree occurrence construction. The ancestry assertion
+is the stored selection predicate of each selected edge. No restriction on
+unselected siblings is assumed:
+\lean{Copying/TwoInputContractionSubtree}{103}{134}{ContractionTree.two_input_subtree}
+\paragraph{Same-store equality on the converse side.}
+Consider an original binding-free operational specimen with expansions
+$C[L]$ and $C[R]$, at a non-entering rewrite token. Assume the original left
+expansion is rooted. Suppose an actual equality-rule occurrence in $C[R]$
+uses the same store for both operands. Rooted argument readiness retains both
+selected instances in the common context. Each is a binding edge, so binding
+freedom retains every edge downstream of either instance.
+
+Apply two-input extraction to the occurrence's original atom tree and extend
+that occurrence through the unchanged equality frame. Its comparison edge
+is retained because the token is non-entering. Its two instances are retained
+by the preceding argument. Each selected sharing edge is downstream of one
+of those instances, by its stored original ancestry. Finally, the common store
+is downstream of the left instance by the original successful resolution
+trace. This proves that the \emph{entire rematched footprint} avoids shallow
+holes, while making no such assertion about unused branches in the original
+larger rule presentation:
+\lean{Copying/ConverseSameEquality}{20}{81}{ConverseOverlap.same_subtree_avoids}
+The extraction theorem then discharges the selected-subtree premise for every
+actual original same-store occurrence and preserves the original comparison
+token. Thus it constructs a complete retained occurrence of an original
+same-store rule, rather than assuming the desired left match:
+\lean{Copying/ConverseSameEquality}{96}{106}{ConverseResidual.same_occurrence}
+The existing guarded primitive residual construction now supplies actual
+right and left rewrites and an admissible opposite quasi-specimen. Successor
+coherence identifies the constructed right result with any independently
+supplied actual successor. The quantitative matching uses zero further
+right steps and one left step, so the cost comparison is $Q(1+0,1)$ by
+reflexivity. Neither a residual-admissibility certificate nor an opposite-step
+existence assumption remains:
+\lean{Copying/ConverseSameEquality}{112}{123}{ConverseResidual.same}
+\Needspace{10\baselineskip}
+\subsection{Rematching the selected read and assignment trees}
+A converse read or assignment can be presented with an atom contraction tree
+containing irrelevant sibling branches. A branch of that supplied tree may
+belong to a right-hand shallow template filling. Consequently, the whole
+supplied tree cannot simply be declared retained. The proof instead extracts
+its actual selected input-to-store spine, leaving unused branches attached at
+new boundary inputs. The resulting smaller graph is still a contraction tree
+and is still an instance of the original local rule. No computation rule,
+stability condition, term or translation changes.
+
+First consider arbitrary atom trees $U$ and $T$ and a complete occurrence
+$f:U\hookrightarrow T$. Assume that $f$ sends the distinguished first input
+to the first input and the root output to the root output. Other inputs may
+attach to internal wires of $T$. The read rematching construction extends $f$
+to an occurrence of the entire read source. Its port function preserves the
+active input, store-content output and the three frame wires; it maps an
+internal tree wire through $f$, and maps every additional input through the
+corresponding tree attachment. Its edge function preserves the reader,
+instance and store edges and uses $f$ on tree edges. The tree-port lemma
+proves that insertion commutes with this map. Internal wires use the
+occurrence's internal-coordinate equation; the first input and root output
+use the two assumptions; every other input uses its explicit ordered frame
+attachment.
+
+\lean{Copying/ReadTreeRematch}{11}{19}{Dereference.TreeRematch.ports}
+\lean{Copying/ReadTreeRematch}{21}{25}{Dereference.TreeRematch.edges}
+\lean{Copying/ReadTreeRematch}{31}{47}{Dereference.TreeRematch.tree_ports}
+The incidence-preserving embedding follows by cases on the four kinds of
+read-source edge. The three fixed primitive edges have unchanged rows.
+For a tree edge, map composition and the tree-port lemma transform the
+source and target rows using the original occurrence equations. Edge
+injectivity follows from the disjoint component tags and injectivity of $f$.
+The complete occurrence constructor then supplies the induced injective
+internal map and full recursive-label preservation; it does not require
+injectivity of all attached boundary ports. Finally, its active input is
+literally the original read input.
+
+\lean{Copying/ReadTreeRematch}{49}{83}{Dereference.TreeRematch.embedding}
+\lean{Copying/ReadTreeRematch}{85}{88}{Dereference.TreeRematch.occurrence}
+\lean{Copying/ReadTreeRematch}{90}{90}{Dereference.TreeRematch.occurrence_input}
+Assignment uses the same construction with four frame wires and an
+additional value component. The stable new-value graph $G$ is kept literally:
+all of its edges and internal wires are fixed, and each of its ordered outputs
+keeps the same external position. The old-content output is fixed separately.
+Thus rematching neither replaces the new value by an observationally related
+value nor changes which store receives it. The port and edge maps extend the
+tree occurrence and preserve this entire value component. Their tree-port
+lemma has the same input, internal-wire and output proof as for reading.
+
+\lean{Copying/AssignmentTreeRematch}{11}{22}{Assignment.TreeRematch.ports}
+\lean{Copying/AssignmentTreeRematch}{24}{31}{Assignment.TreeRematch.edges}
+\lean{Copying/AssignmentTreeRematch}{37}{59}{Assignment.TreeRematch.tree_ports}
+For the assignment embedding, the only additional incidence case is an
+edge of $G$. Its source and target lists commute with insertion because the
+value's sole input attaches to the fixed new-value frame wire, its internal
+wires are fixed, and its outputs attach in their original order. The complete
+occurrence again follows from full label and incidence preservation, and its
+active input is unchanged. These structural constructors work for arbitrary
+$G$; the actual assignment rule later retains its original proof that $G$ is
+stable.
+
+\lean{Copying/AssignmentTreeRematch}{61}{136}{Assignment.TreeRematch.embedding}
+\lean{Copying/AssignmentTreeRematch}{138}{143}{Assignment.TreeRematch.occurrence}
+\lean{Copying/AssignmentTreeRematch}{145}{145}{Assignment.TreeRematch.occurrence_input}
+\Needspace{10\baselineskip}
+\subsection{The original binding barrier retains each selected store spine}
+Let $C$ be an original binding-free operational specimen context with paired
+fillings $L,R$. Suppose the common rewrite token is not entering a shallow
+hole, and the left endpoint has a rooted search history to that token.
+Consider an active operation in $C[R]$ and a binding edge $a$ immediately
+following one of its arguments. The argument-readiness theorem first proves
+that the original owner of $a$ is not a shallow hole. This yields its retained
+corolla certificate. Binding-label reflection supplies the binding property
+of the original edge in $C$, and reflection of the argument adjacency supplies
+a source witness for it.
+
+If $b$ is any actual descendant of $a$, the original binding-free barrier
+reflects that ancestry into $C$. Were the original owner of $b$ a hole, it
+would differ from the already non-hole owner of $a$; the reflected ancestry
+would therefore be positive. This contradicts the precise binding-free
+condition, which prohibits a path from a sourced binding edge to a hole.
+The proof applies to each selected spine independently and never assumes
+that every sibling in the supplied tree is retained.
+
+\lean{Copying/ConverseBindingDescendant}{12}{35}{OperationalTemplates.ConverseOverlap.argument_binding_descendant_not_hole}
+For a read subtree, require that each of its mapped edges is reached by
+an actual counted path from a contraction consuming the original first atom
+input. The original instance enters that contraction, so each such edge is
+a descendant of the instance. The entire selected source avoids shallow
+holes: the reader is retained because the token is non-entering; the instance
+uses reflexive ancestry in the binding-argument lemma; tree edges use the
+selected paths; and the store uses the original successful store-resolution
+trace. This establishes avoidance for the complete rematched occurrence,
+including its operation and store edges.
+
+The assignment argument is identical for the destination instance, selected
+tree and store. Every edge of the original stable value consumes its sole term
+input, so it is adjacent to the active assignment head at the new-value
+argument. Rooted argument readiness excludes a shallow-hole origin for these
+edges as well. This preserves all stable operand forms and their full output
+interfaces, including thunk outputs.
+
+\lean{Copying/ConverseStoreFootprint}{19}{53}{OperationalTemplates.ConverseOverlap.read_subtree_avoids}
+\lean{Copying/ConverseStoreFootprint}{57}{99}{OperationalTemplates.ConverseOverlap.assignment_subtree_avoids}
+\Needspace{10\baselineskip}
+\subsection{Actual converse read and assignment residuals}
+The public read-occurrence theorem starts with any actual complete right read
+occurrence. The minimal-spine theorem extracts a finite oriented spine from
+the supplied atom tree, fixes its selected first input and root output, and
+provides the counted ancestry of every retained spine edge. Extend that tree
+occurrence through the read frame and compose it with the actual host
+occurrence. The preceding avoidance theorem discharges the entire footprint
+condition. The public assignment-occurrence theorem performs the same steps
+while preserving the literal stable value graph. Their conclusions contain
+both an actual complete source occurrence and its exact original rewrite-token
+attachment. No smaller-tree certificate is assumed by either caller.
+
+\lean{Copying/ConverseStoreResiduals}{22}{35}{OperationalTemplates.ConverseResidual.read_occurrence}
+\lean{Copying/ConverseStoreResiduals}{39}{55}{OperationalTemplates.ConverseResidual.assignment_occurrence}
+The two diamond theorems now apply the already proved primitive transfer
+construction with the paired filling certificates reversed. For reading,
+the original sourced-instance ancestry guards the content output, and the
+literal read reduct is focus-free and hole-free. For assignment, the original
+source has binding-or-thunk outputs. Hole typing follows from the closed
+operational filling, and stability proves the required safety of the literal
+assignment reduct. The guarded or thunk-aware replacement theorem establishes
+binding freedom of the resulting common residual context; it is not an extra
+hypothesis of either diamond.
+
+Each diamond constructs a genuine right rewrite and a genuine left rewrite
+and gives an equality-up-to quasi-specimen between their resumed search
+states. The reversed-template quasi-specimen is then converted into a
+quasi-specimen for the opposite of the \emph{original} directed specimen
+system. This conversion requires no symmetry of the template. All original
+unmatched shallow and deep fillings remain in the common residual.
+
+\lean{Copying/ConverseStoreResiduals}{61}{74}{OperationalTemplates.ConverseResidual.read_diamond}
+\lean{Copying/ConverseStoreResiduals}{78}{93}{OperationalTemplates.ConverseResidual.assignment_diamond}
+Finally, the quantitative theorems quantify over any supplied actual right
+machine successor. Successor determinism identifies it with the constructed
+right successor in the representation quotient. There are zero further steps
+on that side and one original left rewrite on the other, so the cost comparison
+is $Q(1+0,1)$ and follows from reflexivity of an arbitrary cost order $Q$.
+The equality-up-to residual implies the required refinement-up-to residual
+for arbitrary orders $P$ and $U$. Neither theorem assumes a left rule match,
+a shallow-overlap classification, a residual-admissibility certificate or a
+canonical shape for the supplied right successor. The original left rootedness
+and the non-entering common token are the operational specimen hypotheses
+used to construct these facts.
+
+\lean{Copying/ConverseStoreResiduals}{96}{108}{OperationalTemplates.ConverseResidual.read}
+\lean{Copying/ConverseStoreResiduals}{111}{124}{OperationalTemplates.ConverseResidual.assignment}
+\Needspace{10\baselineskip}
+\subsection{Distinct-store equality uses two independent selected spines}
+The distinct-store equality rule has two instances, two atom trees and two
+stores. Its rematched source contains only the selected spine in each tree,
+while preserving both actual store edges and their ordered content outputs.
+For each instance separately, the rooted argument theorem establishes its
+original non-hole owner, and the binding-descendant barrier excludes shallow
+holes along its selected spine. The corresponding successful resolution trace
+retains its store. The comparison head is retained at the non-entering token.
+A case split on the seven component tags therefore proves avoidance for the
+complete rematched distinct-store source. In particular, the proof does not
+conflate store identity with the shape of either tree.
+
+\lean{Copying/ConverseDifferentEquality}{19}{93}{OperationalTemplates.ConverseOverlap.different_subtrees_avoids}
+The occurrence theorem invokes minimal-spine extraction independently for
+the two original trees, extends both complete occurrences through the literal
+distinct-store comparison frame, and composes with the original right match.
+Both stores remain distinct because complete occurrence maps are injective
+on edge occurrences. The exact comparison token and both content outputs
+remain attached as before. Thus the newly constructed source is an actual
+instance of the original false-result rule, rather than a new decision rule
+inferred solely from an intrinsic selector.
+
+\lean{Copying/ConverseDifferentEquality}{108}{124}{OperationalTemplates.ConverseResidual.different_occurrence}
+The final distinct-store theorem applies the retained equality transfer to
+this constructed occurrence. That transfer builds both original computations,
+uses the source's binding ancestors to establish residual admissibility, and
+returns an opposite quasi-specimen. The arbitrary supplied right successor
+is handled by the same successor-determinism argument as reading and
+assignment. Its quantitative comparison is again the exact one-step match
+$Q(1,1)$ for every cost order. The same-store equality branch needs a union of
+two selected paths in one tree and is proved separately; independent spine
+extraction is used here only for the genuinely distinct-store rule.
+
+\lean{Copying/ConverseDifferentEquality}{130}{141}{OperationalTemplates.ConverseResidual.different}
+\subsection{Exhaustive assembly of universal converse robustness}
+The local-case theorem performs case analysis on the original local-rule
+constructor. Allocation, both arithmetic operations, read, assignment and
+both equality decisions use their now unconditional converse residual
+lemmas. Beta uses the original left rootedness to prove its complete cut
+admissible; copying uses the selected spine and retained recursive payload.
+Each branch supplies the same quantitative conclusion for the independently
+provided right successor. The original stability and copyability proofs
+are passed unchanged.
+
+An arbitrary contextual rewrite supplies its own complete local occurrence,
+including its literal source and target rule and its exact active token.
+Applying the local-case theorem therefore discharges all match extraction
+premises. At the representation-class level, reflect a successor to an actual
+finite step. A search step is impossible in rewrite mode, leaving exactly the
+rewrite case already established.
+
+Finally, take an arbitrary eligible specimen in the opposite of the original
+system. Its original left state supplies the rooted search history. Rewrite
+its endpoints into the common-context host coordinates, transport the
+non-entering premise to that token, and apply the preceding class-step
+result. The resulting quantitative matching alternative is precisely the
+original opposite-system robustness conclusion. Thus the proof is universal
+over specimens, contexts, depths and right successors, with no residual
+existence assumption hidden in the final theorem.
+\lean{Copying/FullOperationalConverseRobustness}{23}{43}{OperationalTemplates.ConverseResidual.local_case}
+\lean{Copying/FullOperationalConverseRobustness}{47}{58}{OperationalTemplates.ConverseResidual.rewrite_case}
+\lean{Copying/FullOperationalConverseRobustness}{62}{75}{OperationalTemplates.ConverseResidual.class_step}
+\lean{Copying/FullOperationalConverseRobustness}{80}{109}{OperationalTemplates.template_robust_converse}
+\subsection{Concrete contextual consequences for both operational families}
+\termdef{operational-contextual-equivalence}
+The complete forward and converse proofs now discharge the robustness
+hypotheses for micro-beta and reference creation. The existing input-safety
+proof consumes their finite search-and-compute prefixes, preserving all
+stability premises. Therefore neither safety nor robustness is an assumption
+of the following semantic conclusions.
+
+First, a recursively filled closed pair whose actual common context is
+binding-free supplies a concrete initial lifting. Construct the original
+specimen at the common input in search mode, use the actual endpoint
+isomorphisms to identify its two states, and establish rootedness by the
+zero-length initial search. This construction is generic in the pre-template.
+
+\lean{Copying/OperationalContextualEquivalence}{14}{29}{FillingWitness.binding_initial_lifting}
+For any operational pair of open programs with the same variable and atom
+interface, apply the concrete contextual robustness theorem. In the forward
+direction, use the improvement cost order: every successful observation of
+the left graph has a successful observation of the right graph with no
+larger transition count. In both directions, use the universal cost relation
+to obtain contextual termination equivalence. Its equivalent formulation
+states that the two actual closed programs terminate together in every
+original binding-free closing context. The context's surrounding depth is
+unrestricted, and neither a terminating continuation nor any syntactic
+restriction on the surrounding language is assumed.
+
+\lean{Copying/OperationalContextualEquivalence}{35}{40}{OperationalTemplates.pair_contextual_improvement}
+\lean{Copying/OperationalContextualEquivalence}{44}{50}{OperationalTemplates.pair_contextual_equiv}
+\lean{Copying/OperationalContextualEquivalence}{54}{57}{OperationalTemplates.pair_contextual_termination}
+The same argument applies directly to arbitrary recursive filling witnesses,
+including many simultaneous and deeply boxed operational occurrences.
+Apply the abstract sufficiency theorem to the initial lifting and the proved
+forward robustness for improvement. For equivalence, apply forward and
+converse sufficiency with the universal cost relation. Unpacking the two
+refinements yields equivalence of existence of successful finite runs.
+The witnesses' transition counts may differ: the operational search and
+compute prefixes have not been made cost-free. These results establish the
+micro-beta and reference-creation steps needed by Figure~22; they do not
+assert the full Proposition~12.2 chain or its remaining templates.
+
+\lean{Copying/OperationalContextualEquivalence}{61}{68}{OperationalTemplates.filling_improvement}
+\lean{Copying/OperationalContextualEquivalence}{72}{83}{OperationalTemplates.filling_equiv}
+\lean{Copying/OperationalContextualEquivalence}{87}{99}{OperationalTemplates.filling_termination}

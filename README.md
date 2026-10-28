@@ -9,41 +9,40 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: full forward operational robustness and converse classification
+## Latest milestone: full operational robustness and contextual equivalence
 
-**Micro-beta and reference creation now satisfy universal forward robustness**
-for the original binding-free specimen system. The theorem covers all nine
-unchanged machine rules and arbitrary contextual rewrites. It derives the
-actual matching steps and admissible pointed residuals, including allocation,
-assignment, and unrestricted deep beta/copying matches. No residual,
-matching or machine-behaviour law is left as a hypothesis.
+**Micro-beta and reference creation now satisfy universal forward and converse
+robustness** for the original binding-free specimen system. Every eligible
+right rewrite constructs an actual matching left rewrite and an admissible
+pointed residual. All nine unchanged local rules are covered, including
+arbitrary deep beta/copying and all store cases.
 
-**Every actual converse rewrite is classified**, with its actual successor
-and resumed token identified. Allocation, arithmetic and beta yield retained
-complete footprints; store operations yield intrinsic matches in the common
-context; copying yields its retained payload and selected sharing resolution.
-Unused sharing-tree branches are not assumed retained. A complete minimal-spine
-copying occurrence is also constructed without changing its payload.
+The converse construction selects the sharing paths actually inspected by the
+rule. Same-store equality uses their two-input union; unused sibling branches
+remain boundary attachments. Neither a matching rewrite nor residual
+admissibility is supplied as a hypothesis.
 
-**Remaining:** construct all converse matching rewrites and admissible residuals
-from those selectors, then assemble universal converse robustness. The other
-eight template families, paper correspondence, semantic weakening and Figure 22
-remain open. **Proposition 12.2 is unproved.**
+**Contextual improvement and termination equivalence now follow for both
+families**, in every original binding-free closing context and for arbitrary
+recursive paired fillings. Directed quantitative comparisons are retained;
+costs are forgotten only for termination equivalence.
 
+**Remaining:** the other eight template families, paper correspondence,
+semantic weakening and Figure 22. **Proposition 12.2 is unproved.**
 The original terms, Figure 16 translation and machine rules are unchanged.
 Appendix B.1 retains completed tasks and subtasks with strikethrough.
-Commentary Section 111 explains this milestone, with immutable links to all
-188 new declarations in 32 modules.
+Commentary Section 112 explains this milestone, with immutable links to all
+109 new declarations in 19 modules.
 
-Full build: **609 jobs**. All **3,607 axiom audits** pass (6 abstract, 504 graph,
-3,097 copying); no `sorryAx` or project-specific axioms. Independent review
-checked the universal theorem's premises and the converse classification's scope.
+Full build: **628 jobs**. All **3,716 axiom audits** pass (6 abstract,
+504 graph, 3,206 copying); no `sorryAx` or project-specific axioms.
+Independent review checked the universal theorem and its original premises.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 28 October 2026. The earlier **80% estimate is withdrawn**.
-The new universal theorem closes a major dependency, but converse residuals,
-eight further template families and the final equivalence chain still have
-uncertain proof costs. Declaration and checklist counts do not measure this effort.
+Both operational families are now discharged, but eight further template
+families and the final equivalence chain still have uncertain proof costs.
+Declaration and checklist counts do not measure this effort.
 
 ## Proposition 12.2: current extension target
 

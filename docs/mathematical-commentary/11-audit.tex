@@ -865,6 +865,39 @@ Independent reviews checked the universal forward theorem and the limits of
 the converse classification. Every one of the 188 new public declarations has
 a complete immutable source-fragment link in
 Section~\ref{sec:copying-operational-forward-robustness}.
-Universal converse residual synthesis remains explicit in Appendix~B.1;
-neither that obligation nor Proposition~12.2 is marked complete.
+At that milestone, universal converse residual synthesis remained open;
+Section~\ref{sec:copying-operational-converse-robustness} now completes it.
+Proposition~12.2 remains unfinished.
 \lean{Copying/Audit}{3007}{3194}{Copying.Audit: full forward robustness and converse classification}
+
+
+\subsection{Universal operational converse robustness and contextual consequences}
+The converse milestone audits all 109 new public declarations in 19 modules.
+The selected-subtree construction is a finite, typed contraction tree with
+an actual complete occurrence; the two-input specialization retains the
+exact original ordered inputs and root. Read, write and equality frames
+extend these occurrences without changing the local rules. Binding-path
+barriers prove their retainedness, and the complete local transfer constructs
+ordinary opposite-side rewrites with binding-free pointed residuals.
+Arbitrary deep beta and copying retain their original recursive bodies,
+stable operands and copyability premises.
+
+The exhaustive original nine-rule dispatch proves universal converse
+robustness for micro-beta and reference creation. Their contextual improvement
+and termination-equivalence theorems now have no safety, robustness,
+determinism, matching-step or residual-admissibility assumptions. Recursive
+filling consequences retain the actual common context's binding freedom;
+that is the intended observation restriction, not a new operational law.
+Independent reviews checked the universal theorem's original premises and
+its use of the original left rooted history.
+
+The complete build passes 628 jobs. All 3716 axiom reports pass: 6 abstract,
+504 graph and 3206 copying declarations. Only \texttt{propext},
+\texttt{Classical.choice} and \texttt{Quot.sound} occur. No \texttt{sorryAx}
+or project-specific axiom is used, and the new modules introduce no warnings.
+Every new public declaration has an immutable source link in
+Section~\ref{sec:copying-operational-converse-robustness}.
+Appendix~B.1 preserves earlier completed entries and strikes through the
+now discharged operational robustness tasks. Eight other template families,
+correspondence, semantic weakening and Figure~22 remain open.
+\lean{Copying/Audit}{3197}{3305}{Copying.Audit: universal converse robustness and contextual consequences}

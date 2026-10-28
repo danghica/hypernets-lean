@@ -30,19 +30,19 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-operational-forward-robustness}.
+Sections~\ref{sec:copying-foundations}--\ref{sec:copying-operational-converse-robustness}.
 Machine determinism, refocusing, coordinate specimen laws and execution
 representation are proved. BPerm has full robustness and exact-cost
 consequences; structural derivations and bijective renaming preserve closing
 observations. Micro-beta and reference creation now have output closure,
-input safety and universal forward robustness for the original binding-free
-specimens. All nine original local rules are covered, including allocation,
-assignment and arbitrary deep beta/copying matches. Every actual converse
-rewrite is classified by retained footprints or original-context store/copy
-selectors. That classification does not yet construct every opposite rewrite
-and admissible residual. Universal converse robustness, the other eight
-template families, correspondence, semantic weakening and the final Figure~22
-chain remain open. The original terms and Figure~16 translation are unchanged.
+input safety and universal forward/converse robustness for the original
+binding-free specimens. All nine original local rules are covered; every
+eligible right rewrite has a constructed matching left rewrite and an
+admissible residual. Contextual improvement and termination equivalence now
+follow for both families, including arbitrary recursive paired fillings.
+The other eight template families, correspondence, semantic weakening and
+the final Figure~22 chain remain open. The original terms and Figure~16
+translation are unchanged.
 
 The four work packages below retain completed tasks and subtasks with
 strikethrough; unstruck entries remain open. A completed prerequisite does not
@@ -99,7 +99,7 @@ See Section~\ref{sec:copying-overlap-classification}.
 in unrestricted and binding-free contexts.}
 See Section~\ref{sec:copying-operational-safety}; the quantitative prefix
 comparisons are retained.
-\item Prove forward/converse robustness for micro-beta and reference creation.
+\item {\raggedright\completedtask{Prove forward/converse robustness for micro-beta and reference creation.}\par}
 \begin{itemize}
 \item \completedtask{Construct finite complements, realize whole graph rewrites,
 and factor the supplied successors.}
@@ -126,8 +126,8 @@ constructed paired footprint; they do not classify arbitrary right overlaps.
 admissible deep beta/copying residuals for the classified original forward cases.}
 See Section~\ref{sec:copying-operational-forward-robustness}; the residual
 contexts and their binding freedom are constructed from the original matches.
-\item Classify arbitrary converse operational overlaps, construct all their
-admissible residual specimens, and assemble universal robustness.
+\item {\raggedright\completedtask{Classify arbitrary converse operational overlaps, construct all their
+admissible residual specimens, and assemble universal robustness.}\par}
 \begin{itemize}
 \item \completedtask{Classify every actual converse rewrite into a retained
 complete footprint or an intrinsic original-context store/copy match.}
@@ -135,9 +135,12 @@ Unused sibling branches need not be retained. The classification keeps the
 actual rule premises, selected lookup information and successor correspondence.
 \item {\raggedright\completedtask{Assemble universal forward robustness of both operational
 templates for the original binding-free specimens and all nine rules.}\par}
-\item Construct actual converse matching rewrites and admissible residuals from
+\item {\raggedright\completedtask{Construct actual converse matching rewrites and admissible residuals from
 the reflected selectors, including atom-tree footprints with two selected inputs;
-then assemble universal converse robustness.
+then assemble universal converse robustness.}\par}
+See Section~\ref{sec:copying-operational-converse-robustness}; all nine actual
+right rule occurrences construct the opposite rewrite and residual, and the
+contextual consequences now have no safety or robustness assumptions.
 \end{itemize}
 \end{itemize}
 \item Prove output closure, input safety and forward/converse robustness for
