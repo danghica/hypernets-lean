@@ -9,45 +9,40 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: constructive operational transfer
+## Latest milestone: exhaustive forward overlaps and admissible residuals
 
-**Every original contextual rewrite now has a constructed finite complement.**
-Plugging its complete match reconstructs the whole source, and replacing that
-match gives an actual original-machine successor. The supplied successor is
-identified up to a pointed recursive isomorphism, preserving exact remaining
-run lengths. No decomposition or locality assumption is added.
+**Every original forward operational rewrite at a non-entering common-context
+position now has a complete matched footprint avoiding shallow holes.** The theorem covers all nine original local
+rule constructors, arbitrary contextual renaming/plugging/expansion, all
+sharing-tree branches, and deep boxes. It constructs a finite cut with a
+pointed recursive isomorphism to the actual supplied successor.
 
-**Deep beta and copying cases now have forward and converse quantitative
-robustness in binding-free sourced-hole closing hosts.** Their original rules,
-stable arguments, nested boxes and internal token coordinates are retained.
-Padding carries a proved isomorphism of the actual common context, and the
-residual specimens are genuinely binding-free. The results cover arbitrary
-independently represented successors for these constructed framed cases.
+**Residual witnesses now preserve the original hole names, box bodies and
+exact resumed token coordinates.** Binding freedom is proved for closed sinks
+and for source footprints whose outputs have binding ancestors. This gives
+actual arithmetic, read and atom-equality diamonds and quantitative matching
+cases in both directions. The public forward operational cases derive
+footprint avoidance and residual admissibility rather than assuming them.
 
-Matched footprints can now be reconstructed inside the same original common
-context, even with unrelated multi-edge hole fillings. A generic transfer
-constructs both whole-graph rewrites and their original residual certificate.
-The binding-path barrier excludes shallow copied payloads and preserves exact
-sharing-hop counts. **Remaining:** prove binding freedom of arbitrary grafted
-residuals, extract the required local diagrams for every operational overlap,
-and assemble full micro-beta/reference-creation robustness. Other template
-families, paper correspondence, semantic weakening and Figure 22 remain open.
-**Proposition 12.2 is still unproved.**
+**Remaining:** allocation and assignment residuals; extraction of admissible
+deep beta/copying residuals; arbitrary converse overlap classification; and
+universal operational robustness. The matched converse cases above do not
+settle that classification. Other template families, paper correspondence,
+semantic weakening and Figure 22 remain open. **Proposition 12.2 is unproved.**
 
 The original terms, Figure 16 translation and machine rules are unchanged.
 Appendix B.1 retains completed tasks and subtasks with strikethrough.
-Commentary Section 109 explains the constructions and their limits,
-with immutable links to every new declaration.
+Commentary Section 110 explains the proofs and their limits, with immutable
+links to all 114 new declarations in 19 modules.
 
-Full build: **558 jobs**. All **3,305 axiom audits** pass (6 abstract, 504 graph,
-2,795 copying), including all 245 new declarations; no `sorryAx` or
-project-specific axioms.
+Full build: **577 jobs**. All **3,419 axiom audits** pass (6 abstract, 504 graph,
+2,909 copying); no `sorryAx` or project-specific axioms.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 28 October 2026. The earlier **80% estimate is withdrawn**.
-The new proofs remove concrete transfer barriers, but global template proofs
-and the final equivalence chain have uncertain costs; declaration and checklist
-counts are not measures of mathematical completion.
+The new proofs close concrete classification and residual obligations, but
+remaining template proofs and the final equivalence chain have uncertain
+costs; declaration and checklist counts do not measure mathematical completion.
 
 ## Proposition 12.2: current extension target
 

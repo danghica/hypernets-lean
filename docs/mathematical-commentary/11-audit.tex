@@ -816,3 +816,26 @@ operational overlap. Appendix~B.1 records these completed prerequisites with
 strikethrough and keeps full operational robustness and Proposition~12.2 open.
 \lean{Graph/Audit}{559}{561}{Graph.Audit: finite complement carrier reconstruction}
 \lean{Copying/Audit}{2649}{2890}{Copying.Audit: constructive operational transfer}
+
+
+\Needspace{14\baselineskip}
+The exhaustive forward-overlap milestone audits all 114 new declarations in
+19 modules. Every original forward operational rewrite at a non-entering common-context
+position has a complete non-shallow local occurrence and a finite cut identifying its actual successor.
+The original-context residual construction preserves hole names, recursive
+box bodies and both exact resume coordinates. Sink and guarded-output path
+arguments establish admissibility; primitive reconstruction supplies actual
+paired local steps. Arithmetic, read and both atom-equality forward cases
+now derive footprint avoidance and residual laws, while generic primitive
+diamonds also give the corresponding matched converse cases.
+
+The full build passes 577 jobs. All 3419 reports pass: 6 abstract, 504 graph
+and 2909 copying audits. Only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound} occur; no \texttt{sorryAx} or project-specific axiom is used.
+An independent review checked the scope of the path barriers, original-label
+preservation, internal resume ports and all nine local constructors. These
+results do not assert unrestricted rewrite preservation of binding freedom.
+Remaining allocation, assignment and deep beta/copying residuals, arbitrary
+converse overlap extraction and full operational robustness remain explicit
+in Appendix~B.1. The Proposition~12.2 terms and translation are unchanged.
+\lean{Copying/Audit}{2892}{3005}{Copying.Audit: exhaustive overlaps and admissible residuals}
