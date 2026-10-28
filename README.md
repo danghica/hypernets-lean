@@ -9,40 +9,45 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: semantic renaming and operational input safety
+## Latest milestone: constructive operational transfer
 
-**Full-syntax bijective renaming now preserves exact successful-run costs in
-all original binding-free closing graph contexts.** Every structural BPerm
-derivation is interpreted by a finite chain of original filling certificates.
-Each link lifts through arbitrary addressed occurrences, including nested boxes;
-full BPerm robustness then supplies exact machine equivalence. The unchanged
-renamed translation has its external resource permutation explicitly compensated,
-so the original context retains the same resource connections.
+**Every original contextual rewrite now has a constructed finite complement.**
+Plugging its complete match reconstructs the whole source, and replacing that
+match gives an actual original-machine successor. The supplied successor is
+identified up to a pointed recursive isomorphism, preserving exact remaining
+run lengths. No decomposition or locality assumption is added.
 
-**Micro-beta and reference creation now have input safety** in both unrestricted
-and binding-free contexts. Their original six/four-transition prefixes consume
-the entered hole into a genuine settled residual specimen, retaining all other
-shallow and deep fillings. The right representation class takes zero transitions.
-Sourced-hole plugging discharges binding-free closure, and the quantitative
-improvement comparison is retained. The beta regression still requests copying
-afterward; the proof does not perform eager substitution or claim termination.
+**Deep beta and copying cases now have forward and converse quantitative
+robustness in binding-free sourced-hole closing hosts.** Their original rules,
+stable arguments, nested boxes and internal token coordinates are retained.
+Padding carries a proved isomorphism of the actual common context, and the
+residual specimens are genuinely binding-free. The results cover arbitrary
+independently represented successors for these constructed framed cases.
+
+Matched footprints can now be reconstructed inside the same original common
+context, even with unrelated multi-edge hole fillings. A generic transfer
+constructs both whole-graph rewrites and their original residual certificate.
+The binding-path barrier excludes shallow copied payloads and preserves exact
+sharing-hop counts. **Remaining:** prove binding freedom of arbitrary grafted
+residuals, extract the required local diagrams for every operational overlap,
+and assemble full micro-beta/reference-creation robustness. Other template
+families, paper correspondence, semantic weakening and Figure 22 remain open.
+**Proposition 12.2 is still unproved.**
 
 The original terms, Figure 16 translation and machine rules are unchanged.
-Appendix B.1 now **retains completed tasks and subtasks with strikethrough**.
-Semantic bijective renaming and these two input-safety obligations are marked
-complete. Operational robustness, eight other template families, paper
-correspondence, non-bijective renaming/substitution, semantic weakening and the
-Figure 22 chain remain. **Proposition 12.2 is still unproved.**
+Appendix B.1 retains completed tasks and subtasks with strikethrough.
+Commentary Section 109 explains the constructions and their limits,
+with immutable links to every new declaration.
 
-Commentary Sections 107–108 explain all 81 new declarations with immutable links.
-Full build: **534 jobs**. All **3,060 axiom audits** pass (6 abstract, 501 graph,
-2,553 copying), with no `sorryAx` or project-specific axioms.
+Full build: **558 jobs**. All **3,305 axiom audits** pass (6 abstract, 504 graph,
+2,795 copying), including all 245 new declarations; no `sorryAx` or
+project-specific axioms.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
-confidence**, as of 27 October 2026. The earlier **80% estimate is withdrawn**.
-These proofs close important reusable dependencies, but remaining template
-robustness and the final semantic chain have uncertain proof costs; declaration
-or checklist counts do not measure them.
+confidence**, as of 28 October 2026. The earlier **80% estimate is withdrawn**.
+The new proofs remove concrete transfer barriers, but global template proofs
+and the final equivalence chain have uncertain costs; declaration and checklist
+counts are not measures of mathematical completion.
 
 ## Proposition 12.2: current extension target
 

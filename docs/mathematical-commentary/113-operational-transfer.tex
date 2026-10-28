@@ -1,0 +1,878 @@
+\clearpage
+\section{Whole-graph reconstruction and binding-free operational residuals}
+\label{sec:copying-operational-transfer}
+Micro-beta and reference creation have multi-edge left-hand graphs. A
+primitive match in one filled specimen therefore cannot be transported by
+assuming that every hole contributes a single corolla. This section proves
+the missing constructive ingredients: finite complements of complete
+matches, actual whole-graph rewrite realization, binding-free residual
+certificates, and the copying overlap barrier. The original compute rules,
+stable arguments and translation are unchanged.
+
+These results serve the operational-template argument in
+\href{https://arxiv.org/html/1907.01257v5\#A8.SS3.SSS7}{Appendix H.3.7}.
+The complement theorem constructs a real graph context and proves its
+reconstruction isomorphism. The residual results check binding freedom of
+the shared context itself. Neither a matching predicate nor an unrestricted
+residual specimen is treated as a proof of binding-free robustness.
+The universal forward/converse robustness theorem for the two operational
+families remains open: every original source overlap must still be connected
+to the appropriate local diagram, and the grafted residual context must
+be proved binding-free. The generic matched transfer below now constructs
+the paired complement and its original recursive residual certificate.
+
+\subsection{A complete match determines its finite complement}
+\termdef{complete-match-complement}
+A \emph{complete match} consists of an incidence-preserving occurrence
+$f:A\to G$ together with recursive agreement of every matched edge label.
+Its boundary inputs and outputs may be identified by attachment, but no two
+inputs, no two outputs, and no internal vertex with another vertex can be
+identified. To prove these facts, use source or target coverage to find
+incidences at the two candidate vertices. Incidence uniqueness identifies
+their edges; injectivity of the edge map and the absence of duplicate ports
+in the ordered incidence list then identify the vertices.
+
+An internal vertex of $A$ has both a producer and a consumer. Its image
+therefore cannot be an input or output of $G$. This gives an injective map
+between the internal carriers. Recursive label agreement supplies equality
+of the edge signatures, so the ordered incidence equations recover every
+wire type, including at boundary ports. These facts are consequences of the
+match, not additional requirements imposed on the machine.
+
+Remove the images of the internal vertices and edges of $A$ from $G$.
+The remaining internal carrier is the subtype of vertices outside the
+internal image. The remaining edges retain their labels and ordered
+incidences. An incidence of a remaining edge cannot meet a removed internal
+vertex: otherwise source or target uniqueness would identify that edge
+with a matched edge. Thus these lists project to the remaining carrier.
+Insert one new hole edge with the ordered input and output images of $A$.
+The resulting context is finite because its carriers are subtypes of the
+original finite carriers, with one additional edge.
+
+Coverage and uniqueness are checked separately for retained edges and the
+new hole. At a surviving vertex, an original incidence is either retained,
+or comes from a matched boundary incidence and is replaced by the hole.
+Matched internal incidences cannot occur there. Same-polarity injectivity
+proves that each hole incidence list has no repetitions. An input-output
+alias is permitted and remains a loop in the hole attachment. The original
+wire labels prove typing of every retained incidence and every hole port.
+
+\Needspace{11\baselineskip}
+\subsection{Reconstruction and actual rewriting}
+\termdef{complete-match-realization}
+The \emph{realization isomorphism} identifies the filled complement with
+$G$. For any injection, the disjoint sum of its complement and its source
+is bijective with its target. Apply this fact to the internal carrier and
+to the edge carrier. The resulting maps send retained objects to themselves
+and inserted objects to their matched images. Their label and ordered
+incidence equations follow from the original match. In particular, the
+isomorphism sends every inserted port to $f$ of that port; it does not
+merely compare the unpointed graphs.
+
+Given an original rewrite $A,v\longrightarrow B,w$, cast its boundary
+indices to the proved hole signature, plug it into the constructed
+complement, and transport its source through the realization isomorphism.
+This produces an original whole-graph rewrite from $G$ at $f(v)$. Its target
+is the same complement filled by $B$, and its resumed token is the actual
+inserted image of $w$. Every constructor used here already belongs to the
+original rewrite relation.
+
+Conversely, induction on an original contextual rewrite extracts an actual
+local rule and an occurrence preserving full recursive labels at the exact
+source token. Local steps use the identity occurrence; renaming, plugging
+and expansion compose it with their proved occurrence maps. Consequently
+the label hypothesis of reconstruction is available for every original
+rewrite, including beta and copying rules that inspect boxes. Comparing the supplied
+successor with the reconstructed successor uses the already proved
+whole-machine successor coherence. The resulting pointed recursive
+isomorphism preserves the exact remaining successful-run lengths.
+
+The auxiliary cut hole need not be a binding-free observation hole, and its
+name is not asserted fresh in a paper replacement tuple. Reconstruction is
+an edge-indexed graph statement. The original-hole inventory correspondence
+and admissibility of a paired residual context remain separate obligations.
+
+\subsection{Paired reconstruction in the original common context}
+\termdef{paired-footprint-frame}
+For a complete match that avoids shallow holes, replace only its auxiliary
+edge labels by the corresponding original context labels. The carriers,
+ordered incidences and boundary are unchanged. This \emph{matched skeleton}
+has a full occurrence in the original common context. Restricting the
+original recursive filling certificates to its edges reconstructs the
+unchanged actual local source on the left, and an actual paired footprint
+on the right. The source-token reconstruction equation is proved explicitly.
+
+Cut this skeleton out of the common context. At the selected cut component,
+place its expansion by the chosen original filling family; at every
+unmatched component, keep that original filling unchanged. The resulting
+whole expansion is recursively isomorphic to the original filled host.
+The proof partitions the edge carrier and regroups the internal carrier;
+its selected and retained insertion equations verify both ordered
+incidences. This works for an arbitrary original filling family, so the
+two sides share one computed frame even when unrelated holes have many
+internal vertices and edges.
+
+Now supply the independently established two local rewrites and their local
+paired residual certificate. Expand those actual rewrites in the common
+frame. Use witnesses for every original unmatched endpoint pair and put the local residual
+at the selected component. This constructs the two whole-graph rewrites and
+a genuine recursive whole-graph filling witness. The left token is the
+actual matched token; the right token is the paired host token when the
+stated attachment equation holds. An independently supplied left successor
+is compared to the constructed one by proved coherence. The final residual
+context need not inherit binding freedom merely because the cut exists;
+that remaining admissibility proof is not hidden in this construction.
+The edge-witness extraction may rebuild its common context and hole names.
+Original-hole inventory and pointed residual-coordinate correspondence
+must therefore be checked separately for this general grafted certificate.
+
+\subsection{Binding freedom excludes shallow copying overlaps}
+\termdef{binding-overlap-barrier}
+At an original token that is not entering a hole, an inspected primitive
+must lie in a retained context contribution. A purported filled-hole
+contribution would place that token at the hole source, contradicting the
+non-entering premise. This argument permits arbitrary multi-edge graphs
+at all other holes.
+
+A retained predecessor exposes its actual context target ports. Source
+ownership reflects the next expanded adjacency to a context adjacency.
+Follow an expanded path starting from a sourced binding edge. If it first
+enters a shallow hole, its already-reflected prefix gives a positive
+context path from that binding edge to the hole. Binding freedom forbids
+this path. Induction therefore retains and reflects the entire path.
+
+For copying, the active contraction is such a binding edge. Each sharing
+hop reflects its primitive label and adjacency; induction preserves the
+exact number of hops. The resolved payload head is consequently present
+in the common context at the same cost. Every outer edge of a normalized
+copyable payload is either its primitive head or, for a lambda, its
+immediately following box. Both are descendants of the contraction and
+cannot belong to a shallow hole. This proof leaves deep occurrences inside
+the box available for the residual construction.
+
+More generally, when every edge of a matched footprint avoids shallow
+holes, incidence coverage places each matched port at an original context
+coordinate. Reflect the ordered match to that context, then insert the
+opposite retained edge corollas to obtain the opposite match at the exact
+paired token. Unrelated hole fillings can have arbitrary internal vertices.
+For a primitive footprint, primitive agreement is already full label
+agreement, and the complement theorem constructs a genuine opposite-side
+rewrite. For a footprint containing boxes, the opposite local source must
+instead be rebuilt with its paired bodies; primitive agreement alone does
+not supply that construction.
+
+\subsection{Stable arguments and binding-free residual certificates}
+\termdef{binding-free-filling-witness}
+A \emph{binding-free filling witness} retains the original common context,
+its two recursive edge-certificate families and the endpoint isomorphisms,
+and additionally proves binding freedom of that common context. Closing
+its endpoints and supplying a typed token constructs an actual specimen
+in the binding-free context class. For a non-rewrite token the pointed
+endpoint equalities give the equality-up-to clause used in robustness.
+The required rootedness premises are those of that clause, not assumptions
+of termination.
+
+Padding preserves the two original operational pairs: pad their bodies,
+arguments and endpoint isomorphisms using the proved compute-padding laws.
+Neither side of either pair has exclusively flat stable labels. The left
+has its active application or reference head. A beta reduct still contains
+the opened body with a term output, impossible for a flat stable graph;
+a reference reduct contains the created store. Hence a stable paired
+argument has no operational filling and no boxed contribution. All its
+certificates are retained corollas, giving an actual recursive isomorphism
+between its two endpoints.
+
+Serial and parallel residual assembly retain their actual shared contexts.
+For copying a lambda, the outer lambda-and-box context has no shallow
+holes; its holes occur only inside the original box body. This permits the
+residual contraction tree to precede the retained copy without introducing
+a forbidden path to a shallow hole. Both copies retain their certificates. Appending the focus-free, hole-free
+distributors preserves binding freedom.
+
+Padding is constructed together with a recursive isomorphism from its
+actual shared context to the padded original context. Transporting binding
+freedom through this isomorphism justifies opening the padded paired body;
+no property of an unconstrained chosen witness is assumed.
+
+For beta opening, the bound body output connects to a closed argument.
+A path can move from the body into that argument, but cannot return: the
+argument outputs are external outputs of the splice, whereas the body
+input is its external input. A path ending at a body hole consequently
+stays in the body. A forbidden binding path would contradict the body's
+binding freedom; the argument contains no holes. This proves binding
+freedom of the actual splice, without a stability or rootedness premise.
+
+To place a residual in a closing host, use an original sourced hole.
+The plugged certificate's common context is explicitly isomorphic to the
+host plugged by the residual context. Proved sourced-hole closure gives
+binding freedom. Expansion peeling identifies both pointed endpoint
+states, including internal host resume coordinates, and constructs the
+required original binding-free residual specimen.
+
+These constructions prove both forward and converse quantitative robustness
+clauses for the framed deep-copying and beta cases. A supplied successor
+may use an independent representation: proved successor coherence compares
+it to the constructed successor. The matched cost comparison is one with
+one, with zero additional transitions after the supplied step. The converse
+exchanges the same residual specimen's two projections. The universal
+operational-template theorem must still extract these framed data from
+every original specimen and handle the remaining overlaps.
+
+\subsection{Concrete nested operational regressions}
+The reference regression uses the original constant translation and
+allocation graphs. The beta regression uses the unchanged variable body,
+including its single-use distributor, and the original stable constant
+argument. Tensoring with an actual weakening exposes an unused bound output;
+this makes each graph a lambda body without changing its operation.
+The copying certificates retain the operational occurrence in both actual
+residual branches. A second enclosing lambda checks a further level of
+nested boxes. No body-termination premise is used, and copying does not
+evaluate the reference operation hidden in a box.
+
+% Generated declaration links; prose states each construction and proof family.
+\subsection{Lean declarations and proof organisation}
+\Needspace{8\baselineskip}
+\paragraph{Port geometry.}
+The two same-polarity injectivity lemmas use incidence coverage, edge
+injectivity and ordered-list nonduplication. The existence lemma places each
+internal image in the host internal carrier; \texttt{internal} chooses that
+carrier element and \texttt{ports\_internal} proves its defining equation.
+The internal-equality equivalence excludes every other port from that image,
+and hence proves internal injectivity. The wire-label theorem uses the
+source equation for internal/input ports and the target equation for output
+ports, together with the full matched label signatures.
+
+\lean{Copying/MatchEmbeddingGeometry}{25}{33}{MatchEmbedding.ports_injective_of_not_output}
+\lean{Copying/MatchEmbeddingGeometry}{36}{44}{MatchEmbedding.ports_injective_of_not_input}
+\lean{Copying/MatchEmbeddingGeometry}{47}{56}{MatchEmbedding.exists_internal}
+\lean{Copying/MatchEmbeddingGeometry}{59}{60}{MatchEmbedding.internal}
+\lean{Copying/MatchEmbeddingGeometry}{62}{64}{MatchEmbedding.ports_internal}
+\par\penalty0
+\lean{Copying/MatchEmbeddingGeometry}{67}{83}{MatchEmbedding.ports_eq_internal_iff}
+\lean{Copying/MatchEmbeddingGeometry}{85}{89}{MatchEmbedding.internal_injective}
+\lean{Copying/MatchEmbeddingGeometry}{92}{116}{MatchEmbedding.vertexLabel}
+
+\Needspace{8\baselineskip}
+\paragraph{Complement carriers.}
+The complement bijection sends an outside element to itself and a source
+element to its injected image. Its inverse tests membership in that image;
+in the positive case injectivity identifies the chosen preimage, and in the
+negative case the point carries its complement proof. The two displayed
+summand equations are definitional.
+
+\lean{Graph/ComplementBijection}{9}{34}{Bijection.ofComplement}
+\lean{Graph/ComplementBijection}{36}{38}{Bijection.ofComplement_inl}
+\lean{Graph/ComplementBijection}{40}{41}{Bijection.ofComplement_inr}
+
+\Needspace{8\baselineskip}
+\paragraph{The constructed cut context.}
+\texttt{Outside} excludes every matched internal image. The internal,
+retained-edge and vertex types are the corresponding finite subtypes and
+port type. The embedding forgets subtype proofs; projection adds the proved
+outside predicate. Their inverse equations and embedding injectivity follow
+by port cases. The source/target outside lemmas use incidence uniqueness;
+the retained lists map the original attached lists through projection.
+Mapping them back recovers the original lists, giving the membership and
+nonduplication lemmas. Projection and embedding preserve wire labels by
+port cases.
+
+The input/output outside lemmas use same-polarity injectivity against an
+internal port. Their projected ports embed to the original matched ports
+and are injective on each boundary separately. The cut source, target and
+label functions distinguish a retained edge from the new hole. The two hole
+membership lemmas are membership in mapped ordered boundary lists.
+Nonduplication follows from the boundary injections; disjointness from a
+retained edge follows from original incidence uniqueness. These prove
+source and target uniqueness for all four combinations of edge kind.
+Coverage uses original coverage, testing whether its edge is in the match:
+a matched preimage at a surviving vertex must be the appropriate boundary
+port. Typing uses the projection-label equation for retained edges and the
+full match's vertex-label theorem for the hole. Finally \texttt{net}
+packages precisely these laws and finite carrier enumerations.
+
+\lean{Copying/CompleteMatchCut}{12}{12}{CompleteMatchCut.Outside}
+\lean{Copying/CompleteMatchCut}{14}{14}{CompleteMatchCut.Internal}
+\lean{Copying/CompleteMatchCut}{15}{15}{CompleteMatchCut.RetainedEdge}
+\lean{Copying/CompleteMatchCut}{16}{16}{CompleteMatchCut.Vertex}
+\lean{Copying/CompleteMatchCut}{18}{18}{CompleteMatchCut.embed}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{20}{24}{CompleteMatchCut.project}
+\lean{Copying/CompleteMatchCut}{26}{27}{CompleteMatchCut.embed_project}
+\lean{Copying/CompleteMatchCut}{29}{43}{CompleteMatchCut.embed_outside}
+\lean{Copying/CompleteMatchCut}{45}{46}{CompleteMatchCut.embed_injective}
+\lean{Copying/CompleteMatchCut}{48}{49}{CompleteMatchCut.project_embed}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{51}{54}{CompleteMatchCut.outside_source}
+\lean{Copying/CompleteMatchCut}{56}{59}{CompleteMatchCut.outside_target}
+\lean{Copying/CompleteMatchCut}{61}{62}{CompleteMatchCut.retainedSource}
+\lean{Copying/CompleteMatchCut}{64}{65}{CompleteMatchCut.retainedTarget}
+\lean{Copying/CompleteMatchCut}{67}{69}{CompleteMatchCut.embed_retainedSource}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{71}{73}{CompleteMatchCut.embed_retainedTarget}
+\lean{Copying/CompleteMatchCut}{75}{82}{CompleteMatchCut.mem_retainedSource}
+\lean{Copying/CompleteMatchCut}{84}{91}{CompleteMatchCut.mem_retainedTarget}
+\lean{Copying/CompleteMatchCut}{93}{94}{CompleteMatchCut.nodup_of_map}
+\lean{Copying/CompleteMatchCut}{96}{97}{CompleteMatchCut.retainedSource_nodup}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{99}{100}{CompleteMatchCut.retainedTarget_nodup}
+\lean{Copying/CompleteMatchCut}{102}{104}{CompleteMatchCut.project_label}
+\lean{Copying/CompleteMatchCut}{106}{108}{CompleteMatchCut.embed_label}
+\lean{Copying/CompleteMatchCut}{110}{114}{CompleteMatchCut.outside_input}
+\lean{Copying/CompleteMatchCut}{116}{120}{CompleteMatchCut.outside_output}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{122}{122}{CompleteMatchCut.inputPort}
+\lean{Copying/CompleteMatchCut}{123}{123}{CompleteMatchCut.outputPort}
+\lean{Copying/CompleteMatchCut}{125}{126}{CompleteMatchCut.embed_input}
+\lean{Copying/CompleteMatchCut}{127}{128}{CompleteMatchCut.embed_output}
+\lean{Copying/CompleteMatchCut}{130}{135}{CompleteMatchCut.inputPort_injective}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{137}{142}{CompleteMatchCut.outputPort_injective}
+\lean{Copying/CompleteMatchCut}{144}{146}{CompleteMatchCut.source}
+\lean{Copying/CompleteMatchCut}{148}{150}{CompleteMatchCut.target}
+\lean{Copying/CompleteMatchCut}{152}{154}{CompleteMatchCut.label}
+\lean{Copying/CompleteMatchCut}{156}{157}{CompleteMatchCut.mem_hole_source}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{159}{160}{CompleteMatchCut.mem_hole_target}
+\lean{Copying/CompleteMatchCut}{162}{165}{CompleteMatchCut.source_nodup}
+\lean{Copying/CompleteMatchCut}{167}{170}{CompleteMatchCut.target_nodup}
+\lean{Copying/CompleteMatchCut}{172}{178}{CompleteMatchCut.source_disjoint}
+\lean{Copying/CompleteMatchCut}{180}{186}{CompleteMatchCut.target_disjoint}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{188}{198}{CompleteMatchCut.source_unique}
+\lean{Copying/CompleteMatchCut}{200}{210}{CompleteMatchCut.target_unique}
+\lean{Copying/CompleteMatchCut}{212}{240}{CompleteMatchCut.source_coverage}
+\lean{Copying/CompleteMatchCut}{242}{270}{CompleteMatchCut.target_coverage}
+\lean{Copying/CompleteMatchCut}{276}{295}{CompleteMatchCut.source_typed}
+\par\penalty0
+\lean{Copying/CompleteMatchCut}{297}{316}{CompleteMatchCut.target_typed}
+\lean{Copying/CompleteMatchCut}{320}{341}{CompleteMatchCut.net}
+
+\Needspace{8\baselineskip}
+\paragraph{Reconstruction maps.}
+The internal-complement bijection identifies the port-based outside
+predicate with the complement of the induced internal injection. Combining
+it with the complement bijection gives \texttt{vertices}. The retained-edge
+bijection removes the new hole, and the corresponding disjoint-sum
+construction gives \texttt{edges}. Their four summand equations specify
+exactly where each retained or inserted object goes. The hole input/output
+lemmas prove the original ordered interface; \texttt{replacement} performs
+only those boundary casts. Host and source/target-port equations reduce
+reconstruction on attached vertices to the original match. The insertion
+equation handles all three port kinds. The final recursive isomorphism
+checks labels and both ordered incidence lists on each edge summand.
+
+\lean{Copying/CompleteMatchRealization}{13}{20}{CompleteMatchCut.internalComplement}
+\lean{Copying/CompleteMatchRealization}{24}{26}{CompleteMatchCut.vertices}
+\lean{Copying/CompleteMatchRealization}{28}{28}{CompleteMatchCut.vertices_left}
+\lean{Copying/CompleteMatchRealization}{29}{30}{CompleteMatchCut.vertices_right}
+\lean{Copying/CompleteMatchRealization}{33}{41}{CompleteMatchCut.retainedEdges}
+\par\penalty0
+\lean{Copying/CompleteMatchRealization}{44}{47}{CompleteMatchCut.edges}
+\lean{Copying/CompleteMatchRealization}{49}{50}{CompleteMatchCut.edges_left}
+\lean{Copying/CompleteMatchRealization}{51}{51}{CompleteMatchCut.edges_right}
+\lean{Copying/CompleteMatchRealization}{55}{56}{CompleteMatchCut.hole_input}
+\lean{Copying/CompleteMatchRealization}{58}{59}{CompleteMatchCut.hole_output}
+\par\penalty0
+\lean{Copying/CompleteMatchRealization}{63}{63}{CompleteMatchCut.replacement}
+\lean{Copying/CompleteMatchRealization}{65}{68}{CompleteMatchCut.map_host}
+\lean{Copying/CompleteMatchRealization}{70}{73}{CompleteMatchCut.hole_sourcePort}
+\lean{Copying/CompleteMatchRealization}{75}{78}{CompleteMatchCut.hole_targetPort}
+\lean{Copying/CompleteMatchRealization}{82}{97}{CompleteMatchCut.map_insert}
+\par\penalty0
+\lean{Copying/CompleteMatchRealization}{101}{151}{CompleteMatchCut.realization}
+
+\Needspace{8\baselineskip}
+\paragraph{Actual rewrite realization.}
+\texttt{replaceWith} fills the constructed cut with the successor graph;
+\texttt{replacePort} is its actual resumed port. The rewrite theorem casts
+the proved local interface, uses the original plug constructor, and then
+renames by the reconstruction isomorphism. The local-rule corollary applies
+that theorem to the original local constructor. The occurrence wrappers
+supply the already proved full labels directly. These theorems assume a
+real rule on the small source, and construct its whole-graph step.
+
+\lean{Copying/CompleteMatchRewrite}{18}{19}{CompleteMatchCut.replaceWith}
+\lean{Copying/CompleteMatchRewrite}{22}{26}{CompleteMatchCut.replacePort}
+\lean{Copying/CompleteMatchRewrite}{30}{41}{CompleteMatchCut.rewrite}
+\lean{Copying/CompleteMatchRewrite}{45}{54}{CompleteMatchCut.local_rewrite}
+\lean{Copying/CompleteMatchRewrite}{57}{61}{Opening.Occurrence.rewrite}
+\par\penalty0
+\lean{Copying/CompleteMatchRewrite}{63}{67}{Opening.Occurrence.local_rewrite}
+
+\Needspace{8\baselineskip}
+\paragraph{Extracting full local occurrences.}
+The complete-match occurrence constructor derives the internal geometry
+from the incidence laws and full recursive labels. The local-occurrence
+theorem inducts over the actual rewrite derivation, composing the occurrence
+through every renaming, plug and expansion. The source-token equation is
+transported by the same port map at each step.
+
+\lean{Copying/LocalRewriteOccurrence}{13}{31}{MatchEmbedding.occurrence}
+\lean{Copying/LocalRewriteOccurrence}{35}{52}{Combined.Rewrite.local_occurrence}
+
+\Needspace{8\baselineskip}
+\paragraph{Factoring a supplied rewrite.}
+The successor lemma compares the supplied actual step with the newly
+realized step using proved successor coherence. \texttt{CutFactorization}
+records the actual local rule, full occurrence, exact source token and
+pointed successor isomorphism. Its rewrite projection constructs the
+canonical successor at the supplied token. The remaining-run equivalence
+transports every exact successful length through the successor isomorphism.
+The final existence theorem extracts a local occurrence from the supplied
+rewrite and assembles these fields.
+
+\lean{Copying/RewriteCutFactorization}{19}{29}{Opening.Occurrence.rewrite_successor}
+\lean{Copying/RewriteCutFactorization}{34}{51}{Combined.CutFactorization}
+\lean{Copying/RewriteCutFactorization}{54}{61}{Combined.CutFactorization.rewrite}
+\lean{Copying/RewriteCutFactorization}{64}{70}{Combined.CutFactorization.terminatesIn_iff}
+\lean{Copying/RewriteCutFactorization}{74}{79}{Combined.Rewrite.cut_factorization}
+\par\penalty0
+
+\Needspace{8\baselineskip}
+\paragraph{Reflection across arbitrary fillings.}
+A non-hole certificate has retained contributions on both sides by the
+original certificate case split. \texttt{AvoidsShallow} requires this for
+exactly the matched edges. The chosen left/right retained corollas yield
+the source/target equations at original host coordinates. Incidence coverage
+then proves every matched port has a host preimage; \texttt{port} chooses it
+and \texttt{host\_port} records the equation. Owners are injective because
+two matched edges in one retained corolla would be equal. \texttt{reflect}
+uses these coordinates and incidences to construct the common-context
+match, and \texttt{across} inserts the opposite retained corollas. Its token
+equation follows from injectivity of the original host inclusion.
+
+\lean{Copying/RetainedFootprint}{11}{23}{DeepFillingEdge.retained_of_not_hole}
+\lean{Copying/RetainedFootprint}{27}{30}{RetainedFootprint.AvoidsShallow}
+\lean{Copying/RetainedFootprint}{32}{33}{RetainedFootprint.left}
+\lean{Copying/RetainedFootprint}{35}{36}{RetainedFootprint.right}
+\lean{Copying/RetainedFootprint}{40}{45}{RetainedFootprint.source}
+\par\penalty0
+\lean{Copying/RetainedFootprint}{47}{52}{RetainedFootprint.target}
+\lean{Copying/RetainedFootprint}{56}{70}{RetainedFootprint.port_origin}
+\lean{Copying/RetainedFootprint}{72}{73}{RetainedFootprint.port}
+\lean{Copying/RetainedFootprint}{75}{77}{RetainedFootprint.host_port}
+\lean{Copying/RetainedFootprint}{79}{88}{RetainedFootprint.owner_injective}
+\par\penalty0
+\lean{Copying/RetainedFootprint}{93}{115}{RetainedFootprint.reflect}
+\lean{Copying/RetainedFootprint}{119}{132}{RetainedFootprint.across}
+\lean{Copying/RetainedFootprint}{135}{139}{RetainedFootprint.across_host}
+
+\Needspace{8\baselineskip}
+\paragraph{The original-label matched skeleton.}
+A retained contribution has one edge and all its ordered boundary ports,
+so it is a labelled corolla; its signature lemmas identify its original
+context interface. Full occurrence labels then give the source-label and
+signature equations. \texttt{skeleton} retains the matched source carriers
+and incidences but assigns the original common-context edge labels.
+\texttt{skeletonOccurrence} is a complete occurrence in that same context.
+Restrict the original two filling families to its edges; their left copies
+collapse to the actual local source, proving \texttt{reconstruction} and
+its exact host-token equation.
+
+The original certificate case split restricts each recursive certificate
+to the skeleton. Focus freedom is inherited edgewise. No shallow skeleton
+edge is a hole, so shallow binding freedom follows immediately; recursive
+binding freedom is inherited from the original boxed bodies. The resulting
+\texttt{witness} pairs the unchanged actual local source with the opposite
+filled skeleton, and its context is proved binding-free. This constructs
+a paired footprint; it does not by itself say that the opposite footprint
+is the source of a local rule.
+
+\lean{Copying/RetainedFootprintNormalisation}{17}{22}{Search.Expansion.Retained.copy}
+\lean{Copying/RetainedFootprintNormalisation}{24}{25}{Search.Expansion.Retained.input}
+\lean{Copying/RetainedFootprintNormalisation}{27}{37}{Search.Expansion.Retained.output}
+\lean{Copying/RetainedFootprintNormalisation}{41}{45}{RetainedFootprint.sourceLabel}
+\lean{Copying/RetainedFootprintNormalisation}{47}{51}{RetainedFootprint.skeleton_input}
+\par\penalty0
+\lean{Copying/RetainedFootprintNormalisation}{53}{57}{RetainedFootprint.skeleton_output}
+\lean{Copying/RetainedFootprintNormalisation}{61}{63}{RetainedFootprint.skeleton}
+\lean{Copying/RetainedFootprintNormalisation}{66}{74}{RetainedFootprint.skeletonOccurrence}
+\lean{Copying/RetainedFootprintNormalisation}{76}{76}{RetainedFootprint.leftFamily}
+\lean{Copying/RetainedFootprintNormalisation}{77}{77}{RetainedFootprint.rightFamily}
+\par\penalty0
+\lean{Copying/RetainedFootprintNormalisation}{79}{82}{RetainedFootprint.leftCopy}
+\lean{Copying/RetainedFootprintNormalisation}{86}{100}{RetainedFootprint.reconstruction}
+\lean{Copying/RetainedFootprintNormalisation}{103}{106}{RetainedFootprint.reconstruction_host}
+\lean{Copying/RetainedFootprintNormalisation}{109}{115}{RetainedFootprint.skeleton_edges}
+\lean{Copying/RetainedFootprintNormalisation}{117}{118}{RetainedFootprint.skeleton_focusFree}
+\par\penalty0
+\lean{Copying/RetainedFootprintNormalisation}{122}{125}{RetainedFootprint.skeleton_shallowBindingFree}
+\lean{Copying/RetainedFootprintNormalisation}{129}{133}{RetainedFootprint.skeleton_bindingFree}
+\lean{Copying/RetainedFootprintNormalisation}{137}{145}{RetainedFootprint.witness}
+\lean{Copying/RetainedFootprintNormalisation}{147}{149}{RetainedFootprint.witness_bindingFree}
+
+\Needspace{8\baselineskip}
+\paragraph{Primitive whole-graph transfer.}
+On a primitive footprint, the primitive-matching equation supplies full
+label agreement at every edge. Reflecting across the retained contributions
+therefore satisfies the complete-match realization theorem. The resulting
+opposite-side rewrite starts at the exact paired host token. The local
+corollary covers the original primitive local-rule footprints with their
+original premises. No shallow-overlap exclusion or successor pairing is
+silently inferred: the former is explicit and the latter remains separate.
+
+\lean{Copying/RetainedRewriteTransfer}{14}{28}{MatchEmbedding.primitive_labels}
+\lean{Copying/RetainedRewriteTransfer}{32}{40}{RetainedFootprint.primitive_rewrite}
+\lean{Copying/RetainedRewriteTransfer}{44}{49}{RetainedFootprint.primitive_local}
+
+\Needspace{8\baselineskip}
+\paragraph{The first-hole barrier.}
+The shallow projection extracts the outer binding condition from the
+recursive definition. Appending one adjacency makes an ancestry path
+positive. The head lemma excludes a filled-hole origin by non-entry, and
+the adjacency lemma uses the retained predecessor's actual target list.
+Induction proves the ancestry-retention lemma: a first hole would violate
+the positive binding-path condition. The contraction corollary supplies
+its actual source and binding label.
+
+\lean{Copying/BindingFreeOverlap}{11}{15}{BindingFree.shallow}
+\lean{Copying/BindingFreeOverlap}{18}{28}{Ancestor.append_adjacent}
+\lean{Copying/BindingFreeOverlap}{31}{42}{BindingOverlap.head_retained}
+\lean{Copying/BindingFreeOverlap}{46}{56}{BindingOverlap.adjacent_owner}
+\lean{Copying/BindingFreeOverlap}{60}{77}{BindingOverlap.ancestor_retained}
+\par\penalty0
+\lean{Copying/BindingFreeOverlap}{80}{89}{BindingOverlap.contraction_descendant}
+
+\Needspace{8\baselineskip}
+\paragraph{Counted copying provenance.}
+The trace-to-ancestry lemma forgets only the numerical count. Payload
+edge classification is a case split on the normal form, and its ancestry
+lemma uses the single lambda-to-box incidence when needed. Each retained
+sharing hop reflects its forward label and adjacency; induction preserves
+the exact trace length. Source uniqueness identifies the resolution start
+with the active contraction, so the full resolution reflects to the common
+context. Composing that path with the payload ancestry proves retention
+of every payload edge. If its owner were a hole, either it would equal the
+contraction owner and have incompatible labels, or the positive ancestry
+would violate binding freedom.
+
+\lean{Copying/BindingCopyOverlap}{11}{17}{CopyTrace.ancestor}
+\lean{Copying/BindingCopyOverlap}{19}{35}{CopyRule.NormalForm.edge_cases}
+\lean{Copying/BindingCopyOverlap}{38}{51}{CopyRule.NormalForm.head_ancestor}
+\lean{Copying/BindingCopyOverlap}{54}{67}{BindingOverlap.copying_hop_owner}
+\lean{Copying/BindingCopyOverlap}{70}{84}{BindingOverlap.copying_trace_owner}
+\par\penalty0
+\lean{Copying/BindingCopyOverlap}{87}{105}{BindingOverlap.copying_resolution_owner}
+\lean{Copying/BindingCopyOverlap}{108}{120}{BindingOverlap.copying_payload_retained}
+\lean{Copying/BindingCopyOverlap}{123}{138}{BindingOverlap.copying_payload_not_hole}
+
+\Needspace{8\baselineskip}
+\paragraph{Admissible paired fillings.}
+The specimen constructor keeps the shared context and certificate families,
+transporting endpoint hole freedom through their isomorphisms. Its left and
+right class equations are pointed recursive isomorphisms. The quasi theorem
+uses those equations to construct the original binding-free specimen under
+the clause's rootedness premises; the initial-token corollary specializes
+to input zero. A literal pair uses the primitive-hole binding proof.
+Serial assembly has its literal serial context; its binding proof requires
+the stated cross-path exclusion. Parallel and tensor assembly use independent
+components. Boundary reindexing preserves the context after eliminating
+its equality proof. Lambda assembly retains the boxed body and has no
+shallow holes. Copying preserves this shielding on the retained branch,
+uses parallel binding freedom for the two copies, and appends the closed
+distributors. The deep-copy corollary supplies the lambda shielding proof.
+
+\lean{Copying/BindingFillingWitness}{13}{27}{FillingWitness.bindingSpecimen}
+\lean{Copying/BindingFillingWitness}{29}{33}{FillingWitness.bindingSpecimen_left}
+\lean{Copying/BindingFillingWitness}{35}{39}{FillingWitness.bindingSpecimen_right}
+\lean{Copying/BindingFillingWitness}{43}{57}{FillingWitness.binding_quasi}
+\lean{Copying/BindingFillingWitness}{59}{65}{FillingWitness.binding_initial_quasi}
+\par\penalty0
+\lean{Copying/BindingFillingWitness}{69}{71}{FillingWitness.of_rel_binding}
+\lean{Copying/BindingFillingWitness}{74}{81}{FillingWitness.serial_context}
+\lean{Copying/BindingFillingWitness}{83}{90}{FillingWitness.serial_binding}
+\lean{Copying/BindingFillingWitness}{92}{97}{FillingWitness.parallel_binding}
+\lean{Copying/BindingFillingWitness}{100}{108}{FillingWitness.tensor_binding}
+\par\penalty0
+\lean{Copying/BindingFillingWitness}{110}{123}{FillingWitness.reboundary_binding}
+\lean{Copying/BindingFillingWitness}{125}{127}{FillingWitness.interfaces_binding}
+\lean{Copying/BindingFillingWitness}{131}{137}{FillingWitness.lambdaPayload_binding}
+\lean{Copying/BindingFillingWitness}{139}{145}{FillingWitness.lambdaPayload_no_shallow_holes}
+\lean{Copying/BindingFillingWitness}{150}{171}{FillingWitness.copyingAfter_binding}
+\par\penalty0
+\lean{Copying/BindingFillingWitness}{175}{181}{FillingWitness.deepCopy_binding}
+
+\Needspace{8\baselineskip}
+\paragraph{Admissible host insertion.}
+The equality-cast lemma records that casting endpoint graph indices leaves
+the stored context unchanged. The plug-context isomorphism follows the
+selected component through the dependent family and uses the original
+single-expansion isomorphism. Sourced-hole closure then proves binding
+freedom of the plugged witness. \texttt{plugHost} retains an original host
+port. The two single-expansion position equations follow both flattenings
+and their endpoint maps. The final quasi theorem uses expansion peeling
+to obtain the actual plugged endpoint graphs and the original typed resume
+coordinate, then constructs the binding-free specimen.
+
+\lean{Copying/BindingFillingPlug}{13}{20}{FillingWitness.cast_context}
+\lean{Copying/BindingFillingPlug}{22}{40}{FillingWitness.plug_context_iso}
+\lean{Copying/BindingFillingPlug}{44}{50}{FillingWitness.plug_binding}
+\lean{Copying/BindingFillingPlug}{54}{61}{FillingWitness.plugHost}
+\lean{Copying/BindingFillingPlug}{63}{68}{FillingWitness.singleExpansion_leftPosition}
+\par\penalty0
+\lean{Copying/BindingFillingPlug}{70}{75}{FillingWitness.singleExpansion_rightPosition}
+\lean{Copying/BindingFillingPlug}{79}{117}{FillingWitness.plug_binding_quasi}
+
+\Needspace{8\baselineskip}
+\paragraph{Box-context bookkeeping.}
+Boundary reindexing leaves the common graph context unchanged up to the
+same boundary cast; the proof eliminates the equality witnesses. Rebuilt
+boxed copies consequently have one original box corolla whose body is the
+actual common body context. This explicit label-copy certificate is the
+recursive invariant required by padding.
+
+\lean{Copying/BindingFillingBoxes}{10}{23}{FillingWitness.reboundary_context}
+\lean{Copying/BindingFillingBoxes}{27}{34}{FillingWitness.boxedCopies_contextCopy}
+
+\Needspace{8\baselineskip}
+\paragraph{Padding with certified context geometry.}
+The related-corolla collapse theorem uses the existing carrier bijections
+and ordered incidences, with recursive label equivalence in place of label
+equality. \texttt{CorollaContext} records that a component's common context
+is one such corolla; boundary casting preserves it. Retained copies and
+literal pairs satisfy this invariant, with the literal pair retaining its
+original hole name and type. Expanded padding collapses these component
+contexts to the padded original context. The hole case uses template
+padding closure and the signature casts.
+
+The recursive existence proof handles retained edges, actual filled holes
+and original boxes separately. In the box case it extracts the body's
+explicit expansion data and applies the induction hypothesis. It returns
+both a padded filling witness and a recursive isomorphism from its actual
+context to the padded original context. \texttt{raiseWithContext} chooses
+this strengthened pair of data. \texttt{raiseBinding} transports binding
+freedom along that certified isomorphism and the proved padding law. It
+makes no assertion about the unrelated witness selected by an earlier,
+unqualified choice.
+
+\lean{Copying/BindingFillingPadding}{14}{34}{FillingCollapse.related}
+\lean{Copying/BindingFillingPadding}{38}{42}{FillingWitness.CorollaContext}
+\lean{Copying/BindingFillingPadding}{44}{49}{FillingWitness.CorollaContext.reboundary}
+\lean{Copying/BindingFillingPadding}{51}{54}{FillingWitness.of_copies_context}
+\lean{Copying/BindingFillingPadding}{56}{58}{FillingWitness.of_rel_context}
+\par\penalty0
+\lean{Copying/BindingFillingPadding}{62}{71}{FillingWitness.paddedExpansion_context}
+\lean{Copying/BindingFillingPadding}{74}{88}{FillingWitness.paddedHole_context}
+\lean{Copying/BindingFillingPadding}{93}{147}{FillingWitness.raisedContext_exists}
+\lean{Copying/BindingFillingPadding}{150}{154}{FillingWitness.raiseWithContext}
+\lean{Copying/BindingFillingPadding}{158}{163}{FillingWitness.raiseBinding}
+\par\penalty0
+
+\Needspace{8\baselineskip}
+\paragraph{The directed beta splice.}
+The two splice slots have no self-loop, by their explicit input/output
+ports. An argument-to-body adjacency would identify an external output
+with the external body input, so is impossible. Induction makes the slot
+index monotone along a path; equal endpoint slots force the whole path to
+stay in one component. A forbidden binding path ending at a hole must
+therefore stay in the body, since the argument has no holes. Component
+binding freedom excludes it. The final theorem combines this shallow
+argument with focus freedom and recursive binding freedom of every edge.
+
+\lean{Copying/BindingSplice}{12}{25}{BindingFree.splice_nonSelfLoop}
+\lean{Copying/BindingSplice}{28}{38}{BindingFree.splice_no_backward}
+\lean{Copying/BindingSplice}{41}{50}{BindingFree.splice_ancestor_monotone}
+\lean{Copying/BindingSplice}{53}{73}{BindingFree.splice_ancestor_same}
+\lean{Copying/BindingSplice}{76}{107}{BindingFree.shallow_splice_suffix}
+\par\penalty0
+\lean{Copying/BindingSplice}{111}{128}{BindingFree.splice_suffix}
+
+\Needspace{8\baselineskip}
+\paragraph{The beta residual.}
+The splice-context equation exposes the actual shared splice assembled by
+the witness. The splice-binding theorem applies the directed-splice lemma.
+A stable paired argument is recursively isomorphic to its other endpoint,
+so \texttt{stableArgument} represents both endpoints using the actual stable
+graph as common context; stability supplies its hole freedom. The
+\texttt{betaResidual} constructor pads the body with certified context
+geometry, casts its ordered bound/free interface, and splices that stable
+argument. Its subtype result includes binding freedom of the constructed
+common context for the two original beta successors.
+
+\lean{Copying/BindingFillingBeta}{15}{22}{FillingWitness.splice_context}
+\lean{Copying/BindingFillingBeta}{26}{36}{FillingWitness.splice_binding}
+\lean{Copying/BindingFillingBeta}{41}{44}{OperationalTemplates.DeepTransfer.stableArgument}
+\lean{Copying/BindingFillingBeta}{46}{48}{OperationalTemplates.DeepTransfer.stableArgument_closed}
+\lean{Copying/BindingFillingBeta}{53}{64}{OperationalTemplates.DeepTransfer.betaResidual}
+\par\penalty0
+
+\Needspace{8\baselineskip}
+\paragraph{Operational invariants.}
+The pair-raising theorem transports the original literal rules and endpoint
+isomorphisms; the padding-closed theorem exposes precisely this property.
+The beta reduct cannot have only stable labels because its retained body
+still has a term output. The literal nonstability theorem combines that
+fact with the active source heads and the reference reduct's store; the
+pair theorem transports it through endpoint isomorphisms. Stable-label
+preservation follows because neither operational side is flat stable.
+A stable edge certificate can thus only be retained; the filled and boxed
+cases contradict stability. Collapsing all those retained corollas proves
+the expansion isomorphism and hence the endpoint witness isomorphism.
+
+\lean{Copying/OperationalTemplateLaws}{10}{22}{OperationalTemplates.Pair.raise}
+\lean{Copying/OperationalTemplateLaws}{24}{24}{OperationalTemplates.template_paddingClosed}
+\lean{Copying/OperationalTemplateLaws}{28}{34}{OperationalTemplates.beta_after_not_stable_labels}
+\lean{Copying/OperationalTemplateLaws}{38}{55}{OperationalTemplates.Literal.not_stable_labels}
+\lean{Copying/OperationalTemplateLaws}{57}{62}{OperationalTemplates.Pair.not_stable_labels}
+\par\penalty0
+\lean{Copying/OperationalTemplateLaws}{64}{67}{OperationalTemplates.template_preservesStableLabels}
+\lean{Copying/OperationalTemplateLaws}{71}{82}{OperationalTemplates.stable_edge_retained}
+\lean{Copying/OperationalTemplateLaws}{84}{90}{OperationalTemplates.stable_expansion_iso}
+\lean{Copying/OperationalTemplateLaws}{94}{97}{OperationalTemplates.stable_witness_iso}
+
+\Needspace{8\baselineskip}
+\paragraph{Whole-host deep diagrams.}
+The generic framed theorem plugs both already proved original rewrites
+into the same sourced-hole binding-free closing host. Their target hole
+freedom follows from actual rewrite preservation, and the proved residual
+witness constructs the original binding-free quasi specimen. The input
+index is the unchanged numeric index under an ordered interface cast;
+its typing and rewrite-cast lemmas follow by eliminating the interface
+equalities. The copying theorem supplies the original local copying rules
+and the constructed duplicated residual. The beta theorem supplies the
+original application rules, derives the opposite stable argument from
+its actual isomorphism, and uses the certified beta residual. Thus both
+whole-host diagrams include actual transitions and admissible pointed
+residuals, without assuming template robustness.
+
+\lean{Copying/OperationalDeepTransfer}{15}{40}{FillingWitness.binding_framed_rewrite}
+\lean{Copying/OperationalDeepTransfer}{42}{43}{OperationalTemplates.DeepTransfer.inputIndex}
+\lean{Copying/OperationalDeepTransfer}{45}{50}{OperationalTemplates.DeepTransfer.rewrite_input_cast}
+\lean{Copying/OperationalDeepTransfer}{52}{55}{OperationalTemplates.DeepTransfer.inputIndex_term}
+\lean{Copying/OperationalDeepTransfer}{60}{90}{OperationalTemplates.DeepTransfer.copy_framed_diamond}
+\par\penalty0
+\lean{Copying/OperationalDeepTransfer}{96}{128}{OperationalTemplates.DeepTransfer.beta_framed_diamond}
+
+\Needspace{8\baselineskip}
+\paragraph{Operational regression certificates.}
+\texttt{unusedBody} tensors the original graph with a term weakening;
+\texttt{unusedWitness} tensors its original certificate with the reflexive
+weakening certificate. Independent tensor binding freedom proves the
+unused-binder lemma. The reference and beta witnesses place the actual
+operational pairs in primitive holes and apply this construction. Their
+binding lemmas give admissible deep-copy residuals. The reference step
+lemma separately checks the original copy transition on each side.
+The nested reference witness adds a second lambda and unused output;
+box and tensor closure prove its binding freedom, which the same copy
+residual theorem preserves in both branches.
+
+\lean{Copying/OperationalDeepExamples}{11}{13}{OperationalDeep.Examples.unusedBody}
+\lean{Copying/OperationalDeepExamples}{15}{18}{OperationalDeep.Examples.unusedWitness}
+\lean{Copying/OperationalDeepExamples}{20}{25}{OperationalDeep.Examples.unused_binding}
+\lean{Copying/OperationalDeepExamples}{27}{28}{OperationalDeep.Examples.referenceWitness}
+\lean{Copying/OperationalDeepExamples}{30}{31}{OperationalDeep.Examples.reference_binding}
+\par\penalty0
+\lean{Copying/OperationalDeepExamples}{35}{37}{OperationalDeep.Examples.reference_copy_binding}
+\lean{Copying/OperationalDeepExamples}{40}{55}{OperationalDeep.Examples.reference_copy_steps}
+\lean{Copying/OperationalDeepExamples}{57}{58}{OperationalDeep.Examples.betaWitness}
+\lean{Copying/OperationalDeepExamples}{60}{61}{OperationalDeep.Examples.beta_binding}
+\lean{Copying/OperationalDeepExamples}{64}{66}{OperationalDeep.Examples.beta_copy_binding}
+\par\penalty0
+\lean{Copying/OperationalDeepExamples}{69}{70}{OperationalDeep.Examples.nestedReferenceWitness}
+\lean{Copying/OperationalDeepExamples}{72}{73}{OperationalDeep.Examples.nestedReference_binding}
+\lean{Copying/OperationalDeepExamples}{77}{79}{OperationalDeep.Examples.nestedReference_copy_binding}
+
+\Needspace{8\baselineskip}
+\paragraph{One common frame for both fillings.}
+Cut the fully labelled skeleton occurrence out of the original common
+context. The grouped family puts the selected skeleton expansion at the
+new hole and leaves every unmatched original filling independent. An edge
+partition separates matched owners from their complement. The vertex and
+edge split maps merely regroup the resulting sum and dependent-pair tags;
+their inverses undo that regrouping. Combining them with the cut carrier
+bijections gives the whole expansion bijections.
+
+The host identity follows by port cases. The local-host identity uses the
+original occurrence's internal map and the cut boundary equations. The
+retained source/target-port identities follow from the projected original
+lists; they give the retained insertion identity. Applying the skeleton's
+ordered incidence equations at a finite index gives its source/target-port
+identities and hence the selected insertion identity. The final recursive
+isomorphism checks labels and each ordered incidence on the two edge cases.
+It reconstructs the entire original expansion for any filling family, so
+the same frame serves both sides without restricting unrelated multi-edge
+fillings. Binding freedom of this auxiliary cut is not asserted.
+
+\lean{Copying/RetainedFootprintFrame}{17}{22}{RetainedFootprint.frame}
+\lean{Copying/RetainedFootprintFrame}{24}{24}{RetainedFootprint.localFamily}
+\lean{Copying/RetainedFootprintFrame}{26}{32}{RetainedFootprint.grouped}
+\lean{Copying/RetainedFootprintFrame}{34}{36}{RetainedFootprint.frameEdgePartition}
+\lean{Copying/RetainedFootprintFrame}{39}{59}{RetainedFootprint.frameVertexSplit}
+\par\penalty0
+\lean{Copying/RetainedFootprintFrame}{61}{65}{RetainedFootprint.frameVertices}
+\lean{Copying/RetainedFootprintFrame}{67}{77}{RetainedFootprint.frameEdgeSplit}
+\lean{Copying/RetainedFootprintFrame}{79}{82}{RetainedFootprint.frameEdges}
+\lean{Copying/RetainedFootprintFrame}{84}{88}{RetainedFootprint.frame_host}
+\lean{Copying/RetainedFootprintFrame}{90}{111}{RetainedFootprint.frame_local_host}
+\par\penalty0
+\lean{Copying/RetainedFootprintFrame}{113}{117}{RetainedFootprint.frame_sourcePort}
+\lean{Copying/RetainedFootprintFrame}{119}{123}{RetainedFootprint.frame_targetPort}
+\lean{Copying/RetainedFootprintFrame}{125}{137}{RetainedFootprint.frame_other}
+\lean{Copying/RetainedFootprintFrame}{139}{147}{RetainedFootprint.skeleton_sourcePort}
+\lean{Copying/RetainedFootprintFrame}{149}{157}{RetainedFootprint.skeleton_targetPort}
+\par\penalty0
+\lean{Copying/RetainedFootprintFrame}{159}{176}{RetainedFootprint.frame_local_insert}
+\lean{Copying/RetainedFootprintFrame}{180}{221}{RetainedFootprint.frameIso}
+
+\Needspace{8\baselineskip}
+\paragraph{Quantitative deep robustness clauses.}
+The forward generic wrapper consumes the two actual steps and their
+constructed binding-free quasi specimen. Proved class determinism
+identifies any independently supplied left successor with the constructed
+one. The cost witnesses are zero additional steps on that side and one
+step on the opposite side, so reflexivity proves the required comparison
+of one with one for every cost order. The converse exchanges the two
+specimen projections and uses the same argument; it does not reverse a
+compute rule. The framed source definition records the actual host source
+port in rewrite mode. The four concrete corollaries instantiate these
+wrappers with the proved copying or beta host diagram, in each direction.
+They quantify over arbitrary supplied successors once the framed body and
+context data are constructed. Deriving those data from every arbitrary
+original specimen remains outside these case theorems.
+
+\lean{Copying/OperationalDeepRobustness}{12}{24}{FillingWitness.binding_framed_robust_case}
+\lean{Copying/OperationalDeepRobustness}{29}{44}{FillingWitness.binding_framed_robust_case_opposite}
+\lean{Copying/OperationalDeepRobustness}{46}{63}{OperationalTemplates.DeepTransfer.framedSource}
+\lean{Copying/OperationalDeepRobustness}{67}{78}{OperationalTemplates.DeepTransfer.copy_robust_case}
+\lean{Copying/OperationalDeepRobustness}{81}{108}{OperationalTemplates.DeepTransfer.copy_robust_case_opposite}
+\par\penalty0
+\lean{Copying/OperationalDeepRobustness}{112}{121}{OperationalTemplates.DeepTransfer.beta_robust_case}
+\lean{Copying/OperationalDeepRobustness}{125}{134}{OperationalTemplates.DeepTransfer.beta_robust_case_opposite}
+
+\Needspace{8\baselineskip}
+\paragraph{Grafting the local residual into the whole graph.}
+The edge-witness constructor turns each retained, filled or boxed
+certificate into an actual paired component witness. The successor family
+changes only the selected grouped component; its graph and port definitions
+use the actual common-frame expansion and insertion. The frame rewrite
+lifts the supplied local step by the original expansion constructor, then
+uses the grouping isomorphism. The inverse reconstruction equation
+identifies the left local token, proving the left whole-graph rewrite at
+its original occurrence coordinate.
+
+The residual witness expands the same frame with the proved local residual
+at the selected component and witnesses for the original unmatched endpoint pairs everywhere
+else. The paired-rewrite theorem assembles the two actual whole-graph
+steps and this genuine recursive filling certificate. The precise right
+token theorem uses its explicit attachment equality; the independent left
+successor is identified with the constructed successor by proved
+coherence. This establishes the whole-graph and residual-certificate part
+of transfer. Binding freedom of the grafted shared context is a separate
+path obligation; original hole names and pointed residual-coordinate
+correspondence also remain separate. They are not supplied by a new locality
+assumption.
+
+\lean{Copying/RetainedFrameTransfer}{15}{33}{FillingWitness.of_edge}
+\lean{Copying/RetainedFrameTransfer}{37}{45}{RetainedFootprint.afterFamily}
+\lean{Copying/RetainedFrameTransfer}{47}{50}{RetainedFootprint.afterGraph}
+\lean{Copying/RetainedFrameTransfer}{52}{57}{RetainedFootprint.afterPort}
+\lean{Copying/RetainedFrameTransfer}{61}{79}{RetainedFootprint.frame_rewrite}
+\par\penalty0
+\lean{Copying/RetainedFrameTransfer}{81}{84}{RetainedFootprint.reconstruction_inverse}
+\lean{Copying/RetainedFrameTransfer}{87}{100}{RetainedFootprint.left_rewrite}
+\lean{Copying/RetainedFrameTransfer}{104}{115}{RetainedFootprint.right_rewrite_at}
+\lean{Copying/RetainedFrameTransfer}{119}{124}{RetainedFootprint.left_successor}
+\lean{Copying/RetainedFrameTransfer}{128}{133}{RetainedFootprint.residual}
+\par\penalty0
+\lean{Copying/RetainedFrameTransfer}{138}{151}{RetainedFootprint.paired_rewrites}
+
