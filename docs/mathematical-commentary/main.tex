@@ -57,7 +57,7 @@
 % Keep completed Appendix B.1 tasks in place; use plain prose inside this macro.
 % ulem permits line breaks, while normalem preserves the meaning of \emph.
 \newcommand{\completedtask}[1]{\sout{#1}}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/6c4d9a339cd5461c642212200eac840c00d9cd86}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/9c19950a600cbb40abd01851240097d7b4b5189d}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -65,7 +65,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{28 October 2026\\\small Source snapshot: \texttt{6c4d9a3}; Lean \texttt{4.35.0}}
+\date{28 October 2026\\\small Source snapshot: \texttt{9c19950}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -150,7 +150,11 @@ and full term-context congruence. The focused-graph and original-hole tuple corr
 all addressed closing contexts to recursive paired fillings, and the template
 argument remain pending;
 Section~\ref{sec:copying-foundations} records the dependency map and proved
-prerequisites.
+prerequisites. Micro-beta and reference creation now have universal forward
+robustness for the original binding-free specimen system, including all nine
+local rules and arbitrary deep beta/copying matches. Their actual converse
+rewrites are exhaustively classified with supplied-successor certificates.
+Converse residual synthesis and Proposition~12.2 remain unfinished.
 \end{abstract}
 \clearpage
 \begingroup
@@ -275,6 +279,7 @@ prerequisites.
 \input{112-operational-input-safety}
 \input{113-operational-transfer}
 \input{114-operational-overlaps}
+\input{115-operational-forward-robustness}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -285,7 +290,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/6c4d9a339cd5461c642212200eac840c00d9cd86}{Repository at revision \texttt{6c4d9a3}}.
+\href{https://github.com/danghica/hypernets-lean/tree/9c19950a600cbb40abd01851240097d7b4b5189d}{Repository at revision \texttt{9c19950}}.
 \end{thebibliography}
 \clearpage
 \appendix

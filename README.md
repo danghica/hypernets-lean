@@ -9,40 +9,41 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: exhaustive forward overlaps and admissible residuals
+## Latest milestone: full forward operational robustness and converse classification
 
-**Every original forward operational rewrite at a non-entering common-context
-position now has a complete matched footprint avoiding shallow holes.** The theorem covers all nine original local
-rule constructors, arbitrary contextual renaming/plugging/expansion, all
-sharing-tree branches, and deep boxes. It constructs a finite cut with a
-pointed recursive isomorphism to the actual supplied successor.
+**Micro-beta and reference creation now satisfy universal forward robustness**
+for the original binding-free specimen system. The theorem covers all nine
+unchanged machine rules and arbitrary contextual rewrites. It derives the
+actual matching steps and admissible pointed residuals, including allocation,
+assignment, and unrestricted deep beta/copying matches. No residual,
+matching or machine-behaviour law is left as a hypothesis.
 
-**Residual witnesses now preserve the original hole names, box bodies and
-exact resumed token coordinates.** Binding freedom is proved for closed sinks
-and for source footprints whose outputs have binding ancestors. This gives
-actual arithmetic, read and atom-equality diamonds and quantitative matching
-cases in both directions. The public forward operational cases derive
-footprint avoidance and residual admissibility rather than assuming them.
+**Every actual converse rewrite is classified**, with its actual successor
+and resumed token identified. Allocation, arithmetic and beta yield retained
+complete footprints; store operations yield intrinsic matches in the common
+context; copying yields its retained payload and selected sharing resolution.
+Unused sharing-tree branches are not assumed retained. A complete minimal-spine
+copying occurrence is also constructed without changing its payload.
 
-**Remaining:** allocation and assignment residuals; extraction of admissible
-deep beta/copying residuals; arbitrary converse overlap classification; and
-universal operational robustness. The matched converse cases above do not
-settle that classification. Other template families, paper correspondence,
-semantic weakening and Figure 22 remain open. **Proposition 12.2 is unproved.**
+**Remaining:** construct all converse matching rewrites and admissible residuals
+from those selectors, then assemble universal converse robustness. The other
+eight template families, paper correspondence, semantic weakening and Figure 22
+remain open. **Proposition 12.2 is unproved.**
 
 The original terms, Figure 16 translation and machine rules are unchanged.
 Appendix B.1 retains completed tasks and subtasks with strikethrough.
-Commentary Section 110 explains the proofs and their limits, with immutable
-links to all 114 new declarations in 19 modules.
+Commentary Section 111 explains this milestone, with immutable links to all
+188 new declarations in 32 modules.
 
-Full build: **577 jobs**. All **3,419 axiom audits** pass (6 abstract, 504 graph,
-2,909 copying); no `sorryAx` or project-specific axioms.
+Full build: **609 jobs**. All **3,607 axiom audits** pass (6 abstract, 504 graph,
+3,097 copying); no `sorryAx` or project-specific axioms. Independent review
+checked the universal theorem's premises and the converse classification's scope.
 
 Estimated completion by mathematical effort remains **roughly 60–70%, with low
 confidence**, as of 28 October 2026. The earlier **80% estimate is withdrawn**.
-The new proofs close concrete classification and residual obligations, but
-remaining template proofs and the final equivalence chain have uncertain
-costs; declaration and checklist counts do not measure mathematical completion.
+The new universal theorem closes a major dependency, but converse residuals,
+eight further template families and the final equivalence chain still have
+uncertain proof costs. Declaration and checklist counts do not measure this effort.
 
 ## Proposition 12.2: current extension target
 

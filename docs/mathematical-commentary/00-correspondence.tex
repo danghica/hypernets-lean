@@ -177,15 +177,23 @@ operational overlaps at non-entering common-context positions and factors the ac
 complete cut. The new residual preserves the original common-context labels
 and exact resume coordinates. Sink and binding-guarded output arguments prove
 admissibility for concrete arithmetic, dereference and atom-equality cases.
-These are proved cases of robustness, not the universal operational-template
-theorem: arbitrary converse overlaps and the remaining local residuals are
-still open. The original terms and translation are unchanged.
+Section~\ref{sec:copying-operational-forward-robustness} completes allocation,
+assignment and arbitrary deep beta/copying residuals, and assembles universal
+forward robustness of both operational templates. Its theorem uses the original
+binding-free specimen system and all nine unchanged local rules; it assumes no
+paired step, overlap certificate or residual admissibility. Actual converse
+rewrites are exhaustively classified using retained footprints or reflected
+intrinsic store/copy matches. Universal converse robustness still requires
+constructing every matching rewrite and admissible residual from that data.
+The terms and translation are unchanged.
 
 The earlier estimate of 80\% completion of Proposition~12.2 is withdrawn.
-The current cautious assessment is 60--70\% of mathematical effort, with low
-confidence. BPerm robustness is complete, but the ten other template families and remaining
-context correspondence are substantial obligations;
-declaration counts do not measure their difficulty.
+The cautious assessment remains 60--70\% of mathematical effort, with low
+confidence. Full forward operational robustness is a major completed theorem,
+but converse residual synthesis, eight further template families, correspondence,
+semantic weakening and the final equivalence chain remain substantial obligations.
+Declaration counts and the number of crossed-out tasks do not measure their
+difficulty.
 
 The new recognition predicate records proved facts about the existing source
 graph. It is not a new reduction rule or a replacement for stability and
