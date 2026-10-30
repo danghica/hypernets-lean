@@ -1,0 +1,523 @@
+\clearpage
+\section{Parametricity: complete original-family copying and beta diagrams}
+\label{sec:parametricity-family-diagrams}
+This milestone closes the local whole-family copying and beta diagrams of
+Figure~20. Both beta statements start at proved original application contexts,
+not merely at unspecified inverse-rewrite predecessors. Family sizes and
+original private sharing trees are arbitrary, and every resource output of
+the original stable argument is retained. The original Proposition~12.2 terms
+and Figure~16 translation are unchanged. Universal parametricity robustness
+and the final proposition remain open.
+
+The six other recently completed template families remain complete. The new
+results follow the local case analysis in the paper's Appendix~H.3.8
+(\href{https://arxiv.org/html/1907.01257v5#A8.SS3.SSS8}{HTML alias}); they
+do not infer global observational equivalence from a successful finite example.
+
+\subsection{Exact enumeration and isolation of the original families}
+\termdef{parametricity-family-isolation}
+Write $A$ and $B$ for the original larger and smaller abstraction graphs,
+respectively. Their common ordered input interface consists of one term
+wire. To treat both sides of Figure~20 uniformly, let each have $k$ term
+outputs: $k=1$ on the private-reference side and $k=0$ on the constant side.
+The generic family is the original tensor of $m$ copies of $A$ followed by
+$n$ copies of $B$, with its boundary equalities written as
+\[
+ F_{m,n}(A,B):\mathsf{term}^{m+n}
+       \Rightarrow\mathsf{term}^{k(m+n)}.
+\]
+This notation changes only proofs of equal interface lengths. The literal
+lambda bodies, recursive boxes, contraction and weakening edges are retained.
+Zero copies mean the actual empty hypernet, so empty remaining families
+require neither an inserted identity edge nor a nonemptiness hypothesis.
+
+An indexed occurrence selects each whole original copy. Its unique input
+is at the copy's index, and its $j$th output is at $ki+j$. A small-family
+copy has the additional offsets $m$ at inputs and $km$ at outputs. Distinct
+copy occurrences have disjoint edge images; recursively splitting the
+literal tensor carrier proves that they cover all edges. Thus the first
+large member can be separated from the remaining large-then-small family.
+For the first small member, the selected copy is moved before all remaining
+large members, while their relative order is preserved.
+
+\lean{Copying/ParametricityFamilyComponents}{14}{23}{Parametricity.FamilyComponents.copy}
+\par\penalty0
+\lean{Copying/ParametricityFamilyComponents}{26}{44}{Parametricity.FamilyComponents.copy_input}
+\par\penalty0
+\lean{Copying/ParametricityFamilyComponents}{48}{79}{Parametricity.FamilyComponents.copy_output}
+\par\penalty0
+\lean{Copying/ParametricityFamilyComponents}{83}{113}{Parametricity.FamilyComponents.copy_disjoint}
+\par\penalty0
+\lean{Copying/ParametricityFamilyComponents}{117}{130}{Parametricity.FamilyComponents.copy_cover}
+\par\penalty0
+\lean{Copying/ParametricityFamilyBlocks}{13}{16}{Parametricity.FamilyComponents.family}%
+
+These are complete graph occurrences. A general edge-cover argument turns
+them into actual boundary isomorphisms. Incidence uniqueness makes the port
+map injective on each polarity; preservation of the external input and
+output roles rules out the remaining possible boundary collision. Every
+host port is incident to an edge, so edge coverage supplies a preimage port.
+Full recursive label equivalence, ordered incidences and these bijections
+prove the isomorphism. This argument permits boundary permutation; it does
+not quietly strengthen a boundary isomorphism to one fixing every position.
+
+\lean{Copying/OccurrenceBoundaryCoverIso}{19}{44}{Opening.Occurrence.boundary_ports_injective}
+\par\penalty0
+\lean{Copying/OccurrenceBoundaryCoverIso}{50}{62}{Opening.Occurrence.ports_surjective_of_edge_surjective}
+\par\penalty0
+\lean{Copying/OccurrenceBoundaryCoverIso}{73}{96}{Opening.Occurrence.boundaryIso_of_edge_surjective}
+\par\penalty0
+\lean{Copying/ParametricityFamilyIsolation}{149}{156}{Parametricity.FamilyComponents.isolateLargeIso}
+\par\penalty0
+\lean{Copying/ParametricityFamilyIsolation}{160}{167}{Parametricity.FamilyComponents.isolateSmallIso}%
+
+The exact small-member permutation is essential. In the isolated order,
+input zero goes to original input $m$. The input belonging to remaining
+member $i$ goes to $i$ if $i<m$, and to $i+1$ otherwise. On the left, the
+selected private output goes to $m$ and each remaining private output uses
+that same rule. Large isolation fixes the numerical ordered boundary.
+The right family has the identical input permutation and no outputs.
+The literal-family wrappers prove these assertions for the original
+\texttt{leftFamily} and \texttt{rightFamily}, not just for the uniform
+arithmetic presentation.
+
+\lean{Copying/ParametricityFamilyLiteralCoordinates}{31}{38}{Parametricity.FamilyLiteral.leftSmall_first_input}
+\par\penalty0
+\lean{Copying/ParametricityFamilyLiteralCoordinates}{90}{106}{Parametricity.FamilyLiteral.leftSmall_rest_input}
+\par\penalty0
+\lean{Copying/ParametricityFamilyLiteralCoordinates}{141}{149}{Parametricity.FamilyLiteral.leftSmall_first_output}
+\par\penalty0
+\lean{Copying/ParametricityFamilyLiteralCoordinates}{173}{189}{Parametricity.FamilyLiteral.leftSmall_rest_output}
+\par\penalty0
+\lean{Copying/ParametricityFamilyBoundary}{157}{160}{Parametricity.FamilyLiteral.small_inputs}
+\par\penalty0
+\lean{Copying/ParametricityFamilyBoundary}{163}{166}{Parametricity.FamilyLiteral.small_private}%
+
+\termdef{parametricity-boundary-synchrony}
+Two family isomorphisms are \emph{synchronous} when their input bijections
+agree and the left private-output bijection agrees with that same input
+bijection. Composition preserves this property by composition of the
+actual boundary maps. Tensor assembly preserves it by splitting the
+ordered boundary into its two original component blocks. Tensor
+reassociation has identity numerical boundary action: its proof assembles
+three complete occurrences and checks their disjointness, full edge
+coverage and every input/output coordinate.
+
+Applying first-member isolation twice therefore identifies
+\[
+ (A\otimes A)\otimes F_{m,n}(A,B)
+       \quad\hbox{with}\quad F_{m+2,n}(A,B),
+\]
+and likewise identifies two selected $B$ copies with $F_{m,n+2}(A,B)$.
+The second identification moves both selected small members past the
+remaining large block. It has a proved common input action on both sides,
+and the same action on the left private wires. Every recursive body is the
+original body. These isomorphisms justify the enlarged family used after
+an actual copying rewrite.
+
+\lean{Copying/BoundarySynchrony}{30}{33}{BoundaryIso.Synchronous}
+\par\penalty0
+\lean{Copying/BoundarySynchrony}{40}{46}{BoundaryIso.Synchronous.trans}
+\par\penalty0
+\lean{Copying/BoundarySynchrony}{50}{93}{BoundaryIso.Synchronous.tensor}
+\par\penalty0
+\lean{Copying/TensorAssociation}{50}{52}{TensorAssociation.iso}
+\par\penalty0
+\lean{Copying/TensorAssociation}{54}{84}{TensorAssociation.input}
+\par\penalty0
+\lean{Copying/TensorAssociation}{86}{116}{TensorAssociation.output}
+\par\penalty0
+\lean{Copying/ParametricityDoubleFamily}{36}{40}{Parametricity.FamilyLiteral.leftLargeDouble}
+\par\penalty0
+\lean{Copying/ParametricityDoubleFamily}{50}{54}{Parametricity.FamilyLiteral.leftSmallDouble}
+\par\penalty0
+\lean{Copying/ParametricityDoubleFamily}{64}{68}{Parametricity.FamilyLiteral.largeDouble_synchronous}
+\par\penalty0
+\lean{Copying/ParametricityDoubleFamily}{72}{76}{Parametricity.FamilyLiteral.smallDouble_synchronous}%
+
+\subsection{Original specimens after moving a selected member}
+The boundary-compensation construction places the original literal
+parametricity pair in an actual common input-permutation context. It
+reindexes the original private contraction tree by the recorded output
+bijection. Consequently an isolated family with any original private tree
+has a genuine filling witness for the original parametricity pre-template.
+The proof needs the two input actions to agree; the output action is
+recorded separately and used to reindex the tree. Synchrony is a useful
+stronger fact proved for the present family isomorphisms.
+
+In particular, for arbitrary $m,n$ and arbitrary term contraction tree
+$C$ of arity $m+n+1$, the selected-small witness relates
+\[
+ ((B_L\otimes F^L_{m,n});C);\operatorname{cell}(1)
+       \quad\sim\quad B_R\otimes F^R_{m,n}.
+\]
+The selected-large version uses the corresponding $A_L,A_R$. The interface
+casts preserve every numerical position. These witnesses contain no
+robustness premise, observation premise or assumed closure under arbitrary
+substitution. They are constructed from the original pair and proved
+finite-graph context operations.
+
+\lean{Copying/ParametricityIsolatedFamily}{44}{47}{Parametricity.IsolatedFamily.smallWitness}
+\par\penalty0
+\lean{Copying/ParametricityIsolatedFamily}{82}{85}{Parametricity.IsolatedFamily.largeWitness}%
+
+\subsection{Application to the selected family input}
+\termdef{parametricity-first-input-application}
+The common application frame has three components: the original application
+edge, the entire closed family, and the supplied argument graph $V$.
+The application's function output reaches family input zero, its argument
+output reaches $V$'s input, and every other family input remains external
+in its original position. All outputs of $V$ remain external in order.
+The frame works when the remaining family is empty. Replacing the family
+component by an actual filling witness gives an actual filling witness for
+the application, with $V$ retained as common context.
+
+A selected complete member occurrence inside the family gives a complete
+occurrence of the original application to that member and $V$. Ordered
+incidences prove the two argument attachments; the distinct original
+component owners prove edge disjointness. Conversely, complete occurrences
+of an application head, a whole family and an argument assemble into an
+occurrence of this exact frame when the two original attachment equations
+hold. The assembly derives internal freshness from complete incidence and
+disjoint edge images. It does not require an unproved graph-locality law.
+The resulting port equations identify external input zero, every remaining
+input and every output of $V$ explicitly.
+
+\lean{Copying/ParametricityApplyOccurrence}{47}{49}{Parametricity.ApplyFirst.binaryOccurrence}
+\par\penalty0
+\lean{Copying/ParametricityApplyOccurrence}{51}{53}{Parametricity.ApplyFirst.binary_input}
+\par\penalty0
+\lean{Copying/ParametricityApplyJoin}{120}{123}{Parametricity.ApplyFirst.Join.occurrence}
+\par\penalty0
+\lean{Copying/ParametricityApplyJoin}{125}{126}{Parametricity.ApplyFirst.Join.input_zero}
+\par\penalty0
+\lean{Copying/ParametricityApplyJoin}{128}{132}{Parametricity.ApplyFirst.Join.input_succ}
+\par\penalty0
+\lean{Copying/ParametricityApplyJoin}{134}{135}{Parametricity.ApplyFirst.Join.output}%
+
+\subsection{The larger abstraction's one-versus-one comparison}
+For a stable argument $V$, the original larger private-reading lambda opens
+in one beta rewrite. Its reduct is the original application of the smaller
+private-reading lambda to the unevaluated callback graph $f()$ connected to
+$V$. The constant-returning side has the same one-step factorization with
+the smaller constant-returning lambda. The complete callback, including its
+original single-use contraction graph, remains in the common context.
+Stability is precisely the original beta-rule hypothesis; neither proof
+assumes that the callback terminates or takes a prescribed number of steps.
+
+Insert these two original beta sources into the actual complements of the
+opened selected members in the complete remaining family. Each resulting
+rewrite resumes at the original external input zero. After the rewrites,
+the smaller-family filling just established, surrounded by the common
+application/callback frame, is a genuine original parametricity residual.
+Thus a larger member becomes a smaller member: the remaining counts are
+$m,n$, and the residual pair is the family with counts $m,n+1$, with the
+private tree and allocated cell retained. Both costs are exactly one.
+
+\lean{Copying/ParametricityLargeFamilyApplication}{58}{65}{Parametricity.LargeFamilyApplication.left_beta}
+\par\penalty0
+\lean{Copying/ParametricityLargeFamilyApplication}{69}{76}{Parametricity.LargeFamilyApplication.right_beta}
+\par\penalty0
+\lean{Copying/ParametricityLargeFamilyApplication}{81}{84}{Parametricity.LargeFamilyApplication.residual}
+\par\penalty0
+\lean{Copying/ParametricityLargeFamilyApplication}{93}{103}{Parametricity.LargeFamilyApplication.one_vs_one}%
+
+\termdef{parametricity-original-source-correspondence}
+A computed inverse-beta cut is not by itself an identification with the
+original Figure~20 application source. The source-correspondence proofs
+reconstruct that entire source. On the right, the matched local reduct and
+all untouched remaining closures form an exhaustive edge partition. Actual
+cut replacement preserves the latter occurrences, and the inserted source
+contains the original application, the original closed lambda and $V$.
+Assembling those pieces proves a complete source occurrence; exact boundary
+coordinates and full edge coverage prove a boundary-fixing recursive
+isomorphism. The concrete smaller and larger right sources discharge every
+partition and attachment condition. In particular, the source exposes all
+outputs of arbitrary $V$ unchanged.
+
+\lean{Copying/ParametricityRightApplicationCut}{140}{143}{Parametricity.RightApplicationCut.iso}
+\par\penalty0
+\lean{Copying/ParametricitySmallRightSource}{55}{60}{Parametricity.SmallRightSource.iso}
+\par\penalty0
+\lean{Copying/ParametricityLargeRightSource}{67}{75}{Parametricity.LargeRightSource.iso}%
+
+The corresponding left source also reconstructs the original arbitrary
+private tree and allocated cell. Together with the right source
+isomorphism, the local one-versus-one result can be stated at the ordinary
+application to the original isolated larger family. The smaller-family
+comparison has a different quantitative behavior: one beta rewrite followed
+by eight actual private-read transitions on the left, and one original beta
+rewrite on the right. Its independently proved copying, garbage-collection
+and sharing corrections then produce the remaining original parametricity
+family. These concrete family comparisons are prerequisites for universal
+parametricity robustness; they do not alone classify every possible
+original-host overlap or finish Proposition~12.2.
+
+\subsection{The smaller-abstraction case for arbitrary original families}
+\termdef{parametricity-small-family-diagram}
+Let $m_1,m_2\in\mathbb N$, put $n=m_1+m_2$, let $T$ be an arbitrary term contraction tree with $n+1$ inputs, and let $V$ be an arbitrary stable graph with one term input and output interface $O$.  The selected smaller abstraction is written first temporarily, followed by the unchanged larger block of size $m_1$ and unchanged smaller block of size $m_2$.  The input permutation which identifies this presentation with the original Figure~20 order is explicit and acts equally on both families.  On the left, its private outputs meet the same permutation of the original tree.  No abstraction body or term translation is changed.
+
+Write $\mathcal A(F,V)$ for the actual application context which connects its function output to input zero of the entire family $F$, connects its argument output to $V$, retains every other family input, and exposes every output of $V$.  The two source graphs constructed below are genuine fillings of the original parametricity pre-template in this context.  They are not related by a new relation defined to assert the intended result.
+
+The checked smaller-family diagram has the form
+\[
+ \mathcal A(F_L,V)\xrightarrow{9} U,
+ \qquad
+ \mathcal A(F_R,V)\xrightarrow{1} R,
+\]
+followed by the certificate chain
+\[
+ U\mathrel{\mathcal T_{\rm Copying}}U_1
+ \mathrel{\mathcal T_{\rm GC}}U_2
+ \mathrel{\mathcal T_{\rm GC}}U_3
+ \mathrel{\mathcal T_{\rm sharing}}W
+ \mathrel{\mathcal T_{\rm Param}}R.
+\]
+Here each $\mathcal T$ denotes a genuine filling witness for the named, independently defined template; these are not additional machine transitions.  The nine left transitions consist of original beta followed by the original eight-step private read.  The right transition is original constant-body beta.  Both sides retain the ignored argument under its original weakening, including all outputs in $O$.  The argument is never evaluated by this diagram.  Copying gives the directed cost comparison; the two garbage collections and sharing correction have exact cost.  In particular, the construction does not assert exact cost equality for the nine-versus-one comparison.
+
+The final parametricity witness contains precisely the remaining $(m_1,m_2)$ family.  Its private term tree is the actual residual tree of $T$, with the selected input closed by the original weakening.  The private atom network is related to the original cell encoding by the proved sharing algebra, rather than by treating its contraction or weakening edges as identity wires.  The case $n=0$ is included: the remaining family is the literal empty graph.
+
+The declarations below establish this entire schematic family diagram, its source correspondence, and its quantified resource interfaces.  Universal parametricity robustness additionally requires extraction and classification of these cases from arbitrary original specimens; that universal statement is not asserted by this local diagram.
+
+\subsubsection{The actual remaining private atom network}
+After the private read and the two garbage collections, the remaining atom network has three original contractions and three original weakening leaves.  Its only live input is the retained reference instance.  The declarations \texttt{localTree}, \texttt{firstTree}, and \texttt{fullTree} describe this network by two literal zero-input grafts.  The component occurrences, input/output equations, and disjointness lemmas prove that these are exactly its actual edges and attachments in the computed reduct.  In particular, both old weakening leaves survive the read cut and are included in the complete occurrence.  The final witness replaces this whole one-input atom tree by the canonical one-input tree using the independently proved sharing relation.  Its pointed form keeps the resumed original input zero.
+
+\subsubsection{Reconstructing the complete corrected graph}
+The corrected graph contains the returned numeral, the residual term tree and retained instance, the complete atom tree above, and the unchanged store with stored numeral.  Each named component is constructed as a complete occurrence; every stated disjointness condition is proved by the original edge ownership or primitive labels.  The serial attachments identify the retained instance output with the atom tree input and the atom tree output with the store input.  The tensor assembly separates the returned numeral from this complete private resource component.  Thus \texttt{occurrence} is a complete occurrence of the proposed normal presentation in the actual corrected graph, with no omitted argument or cell resource.
+
+\subsubsection{Why the reconstructed graph is the whole graph}
+The coverage proof first classifies every original reader-ready edge into the matched read or its genuine retained complement.  It then classifies every edge of the actual cut replacement.  The coverage lemmas for the two nested atom grafts account for their original weakening leaves as well as their contractions.  Consequently every corrected edge lies in exactly one of the assembled components.  The input lemmas compute every external coordinate, not only the active coordinate.  A complete occurrence with surjective edge map and fixed ordered boundaries gives the displayed recursive graph isomorphism.  Internal-vertex surjectivity follows from completeness of incidence, so it is not an extra reconstruction hypothesis.
+
+\subsubsection{Association of actual serial composition}
+For arbitrary compatible hypernets $A,B,C$, complete occurrences of their three original components are assembled in $A;(B;C)$.  The two attachment lemmas identify the two common interfaces, while edge disjointness follows from the original component tags.  The resulting occurrence of $(A;B);C$ fixes every input and output and covers every edge, giving an actual recursive graph isomorphism.  This is a representation theorem about serial gluing; it introduces no execution rule and imposes no restriction on graph labels or depth.
+
+\subsubsection{Returning to the original private cell}
+The graph \texttt{result} is the returned numeral in parallel with the original residual term tree followed by the original private cell.  The association isomorphisms retain the instance, canonical atom $D_{1,1}$, store, and numeral in that cell's original encoding.  The actual sharing witness on the complete atom tree is extended through the unchanged reference and numeral components, then transported by these proved graph isomorphisms.  This constructs \texttt{sharing\_residual} and its exact input-pointed form.  The final factorization combines the unchanged eight actual transitions with the explicitly constructed copying/GC/GC certificate and this sharing certificate.
+
+\subsubsection{Directed costs of the read corrections}
+A pointed copying filling supplies forward improvement and reverse overhead through the completed copying theorem; it does not supply exact cost equality.  The two garbage-collection steps preserve exact cost and reflect original search roots.  Their intermediate roots are therefore derived from the final root, rather than introduced as unproved assumptions.  The \texttt{ReadResidual} structure records an explicit copying/GC/GC chain followed by a sharing witness, including its actual intermediate graph and focus.  Its comparison theorem composes the proved directed and exact relations.  The cut and input operations lift the genuine graph witnesses at an explicitly specified original boundary input; they do not presume transitivity of filling witnesses or identify an arbitrary internal focus with that input.
+
+\subsubsection{The local nine-transition calculation}
+The unchanged original beta step precedes the eight-transition private read.  The stable argument remains under its weakening in the computed complement, with every output retained.  The complete-match cut transports both the original finite run and all four correction links.  Successor coherence identifies the independently presented endpoint with the constructed replacement, including its actual resumed vertex.  Hence \texttt{nine\_transition\_residual} produces nine genuine original transitions and a fully constructed residual certificate, not a premise requiring that certificate.
+
+\subsubsection{Replacing a complete tensor component}
+The selected first tensor component is cut out using its complete occurrence.  The inserted replacement and retained second component have disjoint edge images and assemble into the literal new tensor.  External-input and external-output lemmas prove that every ordered boundary attachment is unchanged.  Every retained edge belongs to the second original component and every inserted edge belongs to the replacement; this exhaustive classification proves edge coverage.  The resulting isomorphism identifies the computed replacement with the actual tensor.  The general output lemma separately proves preservation of any external output attachment of a complete cut.
+
+\subsubsection{The remaining-family attachment frame}
+The two-hole frame has $n$ genuine internal term junctions.  Its first hole contains an arbitrary $n$-input, $n$-output remaining family $P$; the second contains a computation $G$ with $n+1$ term inputs.  Output $i$ of $P$ connects to input $i+1$ of $G$.  Input zero of $G$ remains external, as do the ordered inputs of $P$ and every output of $G$.  The finite incidence, uniqueness, typing, and coverage proofs include $n=0$ without adding an identity edge.  The complete occurrences and port equations expose these exact attachments.  The final rewrite lemma lifts any original rewrite of $G$ through this actual frame, preserving its original rule and focus.
+
+\subsubsection{Execution and residual transport through that frame}
+The state map inserts the original mode and local focus into the second component of the remaining-family frame.  Search steps lift by original incidence preservation and rewrite steps by the original contextual rewrite rule.  Induction on finite runs therefore preserves their exact transition count.  The pointed filling construction expands the local certificate together with a reflexive certificate on $P$.  Each of the four correction links is lifted separately, retaining all intermediate graphs and foci.  Thus the residual construction requires no false transitivity principle for the underlying template relation.
+
+\subsubsection{Separating the returned numeral from the remaining family}
+For a closed-result component $A$ with one term input and a continuation $R$ with $n$ term inputs, attaching $P$ to the nonactive inputs of $A\otimes R$ reconstructs exactly $A\otimes(P;R)$.  The proof uses actual complete occurrences of $A,P,R$, the explicit $n$ attachment equations, and disjoint edge ownership.  Every external input and output is computed and every original component edge is covered.  The resulting isomorphism applies to the returned numeral and residual tree/cell without erasing any of them.
+
+\subsubsection{The genuine smaller residual family}
+Instantiate the remaining-family frame with the original left $(m_1,m_2)$ family.  The original eight-step read lifts with unchanged cost and all four corrections.  The tensor normalization and serial association identify its corrected graph with the returned numeral in parallel with the literal original left family for the residual tree of $T$.  Applying the original parametricity template to that family and retaining the numeral constructs the actual paired witness to the returned numeral and original right $(m_1,m_2)$ family.  The pointed witness resumes at their common input zero.  Both family multiplicities are arbitrary, including empty blocks.
+
+\subsubsection{The constructed nine-versus-one family predecessors}
+The original read-body beta reduct is a complete occurrence in the reattached private family and the unchanged discarded argument.  Replacing it by the original beta source constructs the actual left predecessor; the original stable beta rule then recovers the opened graph.  The eight-step family read is lifted into its complement, and the computed tensor replacement is normalized by the proved tensor-cut isomorphism.  On the right, the returned numeral and same discarded argument form a complete constant-body beta reduct; inserting its original source gives the one-step right predecessor.  All remaining closures and all argument outputs survive.  The final diagram records these actual prefixes, the full correction chain, and the genuine smaller residual parametricity witness.  Source identification with the canonical original application context is established in the later source-isomorphism modules.
+
+\subsubsection{The common original application context}
+This explicit finite three-component frame contains the original application operation, an entire $(n+1)$-input family, and the arbitrary argument graph.  Its two internal term vertices are the function and argument connections.  Every other family input remains an external input, and every argument output remains an external output.  Incidence uniqueness, coverage, and typing are proved by the finite component cases, including the empty remaining family.  The complete head/family/argument occurrences and their port equations expose those actual connections.  Expanding a genuine family filling with the unchanged argument gives the common-context witness used at the sources of the final diagram.
+
+\subsubsection{Recovering the whole original private source}
+The complete original term tree and allocated cell occur beneath the dereference before any copying takes place.  The payload and atom-tail components join along their genuine atom interface.  Serial association restores the original cell encoding, preserving the canonical atom distributor, store, and numeral.  The input lemmas identify the selected input with the actual reader argument and fix every other original term input.  The exhaustive edge classification proves that the sole edge outside this complete private occurrence is the active dereference itself.
+
+\subsubsection{Recovering the whole source family after the inverse beta cut}
+The inserted original beta redex supplies the actual application head, selected original smaller lambda, and argument.  The remaining original family and complete original private component are edge-disjoint from the removed read-body reduct, so their complete occurrences survive the actual cut.  The cut attachment equations show that the selected lambda's free variable and every other lambda output meet precisely their original tree inputs.  Serial assembly therefore produces a complete occurrence of the entire isolated original Figure20 left family and cell in the computed predecessor.  All head/family/argument disjointness obligations are proved.  The original isolated-family witness, transported by serial association alone, certifies this whole family to its original right counterpart.
+
+\subsubsection{External boundaries of surviving occurrences}
+For any two disjoint complete occurrences, an input or output attachment of the surviving occurrence remains the same external port after replacement of the other occurrence.  To prove each assertion, project the old vertex into the computed complement, use injectivity of the complement embedding to identify it with that external port, and then apply the literal replacement host map.  These lemmas make no closure, rootedness, or label restriction beyond the complete occurrences and their proved disjointness.
+
+\subsubsection{The complete left source correspondence}
+The application head, entire original private family, and original argument assemble into a complete occurrence of the canonical application context in the computed beta predecessor.  Its active input, every remaining family input, and every argument output are shown to be the identical ordered external ports.  Before the cut, exhaustive classification assigns every edge either to the removed reader/argument component, the retained family, or the complete original private component.  After the cut, retained and inserted cases prove that the three canonical components cover every edge.  Complete incidence and this coverage give the actual recursive graph isomorphism.  Thus source correspondence is proved, not supplied as an application hypothesis.
+
+\subsubsection{The canonical arbitrary-family endpoint}
+The final source graphs are the actual application context around the whole original isolated left and right families, at rewrite input zero.  Their common-context filling is constructed directly from the original parametricity witness and the unchanged argument.  Both computed beta predecessors are related to these sources by the proved whole-graph isomorphisms, fixing every external port.  Transporting the actual prefixes preserves their exact counts and actual resumed vertices; transporting the residual certificates preserves their explicit intermediate graphs.  The resulting \texttt{nine\_vs\_one} theorem therefore has only the original stability premise on the arbitrary argument.  It contains no assumption of translation correctness, machine determinism, source matching, or residual parametricity equivalence.
+
+
+
+\subsection{Canonical source diagrams and the directed residual comparison}
+The final family diagram statements now start at the ordinary first-input
+application graphs themselves. The larger-family theorem gives its two
+actual rewrites and a pointed original-template residual. The smaller-family
+theorem gives actual finite runs of lengths nine and one, records that the
+left run ends in search mode, and supplies both the constructed read
+correction and the remaining-family pointed witness. A separate
+\texttt{sourceWitness} certifies that each pair of initial graphs is already
+an application context around an instance of the original parametricity
+pre-template. This is a syntactic filling certificate; universal
+parametricity equivalence is not being assumed or concluded from that
+certificate alone.
+
+\lean{Copying/ParametricityLargeFamilyDiagram}{18}{20}{sourceWitness}
+\par\penalty0
+\lean{Copying/ParametricityLargeFamilyDiagram}{25}{35}{one_vs_one}
+\par\penalty0
+\lean{Copying/ParametricitySmallFamilyDiagram}{26}{29}{sourceWitness}
+\par\penalty0
+\lean{Copying/ParametricitySmallFamilyDiagram}{50}{71}{nine_vs_one}
+
+At a closed running host, the directed read correction changes the endpoint
+through the independently established copying improvement and exact garbage
+collection/sharing steps. Applying those semantic comparisons requires the
+corrected intermediate search state to be rooted. That rootedness is proved:
+the remaining parametricity filling has only immediate-return lambda entries
+and no outputs, so its two actual search histories correspond. Rootedness
+of the opposite endpoint therefore supplies the corrected endpoint's root.
+Hole-freeness and the term type of the focus are transported through the
+actual correction. No additional premise says that the corrected state
+happens to be reachable.
+
+The resulting forward quasi-specimen uses the improvement refinement on the
+corrected left endpoint and equality on the right. The converse uses equality
+on the first endpoint and the opposite overhead refinement on the second.
+These are assertions for the stated all-context quasi-specimen system at
+closed, term-typed pointed hosts. They preserve the quantitative orientation;
+they do not assert equality of exact run lengths. Using them in the paper's
+universal robustness proof still requires the complete original
+overlap classification and admissibility of the required residual contexts.
+
+\lean{Copying/ParametricityPointedResidual}{18}{27}{parametricity_rooted_iff}
+\par\penalty0
+\lean{Copying/ParametricityPointedResidual}{49}{64}{parametricity_quasi}
+\par\penalty0
+\lean{Copying/ParametricityPointedResidual}{68}{83}{parametricity_quasi_converse}
+
+
+\subsection{Copying grows an original family}
+\termdef{parametricity-family-copy-growth}
+Let the selected left closure have one private term output, and let $R$
+be its entire remaining family of $m+n$ original closures. Copying creates
+two whole copies of the selected closure. The resource output from each
+copy enters the complete canonical two-use term row. A four-component
+occurrence proof moves that row past the untouched $R$ into the old private
+tree $C$. On the nose up to ordered graph representation, the new tree is
+\[
+ C' = D^{\mathsf{term}}_{1,2}\mathbin{\mathrm{graft}_0} C.
+\]
+Its $2+(m+n)$ inputs are the two selected private outputs followed by all
+original remaining private outputs. Every old edge of $C$, every canonical
+weakening in the row, and the literal atom distributor and store in the
+private cell remain. The occurrence proof covers every edge, and verifies
+each input and output; it does not assume copying commutes with composition.
+On the right the closure has no private outputs. Only empty resource
+carriers disappear from the representation; the two original closed
+closures and all remaining closures are retained.
+
+The two enlarged families are exactly the doubled families already isolated.
+For a selected large member they have counts $m+2,n$, and for a selected
+small member they have counts $m,n+2$. Boundary compensation constructs a
+genuine original parametricity filling with $C'$ as its private tree.
+The actual upstream tree's residual $T^{-}$ is placed in a common graph
+context at the second copy's input. All its unselected inputs remain
+external in their original order, including the zero-input residual case.
+This supplies one original copying rewrite on each side and a constructed
+original residual specimen. No copyability premise is left to the caller:
+it is proved from the unchanged original lambda bodies.
+
+\lean{Copying/ParametricityTensorGraft}{200}{201}{Parametricity.TensorGraft.iso}
+\par\penalty0
+\lean{Copying/ParametricityCopyGrowth}{44}{59}{Parametricity.CopyGrowth.iso}
+\par\penalty0
+\lean{Copying/ParametricityCopyFamilies}{27}{44}{Parametricity.CopyFamilies.large}
+\par\penalty0
+\lean{Copying/ParametricityCopyFamilies}{49}{66}{Parametricity.CopyFamilies.small}
+\par\penalty0
+\lean{Copying/ParametricityCopyFamilies}{71}{85}{Parametricity.CopyFamilies.large_copy}
+\par\penalty0
+\lean{Copying/ParametricityCopyFamilies}{90}{104}{Parametricity.CopyFamilies.small_copy}
+\par\penalty0
+
+\subsection{Search roots and closed private interfaces}
+\termdef{parametricity-lambda-rootedness}
+The boundary laws prove two separate facts. Every family input is sourced
+by a surface lambda edge, and the complete private family has no output.
+A non-lambda source at an original host vertex must consequently be
+retained. Conversely, an edge targeting a host vertex cannot belong to a
+no-output component. Following this argument backwards retains every
+predecessor of a retained edge, including branches not used by the token.
+These assertions concern actual ordered incidences of recursive fillings,
+not a global assumption that the surrounding graph is acyclic.
+
+For search itself there is a stronger exact result. A step at a common
+host coordinate either reflects to an ordinary context step, which both
+fillings preserve, or enters one shallow family. In the second case the
+actual lambda returns immediately from search to backtracking on that same
+wire on both sides. Proved search determinism identifies this return with
+the supplied step. An exiting boundary case is impossible because the
+family has no outputs. Induction on any finite search run therefore gives
+an equally long opposite run, still at corresponding host coordinates.
+The endpoint isomorphisms transport this statement to independently named
+original graphs. This proves the rootedness equivalence used in the directed
+read correction without invoking the desired parametricity robustness.
+
+\lean{Copying/ParametricityBoundaryBarrier}{83}{95}{Parametricity.Pair.input_heads}
+\par\penalty0
+\lean{Copying/ParametricityBoundaryBarrier}{102}{102}{Parametricity.template_noOutputs}
+\par\penalty0
+\lean{Copying/NoOutputOverlap}{45}{53}{NoOutputOverlap.ancestor_retained}
+\par\penalty0
+\lean{Copying/LambdaEntrySearch}{18}{38}{Search.Expansion.lambda_step}
+\par\penalty0
+\lean{Copying/LambdaEntrySearch}{42}{54}{Search.Expansion.lambda_run}
+\par\penalty0
+\lean{Copying/LambdaEntrySearch}{87}{96}{FillingWitness.lambda_rooted_iff}
+\par\penalty0
+
+\subsection{Preserved allocation overlaps and numeric branches}
+\termdef{parametricity-preserved-allocation}
+Allocation can inspect a stable lambda edge that belongs to a shallow
+parametricity family. The complete family is not a retained corolla, so
+excluding this overlap by a retained-footprint assumption would be wrong.
+Instead, original rooted readiness supplies the stable primitive operand
+on each side. The actual reference-allocation rewrite is identified with
+replacement of just its original reference head by the literal allocation
+cell prefix. The old operand and its externally attached box are unchanged.
+The complete recursive filling certificate is therefore preserved by
+replacing only that retained reference contribution in the common context.
+The resulting pointed witness proves the exact one-step allocation branch
+for any supplied represented successor. The original roots of the two
+running hosts are the ordinary robustness hypotheses, not new assumptions
+about the intermediate residual.
+
+Unary negation and both binary arithmetic operations have a different
+argument. Every edge of their entire actual footprint is a descendant of
+the sourced numeric head, and none has the lambda label. The entry barrier
+retains that whole ancestry, including both ordered binary operands.
+The proved retained-footprint construction then supplies the actual
+opposite compute step and original residual, with one transition per side.
+The entry and empty-output laws are proved for both parametricity directions;
+these numeric branches require no binding-free restriction or assumed
+callback behavior.
+
+\lean{Copying/AllocationEnabled}{15}{61}{Allocation.rooted_enabled}
+\par\penalty0
+\lean{Copying/LambdaEntryAllocation}{73}{90}{LambdaEntryOverlap.allocation_matching}
+\par\penalty0
+\lean{Copying/LambdaEntryAllocation}{94}{110}{LambdaEntryOverlap.allocation_robust_case}
+\par\penalty0
+\lean{Copying/LambdaEntryNumericResiduals}{16}{30}{LambdaEntryOverlap.unary_robust_case}
+\par\penalty0
+\lean{Copying/LambdaEntryNumericResiduals}{34}{48}{LambdaEntryOverlap.binary_robust_case}
+\par\penalty0
+
+\subsection{Dependency status at this publication}
+All of the following arrows are now justified by checked constructions:
+original family enumeration $\longrightarrow$ complete isolation and
+synchrony $\longrightarrow$ compensated original filling witnesses
+$\longrightarrow$ full copying family residuals and original beta sources.
+The smaller beta branch additionally uses the completed copying improvement,
+exact garbage collection and sharing laws, then exact search-root transport,
+to yield the directed quasi-specimen clauses. The larger beta branch leaves
+the entire original callback unevaluated. Allocation and numeric branches
+have actual matching rewrites in arbitrary original recursive specimens.
+
+The open arrows are from an arbitrary original host rewrite to these
+canonical copying or beta situations, together with all remaining preserved
+and deep/mixed operation cases, and from that exhaustive dispatch to universal
+forward/converse parametricity robustness and its contextual consequences.
+Correspondence audits, semantic weakening and Figure~22's final equivalence
+chain also remain. A genuine structural source or residual filling is not,
+by itself, a theorem of observational equivalence.

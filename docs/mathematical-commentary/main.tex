@@ -18,6 +18,7 @@
 \renewcommand*{\@tocrmarg}{3.4em}
 \patchcmd{\l@section}{1.5em}{2.1em}{}{\errmessage{Could not widen section numbers in contents}}
 \renewcommand*{\l@subsection}{\@dottedtocline{2}{1.5em}{3.2em}}
+\renewcommand*{\l@subsubsection}{\@dottedtocline{3}{4.7em}{4.6em}}
 \makeatother
 \BeforeBeginEnvironment{definition}{\Needspace{12\baselineskip}}
 \BeforeBeginEnvironment{lemma}{\Needspace{8\baselineskip}}
@@ -60,7 +61,7 @@
 % Keep completed Appendix B.1 tasks in place; use plain prose inside this macro.
 % ulem permits line breaks, while normalem preserves the meaning of \emph.
 \newcommand{\completedtask}[1]{\sout{#1}}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/6e695abef43395185b0e80df3196009fa669b1b4}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/f235d4d7664d5f02a6227a819ad97bc75b63470a}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -68,7 +69,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{30 October 2026\\\small Source snapshot: \texttt{6e695ab}; Lean \texttt{4.35.0}}
+\date{30 October 2026\\\small Source snapshot: \texttt{f235d4d}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -295,6 +296,8 @@ Converse residual synthesis and Proposition~12.2 remain unfinished.
 \input{125-full-copying-template}
 \input{126-remote-copying-concordance}
 \input{127-parametricity-local-concordance}
+\input{128-parametricity-family-diagrams}
+\input{129-parametricity-families-concordance}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -305,7 +308,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/6e695abef43395185b0e80df3196009fa669b1b4}{Repository at revision \texttt{6e695ab}}.
+\href{https://github.com/danghica/hypernets-lean/tree/f235d4d7664d5f02a6227a819ad97bc75b63470a}{Repository at revision \texttt{f235d4d}}.
 \end{thebibliography}
 \clearpage
 \appendix

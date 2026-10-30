@@ -1014,7 +1014,7 @@ addressed sites under boxes and unrestricted original recursive contexts
 are covered. Only the parametricity family remains unfinished among the
 seven requested further templates.
 
-The full build passes 945 jobs. All 6130 axiom reports pass: 6 abstract,
+At the six-family checkpoint, the full build passed 945 jobs. All 6130 axiom reports passed: 6 abstract,
 542 graph and 5582 copying declarations. Only \texttt{propext},
 \texttt{Classical.choice} and \texttt{Quot.sound} occur; there is no
 \texttt{sorryAx} or project-specific axiom. This milestone adds 560 public
@@ -1024,3 +1024,21 @@ and large beta opening remain intermediate results. Every new declaration
 has an immutable source-fragment link in
 Sections~\ref{sec:remote-copying-concordance}--\ref{sec:parametricity-local-concordance}.
 \lean{Copying/Audit}{3400}{5685}{Copying.Audit: six completed further templates}
+
+\subsection{Complete parametricity family diagrams}
+The current full build passes 1014 jobs. All 6897 distinct axiom reports pass:
+6 abstract, 542 graph and 6349 copying declarations. Every reported axiom is
+\texttt{propext}, \texttt{Classical.choice} or \texttt{Quot.sound}; no
+\texttt{sorryAx} or project-specific axiom occurs. The current milestone
+publishes 767 additional public declarations across 68 proof modules, plus
+one import-only compatibility module. The further-template development now
+contains 3091 public declarations in 370 modules. Its immutable code revision
+is \texttt{f235d4d}.
+
+The audited endpoints include the smaller-family nine-versus-one diagram,
+the larger-family one-versus-one diagram, both complete family copying
+diagrams, source isomorphisms, search-root transport and both directed
+parametricity quasi-clauses. Allocation and arithmetic branches also have
+actual opposite rewrites and genuine residuals. They do not claim full
+parametricity robustness or the final Proposition~12.2.
+\lean{Copying/Audit}{5686}{6452}{Copying.Audit: original parametricity family diagrams}

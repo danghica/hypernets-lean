@@ -9,7 +9,7 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: six further template families
+## Latest milestone: original parametricity family diagrams
 
 **Contraction associativity, contraction commutativity, garbage collection and
 pulling weakening or contraction through boxes are complete.** Each has output closure,
@@ -37,13 +37,17 @@ Proposition 12.2 is unproved.** Its terms, Figure 16 translation, copying rule
 and stability/copyability conditions are unchanged. Appendix B.1 keeps every
 completed task and subtask with strikethrough.
 
-Full build: **945 jobs**. All **6,130 axiom audits** pass (6 abstract, 542 graph,
-5,582 copying); no `sorryAx` or project-specific axioms. The commentary explains
+Full build: **1,014 jobs**. All **6,897 axiom audits** pass (6 abstract, 542 graph,
+6,349 copying); no `sorryAx` or project-specific axioms. The commentary explains
 the proof and its correspondence with the paper, with immutable source links
-for all 2,324 newly published declarations in 301 modules. The only remaining template
-family is parametricity. Its actual nine-transition private-read correction
-and one-versus-one large beta opening are checked intermediate results; the
-whole-family robustness proof remains open.
+for all 3,091 newly published declarations in 370 modules. The only remaining template
+family is parametricity. Its complete original-family diagrams now cover copying either lambda kind,
+one-versus-one large beta, and nine-versus-one small beta, for arbitrary
+remaining family sizes and original private trees. Both beta sources are
+proved to be the original whole-family application contexts. Directed residual
+corrections derive the intermediate search roots; allocation and numeric
+branches construct actual opposite rewrites. The full host-overlap dispatch
+and universal parametricity robustness remain open.
 
 Estimated completion by mathematical effort is **roughly 65–75%, with low
 confidence**, as of 30 October 2026. The earlier **80% estimate is withdrawn**.
