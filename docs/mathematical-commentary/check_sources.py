@@ -44,6 +44,9 @@ for path in sorted(root / name for name in versioned_sources if name.endswith(".
                 errors.append(f"Uncovered declaration: {relative}:{number}: {line}")
 
 for name, start, end, label in references:
+    relative = f"Hypernets/{name}.lean"
+    if relative not in versioned_sources:
+        errors.append(f"Source-fragment target is absent from pinned revision: {relative}")
     path = root / "Hypernets" / f"{name}.lean"
     if not path.exists() or not 1 <= int(start) <= int(end) <= len(path.read_text().splitlines()):
         errors.append(f"Invalid range: {name}:{start}-{end}: {label}")

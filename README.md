@@ -9,7 +9,7 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: five further template families
+## Latest milestone: six further template families
 
 **Contraction associativity, contraction commutativity, garbage collection and
 pulling weakening or contraction through boxes are complete.** Each has output closure,
@@ -24,21 +24,26 @@ proved idempotence corrections. **Box-contraction pulling has its whole-graph co
 correction and full forward and converse robustness**. Its exact contextual
 equivalence uses selected original-port reconstruction in arbitrary contexts.
 
-Copying input safety is now proved at every ordered input, using an actual
-three-payload two-copy interchange with complete canonical distributors.
+**The full copying template is now complete too**, closing the sixth of those
+seven families. It has all-input safety, universal forward and converse
+robustness, contextual improvement and termination equivalence in unrestricted
+original contexts. Actual upstream/downstream copying diagrams retain all
+payloads, original tree branches and canonical weakening edges. Its original
+two-versus-zero input cost is preserved; exact-count equality is not claimed.
 
-**Full copying robustness, parametricity, correspondence,
+**Parametricity, correspondence,
 semantic weakening and the Figure 22 assembly remain unfinished.
 Proposition 12.2 is unproved.** Its terms, Figure 16 translation, copying rule
 and stability/copyability conditions are unchanged. Appendix B.1 keeps every
 completed task and subtask with strikethrough.
 
-Full build: **866 jobs**. All **5,570 axiom audits** pass (6 abstract, 542 graph,
-5,022 copying); no `sorryAx` or project-specific axioms. The commentary explains
+Full build: **945 jobs**. All **6,130 axiom audits** pass (6 abstract, 542 graph,
+5,582 copying); no `sorryAx` or project-specific axioms. The commentary explains
 the proof and its correspondence with the paper, with immutable source links
-for all 1,764 newly published declarations in 222 modules. The remaining two
-families have checked intermediate results, which are not presented as full
-robustness proofs.
+for all 2,324 newly published declarations in 301 modules. The only remaining template
+family is parametricity. Its actual nine-transition private-read correction
+and one-versus-one large beta opening are checked intermediate results; the
+whole-family robustness proof remains open.
 
 Estimated completion by mathematical effort is **roughly 65–75%, with low
 confidence**, as of 30 October 2026. The earlier **80% estimate is withdrawn**.

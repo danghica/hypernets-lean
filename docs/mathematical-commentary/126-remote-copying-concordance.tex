@@ -1,0 +1,1882 @@
+\clearpage
+\section{Remote copying: declarations and proofs}
+\label{sec:remote-copying-concordance}
+These declarations complete the unrestricted original copying template. The forward and converse proofs use actual retained or shallow occurrences, independently proved sharing corrections, and the original machine rules.
+
+\subsection{Boundary Occurrence}
+Boundary actions also give complete local occurrences. The occurrence records their actual boundary action instead of silently fixing those ports.
+
+Full recursive labels upgrade the existing typed boundary transport to an actual complete occurrence, with no extra injectivity assumptions.
+\lean{Copying/BoundaryOccurrence}{12}{14}{Opening.Occurrence.ofBoundaryIso}
+\par\penalty0
+
+\subsection{Contraction Tree Graft}
+Graft an arbitrary upstream graph into one ordered sharing input of an arbitrary downstream graph. The contraction-tree specialization includes zero-input residual trees and retains literal component ownership.
+
+This defines the pattern data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraft}{13}{15}{ContractionTree.Graft.pattern}
+\par\penalty0
+
+This defines the filling data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraft}{17}{23}{ContractionTree.Graft.filling}
+\par\penalty0
+
+Literal partial serial composition, retaining every unselected input in its original relative order after all upstream inputs.
+\lean{Copying/ContractionTreeGraft}{27}{33}{ContractionTree.Graft.net}
+\par\penalty0
+
+This defines the left Insert data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraft}{35}{36}{ContractionTree.Graft.leftInsert}
+\par\penalty0
+
+This defines the right Insert data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraft}{38}{39}{ContractionTree.Graft.rightInsert}
+\par\penalty0
+
+The left Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ContractionTreeGraft}{41}{42}{ContractionTree.Graft.leftOccurrence}
+\par\penalty0
+
+The right Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ContractionTreeGraft}{44}{45}{ContractionTree.Graft.rightOccurrence}
+\par\penalty0
+
+The left Occurrence ports assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraft}{47}{48}{ContractionTree.Graft.leftOccurrence_ports}
+\par\penalty0
+
+The right Occurrence ports assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraft}{50}{51}{ContractionTree.Graft.rightOccurrence_ports}
+\par\penalty0
+
+The left input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraft}{53}{59}{ContractionTree.Graft.left_input}
+\par\penalty0
+
+The right output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraft}{61}{65}{ContractionTree.Graft.right_output}
+\par\penalty0
+
+The right input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraft}{67}{72}{ContractionTree.Graft.right_input}
+\par\penalty0
+
+The selected downstream input is exactly the actual upstream root.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraft}{75}{82}{ContractionTree.Graft.selected_input}
+\par\penalty0
+
+This defines the tree Filling data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraft}{90}{96}{ContractionTree.Graft.treeFilling}
+\par\penalty0
+
+Insert the complete upstream tree into precisely one downstream input. The case a=0 includes actual weakened residual trees.
+\lean{Copying/ContractionTreeGraft}{100}{116}{ContractionTree.graftInput}
+\par\penalty0
+
+Raising the literal primitive graft is the same original graph as grafting its two raised components, with the same finite carriers and boundary ports.
+\lean{Copying/ContractionTreeGraft}{120}{134}{ContractionTree.graftInput_iso}
+\par\penalty0
+
+\subsection{Contraction Tree Graft Congruence}
+Independent recursive representation changes preserve the literal input graft and its ordered external boundary.
+
+Both grafted components may change recursive representation, while the selected original input and every external boundary position stay fixed.
+\lean{Copying/ContractionTreeGraftCongruence}{12}{20}{ContractionTree.Graft.congr}
+\par\penalty0
+
+\subsection{Contraction Tree Graft Expansion}
+Exact reassociation of simultaneous expansion through a literal graft. Both original component families retain their complete ordered interfaces.
+
+This defines the expansion Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftExpansion}{16}{18}{ContractionTree.Graft.expansionLeft}
+\par\penalty0
+
+This defines the expansion Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftExpansion}{19}{21}{ContractionTree.Graft.expansionRight}
+\par\penalty0
+
+The expansion Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/ContractionTreeGraftExpansion}{23}{35}{ContractionTree.Graft.expansionIso}
+\par\penalty0
+
+\subsection{Contraction Tree Graft Frame}
+A literal two-tree graft frame. The upstream inputs precede the ordered remaining downstream inputs; the selected downstream input is replaced by one fresh internal junction. No identity edges or ordering quotient is introduced.
+
+This defines the Vertex data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftFrame}{10}{10}{ContractionTree.Graft.Vertex}
+\par\penalty0
+
+This defines the upstream data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftFrame}{12}{12}{ContractionTree.Graft.upstream}
+\par\penalty0
+
+This defines the downstream data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftFrame}{14}{20}{ContractionTree.Graft.downstream}
+\par\penalty0
+
+The upstream injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionTreeGraftFrame}{22}{25}{ContractionTree.Graft.upstream_injective}
+\par\penalty0
+
+The downstream injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftFrame}{27}{43}{ContractionTree.Graft.downstream_injective}
+\par\penalty0
+
+The upstream downstream ne assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/ContractionTreeGraftFrame}{45}{54}{ContractionTree.Graft.upstream_downstream_ne}
+\par\penalty0
+
+The downstream selected assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftFrame}{56}{56}{ContractionTree.Graft.downstream_selected}
+\par\penalty0
+
+The downstream not output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionTreeGraftFrame}{58}{59}{ContractionTree.Graft.downstream_not_output}
+\par\penalty0
+
+This defines the label data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftFrame}{61}{63}{ContractionTree.Graft.label}
+\par\penalty0
+
+This defines the sources data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftFrame}{64}{66}{ContractionTree.Graft.sources}
+\par\penalty0
+
+This defines the targets data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftFrame}{67}{69}{ContractionTree.Graft.targets}
+\par\penalty0
+
+The input covered assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftFrame}{71}{89}{ContractionTree.Graft.input_covered}
+\par\penalty0
+
+The vertex label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftFrame}{91}{96}{ContractionTree.Graft.vertex_label}
+\par\penalty0
+
+The two literal holes joined at the selected downstream port.
+\lean{Copying/ContractionTreeGraftFrame}{99}{165}{ContractionTree.Graft.frame}
+\par\penalty0
+
+The frame acyclic assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftFrame}{167}{181}{ContractionTree.Graft.frame_acyclic}
+\par\penalty0
+
+\subsection{Contraction Tree Graft Occurrence}
+Complete occurrences glue at one ordered downstream input. The actual graft retains all other input positions; disjoint edge support supplies the required internal-carrier freshness through complete incidence matching.
+
+Select the unique original component owning an external graft input. Coverage, rather than an ordering quotient, supplies this finite inverse.
+\lean{Copying/ContractionTreeGraftOccurrence}{17}{21}{ContractionTree.Graft.Join.inputPort}
+\par\penalty0
+
+This defines the old-frame port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftOccurrence}{23}{26}{ContractionTree.Graft.Join.host}
+\par\penalty0
+
+The upstream port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftOccurrence}{28}{36}{ContractionTree.Graft.Join.upstream_port}
+\par\penalty0
+
+The downstream input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftOccurrence}{38}{50}{ContractionTree.Graft.Join.downstream_input}
+\par\penalty0
+
+The downstream port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftOccurrence}{52}{65}{ContractionTree.Graft.Join.downstream_port}
+\par\penalty0
+
+The each map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ContractionTreeGraftOccurrence}{67}{70}{ContractionTree.Graft.Join.each}
+\par\penalty0
+
+The source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftOccurrence}{72}{82}{ContractionTree.Graft.Join.source}
+\par\penalty0
+
+The target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftOccurrence}{84}{89}{ContractionTree.Graft.Join.target}
+\par\penalty0
+
+The components disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftOccurrence}{91}{101}{ContractionTree.Graft.Join.components_disjoint}
+\par\penalty0
+
+Assemble the original graft occurrence from its actual two complete components and their one specified shared boundary attachment.
+\lean{Copying/ContractionTreeGraftOccurrence}{105}{107}{ContractionTree.Graft.Join.occurrence}
+\par\penalty0
+
+The left port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionTreeGraftOccurrence}{109}{112}{ContractionTree.Graft.Join.left_port}
+\par\penalty0
+
+The right port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionTreeGraftOccurrence}{114}{117}{ContractionTree.Graft.Join.right_port}
+\par\penalty0
+
+The left edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftOccurrence}{119}{121}{ContractionTree.Graft.Join.left_edge}
+\par\penalty0
+
+The right edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftOccurrence}{123}{125}{ContractionTree.Graft.Join.right_edge}
+\par\penalty0
+
+\subsection{Contraction Tree Graft Rewrite}
+Actual rewrites of the selected downstream component of a graft. All unselected inputs retain their literal external ordering.
+
+An original downstream rewrite lifts through the literal partial serial context; no copying transition is replaced by a derived compute rule.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftRewrite}{13}{26}{ContractionTree.Graft.rewrite_right}
+\par\penalty0
+
+When the attached downstream input is positive, downstream input zero remains external, immediately after the upstream inputs.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftRewrite}{30}{39}{ContractionTree.Graft.right_zero}
+\par\penalty0
+
+An equality of ordered input interfaces commutes with an unchanged serial continuation. This transport has no input permutation.
+\lean{Copying/ContractionTreeGraftRewrite}{43}{48}{ContractionTree.Graft.serial_input}
+\par\penalty0
+
+The copying source for the full graft is the literal original downstream copying source in the graft context, with only its explicit arity equality.
+\lean{Copying/ContractionTreeGraftRewrite}{52}{62}{ContractionTree.Graft.copy_source_iso}
+\par\penalty0
+
+\subsection{Contraction Tree Graft Serial}
+Partial serial composition associates with an actual downstream serial continuation. Complete occurrences account for all three original components.
+
+This defines the ordered target list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftSerial}{24}{24}{ContractionTree.Graft.SerialRight.target}
+\par\penalty0
+
+This defines the upstream data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftSerial}{25}{26}{ContractionTree.Graft.SerialRight.upstream}
+\par\penalty0
+
+This defines the downstream data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftSerial}{27}{28}{ContractionTree.Graft.SerialRight.downstream}
+\par\penalty0
+
+This defines the continuation data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftSerial}{29}{29}{ContractionTree.Graft.SerialRight.continuation}
+\par\penalty0
+
+The boundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftSerial}{31}{35}{ContractionTree.Graft.SerialRight.boundary}
+\par\penalty0
+
+The downstream disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionTreeGraftSerial}{37}{38}{ContractionTree.Graft.SerialRight.downstream_disjoint}
+\par\penalty0
+
+The joined map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ContractionTreeGraftSerial}{40}{42}{ContractionTree.Graft.SerialRight.joined}
+\par\penalty0
+
+The components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ContractionTreeGraftSerial}{44}{47}{ContractionTree.Graft.SerialRight.components}
+\par\penalty0
+
+This defines the old-frame port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionTreeGraftSerial}{49}{52}{ContractionTree.Graft.SerialRight.host}
+\par\penalty0
+
+The input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftSerial}{54}{76}{ContractionTree.Graft.SerialRight.input}
+\par\penalty0
+
+The output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftSerial}{78}{93}{ContractionTree.Graft.SerialRight.output}
+\par\penalty0
+
+The disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftSerial}{95}{106}{ContractionTree.Graft.SerialRight.disjoint}
+\par\penalty0
+
+The occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ContractionTreeGraftSerial}{108}{110}{ContractionTree.Graft.SerialRight.occurrence}
+\par\penalty0
+
+The cover assertion states that every target coordinate has an original preimage under the indicated map.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ContractionTreeGraftSerial}{112}{121}{ContractionTree.Graft.SerialRight.cover}
+\par\penalty0
+
+No external permutation is hidden in partial serial reassociation.
+\lean{Copying/ContractionTreeGraftSerial}{124}{125}{ContractionTree.Graft.SerialRight.iso}
+\par\penalty0
+
+\subsection{Contraction Tree Graft Witness}
+Genuine filling certificates through the literal graft context. Residual weakening and grafting need only the already proved exact sharing relation; no unproved associativity of copying or transitivity of its template is used.
+
+Simultaneous recursive certificates lift through the actual two-hole partial serial context, retaining its selected port and all remaining inputs.
+\lean{Copying/ContractionTreeGraftWitness}{13}{21}{ContractionTree.Graft.witness}
+\par\penalty0
+
+Actual primitive-tree arity transport changes only the equal external index type. It neither permutes ports nor changes either original tree.
+\lean{Copying/ContractionTreeGraftWitness}{25}{26}{ContractionTree.Graft.recount}
+\par\penalty0
+
+The recount iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/ContractionTreeGraftWitness}{28}{32}{ContractionTree.Graft.recount_iso}
+\par\penalty0
+
+Name the original full graft with the successor arity required by the unchanged original copying rule. The first input remains upstream input zero.
+\lean{Copying/ContractionTreeGraftWitness}{36}{38}{ContractionTree.Graft.copyTree}
+\par\penalty0
+
+The original raised copying tree has exactly the literal two-component graft, up to its explicit equal-interface cast and representation isomorphism.
+\lean{Copying/ContractionTreeGraftWitness}{42}{47}{ContractionTree.Graft.copyTree_iso}
+\par\penalty0
+
+Closing the active upstream input before or after the graft gives actual same-interface contraction trees. Their relation is the independently proved sharing algebra, not an asserted graph isomorphism or a copying axiom.
+\lean{Copying/ContractionTreeGraftWitness}{52}{58}{ContractionTree.Graft.residual_graft_witness}
+\par\penalty0
+
+The same residual certificate targets the literal generic graft graph, so it can be used directly inside the three-payload copying diagram.
+\lean{Copying/ContractionTreeGraftWitness}{62}{68}{ContractionTree.Graft.residual_graft_net_witness}
+\par\penalty0
+
+\subsection{Copying Converse Remote}
+Every actual converse copy has either a wholly retained selected spine or a first literal shallow copying input. The right distinguished input's zero-length payload suffix is included explicitly. Contexts are unrestricted.
+
+Split the original right path at its first shallow component, retaining the exact ordered input and all counted original-context prefix edges.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/CopyingConverseRemote}{13}{39}{CopyingTemplate.RemoteRight.trace_cases}
+\par\penalty0
+
+Resolving from any original right hole input reaches that component's actual complete payload, including a possible zero-hop distinguished suffix.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingConverseRemote}{43}{66}{CopyingTemplate.RemoteRight.shallow_payload}
+\par\penalty0
+
+The full independently supplied matched payload has the original entered hole owner; recursive lambda bodies are retained without restriction.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingConverseRemote}{70}{95}{CopyingTemplate.RemoteRight.payload_owner}
+\par\penalty0
+
+Exhaustive converse first-entry classification for the actual supplied copying match. The selected upstream prefix is a complete finite occurrence in the original context and ends at the exact original hole input.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingConverseRemote}{100}{140}{CopyingTemplate.RemoteRight.match_cases}
+\par\penalty0
+
+\subsection{Copying Converse Retained}
+Retained converse copying matches are synthesized by actual selected-spine extraction. All retention conditions are derived from the resolved payload's original owner, with no binding-free restriction or assumed locality law.
+
+A successful right copying path cannot enter a shallow component and later resolve outside it. Hence a retained terminal payload retains every selected prefix edge, even when the original supplied tree has other branches.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingConverseRetained}{15}{54}{CopyingTemplate.RemoteRight.trace_prefix_avoids}
+\par\penalty0
+
+A retained payload head retains its whole original copyable payload. For lambda payloads the box input is a thunk wire, whereas every original copying hole input is a term wire, so the box cannot be shallowly hidden.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingConverseRetained}{59}{89}{CopyingTemplate.RemoteRight.payload_avoids}
+\par\penalty0
+
+The actual retained-payload converse case admits a complete selected-spine copying occurrence. Neither unrelated tree siblings nor arbitrary deep box bodies are removed from the surrounding original graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingConverseRetained}{94}{134}{CopyingTemplate.RemoteRight.retained_occurrence}
+\par\penalty0
+
+\subsection{Copying Merge}
+Combine two actual graph branches through the unchanged Figure 17 resource distributors. Both ordered term-input blocks are retained, including empty residual-tree branches.
+
+Parallel input concatenation and the original variable/atom output blocks.
+\lean{Copying/CopyingMerge}{11}{21}{CopyingMerge.boundary}
+\par\penalty0
+
+The literal pair before its unchanged external resource distributors.
+\lean{Copying/CopyingMerge}{24}{30}{CopyingMerge.pair}
+\par\penalty0
+
+Merge the two resource copies using the full canonical D1,2 row for every variable and atom, keeping the first branch's inputs before the second's.
+\lean{Copying/CopyingMerge}{34}{42}{CopyingMerge.net}
+\par\penalty0
+
+Each branch is its actual complete-label occurrence in the merged graph.
+\lean{Copying/CopyingMerge}{45}{60}{CopyingMerge.pairComponent}
+\par\penalty0
+
+The component map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingMerge}{62}{63}{CopyingMerge.component}
+\par\penalty0
+
+The left input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMerge}{65}{72}{CopyingMerge.left_input}
+\par\penalty0
+
+The right input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMerge}{74}{84}{CopyingMerge.right_input}
+\par\penalty0
+
+\subsection{Copying Merge Associativity}
+Associativity of actual original two-use resource merging follows from complete three-branch normalization and genuine sharing-tree witnesses.
+
+Both sides retain arbitrary original branch graphs and every canonical weakening edge; the input order is fixed A, then B, then C.
+\lean{Copying/CopyingMergeAssociativity}{11}{20}{CopyingMerge.assoc}
+\par\penalty0
+
+\subsection{Copying Merge Components}
+Full original branch and resource occurrences in both associations of binary merging. All external inputs are ordered A, then B, then C.
+
+This defines the ordered target list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeComponents}{15}{16}{CopyingMerge.Components.target}
+\par\penalty0
+
+The branch map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingMergeComponents}{18}{27}{CopyingMerge.Components.branch}
+\par\penalty0
+
+The inner Row map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingMergeComponents}{29}{33}{CopyingMerge.Components.innerRow}
+\par\penalty0
+
+The outer Row map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingMergeComponents}{35}{39}{CopyingMerge.Components.outerRow}
+\par\penalty0
+
+The row link assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeComponents}{41}{50}{CopyingMerge.Components.row_link}
+\par\penalty0
+
+The row disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingMergeComponents}{52}{54}{CopyingMerge.Components.row_disjoint}
+\par\penalty0
+
+The row map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingMergeComponents}{56}{61}{CopyingMerge.Components.row}
+\par\penalty0
+
+The row inner edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeComponents}{63}{66}{CopyingMerge.Components.row_inner_edge}
+\par\penalty0
+
+The row outer edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeComponents}{68}{71}{CopyingMerge.Components.row_outer_edge}
+\par\penalty0
+
+The branch input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeComponents}{73}{97}{CopyingMerge.Components.branch_input}
+\par\penalty0
+
+The row input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeComponents}{99}{117}{CopyingMerge.Components.row_input}
+\par\penalty0
+
+The row output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeComponents}{119}{123}{CopyingMerge.Components.row_output}
+\par\penalty0
+
+The branches disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeComponents}{126}{132}{CopyingMerge.Components.branches_disjoint}
+\par\penalty0
+
+The branch row disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeComponents}{134}{139}{CopyingMerge.Components.branch_row_disjoint}
+\par\penalty0
+
+The rows disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingMergeComponents}{141}{159}{CopyingMerge.Components.rows_disjoint}
+\par\penalty0
+
+\subsection{Copying Merge Frame}
+A three-branch frame with one complete three-input resource row per output. The explicit input bijection fixes the external order of every branch.
+
+This defines the Resource data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{12}{12}{CopyingMerge.Frame.Resource}
+\par\penalty0
+
+This defines the Internal data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{13}{13}{CopyingMerge.Frame.Internal}
+\par\penalty0
+
+This defines the Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{14}{14}{CopyingMerge.Frame.Edge}
+\par\penalty0
+
+This defines the Vertex data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{15}{15}{CopyingMerge.Frame.Vertex}
+\par\penalty0
+
+This defines the branch Input data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{17}{18}{CopyingMerge.Frame.branchInput}
+\par\penalty0
+
+This defines the branch Output data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{19}{19}{CopyingMerge.Frame.branchOutput}
+\par\penalty0
+
+This defines the row Input data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{20}{20}{CopyingMerge.Frame.rowInput}
+\par\penalty0
+
+This defines the hole data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{22}{24}{CopyingMerge.Frame.hole}
+\par\penalty0
+
+This defines the ordered source list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{25}{27}{CopyingMerge.Frame.source}
+\par\penalty0
+
+This defines the ordered target list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{28}{30}{CopyingMerge.Frame.target}
+\par\penalty0
+
+This defines the internal wire label for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{31}{31}{CopyingMerge.Frame.internalLabel}
+\par\penalty0
+
+The branch Input injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingMergeFrame}{33}{38}{CopyingMerge.Frame.branchInput_injective}
+\par\penalty0
+
+The branch Output injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingMergeFrame}{40}{42}{CopyingMerge.Frame.branchOutput_injective}
+\par\penalty0
+
+The row Input injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingMergeFrame}{43}{45}{CopyingMerge.Frame.rowInput_injective}
+\par\penalty0
+
+The mem input equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeFrame}{47}{49}{CopyingMerge.Frame.mem_input}
+\par\penalty0
+
+The mem output equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeFrame}{50}{51}{CopyingMerge.Frame.mem_output}
+\par\penalty0
+
+The mem row equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeFrame}{52}{53}{CopyingMerge.Frame.mem_row}
+\par\penalty0
+
+This defines the finite typed net for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{55}{147}{CopyingMerge.Frame.net}
+\par\penalty0
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeFrame}{149}{151}{CopyingMerge.Frame.graph}
+\par\penalty0
+
+\subsection{Copying Merge Inputs}
+Explicit ordered input bijection for three arbitrary term-input blocks.
+
+This defines the arity data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeInputs}{8}{8}{CopyingMerge.Inputs.arity}
+\par\penalty0
+
+This defines the offset data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeInputs}{9}{9}{CopyingMerge.Inputs.offset}
+\par\penalty0
+
+This defines the join data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeInputs}{11}{17}{CopyingMerge.Inputs.join}
+\par\penalty0
+
+The injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeInputs}{19}{30}{CopyingMerge.Inputs.injective}
+\par\penalty0
+
+The surjective assertion states that every target coordinate has an original preimage under the indicated map.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeInputs}{32}{43}{CopyingMerge.Inputs.surjective}
+\par\penalty0
+
+This defines the bijection data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeInputs}{45}{46}{CopyingMerge.Inputs.bijection}
+\par\penalty0
+
+The bijection join assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+Both sides are definitionally equal.
+\lean{Copying/CopyingMergeInputs}{48}{49}{CopyingMerge.Inputs.bijection_join}
+\par\penalty0
+
+\subsection{Copying Merge Normal}
+A common three-branch presentation for nested resource merging. The three original branches remain fixed; only their actual six-edge resource rows vary.
+
+This defines the row data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeNormal}{13}{17}{CopyingMerge.Frame.row}
+\par\penalty0
+
+This defines the typed family of inserted components for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeNormal}{19}{23}{CopyingMerge.Frame.family}
+\par\penalty0
+
+One finite original common frame fixes all branch and resource orders.
+\lean{Copying/CopyingMergeNormal}{26}{28}{CopyingMerge.Frame.normal}
+\par\penalty0
+
+Associating the original resource merges changes only genuine sharing trees; arbitrary branches, including divergent or boxed ones, remain reflexive.
+\lean{Copying/CopyingMergeNormal}{32}{41}{CopyingMerge.Frame.witness}
+\par\penalty0
+
+This defines the branches data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeNormal}{51}{56}{CopyingMerge.branches}
+\par\penalty0
+
+The common normal graph has the exact original A-then-B-then-C input order.
+\lean{Copying/CopyingMergeNormal}{59}{61}{CopyingMerge.normal}
+\par\penalty0
+
+The normal Witness data give an actual recursive paired filling, with its common context and endpoint representation maps.
+\lean{Copying/CopyingMergeNormal}{63}{70}{CopyingMerge.normalWitness}
+\par\penalty0
+
+\subsection{Copying Merge Normalization}
+Complete incidence normalization of actual nested merges into one common three-branch frame. The external input order remains A, then B, then C.
+
+The components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingMergeNormalization}{16}{19}{CopyingMerge.Normalization.components}
+\par\penalty0
+
+This defines the old-frame port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeNormalization}{21}{25}{CopyingMerge.Normalization.host}
+\par\penalty0
+
+The input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeNormalization}{27}{45}{CopyingMerge.Normalization.input}
+\par\penalty0
+
+The output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeNormalization}{47}{61}{CopyingMerge.Normalization.output}
+\par\penalty0
+
+The disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingMergeNormalization}{63}{73}{CopyingMerge.Normalization.disjoint}
+\par\penalty0
+
+Both original associations contain exactly the same three original branches and the two complete canonical rows for each original resource.
+\lean{Copying/CopyingMergeNormalization}{77}{81}{CopyingMerge.Normalization.occurrence}
+\par\penalty0
+
+The cover assertion states that every target coordinate has an original preimage under the indicated map.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeNormalization}{83}{126}{CopyingMerge.Normalization.cover}
+\par\penalty0
+
+Complete edge coverage and the fixed whole external boundary identify the normal frame with each actual association, for arbitrary original branches.
+\lean{Copying/CopyingMergeNormalization}{130}{131}{CopyingMerge.Normalization.iso}
+\par\penalty0
+
+\subsection{Copying Merge Resources}
+Every original resource row and branch of a binary merge has its complete original occurrence and exact ordered attachments.
+
+The pair output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeResources}{14}{17}{CopyingMerge.pair_output}
+\par\penalty0
+
+The resource map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingMergeResources}{19}{21}{CopyingMerge.resource}
+\par\penalty0
+
+The resource input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeResources}{23}{29}{CopyingMerge.resource_input}
+\par\penalty0
+
+The resource output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeResources}{31}{34}{CopyingMerge.resource_output}
+\par\penalty0
+
+The resource disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingMergeResources}{36}{40}{CopyingMerge.resource_disjoint}
+\par\penalty0
+
+The component resource disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingMergeResources}{42}{44}{CopyingMerge.component_resource_disjoint}
+\par\penalty0
+
+The components disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingMergeResources}{46}{47}{CopyingMerge.components_disjoint}
+\par\penalty0
+
+\subsection{Copying Merge Retained Iso}
+The one-active-input resource context is precisely the general merge, with only its original arithmetic equality of interface lengths exposed.
+
+The reboundary comp assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeRetainedIso}{10}{15}{CopyingMerge.reboundary_comp}
+\par\penalty0
+
+The generic merge with one active input preserves the exact original copying reduct, including the arithmetic transport of its input interface.
+\lean{Copying/CopyingMergeRetainedIso}{25}{37}{CopyingMerge.retainedIso}
+\par\penalty0
+
+Independent recursive graph representations can be changed inside the original two resource branches.
+\lean{Copying/CopyingMergeRetainedIso}{41}{46}{CopyingMerge.congr}
+\par\penalty0
+
+Transporting the first branch's arithmetic arity commutes with its unchanged merge context.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeRetainedIso}{50}{56}{CopyingMerge.reboundary_left}
+\par\penalty0
+
+The literal active/retained copying decomposition can be used as the first branch of a further original resource merge.
+\lean{Copying/CopyingMergeRetainedIso}{60}{69}{CopyingMerge.retainedLeftIso}
+\par\penalty0
+
+Exact graph representation changes pass through the original active copy and all original canonical output distributors.
+\lean{Copying/CopyingMergeRetainedIso}{73}{80}{CopyingMerge.retainedCongr}
+\par\penalty0
+
+\subsection{Copying Merge Rewrite}
+Actual original rewrites inside the first branch of a resource merge. The other branch and both complete canonical distributor families remain.
+
+This defines the left Context data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeRewrite}{12}{13}{CopyingMerge.leftContext}
+\par\penalty0
+
+This defines the left Hole data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingMergeRewrite}{15}{16}{CopyingMerge.leftHole}
+\par\penalty0
+
+The left Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/CopyingMergeRewrite}{18}{30}{CopyingMerge.leftIso}
+\par\penalty0
+
+The selected original first-branch ports retain exactly their indices.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeRewrite}{33}{52}{CopyingMerge.pair_left_rewrite}
+\par\penalty0
+
+The actual merge closure keeps all resource edges and the untouched second branch, and takes exactly one original compute rewrite when the branch does.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingMergeRewrite}{56}{70}{CopyingMerge.left_rewrite}
+\par\penalty0
+
+\subsection{Copying Nested Row Occurrence}
+Both literal associations of complete binary distributor rows occur in an actual host. The middle link is the only attachment premise; complete incidence proves all necessary internal freshness.
+
+This defines the occurrence Host data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingNestedRowOccurrence}{12}{21}{CopyingNested.Row.occurrenceHost}
+\par\penalty0
+
+The occurrence Components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingNestedRowOccurrence}{23}{29}{CopyingNested.Row.occurrenceComponents}
+\par\penalty0
+
+The complete two-row graph, including both canonical weakenings, is an actual complete-label occurrence in its original host.
+\lean{Copying/CopyingNestedRowOccurrence}{34}{61}{CopyingNested.Row.occurrence}
+\par\penalty0
+
+The occurrence input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/CopyingNestedRowOccurrence}{63}{65}{CopyingNested.Row.occurrence_input}
+\par\penalty0
+
+The occurrence output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/CopyingNestedRowOccurrence}{67}{69}{CopyingNested.Row.occurrence_output}
+\par\penalty0
+
+\subsection{Copying Nested Rows}
+The two actual three-resource rows for upstream/downstream copying. Every binary row is the complete canonical D1,2, retaining its weakening.
+
+This defines the common graph frame for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingNestedRows}{10}{13}{CopyingNested.Row.frame}
+\par\penalty0
+
+This defines the typed family of inserted components for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingNestedRows}{15}{19}{CopyingNested.Row.family}
+\par\penalty0
+
+The two associations keep all six original canonical-row edges.
+\lean{Copying/CopyingNestedRows}{22}{24}{CopyingNested.Row.graph}
+\par\penalty0
+
+The sharing assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingNestedRows}{26}{32}{CopyingNested.Row.sharing}
+\par\penalty0
+
+Actual association change is a proved sharing-tree instance, with each ordered external input kept fixed and no distributor simplification.
+\lean{Copying/CopyingNestedRows}{36}{38}{CopyingNested.Row.witness}
+\par\penalty0
+
+The right graph assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+Both sides are definitionally equal.
+\lean{Copying/CopyingNestedRows}{40}{40}{CopyingNested.Row.right_graph}
+\par\penalty0
+
+This defines the row data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingNestedRows}{47}{50}{CopyingNested.Frame.row}
+\par\penalty0
+
+This defines the typed family of inserted components for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingNestedRows}{52}{57}{CopyingNested.Frame.family}
+\par\penalty0
+
+Three actual identical payloads, the entire remaining tree, and the complete per-resource rows, in one fixed finite common frame.
+\lean{Copying/CopyingNestedRows}{61}{64}{CopyingNested.Frame.normal}
+\par\penalty0
+
+Only actual sharing components change. The three copies of the original payload are reflexive contributions to the genuine common-context witness.
+\lean{Copying/CopyingNestedRows}{68}{78}{CopyingNested.Frame.witness}
+\par\penalty0
+
+The right normal assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingNestedRows}{80}{82}{CopyingNested.Frame.right_normal}
+\par\penalty0
+
+\subsection{Copying Normal Match}
+Normalize only the outer presentation of an actual copyable payload. The full original source occurrence and exact selected token are retained.
+
+Transport the selected token while keeping the actual active edge, orientation, side wire, complete payload occurrence, and normal form literal.
+\lean{Copying/CopyingNormalMatch}{12}{22}{CopyRule.SuccessorMatch.atToken}
+\par\penalty0
+
+Every supplied original copying occurrence has a full-label occurrence with a normalized outer payload and the identical original selected input. Recursive box contents and the original contraction tree are unchanged.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingNormalMatch}{27}{36}{CopyRule.normalized_occurrence}
+\par\penalty0
+
+\subsection{Copying Remote Certificates}
+Every original sharing-prefix edge has a literal retained corolla on both sides. These certificates follow from the actual template filling, rather than an assumption that the matched footprint is retained.
+
+A primitive non-hole edge retains its exact label on both actual sides, including interfaces and the absence of hidden additional edges.
+\lean{Copying/CopyingRemoteCertificates}{14}{22}{CopyingTemplate.RemoteContext.primitiveCopies}
+\par\penalty0
+
+The actual complete prefix's primitive labels exclude shallow copying holes, on every branch of its original tree.
+\lean{Copying/CopyingRemoteCertificates}{26}{40}{CopyingTemplate.RemoteContext.treeCopies}
+\par\penalty0
+
+Equality transports the existing pair's ordered boundary and does not add an assumption or closure constructor to the original copying relation.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingRemoteCertificates}{44}{48}{CopyingTemplate.RemoteContext.pair_reboundary}
+\par\penalty0
+
+\subsection{Copying Remote Context}
+An actual original sharing prefix and the first entered copying hole form one complete common-context occurrence. The hole is kept in the selected fragment, and all its original ordered inputs remain explicit.
+
+This defines the hole data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteContext}{17}{17}{CopyingTemplate.RemoteContext.hole}
+\par\penalty0
+
+The hole Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingRemoteContext}{19}{20}{CopyingTemplate.RemoteContext.holeOccurrence}
+\par\penalty0
+
+Sharing labels and the actual hole label force disjoint complete edge supports; no separate context-hole isolation condition is assumed.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteContext}{24}{40}{CopyingTemplate.RemoteContext.disjoint}
+\par\penalty0
+
+The whole actual prefix and the entered original hole, with their one specified junction, form a complete original common-context footprint.
+\lean{Copying/CopyingRemoteContext}{44}{48}{CopyingTemplate.RemoteContext.occurrence}
+\par\penalty0
+
+The graft's first input is precisely the original active prefix input.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteContext}{51}{58}{CopyingTemplate.RemoteContext.occurrence_input}
+\par\penalty0
+
+The selected original hole edge retains its exact owner.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteContext}{61}{66}{CopyingTemplate.RemoteContext.hole_edge}
+\par\penalty0
+
+\subsection{Copying Remote Cut}
+The original finite common-context cut lifts a remote copying diagram with exact sharing corrections on either endpoint. Selected shallow holes are allowed inside the matched common context; every unmatched original recursive contribution remains in the copying specimen.
+
+The actual two-sided local residual is inserted in the complete cut, retaining literal original certificates at every other context edge.
+\lean{Copying/CopyingRemoteCut}{20}{30}{CopyingTemplate.RemoteCut.residual}
+\par\penalty0
+
+Both original whole-graph rewrites and their corrected original specimen are constructed from the same finite common-context occurrence.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingRemoteCut}{35}{47}{CopyingTemplate.RemoteCut.diagram}
+\par\penalty0
+
+\subsection{Copying Remote Host}
+Actual whole-graph remote copying diagrams in the original specimen. The first entered hole and the complete retained prefix determine a finite common-context cut. Its two expanded sources are proved to be literal grafts, so every selected original input has a proved diagram in the actual host.
+
+Any actual prefix entering any original shallow copying input has one original rewrite on each side and a complete original residual specimen, with independently proved exact sharing corrections.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteHost}{29}{54}{CopyingTemplate.RemoteContext.diagram}
+\par\penalty0
+
+The original copying pair itself determines its complete ordered input and output interfaces. No scoping or closed-program restriction is added.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteHost}{59}{64}{CopyingTemplate.RemoteContext.pair_boundaries}
+\par\penalty0
+
+The actual arbitrary original hole's interfaces are recovered from its proved copying replacement. This consumes the exact first-entry classification without any normalized-hole or additional matching premise.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteHost}{69}{98}{CopyingTemplate.RemoteContext.any_hole_diagram}
+\par\penalty0
+
+\subsection{Copying Remote Left}
+The literal upstream copying successor first receives a proved exact sharing correction, then retains one genuine downstream copying instance.
+
+This defines the middle Before data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteLeft}{14}{15}{CopyingRemote.Left.middleBefore}
+\par\penalty0
+
+This defines the middle After data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteLeft}{17}{18}{CopyingRemote.Left.middleAfter}
+\par\penalty0
+
+Closing the selected upstream input is normalized by the independently proved sharing algebra. The whole graph retains both original payloads, all residual inputs and the unchanged resource distributors.
+\lean{Copying/CopyingRemoteLeft}{23}{30}{CopyingRemote.Left.leading}
+\par\penalty0
+
+The middle relation is the actual original downstream copying template in its computed common context, not an assumed commutation of two rewrites.
+\lean{Copying/CopyingRemoteLeft}{34}{46}{CopyingRemote.Left.original}
+\par\penalty0
+
+\subsection{Copying Remote Pair}
+Exhaustive literal and independently represented remote-copy diagrams. The distinguished and positive shallow inputs are proved separately.
+
+Every original ordered shallow input has actual opposite rewrites and a constructed original residual with independently proved sharing corrections.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/CopyingRemotePair}{13}{24}{CopyingRemote.literalDiagrams}
+\par\penalty0
+
+A complete original copying pair at any selected graft input has a real one-copy-per-side remote diagram. There is no matching, robustness, or residual hypothesis; independent recursive representation changes are accounted for.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemotePair}{33}{40}{CopyingTemplate.Pair.graft_diagram}
+\par\penalty0
+
+\subsection{Copying Remote Pair Transfer}
+A proved literal copying diagram transfers to independently represented original template pairs through actual graft isomorphisms.
+
+The precise literal diagram obligation, with actual one-step rewrites and a genuine two-sided original residual at the unchanged upstream input.
+\lean{Copying/CopyingRemotePairTransfer}{12}{21}{CopyingRemote.LiteralDiagrams}
+\par\penalty0
+
+Independent recursive names of the two graphs add no matching or residual premise to the proved literal diagram.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemotePairTransfer}{56}{68}{CopyingRemote.Pair.graft_diagram_of}
+\par\penalty0
+
+\subsection{Copying Remote Positive}
+A copying match entering a positive input of a shallow copying template. The original hole's distinguished input remains external. Its actual rewrite therefore agrees, by proved successor coherence, with the corresponding selected-input copy of the complete graft. The two-copy diagram then gives the original directed residual at the active upstream input.
+
+The external input of the original hole's distinguished request.
+\lean{Copying/CopyingRemotePositive}{18}{18}{CopyingRemote.Positive.distinguished}
+\par\penalty0
+
+Literal original source in the graft context, with the arithmetic interface equality displayed explicitly.
+\lean{Copying/CopyingRemotePositive}{22}{23}{CopyingRemote.Positive.left}
+\par\penalty0
+
+Literal original target in the identical graft context.
+\lean{Copying/CopyingRemotePositive}{26}{27}{CopyingRemote.Positive.right}
+\par\penalty0
+
+The original template's own rewrite, occurring at the external input immediately after the upstream inputs.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemotePositive}{31}{39}{CopyingRemote.Positive.template_rewrite}
+\par\penalty0
+
+The entire literal grafted reduct is the selected-input copying reduct of the entire original tree. This is derived from two actual original rewrites, not from an assumed copying-commutation or graph equality.
+\lean{Copying/CopyingRemotePositive}{44}{56}{CopyingRemote.Positive.selected_iso}
+\par\penalty0
+
+This defines the left After data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemotePositive}{58}{59}{CopyingRemote.Positive.leftAfter}
+\par\penalty0
+
+This defines the right After data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemotePositive}{60}{61}{CopyingRemote.Positive.rightAfter}
+\par\penalty0
+
+The actual upstream zero-input copy on the original left graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingRemotePositive}{64}{69}{CopyingRemote.Positive.left_rewrite}
+\par\penalty0
+
+The right copy fires at the same original upstream input, after the unmodified hole's copying rewrite.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemotePositive}{73}{78}{CopyingRemote.Positive.right_rewrite}
+\par\penalty0
+
+The residual contains one genuine original copying filling, followed by the independently proved exact sharing correction.
+\lean{Copying/CopyingRemotePositive}{82}{86}{CopyingRemote.Positive.residual}
+\par\penalty0
+
+Every positive entered input admits an actual one-rewrite-per-side matching diagram with the original directed residual. There is no omitted sibling tree, assumed matching certificate, or binding-free restriction.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingRemotePositive}{91}{96}{CopyingRemote.Positive.diagram}
+\par\penalty0
+
+\subsection{Copying Remote Positive Raw}
+The positive-input remote diagram on the literal graft interfaces, without an arithmetic interface cast at its public endpoints.
+
+Actual matched original grafts at their unchanged interface admit one copy per side and a genuine copying residual at the same upstream input.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemotePositiveRaw}{15}{33}{CopyingRemote.Positive.raw_diagram}
+\par\penalty0
+
+\subsection{Copying Remote Right Pair}
+Factor the actual upstream tree out of the active branch of a copying reduct. The retained branch and both ordered resource blocks are unchanged.
+
+This defines the ordered target list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteRightPair}{17}{17}{CopyingRemoteRight.Pair.target}
+\par\penalty0
+
+This defines the upstream data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteRightPair}{18}{20}{CopyingRemoteRight.Pair.upstream}
+\par\penalty0
+
+This defines the active data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteRightPair}{21}{22}{CopyingRemoteRight.Pair.active}
+\par\penalty0
+
+This defines the retained data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteRightPair}{23}{23}{CopyingRemoteRight.Pair.retained}
+\par\penalty0
+
+The branches map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingRemoteRightPair}{25}{28}{CopyingRemoteRight.Pair.branches}
+\par\penalty0
+
+The branches disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{30}{39}{CopyingRemoteRight.Pair.branches_disjoint}
+\par\penalty0
+
+The joined map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingRemoteRightPair}{41}{44}{CopyingRemoteRight.Pair.joined}
+\par\penalty0
+
+This defines the insert data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteRightPair}{46}{49}{CopyingRemoteRight.Pair.insert}
+\par\penalty0
+
+The joined insert assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{51}{54}{CopyingRemoteRight.Pair.joined_insert}
+\par\penalty0
+
+The joined zero assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{56}{58}{CopyingRemoteRight.Pair.joined_zero}
+\par\penalty0
+
+The joined other assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{60}{68}{CopyingRemoteRight.Pair.joined_other}
+\par\penalty0
+
+The components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingRemoteRightPair}{70}{73}{CopyingRemoteRight.Pair.components}
+\par\penalty0
+
+This defines the old-frame port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteRightPair}{75}{78}{CopyingRemoteRight.Pair.host}
+\par\penalty0
+
+The branches output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{80}{89}{CopyingRemoteRight.Pair.branches_output}
+\par\penalty0
+
+The joined output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{91}{96}{CopyingRemoteRight.Pair.joined_output}
+\par\penalty0
+
+The input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{98}{140}{CopyingRemoteRight.Pair.input}
+\par\penalty0
+
+The output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{142}{161}{CopyingRemoteRight.Pair.output}
+\par\penalty0
+
+The disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{163}{174}{CopyingRemoteRight.Pair.disjoint}
+\par\penalty0
+
+The occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CopyingRemoteRightPair}{176}{181}{CopyingRemoteRight.Pair.occurrence}
+\par\penalty0
+
+The cover assertion states that every target coordinate has an original preimage under the indicated map.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{183}{192}{CopyingRemoteRight.Pair.cover}
+\par\penalty0
+
+Moving the actual upstream graph into the first parallel branch preserves every edge and fixes every external input and resource output.
+\lean{Copying/CopyingRemoteRightPair}{196}{199}{CopyingRemoteRight.Pair.iso}
+\par\penalty0
+
+Pull the actual upstream graph into the active branch while retaining all original output distributors and every remaining input.
+\lean{Copying/CopyingRemoteRightPair}{208}{216}{CopyingRemoteRight.factorIso}
+\par\penalty0
+
+The actual right successor of the distinguished-input remote overlap.
+\lean{Copying/CopyingRemoteRightPair}{219}{223}{CopyingRemoteRight.after}
+\par\penalty0
+
+One original Figure 17 rewrite occurs upstream of the shallow copying component, with the token returned at the same original ordered input zero.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRightPair}{227}{235}{CopyingRemoteRight.rewrite}
+\par\penalty0
+
+\subsection{Copying Remote Robust Case}
+Actual two-sided copying residuals discharge both precise robustness clauses, including arbitrary independently represented supplied successors. Only previously proved exact sharing semantics supplies the refinements.
+
+The quasi assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingRemoteRobustCase}{11}{21}{CopyingTemplate.TwoSidedResidual.quasi}
+\par\penalty0
+
+The opposite quasi assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingRemoteRobustCase}{23}{33}{CopyingTemplate.TwoSidedResidual.opposite_quasi}
+\par\penalty0
+
+Two actual original rewrites and the original residual support any supplied left successor, by the already proved quotient-machine determinism.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRobustCase}{37}{49}{CopyingTemplate.TwoSidedResidual.matching_robust_case}
+\par\penalty0
+
+The same directed original specimen supports any supplied right successor; the exact sharing comparisons reverse their own directions.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteRobustCase}{53}{65}{TwoSidedResidual.converse_matching_robust_case}
+\par\penalty0
+
+\subsection{Copying Remote Source}
+The computed original finite cut expands to the literal sharing prefix and its actual entered filling. Retained sharing edges are collapsed using proved labelled-corolla certificates; the selected hole keeps its entire original recursively represented graph.
+
+Identity corollas on the original prefix and the full selected filling at the one original hole.
+\lean{Copying/CopyingRemoteSource}{20}{26}{CopyingTemplate.RemoteContext.filledFamily}
+\par\penalty0
+
+This defines the hole Family data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteSource}{28}{31}{CopyingTemplate.RemoteContext.holeFamily}
+\par\penalty0
+
+Filling the literal one-edge hole by its whole component restores that component, with all ordered boundary coordinates fixed.
+\lean{Copying/CopyingRemoteSource}{35}{61}{CopyingTemplate.RemoteContext.holeIso}
+\par\penalty0
+
+Actual graph reassociation exposes the original prefix and complete selected graph, with no operational or copying law used.
+\lean{Copying/CopyingRemoteSource}{65}{92}{CopyingTemplate.RemoteContext.filledIso}
+\par\penalty0
+
+The actual original selected cut has precisely the stated literal graft source. Every prefix certificate and the selected component's representation is supplied explicitly by its original filling, not by a matching assumption.
+\lean{Copying/CopyingRemoteSource}{97}{112}{CopyingTemplate.RemoteContext.sourceIso}
+\par\penalty0
+
+\subsection{Copying Remote Spine}
+An actual finite remote-copy prefix realizes a complete selected term spine in the original context. Its sibling wires become ordered inputs, while both the original token and the exact reached hole input remain fixed.
+
+Every finite sharing prefix ending immediately before a terminal edge has an injective selected-spine occurrence, with no unused sibling subtree added.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteSpine}{12}{91}{CopyingTemplate.Remote.prefix_spine}
+\par\penalty0
+
+\subsection{Copying Remote Zero}
+The distinguished-input remote copying overlap. One actual original copy occurs on each side. Their residuals contain one genuine copying instance between independently proved exact sharing corrections.
+
+This defines the left graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteZero}{20}{21}{CopyingRemote.Zero.left}
+\par\penalty0
+
+This defines the right graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteZero}{23}{24}{CopyingRemote.Zero.right}
+\par\penalty0
+
+This defines the right After data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRemoteZero}{26}{27}{CopyingRemote.Zero.rightAfter}
+\par\penalty0
+
+The right actual successor and the original residual's right endpoint have the same three payloads. Only the two canonical resource-row parenthesizations differ, and their equivalence is a genuine sharing filling.
+\lean{Copying/CopyingRemoteZero}{32}{50}{CopyingRemote.Zero.trailing}
+\par\penalty0
+
+The left upstream match is the original copying rule on the complete grafted tree, with the literal original source and input order preserved.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingRemoteZero}{54}{58}{CopyingRemote.Zero.left_rewrite}
+\par\penalty0
+
+The right source admits one actual original upstream copying rewrite, including the case where the shallow component has no remaining input.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteZero}{62}{68}{CopyingRemote.Zero.right_rewrite}
+\par\penalty0
+
+The complete residual has exactly one original copying link, with actual sharing certificates on both sides and the same ordered resume port.
+\lean{Copying/CopyingRemoteZero}{72}{83}{CopyingRemote.Zero.residual}
+\par\penalty0
+
+The literal distinguished-input graft diagram has no assumed matching, residual, or semantic law. Both costs are one rewrite and the residual keeps the paper's original directed copying template.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRemoteZero}{88}{106}{CopyingRemote.Zero.raw_diagram}
+\par\penalty0
+
+\subsection{Copying Residual Boundary}
+Equal ordered interfaces transport the actual copying residual and every resume coordinate. No permutation or new relation closure is introduced.
+
+This defines the reboundary data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingResidualBoundary}{17}{23}{CopyingTemplate.Residual.reboundary}
+\par\penalty0
+
+This defines the reboundary data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingResidualBoundary}{25}{31}{CopyingTemplate.TwoSidedResidual.reboundary}
+\par\penalty0
+
+Cancel explicit interface equality transports on the actual graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingResidualBoundary}{34}{37}{CopyingTemplate.reboundary_cancel}
+\par\penalty0
+
+\subsection{Copying Retained Context}
+The original copying reduct as a context in its retained branch, including zero remaining inputs. The active payload and full resource distributors stay.
+
+This defines the copies data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingRetainedContext}{11}{15}{CopyingRetainedContext.copies}
+\par\penalty0
+
+This context accepts every original residual arity, including zero.
+\lean{Copying/CopyingRetainedContext}{18}{20}{CopyingRetainedContext.after}
+\par\penalty0
+
+With the actual weakened original tree, the context is exactly the unchanged original copying reduct.
+Both sides are definitionally equal.
+\lean{Copying/CopyingRetainedContext}{24}{25}{CopyingRetainedContext.after_original}
+\par\penalty0
+
+Recursive paired residuals lift through the literal active copy and both canonical output distributors. No transitivity of fillings is assumed.
+\lean{Copying/CopyingRetainedContext}{29}{42}{CopyingRetainedContext.witness}
+\par\penalty0
+
+\subsection{Copying Right Payload}
+Every original input of a copying reduct still resolves to one complete original payload. Input zero reaches its active copy immediately; the other inputs follow the actual weakened residual tree to the retained copy.
+
+Both branches of the original active/retained context, including an empty retained input interface, occur with their complete recursive labels.
+\lean{Copying/CopyingRightPayload}{14}{19}{CopyingRetainedContext.branch}
+\par\penalty0
+
+The branch left input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRightPayload}{21}{27}{CopyingRetainedContext.branch_left_input}
+\par\penalty0
+
+The branch right input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRightPayload}{29}{36}{CopyingRetainedContext.branch_right_input}
+\par\penalty0
+
+Every right input resolves to an original complete normalized payload. The count is allowed to be zero precisely because the distinguished input already exposes the active payload after the original copying rewrite.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingRightPayload}{46}{92}{CopyingTemplate.Pair.right_input_payload}
+\par\penalty0
+
+\subsection{Copying Selected Input Other}
+The original two-copy diagram with the first copy at an arbitrary positive input and the next copy at input zero. All permutations are actual common graph contexts, and the residual keeps the original directed template.
+
+This defines the sharing-tree presentation for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingSelectedInputOther}{15}{15}{CopyingSelectedInput.OtherZero.tree}
+\par\penalty0
+
+This defines the left After data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingSelectedInputOther}{16}{16}{CopyingSelectedInput.OtherZero.leftAfter}
+\par\penalty0
+
+This defines the right After data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CopyingSelectedInputOther}{17}{17}{CopyingSelectedInput.OtherZero.rightAfter}
+\par\penalty0
+
+The selected zero assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingSelectedInputOther}{19}{23}{CopyingSelectedInput.OtherZero.selected_zero}
+\par\penalty0
+
+The zero-input copy is an actual original rewrite of the unmodified source.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingSelectedInputOther}{26}{34}{CopyingSelectedInput.OtherZero.left_rewrite}
+\par\penalty0
+
+After the first positive-input copy, the same zero input still has an actual original copy. This includes the entire original residual tree.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingSelectedInputOther}{38}{46}{CopyingSelectedInput.OtherZero.right_rewrite}
+\par\penalty0
+
+The original copying residual and its independently proved sharing correction survive the compensating full-interface permutation.
+\lean{Copying/CopyingSelectedInputOther}{50}{62}{CopyingSelectedInput.OtherZero.residual}
+\par\penalty0
+
+Unconditional one-rewrite-per-side matching for the two distinct original inputs, with an actual residual and no assumed order-exchange law.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingSelectedInputOther}{66}{73}{CopyingSelectedInput.OtherZero.diagram}
+\par\penalty0
+
+\subsection{Copying Selected Retained}
+Retain exactly the selected spine of an original copying match. The complete payload remains unchanged, while unrelated tree branches become ordered side inputs of the smaller actual source occurrence.
+
+Given proved retention along the actual selected input's paths and on the full payload, minimal-spine extraction supplies a complete retained original copying source. No assumption is made about unrelated siblings.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingSelectedRetained}{14}{41}{CopyingTemplate.Remote.selected_occurrence}
+\par\penalty0
+
+In the retained-payload case, every selected source contraction and every payload edge are proved to avoid shallow copying holes. The resulting smaller source is an actual full-label occurrence at exactly the original token.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingSelectedRetained}{46}{86}{CopyingTemplate.Remote.retained_occurrence}
+\par\penalty0
+
+\subsection{Copying Template Beta Overlap}
+The actual beta footprint cannot enter a shallow left copying component: its entire outer application/lambda/box/argument ancestry contains no term contraction, including when the arbitrary body has deep template holes.
+
+Every outer beta edge is reached from the application: the lambda and its box are a two-edge path, and every stable argument edge uses its sole input.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateBetaOverlap}{13}{67}{CopyingTemplate.ForwardOverlap.beta_avoids}
+\par\penalty0
+
+\subsection{Copying Template Converse Atom Trace}
+Atom traces starting at an evaluated original instance cannot enter shallow copying holes, whose entire input interface consists of term wires. Unused side branches are deliberately outside this selected-path claim.
+
+An actual retained atom-trace predecessor gives a host coordinate for its next edge, and typing excludes a term-input copying replacement there.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseAtomTrace}{18}{36}{CopyingTemplate.ConverseOverlap.atom_hop_not_hole}
+\par\penalty0
+
+Every edge on the actual selected atom lookup is retained. Cycles or additional unused sibling branches in the surrounding host are permitted.
+For the proof, induction follows the original derivation or finite structure.
+\lean{Copying/CopyingTemplateConverseAtomTrace}{40}{46}{CopyingTemplate.ConverseOverlap.atom_trace_not_hole}
+\par\penalty0
+
+Full primitive labels in an original local occurrence preserve its exact atom-hop path, so the selection can be checked in the smaller rule graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateConverseAtomTrace}{50}{62}{CopyingTemplate.ConverseOverlap.matched_atom_trace_not_hole}
+\par\penalty0
+
+\subsection{Copying Template Converse Beta}
+Complete converse beta footprints remain in the original context. The lambda body may contain arbitrary deep copying occurrences.
+
+Every outer edge of an actual beta footprint avoids a shallow copying hole. The original left search history proves readiness of both app arguments; the proof then follows the lambda's actual boxed successor; it does not inspect the arbitrary box body.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseBeta}{13}{72}{CopyingTemplate.ConverseOverlap.beta_avoids}
+\par\penalty0
+
+\subsection{Copying Template Converse Head}
+A rooted original left endpoint excludes shallow right contributions at arguments already evaluated by search. This is the history condition needed by the converse operational-template proof.
+
+If the left endpoint has finished evaluating an original coordinate, a right source at that coordinate cannot originate in a shallow template hole.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateConverseHead}{17}{29}{CopyingTemplate.ConverseOverlap.stable_source_not_hole}
+\par\penalty0
+
+A right head at the original non-entering token is the same retained operation on the original left endpoint.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseHead}{33}{46}{CopyingTemplate.ConverseOverlap.left_head}
+\par\penalty0
+
+Ordered readiness is transferred to the actual original coordinate of any right operation argument. No right endpoint rootedness is needed here.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseHead}{50}{68}{CopyingTemplate.ConverseOverlap.argument_stable}
+\par\penalty0
+
+Every source on a previously evaluated operation argument avoids shallow right holes, regardless of its full label or its internal template structure.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateConverseHead}{72}{80}{CopyingTemplate.ConverseOverlap.argument_source_not_hole}
+\par\penalty0
+
+A non-term source at an original coordinate cannot enter a copying hole: every original copying input is a term wire.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseHead}{84}{105}{CopyingTemplate.ConverseOverlap.nonterm_source_not_hole}
+\par\penalty0
+
+Every successor of an active operation is an evaluated argument.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseHead}{108}{120}{CopyingTemplate.ConverseOverlap.adjacent_source_not_hole}
+\par\penalty0
+
+\subsection{Copying Template Converse Operational}
+Every original operational converse case for the copying template. The actual left rooted search history excludes already evaluated shallow holes; selected atom subtrees retain every operation/store attachment.
+
+The eight operation-headed rules all produce genuine opposite steps and unrestricted original residual specimens. Allocation, arithmetic and beta use the supplied source; store rules prune only irrelevant contraction siblings.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseOperational}{16}{65}{CopyingTemplate.ConverseResidual.operational_case}
+\par\penalty0
+
+\subsection{Copying Template Converse Primitive}
+Exhaustive converse footprints for arithmetic and allocation, from the original left endpoint's rooted search history.
+
+A local rule consisting of its active head and its direct argument edges has no shallow right copying overlap.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConversePrimitive}{12}{27}{CopyingTemplate.ConverseOverlap.simple_avoids}
+\par\penalty0
+
+Allocation is classified without changing its stable operand or interface.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConversePrimitive}{30}{39}{CopyingTemplate.ConverseOverlap.allocation_avoids}
+\par\penalty0
+
+Exact unary footprints avoid all original shallow right holes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConversePrimitive}{42}{50}{CopyingTemplate.ConverseOverlap.unary_avoids}
+\par\penalty0
+
+Exact binary footprints avoid all original shallow right holes.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConversePrimitive}{53}{62}{CopyingTemplate.ConverseOverlap.binary_avoids}
+\par\penalty0
+
+\subsection{Copying Template Converse Robustness}
+Full converse robustness of the original unrestricted copying template. Actual right successors are classified into the eight operation cases, retained selected copying spines, or a first original shallow copying input. Every matching step and residual specimen is constructed by proved rules.
+
+Every actual right copying match is handled. The selected spine either remains outside shallow replacements or enters one exact original hole; the latter includes distinguished, positive, and final remaining inputs.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseRobustness}{23}{52}{CopyingTemplate.ConverseResidual.copying_case}
+\par\penalty0
+
+All nine original local rules, with their original stability/copyability premises and full recursive bodies, satisfy the converse clause.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateConverseRobustness}{56}{93}{CopyingTemplate.ConverseResidual.local_case}
+\par\penalty0
+
+Every actual quotient-machine right successor supplies its own complete local occurrence and receives the exhaustive actual converse diagram.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateConverseRobustness}{97}{113}{CopyingTemplate.ConverseResidual.class_step}
+\par\penalty0
+
+Universal converse robustness of the unchanged copying family, in the paper's unrestricted original context class. No matching, residual, locality, or determinism hypothesis remains in this theorem.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseRobustness}{120}{149}{CopyingTemplate.template_robust_converse}
+\par\penalty0
+
+\subsection{Copying Template Converse Store Footprint}
+Every selected atom-operation footprint avoids shallow copying fillings. The surrounding context is unrestricted; irrelevant original tree branches are exposed as side inputs of a smaller original rule.
+
+An arbitrary selected subtree containing only descendants of the read's first atom input yields a complete shallow-hole-free read occurrence.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseStoreFootprint}{23}{53}{CopyingTemplate.ConverseStoreFootprint.read_subtree_avoids}
+\par\penalty0
+
+The same selected-spine criterion preserves the full stable assignment value and all of its original outputs.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseStoreFootprint}{57}{95}{ConverseStoreFootprint.assignment_subtree_avoids}
+\par\penalty0
+
+The complete rematched equality footprint is retained when its atom tree contains only descendants of the two evaluated original instances.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseStoreFootprint}{99}{157}{CopyingTemplate.ConverseStoreFootprint.same_subtree_avoids}
+\par\penalty0
+
+Each selected reference spine is downstream of its own original binding instance; unrelated siblings from either supplied tree remain unrestricted.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseStoreFootprint}{161}{229}{ConverseStoreFootprint.different_subtrees_avoids}
+\par\penalty0
+
+Extract the actual selected atom spine of any original right read, with all original operation/store attachments and a proved retained footprint.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseStoreFootprint}{233}{246}{CopyingTemplate.ConverseStoreFootprint.read_occurrence}
+\par\penalty0
+
+Selected-spine extraction retains the literal stable assignment value, its output ordering, the selected store and both value connections.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseStoreFootprint}{250}{266}{CopyingTemplate.ConverseStoreFootprint.assignment_occurrence}
+\par\penalty0
+
+Every actual same-store rule supplies a smaller original rule whose entire two-selected-input footprint avoids the original shallow holes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseStoreFootprint}{270}{280}{CopyingTemplate.ConverseStoreFootprint.same_occurrence}
+\par\penalty0
+
+Independently prune both original atom trees while preserving the two actual stores, their inequality, contents outputs and comparison token.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateConverseStoreFootprint}{284}{300}{CopyingTemplate.ConverseStoreFootprint.different_occurrence}
+\par\penalty0
+
+\subsection{Copying Template Equivalence}
+The full original copying template is a contextual improvement and preserves successful termination. Its distinguished 2/0 input prefix is kept: no exact-count equivalence is asserted for the copying relation.
+
+Arbitrarily many recursive original copying occurrences improve every successful execution in every unrestricted common context.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{16}{22}{CopyingTemplate.filling_improvement}
+\par\penalty0
+
+The converse successful run has at least the right run's length. This uses the proved converse robustness with its original converse-cost safety condition, retaining the quantitative direction of the copying optimization.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{27}{33}{CopyingTemplate.filling_reverse_overhead}
+\par\penalty0
+
+Costs are forgotten only after the forward and converse quantitative comparisons have both been proved for the actual original machine.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{37}{42}{CopyingTemplate.filling_equiv}
+\par\penalty0
+
+Actual successful termination agrees without any premise that a callback or enclosing computation terminates, and with stuckness kept distinct.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{46}{57}{CopyingTemplate.filling_termination}
+\par\penalty0
+
+The literal copying pair may be replaced at any original addressed site, including inside boxes, in every closed unrestricted observing graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{61}{66}{CopyingTemplate.addressed_improvement}
+\par\penalty0
+
+The same arbitrary-depth addressed replacements preserve termination in both directions; the observing context need not be binding-free.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{70}{75}{CopyingTemplate.addressed_equiv}
+\par\penalty0
+
+The actual paired residual at any common host token has the same directed improvement. Both original roots are the normal specimen applicability conditions, and the token is not already requesting a rewrite.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{80}{90}{CopyingTemplate.pointed_improvement}
+\par\penalty0
+
+At the same actual common point, converse robustness supplies the original reverse cost inequality rather than an incorrect exact-count equivalence.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{94}{104}{CopyingTemplate.pointed_reverse_overhead}
+\par\penalty0
+
+Pointed termination equivalence follows by forgetting costs only after both inequalities, and is available for actual residual compensation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{108}{117}{CopyingTemplate.pointed_equiv}
+\par\penalty0
+
+The original representation quotient receives the same pointed termination equivalence; no additional observation relation is introduced.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{121}{131}{CopyingTemplate.pointed_class_equiv}
+\par\penalty0
+
+The same theorem specializes to every original binding-free observation of open program graphs at arbitrary variable and atom environments.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{135}{139}{CopyingTemplate.pair_contextual_improvement}
+\par\penalty0
+
+Copying preserves the paper's termination observations in both directions for all original closing contexts of the actual open graph interfaces.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateEquivalence}{143}{150}{CopyingTemplate.pair_contextual_equiv}
+\par\penalty0
+
+\subsection{Copying Template First Shallow}
+Locate the first actual shallow copying component on a remote copy path. The counted prefix is reflected in the original context, and the exact ordered hole input is retained. No binding-free restriction or path choice is assumed.
+
+A source incidence at an original vertex records the actual component input and its exact original attachment, not merely the existence of an input.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateFirstShallow}{13}{21}{CopyingTemplate.Remote.source_input_exact}
+\par\penalty0
+
+The first shallow entry splits the actual counted copy path into an original-context prefix and the remaining original expanded-graph suffix.
+\lean{Copying/CopyingTemplateFirstShallow}{25}{35}{CopyingTemplate.Remote.FirstShallow}
+\par\penalty0
+
+A remote sharing trace either stays wholly in the original context or has a first shallow entry with a positive retained prefix and exact input.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/CopyingTemplateFirstShallow}{39}{65}{CopyingTemplate.Remote.trace_cases}
+\par\penalty0
+
+At that first original hole input the actual copying-source edge is a term contraction. This is the unique possible shallow forward overlap.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateFirstShallow}{69}{78}{CopyingTemplate.Remote.first_entry_contraction}
+\par\penalty0
+
+\subsection{Copying Template Forward Barrier}
+The unrestricted forward barrier for the original copying template. Every shallow left input starts at a term contraction. A path containing no term contraction therefore cannot enter such a hole. No binding restriction on the original surrounding graph is needed.
+
+Each ordered input of the literal copying source has a term contraction head, independently of the chosen contraction-tree presentation.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateForwardBarrier}{14}{22}{CopyingTemplate.Pair.left_input_head}
+\par\penalty0
+
+A non-contraction sourcing an original host vertex belongs to a retained context edge, even if other shallow copying holes have many inputs.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateForwardBarrier}{31}{42}{CopyingTemplate.ForwardOverlap.source_retained}
+\par\penalty0
+
+Hole freedom excludes the retained-unfilled-hole alternative as well.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateForwardBarrier}{45}{57}{CopyingTemplate.ForwardOverlap.source_not_hole}
+\par\penalty0
+
+A whole mapped operational ancestry stays in the retained context when none of its original edges is a term contraction.
+For the proof, induction follows the original derivation or finite structure.
+\lean{Copying/CopyingTemplateForwardBarrier}{61}{78}{CopyingTemplate.ForwardOverlap.ancestor_retained}
+\par\penalty0
+
+The final owner of a non-contraction ancestry is not a shallow hole.
+For the proof, induction follows the original derivation or finite structure.
+\lean{Copying/CopyingTemplateForwardBarrier}{81}{95}{CopyingTemplate.ForwardOverlap.ancestor_not_hole}
+\par\penalty0
+
+\subsection{Copying Template Left Labels}
+Only term-sharing, ordinary operation, and instance primitives occur on the outer surface of a copying source. Arbitrary recursive lambda bodies are left unrestricted. In particular, no atom tree or store is hidden shallowly.
+
+The exact primitive possibilities at the surface of a copyable payload.
+\lean{Copying/CopyingTemplateLeftLabels}{13}{14}{CopyingTemplate.PayloadPrimitive}
+\par\penalty0
+
+A primitive edge of an original copyable payload is an instance or an operation. Its possible box body is intentionally outside this assertion.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateLeftLabels}{18}{44}{CopyingTemplate.copyable_primitive}
+\par\penalty0
+
+The whole source adds only term weakening/contraction to the original copyable payload's outer primitive labels.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateLeftLabels}{48}{69}{CopyingTemplate.Literal.left_primitive_cases}
+\par\penalty0
+
+Full recursive graph isomorphism preserves this outer-surface restriction.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateLeftLabels}{72}{79}{CopyingTemplate.Pair.left_primitive_cases}
+\par\penalty0
+
+Any primitive excluded from the source's outer surface has an original non-hole owner. The retained-hole possibility is excluded by its exact label.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateLeftLabels}{88}{104}{CopyingTemplate.ForwardOverlap.forbidden_primitive_not_hole}
+\par\penalty0
+
+Every actual atom-sharing branch is retained, including unused siblings.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateLeftLabels}{107}{115}{CopyingTemplate.ForwardOverlap.atom_sharing_not_hole}
+\par\penalty0
+
+The actual store cannot be supplied by a shallow copying component.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateLeftLabels}{118}{123}{CopyingTemplate.ForwardOverlap.store_not_hole}
+\par\penalty0
+
+\subsection{Copying Template Operational Dispatch}
+Exhaustive separation of the original operation and copying requests. The non-copying part of both unrestricted robustness directions is discharged for arbitrary actual representation-class successors, not chosen local steps.
+
+Each original local rule is headed by an ordinary operation or by a term contraction. These possibilities cover the unchanged complete operation set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateOperationalDispatch}{13}{26}{CopyingTemplate.local_head_cases}
+\par\penalty0
+
+Every actual non-copying forward successor has a matching opposite step and exact original residual, in the full unrestricted context class.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateOperationalDispatch}{30}{56}{CopyingTemplate.forward_operational_step}
+\par\penalty0
+
+Original left rootedness excludes the converse shallow operational configurations. Actual non-copying right successors therefore satisfy the full quantitative converse clause with no assumed matching footprint.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateOperationalDispatch}{61}{88}{CopyingTemplate.converse_operational_step}
+\par\penalty0
+
+\subsection{Copying Template Operational Residuals}
+Actual all-context residuals for every original operational rule in a copying specimen. Beta retains arbitrary recursive bodies; primitive rules retain complete store trees and the original stable operands.
+
+A complete retained beta match opens the actual paired recursive body and constructs its unrestricted residual specimen, with exactly one step per side.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateOperationalResiduals}{15}{35}{CopyingTemplate.ForwardResidual.beta}
+\par\penalty0
+
+Every primitive-headed local rule, including arbitrary beta bodies, has an actual matching step and an exact original residual. No binding-free hypothesis, remote-overlap certificate, or residual assumption is required.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateOperationalResiduals}{40}{103}{CopyingTemplate.ForwardResidual.operational_case}
+\par\penalty0
+
+If a copying footprint is wholly retained, arbitrary recursively related payloads supply actual paired copy steps and their exact original specimen. Only shallow copying overlaps lie outside this retained-footprint case.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateOperationalResiduals}{108}{128}{CopyingTemplate.ForwardResidual.retained_copying}
+\par\penalty0
+
+\subsection{Copying Template Primitive Overlap}
+Every original non-boxed operational rule has a fully retained forward footprint in a copying specimen. The argument is unrestricted: term-sharing entry barriers and atom/store labels replace any binding-free hypothesis.
+
+Operational footprints contain their head, atom sharing, a store, or an adjacent stable operand. Term sharing is deliberately absent from this list.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{14}{19}{CopyingTemplate.ForwardOverlap.PrimitiveEdgeCase}
+\par\penalty0
+
+Entire actual primitive matches avoid shallow copying holes. This includes irrelevant atom-tree siblings and every edge of the original stable value.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{23}{51}{CopyingTemplate.ForwardOverlap.primitive_avoids}
+\par\penalty0
+
+Allocation's outer graph consists exactly of its active reference head and its original stable operand.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{55}{72}{CopyingTemplate.ForwardOverlap.allocation_cases}
+\par\penalty0
+
+A read inspects its head, instance, complete atom tree and store.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{75}{92}{CopyingTemplate.ForwardOverlap.read_cases}
+\par\penalty0
+
+Numeric unary computation inspects exactly its head and numeric operand.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{95}{111}{CopyingTemplate.ForwardOverlap.unary_cases}
+\par\penalty0
+
+Binary arithmetic retains both ordered numeric operand occurrences.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{114}{134}{CopyingTemplate.ForwardOverlap.binary_cases}
+\par\penalty0
+
+A write inspects its destination instance, the whole atom tree and store, and every edge of the original stable new value.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{138}{166}{CopyingTemplate.ForwardOverlap.assignment_cases}
+\par\penalty0
+
+Equality of two references to the same cell inspects both original instances and all edges of the shared atom tree.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{170}{191}{CopyingTemplate.ForwardOverlap.same_cases}
+\par\penalty0
+
+Disequality inspects both separate original stores and both entire atom trees, including branches unrelated to the selected references.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplatePrimitiveOverlap}{195}{221}{CopyingTemplate.ForwardOverlap.different_cases}
+\par\penalty0
+
+\subsection{Copying Template Remote Classification}
+Complete first-entry classification of an actual remote copying request. The original term-contraction prefix is realized as a finite source occurrence; its selected output attaches to the exact original hole input. The matched payload is forced to be the entered component's complete recursive payload.
+
+The actual payload selected by a supplied copy match has every edge in the entered shallow component, and agrees with its complete recursive payload.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateRemoteClassification}{15}{40}{CopyingTemplate.Remote.payload_owner}
+\par\penalty0
+
+A remote actual copy either resolves entirely through retained owners, or has a literal selected-spine occurrence in the original context ending at one exact shallow copying input. All edges of its actual payload then belong to that same hole; no assumption of isolated or disjoint context holes is made.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateRemoteClassification}{46}{86}{CopyingTemplate.Remote.match_cases}
+\par\penalty0
+
+\subsection{Copying Template Remote Payload}
+The payload reached after entering a shallow copying source is the actual copyable payload of that component, including its full recursive box body. Functional copy resolution rules out escaping into an unrelated payload.
+
+Every original source input resolves to an actual complete occurrence of its original copyable payload, in a canonical outer representation only.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateRemotePayload}{13}{30}{CopyingTemplate.Pair.input_payload}
+\par\penalty0
+
+A successful actual suffix after first shallow entry ends at that same component's complete normalized payload. Every payload edge keeps that exact original hole owner; nested bodies are preserved through full-label occurrence.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateRemotePayload}{36}{60}{CopyingTemplate.Remote.shallow_payload}
+\par\penalty0
+
+\subsection{Copying Template Remote Retained}
+A resolved copy path whose actual payload head remains outside shallow holes cannot pass through a shallow copying component. This proves retention for every edge of its selected spine, without assuming unrelated tree siblings are retained.
+
+Every prefix of the actual successful copy resolution avoids shallow holes when its complete payload has a non-hole original head owner.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly.
+\lean{Copying/CopyingTemplateRemoteRetained}{14}{53}{CopyingTemplate.Remote.trace_prefix_avoids}
+\par\penalty0
+
+The whole actual payload is retained once its primitive head is retained; its possible lambda box follows a non-term input and preserves its full body.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateRemoteRetained}{57}{81}{CopyingTemplate.Remote.payload_avoids}
+\par\penalty0
+
+\subsection{Copying Template Retained Converse}
+Converse matching for a wholly retained original local footprint. This constructs the actual opposite rewrite and unrestricted residual; the source classification that discharges retention is a separate geometric argument.
+
+All nine original rules transport through a retained right source. Deep bodies use original copying certificates in the reverse direction, preserving all stability, copyability, padding, and recursive-interface requirements.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyingTemplateRetainedConverse}{15}{84}{CopyingTemplate.ConverseResidual.retained_local_case}
+\par\penalty0
+
+\subsection{Copying Template Two Sided Residual}
+Original copying specimens with independent exact sharing corrections on both endpoints. Reassociation of an actual residual tree is a proved sharing step, not an equality assumption or an extension of the copying relation.
+
+A leading sharing correction followed by the original copying relation and its trailing sharing correction. All three links are actual fillings.
+\lean{Copying/CopyingTemplateTwoSidedResidual}{13}{18}{CopyingTemplate.TwoSidedResidual}
+\par\penalty0
+
+Equality transport changes no graph, ordered attachment, or proof link.
+\lean{Copying/CopyingTemplateTwoSidedResidual}{21}{25}{CopyingTemplate.Residual.cast}
+\par\penalty0
+
+A residual needing no leading reassociation uses a literal identity link.
+\lean{Copying/CopyingTemplateTwoSidedResidual}{29}{31}{CopyingTemplate.TwoSidedResidual.ofResidual}
+\par\penalty0
+
+Independent recursive representation changes act only on actual endpoints.
+\lean{Copying/CopyingTemplateTwoSidedResidual}{34}{41}{CopyingTemplate.TwoSidedResidual.congr}
+\par\penalty0
+
+Untouched components retain their original copying certificates, while leading sharing acts reflexively on each untouched original left component.
+\lean{Copying/CopyingTemplateTwoSidedResidual}{45}{65}{CopyingTemplate.TwoSidedResidual.expandSelected}
+\par\penalty0
+
+Both exact sharing corrections apply to the unchanged original specimen. Its intermediate roots are derived from actual endpoint search histories.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CopyingTemplateTwoSidedResidual}{69}{80}{CopyingTemplate.TwoSidedResidual.quasi_equiv}
+\par\penalty0
+
+\subsection{Full Copying Forward Robustness}
+Universal forward robustness of the original Figure 17 copying template. All original operational rules, retained copying footprints and first shallow copying entries are covered in arbitrary recursive unrestricted contexts.
+
+An arbitrary actual copying occurrence is classified by its selected resolution path. Retained payloads use a proved minimal original spine; first shallow entries use the complete original prefix-and-hole diagram.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/FullCopyingForwardRobustness}{21}{49}{CopyingTemplate.ForwardResidual.copying_case}
+\par\penalty0
+
+Exhaustive dispatch on the unchanged original nine local constructors. Stability and copyability are precisely the original rule premises.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/FullCopyingForwardRobustness}{54}{76}{CopyingTemplate.ForwardResidual.local_case}
+\par\penalty0
+
+The supplied quotient-machine step yields its own actual original local occurrence; no deterministic matching or successor existence is assumed.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/FullCopyingForwardRobustness}{81}{96}{CopyingTemplate.ForwardResidual.class_step}
+\par\penalty0
+
+Full forward robustness of the original copying template in every unrestricted recursive context, for the entire original copying UAM.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/FullCopyingForwardRobustness}{101}{126}{CopyingTemplate.template_robust}
+\par\penalty0
+
+\subsection{Occurrence Boundary Target}
+An equal ordered host interface transports an entire occurrence without changing its edges or internal injection.
+
+The reboundary Target map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/OccurrenceBoundaryTarget}{9}{21}{Opening.Occurrence.reboundaryTarget}
+\par\penalty0
+

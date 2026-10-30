@@ -1,0 +1,904 @@
+\clearpage
+\section{Parametricity: checked read and beta corrections}
+\label{sec:parametricity-local-concordance}
+These are checked local dependencies of the remaining parametricity family. They retain its original graphs and arbitrary stable arguments. The whole-family residual synthesis and universal template proof are still unfinished at this publication.
+
+\subsection{Parametricity Closed Copy}
+The copying/garbage-collection correction needed by private readback. After copying a closed payload through a one-input tree, the unused retained copy is a literal GC instance; no sharing edge is declared to be an identity.
+
+This defines the collected data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityClosedCopy}{13}{13}{Parametricity.ClosedCopy.collected}
+\par\penalty0
+
+This defines the copies data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityClosedCopy}{15}{18}{Parametricity.ClosedCopy.copies}
+\par\penalty0
+
+This defines the corrected data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityClosedCopy}{20}{21}{Parametricity.ClosedCopy.corrected}
+\par\penalty0
+
+The only changed branch is the whole actual nullary retained copy.
+\lean{Copying/ParametricityClosedCopy}{24}{36}{Parametricity.ClosedCopy.witness}
+\par\penalty0
+
+The active copy remains a complete actual component of the corrected graph.
+\lean{Copying/ParametricityClosedCopy}{39}{44}{Parametricity.ClosedCopy.occurrence}
+\par\penalty0
+
+The input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityClosedCopy}{46}{51}{Parametricity.ClosedCopy.input}
+\par\penalty0
+
+The cover assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityClosedCopy}{53}{64}{Parametricity.ClosedCopy.cover}
+\par\penalty0
+
+Zero-resource distributors and the collected closed branch contain no edges, so the complete active occurrence gives an exact graph isomorphism.
+\lean{Copying/ParametricityClosedCopy}{68}{69}{Parametricity.ClosedCopy.iso}
+\par\penalty0
+
+A genuine GC filling relates the exact original copy reduct to its active closed payload, for every concrete one-input contraction-tree presentation.
+\lean{Copying/ParametricityClosedCopy}{73}{75}{Parametricity.ClosedCopy.garbage}
+\par\penalty0
+
+\subsection{Parametricity Closed Copy Pair}
+The two closed copies produced by private readback are separated by two genuine template fillings: copying of the retained branch, followed by garbage collection. The final graph is the actual ordered tensor of the two payloads.
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityClosedCopyPair}{14}{16}{Parametricity.ClosedCopyPair.graph}
+\par\penalty0
+
+Keep the active copy and the literal zero-resource distributor, while replacing only the retained closed branch by its certified filling.
+\lean{Copying/ParametricityClosedCopyPair}{20}{33}{Parametricity.ClosedCopyPair.rightWitness}
+\par\penalty0
+
+The second copy is exactly the original copying template on the complete residual one-input tree, including its newly inserted weakening.
+\lean{Copying/ParametricityClosedCopyPair}{37}{42}{Parametricity.ClosedCopyPair.copying}
+\par\penalty0
+
+Each of the two payloads is a complete occurrence of the corrected graph.
+\lean{Copying/ParametricityClosedCopyPair}{45}{50}{Parametricity.ClosedCopyPair.component}
+\par\penalty0
+
+The disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityClosedCopyPair}{52}{59}{Parametricity.ClosedCopyPair.disjoint}
+\par\penalty0
+
+Assemble the actual independent payload occurrences with the tensor's original input order; no machine transition is used by this isomorphism.
+\lean{Copying/ParametricityClosedCopyPair}{63}{66}{Parametricity.ClosedCopyPair.occurrence}
+\par\penalty0
+
+The input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityClosedCopyPair}{68}{73}{Parametricity.ClosedCopyPair.input}
+\par\penalty0
+
+The cover assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityClosedCopyPair}{75}{82}{Parametricity.ClosedCopyPair.cover}
+\par\penalty0
+
+The iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/ParametricityClosedCopyPair}{84}{85}{Parametricity.ClosedCopyPair.iso}
+\par\penalty0
+
+Collect the unused retained copy and remove only the genuinely empty distributor carriers, obtaining the two original ordered payloads.
+\lean{Copying/ParametricityClosedCopyPair}{89}{94}{Parametricity.ClosedCopyPair.garbage}
+\par\penalty0
+
+Input reindexing is the actual one-hole context, hence preserves each existing filling certificate without adding a certificate constructor.
+\lean{Copying/ParametricityClosedCopyPair}{103}{114}{FillingWitness.inputPermuted}
+\par\penalty0
+
+The intermediate graph keeps the original selected-input compensation. In private readback the selected input is one, not the store's input zero.
+\lean{Copying/ParametricityClosedCopyPair}{125}{130}{Parametricity.ClosedCopyPair.selectedMiddle}
+\par\penalty0
+
+This defines the selected Pair data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityClosedCopyPair}{132}{133}{Parametricity.ClosedCopyPair.selectedPair}
+\par\penalty0
+
+A genuine copying filling at either original input, retaining the ordered boundary action of the actual selected-input rewrite.
+\lean{Copying/ParametricityClosedCopyPair}{137}{141}{Parametricity.ClosedCopyPair.selectedCopying}
+\par\penalty0
+
+A separate genuine garbage-collection filling completes the selected two-copy correction; no transitivity of filling certificates is asserted.
+\lean{Copying/ParametricityClosedCopyPair}{145}{148}{Parametricity.ClosedCopyPair.selectedGarbage}
+\par\penalty0
+
+\subsection{Parametricity Garbage Pointed}
+Exact pointed GC corrections used by the parametricity proof. Label preservation is deliberately directional: GC may discard a graph containing a hole, so an unconditional hole-freedom equivalence would be false.
+
+The all Labels forward assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityGarbagePointed}{11}{44}{DeepFilling.allLabels_forward}
+\par\penalty0
+
+The all Labels forward assertion constructs the indicated original recursive paired filling; the context and both actual endpoint maps are included.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityGarbagePointed}{46}{51}{FillingWitness.allLabels_forward}
+\par\penalty0
+
+The right hole Free assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityGarbagePointed}{53}{60}{GarbageCollection.UpToIso.right_holeFree}
+\par\penalty0
+
+The garbage hole Free assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityGarbagePointed}{65}{67}{BoxPullWeakening.PointedWitness.garbage_holeFree}
+\par\penalty0
+
+The garbage rooted iff assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityGarbagePointed}{69}{77}{BoxPullWeakening.PointedWitness.garbage_rooted_iff}
+\par\penalty0
+
+One actual endpoint root suffices: the other root is transported by original search, and every successful transition count is preserved.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityGarbagePointed}{81}{96}{BoxPullWeakening.PointedWitness.garbage_exact}
+\par\penalty0
+
+\subsection{Parametricity Large Opening}
+Literal one-step opening of the larger Figure20 abstractions. The entire callback f() stays an unevaluated graph and retains the original D1,1.
+
+The original callback connected to its evaluated f argument, with no transition of the callback included in this definition.
+\lean{Copying/ParametricityLargeOpening}{13}{13}{Parametricity.LargeOpening.invocation}
+\par\penalty0
+
+This defines the read Opened data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeOpening}{15}{16}{Parametricity.LargeOpening.readOpened}
+\par\penalty0
+
+This defines the one Opened data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeOpening}{18}{19}{Parametricity.LargeOpening.oneOpened}
+\par\penalty0
+
+The opened left body is the actual raised original displayed call/read body, with its selected bound output still first.
+\lean{Copying/ParametricityLargeOpening}{23}{27}{Parametricity.LargeOpening.read_bodyIso}
+\par\penalty0
+
+The right body has the same unevaluated callback and the original smaller constant-returning abstraction.
+\lean{Copying/ParametricityLargeOpening}{31}{35}{Parametricity.LargeOpening.one_bodyIso}
+\par\penalty0
+
+The factorization is a full original graph isomorphism, independent of all callback behavior and of stability of V.
+\lean{Copying/ParametricityLargeOpening}{39}{41}{Parametricity.LargeOpening.read_openedIso}
+\par\penalty0
+
+The one opened Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/ParametricityLargeOpening}{43}{45}{Parametricity.LargeOpening.one_openedIso}
+\par\penalty0
+
+The larger private-read abstraction takes exactly one actual original beta step and retains an application of the smaller abstraction to f().
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityLargeOpening}{49}{51}{Parametricity.LargeOpening.read_beta}
+\par\penalty0
+
+The corresponding constant abstraction takes the same single beta step; no callback evaluation or successful-termination premise is introduced.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityLargeOpening}{55}{57}{Parametricity.LargeOpening.one_beta}
+\par\penalty0
+
+\subsection{Parametricity Large Splice}
+The large parametricity beta reduct retains its inner lambda and the entire unevaluated callback. The bound callback output is connected to V.
+
+This defines the free Interface data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{12}{15}{Parametricity.LargeSplice.freeInterface}
+\par\penalty0
+
+This defines the raw data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{17}{18}{Parametricity.LargeSplice.raw}
+\par\penalty0
+
+The actual Figure20 left output swap selects f, while the right family already has f as its sole output. No callback transition takes place here.
+\lean{Copying/ParametricityLargeSplice}{22}{25}{Parametricity.LargeSplice.body}
+\par\penalty0
+
+This defines the ordered source list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{27}{27}{Parametricity.LargeSplice.source}
+\par\penalty0
+
+This defines the ordered target list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{28}{29}{Parametricity.LargeSplice.target}
+\par\penalty0
+
+The raw Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityLargeSplice}{31}{34}{Parametricity.LargeSplice.rawOccurrence}
+\par\penalty0
+
+The body Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityLargeSplice}{36}{38}{Parametricity.LargeSplice.bodyOccurrence}
+\par\penalty0
+
+The argument map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityLargeSplice}{39}{41}{Parametricity.LargeSplice.argument}
+\par\penalty0
+
+This defines the raw In Source data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{42}{42}{Parametricity.LargeSplice.rawInSource}
+\par\penalty0
+
+This defines the head data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{43}{45}{Parametricity.LargeSplice.head}
+\par\penalty0
+
+This defines the arguments data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{46}{48}{Parametricity.LargeSplice.arguments}
+\par\penalty0
+
+This defines the first data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{49}{49}{Parametricity.LargeSplice.first}
+\par\penalty0
+
+This defines the callback data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{50}{50}{Parametricity.LargeSplice.callback}
+\par\penalty0
+
+The callback link assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{52}{54}{Parametricity.LargeSplice.callback_link}
+\par\penalty0
+
+The callback disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityLargeSplice}{56}{57}{Parametricity.LargeSplice.callback_disjoint}
+\par\penalty0
+
+The applied Callback map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityLargeSplice}{59}{62}{Parametricity.LargeSplice.appliedCallback}
+\par\penalty0
+
+The first disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityLargeSplice}{64}{67}{Parametricity.LargeSplice.first_disjoint}
+\par\penalty0
+
+This defines the paired data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityLargeSplice}{69}{70}{Parametricity.LargeSplice.paired}
+\par\penalty0
+
+The head link assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{72}{80}{Parametricity.LargeSplice.head_link}
+\par\penalty0
+
+The head disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityLargeSplice}{82}{89}{Parametricity.LargeSplice.head_disjoint}
+\par\penalty0
+
+The occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityLargeSplice}{91}{92}{Parametricity.LargeSplice.occurrence}
+\par\penalty0
+
+The first output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{93}{100}{Parametricity.LargeSplice.first_output}
+\par\penalty0
+
+The argument output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{102}{108}{Parametricity.LargeSplice.argument_output}
+\par\penalty0
+
+The paired left output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{110}{116}{Parametricity.LargeSplice.paired_left_output}
+\par\penalty0
+
+The paired right output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{118}{127}{Parametricity.LargeSplice.paired_right_output}
+\par\penalty0
+
+The cover assertion states that every target coordinate has an original preimage under the indicated map.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{129}{141}{Parametricity.LargeSplice.cover}
+\par\penalty0
+
+The input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{143}{148}{Parametricity.LargeSplice.input}
+\par\penalty0
+
+The output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityLargeSplice}{150}{162}{Parametricity.LargeSplice.output}
+\par\penalty0
+
+The entire beta splice factors as the original inner lambda applied to an unchanged callback graph connected to V. The callback need not terminate.
+\lean{Copying/ParametricityLargeSplice}{166}{167}{Parametricity.LargeSplice.iso}
+\par\penalty0
+
+\subsection{Parametricity Pointed Cut}
+Actual pointed filling transport through the constructed complement of a complete occurrence. This records the original input attachment, rather than resetting the token at the outer boundary of the surrounding graph.
+
+Keep an arbitrary original host vertex through a genuine plugged filling. The proof uses the two actual expansion-flattening isomorphisms.
+\lean{Copying/ParametricityPointedCut}{15}{44}{BoxPullWeakening.PointedWitness.plugHost}
+\par\penalty0
+
+The computed cut changes no retained label and inserts only its hole.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityPointedCut}{56}{64}{CompleteMatchCut.focusFree}
+\par\penalty0
+
+A local filling at an original input remains pointed at exactly that input's attachment in the actual constructed graph complement.
+\lean{Copying/ParametricityPointedCut}{68}{76}{CompleteMatchCut.inputWitness}
+\par\penalty0
+
+A complete occurrence realizes a local certified filling in the actual source graph, using its constructed complement and proved realization.
+\lean{Copying/ParametricityPointedCut}{80}{85}{CompleteMatchCut.filling}
+\par\penalty0
+
+External input attachments remain the same external input after a cut. This proves the local read resume coordinate without a token convention.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityPointedCut}{89}{98}{CompleteMatchCut.replace_input}
+\par\penalty0
+
+\subsection{Parametricity Private Correction}
+Carry the constructed readback correction through the actual original private-instance copying prefix and the stable-argument beta context.
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityPrivateCorrection}{12}{17}{Parametricity.ReaderPrefix.focusFree}
+\par\penalty0
+
+The tail focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityPrivateCorrection}{24}{28}{Parametricity.PrivateRead.tail_focusFree}
+\par\penalty0
+
+The before focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityPrivateCorrection}{30}{34}{Parametricity.PrivateRead.before_focusFree}
+\par\penalty0
+
+The ready focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityPrivateCorrection}{36}{39}{Parametricity.PrivateRead.ready_focusFree}
+\par\penalty0
+
+This endpoint keeps the complete original complement of the matched private read and inserts the reconstructed returned-value/store graph.
+\lean{Copying/ParametricityPrivateCorrection}{43}{45}{Parametricity.PrivateRead.corrected}
+\par\penalty0
+
+This defines the corrected Point data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityPrivateCorrection}{47}{50}{Parametricity.PrivateRead.correctedPoint}
+\par\penalty0
+
+The corrected input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityPrivateCorrection}{52}{54}{Parametricity.PrivateRead.corrected_input}
+\par\penalty0
+
+The after input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityPrivateCorrection}{56}{60}{Parametricity.PrivateRead.after_input}
+\par\penalty0
+
+The original eight-transition private read ends at a genuinely certified three-link residual, with its original token and unchanged complement.
+\lean{Copying/ParametricityPrivateCorrection}{64}{72}{Parametricity.PrivateRead.correction}
+\par\penalty0
+
+The corrected factorization assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityPrivateCorrection}{74}{78}{Parametricity.PrivateRead.corrected_factorization}
+\par\penalty0
+
+The opened focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityPrivateCorrection}{85}{87}{Parametricity.PrivateApplication.opened_focusFree}
+\par\penalty0
+
+The normalized private read is inserted into the original opened beta context. In particular, every output of the discarded argument survives.
+\lean{Copying/ParametricityPrivateCorrection}{91}{93}{Parametricity.PrivateApplication.corrected}
+\par\penalty0
+
+This defines the corrected Point data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityPrivateCorrection}{95}{97}{Parametricity.PrivateApplication.correctedPoint}
+\par\penalty0
+
+The correction map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityPrivateCorrection}{99}{110}{Parametricity.PrivateApplication.correction}
+\par\penalty0
+
+The original beta and private read perform exactly nine transitions. Their actual endpoint is related to the retained store/value graph by the constructed copying and garbage-collection chain, with its original focus.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityPrivateCorrection}{115}{125}{Parametricity.PrivateApplication.nine_transition_correction}
+\par\penalty0
+
+\subsection{Parametricity Read Correction}
+The private read's actual residual chain: one original copying filling, then two independently proved exact garbage-collection corrections. The endpoint contains the returned numeral and the unchanged residual store.
+
+The Read Correction data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/ParametricityReadCorrection}{13}{21}{Parametricity.ReadCorrection}
+\par\penalty0
+
+The congr map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/ParametricityReadCorrection}{25}{33}{Parametricity.ReadCorrection.congr}
+\par\penalty0
+
+Lift the actual input-pointed chain through any constructed complement. Every intermediate focus uses the same ordered local input attachment.
+\lean{Copying/ParametricityReadCorrection}{37}{50}{Parametricity.ReadCorrection.cutInput}
+\par\penalty0
+
+The chain has the actual original copying specimen as its first link. Its two GC corrections are proved exact, including transport of the roots needed to instantiate the original quasi-specimen relation.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadCorrection}{55}{75}{Parametricity.ReadCorrection.quasi_equiv}
+\par\penalty0
+
+The original minimal-spine presentation resumes at the same actual read input as the complete canonical presentation, by proved pointed coherence.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadCorrection}{84}{87}{Parametricity.ReadTail.resume_input}
+\par\penalty0
+
+Every original atom-tree presentation has the same certified local correction, with all remaining atom inputs and the store retained.
+\lean{Copying/ParametricityReadCorrection}{91}{100}{Parametricity.ReadTail.fullReadCorrection}
+\par\penalty0
+
+The endpoint of the original three-step read prefix has this same residual certificate. Its carrier conversion follows actual successor coherence, and its token is the original resumed token of that prefix.
+\lean{Copying/ParametricityReadCorrection}{105}{111}{Parametricity.ReadTail.originalReadCorrection}
+\par\penalty0
+
+The actual three-transition read/request/copy prefix, followed by its fully constructed pointed Copying/GC/GC residual certificate.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadCorrection}{115}{121}{Parametricity.ReadTail.readback_factorization}
+\par\penalty0
+
+\subsection{Parametricity Read Discard}
+The discarded reference instance left by the actual read rule is a literal garbage-collection instance. Its complete match is disjoint from the full stored-content copying occurrence, so it survives both corrections.
+
+This defines the weak data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadDiscard}{12}{14}{Parametricity.ReadTail.Discard.weak}
+\par\penalty0
+
+The weak Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadDiscard}{16}{21}{Parametricity.ReadTail.Discard.weakOccurrence}
+\par\penalty0
+
+The instance Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadDiscard}{23}{24}{Parametricity.ReadTail.Discard.instanceOccurrence}
+\par\penalty0
+
+The boundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadDiscard}{26}{31}{Parametricity.ReadTail.Discard.boundary}
+\par\penalty0
+
+The disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadDiscard}{33}{38}{Parametricity.ReadTail.Discard.disjoint}
+\par\penalty0
+
+The actual term weakening and the consumed reference instance together form the complete zero-input GC source, preserving its exposed atom wire.
+\lean{Copying/ParametricityReadDiscard}{42}{46}{Parametricity.ReadTail.Discard.occurrence}
+\par\penalty0
+
+Stored-content copying and reference-instance collection have disjoint original edges, even though their surrounding store connects their outputs.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadDiscard}{50}{61}{Parametricity.ReadTail.Discard.content_disjoint}
+\par\penalty0
+
+The GC occurrence is retained in the actual corrected stored-content graph by the proved complement transport, without a locality assumption.
+\lean{Copying/ParametricityReadDiscard}{65}{69}{Parametricity.ReadTail.Discard.retained}
+\par\penalty0
+
+This defines the collected data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadDiscard}{71}{73}{Parametricity.ReadTail.Discard.collected}
+\par\penalty0
+
+Collect exactly the consumed instance; the actual store and its constant content remain present in the retained complement.
+\lean{Copying/ParametricityReadDiscard}{77}{82}{Parametricity.ReadTail.Discard.witness}
+\par\penalty0
+
+The consumed-instance collection preserves the actual active reader position, proved to be the original read-result input by the cut attachment.
+\lean{Copying/ParametricityReadDiscard}{86}{90}{Parametricity.ReadTail.Discard.pointed}
+\par\penalty0
+
+\subsection{Parametricity Read Full Copy}
+Rematch the private read's whole canonical D1,2, including its weakening. The actual original copying rule at input one gives a literal full-tree endpoint, proved coherent with the earlier minimal-spine implementation.
+
+The read reduct contains the complete original three-edge term distributor.
+\lean{Copying/ParametricityReadFullCopy}{14}{24}{Parametricity.ReadTail.FullCopy.distributor}
+\par\penalty0
+
+The tree map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadFullCopy}{26}{27}{Parametricity.ReadTail.FullCopy.tree}
+\par\penalty0
+
+The boundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadFullCopy}{29}{34}{Parametricity.ReadTail.FullCopy.boundary}
+\par\penalty0
+
+The disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadFullCopy}{36}{37}{Parametricity.ReadTail.FullCopy.disjoint}
+\par\penalty0
+
+The selected component is the full canonical distributor and the actual stored numeral, preserving all other store/instance/atom-tree edges.
+\lean{Copying/ParametricityReadFullCopy}{41}{43}{Parametricity.ReadTail.FullCopy.occurrence}
+\par\penalty0
+
+The token assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadFullCopy}{45}{50}{Parametricity.ReadTail.FullCopy.token}
+\par\penalty0
+
+This defines the reduct data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadFullCopy}{52}{54}{Parametricity.ReadTail.FullCopy.reduct}
+\par\penalty0
+
+This defines the resume data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadFullCopy}{56}{58}{Parametricity.ReadTail.FullCopy.resume}
+\par\penalty0
+
+This is the same original copying rule, at the actual reader input.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadFullCopy}{61}{65}{Parametricity.ReadTail.FullCopy.rewrite}
+\par\penalty0
+
+The existing three-transition endpoint and the full canonical target are actual recursively isomorphic pointed states, by proved successor coherence.
+For the proof, proved successor coherence compares the two actual rewrites.
+\lean{Copying/ParametricityReadFullCopy}{69}{71}{Parametricity.ReadTail.FullCopy.coherent}
+\par\penalty0
+
+The complete canonical presentation has the same exact three-transition read/request/copy prefix; none of the original weakening edges is removed.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadFullCopy}{75}{78}{Parametricity.ReadTail.FullCopy.run}
+\par\penalty0
+
+\subsection{Parametricity Read Normal}
+Reconstruct the corrected private read as its returned numeral and an independent retained store with the complete residual atom tree. All graph equalities below are proved from actual occurrences and edge coverage.
+
+The tree store disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormal}{11}{15}{Parametricity.ReadTail.Normal.tree_store_disjoint}
+\par\penalty0
+
+The tree payload disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormal}{17}{19}{Parametricity.ReadTail.Normal.tree_payload_disjoint}
+\par\penalty0
+
+The store payload disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormal}{21}{23}{Parametricity.ReadTail.Normal.store_payload_disjoint}
+\par\penalty0
+
+The payloads disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormal}{25}{31}{Parametricity.ReadTail.Normal.payloads_disjoint}
+\par\penalty0
+
+The weak store disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormal}{33}{34}{Parametricity.ReadTail.Normal.weak_store_disjoint}
+\par\penalty0
+
+The weak payload disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormal}{36}{37}{Parametricity.ReadTail.Normal.weak_payload_disjoint}
+\par\penalty0
+
+The residual store disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormal}{39}{47}{Parametricity.ReadTail.Normal.residual_store_disjoint}
+\par\penalty0
+
+The residual payload disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormal}{49}{58}{Parametricity.ReadTail.Normal.residual_payload_disjoint}
+\par\penalty0
+
+This defines the cell data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadNormal}{60}{60}{Parametricity.ReadTail.Normal.cell}
+\par\penalty0
+
+The cell Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormal}{62}{68}{Parametricity.ReadTail.Normal.cellOccurrence}
+\par\penalty0
+
+This defines the retained Cell data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadNormal}{70}{71}{Parametricity.ReadTail.Normal.retainedCell}
+\par\penalty0
+
+The retained Cell Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormal}{73}{83}{Parametricity.ReadTail.Normal.retainedCellOccurrence}
+\par\penalty0
+
+The active cell disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormal}{85}{92}{Parametricity.ReadTail.Normal.active_cell_disjoint}
+\par\penalty0
+
+This defines the finite typed net for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadNormal}{94}{96}{Parametricity.ReadTail.Normal.net}
+\par\penalty0
+
+The parallel Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormal}{98}{108}{Parametricity.ReadTail.Normal.parallelOccurrence}
+\par\penalty0
+
+The normal Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormal}{110}{111}{Parametricity.ReadTail.Normal.normalOccurrence}
+\par\penalty0
+
+The original tree input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormal}{113}{123}{Parametricity.ReadTail.Normal.original_tree_input}
+\par\penalty0
+
+The tree input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadNormal}{125}{130}{Parametricity.ReadTail.Normal.tree_input}
+\par\penalty0
+
+The residual input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormal}{132}{142}{Parametricity.ReadTail.Normal.residual_input}
+\par\penalty0
+
+\subsection{Parametricity Read Normal Components}
+All retained and inserted components of the corrected private read. The original store and arbitrary atom tree are preserved through both actual cuts; the result and the stored numeral are separate original payload copies.
+
+Disjoint surviving occurrences remain disjoint after the same actual cut.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadNormalComponents}{12}{20}{Opening.Occurrence.acrossCut_disjoint}
+\par\penalty0
+
+The across Cut external Input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalComponents}{22}{34}{Opening.Occurrence.acrossCut_externalInput}
+\par\penalty0
+
+The original Tree map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{42}{53}{Parametricity.ReadTail.Normal.originalTree}
+\par\penalty0
+
+The original Store map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{55}{57}{Parametricity.ReadTail.Normal.originalStore}
+\par\penalty0
+
+The content tree disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormalComponents}{59}{62}{Parametricity.ReadTail.Normal.content_tree_disjoint}
+\par\penalty0
+
+The content store disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormalComponents}{64}{67}{Parametricity.ReadTail.Normal.content_store_disjoint}
+\par\penalty0
+
+The discard tree disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormalComponents}{69}{72}{Parametricity.ReadTail.Normal.discard_tree_disjoint}
+\par\penalty0
+
+The discard store disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormalComponents}{74}{77}{Parametricity.ReadTail.Normal.discard_store_disjoint}
+\par\penalty0
+
+The separated Tree map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{79}{81}{Parametricity.ReadTail.Normal.separatedTree}
+\par\penalty0
+
+The separated Store map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{83}{85}{Parametricity.ReadTail.Normal.separatedStore}
+\par\penalty0
+
+The retained tree disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadNormalComponents}{87}{90}{Parametricity.ReadTail.Normal.retained_tree_disjoint}
+\par\penalty0
+
+The retained store disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadNormalComponents}{92}{95}{Parametricity.ReadTail.Normal.retained_store_disjoint}
+\par\penalty0
+
+The tree map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{97}{99}{Parametricity.ReadTail.Normal.tree}
+\par\penalty0
+
+The store map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{101}{103}{Parametricity.ReadTail.Normal.store}
+\par\penalty0
+
+The literal zero-use atom distributor contains exactly one weakening; its empty term forest contributes no edge.
+\lean{Copying/ParametricityReadNormalComponents}{107}{120}{Parametricity.ReadTail.Normal.collectedCopy}
+\par\penalty0
+
+This defines the atom Weak Copy data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadNormalComponents}{122}{126}{Parametricity.ReadTail.Normal.atomWeakCopy}
+\par\penalty0
+
+The weak map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{128}{131}{Parametricity.ReadTail.Normal.weak}
+\par\penalty0
+
+The original weak tree assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalComponents}{133}{135}{Parametricity.ReadTail.Normal.original_weak_tree}
+\par\penalty0
+
+The weak tree assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalComponents}{137}{145}{Parametricity.ReadTail.Normal.weak_tree}
+\par\penalty0
+
+The weak tree disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormalComponents}{147}{148}{Parametricity.ReadTail.Normal.weak_tree_disjoint}
+\par\penalty0
+
+The complete residual atom tree closes exactly the consumed reference's input with the newly collected atom weakening, preserving all other inputs.
+\lean{Copying/ParametricityReadNormalComponents}{152}{153}{Parametricity.ReadTail.Normal.residualTree}
+\par\penalty0
+
+The residual map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{155}{158}{Parametricity.ReadTail.Normal.residual}
+\par\penalty0
+
+The residual output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalComponents}{160}{164}{Parametricity.ReadTail.Normal.residual_output}
+\par\penalty0
+
+The original tree store assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalComponents}{166}{167}{Parametricity.ReadTail.Normal.original_tree_store}
+\par\penalty0
+
+The tree store assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadNormalComponents}{169}{175}{Parametricity.ReadTail.Normal.tree_store}
+\par\penalty0
+
+The local separated pair retains both original numeral components and the actual selected-input swap: false is the active copy, true the stored one.
+\lean{Copying/ParametricityReadNormalComponents}{179}{184}{Parametricity.ReadTail.Normal.localPayload}
+\par\penalty0
+
+The separated Payload map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{186}{188}{Parametricity.ReadTail.Normal.separatedPayload}
+\par\penalty0
+
+The discard payload disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadNormalComponents}{190}{192}{Parametricity.ReadTail.Normal.discard_payload_disjoint}
+\par\penalty0
+
+The payload map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/ParametricityReadNormalComponents}{194}{197}{Parametricity.ReadTail.Normal.payload}
+\par\penalty0
+
+The store payload assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalComponents}{199}{211}{Parametricity.ReadTail.Normal.store_payload}
+\par\penalty0
+
+The active input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalComponents}{213}{220}{Parametricity.ReadTail.Normal.active_input}
+\par\penalty0
+
+\subsection{Parametricity Read Normal Cover}
+Exhaustive finite-edge coverage of the reconstructed private-read residual. No leftover store, sharing, or reference edge is silently erased.
+
+The retained Cell input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadNormalCover}{10}{13}{Parametricity.ReadTail.Normal.retainedCell_input}
+\par\penalty0
+
+The parallel input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{15}{32}{Parametricity.ReadTail.Normal.parallel_input}
+\par\penalty0
+
+The normal input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ParametricityReadNormalCover}{34}{36}{Parametricity.ReadTail.Normal.normal_input}
+\par\penalty0
+
+The literal read graph consists of exactly its full content-copy match, the discarded instance, the retained atom tree and the retained store.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{40}{66}{Parametricity.ReadTail.Normal.original_cover}
+\par\penalty0
+
+The first cut removes precisely the complete stored-content match and retains each other original component alongside the two separated numerals.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{70}{93}{Parametricity.ReadTail.Normal.separated_cover}
+\par\penalty0
+
+The second cut removes precisely the consumed instance and inserts the one atom weakening. The store, tree and both numeral copies exhaust the rest.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{97}{121}{Parametricity.ReadTail.Normal.collected_cover}
+\par\penalty0
+
+The residual covers weak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{123}{132}{Parametricity.ReadTail.Normal.residual_covers_weak}
+\par\penalty0
+
+The residual covers tree assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{134}{143}{Parametricity.ReadTail.Normal.residual_covers_tree}
+\par\penalty0
+
+The normal covers residual assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{145}{147}{Parametricity.ReadTail.Normal.normal_covers_residual}
+\par\penalty0
+
+The normal covers store assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{149}{151}{Parametricity.ReadTail.Normal.normal_covers_store}
+\par\penalty0
+
+The normal covers payload assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{153}{156}{Parametricity.ReadTail.Normal.normal_covers_payload}
+\par\penalty0
+
+Every corrected edge is accounted for by the reconstructed returned value or retained store; the complete occurrence is therefore surjective.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadNormalCover}{160}{170}{Parametricity.ReadTail.Normal.normal_cover}
+\par\penalty0
+
+The final corrected graph is exactly the returned numeral in parallel with the remaining private store. No observational quotient is used here.
+\lean{Copying/ParametricityReadNormalCover}{174}{176}{Parametricity.ReadTail.Normal.iso}
+\par\penalty0
+
+\subsection{Parametricity Read Residual}
+Pointed residual certificates for the content-copy stage of private readback. Both links sit in the actual computed read complement, retaining its store, discarded instance and arbitrary atom contraction tree.
+
+The after Read focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ParametricityReadResidual}{14}{16}{Parametricity.ReadTail.FullCopy.afterRead_focusFree}
+\par\penalty0
+
+The intermediate is the exact old read complement, with the complete second-copy reduct inserted at its original two ordered content inputs.
+\lean{Copying/ParametricityReadResidual}{20}{22}{Parametricity.ReadTail.FullCopy.middle}
+\par\penalty0
+
+This defines the middle Point data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadResidual}{24}{26}{Parametricity.ReadTail.FullCopy.middlePoint}
+\par\penalty0
+
+The two actual numeral edges are now independent, with input zero still attached to the store and input one still attached to the active read result.
+\lean{Copying/ParametricityReadResidual}{30}{32}{Parametricity.ReadTail.FullCopy.separated}
+\par\penalty0
+
+This defines the separated Point data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ParametricityReadResidual}{34}{36}{Parametricity.ReadTail.FullCopy.separatedPoint}
+\par\penalty0
+
+The resume input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadResidual}{38}{40}{Parametricity.ReadTail.FullCopy.resume_input}
+\par\penalty0
+
+The middle Point input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadResidual}{42}{44}{Parametricity.ReadTail.FullCopy.middlePoint_input}
+\par\penalty0
+
+The separated Point input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/ParametricityReadResidual}{46}{48}{Parametricity.ReadTail.FullCopy.separatedPoint_input}
+\par\penalty0
+
+The original copying template corrects the residual shared stored value. The token is its actual old reader attachment inside the retained complement.
+\lean{Copying/ParametricityReadResidual}{52}{58}{Parametricity.ReadTail.FullCopy.copyingResidual}
+\par\penalty0
+
+The following independent GC correction has the same literal pointed attachment. It removes only the unused closed copy, not the retained store.
+\lean{Copying/ParametricityReadResidual}{62}{68}{Parametricity.ReadTail.FullCopy.garbageResidual}
+\par\penalty0
+

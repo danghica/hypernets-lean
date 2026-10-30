@@ -1,0 +1,262 @@
+\clearpage
+\section{The full copying template and contextual improvement}
+\label{sec:copying-full-copying-template}
+The sixth of the seven further template families is now complete. The
+literal copying pre-template has output closure, input safety at every
+ordered input, universal forward and converse robustness, contextual
+improvement and termination equivalence. All observing contexts in the
+original unrestricted class are covered, including recursive occurrences
+under boxes. Parametricity is the only one of those seven families whose
+universal template proof remains open. Proposition~12.2 also still requires
+the correspondence, semantic weakening and final Figure~22 assembly.
+
+\subsection{The literal equation and its costs}
+\termdef{full-copying-template}
+Let $T$ be any genuine term contraction tree with $n+1$ ordered inputs,
+and let $H:\mathsf{term}\Rightarrow\mathsf{term}^k\mathsf{atom}^h$ be an
+original copyable, focus-free payload. Write $T^{-}$ for the original
+residual tree: feed input zero of $T$ with an actual weakening, leaving its
+other $n$ inputs in order. The token-erasure of Figure~17 compares
+\[
+ T;H\quad\sim\quad
+ \operatorname{pair}_{k,h}(H,T^{-};H);
+       (D^{\mathsf{term}}_{k,2}\otimes D^{\mathsf{atom}}_{h,2}).
+\]
+Here the pair constructor keeps the active input first, then the residual
+inputs, and places the two term-resource blocks before the two atom-resource
+blocks. Both distributors are the original canonical graphs. In particular,
+their weakening edges are retained. The pair relation permits independent
+recursive carrier names on both sides, fixes every external position, and
+contains no semantic or robustness premise.
+
+\termdef{copying-contextual-improvement}
+The conclusion is quantitative improvement, not equality of exact costs.
+For every successful left run of length $p$, there is a successful right
+run of length $q\leq p$. Conversely every successful right run has a
+successful left run whose length is at least the right run's length.
+Forgetting these inequalities gives termination equivalence. This says
+nothing that assumes a callback terminates: each implication is conditional
+on the successful run it transports, while stuckness remains distinct from
+successful termination.
+
+The distinguished input explains the inequality. The left graph requests
+copying and performs its original rewrite in exactly two transitions; it
+then is the right graph with the same search token. The right side takes
+zero transitions. At every other input, both sides take an actual
+request/rewrite pair, with costs two and two. The resulting three payloads,
+remaining tree and nested canonical resource rows have a proved sharing
+interchange. These establish the original input-safety clauses. Applying
+the exact cost preorder here would incorrectly require $2=0$; the published
+contextual theorem instead uses the proved improvement and converse-overhead
+cost triples.
+
+
+\lean{Copying/CopyingTemplateInputSafety}{63}{65}{CopyingTemplate.template_inputSafe_improvement}
+\par\penalty0
+\lean{Copying/CopyingTemplateEquivalence}{16}{22}{CopyingTemplate.filling_improvement}
+\par\penalty0
+\lean{Copying/CopyingTemplateEquivalence}{27}{33}{CopyingTemplate.filling_reverse_overhead}
+\par\penalty0
+\lean{Copying/CopyingTemplateEquivalence}{37}{42}{CopyingTemplate.filling_equiv}
+\par\penalty0
+
+\subsection{Classifying the original remote copying matches}
+The eight operation-headed local-rule families have inspected primitive
+footprints, original stable arguments and, for beta, the actual lambda and
+its complete box body. A shallow left copying component starts with a term
+contraction, so it cannot supply one of these incompatible primitive heads.
+The forward ancestry barrier retains every inspected edge. In the converse,
+original rooted readiness and wire typing exclude an incompatible shallow
+passive contribution to an operation's evaluated argument. Minimal atom
+spines retain exactly the store/equality entries inspected by the local
+rule; unused siblings stay attached in the common complement. Thus actual
+matching rewrites and original residuals exist for all eight operation cases.
+
+The copying-headed case requires an additional diagram.
+\termdef{copying-first-shallow-entry}
+Follow the actual finite contraction resolution from the original token to
+its complete copyable payload. Either the selected route and payload are
+retained, or there is a first shallow copying hole, a specific ordered input
+$j$ of that hole, a retained prefix, and a suffix ending in that hole's actual
+payload. Functional resolution identifies the complete payload, including
+its recursive box label; it does not identify only its passive head.
+
+In the retained case a minimal selected term spine replaces the arbitrary
+whole tree in the supplied match. Its active input and payload attachment
+are unchanged. All inspected edges avoid shallow holes, so the proved
+retained-footprint construction transfers the actual source occurrence.
+Successor coherence compares the rematched rewrite with the independently
+supplied original rewrite. The unused branches are retained in the host;
+no condition is imposed on their labels or recursive fillings.
+
+\termdef{copying-input-graft}
+In the shallow case let $P$ be the retained prefix tree. Grafting $P$ into
+input $j$ of $T$ uses a literal two-component frame with one new junction.
+The upstream inputs come first, followed by every unselected downstream
+input in its original relative order. The construction allows a zero-input
+upstream residual tree. It adds no identity edge and takes no quotient of
+input order. Its raised primitive-tree presentation has a proved recursive
+isomorphism to the actual two-component hypernet.
+
+The complete original prefix occurrence and the original hole corolla are
+edge-disjoint: sharing labels cannot equal the hole label. Complete incidence
+then supplies their internal freshness. Joining them gives an actual
+occurrence of this graft in the original common context. Label-copy
+certificates reconstruct its two actual filled sides. A finite common cut
+lifts any proved literal diagram through this occurrence, preserving the
+original token, all other hole names and every untouched recursive filling.
+
+
+\lean{Copying/ContractionTreeGraft}{100}{116}{ContractionTree.graftInput}
+\par\penalty0
+\lean{Copying/ContractionTreeGraftRewrite}{52}{62}{ContractionTree.Graft.copy_source_iso}
+\par\penalty0
+\lean{Copying/CopyingRemoteCut}{35}{47}{CopyingTemplate.RemoteCut.diagram}
+\par\penalty0
+
+\subsection{Positive and distinguished shallow inputs}
+\termdef{copying-positive-input-diagram}
+If $j>0$, input zero of $T$ is still an external port of the full graft,
+separate from the upstream active port. The original rewrite confined to
+$T;H$ and a rewrite using the full graft tree start in exactly the same whole
+graph at that same external port. Proved successor coherence therefore
+identifies their actual reducts. After reindexing the two selected original
+inputs, the already proved two-input copying interchange constructs the
+required residual. Undoing the actual input permutation restores every
+ordered external position. No new copying commutation law is assumed.
+
+\termdef{copying-distinguished-input-diagram}
+If $j=0$, the downstream selected port is internal to the graft. The
+positive-input argument does not apply. First use the independently proved
+sharing algebra to relate the actual residual of the full graft to the
+graft of $P^{-}$ into $T$. A fixed-boundary partial-serial reassociation
+isomorphism then exposes one genuine original copying-template instance
+$T;H$ inside that retained branch. Applying that original relation leaves
+three actual branches
+\[
+ H,\qquad P^{-};H,\qquad T^{-};H.
+\]
+Each original resource now has two complete canonical two-use rows.
+
+\termdef{copying-three-branch-merging}
+Merging three arbitrary focus-free branch graphs through these rows is
+associative up to a genuine sharing-algebra filling. The proof gives a
+common finite frame with one hole for each entire branch and one three-input
+sharing hole for each original term or atom resource. An explicit input
+bijection fixes the order of all three branch input blocks, including empty
+blocks. Each association has complete original branch and row occurrences
+in that frame, exact attachment equations, and pairwise edge disjointness.
+An exhaustive partition covers every actual edge of each association.
+The complete occurrence and fixed external boundaries therefore yield a
+recursive graph isomorphism. The two six-edge rows are genuine same-input
+sharing trees, so the sharing template supplies the relation between them.
+Arbitrary branch graphs are reflexive contributions: no branch is executed,
+simplified or identified with another branch.
+
+On the right side of the distinguished diagram, factor the actual graft
+through the active branch of the original copying reduct. This yields the
+literal merge of $P;H$ and $T^{-};H$. One original copying rewrite in its
+first branch gives the other association of the same three branches.
+The proved merging law supplies the final sharing correction. All these
+are whole-graph constructions; a local resource-row picture alone would
+not establish the required original residual specimen.
+
+
+\lean{Copying/CopyingMergeAssociativity}{11}{20}{CopyingMerge.assoc}
+\par\penalty0
+\lean{Copying/CopyingRemotePositiveRaw}{15}{33}{CopyingRemote.Positive.raw_diagram}
+\par\penalty0
+\lean{Copying/CopyingRemoteZero}{88}{106}{CopyingRemote.Zero.raw_diagram}
+\par\penalty0
+\lean{Copying/CopyingRemotePair}{33}{40}{CopyingTemplate.Pair.graft_diagram}
+\par\penalty0
+
+\subsection{Two-sided corrections and universal robustness}
+\termdef{copying-two-sided-residual}
+The distinguished case records a leading sharing witness, one original
+copying witness and a trailing sharing witness. This is not transitivity
+of the original copying filling relation. At each link the actual graph,
+search token and ordered interface are recorded. Expansion acts reflexively
+on unrelated components in the sharing links and retains their original
+copying certificates in the middle link.
+
+The independently proved exact sharing semantics supplies the two
+refinements around an original quasi-specimen. Its required intermediate
+roots are derived from the actual rooted endpoints by sharing's nonrewrite
+root-reflection theorem. Hole freedom is transported by the actual label
+laws. This discharges the original refinement-up-to clause without an
+assumed residual-admissibility certificate.
+
+Both literal cases preserve the upstream input zero. Graft congruence
+transports their actual rewrites through independent recursive graph names.
+Their union therefore proves the remote diagram for every original copying
+pair and every ordered hole input. The common-cut construction turns it into
+actual matching whole-graph rewrites and a genuine original residual.
+
+The converse classification also includes the right graph's zero-hop
+resolution at input zero and its positive-input residual-tree resolutions.
+Together with retained rematching and the eight operation-headed cases,
+these exhaust all nine original local-rule constructors in both directions.
+Reflection of an arbitrary representation-class successor uses the existing
+proved machine laws. Consequently the universal forward and converse
+robustness theorems have no matching, classification, determinism,
+refocusing or residual-existence hypotheses left to discharge.
+
+Concrete sufficiency, the proved input-safety inequality and original initial
+lifting give contextual improvement. Converse sufficiency gives the reverse
+overhead comparison. Costs are forgotten only when deriving termination
+equivalence. The result covers arbitrary original addressed sites under
+boxes as well as ordinary closing contexts. Pointed variants retain their
+explicit actual-root premises. The original terms, Figure~16 translation
+and Figure~17 operational rule are unchanged.
+
+
+\lean{Copying/FullCopyingForwardRobustness}{101}{126}{CopyingTemplate.template_robust}
+\par\penalty0
+\lean{Copying/CopyingTemplateConverseRobustness}{120}{149}{CopyingTemplate.template_robust_converse}
+\par\penalty0
+\lean{Copying/CopyingTemplateEquivalence}{61}{66}{CopyingTemplate.addressed_improvement}
+\par\penalty0
+\lean{Copying/CopyingTemplateEquivalence}{70}{75}{CopyingTemplate.addressed_equiv}
+\par\penalty0
+\lean{Copying/CopyingTemplateEquivalence}{143}{150}{CopyingTemplate.pair_contextual_equiv}
+\par\penalty0
+
+\subsection{Checked parametricity progress, with universal work still open}
+\termdef{parametricity-private-read-correction}
+The actual private-reference beta/read/copy path has a checked nine-transition
+prefix with an arbitrary original stable argument. Its exact computed
+successor has a genuine copying-template filling followed by two independent
+garbage-collection fillings. Complete occurrences retain the store and all
+remaining reference inputs. A full edge-cover proof reconstructs a returned
+numeral one together with the surviving tree, original store and stored
+numeral one. Lifting the correction through the original computed complement
+keeps every unused argument output. These are structural corrections with
+proved quantitative semantics; they are not extra machine transitions.
+
+\termdef{parametricity-large-beta-opening}
+For the larger abstraction, the two original beta rules each take one
+transition. Their actual reducts are recursively isomorphic to applying the
+corresponding smaller abstraction to the original callback graph connected
+to the evaluated argument. The callback retains its literal single-use
+contraction tree and unit edge. A four-component complete occurrence
+accounts for the application head, smaller abstraction, callback and argument;
+edge coverage and fixed boundaries prove the isomorphism. This does not
+execute the callback and has no callback-termination hypothesis.
+
+The remaining family isolation, ordered reattachment, shallow lambda
+copying and universal parametricity robustness are separate obligations.
+Neither a counted prefix nor these local opening diagrams prove the
+parametricity template. Appendix~B.1 keeps those tasks visible.
+
+\lean{Copying/ParametricityPrivateCorrection}{115}{125}{Parametricity.PrivateApplication.nine_transition_correction}
+\par\penalty0
+
+
+\lean{Copying/ParametricityLargeOpening}{49}{51}{Parametricity.LargeOpening.read_beta}
+\par\penalty0
+
+
+\lean{Copying/ParametricityLargeOpening}{55}{57}{Parametricity.LargeOpening.one_beta}
+\par\penalty0
+
