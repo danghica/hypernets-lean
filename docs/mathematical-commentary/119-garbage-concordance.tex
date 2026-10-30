@@ -1,0 +1,209 @@
+\clearpage
+\section{Garbage collection: declarations and proofs}
+\label{sec:garbage-concordance}
+The zero-input theorem is applied to the literal tree and payload. The following declarations retain its explicit copyability, focus-freedom and ordered-interface conditions.
+
+\subsection{Garbage Collection}
+Figure 21's garbage-collection pre-template. An arbitrary zero-input term contraction tree feeds the original copyable payload; the right side is exactly the term and atom zero-use distributors.
+
+The original discarded graph retains the complete zero-input tree and the copyable payload, including arbitrary recursive lambda bodies.
+\lean{Copying/GarbageCollection}{14}{16}{GarbageCollection.left}
+\par\penalty0
+
+The paper's two ordered zero-use distributors, with variables before atoms.
+\lean{Copying/GarbageCollection}{19}{21}{GarbageCollection.right}
+\par\penalty0
+
+The literal GC family of Figure 21. Copyability is retained from the figure's H convention; focus freedom is the pre-template requirement.
+\lean{Copying/GarbageCollection}{25}{30}{GarbageCollection.Step}
+\par\penalty0
+
+Independent graph carrier changes preserve every ordered external port.
+\lean{Copying/GarbageCollection}{33}{36}{GarbageCollection.UpToIso}
+\par\penalty0
+
+Arbitrary tree presentations contain only their original weakening and contraction labels when raised into the copying alphabet.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/GarbageCollection}{40}{45}{GarbageCollection.tree_allLabels}
+\par\penalty0
+
+Serial assembly retains the payload's entire recursive label predicate.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollection}{48}{52}{GarbageCollection.left_allLabels}
+\par\penalty0
+
+Zero-use distributors satisfy every primitive-label property holding of the two sorts' sharing primitives, with the literal distributors retained.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollection}{56}{62}{GarbageCollection.right_allLabels}
+\par\penalty0
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/GarbageCollection}{64}{69}{GarbageCollection.Step.focusFree}
+\par\penalty0
+
+Every literal garbage-collection fragment has empty input interface.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/GarbageCollection}{72}{74}{GarbageCollection.Step.input}
+\par\penalty0
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/GarbageCollection}{76}{80}{GarbageCollection.UpToIso.focusFree}
+\par\penalty0
+
+The input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/GarbageCollection}{82}{84}{GarbageCollection.UpToIso.input}
+\par\penalty0
+
+The actual GC pre-template, without any assumed execution equivalence.
+\lean{Copying/GarbageCollection}{87}{89}{GarbageCollection.template}
+\par\penalty0
+
+The literal assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollection}{91}{94}{GarbageCollection.literal}
+\par\penalty0
+
+\subsection{Garbage Collection Equivalence}
+Full robustness and exact-cost contextual equivalence for Figure 21's literal garbage-collection family, in all original observation contexts.
+
+Every original local rule admits actual matching GC residuals.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionEquivalence}{10}{12}{GarbageCollection.template_robust}
+\par\penalty0
+
+The original opposite specimen system also satisfies full robustness.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionEquivalence}{15}{17}{GarbageCollection.template_robust_converse}
+\par\penalty0
+
+Arbitrary simultaneous recursive GC fillings preserve exact successful execution costs, without a binding restriction on their observing context.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionEquivalence}{21}{25}{GarbageCollection.filling_exact_equiv}
+\par\penalty0
+
+The filling termination count assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionEquivalence}{27}{31}{GarbageCollection.filling_termination_count}
+\par\penalty0
+
+The actual GC pair can be substituted at an original site at any box depth. Both filled graphs, rather than the nullary fragments alone, execute.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionEquivalence}{35}{40}{GarbageCollection.addressed_exact_equiv}
+\par\penalty0
+
+Every successful transition count is preserved in these unrestricted contexts, including contexts with effects, copying and divergent computations.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionEquivalence}{44}{49}{GarbageCollection.addressed_termination_count}
+\par\penalty0
+
+\subsection{Garbage Collection Laws}
+Structural safety and padding of the literal garbage-collection family.
+
+The template no Inputs assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionLaws}{9}{9}{GarbageCollection.template_noInputs}
+\par\penalty0
+
+The template output Closed assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionLaws}{11}{11}{GarbageCollection.template_outputClosed}
+\par\penalty0
+
+Input safety holds for every context class and both cost parameters.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionLaws}{14}{16}{GarbageCollection.template_inputSafe}
+\par\penalty0
+
+Padding preserves the actual arbitrary zero-input contraction tree.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/GarbageCollectionLaws}{19}{21}{GarbageCollection.tree_raise}
+\par\penalty0
+
+Padding retains the tree and raises the original payload, including its box bodies, up to the serial constructor's ordered carrier representation.
+\lean{Copying/GarbageCollectionLaws}{25}{28}{GarbageCollection.left_raise}
+\par\penalty0
+
+The same two zero-use distributors remain on the right at the next allowance.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/GarbageCollectionLaws}{31}{34}{GarbageCollection.right_raise}
+\par\penalty0
+
+The raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/GarbageCollectionLaws}{36}{42}{GarbageCollection.Step.raise}
+\par\penalty0
+
+The raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/GarbageCollectionLaws}{44}{50}{GarbageCollection.UpToIso.raise}
+\par\penalty0
+
+The template padding Closed assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/GarbageCollectionLaws}{52}{52}{GarbageCollection.template_paddingClosed}
+\par\penalty0
+
+\subsection{Nullary Pointed Execution}
+Exact execution equivalence for nullary fillings at their actual common host focus. The focus may be internal, and every endpoint rootedness premise refers to the actual original unbounded machine state.
+
+A genuine recursive filling yields the actual pointed lifting when both supplied endpoints are rooted. This does not reset an internal token to the whole graph's input or assume rootedness of an unrelated state.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/NullaryPointedExecution}{14}{25}{FillingWitness.allContexts_pointed_lifting}
+\par\penalty0
+
+Nullary structural changes preserve every successful transition count from an arbitrary common host token. Input safety and both robustness directions are the already proved concrete theorems.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/NullaryPointedExecution}{34}{47}{NullaryExecution.pointed_exact_equiv}
+\par\penalty0
+
+The same exact equivalence in the original representation quotient used by quasi-specimens; no extra quotient or coarse observation is introduced.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/NullaryPointedExecution}{51}{62}{NullaryExecution.pointed_class_exact_equiv}
+\par\penalty0
+
+Pointed execution agrees at each exact cost, with no termination premise and no bound on the subsequent run or on the enclosing recursive graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/NullaryPointedExecution}{66}{83}{NullaryExecution.pointed_termination_count}
+\par\penalty0
+
+A rooted actual left endpoint suffices for a pointed semantic correction: the right root is obtained by exact reflection of the original search path.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/NullaryPointedExecution}{87}{95}{NullaryExecution.pointed_exact_equiv_of_left_rooted}
+\par\penalty0
+
+The representation-quotient form for composing a completed nullary template correction with an actual residual specimen.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/NullaryPointedExecution}{99}{108}{NullaryExecution.pointed_class_exact_equiv_of_left_rooted}
+\par\penalty0
+
+A correction can instead start from a proved root on its actual right endpoint; search reflection supplies the intermediate left root exactly.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/NullaryPointedExecution}{112}{121}{NullaryExecution.pointed_class_exact_equiv_of_right_rooted}
+\par\penalty0
+
+\subsection{Nullary Rooted}
+Nullary recursive fillings preserve rootedness at every common host position. The proof transports original search, without using contextual equivalence or assuming a root for an intermediate semantic correction.
+
+Original search cannot cross a nullary hole's source, or backtrack out of one: a hole-labelled producer blocks operation-only reachability.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/NullaryRooted}{20}{27}{Search.Expansion.nullary_boundary}
+\par\penalty0
+
+Every finite filled search path from an originally rooted host position reflects to an equally long path in the literal original context.
+For the proof, induction follows the original derivation or finite structure; the defined maps and incidence equations are substituted.
+\lean{Copying/NullaryRooted}{31}{44}{Search.Expansion.nullary_reflect_run}
+\par\penalty0
+
+Search rootedness is identical before and after a nullary filling, at the same original host coordinate and the same selected external input.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/NullaryRooted}{48}{60}{Search.Expansion.nullary_rooted_iff}
+\par\penalty0
+
+A nullary paired recursive filling transports actual rootedness in both directions, including when its common token is internal. Hole freedom of one actual endpoint forces every original shallow hole to have its true nullary interface; unchanged and rebuilt box corollas retain their original search.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/NullaryRooted}{67}{80}{FillingWitness.nullary_rooted_iff}
+\par\penalty0
+

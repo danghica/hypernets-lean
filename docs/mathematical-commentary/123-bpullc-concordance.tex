@@ -1,0 +1,2044 @@
+\clearpage
+\section{Box-contraction pulling: declarations and proofs}
+\label{sec:bpullc-concordance}
+This section records the literal pair, its beta and copying diamonds, and complete forward and converse robustness. All nine original local constructors have actual opposite rewrites. The four-input correction uses genuine sharing-tree witnesses and retains the entire canonical distributor. The resulting exact contextual equivalence covers arbitrary original addressed observing sites.
+
+\subsection{Box Pull Contraction}
+The literal BPullC pair of Figure 21 for both sharing sorts. The two adjacent free outputs of an arbitrary focus-free body are contracted inside the box on the left and outside it on the right.
+
+This defines the variables data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContraction}{12}{13}{BoxPullContraction.variables}
+\par\penalty0
+
+This defines the atoms data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContraction}{15}{16}{BoxPullContraction.atoms}
+\par\penalty0
+
+In both sorts the selected wires occur between the old term and atom blocks. Atom positions are therefore before the original atom outputs.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContraction}{20}{24}{BoxPullContraction.block_interface}
+\par\penalty0
+
+The variables bound assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContraction}{26}{28}{BoxPullContraction.variables_bound}
+\par\penalty0
+
+Contract the two displayed resources of one environment, preserving the entire original graph and the remaining interface order.
+\lean{Copying/BoxPullContraction}{32}{36}{BoxPullContraction.contract}
+\par\penalty0
+
+The body contraction acts only on free outputs: the first n bound outputs remain fixed, including when there are no other free variables.
+\lean{Copying/BoxPullContraction}{40}{44}{BoxPullContraction.body}
+\par\penalty0
+
+This defines the left graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContraction}{46}{49}{BoxPullContraction.left}
+\par\penalty0
+
+This defines the right graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContraction}{51}{54}{BoxPullContraction.right}
+\par\penalty0
+
+Every body is permitted, with the paper's focus-freedom condition; no closedness, copyability, or operation restriction is imposed on it.
+\lean{Copying/BoxPullContraction}{58}{62}{BoxPullContraction.Step}
+\par\penalty0
+
+The Up To Iso data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/BoxPullContraction}{64}{67}{BoxPullContraction.UpToIso}
+\par\penalty0
+
+Output merging adds exactly its contraction and preserves every primitive in the original graph, recursively through all box bodies.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContraction}{71}{79}{BoxPullContraction.merge_allLabels}
+\par\penalty0
+
+The contract all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContraction}{81}{85}{BoxPullContraction.contract_allLabels}
+\par\penalty0
+
+The body all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContraction}{87}{91}{BoxPullContraction.body_allLabels}
+\par\penalty0
+
+The left all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContraction}{93}{98}{BoxPullContraction.left_allLabels}
+\par\penalty0
+
+The right all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContraction}{100}{106}{BoxPullContraction.right_allLabels}
+\par\penalty0
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContraction}{108}{112}{BoxPullContraction.Step.focusFree}
+\par\penalty0
+
+The all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContraction}{114}{117}{BoxPullContraction.Step.allLabels}
+\par\penalty0
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContraction}{119}{123}{BoxPullContraction.UpToIso.focusFree}
+\par\penalty0
+
+The all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContraction}{125}{128}{BoxPullContraction.UpToIso.allLabels}
+\par\penalty0
+
+This defines the template data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContraction}{130}{132}{BoxPullContraction.template}
+\par\penalty0
+
+The literal assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContraction}{134}{137}{BoxPullContraction.literal}
+\par\penalty0
+
+\subsection{Box Pull Contraction Assembly}
+Pull edgewise transformations through the actual rewrite constructors.
+
+Pull each component back along the original edge bijection, retaining its complete ordered boundary via proved signature equalities.
+\lean{Copying/BoxPullContractionAssembly}{13}{21}{BoxPullContraction.Decoration.pull}
+\par\penalty0
+
+The pull Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionAssembly}{23}{30}{BoxPullContraction.Decoration.pullIso}
+\par\penalty0
+
+The pull Iso host assertion identifies the indicated constructions by an ordered recursive graph isomorphism.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionAssembly}{32}{39}{BoxPullContraction.Decoration.pullIso_host}
+\par\penalty0
+
+Restrict to an existing expansion component; no subgraph complement is assumed.
+\lean{Copying/BoxPullContractionAssembly}{42}{44}{BoxPullContraction.Decoration.component}
+\par\penalty0
+
+The grouped Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionAssembly}{46}{47}{BoxPullContraction.Decoration.groupedIso}
+\par\penalty0
+
+The selected token follows the same nesting of the original expansion.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionAssembly}{50}{55}{BoxPullContraction.Decoration.groupedIso_insert}
+\par\penalty0
+
+The corolla Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionAssembly}{62}{65}{BoxPullContraction.Decoration.corollaIso}
+\par\penalty0
+
+This defines the serial Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionAssembly}{67}{69}{BoxPullContraction.Decoration.serialLeft}
+\par\penalty0
+
+This defines the serial Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionAssembly}{71}{73}{BoxPullContraction.Decoration.serialRight}
+\par\penalty0
+
+The serial Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionAssembly}{75}{81}{BoxPullContraction.Decoration.serialIso}
+\par\penalty0
+
+This defines the tensor Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionAssembly}{83}{86}{BoxPullContraction.Decoration.tensorLeft}
+\par\penalty0
+
+This defines the tensor Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionAssembly}{88}{91}{BoxPullContraction.Decoration.tensorRight}
+\par\penalty0
+
+The tensor Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionAssembly}{93}{100}{BoxPullContraction.Decoration.tensorIso}
+\par\penalty0
+
+Pull a decoration through equality transport of boundary lists.
+\lean{Copying/BoxPullContractionAssembly}{103}{106}{BoxPullContraction.Decoration.unboundary}
+\par\penalty0
+
+\subsection{Box Pull Contraction Atomic}
+Atomic certificates for transporting an existing contextual rewrite. They retain actual BPullC pairs and recursively certified box bodies.
+
+One outer contribution: representation, the original BPullC pair, or a box whose bodies have an original recursive filling certificate. The congruence constructors only change graph representation and equal interface indices.
+\lean{Copying/BoxPullContractionAtomic}{13}{22}{BoxPullContraction.AtomicPair}
+\par\penalty0
+
+Every atomic certificate supplies a genuine recursive residual certificate.
+\lean{Copying/BoxPullContractionAtomic}{26}{35}{BoxPullContraction.AtomicPair.witness}
+\par\penalty0
+
+Primitive footprints cannot contain a shallow or boxed BPullC contribution.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionAtomic}{38}{64}{BoxPullContraction.AtomicPair.primitive_rigid}
+\par\penalty0
+
+Extract the atomic contribution already present at an original context edge.
+\lean{Copying/BoxPullContractionAtomic}{68}{86}{BoxPullContraction.atomic_of_edge}
+\par\penalty0
+
+\subsection{Box Pull Contraction Beta}
+Actual beta rewriting with an external contraction. Isomorphisms expose exactly the original app/lam/box redex and preserve its stable argument.
+
+This defines the boxed Application data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionBeta}{13}{13}{BoxPullContraction.boxedApplication}
+\par\penalty0
+
+The unchanged app/lam prefix and argument can be factored through the literal contraction frame, with all remaining output positions preserved.
+\lean{Copying/BoxPullContractionBeta}{17}{39}{BoxPullContraction.outside_source_iso}
+\par\penalty0
+
+A literal output contraction carries any actual app/lam-prefix rewrite through unchanged. This theorem transports an existing machine step; it is not an additional compute rule.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionBeta}{44}{60}{BoxPullContraction.outside_rewrite}
+\par\penalty0
+
+Moving an equality of ordered free interfaces through the app/lam frame changes no edge, argument, or bound-output connection.
+\lean{Copying/BoxPullContractionBeta}{64}{69}{BoxPullContraction.boxedApplication_output}
+\par\penalty0
+
+The original beta rule, with its original stability premise, really fires through an outside contraction. The body and argument are unchanged; the equality only locates the displayed pair in the ordered free boundary.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionBeta}{74}{88}{BoxPullContraction.outside_beta}
+\par\penalty0
+
+Both sharing sorts and every environment size instantiate the displayed pair without any additional premise about ordered interfaces.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionBeta}{92}{104}{BoxPullContraction.outside_beta_environment}
+\par\penalty0
+
+\subsection{Box Pull Contraction Beta Diamond}
+The complete literal BPullC beta diamond: original stable beta steps on both sides, followed by exact recursive graph isomorphism of the successors.
+
+This defines the two interface data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionBetaDiamond}{11}{14}{BoxPullContraction.two_interface}
+\par\penalty0
+
+This defines the one interface data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionBetaDiamond}{16}{19}{BoxPullContraction.one_interface}
+\par\penalty0
+
+This defines the raw Open data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionBetaDiamond}{21}{23}{BoxPullContraction.rawOpen}
+\par\penalty0
+
+This defines the outside Beta Source data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionBetaDiamond}{25}{30}{BoxPullContraction.outsideBetaSource}
+\par\penalty0
+
+This defines the outside Beta After data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionBetaDiamond}{32}{40}{BoxPullContraction.outsideBetaAfter}
+\par\penalty0
+
+The source is exactly a literal template occurrence within the original app/lam prefix and stable argument context.
+\lean{Copying/BoxPullContractionBetaDiamond}{44}{57}{BoxPullContraction.beta_sourceWitness}
+\par\penalty0
+
+Recasting the free interface commutes with the original body--argument splice, and hence the raw outside successor is exactly the original beta successor with its external contraction retained.
+\lean{Copying/BoxPullContractionBetaDiamond}{62}{75}{BoxPullContraction.raw_successorIso}
+\par\penalty0
+
+All original body and argument edges and the bound-output junction are preserved; only the finite carrier grouping differs between the reducts.
+\lean{Copying/BoxPullContractionBetaDiamond}{79}{86}{BoxPullContraction.beta_successorIso}
+\par\penalty0
+
+Both branches take the actual original beta rule at the same input and resume at that input, preserving the original stable-argument premise.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionBetaDiamond}{90}{99}{BoxPullContraction.beta_diamond}
+\par\penalty0
+
+Exact transition-count equivalence for the completed local beta overlap in every typed host, including diverging opened bodies or callbacks.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionBetaDiamond}{103}{117}{BoxPullContraction.beta_costs_at}
+\par\penalty0
+
+\subsection{Box Pull Contraction Converse Residual}
+Reverse use of a constructed BPullC residual. The exact sharing correction supplies the left refinement of the original opposite quasi-specimen.
+
+The same genuine residual supports the opposite specimen orientation; only the independently proved exact sharing correction reverses direction.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionConverseResidual}{11}{32}{BoxPullContraction.Residual.opposite_quasi}
+\par\penalty0
+
+\subsection{Box Pull Contraction Converse Robustness}
+Universal converse BPullC robustness. Actual left enabledness and proved successor coherence let the forward geometric residual handle every supplied right successor, with the exact sharing correction used in the opposite direction.
+
+Full converse robustness for all original recursive BPullC specimens and all original local rules. No matching, decomposition, or robustness hypothesis is present: exact original matching rewrites and residuals are constructed.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionConverseRobustness}{14}{41}{BoxPullContraction.template_robust_converse}
+\par\penalty0
+
+\subsection{Box Pull Contraction Converse Transport}
+Exhaustive actual converse matching for the original BPullC specimen. All nine original local rules are reconstructed at the original host token; unused contraction siblings and new right internal vertices are never assumed retained or projected globally.
+
+Exhaustive reconstruction of an actual left rewrite from any original right local rule occurrence and its actual original context coordinate.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionConverseTransport}{20}{33}{BoxPullContraction.local_enabled_converse}
+\par\penalty0
+
+Every supplied right whole-graph rewrite contains its own complete local occurrence. Its reconstructed left rewrite uses the exact paired specimen token.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionConverseTransport}{37}{41}{BoxPullContraction.filling_enabled_converse}
+\par\penalty0
+
+\subsection{Box Pull Contraction Coordinates}
+Explicit ordered coordinates for the single contraction attached to an output pair. These identify actual beta residuals without changing the body.
+
+This defines the junction data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionCoordinates}{10}{11}{BoxPullContraction.junction}
+\par\penalty0
+
+Only the selected pair of old outputs becomes internal. All other old ports retain their original order, with one output removed from the list.
+\lean{Copying/BoxPullContractionCoordinates}{15}{22}{BoxPullContraction.oldPort}
+\par\penalty0
+
+The frame target Port identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCoordinates}{24}{54}{BoxPullContraction.frame_targetPort}
+\par\penalty0
+
+The explicit old-port map is the actual simultaneous-expansion embedding, including both internalized output coordinates.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCoordinates}{58}{77}{BoxPullContraction.oldPort_insert}
+\par\penalty0
+
+This defines the old Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionCoordinates}{79}{80}{BoxPullContraction.oldEdge}
+\par\penalty0
+
+This defines the contraction Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionCoordinates}{82}{84}{BoxPullContraction.contractionEdge}
+\par\penalty0
+
+The merge source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionCoordinates}{86}{90}{BoxPullContraction.merge_source}
+\par\penalty0
+
+The merge target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionCoordinates}{92}{96}{BoxPullContraction.merge_target}
+\par\penalty0
+
+The merge contraction source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCoordinates}{98}{101}{BoxPullContraction.merge_contraction_source}
+\par\penalty0
+
+The merge contraction target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCoordinates}{103}{106}{BoxPullContraction.merge_contraction_target}
+\par\penalty0
+
+\subsection{Box Pull Contraction Copy Boundary}
+The complete outside-contraction occurrence fixes the actual ordered external interface of the original copying reduct.
+
+The retained Branch input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{12}{16}{BoxPullContraction.CopyRows.retainedBranch_input}
+\par\penalty0
+
+The copies input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{18}{34}{BoxPullContraction.CopyRows.copies_input}
+\par\penalty0
+
+The original Copies input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{36}{39}{BoxPullContraction.CopyRows.originalCopies_input}
+\par\penalty0
+
+The corrected Copies input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{41}{54}{BoxPullContraction.CopyRows.correctedCopies_input}
+\par\penalty0
+
+The after input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{56}{58}{BoxPullContraction.CopyRows.after_input}
+\par\penalty0
+
+Every surviving component preserves a boundary output already external in the original host of the sharing-row cut.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{62}{77}{BoxPullContraction.CopyRows.retained_output}
+\par\penalty0
+
+The original Term Row output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{79}{84}{BoxPullContraction.CopyRows.originalTermRow_output}
+\par\penalty0
+
+The original Atom Row output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{86}{94}{BoxPullContraction.CopyRows.originalAtomRow_output}
+\par\penalty0
+
+The retained Term Row output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionCopyBoundary}{96}{99}{BoxPullContraction.CopyRows.retainedTermRow_output}
+\par\penalty0
+
+The retained Atom Row output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionCopyBoundary}{101}{104}{BoxPullContraction.CopyRows.retainedAtomRow_output}
+\par\penalty0
+
+All unselected outputs keep the exact original compressed ordering.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{107}{152}{BoxPullContraction.CopyRows.after_unselected_output}
+\par\penalty0
+
+The selected inside row ends at the original contracted output.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{155}{167}{BoxPullContraction.CopyRows.original_row_output}
+\par\penalty0
+
+The inserted outside contraction keeps the actual original output port.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{170}{183}{BoxPullContraction.CopyRows.insertedContraction_output}
+\par\penalty0
+
+The normalization fixes every original ordered input, including all unused residual-tree inputs.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{195}{200}{BoxPullContraction.CopyRows.normalization_input}
+\par\penalty0
+
+The normalization fixes the complete ordered contracted environment.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyBoundary}{203}{238}{BoxPullContraction.CopyRows.normalization_output}
+\par\penalty0
+
+\subsection{Box Pull Contraction Copy Correction}
+The copying overlap of literal BPullC: the duplicated original specimen is followed by one independently proved exact sharing-tree correction.
+
+Exhaustive complete incidence reconstruction identifies the corrected whole graph with the literal outside-contraction reduct.
+\lean{Copying/BoxPullContractionCopyCorrection}{17}{20}{BoxPullContraction.CopyRows.normalizationIso}
+\par\penalty0
+
+One genuine sharing-algebra filling performs the whole-graph correction, ending at the actual original copying reduct with contraction outside.
+\lean{Copying/BoxPullContractionCopyCorrection}{24}{28}{BoxPullContraction.CopyRows.finalCorrection}
+\par\penalty0
+
+The original copying overlap produces two genuine BPullC instances, followed by the checked four-input sharing interchange. Both links preserve the actual original search token and every unused contraction-tree branch.
+\lean{Copying/BoxPullContractionCopyCorrection}{35}{44}{BoxPullContraction.Residual.copying}
+\par\penalty0
+
+\subsection{Box Pull Contraction Copy Coverage}
+Exhaustive edge coverage of the actual BPullC correction.
+
+The normalization copies edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyCoverage}{11}{13}{BoxPullContraction.CopyRows.normalization_copies_edge}
+\par\penalty0
+
+The normalization term edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyCoverage}{15}{17}{BoxPullContraction.CopyRows.normalization_term_edge}
+\par\penalty0
+
+The normalization atom edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyCoverage}{19}{21}{BoxPullContraction.CopyRows.normalization_atom_edge}
+\par\penalty0
+
+The normalization root edge assertion relates the actual token root condition to the indicated common-context representation.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyCoverage}{23}{25}{BoxPullContraction.CopyRows.normalization_root_edge}
+\par\penalty0
+
+Original payload and residual-tree edges retain explicit preimages.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionCopyCoverage}{28}{30}{BoxPullContraction.CopyRows.copies_covered}
+\par\penalty0
+
+Account for the two inserted canonical rows and their outside root.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyCoverage}{33}{53}{BoxPullContraction.CopyRows.inserted_covered}
+\par\penalty0
+
+Every retained old edge is either an original copy/tree edge or an unselected distributor edge; the other five old edges were actually removed.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyCoverage}{57}{120}{BoxPullContraction.CopyRows.raw_normalization_surjective}
+\par\penalty0
+
+Every edge of the computed sharing correction occurs in the literal outside-contraction reduct, with no omitted canonical weakening edges.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionCopyCoverage}{130}{134}{BoxPullContraction.CopyRows.normalization_surjective}
+\par\penalty0
+
+\subsection{Box Pull Contraction Copy Reconstruction}
+Reassemble the actual original copy reduct from the retained copies and all reconstructed resource rows after BPullC's sharing interchange.
+
+The term Forest port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{13}{21}{BoxPullContraction.CopyRows.termForest_port}
+\par\penalty0
+
+The atom Forest port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{23}{31}{BoxPullContraction.CopyRows.atomForest_port}
+\par\penalty0
+
+The distributor term port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{33}{40}{BoxPullContraction.CopyRows.distributor_term_port}
+\par\penalty0
+
+The distributor atom port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{42}{49}{BoxPullContraction.CopyRows.distributor_atom_port}
+\par\penalty0
+
+Every original serial junction between the pair of copies and its resource forest remains literally attached after the selected-row replacement.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{53}{70}{BoxPullContraction.CopyRows.after_boundary}
+\par\penalty0
+
+The copies term disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{72}{82}{BoxPullContraction.CopyRows.copies_term_disjoint}
+\par\penalty0
+
+The copies atom disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{84}{94}{BoxPullContraction.CopyRows.copies_atom_disjoint}
+\par\penalty0
+
+The after disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionCopyReconstruction}{96}{103}{BoxPullContraction.CopyRows.after_disjoint}
+\par\penalty0
+
+The full original uncontracted copy reduct has its complete occurrence inside the actual corrected graph. Its two selected outputs feed the sole external contraction, reconstructed separately below.
+\lean{Copying/BoxPullContractionCopyReconstruction}{108}{110}{BoxPullContraction.CopyRows.afterOccurrence}
+\par\penalty0
+
+The inserted Contraction map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionCopyReconstruction}{112}{113}{BoxPullContraction.CopyRows.insertedContraction}
+\par\penalty0
+
+The inserted Row output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{115}{121}{BoxPullContraction.CopyRows.insertedRow_output}
+\par\penalty0
+
+The distributor term output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{123}{126}{BoxPullContraction.CopyRows.distributor_term_output}
+\par\penalty0
+
+The distributor atom output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{128}{134}{BoxPullContraction.CopyRows.distributor_atom_output}
+\par\penalty0
+
+The reconstructed selected outputs meet the two original ordered inputs of the sole outside contraction.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{138}{154}{BoxPullContraction.CopyRows.after_selected_output}
+\par\penalty0
+
+The after contraction disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyReconstruction}{156}{183}{BoxPullContraction.CopyRows.after_contraction_disjoint}
+\par\penalty0
+
+Complete occurrence with all interface casts written as explicit boundary maps; this exposes the original finite carriers for coverage proofs.
+\lean{Copying/BoxPullContractionCopyReconstruction}{187}{197}{BoxPullContraction.CopyRows.rawNormalizationOccurrence}
+\par\penalty0
+
+The literal outside-contraction reduct has its complete occurrence in the computed sharing correction.
+\lean{Copying/BoxPullContractionCopyReconstruction}{202}{205}{BoxPullContraction.CopyRows.normalizationOccurrence}
+\par\penalty0
+
+\subsection{Box Pull Contraction Copy Rows}
+The literal four-input sharing rows in the copying overlap of BPullC. The original canonical distributors retain all their weakening branches.
+
+Contract each copied pair before the actual two-use distributor.
+\lean{Copying/BoxPullContractionCopyRows}{13}{15}{BoxPullContraction.CopyRows.inside}
+\par\penalty0
+
+Distribute the two selected resources independently, then contract them. The distributor's input ordering is copy-major, preserving the same four wires.
+\lean{Copying/BoxPullContractionCopyRows}{19}{20}{BoxPullContraction.CopyRows.outside}
+\par\penalty0
+
+This defines the inside Rank data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionCopyRows}{36}{40}{BoxPullContraction.CopyRows.insideRank}
+\par\penalty0
+
+This defines the outside Rank data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionCopyRows}{42}{56}{BoxPullContraction.CopyRows.outsideRank}
+\par\penalty0
+
+Both copied contractions feed the canonical row in its exact source order.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyRows}{59}{88}{BoxPullContraction.CopyRows.inside_rank}
+\par\penalty0
+
+Each canonical resource row feeds the sole external contraction.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyRows}{91}{121}{BoxPullContraction.CopyRows.outside_rank}
+\par\penalty0
+
+The first displayed row is a genuine four-input sharing tree.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyRows}{124}{130}{BoxPullContraction.CopyRows.inside_sharing}
+\par\penalty0
+
+The independently distributed row is also a tree with the same four ordered inputs; no commutation of external interfaces is hidden in an iso.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopyRows}{134}{141}{BoxPullContraction.CopyRows.outside_sharing}
+\par\penalty0
+
+The exact copying interchange row is a proved sharing-algebra instance.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionCopyRows}{144}{146}{BoxPullContraction.CopyRows.pair}
+\par\penalty0
+
+\subsection{Box Pull Contraction Copying}
+Original copying steps and the duplicated literal BPullC certificate. The intermediate has two external contractions followed by the actual output distributor; sharing interchange is a separate residual obligation.
+
+Pulling the literal contraction through an unchanged serial prefix preserves the original counted term and atom interfaces.
+\lean{Copying/BoxPullContractionCopying}{13}{20}{BoxPullContraction.serial_contract}
+\par\penalty0
+
+The lambda head remains in the common context; the hole is precisely the literal box-contraction pair, with its original arbitrary body.
+\lean{Copying/BoxPullContractionCopying}{24}{31}{BoxPullContraction.payloadWitness}
+\par\penalty0
+
+An actual rewrite may be surrounded by the literal output contraction; only ordered interface casts and the original expansion rule are used.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopying}{35}{42}{BoxPullContraction.contract_rewrite}
+\par\penalty0
+
+The actual contraction tree and lambda head are retained around one original literal template occurrence.
+\lean{Copying/BoxPullContractionCopying}{46}{53}{BoxPullContraction.copy_sourceWitness}
+\par\penalty0
+
+Duplication creates two genuine occurrences of the original pair. The right graph is the explicit intermediate before output sharing interchange; it is not asserted to be a copyable payload.
+\lean{Copying/BoxPullContractionCopying}{58}{64}{BoxPullContraction.copy_intermediateWitness}
+\par\penalty0
+
+Both branches perform the original copying transition with the actual copyable lambda payload. The external contraction remains outside that payload, and all residual tree inputs and distributor rows are retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCopying}{69}{76}{BoxPullContraction.copy_steps}
+\par\penalty0
+
+\subsection{Box Pull Contraction Cut Links}
+Ordered attachment equations for the actual complement of a complete occurrence, used to reassemble copying after a sharing-row interchange.
+
+The literal inserted replacement, with precisely the cut's old boundary.
+\lean{Copying/BoxPullContractionCutLinks}{14}{18}{Opening.Occurrence.replacement}
+\par\penalty0
+
+A retained component's old attachment to a selected input remains exactly attached to that same ordered input of the inserted replacement.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCutLinks}{22}{36}{Opening.Occurrence.acrossCut_replacement_input}
+\par\penalty0
+
+The corresponding ordered output attachment survives the same cut.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCutLinks}{39}{53}{Opening.Occurrence.acrossCut_replacement_output}
+\par\penalty0
+
+Two retained components preserve every old common vertex.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionCutLinks}{56}{68}{Opening.Occurrence.acrossCut_link}
+\par\penalty0
+
+\subsection{Box Pull Contraction Decoration}
+Edgewise BPullC transformations and pointed residual certificates.
+
+Replace each original edge by an atomically certified contribution.
+\lean{Copying/BoxPullContractionDecoration}{9}{12}{BoxPullContraction.Decoration}
+\par\penalty0
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionDecoration}{17}{17}{BoxPullContraction.Decoration.graph}
+\par\penalty0
+
+This defines the identity data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionDecoration}{19}{21}{BoxPullContraction.Decoration.identity}
+\par\penalty0
+
+The identity Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionDecoration}{23}{24}{BoxPullContraction.Decoration.identityIso}
+\par\penalty0
+
+Edgewise witnesses assemble to the original recursive filling relation.
+\lean{Copying/BoxPullContractionDecoration}{27}{29}{BoxPullContraction.Decoration.witness}
+\par\penalty0
+
+Every primitive source edge is unchanged up to ordered recursive naming.
+\lean{Copying/BoxPullContractionDecoration}{32}{34}{BoxPullContraction.Decoration.primitiveIso}
+\par\penalty0
+
+The primitive Iso vertex assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionDecoration}{36}{38}{BoxPullContraction.Decoration.primitiveIso_vertex}
+\par\penalty0
+
+\subsection{Box Pull Contraction Equivalence}
+Full BPullC contextual equivalence from the proved original-machine robustness in both directions. Exact transition counts hold in all original observing contexts, including recursive sites at arbitrary box depth.
+
+BPullC paired fillings have exact quantitative equivalence, using proved input safety and both proved robustness directions of the original machine.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionEquivalence}{14}{22}{BoxPullContraction.filling_exact_equiv}
+\par\penalty0
+
+Successful termination agrees at every exact transition count, including contexts whose other computations may diverge or become stuck.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionEquivalence}{26}{39}{BoxPullContraction.filling_termination_count}
+\par\penalty0
+
+An actual template pair can be replaced at any original addressed site, including under boxes, in every closed observing graph. No binding restriction or bound on the surrounding depth is imposed.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionEquivalence}{44}{49}{BoxPullContraction.addressed_exact_equiv}
+\par\penalty0
+
+The addressed-context consequence preserves exact successful-transition counts for each actual replacement, not merely termination after forgetting costs.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionEquivalence}{53}{58}{BoxPullContraction.addressed_termination_count}
+\par\penalty0
+
+Box-pulling contraction preserves every successful transition count from an arbitrary common host token. Input safety and both robustness directions are the already proved concrete theorems.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionEquivalence}{62}{75}{BoxPullContraction.pointed_exact_equiv}
+\par\penalty0
+
+The same exact equivalence in the original representation quotient used by quasi-specimens; no extra quotient or coarse observation is introduced.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionEquivalence}{79}{90}{BoxPullContraction.pointed_class_exact_equiv}
+\par\penalty0
+
+Pointed execution agrees at each exact cost, with no termination premise and no bound on the subsequent run or on the enclosing recursive graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionEquivalence}{94}{111}{BoxPullContraction.pointed_termination_count}
+\par\penalty0
+
+\subsection{Box Pull Contraction Forest}
+Reconstruct each original resource distributor after the literal four-input interchange, using the inserted rows only at the two selected ports.
+
+Original term row in the actual reduct before the interchange.
+\lean{Copying/BoxPullContractionForest}{13}{16}{BoxPullContraction.CopyRows.originalTermRow}
+\par\penalty0
+
+The original Atom Row map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionForest}{18}{21}{BoxPullContraction.CopyRows.originalAtomRow}
+\par\penalty0
+
+The original Term Row disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForest}{23}{34}{BoxPullContraction.CopyRows.originalTermRow_disjoint}
+\par\penalty0
+
+The original Atom Row disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForest}{36}{47}{BoxPullContraction.CopyRows.originalAtomRow_disjoint}
+\par\penalty0
+
+The retained Term Row map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionForest}{49}{52}{BoxPullContraction.CopyRows.retainedTermRow}
+\par\penalty0
+
+The retained Atom Row map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionForest}{54}{57}{BoxPullContraction.CopyRows.retainedAtomRow}
+\par\penalty0
+
+One of the two canonical rows in the literal seven-edge replacement.
+\lean{Copying/BoxPullContractionForest}{60}{62}{BoxPullContraction.CopyRows.insertedRow}
+\par\penalty0
+
+The two selected resource rows have their original copy-major order.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForest}{65}{75}{BoxPullContraction.CopyRows.insertedRow_input}
+\par\penalty0
+
+The replaced rows reattach to the exact original selected copy outputs.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForest}{78}{84}{BoxPullContraction.CopyRows.corrected_selected_link}
+\par\penalty0
+
+Term resources use the inserted rows only in the two selected positions.
+\lean{Copying/BoxPullContractionForest}{87}{93}{BoxPullContraction.CopyRows.termRow}
+\par\penalty0
+
+Atom resources use the first two inserted rows precisely in the atom case.
+\lean{Copying/BoxPullContractionForest}{96}{103}{BoxPullContraction.CopyRows.atomRow}
+\par\penalty0
+
+\subsection{Box Pull Contraction Forest Assembly}
+The reconstructed canonical rows are disjoint and assemble into the complete original ordered environment distributor.
+
+The retained Term Row index assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionForestAssembly}{11}{16}{BoxPullContraction.CopyRows.retainedTermRow_index}
+\par\penalty0
+
+The retained Atom Row index assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionForestAssembly}{18}{23}{BoxPullContraction.CopyRows.retainedAtomRow_index}
+\par\penalty0
+
+The inserted Row index assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionForestAssembly}{25}{28}{BoxPullContraction.CopyRows.insertedRow_index}
+\par\penalty0
+
+The term Rows disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestAssembly}{30}{50}{BoxPullContraction.CopyRows.termRows_disjoint}
+\par\penalty0
+
+The atom Rows disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestAssembly}{52}{72}{BoxPullContraction.CopyRows.atomRows_disjoint}
+\par\penalty0
+
+The term atom disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestAssembly}{74}{88}{BoxPullContraction.CopyRows.term_atom_disjoint}
+\par\penalty0
+
+The term Forest map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionForestAssembly}{90}{94}{BoxPullContraction.CopyRows.termForest}
+\par\penalty0
+
+The atom Forest map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionForestAssembly}{96}{100}{BoxPullContraction.CopyRows.atomForest}
+\par\penalty0
+
+The forests map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionForestAssembly}{102}{105}{BoxPullContraction.CopyRows.forests}
+\par\penalty0
+
+The forests disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestAssembly}{107}{116}{BoxPullContraction.CopyRows.forests_disjoint}
+\par\penalty0
+
+The full original resource forest is reconstructed, including every canonical weakening and all unselected term and atom resources.
+\lean{Copying/BoxPullContractionForestAssembly}{120}{126}{BoxPullContraction.CopyRows.distributor}
+\par\penalty0
+
+\subsection{Box Pull Contraction Forest Ports}
+Exact ordered port coordinates for every reconstructed resource row.
+
+A term row receives active and retained uses in the original copy-major order.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestPorts}{10}{18}{BoxPullContraction.CopyRows.termOccurrence_input}
+\par\penalty0
+
+The atom Occurrence input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestPorts}{20}{31}{BoxPullContraction.CopyRows.atomOccurrence_input}
+\par\penalty0
+
+The original Term Row input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestPorts}{33}{37}{BoxPullContraction.CopyRows.originalTermRow_input}
+\par\penalty0
+
+The original Atom Row input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestPorts}{39}{43}{BoxPullContraction.CopyRows.originalAtomRow_input}
+\par\penalty0
+
+Every reconstructed term row connects to the original selected copy wire.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestPorts}{46}{73}{BoxPullContraction.CopyRows.termRow_input}
+\par\penalty0
+
+Every reconstructed atom row uses the same original copy-major boundary.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForestPorts}{76}{107}{BoxPullContraction.CopyRows.atomRow_input}
+\par\penalty0
+
+\subsection{Box Pull Contraction Forward Robustness}
+Universal forward BPullC robustness for the original copying UAM. The copying case uses its proved sharing-algebra correction as exact refinements, while all source decompositions and local rewrites are constructed.
+
+Every original recursive BPullC specimen has the required actual matching rewrite. Deep and shallow overlaps are exhaustive; the original quasi-specimen uses only the independently proved sharing equivalences after its residual.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForwardRobustness}{14}{39}{BoxPullContraction.template_robust}
+\par\penalty0
+
+\subsection{Box Pull Contraction Forward Transport}
+Every local copying-UAM rule and every contextual rewrite have a concrete BPullC matching rewrite and a pointed original residual certificate.
+
+Exhaustive on the original local-rule datatype: no classified case is a premise.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForwardTransport}{13}{28}{BoxPullContraction.local_transport}
+\par\penalty0
+
+Full one-rewrite forward transport for every edgewise BPullC decoration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionForwardTransport}{31}{34}{BoxPullContraction.rewrite_transport}
+\par\penalty0
+
+Transport from an arbitrary original common context, including deep and mixed contributions anywhere in the host, rather than only a standalone redex.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionForwardTransport}{38}{59}{BoxPullContraction.filling_rewrite}
+\par\penalty0
+
+\subsection{Box Pull Contraction Frame}
+Attach one actual contraction to two adjacent output wires, retaining every other ordered boundary wire directly. There are no identity edges.
+
+This defines the prefix Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{9}{10}{BoxPullContraction.prefixPort}
+\par\penalty0
+
+This defines the suffix Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{12}{13}{BoxPullContraction.suffixPort}
+\par\penalty0
+
+This defines the selected Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{15}{16}{BoxPullContraction.selectedPort}
+\par\penalty0
+
+This defines the prefix Ports data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{18}{19}{BoxPullContraction.prefixPorts}
+\par\penalty0
+
+This defines the suffix Ports data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{21}{22}{BoxPullContraction.suffixPorts}
+\par\penalty0
+
+The mem prefix Ports equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionFrame}{24}{26}{BoxPullContraction.mem_prefixPorts}
+\par\penalty0
+
+The mem suffix Ports equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionFrame}{28}{30}{BoxPullContraction.mem_suffixPorts}
+\par\penalty0
+
+The prefix suffix ne assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/BoxPullContractionFrame}{32}{38}{BoxPullContraction.prefix_suffix_ne}
+\par\penalty0
+
+The prefix selected ne assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/BoxPullContractionFrame}{40}{46}{BoxPullContraction.prefix_selected_ne}
+\par\penalty0
+
+The suffix selected ne assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/BoxPullContractionFrame}{48}{53}{BoxPullContraction.suffix_selected_ne}
+\par\penalty0
+
+The prefix Ports nodup assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionFrame}{55}{60}{BoxPullContraction.prefixPorts_nodup}
+\par\penalty0
+
+The suffix Ports nodup assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/BoxPullContractionFrame}{62}{69}{BoxPullContraction.suffixPorts_nodup}
+\par\penalty0
+
+This defines the frame Label data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{71}{73}{BoxPullContraction.frameLabel}
+\par\penalty0
+
+This defines the frame Source data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{75}{78}{BoxPullContraction.frameSource}
+\par\penalty0
+
+This defines the frame Target data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{80}{83}{BoxPullContraction.frameTarget}
+\par\penalty0
+
+The exact two-edge frame: one original graph hole and one contraction, with its two distinct incident vertices freshly internalized.
+\lean{Copying/BoxPullContractionFrame}{87}{186}{BoxPullContraction.frame}
+\par\penalty0
+
+This defines the pattern data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{188}{189}{BoxPullContraction.pattern}
+\par\penalty0
+
+This defines the filling data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionFrame}{191}{195}{BoxPullContraction.filling}
+\par\penalty0
+
+The original graph with exactly the displayed contraction added to its two adjacent outputs. All other vertices, edges and ports remain present.
+\lean{Copying/BoxPullContractionFrame}{199}{200}{BoxPullContraction.merge}
+\par\penalty0
+
+\subsection{Box Pull Contraction Laws}
+Structural safety and exact representation padding for Figure 21's box-contraction pair. Its arbitrary body and both sharing sorts are retained.
+
+The template no Term Inputs assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionLaws}{10}{23}{BoxPullContraction.template_noTermInputs}
+\par\penalty0
+
+The template output Closed assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionLaws}{25}{25}{BoxPullContraction.template_outputClosed}
+\par\penalty0
+
+A term token cannot enter the original thunk interface, for either quantitative direction and every original context class.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionLaws}{29}{31}{BoxPullContraction.template_inputSafe}
+\par\penalty0
+
+Padding preserves the complete output-merging frame and the body placed in its original hole, including the contraction's two distinct junctions.
+\lean{Copying/BoxPullContractionLaws}{35}{51}{BoxPullContraction.merge_raise}
+\par\penalty0
+
+The contract raise map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionLaws}{53}{62}{BoxPullContraction.contract_raise}
+\par\penalty0
+
+The body raise map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionLaws}{64}{72}{BoxPullContraction.body_raise}
+\par\penalty0
+
+The left raise map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionLaws}{74}{79}{BoxPullContraction.left_raise}
+\par\penalty0
+
+The right raise map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionLaws}{81}{85}{BoxPullContraction.right_raise}
+\par\penalty0
+
+The padded literal pair is the same BPullC pair up to its original ordered recursive graph representation, with no added compute rule.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionLaws}{89}{94}{BoxPullContraction.Step.raise}
+\par\penalty0
+
+The raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionLaws}{96}{101}{BoxPullContraction.UpToIso.raise}
+\par\penalty0
+
+The template padding Closed assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionLaws}{103}{103}{BoxPullContraction.template_paddingClosed}
+\par\penalty0
+
+\subsection{Box Pull Contraction Local Beta}
+Exhaustive actual beta transport for original BPullC fillings, including retained, deep, and shallow boxes with the original stable argument.
+
+This defines the boxes data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionLocalBeta}{16}{16}{BoxPullContraction.Beta.boxes}
+\par\penalty0
+
+The source Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionLocalBeta}{18}{26}{BoxPullContraction.Beta.sourceIso}
+\par\penalty0
+
+The paired source has an actual beta step and a constructed original-template local residual. The stable argument is the unchanged original graph.
+For the proof, proved successor coherence compares the two actual rewrites; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionLocalBeta}{30}{68}{BoxPullContraction.Beta.transport}
+\par\penalty0
+
+\subsection{Box Pull Contraction Local Copy}
+Exhaustive actual copying transport for BPullC: all original copyable constructors, retained and deep lambda boxes, and the literal sharing-algebra shallow case.
+
+The primitive transport assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionLocalCopy}{15}{27}{BoxPullContraction.Copying.primitive_transport}
+\par\penalty0
+
+This defines the boxes data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionLocalCopy}{29}{29}{BoxPullContraction.Copying.boxes}
+\par\penalty0
+
+The source Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionLocalCopy}{31}{37}{BoxPullContraction.Copying.sourceIso}
+\par\penalty0
+
+The lambda transport assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, proved successor coherence compares the two actual rewrites; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionLocalCopy}{39}{72}{BoxPullContraction.Copying.lambda_transport}
+\par\penalty0
+
+Every constructor of original copyability is covered, including active operation payloads and recursive representation changes.
+For the proof, induction follows the original derivation or finite structure; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionLocalCopy}{76}{109}{BoxPullContraction.Copying.transport}
+\par\penalty0
+
+\subsection{Box Pull Contraction Merge Join}
+Join an actual graph occurrence to an actual output contraction, using only their exact ordered junctions and edge disjointness.
+
+This defines the old-frame port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionMergeJoin}{13}{19}{Opening.Occurrence.MergeJoin.host}
+\par\penalty0
+
+The components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionMergeJoin}{21}{26}{Opening.Occurrence.MergeJoin.components}
+\par\penalty0
+
+The component input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionMergeJoin}{29}{43}{Opening.Occurrence.MergeJoin.component_input}
+\par\penalty0
+
+The old output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionMergeJoin}{45}{64}{Opening.Occurrence.MergeJoin.old_output}
+\par\penalty0
+
+The component output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionMergeJoin}{66}{75}{Opening.Occurrence.MergeJoin.component_output}
+\par\penalty0
+
+The resulting complete occurrence contains every original edge of G and the actual external contraction. All internal freshness follows from incidence.
+\lean{Copying/BoxPullContractionMergeJoin}{79}{88}{Opening.Occurrence.MergeJoin.occurrence}
+\par\penalty0
+
+The occurrence input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/BoxPullContractionMergeJoin}{90}{91}{Opening.Occurrence.MergeJoin.occurrence_input}
+\par\penalty0
+
+The occurrence output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/BoxPullContractionMergeJoin}{93}{94}{Opening.Occurrence.MergeJoin.occurrence_output}
+\par\penalty0
+
+The occurrence old assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionMergeJoin}{96}{101}{Opening.Occurrence.MergeJoin.occurrence_old}
+\par\penalty0
+
+The occurrence old Edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionMergeJoin}{103}{104}{Opening.Occurrence.MergeJoin.occurrence_oldEdge}
+\par\penalty0
+
+The occurrence contraction Edge assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionMergeJoin}{106}{107}{Opening.Occurrence.MergeJoin.occurrence_contractionEdge}
+\par\penalty0
+
+\subsection{Box Pull Contraction Normalization}
+Literal left corollas normalize every recursively filled BPullC source.
+
+This defines the left copy data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionNormalization}{8}{14}{BoxPullContraction.UpToIso.left_copy}
+\par\penalty0
+
+The left contribution is an ordered corolla, including at a shallow hole.
+\lean{Copying/BoxPullContractionNormalization}{17}{24}{BoxPullContraction.leftCopy}
+\par\penalty0
+
+This defines the labels data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionNormalization}{30}{30}{BoxPullContraction.SourceNormalisation.labels}
+\par\penalty0
+
+This defines the copies data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionNormalization}{31}{31}{BoxPullContraction.SourceNormalisation.copies}
+\par\penalty0
+
+The common skeleton now carries the actual left labels instead of hole labels.
+\lean{Copying/BoxPullContractionNormalization}{34}{36}{BoxPullContraction.SourceNormalisation.source}
+\par\penalty0
+
+The left Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionNormalization}{38}{40}{BoxPullContraction.SourceNormalisation.leftIso}
+\par\penalty0
+
+Only equality transport of each interface is used; the original right graph and its complete ordered port lists are retained.
+\lean{Copying/BoxPullContractionNormalization}{44}{45}{BoxPullContraction.SourceNormalisation.right}
+\par\penalty0
+
+This defines the decoration data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionNormalization}{47}{53}{BoxPullContraction.SourceNormalisation.decoration}
+\par\penalty0
+
+Relabelled skeletons have the same vertex and edge incidence maps.
+\lean{Copying/BoxPullContractionNormalization}{56}{62}{BoxPullContraction.SourceNormalisation.skeleton}
+\par\penalty0
+
+The right Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionNormalization}{64}{73}{BoxPullContraction.SourceNormalisation.rightIso}
+\par\penalty0
+
+The left token assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionNormalization}{75}{76}{BoxPullContraction.SourceNormalisation.left_token}
+\par\penalty0
+
+The right token assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionNormalization}{78}{80}{BoxPullContraction.SourceNormalisation.right_token}
+\par\penalty0
+
+\subsection{Box Pull Contraction Opening}
+Ordered-interface correspondence between the literal BPullC family and the original lambda and micro-beta constructors.
+
+Merging respects equal ordered interfaces; it does not reorder the selected pair or any remaining output.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionOpening}{13}{19}{BoxPullContraction.merge_reboundary}
+\par\penalty0
+
+The contract eq assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionOpening}{21}{27}{BoxPullContraction.contract_eq}
+\par\penalty0
+
+This defines the beta Body data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionOpening}{29}{33}{BoxPullContraction.betaBody}
+\par\penalty0
+
+The raw original body has a bound output first, followed by the exact two displayed free resources and the unchanged remaining outputs.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionOpening}{37}{41}{BoxPullContraction.beta_interface}
+\par\penalty0
+
+The contracted beta body is exactly the original body in the literal output-merging frame, with the bound output fixed at position zero.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionOpening}{45}{67}{BoxPullContraction.betaBody_eq}
+\par\penalty0
+
+Opening and recasting the original body gives exactly its padded raw boundary, including the one bound output preceding the free resources.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionOpening}{71}{79}{BoxPullContraction.raw_open_eq}
+\par\penalty0
+
+Opening the contracted body and contracting the opened original body are recursively isomorphic. Padding is transported by its proved expansion law, not presumed to commute definitionally with the contraction frame.
+\lean{Copying/BoxPullContractionOpening}{84}{105}{BoxPullContraction.open_betaBody}
+\par\penalty0
+
+The literal inside endpoint is the unchanged original lambda-box constructor over the contracted body.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionOpening}{109}{115}{BoxPullContraction.lambda_left}
+\par\penalty0
+
+The literal outside endpoint retains the original lambda body and only contracts its two displayed free outputs.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionOpening}{119}{124}{BoxPullContraction.lambda_right}
+\par\penalty0
+
+The lambda literal assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionOpening}{126}{131}{BoxPullContraction.lambda_literal}
+\par\penalty0
+
+\subsection{Box Pull Contraction Residual}
+A BPullC residual followed by its actual sharing-algebra correction. No transitivity of the original BPullC filling relation is assumed.
+
+The first link retains the original BPullC specimen. The second changes only actual sharing trees using the completed exact sharing theorem.
+\lean{Copying/BoxPullContractionResidual}{13}{18}{BoxPullContraction.Residual}
+\par\penalty0
+
+This defines the direct data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionResidual}{21}{23}{BoxPullContraction.Residual.direct}
+\par\penalty0
+
+The congr map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionResidual}{25}{32}{BoxPullContraction.Residual.congr}
+\par\penalty0
+
+The original-template residual is admissible. The completed sharing correction is used afterward as exact semantics, with its root derived from the actual final endpoint's original search root.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionResidual}{37}{54}{BoxPullContraction.Residual.quasi}
+\par\penalty0
+
+\subsection{Box Pull Contraction Residual Expansion}
+Closure of the two-link BPullC residual under arbitrary simultaneous expansions. Original BPullC contributions remain in the first link.
+
+Untouched components keep their original certificates in the BPullC link, and remain literal reflexive components during the sharing correction.
+\lean{Copying/BoxPullContractionResidualExpansion}{14}{34}{BoxPullContraction.Residual.expandSelected}
+\par\penalty0
+
+A selected actual rewrite and its two-link residual lift together through a whole simultaneous expansion. The complement is the original derivation's finite frame, with every other contribution explicitly retained.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionResidualExpansion}{39}{61}{BoxPullContraction.Residual.assemble}
+\par\penalty0
+
+\subsection{Box Pull Contraction Retained Copy}
+The original payload copies and residual contraction tree survive the literal four-input sharing interchange.
+
+The complete payload is preserved by attaching its output contraction.
+\lean{Copying/BoxPullContractionRetainedCopy}{14}{46}{BoxPullContraction.CopyRows.payload}
+\par\penalty0
+
+The payload input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{48}{48}{BoxPullContraction.CopyRows.payload_input}
+\par\penalty0
+
+The residual tree and retained payload form their original complete branch.
+\lean{Copying/BoxPullContractionRetainedCopy}{51}{61}{BoxPullContraction.CopyRows.retainedBranch}
+\par\penalty0
+
+The retained Branch output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{63}{68}{BoxPullContraction.CopyRows.retainedBranch_output}
+\par\penalty0
+
+The payload Components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionRetainedCopy}{70}{76}{BoxPullContraction.CopyRows.payloadComponents}
+\par\penalty0
+
+The payload Components disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{78}{85}{BoxPullContraction.CopyRows.payloadComponents_disjoint}
+\par\penalty0
+
+Both copies and the complete residual tree occur jointly in the original reduct, before any sharing-row replacement.
+\lean{Copying/BoxPullContractionRetainedCopy}{89}{95}{BoxPullContraction.CopyRows.copies}
+\par\penalty0
+
+The original Copies map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionRetainedCopy}{97}{98}{BoxPullContraction.CopyRows.originalCopies}
+\par\penalty0
+
+The original Copies disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionRetainedCopy}{100}{110}{BoxPullContraction.CopyRows.originalCopies_disjoint}
+\par\penalty0
+
+The original pair of payloads survives the computed row replacement, including every deep box and every unused residual-tree branch.
+\lean{Copying/BoxPullContractionRetainedCopy}{114}{116}{BoxPullContraction.CopyRows.correctedCopies}
+\par\penalty0
+
+The full seven-edge replacement row has its literal occurrence.
+\lean{Copying/BoxPullContractionRetainedCopy}{119}{124}{BoxPullContraction.CopyRows.inserted}
+\par\penalty0
+
+The new contraction is attached to the two original selected outputs.
+\lean{Copying/BoxPullContractionRetainedCopy}{127}{128}{BoxPullContraction.CopyRows.resource}
+\par\penalty0
+
+The outer input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{130}{135}{BoxPullContraction.CopyRows.outer_input}
+\par\penalty0
+
+The payload selected assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{137}{151}{BoxPullContraction.CopyRows.payload_selected}
+\par\penalty0
+
+The copies component assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{153}{157}{BoxPullContraction.CopyRows.copies_component}
+\par\penalty0
+
+Ordered source positions of the four-input inside row are exactly the selected outputs of the two original payload copies.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{161}{195}{BoxPullContraction.CopyRows.inside_input_link}
+\par\penalty0
+
+Every unselected output keeps its literal order after merging the pair.
+\lean{Copying/BoxPullContractionRetainedCopy}{198}{203}{BoxPullContraction.CopyRows.collapsedOutput}
+\par\penalty0
+
+The payload unselected assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{205}{216}{BoxPullContraction.CopyRows.payload_unselected}
+\par\penalty0
+
+The original Copies unselected assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRetainedCopy}{218}{236}{BoxPullContraction.CopyRows.originalCopies_unselected}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Barrier}
+A sourced primitive footprint cannot enter a shallow BPullC replacement: its original interface consists of a thunk wire, while every nonhole primitive accepts only term or atom wires. This applies in unrestricted contexts.
+
+Both actual endpoints retain the paper's single thunk input.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseBarrier}{14}{22}{BoxPullContraction.UpToIso.inputs_thunk}
+\par\penalty0
+
+None of the original primitive operation/store/sharing rules has a thunk input; primitive holes are the sole excluded constructor.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseBarrier}{26}{35}{BoxPullContraction.primitive_input_not_thunk}
+\par\penalty0
+
+A thunk-typed external input cannot be the source of a nonhole primitive.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseBarrier}{38}{52}{BoxPullContraction.primitive_no_thunk_source}
+\par\penalty0
+
+Every actual right primitive sourced at an original host vertex has a retained original owner; the new outside contraction cannot be selected there.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionReverseBarrier}{57}{65}{BoxPullContraction.right_primitive_retained}
+\par\penalty0
+
+A shallow original hole cannot own such a primitive even if an unfilled hole corolla had been permitted by the structural certificate.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReverseBarrier}{69}{78}{BoxPullContraction.right_primitive_not_hole}
+\par\penalty0
+
+Every primitive on an actual selected local ancestry remains outside shallow BPullC holes. In particular this applies to minimal term/atom spines; no property of irrelevant sharing-tree siblings is assumed.
+For the proof, induction follows the original derivation or finite structure.
+\lean{Copying/BoxPullContractionReverseBarrier}{83}{99}{BoxPullContraction.right_primitive_ancestor_not_hole}
+\par\penalty0
+
+Hole freedom of the actual endpoint supplies the nonhole premise for every primitive in a selected complete local footprint.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseBarrier}{103}{115}{BoxPullContraction.right_primitive_footprint}
+\par\penalty0
+
+Primitive local-rule ancestries need no independently supplied nohole certificate: it follows from the actual closed machine state.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReverseBarrier}{119}{125}{BoxPullContraction.right_primitive_ancestry}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Beta}
+Converse beta enabledness uses the actual original left lambda interface and the same stable argument. All attachments remain at selected original ports.
+
+An original right beta match at a common token has an actual original left beta rewrite, including shallow box-contraction and arbitrary deep cases.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseBeta}{12}{111}{BoxPullContraction.ReverseBeta.beta_enabled}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Box}
+Actual left boxes at sourced thunk interfaces. Only selected ports are reflected; the new right contraction vertices have no global projection.
+
+A closed corolla accepting a thunk is a box; the original alphabet has no other nonhole label accepting that wire. Its actual whole body is retained.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseBox}{14}{67}{BoxPullContraction.ReverseBox.box_at_input}
+\par\penalty0
+
+At each actual original thunk input, the left filling has a complete box occurrence with the same binding arity. The free interface is reconstructed from the original left corolla, rather than guessed from the right box.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReverseBox}{73}{82}{BoxPullContraction.ReverseBox.left_at_input}
+\par\penalty0
+
+An actual right box attached to an original thunk port therefore has a complete left box at the corresponding original port.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseBox}{86}{109}{BoxPullContraction.ReverseBox.reflectBox}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Copy}
+Actual converse copying enabledness for arbitrary recursive BPullC fillings. The selected term spine and complete original copyable payload are constructed from the supplied right rewrite.
+
+Every actual copyable payload on the right has a complete original left payload at the same incoming context wire. Lambda free interfaces may change exactly as prescribed by the original box-pulling rule.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionReverseCopy}{18}{32}{BoxPullContraction.ReverseCopy.reflect_copyable}
+\par\penalty0
+
+Every original right copying match is enabled on the original left. The finite selected tree, original lambda body and interface, actual ordered join and complete complement are all constructed from that supplied match.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseCopy}{37}{76}{BoxPullContraction.ReverseCopy.copying_enabled}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Copy Spine}
+Converse copying rematches only the actually selected term spine. Its side branches remain in the host complement; every selected contraction is proved retained at the original common context, without binding restrictions.
+
+The original input-to-root path supplies a complete retained smaller contraction tree with the identical selected input and payload attachment.
+For the proof, induction follows the original derivation or finite structure; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseCopySpine}{18}{38}{BoxPullContraction.ReverseCopy.selected_tree}
+\par\penalty0
+
+Both actual ordered serial components are available as full occurrences.
+\lean{Copying/BoxPullContractionReverseCopySpine}{41}{45}{BoxPullContraction.ReverseCopy.serialLeft}
+\par\penalty0
+
+The shared serial junction is the same actual vertex on both sides.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseCopySpine}{49}{51}{BoxPullContraction.ReverseCopy.serial_boundary}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Lambda}
+Converse lambda reconstruction retains the actual left box and its full original free interface. Boundary agreement is proved only on selected ports.
+
+A primitive component whose edges all accept its original term input can be transferred with every actual original-port attachment. No inverse map on unrelated right-hand internal vertices is introduced.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseLambda}{19}{44}{BoxPullContraction.ReverseLambda.primitive_at_input}
+\par\penalty0
+
+An actual right lambda at an original term port has a complete actual left lambda occurrence with the same input, original body and free interface.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseLambda}{50}{105}{BoxPullContraction.ReverseLambda.reflectLambda}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Payload}
+Reflection of literal primitive copyable payloads at their original common incoming wire. The entire ordered output interface is preserved.
+
+A primitive payload has a single sourced edge and therefore cannot be introduced by the shallow right-hand contraction/box replacement.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/BoxPullContractionReversePayload}{15}{26}{BoxPullContraction.ReverseCopy.plain_avoids}
+\par\penalty0
+
+The original primitive source is reconstructed as a full left occurrence, not merely as an operation label or an abstract matching assumption.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionReversePayload}{30}{40}{BoxPullContraction.ReverseCopy.reflect_plain}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Primitive}
+Allocation and arithmetic footprints cannot enter BPullC right-hand holes. The proof follows their actual head-to-operand paths and requires neither binding freedom nor a rooted execution history.
+
+A complete local footprint whose edges are descendants of its sourced head avoids every original shallow BPullC hole.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReversePrimitive}{19}{29}{BoxPullContraction.ReversePrimitive.sourced_ancestors_avoid}
+\par\penalty0
+
+Allocation inspects its ref head and the original stable operand, all of which are connected directly to that head in the actual source graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/BoxPullContractionReversePrimitive}{33}{51}{BoxPullContraction.ReversePrimitive.allocation_avoids}
+\par\penalty0
+
+Unary negation inspects exactly the selected operation and numeric operand.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionReversePrimitive}{54}{62}{BoxPullContraction.ReversePrimitive.unary_avoids}
+\par\penalty0
+
+Binary arithmetic inspects the selected operation and both ordered numeric operands; either original binary arithmetic code is permitted.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionReversePrimitive}{66}{75}{BoxPullContraction.ReversePrimitive.binary_avoids}
+\par\penalty0
+
+The allocation enabled assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReversePrimitive}{77}{83}{BoxPullContraction.ReversePrimitive.allocation_enabled}
+\par\penalty0
+
+The unary enabled assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReversePrimitive}{85}{90}{BoxPullContraction.ReversePrimitive.unary_enabled}
+\par\penalty0
+
+The binary enabled assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReversePrimitive}{92}{98}{BoxPullContraction.ReversePrimitive.binary_enabled}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Store}
+Actual left-side store rewrites are reconstructed from every original right-side BPullC store match. No off-spine sharing overlap is assumed absent.
+
+The read enabled assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReverseStore}{14}{20}{BoxPullContraction.ReverseStore.read_enabled}
+\par\penalty0
+
+The assignment enabled assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReverseStore}{22}{29}{BoxPullContraction.ReverseStore.assignment_enabled}
+\par\penalty0
+
+The same enabled assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReverseStore}{31}{37}{BoxPullContraction.ReverseStore.same_enabled}
+\par\penalty0
+
+The different enabled assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionReverseStore}{39}{45}{BoxPullContraction.ReverseStore.different_enabled}
+\par\penalty0
+
+\subsection{Box Pull Contraction Reverse Store Footprint}
+Every selected atom-operation footprint avoids shallow BPullC fillings. The surrounding context is unrestricted; irrelevant original tree branches are exposed as side inputs of a smaller original rule.
+
+An arbitrary selected subtree containing only descendants of the read's first atom input yields a complete shallow-hole-free read occurrence.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseStoreFootprint}{21}{51}{BoxPullContraction.ReverseStoreFootprint.read_subtree_avoids}
+\par\penalty0
+
+The same selected-spine criterion preserves the full stable assignment value and all of its original outputs.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseStoreFootprint}{55}{93}{ReverseStoreFootprint.assignment_subtree_avoids}
+\par\penalty0
+
+The complete rematched equality footprint is retained when its atom tree contains only descendants of the two evaluated original instances.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseStoreFootprint}{97}{151}{BoxPullContraction.ReverseStoreFootprint.same_subtree_avoids}
+\par\penalty0
+
+Each selected reference spine is downstream of its own original binding instance; unrelated siblings from either supplied tree remain unrestricted.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseStoreFootprint}{155}{222}{ReverseStoreFootprint.different_subtrees_avoids}
+\par\penalty0
+
+Extract the actual selected atom spine of any original right read, with all original operation/store attachments and a proved retained footprint.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseStoreFootprint}{226}{239}{BoxPullContraction.ReverseStoreFootprint.read_occurrence}
+\par\penalty0
+
+Selected-spine extraction retains the literal stable assignment value, its output ordering, the selected store and both value connections.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseStoreFootprint}{243}{259}{ReverseStoreFootprint.assignment_occurrence}
+\par\penalty0
+
+Every actual same-store rule supplies a smaller original rule whose entire two-selected-input footprint avoids the original shallow holes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseStoreFootprint}{263}{273}{BoxPullContraction.ReverseStoreFootprint.same_occurrence}
+\par\penalty0
+
+Independently prune both original atom trees while preserving the two actual stores, their inequality, contents outputs and comparison token.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionReverseStoreFootprint}{277}{293}{BoxPullContraction.ReverseStoreFootprint.different_occurrence}
+\par\penalty0
+
+\subsection{Box Pull Contraction Rewrite}
+Transport an actual rewrite through the literal output-contraction frame. This uses the existing simultaneous-context expansion rule, with its separate contraction edge unchanged.
+
+Boundary-to-boundary rewrites preserve the two external contraction junctions and resume at exactly the original input coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRewrite}{13}{23}{BoxPullContraction.merge_rewrite}
+\par\penalty0
+
+A full graph isomorphism of the payload extends through the unchanged output contraction and preserves its ordered interface.
+\lean{Copying/BoxPullContractionRewrite}{27}{32}{BoxPullContraction.merge_congr}
+\par\penalty0
+
+\subsection{Box Pull Contraction Row Occurrence}
+The four-input contraction interchange occurs in the actual original copying reduct, with both copied contractions and the selected distributor row.
+
+The literal contraction written with explicit boundary maps, eliminating only the proof casts in the public definition.
+\lean{Copying/BoxPullContractionRowOccurrence}{17}{18}{BoxPullContraction.CopyRows.merged}
+\par\penalty0
+
+The merged eq assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionRowOccurrence}{20}{20}{BoxPullContraction.CopyRows.merged_eq}
+\par\penalty0
+
+This defines the outer Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionRowOccurrence}{22}{23}{BoxPullContraction.CopyRows.outerEdge}
+\par\penalty0
+
+The outer label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRowOccurrence}{25}{26}{BoxPullContraction.CopyRows.outer_label}
+\par\penalty0
+
+The displayed contraction is its actual complete primitive corolla.
+\lean{Copying/BoxPullContractionRowOccurrence}{29}{30}{BoxPullContraction.CopyRows.outer}
+\par\penalty0
+
+This defines the selected Output data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionRowOccurrence}{32}{33}{BoxPullContraction.CopyRows.selectedOutput}
+\par\penalty0
+
+The outer target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRowOccurrence}{35}{45}{BoxPullContraction.CopyRows.outer_target}
+\par\penalty0
+
+The outer output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRowOccurrence}{47}{51}{BoxPullContraction.CopyRows.outer_output}
+\par\penalty0
+
+The original selected row lies in the actual copied environment forest.
+\lean{Copying/BoxPullContractionRowOccurrence}{54}{59}{BoxPullContraction.CopyRows.selected}
+\par\penalty0
+
+The row map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullContractionRowOccurrence}{61}{62}{BoxPullContraction.CopyRows.row}
+\par\penalty0
+
+Select the actual active or retained copy of the output contraction.
+\lean{Copying/BoxPullContractionRowOccurrence}{65}{71}{BoxPullContraction.CopyRows.copied}
+\par\penalty0
+
+The copied disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRowOccurrence}{73}{76}{BoxPullContraction.CopyRows.copied_disjoint}
+\par\penalty0
+
+The copied row disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionRowOccurrence}{78}{81}{BoxPullContraction.CopyRows.copied_row_disjoint}
+\par\penalty0
+
+The two copied contractions retain their original left/right order.
+\lean{Copying/BoxPullContractionRowOccurrence}{84}{93}{BoxPullContraction.CopyRows.pairOccurrence}
+\par\penalty0
+
+The copied output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRowOccurrence}{95}{104}{BoxPullContraction.CopyRows.copied_output}
+\par\penalty0
+
+The selected row's inputs are the two copied images of the contracted resource, in the original active/retained order.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRowOccurrence}{108}{127}{BoxPullContraction.CopyRows.selected_input}
+\par\penalty0
+
+The pair boundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRowOccurrence}{129}{145}{BoxPullContraction.CopyRows.pair_boundary}
+\par\penalty0
+
+The actual five-edge inside row has a complete ordered occurrence in this precise copying reduct.
+\lean{Copying/BoxPullContractionRowOccurrence}{149}{155}{BoxPullContraction.CopyRows.insideOccurrence}
+\par\penalty0
+
+The row also occurs in the public literal reduct; the change above was only removal of proof casts on the ordered boundary.
+\lean{Copying/BoxPullContractionRowOccurrence}{159}{161}{BoxPullContraction.CopyRows.originalOccurrence}
+\par\penalty0
+
+The actual whole-graph intermediate with the seven-edge outside row plugged into the computed finite complement of the five-edge inside row.
+\lean{Copying/BoxPullContractionRowOccurrence}{165}{166}{BoxPullContraction.CopyRows.corrected}
+\par\penalty0
+
+The merged free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionRowOccurrence}{168}{170}{BoxPullContraction.CopyRows.merged_free}
+\par\penalty0
+
+The cut free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionRowOccurrence}{172}{177}{BoxPullContraction.CopyRows.cut_free}
+\par\penalty0
+
+One genuine sharing-tree filling witness performs this exact local interchange inside the complete original copying reduct.
+\lean{Copying/BoxPullContractionRowOccurrence}{181}{189}{BoxPullContraction.CopyRows.correction}
+\par\penalty0
+
+\subsection{Box Pull Contraction Serial}
+Attaching a contraction to an output pair commutes with an unchanged serial prefix. This preserves every original port and recursive edge label.
+
+This defines the left graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSerial}{13}{13}{BoxPullContraction.SerialPull.left}
+\par\penalty0
+
+This defines the right graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSerial}{14}{14}{BoxPullContraction.SerialPull.right}
+\par\penalty0
+
+This defines the internal-vertex map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSerial}{16}{42}{BoxPullContraction.SerialPull.vertices}
+\par\penalty0
+
+This defines the edge map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSerial}{44}{56}{BoxPullContraction.SerialPull.edges}
+\par\penalty0
+
+The prefix commutes assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSerial}{58}{72}{BoxPullContraction.SerialPull.prefix_commutes}
+\par\penalty0
+
+The suffix commutes assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSerial}{82}{102}{BoxPullContraction.SerialPull.suffix_commutes}
+\par\penalty0
+
+This defines the prefix Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSerial}{104}{104}{BoxPullContraction.SerialPull.prefixEdge}
+\par\penalty0
+
+This defines the suffix Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSerial}{105}{105}{BoxPullContraction.SerialPull.suffixEdge}
+\par\penalty0
+
+This defines the contraction data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSerial}{106}{107}{BoxPullContraction.SerialPull.contraction}
+\par\penalty0
+
+The edge cases assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSerial}{109}{117}{BoxPullContraction.SerialPull.edge_cases}
+\par\penalty0
+
+The iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionSerial}{119}{182}{BoxPullContraction.SerialPull.iso}
+\par\penalty0
+
+\subsection{Box Pull Contraction Splice}
+The geometric beta commutation underlying BPullC: attaching a contraction to a body's free boundary commutes with connecting its bound output to the unchanged argument. No evaluation or termination premise is used.
+
+This defines the left graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{13}{14}{BoxPullContraction.Splice.left}
+\par\penalty0
+
+This defines the right graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{16}{18}{BoxPullContraction.Splice.right}
+\par\penalty0
+
+Reassociate the original body, the stable argument, the bound-output junction and the two distinct contraction junctions.
+\lean{Copying/BoxPullContractionSplice}{22}{48}{BoxPullContraction.Splice.vertices}
+\par\penalty0
+
+Every original edge is retained once. Only the position of the separate contraction in the disjoint edge-carrier sum changes.
+\lean{Copying/BoxPullContractionSplice}{52}{64}{BoxPullContraction.Splice.edges}
+\par\penalty0
+
+This defines the left Body Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{66}{68}{BoxPullContraction.Splice.leftBodyPort}
+\par\penalty0
+
+This defines the right Body Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{70}{73}{BoxPullContraction.Splice.rightBodyPort}
+\par\penalty0
+
+This defines the left Argument Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{75}{76}{BoxPullContraction.Splice.leftArgumentPort}
+\par\penalty0
+
+This defines the right Argument Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{78}{81}{BoxPullContraction.Splice.rightArgumentPort}
+\par\penalty0
+
+The actual embedding of each old body port commutes with reassociation, including the bound output which becomes the internal argument junction.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{102}{120}{BoxPullContraction.Splice.bodyPort_commutes}
+\par\penalty0
+
+Every argument edge and port remains unchanged, including its arbitrary atom and thunk outputs.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{124}{138}{BoxPullContraction.Splice.argumentPort_commutes}
+\par\penalty0
+
+This defines the left Body Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{140}{141}{BoxPullContraction.Splice.leftBodyEdge}
+\par\penalty0
+
+This defines the right Body Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{142}{143}{BoxPullContraction.Splice.rightBodyEdge}
+\par\penalty0
+
+This defines the left Argument Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{144}{145}{BoxPullContraction.Splice.leftArgumentEdge}
+\par\penalty0
+
+This defines the right Argument Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{146}{147}{BoxPullContraction.Splice.rightArgumentEdge}
+\par\penalty0
+
+This defines the left Contraction Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{148}{149}{BoxPullContraction.Splice.leftContractionEdge}
+\par\penalty0
+
+This defines the right Contraction Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionSplice}{150}{151}{BoxPullContraction.Splice.rightContractionEdge}
+\par\penalty0
+
+The left body source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{153}{160}{BoxPullContraction.Splice.left_body_source}
+\par\penalty0
+
+The left body target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{162}{169}{BoxPullContraction.Splice.left_body_target}
+\par\penalty0
+
+The right body source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{171}{186}{BoxPullContraction.Splice.right_body_source}
+\par\penalty0
+
+The right body target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{188}{203}{BoxPullContraction.Splice.right_body_target}
+\par\penalty0
+
+The left argument source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionSplice}{205}{211}{BoxPullContraction.Splice.left_argument_source}
+\par\penalty0
+
+The left argument target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullContractionSplice}{213}{219}{BoxPullContraction.Splice.left_argument_target}
+\par\penalty0
+
+The right argument source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{221}{236}{BoxPullContraction.Splice.right_argument_source}
+\par\penalty0
+
+The right argument target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{238}{253}{BoxPullContraction.Splice.right_argument_target}
+\par\penalty0
+
+The contraction target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{255}{267}{BoxPullContraction.Splice.contraction_target}
+\par\penalty0
+
+The edge cases assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{269}{277}{BoxPullContraction.Splice.edge_cases}
+\par\penalty0
+
+The edges body assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{279}{280}{BoxPullContraction.Splice.edges_body}
+\par\penalty0
+
+The edges argument assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{282}{283}{BoxPullContraction.Splice.edges_argument}
+\par\penalty0
+
+The edges contraction assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionSplice}{285}{286}{BoxPullContraction.Splice.edges_contraction}
+\par\penalty0
+
+Opening the bound output commutes with pulling out the contraction, up to an ordered recursive graph isomorphism. This is independent of the argument's behaviour and retains every edge of both original components.
+\lean{Copying/BoxPullContractionSplice}{291}{330}{BoxPullContraction.Splice.iso}
+\par\penalty0
+
+\subsection{Box Pull Contraction Tensor}
+Pull a contraction out of the first parallel operand without changing the order of the other operand's ports.
+
+This defines the left graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{11}{11}{BoxPullContraction.TensorPull.left}
+\par\penalty0
+
+This defines the right graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{12}{14}{BoxPullContraction.TensorPull.right}
+\par\penalty0
+
+This defines the internal-vertex map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{16}{38}{BoxPullContraction.TensorPull.vertices}
+\par\penalty0
+
+This defines the edge map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{40}{52}{BoxPullContraction.TensorPull.edges}
+\par\penalty0
+
+This defines the first Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{54}{56}{BoxPullContraction.TensorPull.firstPort}
+\par\penalty0
+
+This defines the second Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{57}{58}{BoxPullContraction.TensorPull.secondPort}
+\par\penalty0
+
+This defines the right First Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{59}{63}{BoxPullContraction.TensorPull.rightFirstPort}
+\par\penalty0
+
+This defines the right Second Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{64}{68}{BoxPullContraction.TensorPull.rightSecondPort}
+\par\penalty0
+
+The first commutes assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{70}{82}{BoxPullContraction.TensorPull.first_commutes}
+\par\penalty0
+
+The second commutes assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{84}{98}{BoxPullContraction.TensorPull.second_commutes}
+\par\penalty0
+
+This defines the left First Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{100}{100}{BoxPullContraction.TensorPull.leftFirstEdge}
+\par\penalty0
+
+This defines the right First Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{101}{101}{BoxPullContraction.TensorPull.rightFirstEdge}
+\par\penalty0
+
+This defines the left Second Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{102}{102}{BoxPullContraction.TensorPull.leftSecondEdge}
+\par\penalty0
+
+This defines the right Second Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{103}{103}{BoxPullContraction.TensorPull.rightSecondEdge}
+\par\penalty0
+
+This defines the left Contraction data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{104}{105}{BoxPullContraction.TensorPull.leftContraction}
+\par\penalty0
+
+This defines the right Contraction data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionTensor}{106}{107}{BoxPullContraction.TensorPull.rightContraction}
+\par\penalty0
+
+The first source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{109}{117}{BoxPullContraction.TensorPull.first_source}
+\par\penalty0
+
+The first target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{119}{127}{BoxPullContraction.TensorPull.first_target}
+\par\penalty0
+
+The right first source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{129}{140}{BoxPullContraction.TensorPull.right_first_source}
+\par\penalty0
+
+The right first target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{142}{153}{BoxPullContraction.TensorPull.right_first_target}
+\par\penalty0
+
+The right second source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{155}{166}{BoxPullContraction.TensorPull.right_second_source}
+\par\penalty0
+
+The right second target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{168}{179}{BoxPullContraction.TensorPull.right_second_target}
+\par\penalty0
+
+The edge cases assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionTensor}{181}{189}{BoxPullContraction.TensorPull.edge_cases}
+\par\penalty0
+
+The iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionTensor}{191}{239}{BoxPullContraction.TensorPull.iso}
+\par\penalty0
+
+\subsection{Box Pull Contraction Views}
+Exhaustive atomic BPullC views, including the actual shallower outside box and its external contraction. Representation changes do not erase this case.
+
+The Atomic Normal data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/BoxPullContractionViews}{10}{22}{BoxPullContraction.AtomicNormal}
+\par\penalty0
+
+The congr map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullContractionViews}{25}{30}{BoxPullContraction.AtomicNormal.congr}
+\par\penalty0
+
+This defines the interfaces data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionViews}{32}{35}{BoxPullContraction.AtomicNormal.interfaces}
+\par\penalty0
+
+This defines the normal data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionViews}{38}{46}{BoxPullContraction.UpToIso.normal}
+\par\penalty0
+
+This defines the normal data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullContractionViews}{48}{57}{BoxPullContraction.AtomicPair.normal}
+\par\penalty0
+
+A shallow lambda keeps its exact expanded body on the left and its original uncontracted lambda box plus external contraction on the right.
+\lean{Copying/BoxPullContractionViews}{61}{72}{BoxPullContraction.LambdaView}
+\par\penalty0
+
+These three cases exhaust every original atomic certificate at a lambda box; equality of recursive labels fixes all binding and free-interface counts.
+\lean{Copying/BoxPullContractionViews}{76}{115}{BoxPullContraction.AtomicPair.lambdaView}
+\par\penalty0
+
+\subsection{Box Pull Contraction Whole Rewrite}
+Whole-graph rewrite transport with pointed residuals. The only obligations in the induction are actual local rules; graph complements come from the original derivation.
+
+The exact local obligation, including a concrete right rewrite and a certificate at its actual resumed token.
+\lean{Copying/BoxPullContractionWholeRewrite}{13}{16}{BoxPullContraction.LocalTransport}
+\par\penalty0
+
+The entire rewrite derivation transports once its local leaves do.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionWholeRewrite}{19}{58}{BoxPullContraction.transport_expanded}
+\par\penalty0
+
+This theorem applies to the unchanged original rewrite relation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullContractionWholeRewrite}{61}{65}{BoxPullContraction.transport_rewrite}
+\par\penalty0
+
+Primitive local sources are rigid even when the surrounding specimen contains unrelated shallow or deep BPerm occurrences.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullContractionWholeRewrite}{69}{78}{BoxPullContraction.primitive_transport}
+\par\penalty0
+

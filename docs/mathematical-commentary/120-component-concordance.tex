@@ -1,0 +1,734 @@
+\clearpage
+\section{Finite components and common cuts}
+\label{sec:component-concordance}
+These finite graph constructions support the maximal-sharing argument. Edge coverage and complete incidence supply the needed internal freshness and bijections; a graph cardinality equality is never an extra premise.
+
+\subsection{Basin Expansion Occurrence}
+The selected common sharing context expands to a complete occurrence in each original expanded host, retaining all local labels and attachment ports.
+
+This defines the context data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BasinExpansionOccurrence}{15}{15}{BasinExpansion.context}
+\par\penalty0
+
+This defines the base data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BasinExpansionOccurrence}{16}{16}{BasinExpansion.base}
+\par\penalty0
+
+This defines the typed family of inserted components for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BasinExpansionOccurrence}{17}{17}{BasinExpansion.family}
+\par\penalty0
+
+This defines the port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BasinExpansionOccurrence}{19}{23}{BasinExpansion.ports}
+\par\penalty0
+
+The host assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BasinExpansionOccurrence}{25}{31}{BasinExpansion.host}
+\par\penalty0
+
+The source Port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BasinExpansionOccurrence}{33}{44}{BasinExpansion.sourcePort}
+\par\penalty0
+
+The target Port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BasinExpansionOccurrence}{46}{57}{BasinExpansion.targetPort}
+\par\penalty0
+
+The insert assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BasinExpansionOccurrence}{59}{69}{BasinExpansion.insert}
+\par\penalty0
+
+Expanding the original selected context preserves its full-label match.
+\lean{Copying/BasinExpansionOccurrence}{72}{95}{BasinExpansion.occurrence}
+\par\penalty0
+
+The occurrence host assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BasinExpansionOccurrence}{97}{100}{BasinExpansion.occurrence_host}
+\par\penalty0
+
+\subsection{Common Context Boundary}
+Reindexing a selected original boundary commutes with its normalized original filling. No wire or incidence is changed.
+
+Boundary equalities transport the exact selected filling on either side.
+\lean{Copying/CommonContextBoundary}{14}{56}{CommonContextCut.reboundarySourceIso}
+\par\penalty0
+
+\subsection{Common Context Cut}
+A complete finite cut in the original common context may contain original shallow template holes. Both whole expansions factor through that same cut.
+
+Normalize only local label representation to the actual original host; carriers, ordered incidences and every attachment coordinate stay unchanged.
+\lean{Copying/CommonContextCut}{13}{16}{CommonContextCut.skeleton}
+\par\penalty0
+
+The normalized common fragment has a complete literal-label occurrence.
+\lean{Copying/CommonContextCut}{19}{27}{CommonContextCut.skeletonOccurrence}
+\par\penalty0
+
+This defines the common graph frame for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CommonContextCut}{29}{34}{CommonContextCut.frame}
+\par\penalty0
+
+This defines the local Family data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CommonContextCut}{36}{36}{CommonContextCut.localFamily}
+\par\penalty0
+
+This defines the grouped data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CommonContextCut}{38}{44}{CommonContextCut.grouped}
+\par\penalty0
+
+The frame Edge Partition map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/CommonContextCut}{46}{48}{CommonContextCut.frameEdgePartition}
+\par\penalty0
+
+Regroup only the carrier tags; no vertex is created or discarded.
+\lean{Copying/CommonContextCut}{51}{71}{CommonContextCut.frameVertexSplit}
+\par\penalty0
+
+This defines the frame Vertices data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CommonContextCut}{73}{77}{CommonContextCut.frameVertices}
+\par\penalty0
+
+This defines the frame Edge Split data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CommonContextCut}{79}{89}{CommonContextCut.frameEdgeSplit}
+\par\penalty0
+
+This defines the frame Edges data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CommonContextCut}{91}{94}{CommonContextCut.frameEdges}
+\par\penalty0
+
+The frame host assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextCut}{96}{100}{CommonContextCut.frame_host}
+\par\penalty0
+
+The frame local host assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextCut}{102}{123}{CommonContextCut.frame_local_host}
+\par\penalty0
+
+The frame source Port identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextCut}{125}{129}{CommonContextCut.frame_sourcePort}
+\par\penalty0
+
+The frame target Port identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextCut}{131}{135}{CommonContextCut.frame_targetPort}
+\par\penalty0
+
+The frame other assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextCut}{137}{149}{CommonContextCut.frame_other}
+\par\penalty0
+
+The skeleton source Port identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextCut}{151}{159}{CommonContextCut.skeleton_sourcePort}
+\par\penalty0
+
+The skeleton target Port identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextCut}{161}{169}{CommonContextCut.skeleton_targetPort}
+\par\penalty0
+
+The frame local insert assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextCut}{171}{188}{CommonContextCut.frame_local_insert}
+\par\penalty0
+
+A single actual finite cut groups precisely the selected original owners. Both sides may therefore use this same frame with their own filling family.
+\lean{Copying/CommonContextCut}{192}{233}{CommonContextCut.frameIso}
+\par\penalty0
+
+\subsection{Common Context Expansion}
+Grouping an original common-context cut commutes with any finite frame, including store frames with original template holes in their tree slots.
+
+Original fillings of a complete frame occurrence regroup into exactly the original fillings of its complete component occurrences.
+\lean{Copying/CommonContextExpansion}{22}{83}{CommonContextCut.expansionIso}
+\par\penalty0
+
+\subsection{Common Context Local Iso}
+Local normalized common cuts compare to literal program-rule frames by componentwise recursive isomorphisms, preserving the actual frame token.
+
+Normalizing source labels changes no carriers or incidence; original full-label matching supplies the recursive label comparison back to A.
+\lean{Copying/CommonContextLocalIso}{14}{27}{CommonContextCut.skeletonIso}
+\par\penalty0
+
+Compare the exact original selected fillings to any established local frame components, without changing the outer ordered boundary.
+\lean{Copying/CommonContextLocalIso}{31}{35}{CommonContextCut.localIso}
+\par\penalty0
+
+The local Iso host assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextLocalIso}{37}{40}{CommonContextCut.localIso_host}
+\par\penalty0
+
+\subsection{Common Context Pointed}
+The grafted whole-graph residual retains its original common-context geometry and the local witness's actual resume coordinate on both sides.
+
+Each untouched component uses its literal original context corolla.
+\lean{Copying/CommonContextPointed}{18}{22}{CommonContextCut.originalComponents}
+\par\penalty0
+
+The pointed Residual data give an actual recursive paired filling, with its common context and endpoint representation maps.
+\lean{Copying/CommonContextPointed}{24}{26}{CommonContextCut.pointedResidual}
+\par\penalty0
+
+The geometric graft changes only the matched local common context.
+\lean{Copying/CommonContextPointed}{29}{31}{CommonContextCut.residualGraft}
+\par\penalty0
+
+The pointed Residual context assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextPointed}{33}{45}{CommonContextCut.pointedResidual_context}
+\par\penalty0
+
+The assembled residual context is the actual finite cut with the local common context plugged in. Original hole names and box bodies are preserved.
+\lean{Copying/CommonContextPointed}{49}{52}{CommonContextCut.pointedResidual_contextIso}
+\par\penalty0
+
+Insert the local witness's exact common-context coordinate into the graft.
+\lean{Copying/CommonContextPointed}{55}{59}{CommonContextCut.residualPoint}
+\par\penalty0
+
+The residual Point left assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextPointed}{61}{69}{CommonContextCut.residualPoint_left}
+\par\penalty0
+
+The residual Point right assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextPointed}{71}{79}{CommonContextCut.residualPoint_right}
+\par\penalty0
+
+The residual Point label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CommonContextPointed}{81}{87}{CommonContextCut.residualPoint_label}
+\par\penalty0
+
+The actual paired resume positions form an original unrestricted quasi-specimen, including points internal to the local common context.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CommonContextPointed}{96}{115}{CommonContextCut.pointedResidual_quasi}
+\par\penalty0
+
+\subsection{Common Context Primitive}
+Original non-hole primitive context edges have literal copied fillings. Their complete selected fragments normalize without any semantic assumption.
+
+The original certificate of a genuine primitive edge is necessarily the retained constructor; filled holes and recursively changed boxes are excluded.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextPrimitive}{15}{21}{CommonContextCut.primitive_copies}
+\par\penalty0
+
+Normalize any complete primitive footprint from its actual original left fillers. Every primitive keeps its original label and ordered ports.
+\lean{Copying/CommonContextPrimitive}{25}{32}{CommonContextCut.primitive_leftIso}
+\par\penalty0
+
+The same unchanged primitive footprint is independently normalized from its actual right fillers; no assumed template symmetry is used.
+\lean{Copying/CommonContextPrimitive}{36}{43}{CommonContextCut.primitive_rightIso}
+\par\penalty0
+
+\subsection{Common Context Robustness}
+Actual paired common-context rewrites yield the paper's precise robust case, with one transition on each side and the original recursive specimen.
+
+Lift the proved local pair through its actual complete common-context cut. The paired residual is constructed, with all unselected original fillings.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/CommonContextRobustness}{20}{43}{CommonContextCut.diamond}
+\par\penalty0
+
+The precise forward robustness clause holds for any independently supplied successor of the actual left graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CommonContextRobustness}{47}{68}{CommonContextCut.robust_case}
+\par\penalty0
+
+The same genuine residual supplies the converse clause without reversing or replacing the original template relation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CommonContextRobustness}{72}{94}{CommonContextCut.converse_robust_case}
+\par\penalty0
+
+\subsection{Common Context Transfer}
+Two genuine local rewrites inside an arbitrary selected common context lift to whole-graph rewrites with the original recursive residual specimens. Selected common fragments may contain shallow template holes.
+
+Only the selected local component changes; the complement retains the original independently supplied family, including every shallow or deep hole.
+\lean{Copying/CommonContextTransfer}{15}{23}{CommonContextCut.afterFamily}
+\par\penalty0
+
+This defines the after Graph data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CommonContextTransfer}{25}{28}{CommonContextCut.afterGraph}
+\par\penalty0
+
+This defines the after Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CommonContextTransfer}{30}{35}{CommonContextCut.afterPort}
+\par\penalty0
+
+Any original local rewrite of the grouped footprint lifts to its complete original host. The source and target tokens are the actual insertion maps.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CommonContextTransfer}{39}{57}{CommonContextCut.frame_rewrite}
+\par\penalty0
+
+A local rewrite starting at an original fragment coordinate fires at that same actual host coordinate after simultaneous filling.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CommonContextTransfer}{61}{71}{CommonContextCut.rewrite_at}
+\par\penalty0
+
+The computed whole successor agrees with any independently supplied original rewrite successor, including the resumed token and recursive labels.
+For the proof, proved successor coherence compares the two actual rewrites.
+\lean{Copying/CommonContextTransfer}{75}{90}{CommonContextCut.successor}
+\par\penalty0
+
+Graft the actual proved local residual into the computed complement and retain every unmatched original recursive contribution.
+\lean{Copying/CommonContextTransfer}{94}{100}{CommonContextCut.residual}
+\par\penalty0
+
+Both original rewrites and their residual specimen are constructed from one actual common-context occurrence. No selected-hole exclusion is required.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CommonContextTransfer}{105}{117}{CommonContextCut.paired_rewrites}
+\par\penalty0
+
+\subsection{Complete Match Execution}
+Exact finite execution inside a constructed complete-match complement. The local run is lifted before any observation or termination is compared.
+
+The cast Interfaces eq reboundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CompleteMatchExecution}{10}{17}{Combined.castInterfaces_eq_reboundary}
+\par\penalty0
+
+This defines the replace State data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/CompleteMatchExecution}{26}{27}{CompleteMatchCut.replaceState}
+\par\penalty0
+
+The run replace assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CompleteMatchExecution}{29}{35}{CompleteMatchCut.run_replace}
+\par\penalty0
+
+The constructed replacement of the original matched source recovers the actual source token and graph, including boundary ports.
+\lean{Copying/CompleteMatchExecution}{39}{43}{CompleteMatchCut.sourceIso}
+\par\penalty0
+
+An arbitrary finite local run lifts to the original host with exactly its length; its endpoint is recursively isomorphic to the computed cut replacement.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CompleteMatchExecution}{47}{51}{CompleteMatchCut.run}
+\par\penalty0
+
+A local rule whose target is the matched component can be plugged into that component's actual complement. This constructs a genuine predecessor.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/CompleteMatchExecution}{55}{65}{CompleteMatchCut.rewrite_into}
+\par\penalty0
+
+If the local prefix begins with a genuine rewrite, its entire finite run starts in the original host and ends at the literal complement replacement.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/CompleteMatchExecution}{69}{73}{CompleteMatchCut.run_after_rewrite}
+\par\penalty0
+
+\subsection{Expansion Occurrence Join}
+Complete occurrences of simultaneously filled components assemble when their actual ordered ports agree with one shared frame.
+
+The shared old-frame coordinates and local internal occurrences determine all vertices of the assembled occurrence.
+\lean{Copying/ExpansionOccurrenceJoin}{16}{20}{Opening.Occurrence.ExpansionJoin.ports}
+\par\penalty0
+
+This defines the edge map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ExpansionOccurrenceJoin}{22}{22}{Opening.Occurrence.ExpansionJoin.edges}
+\par\penalty0
+
+The host ports assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ExpansionOccurrenceJoin}{24}{28}{Opening.Occurrence.ExpansionJoin.host_ports}
+\par\penalty0
+
+The insert ports assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/ExpansionOccurrenceJoin}{31}{38}{Opening.Occurrence.ExpansionJoin.insert_ports}
+\par\penalty0
+
+Full actual incidence determines a complete embedding; no additional internal freshness or injectivity premise is needed.
+\lean{Copying/ExpansionOccurrenceJoin}{42}{61}{Opening.Occurrence.ExpansionJoin.embedding}
+\par\penalty0
+
+Assemble the complete original-label occurrence of the expanded frame.
+\lean{Copying/ExpansionOccurrenceJoin}{64}{65}{Opening.Occurrence.ExpansionJoin.occurrence}
+\par\penalty0
+
+The occurrence host assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ExpansionOccurrenceJoin}{67}{69}{Opening.Occurrence.ExpansionJoin.occurrence_host}
+\par\penalty0
+
+The occurrence insert assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ExpansionOccurrenceJoin}{71}{73}{Opening.Occurrence.ExpansionJoin.occurrence_insert}
+\par\penalty0
+
+\subsection{Maximal Atom Component}
+Actual instance producers place the selected atom references on the boundary of the maximal sharing context, in their original operand order.
+
+A nonsharing producer has an original host output. No sharing component can also produce it, by the actual graph's unique-target law.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/MaximalAtomComponent}{14}{36}{MaximalSharing.producer_origin}
+\par\penalty0
+
+A retained unary primitive exposes the same two original context ports. Actual singleton rows determine those coordinates without choosing names.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/MaximalAtomComponent}{40}{64}{MaximalSharing.unary_primitive_origin}
+\par\penalty0
+
+The actual selected instance and store derive the entire maximal atom component. No boundary exclusion or guessed maximal match is assumed.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/MaximalAtomComponent}{68}{85}{MaximalSharing.atom_component}
+\par\penalty0
+
+Both references of a same-store comparison remain the first two ordered inputs of one maximal component; every unused predecessor branch is retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/MaximalAtomComponent}{89}{138}{MaximalSharing.atom_two_component}
+\par\penalty0
+
+\subsection{Maximal Sharing Component}
+A real local tree match supplies a maximal original common sharing context. Its selected input stays first; all unused predecessor branches are retained.
+
+A selected original vertex becomes the first actual boundary input of the computed maximal component; no complete occurrence or cut is a premise.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/MaximalSharingComponent}{17}{44}{MaximalSharing.component}
+\par\penalty0
+
+Rooted term positions cannot have a sharing producer; this is proved from actual operation reachability, not added as an exclusion assumption.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/MaximalSharingComponent}{48}{63}{MaximalSharing.term_component}
+\par\penalty0
+
+\subsection{Occurrence Across Cut}
+An edge-disjoint complete occurrence survives actual replacement of another complete occurrence. Completeness proves the necessary vertex freshness.
+
+Each edge of the other occurrence belongs to the computed complement.
+\lean{Copying/OccurrenceAcrossCut}{13}{14}{Opening.Occurrence.cutEdge}
+\par\penalty0
+
+Every port of a disjoint complete occurrence lies outside the removed internal vertices, even when the two occurrences share boundary wires.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/OccurrenceAcrossCut}{19}{27}{Opening.Occurrence.outsideCut}
+\par\penalty0
+
+Project the surviving occurrence into the complement's retained vertices.
+\lean{Copying/OccurrenceAcrossCut}{30}{31}{Opening.Occurrence.cutPort}
+\par\penalty0
+
+The cut Port internal assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/OccurrenceAcrossCut}{34}{43}{Opening.Occurrence.cutPort_internal}
+\par\penalty0
+
+The cut Port source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/OccurrenceAcrossCut}{46}{53}{Opening.Occurrence.cutPort_source}
+\par\penalty0
+
+The cut Port target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/OccurrenceAcrossCut}{56}{63}{Opening.Occurrence.cutPort_target}
+\par\penalty0
+
+The surviving occurrence, with all unmatched incidences carried through the actual computed replacement.
+\lean{Copying/OccurrenceAcrossCut}{67}{104}{Opening.Occurrence.acrossCut}
+\par\penalty0
+
+\subsection{Occurrence Cover Iso}
+A complete occurrence covering every host edge is an actual recursive isomorphism once it fixes the ordered external boundary.
+
+Incidence coverage supplies every original host internal vertex; no independent carrier-count or internal-surjectivity assumption is needed.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/OccurrenceCoverIso}{16}{27}{Opening.Occurrence.internal_surjective}
+\par\penalty0
+
+The ports as map assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/OccurrenceCoverIso}{30}{34}{Opening.Occurrence.ports_as_map}
+\par\penalty0
+
+Edge coverage and the fixed external interface turn a complete occurrence into an ordered recursive graph isomorphism.
+\lean{Copying/OccurrenceCoverIso}{45}{57}{Opening.Occurrence.iso_of_edge_surjective}
+\par\penalty0
+
+\subsection{Primitive Context Occurrence}
+Literal edge corollas embed into their actual original host with ordered source and target attachments, including primitive interface casts.
+
+This defines the corolla Ports data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/PrimitiveContextOccurrence}{12}{15}{Opening.Occurrence.corollaPorts}
+\par\penalty0
+
+The finite corolla of any original edge has a complete original match.
+\lean{Copying/PrimitiveContextOccurrence}{18}{34}{Opening.Occurrence.corolla}
+\par\penalty0
+
+A literal equality of edge labels retypes its canonical corolla.
+\lean{Copying/PrimitiveContextOccurrence}{37}{38}{Opening.Occurrence.labelledCorolla}
+\par\penalty0
+
+The labelled Corolla input assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/PrimitiveContextOccurrence}{40}{44}{Opening.Occurrence.labelledCorolla_input}
+\par\penalty0
+
+The labelled Corolla output assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/PrimitiveContextOccurrence}{46}{50}{Opening.Occurrence.labelledCorolla_output}
+\par\penalty0
+
+The labelled Corolla edges assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/PrimitiveContextOccurrence}{52}{53}{Opening.Occurrence.labelledCorolla_edges}
+\par\penalty0
+
+Reindexing the selected local boundary does not change its host graph.
+\lean{Copying/PrimitiveContextOccurrence}{56}{78}{Opening.Occurrence.reboundarySource}
+\par\penalty0
+
+The reboundary Source ports assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/PrimitiveContextOccurrence}{80}{83}{Opening.Occurrence.reboundarySource_ports}
+\par\penalty0
+
+Every primitive net is the canonical complete corolla of its label.
+\lean{Copying/PrimitiveContextOccurrence}{86}{87}{Opening.Occurrence.primitiveCopy}
+\par\penalty0
+
+A primitive edge in the original context gives a canonical primitive-net occurrence, with all interface casts justified by its actual label equality.
+\lean{Copying/PrimitiveContextOccurrence}{91}{100}{Opening.Occurrence.primitive}
+\par\penalty0
+
+The primitive input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/PrimitiveContextOccurrence}{102}{105}{Opening.Occurrence.primitive_input}
+\par\penalty0
+
+The primitive output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/PrimitiveContextOccurrence}{107}{110}{Opening.Occurrence.primitive_output}
+\par\penalty0
+
+\subsection{Serial Components}
+The original serial constructor supplies its two actual component occurrences and their exact common ordered junction.
+
+The left Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SerialComponents}{10}{11}{Serial.leftOccurrence}
+\par\penalty0
+
+The right Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SerialComponents}{13}{14}{Serial.rightOccurrence}
+\par\penalty0
+
+The occurrence boundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SerialComponents}{16}{22}{Serial.occurrence_boundary}
+\par\penalty0
+
+The left Occurrence input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SerialComponents}{24}{29}{Serial.leftOccurrence_input}
+\par\penalty0
+
+\subsection{Serial Expansion}
+Simultaneous expansion reassociates through the original serial graph constructor with completely arbitrary typed component families.
+
+This defines the expansion Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SerialExpansion}{15}{17}{Serial.expansionLeft}
+\par\penalty0
+
+This defines the expansion Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SerialExpansion}{19}{21}{Serial.expansionRight}
+\par\penalty0
+
+This is graph-associativity of actual expansions, not a sharing equation or an assumed operational congruence.
+\lean{Copying/SerialExpansion}{25}{38}{Serial.expansionIso}
+\par\penalty0
+
+\subsection{Predecessor Basin}
+The maximal predecessor component consists of all sharing-like edges whose forward sharing path reaches a specified terminal root.
+
+This defines the Sharing Next data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/PredecessorBasin}{10}{10}{Net.SharingNext}
+\par\penalty0
+
+This defines the Predecessor Of data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/PredecessorBasin}{12}{12}{Net.PredecessorOf}
+\par\penalty0
+
+Every eligible immediate predecessor of a selected edge is selected.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Graph/PredecessorBasin}{15}{18}{Net.predecessor_closed}
+\par\penalty0
+
+The entire trace stays in the maximal predecessor component.
+For the proof, induction follows the original derivation or finite structure.
+\lean{Graph/PredecessorBasin}{21}{26}{Net.predecessor_trace}
+\par\penalty0
+
+Selecting all eligible ancestors of a terminal sharing root constructs an actual finite converging component, including every unused sharing branch.
+\lean{Graph/PredecessorBasin}{30}{48}{Net.predecessorBasin}
+\par\penalty0
+
+\subsection{Rooted Basin}
+Finite components selected by forward convergence to a distinguished edge. The distinguished output may be internal in the original host.
+
+A selected component has one exit, functional forward incidence, and an actual finite path from each selected edge to the distinguished root.
+\lean{Graph/RootedBasin}{13}{23}{Net.RootedBasin}
+\par\penalty0
+
+This defines the Next data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasin}{28}{28}{Net.RootedBasin.Next}
+\par\penalty0
+
+The functional assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Graph/RootedBasin}{30}{31}{Net.RootedBasin.functional}
+\par\penalty0
+
+The root terminal assertion relates the actual token root condition to the indicated common-context representation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Graph/RootedBasin}{33}{33}{Net.RootedBasin.root_terminal}
+\par\penalty0
+
+This defines the distance data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasin}{35}{36}{Net.RootedBasin.distance}
+\par\penalty0
+
+The distance trace assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Graph/RootedBasin}{38}{39}{Net.RootedBasin.distance_trace}
+\par\penalty0
+
+The distance step assertion supplies the indicated actual machine transition or its transport through the common construction.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Graph/RootedBasin}{41}{45}{Net.RootedBasin.distance_step}
+\par\penalty0
+
+Forward convergence forbids a selected consumer at the distinguished exit.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasin}{48}{50}{Net.RootedBasin.output_not_source}
+\par\penalty0
+
+A selected non-root producer is followed by another selected edge.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasin}{53}{58}{Net.RootedBasin.next_of_ne}
+\par\penalty0
+
+\subsection{Rooted Basin Boundary}
+Explicit finite boundary orders can put any prescribed distinct entry vertices first without altering the remaining host attachments.
+
+Every computed finite component has an explicit complete input order.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinBoundary}{30}{39}{Net.RootedBasin.input_order}
+\par\penalty0
+
+A complete boundary order begins with any chosen original input.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinBoundary}{42}{58}{Net.RootedBasin.first_input_order}
+\par\penalty0
+
+Two prescribed distinct inputs retain their ordered operand positions.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinBoundary}{61}{80}{Net.RootedBasin.two_input_order}
+\par\penalty0
+
+\subsection{Rooted Basin Selection}
+Normalize a finite forward-convergent host component at its actual exit.
+
+This defines the Incident data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasinSelection}{11}{12}{Net.RootedBasin.Incident}
+\par\penalty0
+
+This defines the Vertex data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasinSelection}{14}{14}{Net.RootedBasin.Vertex}
+\par\penalty0
+
+This defines the Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasinSelection}{15}{15}{Net.RootedBasin.Edge}
+\par\penalty0
+
+This defines the ordered source list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasinSelection}{17}{18}{Net.RootedBasin.source}
+\par\penalty0
+
+This defines the ordered target list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasinSelection}{19}{20}{Net.RootedBasin.target}
+\par\penalty0
+
+The source val assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{22}{23}{Net.RootedBasin.source_val}
+\par\penalty0
+
+The target val assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{24}{25}{Net.RootedBasin.target_val}
+\par\penalty0
+
+The mem source equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{27}{34}{Net.RootedBasin.mem_source}
+\par\penalty0
+
+The mem target equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{35}{42}{Net.RootedBasin.mem_target}
+\par\penalty0
+
+This defines the Input data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasinSelection}{44}{44}{Net.RootedBasin.Input}
+\par\penalty0
+
+This defines the exit data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Graph/RootedBasinSelection}{46}{46}{Net.RootedBasin.exit}
+\par\penalty0
+
+The label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Graph/RootedBasinSelection}{48}{51}{Net.RootedBasin.label}
+\par\penalty0
+
+The source coverage equivalence proves both implications of the indicated structural or execution condition.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{53}{80}{Net.RootedBasin.source_coverage}
+\par\penalty0
+
+The output not input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{82}{84}{Net.RootedBasin.output_not_input}
+\par\penalty0
+
+Normalize a selected tree after an explicit complete ordering of its boundary.
+\lean{Graph/RootedBasinSelection}{87}{158}{Net.RootedBasin.setNet}
+\par\penalty0
+
+The exact inclusion of normalized selected vertices into the original graph.
+\lean{Graph/RootedBasinSelection}{161}{162}{Net.RootedBasin.ports}
+\par\penalty0
+
+The source ports assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{164}{169}{Net.RootedBasin.source_ports}
+\par\penalty0
+
+The target ports assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{171}{176}{Net.RootedBasin.target_ports}
+\par\penalty0
+
+The adjacent assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Graph/RootedBasinSelection}{178}{186}{Net.RootedBasin.adjacent}
+\par\penalty0
+
+Every selected forward step strictly decreases the actual terminal distance.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Graph/RootedBasinSelection}{190}{194}{Net.RootedBasin.distance_decreases}
+\par\penalty0
+
+A selected host component is edge-acyclic by its finite distance to the exit.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Graph/RootedBasinSelection}{197}{235}{Net.RootedBasin.acyclic}
+\par\penalty0
+

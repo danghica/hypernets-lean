@@ -1,0 +1,355 @@
+\clearpage
+\section{Five further completed template families}
+\label{sec:copying-four-templates}
+This development completes contraction associativity, contraction
+commutativity, garbage collection and pulling weakening or contraction through a box.
+For each family the pre-template is defined from the literal graph pair,
+with independent recursive graph isomorphisms on its two sides. Output
+closure, input safety and both robustness directions are proved for the
+original copying machine. The resulting contextual equivalences preserve
+\emph{every exact successful transition count}, in arbitrary original
+focus-free observing contexts, including addressed sites under boxes.
+The copying and parametricity families remain unfinished.
+The unchanged terms of Proposition~12.2 and their Figure~16 translation
+are not replaced by simpler programs.
+
+\subsection{Garbage collection}
+\termdef{literal-garbage-collection}
+Let $C:[]\Rightarrow\mathsf{term}$ be any finite acyclic term-sharing tree,
+and let $H:\mathsf{term}\Rightarrow\mathsf{term}^{k}\mathsf{atom}^{h}$ be
+an original copyable, focus-free payload. The garbage-collection pair is
+\[
+ C;H\quad\sim\quad D^{\mathsf{term}}_{k,0}\otimes D^{\mathsf{atom}}_{h,0}.
+\]
+The right side is the original ordered zero-use distributor, including its
+actual weakening edges. The left side retains the entire zero-input tree
+and the entire payload, including any recursively boxed lambda body.
+Copyability is an explicit premise of the family, as required by the
+paper's use of $H$ in Figure~21.
+
+The primitive-label lemmas prove focus freedom by serial and parallel
+assembly. Inspection of the literal constructor proves that its input list
+is empty; independent carrier renamings preserve that interface. Thus a
+term token cannot enter a garbage-collection hole. Output closure follows
+because there is no term input from which an operation-only path could
+reach an output. Raising the allowance preserves the primitive tree and
+the two zero-use distributors; it raises the arbitrary payload recursively.
+These are the hypotheses of the previously proved nullary-template theorem.
+That theorem constructs the actual matching rewrites and original residuals
+for all nine local rules. Applying it in both directions gives the claimed
+exact contextual equivalence, without a garbage-collection simulation axiom.
+
+
+\lean{Copying/GarbageCollection}{14}{16}{GarbageCollection.left}
+\lean{Copying/GarbageCollection}{19}{21}{GarbageCollection.right}
+\lean{Copying/GarbageCollection}{87}{89}{GarbageCollection.template}
+\lean{Copying/GarbageCollectionEquivalence}{10}{12}{GarbageCollection.template_robust}
+\lean{Copying/GarbageCollectionEquivalence}{15}{17}{GarbageCollection.template_robust_converse}
+\lean{Copying/GarbageCollectionEquivalence}{35}{40}{GarbageCollection.addressed_exact_equiv}
+\par\penalty0
+
+\subsection{Ordered contraction algebra}
+\termdef{ordered-contraction-algebra}
+Fix a sharing sort $s$, either term or atom, and write $c_s$ for the
+ordered two-input contraction corolla. Associativity compares the two
+three-input trees $((0,1),2)$ and $(0,(1,2))$. Commutativity compares the
+literal ordered lists of sources $[1,0]$ and $[0,1]$. The crossing is a real
+incidence change: external input positions are fixed by every recursive
+graph isomorphism used in the proof. No external permutation is hidden in
+an isomorphism of the displayed fragments.
+
+\termdef{sharing-tree-pair}
+More generally, a sharing-tree pair consists of two genuine finite acyclic
+contraction/weakening trees of the same sort and the same ordered input
+length, together with independent recursive graph representations of those
+trees. This is a structural predicate. Its definition contains no execution,
+simulation or contextual-equivalence hypothesis. Both outputs are blocked
+from operation-only paths, since each output has a sharing-edge producer.
+The predicate is preserved by reversal and depth padding. The central new
+result proves full input safety and both robustness directions for every
+padding-closed pre-template whose pairs have this structural shape.
+
+\begin{theorem}[Exact sharing-template equivalence]
+Suppose every pair of a padding-closed pre-template is a sharing-tree pair.
+Any original recursive paired filling of a closed observing graph preserves
+exact successful-transition counts. The same assertion holds at an arbitrary
+typed nonrewrite common token, provided an actual endpoint is search-rooted.
+In particular, it holds for the literal associativity and commutativity
+families, for both sharing sorts, at arbitrary addressed observing sites.
+\end{theorem}
+The following construction supplies the theorem's operational proof.
+
+
+\lean{Copying/ContractionAlgebra}{118}{120}{ContractionAlgebra.template}
+\lean{Copying/SharingTreePair}{14}{18}{SharingTreePair}
+\lean{Copying/ContractionAlgebraEquivalence}{21}{23}{ContractionAlgebra.template_inputSafe}
+\lean{Copying/ContractionAlgebraEquivalence}{10}{12}{ContractionAlgebra.template_robust}
+\lean{Copying/ContractionAlgebraEquivalence}{15}{17}{ContractionAlgebra.template_robust_converse}
+\lean{Copying/ContractionAlgebraEquivalence}{43}{48}{ContractionAlgebra.addressed_exact_equiv}
+\par\penalty0
+
+\subsection{Maximal sharing components}
+\termdef{rooted-sharing-basin}
+A rooted sharing basin selects finitely many original host edges, a selected
+root edge, and its unique exit wire. Every selected edge has exactly one
+output and has a finite selected-edge path to the root. The root has no
+selected sharing successor. Source and target wires have the selected
+sharing sort. The exit may be an internal wire of the host.
+
+Forward adjacency is functional because output lists are singletons and a
+wire has a unique consumer. Each selected edge therefore has a unique
+terminal route and an exact distance to the root. An adjacency step decreases
+that distance by one. This proves acyclicity of the normalized component.
+The maximal basin contains \emph{all} sharing predecessors of its root,
+including inactive sibling branches. Its boundary consists of precisely the
+incident wires with no selected producer, together with the distinguished
+exit. A finite distinct boundary enumeration may place one selected input,
+or two distinct selected inputs, first, while retaining every other input.
+
+\termdef{sharing-context-expansion}
+Normalization turns the selected component into a sharing-tree context.
+Its old template holes remain actual holes with their original ordered
+interfaces. Restricting the original recursive filling certificates to the
+selected edges yields actual filled trees on both sides. Expanded acyclicity
+uses the host distance together with each inserted tree's distance, in
+lexicographic order. Erasing the allowance changes only primitive labels:
+identity carrier maps recover actual contraction trees at the original
+allowance. Crucially, the resulting paired-tree witness retains the
+\emph{original} pre-template relation at every hole. It does not declare
+arbitrary unrelated trees to be an instance of associativity or commutativity.
+
+\termdef{common-context-cut}
+A complete occurrence in the original common context determines a finite
+complement by removing exactly its matched edges and internal vertices.
+Unlike a retained-only footprint, this cut may include shallow template
+holes. Expanding the original selected fillings and its complement
+reconstructs each original whole graph. Two proved local rewrites therefore
+lift through one common cut, preserving the actual token and every untouched
+recursive filling. The local residual is grafted into that same context.
+This constructs an original quasi-specimen, rather than merely asserting
+that a matching residual must exist.
+
+
+\lean{Copying/CommonContextExpansion}{22}{83}{CommonContextCut.expansionIso}
+\lean{Copying/SharingTreeMatching}{25}{42}{SharingResidual.local_matching}
+\lean{Copying/SharingTreeMatching}{46}{54}{SharingResidual.rewrite_matching}
+\par\penalty0
+
+\subsection{All nine operational cases}
+For allocation and unary or binary arithmetic, the actual outer footprint
+contains nonsharing primitives and the original stable operand. Such an
+edge cannot originate in a shallow sharing-tree filling. A retained box
+may still contain arbitrarily deep paired changes. Primitive rigidity
+reconstructs both local rewrites and their exact common residual.
+
+For beta reduction, the application, lambda and box are retained outer
+edges; the box body may contain arbitrary recursive sharing-template
+fillings. The original stable argument is unchanged. Padding closure
+allows the actual paired bodies to be opened at the required allowance.
+The proved substitution/expansion laws construct the paired beta reducts,
+without a binding-free restriction on the common context.
+
+For dereference, the selected actual instance determines the first input
+of a complete maximal atom-sharing basin. Its root exits into the actual
+store. The common cut includes the literal reader, instance and store
+corollas and all original sharing holes in that basin. On each side the
+selected expansion normalizes to the original dereference rule. The rule
+retains the store and requests the prescribed copying of its contents.
+
+Assignment uses the same maximal atom component and the actual unchanged
+stable value. Stable labels exclude sharing edges; the complete value
+therefore reflects into the original context with all its output ports.
+This preserves the original stability premise. The constructed residual
+uses the actual assignment rule and retains every inactive atom input.
+
+True reference equality selects two distinct ordered instance entries in
+one maximal atom component. Both entries remain first in the normalized
+boundary. False equality selects two components ending at distinct original
+stores. They are disjoint: a common sharing predecessor would have two
+terminal roots, contradicting functional forward adjacency and uniqueness
+of the consuming store. Both actual equality outcomes thus have explicit
+paired original rewrites and original recursive residuals.
+
+Copying uses a maximal \emph{term} component. Search rootedness gives
+operation-only reachability of the selected original token, so that token
+has no sharing producer and is an actual component input. The original
+copyable payload has no outer weakening or contraction; its lambda body
+may still contain arbitrary recursive changes. Its complete retained
+skeleton is disjoint from the sharing basin. Joining the two components
+therefore yields an actual full copying source. Both original copy rules
+fire at its first input. The residual retains the selected input's new
+weakening, the remaining entire tree, both separately certified payload
+copies and the literal term and atom output distributors.
+
+These cases exhaust the original local-rule datatype. Every arbitrary
+contextual rewrite supplies its own complete local occurrence. Proved
+successor coherence identifies the constructed result with any separately
+supplied representation-class successor. Reversing the original filling
+certificates repeats the construction for every opposite-side rewrite;
+reversing the resulting quasi-specimen restores the original orientation.
+Thus no case classification, matching rewrite or residual-existence
+assumption remains in the universal sharing theorem.
+
+\subsection{Input safety and rooted execution}
+\termdef{sharing-entry-safety}
+Every exposed term input of a genuine sharing tree is consumed by a
+contraction: a weakening has no source. It therefore requests copying in
+one actual search transition. At an entered specimen both sides make that
+request at the same common host coordinate. If no rewrite follows, the
+opposite matching theorem proves that both requests are stuck. Otherwise
+both sides perform one actual rewrite and reach an equality-up-to residual.
+These are exactly input-safety Cases I and III, with costs one/one or
+two/two. Reflexivity of the cost preorder discharges the comparisons.
+
+\termdef{sharing-nonrewrite-root-reflection}
+A pure search run ending at a nonrewrite common token cannot have entered
+a filled term-sharing hole: that entry would stop at rewrite mode, from
+which pure search has no transition. Backtracking out of a sharing hole is
+also excluded by operation-only reachability. Reflecting the remaining
+steps gives an equally long pure-search run in the literal common context.
+Conversely every retained context step expands to a filled search step.
+Both actual endpoints therefore have the same original search roots at
+nonrewrite common tokens. This root theorem, rather than an inference from
+observational equivalence, permits exact corrections from one actual rooted
+endpoint. Applying concrete robustness sufficiency gives the exact initial,
+pointed and addressed execution consequences stated above.
+
+
+\lean{Copying/SharingTreeMatching}{83}{117}{PreTemplate.SharingTrees.stepMatching}
+\lean{Copying/SharingTreeMatching}{121}{124}{PreTemplate.SharingTrees.inputSafe}
+\lean{Copying/SharingTreeMatching}{127}{130}{PreTemplate.SharingTrees.robust}
+\lean{Copying/SharingTreeMatching}{134}{137}{PreTemplate.SharingTrees.robust_converse}
+\lean{Copying/SharingExecution}{64}{77}{SharingExecution.pointed_exact_equiv}
+\par\penalty0
+
+\subsection{Pulling weakening through a box}
+\termdef{literal-box-weakening-pull}
+For an arbitrary focus-free body with $n$ bound outputs, adjoin one free
+weakening output of sort $s$. On the left this weakening lies inside the
+box; on the right it is outside the original box. The selected free output
+is inserted between the free term and atom blocks, and all $n$ bound outputs
+remain fixed. The fragment's only input is a thunk. Output closure and
+input safety follow from the absence of term inputs; they do not by
+themselves prove robustness.
+
+The beta diagram is a geometric commutation of adjoining the unused output
+with the original bound-output splice. Serial and parallel port maps keep
+every argument attachment fixed. Both branches take the actual beta rule
+with the same original stable argument, and their successors are recursively
+isomorphic. No termination assumption is made on the body or callback.
+
+\termdef{box-weakening-copy-correction}
+The copying overlap duplicates the outside weakening and retains the entire
+canonical $D_{1,2}$ row. That row itself has a weakening and two contractions.
+Consequently the new unused resource contains three weakenings feeding two
+contractions. Two genuine Idem witnesses reduce it to the single outside
+weakening. The first Idem step alone is insufficient. Complete occurrences
+identify the full original row; after replacing it, an edge partition proves
+that the intended outside-weakening reduct covers the corrected graph.
+The resulting isomorphism fixes its ordered external boundary.
+
+\termdef{box-weakening-residual-chain}
+A residual records one original box-weakening paired filling followed by
+the two Idem corrections. It does not assert transitivity of the original
+box-weakening filling relation. Expansion retains every unrelated original
+box-weakening contribution in the first link and uses reflexive Idem
+certificates on those other components in the correction links. Exact Idem
+semantics are applied only after the original residual specimen; their
+intermediate search roots and hole freedom are proved from the actual
+endpoints. This yields the precise refinement-up-to clause.
+
+The forward proof normalizes all left contributions to their actual
+corollas. An atomic box has exactly three possibilities: retained, deeply
+paired, or a shallow literal box-weakening occurrence. These cases cover
+beta and every constructor of copyability; the primitive cases are rigid.
+Induction through the original rewrite constructors then handles arbitrary
+whole graphs and mixed recursive contributions.
+
+The converse reconstructs enabled left rewrites from arbitrary actual
+right occurrences. A separate weakening has no input, and every other
+primitive contribution is rigid. Selected minimal atom or term paths omit
+unused weakening siblings from the local match while retaining them in the
+host complement. Lambda reconstruction keeps the original \emph{larger}
+free interface and original body, rather than replacing it by the smaller
+right box. Allocation, read, assignment, both equality outcomes, arithmetic,
+beta and every copyable payload are covered. Forward transport and proved
+successor coherence then supply the residual for any given right successor.
+This establishes full converse robustness. Concrete sufficiency gives exact
+successful counts in every original observing context, including recursive
+addressed sites. Semantic weakening and the final Proposition~12.2 chain
+remain separate tasks.
+
+
+\lean{Copying/BoxPullWeakeningResidual}{150}{160}{BoxPullWeakening.Residual.copying}
+\lean{Copying/BoxPullWeakeningForwardRobustness}{14}{39}{BoxPullWeakening.template_robust}
+\lean{Copying/BoxPullWeakeningConverseRobustness}{14}{41}{BoxPullWeakening.template_robust_converse}
+\lean{Copying/BoxPullWeakeningEquivalence}{44}{49}{BoxPullWeakening.addressed_exact_equiv}
+\par\penalty0
+
+\subsection{Checked intermediate work for the remaining families}
+The published copying pre-template is the token-erasure of the original
+Figure~17 rule. It preserves all term inputs, the residual tree and both
+resource distributors. Its output closure and padding laws and the
+original request at every input are checked; the distinguished first input
+has the exact two-versus-zero consumption prefix. The actual two-copy interchange and input safety at every ordered input
+are now also proved. The first input takes the original two-versus-zero
+prefix. Every other input takes two actual transitions on either side and
+uses the genuine three-payload sharing correction. Full copying robustness
+still needs the remote overlap between upstream and downstream copying;
+these results are not presented as that missing universal proof.
+
+The box-contraction pair retains the two selected adjacent free outputs and
+the literal contraction inside or outside the box. Its structural laws and
+stable beta diamond are checked. The copying interchange has genuine
+four-input sharing rows, including all canonical weakening branches.
+The whole corrected successor is now reconstructed and the full forward
+robustness theorem is proved. Every edge is covered by the actual two payload
+copies, residual tree, selected resource rows or the outside contraction.
+The occurrence fixes every external input and output. Completeness and this
+edge coverage give an ordered recursive isomorphism; no separate cardinality
+assumption or graph identification is used. The residual consists of the
+original duplicated box-contraction pair followed by a genuine sharing-tree
+correction. Exact sharing semantics supplies the refinement after that
+residual, rather than a transitivity axiom for box-contraction fillings.
+Induction through arbitrary rewrite derivations, with an exhaustive dispatch
+on the nine original local constructors, proves full forward robustness in
+unrestricted contexts. Converse rematching is now also proved. Every operation-headed footprint
+is reconstructed on the left using its selected original ports. A typed
+thunk-input barrier excludes every shallow contraction from the inspected
+primitive ancestry, while unrelated sharing siblings stay in the original
+complement. A box at an original thunk input has a complete actual left
+box with the same binding arity: left-corolla normalization and the original
+alphabet exclude every nonhole primitive alternative. This reconstructs
+beta's actual lambda and original stable argument, with the entire left
+free interface. For copying, a minimal selected term spine and reconstructed
+actual copyable payload join to a complete original copying source. Thus
+all nine converse local cases have actual left rewrites. Full forward
+transport and successor coherence identify the residual for an arbitrary
+supplied right successor. Exact sharing semantics reverses the correction
+link after the original opposite specimen. The concrete robustness theorem
+therefore yields exact contextual equivalence in unrestricted original
+contexts, including arbitrary addressed sites under boxes.
+
+The literal parametricity families retain the arbitrary term contraction
+tree, original single instance, atom distributor and private store holding
+one. Their structural laws and input safety are checked. The concrete
+private-store path has an exact nine-transition prefix with an arbitrary
+original stable argument, retaining the discarded argument and all inactive
+resource inputs. A counted prefix is not the required compensated residual
+or a universal robustness proof. These unfinished obligations remain visible
+in Appendix~B.1.
+
+\lean{Copying/BoxPullContractionCopyCorrection}{17}{20}{BoxPullContraction.CopyRows.normalizationIso}
+\lean{Copying/BoxPullContractionCopyCorrection}{24}{28}{BoxPullContraction.CopyRows.finalCorrection}
+\lean{Copying/BoxPullContractionCopyCorrection}{35}{44}{BoxPullContraction.Residual.copying}
+\lean{Copying/BoxPullContractionForwardRobustness}{14}{39}{BoxPullContraction.template_robust}
+\par\penalty0
+
+\lean{Copying/BoxPullContractionConverseRobustness}{14}{41}{BoxPullContraction.template_robust_converse}
+\par\penalty0
+\lean{Copying/BoxPullContractionEquivalence}{44}{49}{BoxPullContraction.addressed_exact_equiv}
+\par\penalty0
+\lean{Copying/CopyingDoubleInterchange}{12}{22}{CopyingDouble.interchange}
+\par\penalty0
+\lean{Copying/CopyingTemplateInputSafety}{63}{65}{CopyingTemplate.template_inputSafe_improvement}
+\par\penalty0

@@ -9,39 +9,41 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: contraction idempotence in all observing contexts
+## Latest milestone: five further template families
 
-**The full contraction-idempotence template is proved for both term and atom
-wires.** Two weakenings feeding a contraction are contextually equivalent to
-one weakening, with exact successful-transition counts in every original
-closing context, including sites nested beneath boxes.
+**Contraction associativity, contraction commutativity, garbage collection and
+pulling weakening or contraction through boxes are complete.** Each has output closure,
+input safety, both robustness directions and exact contextual consequences in
+all original observing contexts, including sites beneath boxes. This closes
+five of the seven template families left at the preceding checkpoint.
 
-Output closure, input safety, forward/converse robustness and the contextual
-consequences are all proved. The underlying generic theorem covers nullary,
-padding-closed templates in unrestricted contexts and all nine original
-copying-machine rules. Actual matching rewrites and pointed residuals are
-constructed, preserving the original stability and copyability premises.
+The sharing proof constructs maximal term and atom components, actual matching
+rewrites for all nine original local rules, and original pointed residuals.
+Box-weakening copying retains the complete canonical distributor and uses two
+proved idempotence corrections. **Box-contraction pulling has its whole-graph copying
+correction and full forward and converse robustness**. Its exact contextual
+equivalence uses selected original-port reconstruction in arbitrary contexts.
 
-This closes one of the eight remaining template families. Idem is a direct
-prerequisite for pulling weakening through boxes and then proving the semantic
-weakening laws needed for Proposition 12.2's arbitrary environments.
-**Seven template families, correspondence, semantic weakening and Figure 22
-remain open. Proposition 12.2 is unproved.**
+Copying input safety is now proved at every ordered input, using an actual
+three-payload two-copy interchange with complete canonical distributors.
 
-The original terms, Figure 16 translation and machine rules are unchanged.
-Appendix B.1 retains completed tasks with strikethrough. Commentary Section
-113 explains all 90 new declarations in 16 modules with immutable Lean links,
-including how selected-path rematching implements the paper's tree argument.
+**Full copying robustness, parametricity, correspondence,
+semantic weakening and the Figure 22 assembly remain unfinished.
+Proposition 12.2 is unproved.** Its terms, Figure 16 translation, copying rule
+and stability/copyability conditions are unchanged. Appendix B.1 keeps every
+completed task and subtask with strikethrough.
 
-Full build: **644 jobs**. All **3,806 axiom audits** pass (6 abstract, 504 graph,
-3,296 copying); no `sorryAx` or project-specific axioms. The new modules have
-no warnings. Regressions cover both wire sorts, exact closed-program costs,
-non-isomorphism of the literal graphs, and actual copying of boxed Idem bodies.
+Full build: **866 jobs**. All **5,570 axiom audits** pass (6 abstract, 542 graph,
+5,022 copying); no `sorryAx` or project-specific axioms. The commentary explains
+the proof and its correspondence with the paper, with immutable source links
+for all 1,764 newly published declarations in 222 modules. The remaining two
+families have checked intermediate results, which are not presented as full
+robustness proofs.
 
-Estimated completion by mathematical effort remains **roughly 60–70%, with low
-confidence**, as of 28 October 2026. The earlier **80% estimate is withdrawn**.
-Idem is complete, but the seven further families and the final equivalence
-chain still have uncertain proof costs; checklist counts do not measure effort.
+Estimated completion by mathematical effort is **roughly 65–75%, with low
+confidence**, as of 30 October 2026. The earlier **80% estimate is withdrawn**.
+The remaining universal template proofs, translation correspondence and final
+example chain have uncertain proof costs; checklist counts do not measure effort.
 
 ## Proposition 12.2: current extension target
 

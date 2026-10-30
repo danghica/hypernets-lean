@@ -12,9 +12,20 @@ text = "\n".join(p.read_text() for p in sorted(project.glob("*.tex")))
 references = re.findall(
     r"\\lean\{([^}]+)\}\{(\d+)\}\{(\d+)\}\{([^}]+)\}", text
 )
+# Index by module once: repeatedly resolving paths inside the declaration
+# loop made the growing commentary checker needlessly quadratic.
+source_ranges = {}
+for name, start, end, _ in references:
+    source_ranges.setdefault(name, []).append((int(start), int(end)))
 errors = []
 declarations = 0
-for path in sorted((root / "Hypernets").rglob("*.lean")):
+# Validate exactly the immutable publication. Untracked proof work is not part
+# of that revision and must not be presented as published or documented.
+versioned_sources = subprocess.check_output(
+    ["git", "ls-tree", "-r", "--name-only", revision, "--", "Hypernets"],
+    cwd=root, text=True,
+).splitlines()
+for path in sorted(root / name for name in versioned_sources if name.endswith(".lean")):
     relative = path.relative_to(root).as_posix()
     pinned = subprocess.run(
         ["git", "show", f"{revision}:{relative}"],
@@ -28,10 +39,8 @@ for path in sorted((root / "Hypernets").rglob("*.lean")):
     for number, line in enumerate(pinned.splitlines(), 1):
         if re.match(r"^(?:@\[[^\n]*?\]\s*)?(?:noncomputable\s+)?(?:structure|inductive|def|abbrev|theorem|example)\b", line):
             declarations += 1
-            if not any(
-                name == path.relative_to(root / "Hypernets").with_suffix("").as_posix() and int(start) <= number <= int(end)
-                for name, start, end, _ in references
-            ):
+            module = path.relative_to(root / "Hypernets").with_suffix("").as_posix()
+            if not any(start <= number <= end for start, end in source_ranges.get(module, [])):
                 errors.append(f"Uncovered declaration: {relative}:{number}: {line}")
 
 for name, start, end, label in references:

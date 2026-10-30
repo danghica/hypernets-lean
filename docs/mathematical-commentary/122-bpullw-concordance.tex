@@ -1,0 +1,1918 @@
+\clearpage
+\section{Box-weakening pulling: declarations and proofs}
+\label{sec:bpullw-concordance}
+The following lemmas implement the beta diamond, the two idempotence corrections, and exhaustive forward and converse rematching. Both shared and retained graph parts are represented by complete original incidences.
+
+\subsection{Box Pull Weakening}
+The literal BPullW pair of Figure 21. The extra weakening is inserted between the free term and atom blocks, both inside and outside the box. The bound outputs stay first and are never permuted.
+
+Adding one resource of the chosen sort changes only that environment.
+\lean{Copying/BoxPullWeakening}{13}{14}{BoxPullWeakening.variables}
+\par\penalty0
+
+This defines the atoms data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakening}{16}{17}{BoxPullWeakening.atoms}
+\par\penalty0
+
+The ordered boundary places the new resource between the two existing blocks. The original component's incidences retain their order.
+\lean{Copying/BoxPullWeakening}{21}{31}{BoxPullWeakening.insertionBoundary}
+\par\penalty0
+
+Disjoint juxtaposition with one actual weakening edge, using that ordered boundary. This construction introduces no machine transition.
+\lean{Copying/BoxPullWeakening}{35}{38}{BoxPullWeakening.insert}
+\par\penalty0
+
+The resulting boundary has exactly one additional variable or atom.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakening}{41}{49}{BoxPullWeakening.extended_interface}
+\par\penalty0
+
+Extend the free environment without changing any existing boundary position within its term or atom block.
+\lean{Copying/BoxPullWeakening}{53}{55}{BoxPullWeakening.extend}
+\par\penalty0
+
+Extending a body leaves its first n bound term outputs unchanged.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakening}{58}{60}{BoxPullWeakening.variables_bound}
+\par\penalty0
+
+This defines the body data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakening}{62}{65}{BoxPullWeakening.body}
+\par\penalty0
+
+The weakening is inside the box, alongside the unchanged original body.
+\lean{Copying/BoxPullWeakening}{68}{71}{BoxPullWeakening.left}
+\par\penalty0
+
+The same weakening is outside the box, which contains the original body.
+\lean{Copying/BoxPullWeakening}{74}{77}{BoxPullWeakening.right}
+\par\penalty0
+
+Both literal sharing-sort instances of BPullW, with the paper's focus-free body condition.
+\lean{Copying/BoxPullWeakening}{81}{84}{BoxPullWeakening.Step}
+\par\penalty0
+
+Ordered recursive graph representation may vary on either side.
+\lean{Copying/BoxPullWeakening}{87}{90}{BoxPullWeakening.UpToIso}
+\par\penalty0
+
+Insertion retains the complete original graph and its weakening.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakening}{93}{103}{BoxPullWeakening.insert_allLabels}
+\par\penalty0
+
+The extend all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakening}{105}{108}{BoxPullWeakening.extend_allLabels}
+\par\penalty0
+
+The body all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakening}{110}{113}{BoxPullWeakening.body_allLabels}
+\par\penalty0
+
+The left all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakening}{115}{120}{BoxPullWeakening.left_allLabels}
+\par\penalty0
+
+The right all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakening}{122}{128}{BoxPullWeakening.right_allLabels}
+\par\penalty0
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakening}{130}{135}{BoxPullWeakening.Step.focusFree}
+\par\penalty0
+
+The all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakening}{137}{140}{BoxPullWeakening.Step.allLabels}
+\par\penalty0
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakening}{142}{146}{BoxPullWeakening.UpToIso.focusFree}
+\par\penalty0
+
+The all Labels equivalence proves both implications of the indicated structural or execution condition.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakening}{148}{152}{BoxPullWeakening.UpToIso.allLabels}
+\par\penalty0
+
+The actual pre-template contains the literal box-weakening graph pairs.
+\lean{Copying/BoxPullWeakening}{155}{157}{BoxPullWeakening.template}
+\par\penalty0
+
+The literal assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakening}{159}{161}{BoxPullWeakening.literal}
+\par\penalty0
+
+\subsection{Box Pull Weakening Assembly}
+Pull edgewise transformations through the actual rewrite constructors.
+
+Pull each component back along the original edge bijection, retaining its complete ordered boundary via proved signature equalities.
+\lean{Copying/BoxPullWeakeningAssembly}{13}{21}{BoxPullWeakening.Decoration.pull}
+\par\penalty0
+
+The pull Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningAssembly}{23}{30}{BoxPullWeakening.Decoration.pullIso}
+\par\penalty0
+
+The pull Iso host assertion identifies the indicated constructions by an ordered recursive graph isomorphism.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningAssembly}{32}{39}{BoxPullWeakening.Decoration.pullIso_host}
+\par\penalty0
+
+Restrict to an existing expansion component; no subgraph complement is assumed.
+\lean{Copying/BoxPullWeakeningAssembly}{42}{44}{BoxPullWeakening.Decoration.component}
+\par\penalty0
+
+The grouped Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningAssembly}{46}{47}{BoxPullWeakening.Decoration.groupedIso}
+\par\penalty0
+
+The selected token follows the same nesting of the original expansion.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningAssembly}{50}{55}{BoxPullWeakening.Decoration.groupedIso_insert}
+\par\penalty0
+
+The corolla Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningAssembly}{62}{65}{BoxPullWeakening.Decoration.corollaIso}
+\par\penalty0
+
+This defines the serial Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningAssembly}{67}{69}{BoxPullWeakening.Decoration.serialLeft}
+\par\penalty0
+
+This defines the serial Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningAssembly}{71}{73}{BoxPullWeakening.Decoration.serialRight}
+\par\penalty0
+
+The serial Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningAssembly}{75}{81}{BoxPullWeakening.Decoration.serialIso}
+\par\penalty0
+
+This defines the tensor Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningAssembly}{83}{86}{BoxPullWeakening.Decoration.tensorLeft}
+\par\penalty0
+
+This defines the tensor Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningAssembly}{88}{91}{BoxPullWeakening.Decoration.tensorRight}
+\par\penalty0
+
+The tensor Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningAssembly}{93}{100}{BoxPullWeakening.Decoration.tensorIso}
+\par\penalty0
+
+Pull a decoration through equality transport of boundary lists.
+\lean{Copying/BoxPullWeakeningAssembly}{103}{106}{BoxPullWeakening.Decoration.unboundary}
+\par\penalty0
+
+\subsection{Box Pull Weakening Atomic}
+Atomic certificates for transporting an existing contextual rewrite. They retain actual BPullW pairs and recursively certified box bodies.
+
+One outer contribution: representation, the original BPullW pair, or a box whose bodies have an original recursive filling certificate. The congruence constructors only change graph representation and equal interface indices.
+\lean{Copying/BoxPullWeakeningAtomic}{13}{22}{BoxPullWeakening.AtomicPair}
+\par\penalty0
+
+Every atomic certificate supplies a genuine recursive residual certificate.
+\lean{Copying/BoxPullWeakeningAtomic}{26}{35}{BoxPullWeakening.AtomicPair.witness}
+\par\penalty0
+
+Primitive footprints cannot contain a shallow or boxed BPullW contribution.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningAtomic}{38}{64}{BoxPullWeakening.AtomicPair.primitive_rigid}
+\par\penalty0
+
+Extract the atomic contribution already present at an original context edge.
+\lean{Copying/BoxPullWeakeningAtomic}{68}{86}{BoxPullWeakening.atomic_of_edge}
+\par\penalty0
+
+\subsection{Box Pull Weakening Beta}
+Actual beta rewriting on BPullW's outside-weakening side. The graph isomorphisms expose an instance of the original beta rule; stability of the argument is retained as its original operational premise.
+
+The adjoin congr map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningBeta}{13}{15}{BoxPullWeakening.adjoin_congr}
+\par\penalty0
+
+Equal ordered output interfaces can be transported outside an unchanged serial prefix; no edge or shared internal wire is altered.
+\lean{Copying/BoxPullWeakeningBeta}{19}{23}{BoxPullWeakening.serial_output}
+\par\penalty0
+
+This defines the boxed Application data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningBeta}{25}{28}{BoxPullWeakening.boxedApplication}
+\par\penalty0
+
+The unmodified app/lam prefix and argument can be separated from the outside weakening with exactly the original boundary ordering.
+\lean{Copying/BoxPullWeakeningBeta}{32}{49}{BoxPullWeakening.outside_source_iso}
+\par\penalty0
+
+Open the original box and leave its external weakening where it was. The target is the concrete splice with the same independent weakening; this is an original machine rewrite, not an assumed semantic equivalence.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningBeta}{54}{71}{BoxPullWeakening.outside_beta}
+\par\penalty0
+
+\subsection{Box Pull Weakening Beta Diamond}
+A complete actual local beta diamond for the literal BPullW family. The source has a genuine template filling certificate; both sides take the original beta transition, and their successors are recursively isomorphic.
+
+The splice output map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{13}{18}{BoxPullWeakening.splice_output}
+\par\penalty0
+
+The boxed Application output map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{20}{25}{BoxPullWeakening.boxedApplication_output}
+\par\penalty0
+
+This defines the outside Beta Source data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{27}{32}{BoxPullWeakening.outsideBetaSource}
+\par\penalty0
+
+This defines the outside Beta After data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{34}{40}{BoxPullWeakening.outsideBetaAfter}
+\par\penalty0
+
+The raw outside box is only recast to the paper's counted environment.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{43}{48}{BoxPullWeakening.outsideBetaSource_iso}
+\par\penalty0
+
+This is the actual original recursive template certificate at the source, with the app, lambda and stable argument retained in the shared context.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{52}{63}{BoxPullWeakening.beta_sourceWitness}
+\par\penalty0
+
+Both reducts keep the same bound-output junction and every original body and argument edge. Their only difference is finite carrier association.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{67}{75}{BoxPullWeakening.beta_successorIso}
+\par\penalty0
+
+The full local beta diamond, with the original stability premise and exact active and resumed token positions on both sides.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{79}{88}{BoxPullWeakening.beta_diamond}
+\par\penalty0
+
+The completed shallow beta case preserves every successful transition count in every typed surrounding graph, including contexts in which the opened body or callback diverges. The focus is at this actual beta redex.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningBetaDiamond}{93}{107}{BoxPullWeakening.beta_costs_at}
+\par\penalty0
+
+\subsection{Box Pull Weakening Converse Residual}
+Reverse use of a constructed BPullW residual. Exact Idem corrections supply the left refinement of the original opposite quasi-specimen.
+
+The same genuine residual supports the opposite specimen orientation; only the independently proved exact Idem corrections reverse direction.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningConverseResidual}{11}{36}{BoxPullWeakening.Residual.opposite_quasi}
+\par\penalty0
+
+\subsection{Box Pull Weakening Converse Robustness}
+Universal converse BPullW robustness. Actual left enabledness and proved successor coherence let the forward geometric residual handle every supplied right successor, with both Idem corrections used in the opposite direction.
+
+Full converse robustness for all original recursive BPullW specimens and all original local rules. No matching, decomposition, or robustness hypothesis is present: exact original matching rewrites and residuals are constructed.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningConverseRobustness}{14}{41}{BoxPullWeakening.template_robust_converse}
+\par\penalty0
+
+\subsection{Box Pull Weakening Converse Transport}
+Exhaustive converse enabledness for original BPullW specimens. Every original rule, including copying and both equality outcomes, is reconstructed at the actual common-context token.
+
+Exhaustive dispatch over all nine original local constructors.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningConverseTransport}{16}{34}{BoxPullWeakening.Decoration.local_enabled}
+\par\penalty0
+
+An arbitrary actual right rewrite supplies its own complete occurrence; no matching or complement assumption is needed by converse enabledness.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningConverseTransport}{38}{43}{BoxPullWeakening.Decoration.rewrite_enabled}
+\par\penalty0
+
+Original common-context fillings have a genuine converse matching rewrite, including arbitrary shallow, deep and mixed template contributions.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningConverseTransport}{48}{79}{BoxPullWeakening.filling_enabled_converse}
+\par\penalty0
+
+\subsection{Box Pull Weakening Coordinates}
+Concrete port coordinates for BPullW's insertion of an unused resource. These coordinates preserve the distinguished bound output in beta reductions.
+
+An interface-normalised version with unchanged graph carriers.
+\lean{Copying/BoxPullWeakeningCoordinates}{12}{15}{BoxPullWeakening.adjoin}
+\par\penalty0
+
+Every old output retains its index before the new slot and moves one position to the right after that slot.
+\lean{Copying/BoxPullWeakeningCoordinates}{19}{24}{BoxPullWeakening.oldOutput}
+\par\penalty0
+
+This defines the weakening Output data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningCoordinates}{26}{27}{BoxPullWeakening.weakeningOutput}
+\par\penalty0
+
+The inserted old output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCoordinates}{29}{49}{BoxPullWeakening.inserted_old_output}
+\par\penalty0
+
+The inserted weakening output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCoordinates}{51}{57}{BoxPullWeakening.inserted_weakening_output}
+\par\penalty0
+
+The original component's actual embedding after equality transport.
+\lean{Copying/BoxPullWeakeningCoordinates}{60}{64}{BoxPullWeakening.oldPort}
+\par\penalty0
+
+The old Port insert assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCoordinates}{66}{76}{BoxPullWeakening.oldPort_insert}
+\par\penalty0
+
+The adjoin source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCoordinates}{78}{82}{BoxPullWeakening.adjoin_source}
+\par\penalty0
+
+The adjoin target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCoordinates}{84}{88}{BoxPullWeakening.adjoin_target}
+\par\penalty0
+
+The new weakening still has no sources, at every representation allowance.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCoordinates}{91}{94}{BoxPullWeakening.adjoin_weakening_source}
+\par\penalty0
+
+The added edge targets exactly the new slot; no old resource is replaced.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningCoordinates}{97}{104}{BoxPullWeakening.adjoin_weakening_target}
+\par\penalty0
+
+\subsection{Box Pull Weakening Copy Correction}
+The exact Idem correction required by the BPullW copying overlap. Both steps are original filling witnesses and their endpoint is the literal outside-weakening reduct.
+
+The second Idem witness ends at the actual outside-weakening reduct, using the proved exhaustive reconstruction rather than an assumed equation.
+\lean{Copying/BoxPullWeakeningCopyCorrection}{16}{19}{BoxPullWeakening.CopyRow.finalSecond}
+\par\penalty0
+
+The intermediate closed assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyCorrection}{21}{33}{BoxPullWeakening.CopyRow.intermediate_closed}
+\par\penalty0
+
+The outside closed assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningCopyCorrection}{35}{36}{BoxPullWeakening.CopyRow.outside_closed}
+\par\penalty0
+
+Preserve the host's global hole freedom while replacing its selected component by another proved hole-free graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningCopyCorrection}{40}{47}{BoxPullWeakening.CopyRow.plug_closed}
+\par\penalty0
+
+In every focus-free closing host, the two Idem corrections preserve exact execution costs at the actual unchanged host token. Only one actual endpoint root is supplied; the intermediate root is proved by original search.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningCopyCorrection}{52}{77}{BoxPullWeakening.CopyRow.exact_at}
+\par\penalty0
+
+\subsection{Box Pull Weakening Copy Injection}
+Retain both original copies and every original resource row inside the literal copy reduct with one additional unused output.
+
+The target Cast map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyInjection}{9}{24}{BoxPullWeakening.RetainedCopy.targetCast}
+\par\penalty0
+
+The serial Left Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyInjection}{26}{31}{BoxPullWeakening.RetainedCopy.serialLeftOccurrence}
+\par\penalty0
+
+The retained Branch map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyInjection}{33}{43}{BoxPullWeakening.RetainedCopy.retainedBranch}
+\par\penalty0
+
+The retained Branch output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{45}{50}{BoxPullWeakening.RetainedCopy.retainedBranch_output}
+\par\penalty0
+
+The retained Branch input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{52}{57}{BoxPullWeakening.RetainedCopy.retainedBranch_input}
+\par\penalty0
+
+The copy Component map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyInjection}{59}{64}{BoxPullWeakening.RetainedCopy.copyComponent}
+\par\penalty0
+
+The copy Output eq assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{66}{67}{BoxPullWeakening.RetainedCopy.copyOutput_eq}
+\par\penalty0
+
+The copy Components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyInjection}{69}{74}{BoxPullWeakening.RetainedCopy.copyComponents}
+\par\penalty0
+
+The copy Components disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{76}{83}{BoxPullWeakening.RetainedCopy.copyComponents_disjoint}
+\par\penalty0
+
+The copies map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyInjection}{85}{90}{BoxPullWeakening.RetainedCopy.copies}
+\par\penalty0
+
+The copies component assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{92}{96}{BoxPullWeakening.RetainedCopy.copies_component}
+\par\penalty0
+
+The copies output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{98}{113}{BoxPullWeakening.RetainedCopy.copies_output}
+\par\penalty0
+
+The copies input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{115}{133}{BoxPullWeakening.RetainedCopy.copies_input}
+\par\penalty0
+
+The after Left map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyInjection}{135}{136}{BoxPullWeakening.RetainedCopy.afterLeft}
+\par\penalty0
+
+The after Right map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyInjection}{138}{140}{BoxPullWeakening.RetainedCopy.afterRight}
+\par\penalty0
+
+The after boundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{142}{147}{BoxPullWeakening.RetainedCopy.after_boundary}
+\par\penalty0
+
+The after disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningCopyInjection}{149}{150}{BoxPullWeakening.RetainedCopy.after_disjoint}
+\par\penalty0
+
+The complete original copy reduct retains a complete-label occurrence inside the extended reduct. The only omitted component is the unused row.
+\lean{Copying/BoxPullWeakeningCopyInjection}{154}{156}{BoxPullWeakening.RetainedCopy.after}
+\par\penalty0
+
+The after input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{158}{163}{BoxPullWeakening.RetainedCopy.after_input}
+\par\penalty0
+
+The after output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyInjection}{165}{170}{BoxPullWeakening.RetainedCopy.after_output}
+\par\penalty0
+
+\subsection{Box Pull Weakening Copy Partition}
+The unchanged copy reduct and the selected unused row partition all original edge occurrences of the extended reduct.
+
+The row disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{13}{36}{BoxPullWeakening.RetainedCopy.row_disjoint}
+\par\penalty0
+
+Every edge of the actual extended reduct belongs to exactly the old copy construction or the selected five-edge weakening row.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{40}{95}{BoxPullWeakening.RetainedCopy.edge_cover}
+\par\penalty0
+
+The complete old reduct survives both Idem contractions through the computed complement of the selected row.
+\lean{Copying/BoxPullWeakeningCopyPartition}{99}{101}{BoxPullWeakening.RetainedCopy.retained}
+\par\penalty0
+
+The sole added weakening is the actual inserted component of the final computed replacement, with the original ordered output attachment.
+\lean{Copying/BoxPullWeakeningCopyPartition}{105}{111}{BoxPullWeakening.RetainedCopy.inserted}
+\par\penalty0
+
+The final Components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningCopyPartition}{113}{118}{BoxPullWeakening.RetainedCopy.finalComponents}
+\par\penalty0
+
+The final Components disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{120}{127}{BoxPullWeakening.RetainedCopy.finalComponents_disjoint}
+\par\penalty0
+
+The intended outside-weakening reduct has an actual complete occurrence in the twice-corrected graph. Edge coverage below will upgrade it to an iso.
+\lean{Copying/BoxPullWeakeningCopyPartition}{131}{137}{BoxPullWeakening.RetainedCopy.normalizationOccurrence}
+\par\penalty0
+
+The normalization old port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{139}{144}{BoxPullWeakening.RetainedCopy.normalization_old_port}
+\par\penalty0
+
+The retained input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{146}{157}{BoxPullWeakening.RetainedCopy.retained_input}
+\par\penalty0
+
+The retained output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{159}{170}{BoxPullWeakening.RetainedCopy.retained_output}
+\par\penalty0
+
+The original row output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{172}{185}{BoxPullWeakening.RetainedCopy.original_row_output}
+\par\penalty0
+
+The inserted output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{187}{200}{BoxPullWeakening.RetainedCopy.inserted_output}
+\par\penalty0
+
+The normalization input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{203}{205}{BoxPullWeakening.RetainedCopy.normalization_input}
+\par\penalty0
+
+The normalization component output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{207}{228}{BoxPullWeakening.RetainedCopy.normalization_component_output}
+\par\penalty0
+
+The reconstruction has the original ordered external interface.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{231}{240}{BoxPullWeakening.RetainedCopy.normalization_output}
+\par\penalty0
+
+No edge remains hidden in the computed complement: the selected row and unchanged original reduct were an exhaustive partition.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyPartition}{244}{263}{BoxPullWeakening.RetainedCopy.normalization_edge_surjective}
+\par\penalty0
+
+The literal original copying reduct, after its two proved Idem corrections, is exactly the outside-weakening reduct up to recursive graph representation.
+\lean{Copying/BoxPullWeakeningCopyPartition}{267}{270}{BoxPullWeakening.RetainedCopy.normalizationIso}
+\par\penalty0
+
+\subsection{Box Pull Weakening Copy Row}
+Identify the unchanged selected distributor row in the full original copy reduct of a payload with an added weakening.
+
+A selected row is an actual component of the original ordered forest.
+\lean{Copying/BoxPullWeakeningCopyRow}{10}{22}{BoxPullWeakening.CopyRow.forestOccurrence}
+\par\penalty0
+
+The term row remains in the term half of the ordered environment forest.
+\lean{Copying/BoxPullWeakeningCopyRow}{25}{45}{BoxPullWeakening.CopyRow.termOccurrence}
+\par\penalty0
+
+The atom row remains in the atom half, after every term resource.
+\lean{Copying/BoxPullWeakeningCopyRow}{48}{68}{BoxPullWeakening.CopyRow.atomOccurrence}
+\par\penalty0
+
+BPullW selects the last term row or the first atom row, exactly matching its insertion between the two free-resource blocks.
+\lean{Copying/BoxPullWeakeningCopyRow}{72}{80}{BoxPullWeakening.CopyRow.selected}
+\par\penalty0
+
+The original selected row in the complete copy reduct, not an abstract isomorphic replacement for that reduct.
+\lean{Copying/BoxPullWeakeningCopyRow}{84}{85}{BoxPullWeakening.CopyRow.row}
+\par\penalty0
+
+This defines the weak Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningCopyRow}{87}{91}{BoxPullWeakening.CopyRow.weakEdge}
+\par\penalty0
+
+The weak injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyRow}{93}{94}{BoxPullWeakening.CopyRow.weak_injective}
+\par\penalty0
+
+The weak disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningCopyRow}{96}{98}{BoxPullWeakening.CopyRow.weak_disjoint}
+\par\penalty0
+
+The weak labels assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyRow}{100}{103}{BoxPullWeakening.CopyRow.weak_labels}
+\par\penalty0
+
+The weak sources identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyRow}{105}{107}{BoxPullWeakening.CopyRow.weak_sources}
+\par\penalty0
+
+This defines the added Output data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningCopyRow}{109}{111}{BoxPullWeakening.CopyRow.addedOutput}
+\par\penalty0
+
+The extended weak target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyRow}{113}{121}{BoxPullWeakening.CopyRow.extended_weak_target}
+\par\penalty0
+
+The weak target link identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyRow}{123}{137}{BoxPullWeakening.CopyRow.weak_target_link}
+\par\penalty0
+
+The selected input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyRow}{139}{157}{BoxPullWeakening.CopyRow.selected_input}
+\par\penalty0
+
+The weak targets identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopyRow}{159}{164}{BoxPullWeakening.CopyRow.weak_targets}
+\par\penalty0
+
+The full five-edge row is present in the actual copy reduct, with its original ordered incidences. The other outputs and residual tree are untouched.
+\lean{Copying/BoxPullWeakeningCopyRow}{168}{171}{BoxPullWeakening.CopyRow.occurrence}
+\par\penalty0
+
+Exact first whole-graph intermediate after collapsing the inner Idem.
+\lean{Copying/BoxPullWeakeningCopyRow}{174}{176}{BoxPullWeakening.CopyRow.intermediate}
+\par\penalty0
+
+Exact second whole-graph intermediate after collapsing the root Idem.
+\lean{Copying/BoxPullWeakeningCopyRow}{179}{181}{BoxPullWeakening.CopyRow.corrected}
+\par\penalty0
+
+The reduct free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningCopyRow}{183}{185}{BoxPullWeakening.CopyRow.reduct_free}
+\par\penalty0
+
+First genuine Idem filling witness for the entire original copy reduct.
+\lean{Copying/BoxPullWeakeningCopyRow}{188}{191}{BoxPullWeakening.CopyRow.first}
+\par\penalty0
+
+Second genuine Idem witness retains exactly the same constructed host complement. This is a certified chain, without assuming witness transitivity.
+\lean{Copying/BoxPullWeakeningCopyRow}{195}{198}{BoxPullWeakening.CopyRow.second}
+\par\penalty0
+
+\subsection{Box Pull Weakening Copying}
+Original copying steps for the literal BPullW lambda payload, and the genuine duplicated BPullW certificate. The final Idem correction of the new distributor row is a separate geometric obligation.
+
+Pulling a weakening through any serial prefix retains the paper's counted variable/atom interfaces on both sides.
+\lean{Copying/BoxPullWeakeningCopying}{13}{18}{BoxPullWeakening.serial_extend}
+\par\penalty0
+
+The actual lambda payload pair supplied by BPullW, with one original literal occurrence and the unchanged lambda head retained in its context.
+\lean{Copying/BoxPullWeakeningCopying}{22}{29}{BoxPullWeakening.payloadWitness}
+\par\penalty0
+
+The extend rewrite assertion supplies the indicated actual machine transition or its transport through the common construction.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopying}{31}{37}{BoxPullWeakening.extend_rewrite}
+\par\penalty0
+
+The common contraction tree is retained; the outside weakening remains separate from the actual copyable payload.
+\lean{Copying/BoxPullWeakeningCopying}{41}{48}{BoxPullWeakening.copy_sourceWitness}
+\par\penalty0
+
+Copying duplicates the complete original BPullW occurrence. The target here is the explicit intermediate graph before contracting its duplicated weakenings by Idem; it is not asserted to be an actual copyable payload.
+\lean{Copying/BoxPullWeakeningCopying}{53}{59}{BoxPullWeakening.copy_intermediateWitness}
+\par\penalty0
+
+Both actual original copying transitions, including all residual sharing tree inputs and both ordered output distributor forests. The outside step copies only the original lambda payload, preserving the separate weakening.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningCopying}{64}{71}{BoxPullWeakening.copy_steps}
+\par\penalty0
+
+\subsection{Box Pull Weakening Decoration}
+Edgewise BPullW transformations and pointed residual certificates.
+
+Replace each original edge by an atomically certified contribution.
+\lean{Copying/BoxPullWeakeningDecoration}{9}{12}{BoxPullWeakening.Decoration}
+\par\penalty0
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningDecoration}{17}{17}{BoxPullWeakening.Decoration.graph}
+\par\penalty0
+
+This defines the identity data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningDecoration}{19}{21}{BoxPullWeakening.Decoration.identity}
+\par\penalty0
+
+The identity Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningDecoration}{23}{24}{BoxPullWeakening.Decoration.identityIso}
+\par\penalty0
+
+Edgewise witnesses assemble to the original recursive filling relation.
+\lean{Copying/BoxPullWeakeningDecoration}{27}{29}{BoxPullWeakening.Decoration.witness}
+\par\penalty0
+
+Every primitive source edge is unchanged up to ordered recursive naming.
+\lean{Copying/BoxPullWeakeningDecoration}{32}{34}{BoxPullWeakening.Decoration.primitiveIso}
+\par\penalty0
+
+The primitive Iso vertex assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningDecoration}{36}{38}{BoxPullWeakening.Decoration.primitiveIso_vertex}
+\par\penalty0
+
+\subsection{Box Pull Weakening Equivalence}
+Full BPullW contextual equivalence from the proved original-machine robustness in both directions. Exact transition counts hold in all original observing contexts, including recursive sites at arbitrary box depth.
+
+BPullW paired fillings have exact quantitative equivalence, using proved input safety and both proved robustness directions of the original machine.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningEquivalence}{14}{22}{BoxPullWeakening.filling_exact_equiv}
+\par\penalty0
+
+Successful termination agrees at every exact transition count, including contexts whose other computations may diverge or become stuck.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningEquivalence}{26}{39}{BoxPullWeakening.filling_termination_count}
+\par\penalty0
+
+An actual template pair can be replaced at any original addressed site, including under boxes, in every closed observing graph. No binding restriction or bound on the surrounding depth is imposed.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningEquivalence}{44}{49}{BoxPullWeakening.addressed_exact_equiv}
+\par\penalty0
+
+The addressed-context consequence preserves exact successful-transition counts for each actual replacement, not merely termination after forgetting costs.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningEquivalence}{53}{58}{BoxPullWeakening.addressed_termination_count}
+\par\penalty0
+
+Box-pulling weakening preserve every successful transition count from an arbitrary common host token. Input safety and both robustness directions are the already proved concrete theorems.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningEquivalence}{62}{75}{BoxPullWeakening.pointed_exact_equiv}
+\par\penalty0
+
+The same exact equivalence in the original representation quotient used by quasi-specimens; no extra quotient or coarse observation is introduced.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningEquivalence}{79}{90}{BoxPullWeakening.pointed_class_exact_equiv}
+\par\penalty0
+
+Pointed execution agrees at each exact cost, with no termination premise and no bound on the subsequent run or on the enclosing recursive graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningEquivalence}{94}{111}{BoxPullWeakening.pointed_termination_count}
+\par\penalty0
+
+\subsection{Box Pull Weakening Forward Robustness}
+Universal forward BPullW robustness for the original copying UAM. The copying case uses its two proved Idem corrections as exact refinements, while all source decompositions and local rewrites are constructed.
+
+Every original recursive BPullW specimen has the required actual matching rewrite. Deep and shallow overlaps are exhaustive; the original quasi-specimen uses only the independently proved Idem equivalences after its residual.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningForwardRobustness}{14}{39}{BoxPullWeakening.template_robust}
+\par\penalty0
+
+\subsection{Box Pull Weakening Forward Transport}
+Every local copying-UAM rule and every contextual rewrite have a concrete BPullW matching rewrite and a pointed original residual certificate.
+
+Exhaustive on the original local-rule datatype: no classified case is a premise.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningForwardTransport}{13}{28}{BoxPullWeakening.local_transport}
+\par\penalty0
+
+Full one-rewrite forward transport for every edgewise BPullW decoration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningForwardTransport}{31}{34}{BoxPullWeakening.rewrite_transport}
+\par\penalty0
+
+Transport from an arbitrary original common context, including deep and mixed contributions anywhere in the host, rather than only a standalone redex.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningForwardTransport}{38}{59}{BoxPullWeakening.filling_rewrite}
+\par\penalty0
+
+\subsection{Box Pull Weakening Idem Row}
+The two genuine Idem contractions required when the original canonical D\_(1,2) row receives a weakening at both input positions. The canonical row also contains its original weakening; it is not a lone binary contraction.
+
+The three-weakening, two-contraction tree in root-first bracketing.
+\lean{Copying/BoxPullWeakeningIdemRow}{12}{14}{BoxPullWeakening.IdemRow.nested}
+\par\penalty0
+
+The selected original canonical distributor row with its two copied weakenings, before any Idem contraction is performed.
+\lean{Copying/BoxPullWeakeningIdemRow}{18}{20}{BoxPullWeakening.IdemRow.canonical}
+\par\penalty0
+
+This defines the internal-vertex map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningIdemRow}{22}{52}{BoxPullWeakening.IdemRow.vertices}
+\par\penalty0
+
+This defines the edge map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningIdemRow}{54}{89}{BoxPullWeakening.IdemRow.edges}
+\par\penalty0
+
+The literal canonical row is the nested two-Idem tree, including its original weakening and both original contractions.
+\lean{Copying/BoxPullWeakeningIdemRow}{101}{126}{BoxPullWeakening.IdemRow.canonical_iso}
+\par\penalty0
+
+First collapse the two weakenings feeding the non-root contraction. The original root weakening and root contraction remain in the shared context.
+\lean{Copying/BoxPullWeakeningIdemRow}{130}{136}{BoxPullWeakening.IdemRow.first}
+\par\penalty0
+
+The first actual Idem certificate starts from the original canonical row.
+\lean{Copying/BoxPullWeakeningIdemRow}{139}{141}{BoxPullWeakening.IdemRow.canonical_first}
+\par\penalty0
+
+The resulting pair of weakenings feeding the root is the second original Idem occurrence, giving the single outside weakening.
+\lean{Copying/BoxPullWeakeningIdemRow}{145}{148}{BoxPullWeakening.IdemRow.second}
+\par\penalty0
+
+\subsection{Box Pull Weakening Laws}
+BPullW's structural side conditions and actual allowance invariance. The thunk input establishes operational input safety, but does not by itself establish robustness under beta or copying.
+
+A box-pulling pair has precisely its original thunk input.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLaws}{12}{25}{BoxPullWeakening.template_noTermInputs}
+\par\penalty0
+
+The template output Closed assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningLaws}{27}{27}{BoxPullWeakening.template_outputClosed}
+\par\penalty0
+
+The actual term token cannot enter a BPullW hole. This proves safety for every observation class and both orientations of every cost relation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningLaws}{31}{35}{BoxPullWeakening.template_inputSafe}
+\par\penalty0
+
+Increasing allowance preserves the exact typed parallel assembly.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLaws}{38}{46}{BoxPullWeakening.insert_raise}
+\par\penalty0
+
+The extend raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLaws}{48}{52}{BoxPullWeakening.extend_raise}
+\par\penalty0
+
+The body raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLaws}{54}{58}{BoxPullWeakening.body_raise}
+\par\penalty0
+
+The left raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLaws}{60}{64}{BoxPullWeakening.left_raise}
+\par\penalty0
+
+The right raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLaws}{66}{70}{BoxPullWeakening.right_raise}
+\par\penalty0
+
+A padded literal pair is again a literal pair; the body and weakening positions, and the complete recursive shape of the body, are preserved.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLaws}{74}{79}{BoxPullWeakening.Step.raise}
+\par\penalty0
+
+The raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningLaws}{81}{85}{BoxPullWeakening.UpToIso.raise}
+\par\penalty0
+
+The template padding Closed assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningLaws}{87}{87}{BoxPullWeakening.template_paddingClosed}
+\par\penalty0
+
+\subsection{Box Pull Weakening Local Beta}
+Exhaustive actual beta transport for original BPullW fillings, including retained, deep, and shallow boxes with the original stable argument.
+
+This defines the boxes data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningLocalBeta}{15}{15}{BoxPullWeakening.Beta.boxes}
+\par\penalty0
+
+The source Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningLocalBeta}{17}{25}{BoxPullWeakening.Beta.sourceIso}
+\par\penalty0
+
+The paired source has an actual beta step and a constructed original-template local residual. The stable argument is the unchanged original graph.
+For the proof, proved successor coherence compares the two actual rewrites; constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningLocalBeta}{29}{61}{BoxPullWeakening.Beta.transport}
+\par\penalty0
+
+\subsection{Box Pull Weakening Local Copy}
+Exhaustive actual copying transport for BPullW: all original copyable constructors, retained and deep lambda boxes, and the literal two-Idem shallow case.
+
+The primitive transport assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLocalCopy}{13}{25}{BoxPullWeakening.Copying.primitive_transport}
+\par\penalty0
+
+This defines the boxes data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningLocalCopy}{27}{27}{BoxPullWeakening.Copying.boxes}
+\par\penalty0
+
+The source Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningLocalCopy}{29}{35}{BoxPullWeakening.Copying.sourceIso}
+\par\penalty0
+
+The lambda transport assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, proved successor coherence compares the two actual rewrites; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLocalCopy}{37}{70}{BoxPullWeakening.Copying.lambda_transport}
+\par\penalty0
+
+Every constructor of original copyability is covered, including active operation payloads and recursive representation changes.
+For the proof, induction follows the original derivation or finite structure; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningLocalCopy}{74}{107}{BoxPullWeakening.Copying.transport}
+\par\penalty0
+
+\subsection{Box Pull Weakening Normalization}
+Literal left corollas normalize every recursively filled BPullW source.
+
+This defines the left copy data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningNormalization}{8}{14}{BoxPullWeakening.UpToIso.left_copy}
+\par\penalty0
+
+The left contribution is an ordered corolla, including at a shallow hole.
+\lean{Copying/BoxPullWeakeningNormalization}{17}{24}{BoxPullWeakening.leftCopy}
+\par\penalty0
+
+This defines the labels data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningNormalization}{30}{30}{BoxPullWeakening.SourceNormalisation.labels}
+\par\penalty0
+
+This defines the copies data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningNormalization}{31}{31}{BoxPullWeakening.SourceNormalisation.copies}
+\par\penalty0
+
+The common skeleton now carries the actual left labels instead of hole labels.
+\lean{Copying/BoxPullWeakeningNormalization}{34}{36}{BoxPullWeakening.SourceNormalisation.source}
+\par\penalty0
+
+The left Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningNormalization}{38}{40}{BoxPullWeakening.SourceNormalisation.leftIso}
+\par\penalty0
+
+Only equality transport of each interface is used; the original right graph and its complete ordered port lists are retained.
+\lean{Copying/BoxPullWeakeningNormalization}{44}{45}{BoxPullWeakening.SourceNormalisation.right}
+\par\penalty0
+
+This defines the decoration data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningNormalization}{47}{53}{BoxPullWeakening.SourceNormalisation.decoration}
+\par\penalty0
+
+Relabelled skeletons have the same vertex and edge incidence maps.
+\lean{Copying/BoxPullWeakeningNormalization}{56}{62}{BoxPullWeakening.SourceNormalisation.skeleton}
+\par\penalty0
+
+The right Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningNormalization}{64}{73}{BoxPullWeakening.SourceNormalisation.rightIso}
+\par\penalty0
+
+The left token assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningNormalization}{75}{76}{BoxPullWeakening.SourceNormalisation.left_token}
+\par\penalty0
+
+The right token assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningNormalization}{78}{80}{BoxPullWeakening.SourceNormalisation.right_token}
+\par\penalty0
+
+\subsection{Box Pull Weakening Opening}
+Interface correspondence between the literal BPullW body and the original micro-beta opening constructor. All casts below are equalities of ordered lists.
+
+The cast eq reboundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningOpening}{10}{13}{BoxPullWeakening.cast_eq_reboundary}
+\par\penalty0
+
+The adjoin interface assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningOpening}{15}{18}{BoxPullWeakening.adjoin_interface}
+\par\penalty0
+
+The extend eq assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{20}{23}{BoxPullWeakening.extend_eq}
+\par\penalty0
+
+The adjoin raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{25}{28}{BoxPullWeakening.adjoin_raise}
+\par\penalty0
+
+Typed list equality may be moved through insertion. This does not permit any permutation of the original input or output order.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{32}{37}{BoxPullWeakening.adjoin_reboundary}
+\par\penalty0
+
+The variables successor assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{39}{40}{BoxPullWeakening.variables_successor}
+\par\penalty0
+
+The enlarged body in the original beta constructor's k+1 convention. Only its new free output is added; the bound output stays at position zero.
+\lean{Copying/BoxPullWeakeningOpening}{44}{47}{BoxPullWeakening.betaBody}
+\par\penalty0
+
+Opening the literal enlarged body exposes the same unchanged graph and weakening as insertion into the already-opened original body.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{51}{61}{BoxPullWeakening.open_betaBody}
+\par\penalty0
+
+Rewriting equal environment counts does not change the insertion graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{64}{69}{BoxPullWeakening.extend_counts}
+\par\penalty0
+
+The inside-box endpoint is literally the original lambda box over the enlarged body, including the original k+1 versus 1+k convention.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{73}{79}{BoxPullWeakening.lambda_left}
+\par\penalty0
+
+The outside endpoint contains exactly the original lambda box and the separate weakening, rather than a substituted or simplified body.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{83}{88}{BoxPullWeakening.lambda_right}
+\par\penalty0
+
+The lambda literal assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningOpening}{90}{94}{BoxPullWeakening.lambda_literal}
+\par\penalty0
+
+\subsection{Box Pull Weakening Parallel Join}
+Disjoint actual graph occurrences assemble in parallel, retaining the original ordered boundary. This supports separating BPullW's unused copy row from the unchanged part of the copying reduct.
+
+Every original component has its literal complete occurrence in parallel assembly, including the prescribed ordered boundary maps.
+\lean{Copying/BoxPullWeakeningParallelJoin}{16}{26}{Opening.Occurrence.ParallelJoin.component}
+\par\penalty0
+
+This defines the port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningParallelJoin}{28}{31}{Opening.Occurrence.ParallelJoin.ports}
+\par\penalty0
+
+The embed ports assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningParallelJoin}{33}{44}{Opening.Occurrence.ParallelJoin.embed_ports}
+\par\penalty0
+
+This defines the embedding data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningParallelJoin}{46}{63}{Opening.Occurrence.ParallelJoin.embedding}
+\par\penalty0
+
+Parallel assembly requires no new freshness premise on vertices: complete incidence and edge disjointness already imply the necessary injectivity.
+\lean{Copying/BoxPullWeakeningParallelJoin}{67}{68}{Opening.Occurrence.ParallelJoin.occurrence}
+\par\penalty0
+
+The occurrence embed assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningParallelJoin}{70}{72}{Opening.Occurrence.ParallelJoin.occurrence_embed}
+\par\penalty0
+
+\subsection{Box Pull Weakening Pointed}
+Pointed semantic corrections by completed nullary templates inside any focus-free host. The actual internal host token and its root are preserved.
+
+A nullary correction can be used at any unchanged typed host position. The supplied root is transported through original search; it is never inferred from observational equivalence.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningPointed}{13}{64}{NullaryExecution.plug_pointed_class_exact_equiv}
+\par\penalty0
+
+\subsection{Box Pull Weakening Residual}
+Residuals keep the original BPullW filling separate from its two proved Idem corrections. No transitivity of the original filling relation is assumed.
+
+An original filling with its actual common-context token.
+\lean{Copying/BoxPullWeakeningResidual}{12}{17}{BoxPullWeakening.PointedWitness}
+\par\penalty0
+
+The input data give an actual recursive paired filling, with its common context and endpoint representation maps.
+\lean{Copying/BoxPullWeakeningResidual}{21}{22}{BoxPullWeakening.PointedWitness.input}
+\par\penalty0
+
+This defines the refl data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningResidual}{24}{26}{BoxPullWeakening.PointedWitness.refl}
+\par\penalty0
+
+The congr map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningResidual}{28}{44}{BoxPullWeakening.PointedWitness.congr}
+\par\penalty0
+
+The expand At data give an actual recursive paired filling, with its common context and endpoint representation maps.
+\lean{Copying/BoxPullWeakeningResidual}{46}{55}{BoxPullWeakening.PointedWitness.expandAt}
+\par\penalty0
+
+The label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningResidual}{57}{61}{BoxPullWeakening.PointedWitness.label}
+\par\penalty0
+
+Every Idem intermediate is hole-free whenever either actual endpoint is.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningResidual}{64}{66}{BoxPullWeakening.PointedWitness.idem_holeFree}
+\par\penalty0
+
+The pointed exact correction also transports the actual original search root. This interface is independent of any BPullW robustness premise.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningResidual}{70}{88}{BoxPullWeakening.PointedWitness.idem_exact}
+\par\penalty0
+
+The labels assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningResidual}{91}{97}{BoxPullWeakening.PointedWitness.labels}
+\par\penalty0
+
+The idem rooted iff assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningResidual}{99}{107}{BoxPullWeakening.PointedWitness.idem_rooted_iff}
+\par\penalty0
+
+The quasi assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningResidual}{109}{117}{BoxPullWeakening.PointedWitness.quasi}
+\par\penalty0
+
+One actual BPullW residual followed by the two Idem corrections required by the paper's unchanged canonical two-use distributor. Reflexive corrections cover all cases which need fewer Idem steps.
+\lean{Copying/BoxPullWeakeningResidual}{123}{131}{BoxPullWeakening.Residual}
+\par\penalty0
+
+This defines the direct data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningResidual}{134}{137}{BoxPullWeakening.Residual.direct}
+\par\penalty0
+
+The congr map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningResidual}{139}{146}{BoxPullWeakening.Residual.congr}
+\par\penalty0
+
+The literal copying overlap has exactly this certified three-link residual: one duplicated BPullW filling, then two actual Idem fillings.
+\lean{Copying/BoxPullWeakeningResidual}{150}{160}{BoxPullWeakening.Residual.copying}
+\par\penalty0
+
+The actual BPullW residual supplies an original quasi-specimen, with its two completed Idem steps used only as exact semantic corrections afterward.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningResidual}{165}{186}{BoxPullWeakening.Residual.quasi}
+\par\penalty0
+
+\subsection{Box Pull Weakening Residual Expansion}
+Exact expansion closure of the three-link BPullW residual. Untouched components retain their BPullW fillings first and are unchanged during Idem.
+
+Equality transport of graph carriers changes no boundary index.
+\lean{Copying/BoxPullWeakeningResidualExpansion}{14}{15}{BoxPullWeakening.PointedWitness.castVertex}
+\par\penalty0
+
+The cast Vertex refl assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningResidualExpansion}{17}{18}{BoxPullWeakening.PointedWitness.castVertex_refl}
+\par\penalty0
+
+This defines the cast data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningResidualExpansion}{20}{24}{BoxPullWeakening.PointedWitness.cast}
+\par\penalty0
+
+Assemble the selected pointed witness and every unchanged component's original filling without imposing any condition on the enclosing incidences.
+\lean{Copying/BoxPullWeakeningResidualExpansion}{28}{50}{BoxPullWeakening.PointedWitness.expandSelected}
+\par\penalty0
+
+The active three-link residual expands through an arbitrary original frame. Every other BPullW occurrence is retained in the first link; the correction links use only reflexive Idem witnesses on those other components.
+\lean{Copying/BoxPullWeakeningResidualExpansion}{57}{86}{BoxPullWeakening.Residual.expandSelected}
+\par\penalty0
+
+A selected actual rewrite and its three-link residual lift together through a whole simultaneous expansion. The complement is the original derivation's finite frame, with every other contribution explicitly retained.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningResidualExpansion}{92}{114}{BoxPullWeakening.Residual.assemble}
+\par\penalty0
+
+\subsection{Box Pull Weakening Retained Copy}
+The unchanged payload and old resource rows retain complete occurrences after adding BPullW's separate unused resource.
+
+This defines the output Index data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{12}{15}{BoxPullWeakening.RetainedCopy.outputIndex}
+\par\penalty0
+
+The payload map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{17}{34}{BoxPullWeakening.RetainedCopy.payload}
+\par\penalty0
+
+The payload input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{36}{37}{BoxPullWeakening.RetainedCopy.payload_input}
+\par\penalty0
+
+The payload output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{39}{42}{BoxPullWeakening.RetainedCopy.payload_output}
+\par\penalty0
+
+This defines the term Resource data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{44}{47}{BoxPullWeakening.RetainedCopy.termResource}
+\par\penalty0
+
+This defines the atom Resource data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{49}{52}{BoxPullWeakening.RetainedCopy.atomResource}
+\par\penalty0
+
+The term Resource injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{54}{57}{BoxPullWeakening.RetainedCopy.termResource_injective}
+\par\penalty0
+
+The atom Resource injective assertion states injectivity of the indicated coordinate map: equal image coordinates have equal original coordinates.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{59}{62}{BoxPullWeakening.RetainedCopy.atomResource_injective}
+\par\penalty0
+
+The output Index term assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{64}{68}{BoxPullWeakening.RetainedCopy.outputIndex_term}
+\par\penalty0
+
+The output Index atom assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{70}{75}{BoxPullWeakening.RetainedCopy.outputIndex_atom}
+\par\penalty0
+
+The forest Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{77}{92}{BoxPullWeakening.RetainedCopy.forestIso}
+\par\penalty0
+
+The term Forest map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{94}{103}{BoxPullWeakening.RetainedCopy.termForest}
+\par\penalty0
+
+The atom Forest map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{105}{114}{BoxPullWeakening.RetainedCopy.atomForest}
+\par\penalty0
+
+The distributor map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{116}{128}{BoxPullWeakening.RetainedCopy.distributor}
+\par\penalty0
+
+The term Forest port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{130}{139}{BoxPullWeakening.RetainedCopy.termForest_port}
+\par\penalty0
+
+The atom Forest port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{141}{150}{BoxPullWeakening.RetainedCopy.atomForest_port}
+\par\penalty0
+
+The distributor term port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{152}{159}{BoxPullWeakening.RetainedCopy.distributor_term_port}
+\par\penalty0
+
+The distributor atom port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{161}{168}{BoxPullWeakening.RetainedCopy.distributor_atom_port}
+\par\penalty0
+
+The distributor output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{170}{184}{BoxPullWeakening.RetainedCopy.distributor_output}
+\par\penalty0
+
+The distributor term input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{186}{191}{BoxPullWeakening.RetainedCopy.distributor_term_input}
+\par\penalty0
+
+The distributor atom input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{193}{201}{BoxPullWeakening.RetainedCopy.distributor_atom_input}
+\par\penalty0
+
+Old resource links enter the corresponding original row at the same use position in both copies. No distributor is omitted or normalized away.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRetainedCopy}{205}{217}{BoxPullWeakening.RetainedCopy.distributor_pair_input}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Beta}
+Converse beta enabledness reconstructs the complete original lambda and retains the actual stable argument. Free outputs may grow only as prescribed by the original BPullW pair.
+
+The tensor Left map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningReverseBeta}{12}{15}{BoxPullWeakening.ReverseComponents.tensorLeft}
+\par\penalty0
+
+The tensor Right map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningReverseBeta}{16}{19}{BoxPullWeakening.ReverseComponents.tensorRight}
+\par\penalty0
+
+The lambda and evaluated argument cannot share an edge when their incoming term ports are the two distinct actual application outputs.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseBeta}{23}{44}{BoxPullWeakening.ReverseComponents.lambda_stable_disjoint}
+\par\penalty0
+
+Join two actual disjoint components with the literal ordered tensor boundary.
+\lean{Copying/BoxPullWeakeningReverseBeta}{47}{58}{BoxPullWeakening.ReverseComponents.tensorJoin}
+\par\penalty0
+
+Actual right beta enabledness reflects to an original left beta rewrite. The actual stable argument and all original larger free-box outputs are kept.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseBeta}{66}{139}{BoxPullWeakening.Decoration.beta_enabled}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Box}
+A box reached on the BPullW right has a genuine original box at the same thunk input. Its original free interface may be larger; this is retained when constructing converse beta and copying matches.
+
+The project label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseBox}{11}{14}{BoxPullWeakening.Decoration.project_label}
+\par\penalty0
+
+A box cannot be introduced by decorating a primitive source corolla.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseBox}{17}{28}{BoxPullWeakening.Decoration.right_box_origin}
+\par\penalty0
+
+The single thunk input remains exactly the original source incidence even when the box's free output interface grows on the original left side.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseBox}{32}{72}{BoxPullWeakening.Decoration.box_source_project}
+\par\penalty0
+
+Reconstruct the actual left box with its original body and free interface; only the common bound arity is identified through the typed thunk input.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseBox}{76}{112}{BoxPullWeakening.Decoration.reflectBox}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Copy}
+Converse copying enabledness uses the actually selected contraction spine. Unused weakening siblings stay in the original complement, while the payload is reconstructed with its complete original larger box interface.
+
+Every actual right copying occurrence yields a real left copying rewrite at the same projected token; no retained-footprint or matching premise remains.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseCopy}{14}{48}{BoxPullWeakening.Decoration.copying_enabled}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Copyable}
+Actual copyable payloads remain enabled in the converse direction. The lambda case retains the original larger box environment; no altered rule or translation is used.
+
+The primitive nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningReverseCopyable}{11}{16}{BoxPullWeakening.ReverseComponents.primitive_nonweak}
+\par\penalty0
+
+The stable nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningReverseCopyable}{18}{22}{BoxPullWeakening.ReverseComponents.stable_nonweak}
+\par\penalty0
+
+Reflection may enlarge a lambda's free interface, while preserving its single actual incoming term port. All Copyable constructors are covered.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseCopyable}{28}{60}{BoxPullWeakening.Decoration.reflectCopyable}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Footprints}
+Nonweak primitive footprints for converse BPullW matching. Unused atom siblings are removed only from the selected local match, never from the host.
+
+This defines the Nonweak data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{13}{14}{BoxPullWeakening.ReverseComponents.Nonweak}
+\par\penalty0
+
+The serial nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{16}{18}{BoxPullWeakening.ReverseComponents.serial_nonweak}
+\par\penalty0
+
+The tensor nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{20}{24}{BoxPullWeakening.ReverseComponents.tensor_nonweak}
+\par\penalty0
+
+The allocation nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{26}{28}{BoxPullWeakening.ReverseComponents.allocation_nonweak}
+\par\penalty0
+
+The unary nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{30}{32}{BoxPullWeakening.ReverseComponents.unary_nonweak}
+\par\penalty0
+
+The binary nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{34}{38}{BoxPullWeakening.ReverseComponents.binary_nonweak}
+\par\penalty0
+
+The read nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{40}{48}{BoxPullWeakening.ReverseComponents.read_nonweak}
+\par\penalty0
+
+The assignment nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{50}{57}{BoxPullWeakening.ReverseComponents.assignment_nonweak}
+\par\penalty0
+
+The same nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{59}{66}{BoxPullWeakening.ReverseComponents.same_nonweak}
+\par\penalty0
+
+The different nonweak assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{68}{77}{BoxPullWeakening.ReverseComponents.different_nonweak}
+\par\penalty0
+
+Every edge on a directed path from an actual input is a contraction.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{80}{95}{BoxPullWeakening.ReverseComponents.fromInput_contraction}
+\par\penalty0
+
+The two-input selected subtree has no weakening edge, even when the original full tree contains arbitrary unused weakening branches.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseFootprints}{99}{111}{BoxPullWeakening.ReverseComponents.selected_nonweak}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Geometry}
+Reverse provenance of actual BPullW right-hand edges. The separate weakening has no source, and all other primitive occurrences are rigid.
+
+A corolla source never acquires internal vertices by BPullW. The shallow right contribution consists of the box and a disconnected weakening.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{14}{30}{BoxPullWeakening.AtomicPair.right_no_internal}
+\par\penalty0
+
+A primitive edge other than weakening cannot originate in a changed box. Its complete contribution is therefore an actual recursive isomorphism.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{34}{65}{BoxPullWeakening.AtomicPair.right_primitive_rigid}
+\par\penalty0
+
+The source and decorated right graph have the same original vertices. Only edge contributions can split; no fresh internal coordinate is introduced.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{73}{82}{BoxPullWeakening.Decoration.rightVertices}
+\par\penalty0
+
+This defines the project data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{84}{84}{BoxPullWeakening.Decoration.project}
+\par\penalty0
+
+The project host assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{86}{87}{BoxPullWeakening.Decoration.project_host}
+\par\penalty0
+
+The host project assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{89}{93}{BoxPullWeakening.Decoration.host_project}
+\par\penalty0
+
+Every actual nonweak primitive on the right belongs to a wholly rigid source corolla; the separately introduced weakening is explicitly excluded.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{97}{100}{BoxPullWeakening.Decoration.rightPrimitiveIso}
+\par\penalty0
+
+The rigid component's actual primitive label equals its source label.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{103}{109}{BoxPullWeakening.Decoration.rightPrimitiveLabel}
+\par\penalty0
+
+Retain the exact ordered input/output corolla data of the rigid component.
+\lean{Copying/BoxPullWeakeningReverseGeometry}{112}{119}{BoxPullWeakening.Decoration.rightPrimitiveCopy}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Lambda}
+Converse reconstruction of an actual lambda payload. Its source box keeps all of its original free ports, including the port weakened only on the right.
+
+The serial Left map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningReverseLambda}{11}{15}{BoxPullWeakening.ReverseComponents.serialLeft}
+\par\penalty0
+
+The serial Right map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningReverseLambda}{16}{20}{BoxPullWeakening.ReverseComponents.serialRight}
+\par\penalty0
+
+The serial boundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseLambda}{22}{24}{BoxPullWeakening.ReverseComponents.serial_boundary}
+\par\penalty0
+
+Every actual right lambda has a complete left copyable lambda occurrence, with the same incoming token and the unchanged larger original body.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseLambda}{32}{70}{BoxPullWeakening.Decoration.reflectLambda}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Primitive}
+Actual nonweak primitive matches reflect from the decorated BPullW right endpoint to the original source. The proof reconstructs the whole occurrence and then applies the original local rewrite through its finite complement.
+
+The source project assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReversePrimitive}{13}{23}{BoxPullWeakening.Decoration.source_project}
+\par\penalty0
+
+The target project assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReversePrimitive}{25}{35}{BoxPullWeakening.Decoration.target_project}
+\par\penalty0
+
+A rigid right contribution has only one edge, so its owner determines it.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningReversePrimitive}{38}{49}{BoxPullWeakening.Decoration.rigid_owner_injective}
+\par\penalty0
+
+Injectivity is proved for the actual selected footprint. Two selected nonweak edges cannot come from different pieces of the same shallow pair.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningReversePrimitive}{54}{58}{BoxPullWeakening.Decoration.right_owner_injective}
+\par\penalty0
+
+Full ordered incidences are reflected, rather than only the active head.
+\lean{Copying/BoxPullWeakeningReversePrimitive}{61}{77}{BoxPullWeakening.Decoration.reflectPrimitive}
+\par\penalty0
+
+The reflect Primitive Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningReversePrimitive}{79}{83}{BoxPullWeakening.Decoration.reflectPrimitiveOccurrence}
+\par\penalty0
+
+Every original local rule with this actual footprint is enabled at the projected token on the left; its successor is constructed by the finite cut.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningReversePrimitive}{88}{91}{BoxPullWeakening.Decoration.primitive_enabled}
+\par\penalty0
+
+\subsection{Box Pull Weakening Reverse Store}
+All converse store and atom-equality rewrites are reconstructed from the actual inspected atom paths. Every other tree branch remains in the host.
+
+Read exactly the original selected store, with the selected path rematched as a full original-rule footprint whose edges have proved rigid provenance.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseStore}{12}{21}{BoxPullWeakening.Decoration.read_enabled}
+\par\penalty0
+
+Assignment retains the original stable new value and selected old store; only unused atom siblings are outside the rematched footprint.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseStore}{25}{40}{BoxPullWeakening.Decoration.assignment_enabled}
+\par\penalty0
+
+Same-store comparison retains both distinct inspected atom inputs in their original order and rematches precisely their union of forward paths.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseStore}{44}{52}{BoxPullWeakening.Decoration.same_enabled}
+\par\penalty0
+
+Distinct-store comparison independently rematches each selected path, retaining both original stores and their actual distinct edge occurrences.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningReverseStore}{56}{69}{BoxPullWeakening.Decoration.different_enabled}
+\par\penalty0
+
+\subsection{Box Pull Weakening Rewrite}
+Contextual transport of an actual original rewrite past a separate weakening edge. Both the active and resumed boundary coordinates are retained.
+
+This defines the insertion Context data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningRewrite}{11}{12}{BoxPullWeakening.insertionContext}
+\par\penalty0
+
+This defines the insertion Hole data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningRewrite}{14}{15}{BoxPullWeakening.insertionHole}
+\par\penalty0
+
+Filling the one real hole gives exactly the inserted graph, up to its finite carrier names. The separate weakening is retained by the isomorphism.
+\lean{Copying/BoxPullWeakeningRewrite}{19}{33}{BoxPullWeakening.insertion_plug}
+\par\penalty0
+
+Any original boundary-to-boundary rewrite lifts through this ordinary parallel context. The proof uses only original plugging and renaming rules.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRewrite}{37}{69}{BoxPullWeakening.insert_rewrite}
+\par\penalty0
+
+The adjoin rewrite assertion supplies the indicated actual machine transition or its transport through the common construction.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRewrite}{71}{77}{BoxPullWeakening.adjoin_rewrite}
+\par\penalty0
+
+\subsection{Box Pull Weakening Row Occurrence}
+The exact two-Idem canonical row can be recognized inside an arbitrary whole graph from its actual ordered incidences, then replaced through its constructed finite complement.
+
+This defines the attached Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{17}{27}{BoxPullWeakening.IdemRow.attachedPort}
+\par\penalty0
+
+This defines the attached Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{29}{35}{BoxPullWeakening.IdemRow.attachedEdge}
+\par\penalty0
+
+The attached tree port assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{37}{51}{BoxPullWeakening.IdemRow.attached_tree_port}
+\par\penalty0
+
+The attached Label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{54}{65}{BoxPullWeakening.IdemRow.attachedLabel}
+\par\penalty0
+
+Two genuine weakening edges attached to the two ordered inputs of the unchanged canonical row determine its entire complete-label occurrence.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{69}{108}{BoxPullWeakening.IdemRow.attachedEmbedding}
+\par\penalty0
+
+The attached Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{110}{112}{BoxPullWeakening.IdemRow.attachedOccurrence}
+\par\penalty0
+
+The explicitly cut complement is focus-free whenever its actual host is; the only fresh edge is the typed hole replacing the complete row.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{116}{121}{BoxPullWeakening.IdemRow.cut_free}
+\par\penalty0
+
+First Idem is grafted into the actual finite complement of the matched row. Every host edge outside that complete row is retained literally.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{125}{132}{BoxPullWeakening.IdemRow.cut_first}
+\par\penalty0
+
+Second Idem uses the same original complement; its two endpoint graphs are explicit finite replacements, not presumed contextual equivalents.
+\lean{Copying/BoxPullWeakeningRowOccurrence}{136}{143}{BoxPullWeakening.IdemRow.cut_second}
+\par\penalty0
+
+\subsection{Box Pull Weakening Serial}
+Moving a disconnected output weakening past an unchanged serial prefix. This is graph geometry used to expose the original beta redex on BPullW's outside-box side, not an additional machine rule.
+
+This defines the left graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSerial}{13}{13}{BoxPullWeakening.SerialPull.left}
+\par\penalty0
+
+This defines the right graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSerial}{14}{14}{BoxPullWeakening.SerialPull.right}
+\par\penalty0
+
+This defines the internal-vertex map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSerial}{16}{39}{BoxPullWeakening.SerialPull.vertices}
+\par\penalty0
+
+This defines the edge map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSerial}{41}{53}{BoxPullWeakening.SerialPull.edges}
+\par\penalty0
+
+The prefix commutes assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSerial}{55}{69}{BoxPullWeakening.SerialPull.prefix_commutes}
+\par\penalty0
+
+The suffix commutes assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSerial}{71}{86}{BoxPullWeakening.SerialPull.suffix_commutes}
+\par\penalty0
+
+This defines the prefix Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSerial}{88}{88}{BoxPullWeakening.SerialPull.prefixEdge}
+\par\penalty0
+
+This defines the suffix Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSerial}{89}{89}{BoxPullWeakening.SerialPull.suffixEdge}
+\par\penalty0
+
+This defines the weak Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSerial}{90}{91}{BoxPullWeakening.SerialPull.weakEdge}
+\par\penalty0
+
+The edge cases assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSerial}{93}{101}{BoxPullWeakening.SerialPull.edge_cases}
+\par\penalty0
+
+The iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningSerial}{103}{161}{BoxPullWeakening.SerialPull.iso}
+\par\penalty0
+
+\subsection{Box Pull Weakening Splice}
+The geometric beta commutation underlying BPullW: adjoining a weakening to a body's free boundary commutes with connecting its bound output to the unchanged argument. No evaluation or termination premise is used.
+
+This defines the left graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{13}{14}{BoxPullWeakening.Splice.left}
+\par\penalty0
+
+This defines the right graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{16}{18}{BoxPullWeakening.Splice.right}
+\par\penalty0
+
+Reassociate the original body and argument carriers and the same single bound-output junction. The weakening has no internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{22}{45}{BoxPullWeakening.Splice.vertices}
+\par\penalty0
+
+Every original edge is retained once. Only the position of the separate weakening in the disjoint edge-carrier sum changes.
+\lean{Copying/BoxPullWeakeningSplice}{49}{61}{BoxPullWeakening.Splice.edges}
+\par\penalty0
+
+This defines the left Body Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{63}{65}{BoxPullWeakening.Splice.leftBodyPort}
+\par\penalty0
+
+This defines the right Body Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{67}{70}{BoxPullWeakening.Splice.rightBodyPort}
+\par\penalty0
+
+This defines the left Argument Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{72}{73}{BoxPullWeakening.Splice.leftArgumentPort}
+\par\penalty0
+
+This defines the right Argument Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{75}{78}{BoxPullWeakening.Splice.rightArgumentPort}
+\par\penalty0
+
+The old Output succ assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{80}{84}{BoxPullWeakening.Splice.oldOutput_succ}
+\par\penalty0
+
+The actual embedding of each old body port commutes with reassociation, including the bound output which becomes the internal argument junction.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{88}{103}{BoxPullWeakening.Splice.bodyPort_commutes}
+\par\penalty0
+
+The stable argument is untouched, including all its store and atom ports.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{106}{120}{BoxPullWeakening.Splice.argumentPort_commutes}
+\par\penalty0
+
+This defines the left Body Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{122}{123}{BoxPullWeakening.Splice.leftBodyEdge}
+\par\penalty0
+
+This defines the right Body Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{124}{125}{BoxPullWeakening.Splice.rightBodyEdge}
+\par\penalty0
+
+This defines the left Argument Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{126}{127}{BoxPullWeakening.Splice.leftArgumentEdge}
+\par\penalty0
+
+This defines the right Argument Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{128}{129}{BoxPullWeakening.Splice.rightArgumentEdge}
+\par\penalty0
+
+This defines the left Weakening Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{130}{131}{BoxPullWeakening.Splice.leftWeakeningEdge}
+\par\penalty0
+
+This defines the right Weakening Edge data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningSplice}{132}{133}{BoxPullWeakening.Splice.rightWeakeningEdge}
+\par\penalty0
+
+The left body source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{135}{141}{BoxPullWeakening.Splice.left_body_source}
+\par\penalty0
+
+The left body target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{143}{149}{BoxPullWeakening.Splice.left_body_target}
+\par\penalty0
+
+The right body source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{151}{166}{BoxPullWeakening.Splice.right_body_source}
+\par\penalty0
+
+The right body target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{168}{183}{BoxPullWeakening.Splice.right_body_target}
+\par\penalty0
+
+The left argument source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningSplice}{185}{191}{BoxPullWeakening.Splice.left_argument_source}
+\par\penalty0
+
+The left argument target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/BoxPullWeakeningSplice}{193}{199}{BoxPullWeakening.Splice.left_argument_target}
+\par\penalty0
+
+The right argument source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{201}{216}{BoxPullWeakening.Splice.right_argument_source}
+\par\penalty0
+
+The right argument target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{218}{233}{BoxPullWeakening.Splice.right_argument_target}
+\par\penalty0
+
+The weakening target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{235}{249}{BoxPullWeakening.Splice.weakening_target}
+\par\penalty0
+
+The edge cases assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{251}{259}{BoxPullWeakening.Splice.edge_cases}
+\par\penalty0
+
+The edges body assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{261}{262}{BoxPullWeakening.Splice.edges_body}
+\par\penalty0
+
+The edges argument assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{264}{265}{BoxPullWeakening.Splice.edges_argument}
+\par\penalty0
+
+The edges weakening assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningSplice}{267}{268}{BoxPullWeakening.Splice.edges_weakening}
+\par\penalty0
+
+Opening the bound output commutes with pulling out the weakening, up to an ordered recursive graph isomorphism. This is independent of the argument's behaviour and retains every edge of both original components.
+\lean{Copying/BoxPullWeakeningSplice}{273}{310}{BoxPullWeakening.Splice.iso}
+\par\penalty0
+
+\subsection{Box Pull Weakening Tensor}
+Pull an unused resource out of the first parallel operand without changing the order of the other operand's ports.
+
+This defines the left graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningTensor}{11}{11}{BoxPullWeakening.TensorPull.left}
+\par\penalty0
+
+This defines the right graph fragment for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningTensor}{12}{14}{BoxPullWeakening.TensorPull.right}
+\par\penalty0
+
+This defines the internal-vertex map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningTensor}{16}{34}{BoxPullWeakening.TensorPull.vertices}
+\par\penalty0
+
+This defines the edge map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningTensor}{36}{48}{BoxPullWeakening.TensorPull.edges}
+\par\penalty0
+
+This defines the first Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningTensor}{50}{52}{BoxPullWeakening.TensorPull.firstPort}
+\par\penalty0
+
+This defines the second Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningTensor}{53}{54}{BoxPullWeakening.TensorPull.secondPort}
+\par\penalty0
+
+This defines the right First Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningTensor}{55}{59}{BoxPullWeakening.TensorPull.rightFirstPort}
+\par\penalty0
+
+This defines the right Second Port data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningTensor}{60}{64}{BoxPullWeakening.TensorPull.rightSecondPort}
+\par\penalty0
+
+The first commutes assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningTensor}{66}{74}{BoxPullWeakening.TensorPull.first_commutes}
+\par\penalty0
+
+The second commutes assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningTensor}{76}{88}{BoxPullWeakening.TensorPull.second_commutes}
+\par\penalty0
+
+The first source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningTensor}{90}{94}{BoxPullWeakening.TensorPull.first_source}
+\par\penalty0
+
+The first target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningTensor}{95}{99}{BoxPullWeakening.TensorPull.first_target}
+\par\penalty0
+
+The right first source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningTensor}{100}{107}{BoxPullWeakening.TensorPull.right_first_source}
+\par\penalty0
+
+The right first target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningTensor}{108}{115}{BoxPullWeakening.TensorPull.right_first_target}
+\par\penalty0
+
+The right second source identity gives the entire ordered source list after applying the construction, rather than only its underlying set.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningTensor}{116}{123}{BoxPullWeakening.TensorPull.right_second_source}
+\par\penalty0
+
+The right second target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningTensor}{124}{131}{BoxPullWeakening.TensorPull.right_second_target}
+\par\penalty0
+
+The iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningTensor}{133}{166}{BoxPullWeakening.TensorPull.iso}
+\par\penalty0
+
+\subsection{Box Pull Weakening Views}
+Exhaustive atomic BPullW views, including the actual shallower outside box and its separate weakening. Representation changes do not erase this case.
+
+The Atomic Normal data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/BoxPullWeakeningViews}{10}{22}{BoxPullWeakening.AtomicNormal}
+\par\penalty0
+
+The congr map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/BoxPullWeakeningViews}{25}{30}{BoxPullWeakening.AtomicNormal.congr}
+\par\penalty0
+
+This defines the interfaces data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningViews}{32}{35}{BoxPullWeakening.AtomicNormal.interfaces}
+\par\penalty0
+
+This defines the normal data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningViews}{38}{46}{BoxPullWeakening.UpToIso.normal}
+\par\penalty0
+
+This defines the normal data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/BoxPullWeakeningViews}{48}{57}{BoxPullWeakening.AtomicPair.normal}
+\par\penalty0
+
+A shallow lambda keeps its exact expanded body on the left and its original smaller lambda box plus separate weakening on the right.
+\lean{Copying/BoxPullWeakeningViews}{61}{72}{BoxPullWeakening.LambdaView}
+\par\penalty0
+
+These three cases exhaust every original atomic certificate at a lambda box; equality of recursive labels fixes all binding and free-interface counts.
+\lean{Copying/BoxPullWeakeningViews}{76}{115}{BoxPullWeakening.AtomicPair.lambdaView}
+\par\penalty0
+
+\subsection{Box Pull Weakening Whole Rewrite}
+Whole-graph rewrite transport with pointed residuals. The only obligations in the induction are actual local rules; graph complements come from the original derivation.
+
+The exact local obligation, including a concrete right rewrite and a certificate at its actual resumed token.
+\lean{Copying/BoxPullWeakeningWholeRewrite}{12}{15}{BoxPullWeakening.LocalTransport}
+\par\penalty0
+
+The entire rewrite derivation transports once its local leaves do.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningWholeRewrite}{18}{57}{BoxPullWeakening.transport_expanded}
+\par\penalty0
+
+This theorem applies to the unchanged original rewrite relation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/BoxPullWeakeningWholeRewrite}{60}{64}{BoxPullWeakening.transport_rewrite}
+\par\penalty0
+
+Primitive local sources are rigid even when the surrounding specimen contains unrelated shallow or deep BPerm occurrences.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/BoxPullWeakeningWholeRewrite}{68}{77}{BoxPullWeakening.primitive_transport}
+\par\penalty0
+

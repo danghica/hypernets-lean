@@ -1,0 +1,1744 @@
+\clearpage
+\section{Sharing algebra: declarations and operational proofs}
+\label{sec:sharing-concordance}
+The constructions below separate a structural sharing-tree pair from its proved operational consequences. Actual common-context cuts normalize the selected term and atom components, while arbitrary recursively filled box bodies remain certified by the original template.
+
+\subsection{Contraction Algebra}
+The literal ordered contraction-associativity and commutativity pairs of Figure 21, for both sharing sorts. No input is silently permuted in an isomorphism: the crossing in commutativity is an actual ordered incidence.
+
+The three-input associativity graph. false is ((0,1),2) and true is (0,(1,2)); both have the same ordered boundary [0,1,2].
+\lean{Copying/ContractionAlgebra}{13}{62}{ContractionAlgebra.assocNet}
+\par\penalty0
+
+The two concrete associations are genuine finite contraction trees.
+\lean{Copying/ContractionAlgebra}{65}{72}{ContractionAlgebra.assocTree}
+\par\penalty0
+
+The two ordered single-contraction graphs. The true graph connects the first external input to the second source port and conversely.
+\lean{Copying/ContractionAlgebra}{76}{77}{ContractionAlgebra.commTree}
+\par\penalty0
+
+This defines the assoc Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionAlgebra}{79}{79}{ContractionAlgebra.assocLeft}
+\par\penalty0
+
+This defines the assoc Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionAlgebra}{80}{80}{ContractionAlgebra.assocRight}
+\par\penalty0
+
+This defines the comm Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionAlgebra}{81}{81}{ContractionAlgebra.commLeft}
+\par\penalty0
+
+This defines the comm Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/ContractionAlgebra}{82}{82}{ContractionAlgebra.commRight}
+\par\penalty0
+
+The two literal schema names keep independent pre-templates.
+\lean{Copying/ContractionAlgebra}{85}{87}{ContractionAlgebra.Kind}
+\par\penalty0
+
+The Step data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/ContractionAlgebra}{89}{92}{ContractionAlgebra.Step}
+\par\penalty0
+
+The Up To Iso data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/ContractionAlgebra}{94}{97}{ContractionAlgebra.UpToIso}
+\par\penalty0
+
+Literal sharing-only graphs contain no focus, at any allowance.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebra}{100}{103}{ContractionAlgebra.tree_focusFree}
+\par\penalty0
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebra}{105}{109}{ContractionAlgebra.Step.focusFree}
+\par\penalty0
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebra}{111}{115}{ContractionAlgebra.UpToIso.focusFree}
+\par\penalty0
+
+The exact paper schema up to ordered recursive carrier isomorphism.
+\lean{Copying/ContractionAlgebra}{118}{120}{ContractionAlgebra.template}
+\par\penalty0
+
+The assoc literal assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebra}{122}{124}{ContractionAlgebra.assoc_literal}
+\par\penalty0
+
+The comm literal assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebra}{126}{128}{ContractionAlgebra.comm_literal}
+\par\penalty0
+
+\subsection{Contraction Algebra Equivalence}
+The complete original Assoc/Comm template is robust in both directions and has exact-cost contextual consequences for term and atom sharing alike.
+
+Full robustness covers every original local rule in unrestricted contexts.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraEquivalence}{10}{12}{ContractionAlgebra.template_robust}
+\par\penalty0
+
+The converse uses original opposite specimens and actual matching rewrites.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraEquivalence}{15}{17}{ContractionAlgebra.template_robust_converse}
+\par\penalty0
+
+The full original input-safety clause is proved for both sharing sorts, including stuck entered requests and exact two/two matched copying prefixes.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraEquivalence}{21}{23}{ContractionAlgebra.template_inputSafe}
+\par\penalty0
+
+Arbitrarily many shallow or deep Assoc/Comm occurrences preserve exact execution cost, with no assumption that their common context is binding-free.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraEquivalence}{27}{31}{ContractionAlgebra.filling_exact_equiv}
+\par\penalty0
+
+The full closed paired-filling statement retains every successful count.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraEquivalence}{34}{38}{ContractionAlgebra.filling_termination_count}
+\par\penalty0
+
+Every actual Assoc/Comm pair can be replaced inside any original closed graph, at any box depth and for either wire sort. Independent carrier renamings are already included in the pair relation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraEquivalence}{43}{48}{ContractionAlgebra.addressed_exact_equiv}
+\par\penalty0
+
+Assoc/Comm preserves exact successful-transition counts in all such observing contexts, including contexts with state, copying or divergent callbacks.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraEquivalence}{52}{57}{ContractionAlgebra.addressed_termination_count}
+\par\penalty0
+
+\subsection{Contraction Algebra Laws}
+Exact-tree correspondence and structural laws for both original contraction algebra templates.
+
+The sharing Trees assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebraLaws}{9}{13}{ContractionAlgebra.Step.sharingTrees}
+\par\penalty0
+
+The sharing Trees assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebraLaws}{15}{20}{ContractionAlgebra.UpToIso.sharingTrees}
+\par\penalty0
+
+The template sharing Trees assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraLaws}{22}{23}{ContractionAlgebra.template_sharingTrees}
+\par\penalty0
+
+The template output Closed assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraLaws}{25}{26}{ContractionAlgebra.template_outputClosed}
+\par\penalty0
+
+Primitive labels exclude hidden holes as well as focus edges.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebraLaws}{29}{32}{ContractionAlgebra.tree_holeFree}
+\par\penalty0
+
+The hole Free assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebraLaws}{34}{38}{ContractionAlgebra.Step.holeFree}
+\par\penalty0
+
+The hole Free assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebraLaws}{40}{44}{ContractionAlgebra.UpToIso.holeFree}
+\par\penalty0
+
+The same literal ordered pair survives representation padding.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebraLaws}{47}{55}{ContractionAlgebra.Step.raise}
+\par\penalty0
+
+The raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/ContractionAlgebraLaws}{57}{62}{ContractionAlgebra.UpToIso.raise}
+\par\penalty0
+
+The template padding Closed assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/ContractionAlgebraLaws}{64}{64}{ContractionAlgebra.template_paddingClosed}
+\par\penalty0
+
+\subsection{Copy Payload Head}
+The original copyability judgement supplies an actual nonsharing head at the payload's sole input, independently of its chosen graph representation.
+
+Both plain payloads and lambdas begin with a genuine nonsharing primitive; renaming changes neither the ordered singleton input nor this classification.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/CopyPayloadHead}{11}{26}{Copyable.head}
+\par\penalty0
+
+\subsection{Sharing Assignment Context}
+The unchanged assignment frame around a maximal atom context and the literal stable value embeds in the original shared context.
+
+This defines the typed family of inserted components for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingAssignmentContext}{12}{21}{Assignment.Context.family}
+\par\penalty0
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingAssignmentContext}{23}{31}{Assignment.Context.graph}
+\par\penalty0
+
+The components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingAssignmentContext}{33}{41}{Assignment.Context.components}
+\par\penalty0
+
+This defines the old-frame port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingAssignmentContext}{43}{54}{Assignment.Context.host}
+\par\penalty0
+
+Every component image is disjoint: the stable value remains the original primitive footprint, and the two assignment argument ports are distinct.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingAssignmentContext}{97}{141}{Assignment.Context.components_disjoint}
+\par\penalty0
+
+The components input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingAssignmentContext}{143}{171}{Assignment.Context.components_input}
+\par\penalty0
+
+The components output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingAssignmentContext}{173}{194}{Assignment.Context.components_output}
+\par\penalty0
+
+The full raw assignment frame embeds once its actual component edge images have been shown disjoint by original matching.
+\lean{Copying/SharingAssignmentContext}{198}{208}{Assignment.Context.occurrence}
+\par\penalty0
+
+\subsection{Sharing Assignment Robustness}
+Every original assignment match admits the maximal sharing-context diagram, with literal paired assignment rewrites and an original-template residual specimen.
+
+An arbitrary supplied assignment successor satisfies the full quantitative robustness clause. The maximal original sharing component, its inactive inputs, and the actual residual specimen are constructed from the supplied occurrence.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingAssignmentRobustness}{20}{81}{MaximalSharing.assignment_matching}
+\par\penalty0
+
+The precise quantitative robustness clause follows for any independently supplied successor by the already proved complete-machine determinism.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingAssignmentRobustness}{85}{98}{MaximalSharing.assignment_robust_case}
+\par\penalty0
+
+\subsection{Sharing Assignment Selection}
+An arbitrary original assignment occurrence determines its whole maximal atom context and the unchanged stable value in the original common context.
+
+The tree Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingAssignmentSelection}{10}{12}{Assignment.treeOccurrence}
+\par\penalty0
+
+The value Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingAssignmentSelection}{14}{16}{Assignment.valueOccurrence}
+\par\penalty0
+
+This defines the before Assign data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingAssignmentSelection}{18}{19}{Assignment.beforeAssign}
+\par\penalty0
+
+The assignment value map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingAssignmentSelection}{30}{32}{MaximalSharing.assignment_value}
+\par\penalty0
+
+The actual instance and store determine the full atom basin, while the ordered assignment arguments determine its entry and original stable value.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingAssignmentSelection}{37}{91}{MaximalSharing.assignment_selection}
+\par\penalty0
+
+\subsection{Sharing Assignment Source}
+Exact source normalization for original assignment around the complete maximal sharing component and the unchanged stable value.
+
+The graph Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/SharingAssignmentSource}{10}{36}{Assignment.Context.graphIso}
+\par\penalty0
+
+The component Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/SharingAssignmentSource}{38}{63}{Assignment.Context.componentIso}
+\par\penalty0
+
+The source Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/SharingAssignmentSource}{65}{84}{Assignment.Context.sourceIso}
+\par\penalty0
+
+\subsection{Sharing Basin}
+A maximal sharing component of an arbitrary host is a literal sharing-tree context, with its old holes and ordered boundary attachments preserved.
+
+Sharing primitives and same-sort, one-output tree holes.
+\lean{Copying/SharingBasin}{12}{15}{SharingLabel}
+\par\penalty0
+
+The target identity gives the entire ordered target list after applying the construction, with output order retained.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingBasin}{20}{24}{SharingLabel.target}
+\par\penalty0
+
+The input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingBasin}{26}{31}{SharingLabel.input}
+\par\penalty0
+
+This defines the Eligible data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingBasin}{37}{37}{SharingBasin.Eligible}
+\par\penalty0
+
+The single assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingBasin}{39}{40}{SharingBasin.single}
+\par\penalty0
+
+The source label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingBasin}{42}{49}{SharingBasin.source_label}
+\par\penalty0
+
+The target label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingBasin}{51}{56}{SharingBasin.target_label}
+\par\penalty0
+
+The actual host supplies the maximal component whenever its chosen sharing root exits into a nonsharing edge (or into the host's external output).
+\lean{Copying/SharingBasin}{60}{69}{SharingBasin.basin}
+\par\penalty0
+
+Normalize the selected component without discarding any original hole.
+\lean{Copying/SharingBasin}{72}{75}{SharingBasin.context}
+\par\penalty0
+
+Full-label occurrence of the computed sharing context in the original host.
+\lean{Copying/SharingBasin}{78}{86}{SharingBasin.occurrence}
+\par\penalty0
+
+The occurrence input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/SharingBasin}{88}{90}{SharingBasin.occurrence_input}
+\par\penalty0
+
+The occurrence output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/SharingBasin}{92}{92}{SharingBasin.occurrence_output}
+\par\penalty0
+
+\subsection{Sharing Basin Disjoint}
+Maximal sharing basins ending at distinct stores cannot share an edge. This follows from unique ordered output incidence and actual finite traces.
+
+An actual sharing predecessor has only one terminal sharing root.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingBasinDisjoint}{9}{26}{SharingBasin.predecessor_roots_equal}
+\par\penalty0
+
+Distinct terminal stores force disjoint complete predecessor basins.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingBasinDisjoint}{29}{35}{SharingBasin.predecessor_disjoint}
+\par\penalty0
+
+A nonsharing consumer makes a selected component's root terminal even among all sharing-like host edges, not only among its chosen edges.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingBasinDisjoint}{39}{48}{SharingBasin.terminal_at_consumer}
+\par\penalty0
+
+Sharing components feeding distinct nonsharing edges are edge-disjoint. The statement applies to the existential basin records produced by selection, without requiring clients to recover a particular predecessor presentation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingBasinDisjoint}{53}{75}{SharingBasin.components_disjoint}
+\par\penalty0
+
+\subsection{Sharing Basin Fillings}
+Original recursive certificates restrict to a maximal sharing context and produce actual complete sharing-tree matches on both sides of the specimen.
+
+This defines the selected Context data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingBasinFillings}{17}{17}{SharingBasin.selectedContext}
+\par\penalty0
+
+This defines the selected Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingBasinFillings}{18}{18}{SharingBasin.selectedLeft}
+\par\penalty0
+
+This defines the selected Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingBasinFillings}{19}{19}{SharingBasin.selectedRight}
+\par\penalty0
+
+The selected Certificates assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingBasinFillings}{23}{30}{SharingBasin.selectedCertificates}
+\par\penalty0
+
+The selected Closed assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingBasinFillings}{33}{35}{SharingBasin.selectedClosed}
+\par\penalty0
+
+This defines the left Tree data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingBasinFillings}{37}{40}{SharingBasin.leftTree}
+\par\penalty0
+
+This defines the right Tree data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingBasinFillings}{42}{45}{SharingBasin.rightTree}
+\par\penalty0
+
+Both recovered primitive trees retain the original common-context holes and exact recursive template pairs, rather than identifying all sharing trees.
+\lean{Copying/SharingBasinFillings}{49}{54}{SharingBasin.treeWitness}
+\par\penalty0
+
+The recovered left tree occurs in the actual original left expansion.
+\lean{Copying/SharingBasinFillings}{57}{62}{SharingBasin.leftOccurrence}
+\par\penalty0
+
+The right match uses the same selected original boundary and all its holes.
+\lean{Copying/SharingBasinFillings}{65}{70}{SharingBasin.rightOccurrence}
+\par\penalty0
+
+The left input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/SharingBasinFillings}{72}{74}{SharingBasin.left_input}
+\par\penalty0
+
+The right input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/SharingBasinFillings}{76}{78}{SharingBasin.right_input}
+\par\penalty0
+
+The left output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/SharingBasinFillings}{80}{82}{SharingBasin.left_output}
+\par\penalty0
+
+The right output assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/SharingBasinFillings}{84}{86}{SharingBasin.right_output}
+\par\penalty0
+
+\subsection{Sharing Basin Local Iso}
+Exact source normalization of maximal original sharing contexts.
+
+The selected context already has the literal original host labels.
+\lean{Copying/SharingBasinLocalIso}{16}{27}{SharingBasin.localExpansionIso}
+\par\penalty0
+
+The normalized selected left cut is its complete primitive sharing tree.
+\lean{Copying/SharingBasinLocalIso}{30}{38}{SharingBasin.localLeftIso}
+\par\penalty0
+
+The right cut is independently the corresponding complete sharing tree.
+\lean{Copying/SharingBasinLocalIso}{41}{49}{SharingBasin.localRightIso}
+\par\penalty0
+
+\subsection{Sharing Binary Origin}
+Retained primitive heads expose both original ordered argument wires.
+
+A retained one-input/two-output primitive has exactly the same ordered source and target ports in the original common context.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingBinaryOrigin}{13}{44}{MaximalSharing.binary_primitive_origin}
+\par\penalty0
+
+\subsection{Sharing Context Reachability}
+Rooted operation positions remain genuine boundary inputs of a maximal sharing component. Sharing edges cannot already have produced such a token.
+
+The reachable assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingContextReachability}{11}{45}{SharingContext.reachable}
+\par\penalty0
+
+Sharing-like original labels are never operation labels.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingContextReachability}{49}{52}{SharingLabel.not_operation}
+\par\penalty0
+
+An operation-reachable original coordinate incident to the component has no selected producer, hence is an actual input of its computed boundary.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingContextReachability}{56}{61}{SharingBasin.reachable_input}
+\par\penalty0
+
+\subsection{Sharing Copy Context}
+A maximal term-sharing basin and the actual copyable payload assemble to a complete original common-context source, including every selected old hole.
+
+This defines the payload data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingCopyContext}{22}{22}{SharingCopyContext.payload}
+\par\penalty0
+
+The payload Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingCopyContext}{23}{23}{SharingCopyContext.payloadOccurrence}
+\par\penalty0
+
+This defines the sharing-tree presentation for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingCopyContext}{24}{24}{SharingCopyContext.tree}
+\par\penalty0
+
+The tree Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingCopyContext}{25}{26}{SharingCopyContext.treeOccurrence}
+\par\penalty0
+
+This defines the ordered source list for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingCopyContext}{27}{27}{SharingCopyContext.source}
+\par\penalty0
+
+Disjointness of this maximal component and payload follows from their original owner labels, including all original sharing-template holes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopyContext}{32}{43}{SharingCopyContext.disjoint}
+\par\penalty0
+
+The serial Boundary assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopyContext}{46}{51}{SharingCopyContext.serialBoundary}
+\par\penalty0
+
+This actual occurrence includes both the entire original sharing basin and the retained payload skeleton, with the original ordered junction.
+\lean{Copying/SharingCopyContext}{55}{61}{SharingCopyContext.occurrence}
+\par\penalty0
+
+The occurrence input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingCopyContext}{64}{67}{SharingCopyContext.occurrence_input}
+\par\penalty0
+
+Select exactly the original fillings belonging to the joined source.
+\lean{Copying/SharingCopyContext}{71}{85}{SharingCopyContext.family}
+\par\penalty0
+
+Normalizing this complete original cut does not change its expanded graph: its source already uses the original labels on every edge.
+\lean{Copying/SharingCopyContext}{89}{110}{SharingCopyContext.localSourceIso}
+\par\penalty0
+
+Expansion through the complete selected source separates into its original sharing and payload expansions, with no distributivity equation assumed.
+\lean{Copying/SharingCopyContext}{114}{134}{SharingCopyContext.splitIso}
+\par\penalty0
+
+The left local source is the literal original copy-rule source with the whole maximal tree; the payload is reconstructed from the actual occurrence.
+\lean{Copying/SharingCopyContext}{138}{152}{SharingCopyContext.leftIso}
+\par\penalty0
+
+Expansion through the complete selected source separates into its original sharing and payload expansions, with no distributivity equation assumed.
+\lean{Copying/SharingCopyContext}{156}{176}{SharingCopyContext.rightSplitIso}
+\par\penalty0
+
+The right local source retains the original paired payload expansion and the independently normalized maximal right tree.
+\lean{Copying/SharingCopyContext}{180}{196}{SharingCopyContext.rightIso}
+\par\penalty0
+
+\subsection{Sharing Copy Diamond}
+Actual local rewrites and original residual specimens for the complete maximal sharing-tree/copyable-payload source, at the selected first input.
+
+This defines the left Tree For Copy data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingCopyDiamond}{22}{23}{SharingCopyContext.leftTreeForCopy}
+\par\penalty0
+
+This defines the right Tree For Copy data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingCopyDiamond}{24}{25}{SharingCopyContext.rightTreeForCopy}
+\par\penalty0
+
+This defines the right Payload data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingCopyDiamond}{26}{28}{SharingCopyContext.rightPayload}
+\par\penalty0
+
+The actual post-copy specimen retains the entire residual sharing tree, both independently filled payload copies, and the literal two-use distributors.
+\lean{Copying/SharingCopyDiamond}{32}{38}{SharingCopyContext.copyResidual}
+\par\penalty0
+
+The full normalized left common source performs the original copying rule at the actual selected ordered input, without narrowing the rule.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopyDiamond}{42}{57}{SharingCopyContext.copy_left}
+\par\penalty0
+
+The other actual payload remains copyable by the original recursive filling laws; its local rewrite has the same selected-input coordinate.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopyDiamond}{62}{80}{SharingCopyContext.copy_right}
+\par\penalty0
+
+The maximal copy diagram proves the full paper robustness clause for any separately supplied successor, including a match using a smaller tree.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopyDiamond}{102}{127}{SharingCopyContext.copy_matching}
+\par\penalty0
+
+The maximal copy diagram proves the full paper robustness clause for any separately supplied successor, including a match using a smaller tree.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopyDiamond}{132}{153}{SharingCopyContext.copy_robust_case}
+\par\penalty0
+
+\subsection{Sharing Copy Robustness}
+The copying case of universal sharing-template robustness, extracted from an arbitrary actual occurrence in the original recursively filled specimen.
+
+Original rootedness determines the actual first input of the complete maximal component. No subtree exclusion, common cut, or residual is assumed.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopyRobustness}{11}{32}{SharingResidual.copying_matching}
+\par\penalty0
+
+Original rootedness determines the actual first input of the complete maximal component. No subtree exclusion, common cut, or residual is assumed.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopyRobustness}{37}{61}{SharingResidual.copying}
+\par\penalty0
+
+\subsection{Sharing Copy Selection}
+A real original copying occurrence determines its maximal common sharing source. The selected port remains first and no rematching certificate is assumed.
+
+This defines the copy Payload data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingCopySelection}{15}{15}{MaximalSharing.copyPayload}
+\par\penalty0
+
+This defines the copy Tree data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingCopySelection}{16}{16}{MaximalSharing.copyTree}
+\par\penalty0
+
+Every real rooted copying source supplies a maximal original sharing basin, with all original shallow holes and the exact payload junction intact.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingCopySelection}{21}{51}{MaximalSharing.copy_selection}
+\par\penalty0
+
+\subsection{Sharing Different Context}
+Different-store equality with two disjoint complete original sharing contexts. The comparison, both instance entries and both store nodes remain literal.
+
+The family data give an actual recursive paired filling, with its common context and endpoint representation maps.
+\lean{Copying/SharingDifferentContext}{13}{25}{AtomEquality.Different.Context.family}
+\par\penalty0
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingDifferentContext}{27}{38}{AtomEquality.Different.Context.graph}
+\par\penalty0
+
+The components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingDifferentContext}{40}{49}{AtomEquality.Different.Context.components}
+\par\penalty0
+
+The components disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingDifferentContext}{60}{116}{AtomEquality.Different.Context.components_disjoint}
+\par\penalty0
+
+The host data give an actual recursive paired filling, with its common context and endpoint representation maps.
+\lean{Copying/SharingDifferentContext}{118}{134}{AtomEquality.Different.Context.host}
+\par\penalty0
+
+The components input assertion constructs the indicated original recursive paired filling; the context and both actual endpoint maps are included.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingDifferentContext}{137}{166}{AtomEquality.Different.Context.components_input}
+\par\penalty0
+
+The components output assertion constructs the indicated original recursive paired filling; the context and both actual endpoint maps are included.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingDifferentContext}{168}{191}{AtomEquality.Different.Context.components_output}
+\par\penalty0
+
+The occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingDifferentContext}{193}{204}{AtomEquality.Different.Context.occurrence}
+\par\penalty0
+
+\subsection{Sharing Different Robustness}
+Every original different-store equality match admits the maximal sharing-context diagram, with literal paired equality rewrites and an original-template residual specimen.
+
+An arbitrary supplied equality successor satisfies the full quantitative robustness clause. The maximal original sharing component, its inactive inputs, and the actual residual specimen are constructed from the supplied occurrence.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingDifferentRobustness}{20}{102}{MaximalSharing.different_matching}
+\par\penalty0
+
+The precise quantitative robustness clause follows for any independently supplied successor by the already proved complete-machine determinism.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingDifferentRobustness}{106}{118}{MaximalSharing.different_robust_case}
+\par\penalty0
+
+\subsection{Sharing Different Selection}
+A false equality match determines two distinct complete atom-sharing components, with their original stores and selected instance order retained.
+
+The left Tree Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingDifferentSelection}{11}{22}{AtomEquality.Different.leftTreeOccurrence}
+\par\penalty0
+
+The right Tree Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingDifferentSelection}{24}{35}{AtomEquality.Different.rightTreeOccurrence}
+\par\penalty0
+
+The two original stores force disjoint maximal basins; no independent assumption on full-tree matching or separation of template holes is required.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingDifferentSelection}{46}{142}{MaximalSharing.different_selection}
+\par\penalty0
+
+\subsection{Sharing Different Source}
+Exact normalization of the selected original different-equality context into the unchanged local different-store equality rule, retaining both complete sharing trees.
+
+Comparing entries of two literal atom trees in the common frame is the original rule graph.
+\lean{Copying/SharingDifferentSource}{14}{48}{AtomEquality.Different.Context.graphIso}
+\par\penalty0
+
+Original fillers of every selected component normalize separately: the comparison, both instances and both stores are retained, and both actual sharing trees are kept.
+\lean{Copying/SharingDifferentSource}{52}{83}{AtomEquality.Different.Context.componentIso}
+\par\penalty0
+
+Regrouping the actual selected cut gives exactly the original complete local comparison source, including every inactive sharing branch.
+\lean{Copying/SharingDifferentSource}{87}{107}{AtomEquality.Different.Context.sourceIso}
+\par\penalty0
+
+\subsection{Sharing Execution}
+Exact contextual and pointed execution consequences of the completed sharing-template proof, at arbitrary recursive original observing sites.
+
+Sharing-tree paired fillings have exact quantitative equivalence, using proved input safety and both proved robustness directions of the original machine.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingExecution}{16}{24}{SharingExecution.filling_exact_equiv}
+\par\penalty0
+
+Successful termination agrees at every exact transition count, including contexts whose other computations may diverge or become stuck.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingExecution}{28}{41}{SharingExecution.filling_termination_count}
+\par\penalty0
+
+An actual template pair can be replaced at any original addressed site, including under boxes, in every closed observing graph. No binding restriction or bound on the surrounding depth is imposed.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingExecution}{46}{51}{SharingExecution.addressed_exact_equiv}
+\par\penalty0
+
+The addressed-context consequence preserves exact successful-transition counts for each actual replacement, not merely termination after forgetting costs.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingExecution}{55}{60}{SharingExecution.addressed_termination_count}
+\par\penalty0
+
+Sharing-tree structural changes preserve every successful transition count from an arbitrary common host token. Input safety and both robustness directions are the already proved concrete theorems.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingExecution}{64}{77}{SharingExecution.pointed_exact_equiv}
+\par\penalty0
+
+The same exact equivalence in the original representation quotient used by quasi-specimens; no extra quotient or coarse observation is introduced.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingExecution}{81}{92}{SharingExecution.pointed_class_exact_equiv}
+\par\penalty0
+
+Pointed execution agrees at each exact cost, with no termination premise and no bound on the subsequent run or on the enclosing recursive graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingExecution}{96}{113}{SharingExecution.pointed_termination_count}
+\par\penalty0
+
+A rooted actual left endpoint suffices for a pointed semantic correction: the right root is obtained by exact reflection of the original search path.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingExecution}{117}{125}{SharingExecution.pointed_exact_equiv_of_left_rooted}
+\par\penalty0
+
+The representation-quotient form for composing a completed sharing template correction with an actual residual specimen.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingExecution}{129}{138}{SharingExecution.pointed_class_exact_equiv_of_left_rooted}
+\par\penalty0
+
+A correction can instead start from a proved root on its actual right endpoint; search reflection supplies the intermediate left root exactly.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingExecution}{142}{151}{SharingExecution.pointed_class_exact_equiv_of_right_rooted}
+\par\penalty0
+
+\subsection{Sharing Input Safety}
+The original input-safety clause follows from one-step sharing requests and actual matched compute steps, including matched stuck rewrite states.
+
+Exact one-step matching at all original rewrite specimens, including entered specimens. Both directions keep the original template orientation.
+\lean{Copying/SharingInputSafety}{12}{21}{PreTemplate.StepMatching}
+\par\penalty0
+
+Equality of the actual representation classes gives equivalence up to any reflexive cost comparison on each residual endpoint.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingInputSafety}{25}{34}{FillingWitness.quasi_equiv}
+\par\penalty0
+
+Every entered term tree first requests copying. Either both requests get stuck, or both perform one actual matching rewrite with an admissible residual. Thus the precise costs are respectively one/one or two/two.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingInputSafety}{39}{77}{PreTemplate.StepMatching.inputSafe}
+\par\penalty0
+
+Matched actual steps also give full forward robustness, for every cost triple and every supplied original representation-class successor.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingInputSafety}{81}{89}{PreTemplate.StepMatching.robust}
+\par\penalty0
+
+Converse robustness uses the independently proved opposite matching steps while retaining the actual original specimen and residual orientation.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingInputSafety}{93}{102}{PreTemplate.StepMatching.robust_converse}
+\par\penalty0
+
+\subsection{Sharing Nonsharing Footprint}
+Nonsharing outer footprints cannot be supplied by any shallow sharing hole. Arbitrary filled boxes remain allowed and are retained recursively.
+
+Only the outer edge is classified; arbitrary recursive box contents are preserved by the eventual retained-source transfer.
+\lean{Copying/SharingNonsharingFootprint}{13}{15}{SharingOverlap.Nonsharing}
+\par\penalty0
+
+The proof inspects the original recursive filling certificate, rather than assuming that a whole footprint is disjoint from the template.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingNonsharingFootprint}{19}{36}{SharingOverlap.avoids}
+\par\penalty0
+
+Every stable outer edge is nonsharing by the original stability alphabet.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingNonsharingFootprint}{39}{46}{SharingOverlap.stable_nonsharing}
+\par\penalty0
+
+Allocation keeps its actual stable operand.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingNonsharingFootprint}{49}{55}{SharingOverlap.allocation_nonsharing}
+\par\penalty0
+
+Numeric unary computation has only operation edges.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingNonsharingFootprint}{58}{61}{SharingOverlap.unary_nonsharing}
+\par\penalty0
+
+Both original binary arithmetic operations have nonsharing footprints.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingNonsharingFootprint}{64}{71}{SharingOverlap.binary_nonsharing}
+\par\penalty0
+
+A beta footprint contains app, lambda, box and the unchanged stable operand; only its box body may contain sharing-template occurrences.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingNonsharingFootprint}{75}{86}{SharingOverlap.beta_nonsharing}
+\par\penalty0
+
+\subsection{Sharing Payload}
+Actual copyable payloads cannot overlap shallow sharing-template holes. Their original retained skeleton therefore supplies a copyable paired payload.
+
+Every actual outer copyable edge retains its original context owner; sharing-template holes can contribute only weakening or contraction edges.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingPayload}{17}{32}{SharingPayload.avoids}
+\par\penalty0
+
+The actual paired footprint is copyable, including any changed original lambda body. The witness keeps the original retained context skeleton.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingPayload}{36}{46}{SharingPayload.paired}
+\par\penalty0
+
+\subsection{Sharing Payload Boundary}
+A copyable payload's retained original owners are disjoint from every same-sort sharing component, including original sharing holes.
+
+A real payload edge never has a sharing-like original common owner.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingPayloadBoundary}{15}{31}{SharingPayload.owner_notSharing}
+\par\penalty0
+
+\subsection{Sharing Pointed}
+Pointed semantic corrections by completed sharing templates inside any focus-free host. The actual internal host token and its root are preserved.
+
+A sharing correction can be used at any unchanged typed host position. The supplied root is transported through original search; it is never inferred from observational equivalence.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingPointed}{13}{64}{SharingExecution.plug_pointed_class_exact_equiv}
+\par\penalty0
+
+\subsection{Sharing Pointed Witness}
+Exact sharing-algebra corrections at the actual pointed residual token. The root on the other endpoint is proved by original search reflection.
+
+The sharing hole Free assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingPointedWitness}{11}{15}{BoxPullWeakening.PointedWitness.sharing_holeFree}
+\par\penalty0
+
+The sharing rooted iff assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingPointedWitness}{17}{26}{BoxPullWeakening.PointedWitness.sharing_rooted_iff}
+\par\penalty0
+
+A genuine sharing-tree certificate preserves exact successful costs and transports search rootedness at its actual common host focus.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingPointedWitness}{30}{45}{BoxPullWeakening.PointedWitness.sharing_exact}
+\par\penalty0
+
+\subsection{Sharing Primitive Context}
+Fully primitive nonsharing footprints occur unchanged in the original common context, preserving every actual port coordinate.
+
+The concrete primitive footprint itself, with its original full labels, embeds into the old common context rather than only into its expansion.
+\lean{Copying/SharingPrimitiveContext}{17}{22}{SharingOverlap.primitiveOccurrence}
+\par\penalty0
+
+Reflecting this footprint keeps its actual host coordinate exactly.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingPrimitiveContext}{25}{27}{SharingOverlap.primitiveOccurrence_host}
+\par\penalty0
+
+\subsection{Sharing Read Context}
+The literal dereference frame admits an arbitrary sharing-tree context, including its original template holes, and embeds at its actual store nodes.
+
+Keep the literal read/instance/store frame and fill only its tree slot.
+\lean{Copying/SharingReadContext}{14}{22}{Dereference.Context.family}
+\par\penalty0
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingReadContext}{24}{25}{Dereference.Context.graph}
+\par\penalty0
+
+This is exactly the original common context used by the read-source witness.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingReadContext}{28}{41}{Dereference.Context.witness_context}
+\par\penalty0
+
+The components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingReadContext}{43}{49}{Dereference.Context.components}
+\par\penalty0
+
+Sharing components and the three distinct primitive read interactions have disjoint actual edge images, derived solely from their original labels.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingReadContext}{62}{85}{Dereference.Context.components_disjoint}
+\par\penalty0
+
+The old term input and unused atom inputs are kept in their literal order.
+\lean{Copying/SharingReadContext}{88}{97}{Dereference.Context.host}
+\par\penalty0
+
+The components input assertion constructs the indicated original recursive paired filling; the context and both actual endpoint maps are included.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingReadContext}{100}{124}{Dereference.Context.components_input}
+\par\penalty0
+
+The components output assertion constructs the indicated original recursive paired filling; the context and both actual endpoint maps are included.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingReadContext}{126}{139}{Dereference.Context.components_output}
+\par\penalty0
+
+The complete read-source common context embeds into the actual original host, including every selected sharing hole and unused atom input.
+\lean{Copying/SharingReadContext}{143}{151}{Dereference.Context.occurrence}
+\par\penalty0
+
+The occurrence input assertion computes the indicated ordered boundary coordinate in the assembled graph.
+Both sides are definitionally equal.
+\lean{Copying/SharingReadContext}{153}{156}{Dereference.Context.occurrence_input}
+\par\penalty0
+
+\subsection{Sharing Read Robustness}
+Every original read match admits the maximal sharing-context diagram, with literal paired read rewrites and an original-template residual specimen.
+
+An arbitrary supplied read successor satisfies the full quantitative robustness clause. The maximal original sharing component, its inactive inputs, and the actual residual specimen are constructed from the supplied occurrence.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingReadRobustness}{20}{76}{MaximalSharing.read_matching}
+\par\penalty0
+
+The precise quantitative robustness clause follows for any independently supplied successor by the already proved complete-machine determinism.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingReadRobustness}{80}{92}{MaximalSharing.read_robust_case}
+\par\penalty0
+
+\subsection{Sharing Read Selection}
+Every original read occurrence determines its actual maximal common sharing context and complete original reader/instance/store attachment.
+
+The full atom tree of the original read rule occurs with every branch.
+\lean{Copying/SharingReadSelection}{12}{23}{Dereference.treeOccurrence}
+\par\penalty0
+
+Selected maximum-tree interfaces and original unary node coordinates come from an arbitrary actual read occurrence, with no assumed cut match.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingReadSelection}{35}{84}{MaximalSharing.read_selection}
+\par\penalty0
+
+\subsection{Sharing Read Source}
+Exact normalization of the selected original read context into the unchanged local dereference rule, retaining its complete sharing tree.
+
+Reading a literal atom tree in the common frame is the original rule graph.
+\lean{Copying/SharingReadSource}{14}{36}{Dereference.Context.graphIso}
+\par\penalty0
+
+Original fillers of every selected component normalize separately: the reader, instance and store are retained, and the actual sharing tree is kept.
+\lean{Copying/SharingReadSource}{40}{60}{Dereference.Context.componentIso}
+\par\penalty0
+
+Regrouping the actual selected cut gives exactly the original complete local read source, including every inactive sharing branch.
+\lean{Copying/SharingReadSource}{64}{84}{Dereference.Context.sourceIso}
+\par\penalty0
+
+\subsection{Sharing Retained Residuals}
+The nonsharing cases of universal sharing-template robustness. Every original stable operand and arbitrary recursively filled beta body is retained.
+
+Actual paired allocation rewrites have an equality-up-to residual, including when the original token enters a sharing-template component.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRetainedResiduals}{19}{32}{SharingResidual.allocation_matching}
+\par\penalty0
+
+Actual paired unary rewrites have an equality-up-to residual, including when the original token enters a sharing-template component.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRetainedResiduals}{36}{49}{SharingResidual.unary_matching}
+\par\penalty0
+
+Actual paired binary rewrites have an equality-up-to residual, including when the original token enters a sharing-template component.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRetainedResiduals}{53}{66}{SharingResidual.binary_matching}
+\par\penalty0
+
+Allocation allocates exactly the original stable operand. The entire quantitative robustness case holds in every original common context.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRetainedResiduals}{70}{84}{SharingResidual.allocation}
+\par\penalty0
+
+The unary natural-number rule is unchanged. The entire quantitative robustness case holds in every original common context.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRetainedResiduals}{88}{102}{SharingResidual.unary}
+\par\penalty0
+
+Both ordered binary arithmetic rules use their original operands. The entire quantitative robustness case holds in every original common context.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRetainedResiduals}{106}{120}{SharingResidual.binary}
+\par\penalty0
+
+Padding-closed sharing templates transport every actual beta body through opening, without a binding-free restriction or a shallow-overlap assumption.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRetainedResiduals}{129}{148}{SharingResidual.beta_matching}
+\par\penalty0
+
+Padding-closed sharing templates transport every actual beta body through opening, without a binding-free restriction or a shallow-overlap assumption.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRetainedResiduals}{153}{175}{SharingResidual.beta}
+\par\penalty0
+
+\subsection{Sharing Root Origin}
+Actual sharing roots and maximal-component provenance in original paired contexts. Store and operation heads are retained because sharing templates cannot introduce those labels.
+
+An actual primitive which is neither weakening nor contraction must belong to a retained original context edge.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRootOrigin}{16}{27}{SharingRootOrigin.retained}
+\par\penalty0
+
+Actual sharing edges have sharing-like original owners, including the entire typed original hole when the edge lies inside a template filling.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRootOrigin}{31}{48}{SharingRootOrigin.sharing_owner}
+\par\penalty0
+
+A retained actual source is exactly the image of an original context source.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRootOrigin}{52}{59}{SharingRootOrigin.source_origin}
+\par\penalty0
+
+A genuine sharing root feeding a store or an operation head determines its original host root, output coordinate, and maximal-basin terminal law.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRootOrigin}{63}{93}{SharingRootOrigin.root}
+\par\penalty0
+
+Sharing-only actual traces project to sharing-only original-owner traces; steps wholly inside one filled tree become zero steps.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingRootOrigin}{97}{113}{SharingRootOrigin.owner_trace}
+\par\penalty0
+
+Primitive labels of a complete matched contraction tree are preserved on every actual expanded edge.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingRootOrigin}{118}{124}{SharingRootOrigin.tree_labels}
+\par\penalty0
+
+Apply original-root extraction to the actual output of an arbitrary complete sharing-tree occurrence, attached to a real nonsharing consumer.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingRootOrigin}{128}{140}{SharingRootOrigin.tree_root}
+\par\penalty0
+
+Every edge of an actual matched tree has its owner in the original maximal sharing predecessor component. Unused branches are included.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingRootOrigin}{144}{152}{SharingRootOrigin.tree_selected}
+\par\penalty0
+
+\subsection{Sharing Rooted}
+Actual search rootedness survives sharing-template changes at nonrewrite host positions. Entering a term-sharing hole stops in rewrite mode, so cannot occur along a search run whose final mode is not rewrite.
+
+Reflect an entire actual search path, preserving its exact length. A filled sharing input requests rewriting, and search cannot continue from it.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingRooted}{18}{49}{Search.Expansion.sharing_reflect_nonrewrite_run}
+\par\penalty0
+
+At a nonrewrite common token, search rootedness is exactly rootedness in the literal common context, independently of sharing-tree presentation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingRooted}{53}{66}{Search.Expansion.sharing_rooted_iff}
+\par\penalty0
+
+Both actual filled graphs have the same original search roots at every nonrewrite common token; no intermediate rootedness is assumed.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingRooted}{71}{82}{FillingWitness.sharing_rooted_iff}
+\par\penalty0
+
+\subsection{Sharing Same Context}
+Same-store equality with one complete original sharing context and two ordered instance entries. The comparison and store nodes remain literal.
+
+The family data give an actual recursive paired filling, with its common context and endpoint representation maps.
+\lean{Copying/SharingSameContext}{12}{21}{AtomEquality.Same.Context.family}
+\par\penalty0
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingSameContext}{23}{31}{AtomEquality.Same.Context.graph}
+\par\penalty0
+
+The components map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingSameContext}{33}{40}{AtomEquality.Same.Context.components}
+\par\penalty0
+
+The components disjoint assertion excludes a shared edge or coordinate between the indicated independently inserted components.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingSameContext}{51}{83}{AtomEquality.Same.Context.components_disjoint}
+\par\penalty0
+
+The host data give an actual recursive paired filling, with its common context and endpoint representation maps.
+\lean{Copying/SharingSameContext}{85}{98}{AtomEquality.Same.Context.host}
+\par\penalty0
+
+The components input assertion constructs the indicated original recursive paired filling; the context and both actual endpoint maps are included.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingSameContext}{101}{128}{AtomEquality.Same.Context.components_input}
+\par\penalty0
+
+The components output assertion constructs the indicated original recursive paired filling; the context and both actual endpoint maps are included.
+For the proof, constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingSameContext}{130}{151}{AtomEquality.Same.Context.components_output}
+\par\penalty0
+
+The occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingSameContext}{153}{162}{AtomEquality.Same.Context.occurrence}
+\par\penalty0
+
+\subsection{Sharing Same Robustness}
+Every original same-store equality match admits the maximal sharing-context diagram, with literal paired equality rewrites and an original-template residual specimen.
+
+An arbitrary supplied equality successor satisfies the full quantitative robustness clause. The maximal original sharing component, its inactive inputs, and the actual residual specimen are constructed from the supplied occurrence.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingSameRobustness}{20}{86}{MaximalSharing.same_matching}
+\par\penalty0
+
+The precise quantitative robustness clause follows for any independently supplied successor by the already proved complete-machine determinism.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingSameRobustness}{90}{102}{MaximalSharing.same_robust_case}
+\par\penalty0
+
+\subsection{Sharing Same Selection}
+The two selected instances of a true comparison select two distinct ordered entries of one complete original atom-sharing component.
+
+The tree Occurrence map is a complete occurrence, preserving original labels and every ordered source and target attachment.
+\lean{Copying/SharingSameSelection}{11}{22}{AtomEquality.Same.treeOccurrence}
+\par\penalty0
+
+The same selection equivalence proves both implications of the indicated structural or execution condition.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingSameSelection}{31}{97}{MaximalSharing.same_selection}
+\par\penalty0
+
+\subsection{Sharing Same Source}
+Exact normalization of the selected original same-equality context into the unchanged local same-store equality rule, retaining its complete sharing tree.
+
+Comparing two entries of a literal atom tree in the common frame is the original rule graph.
+\lean{Copying/SharingSameSource}{14}{40}{AtomEquality.Same.Context.graphIso}
+\par\penalty0
+
+Original fillers of every selected component normalize separately: the comparison, both instances and store are retained, and the actual sharing tree is kept.
+\lean{Copying/SharingSameSource}{44}{68}{AtomEquality.Same.Context.componentIso}
+\par\penalty0
+
+Regrouping the actual selected cut gives exactly the original complete local comparison source, including every inactive sharing branch.
+\lean{Copying/SharingSameSource}{72}{92}{AtomEquality.Same.Context.sourceIso}
+\par\penalty0
+
+\subsection{Sharing Store Basin Disjoint}
+Complete sharing components with distinct actual store consumers are disjoint, independently of how their finite predecessor presentations arose.
+
+An actual store consumer makes a sharing-basin root globally terminal among sharing labels, not merely terminal inside its chosen subset.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingStoreBasinDisjoint}{11}{23}{SharingBasin.store_terminal}
+\par\penalty0
+
+Any two complete sharing components attached to distinct original stores have disjoint edge sets. Both paths are mapped into one functional relation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingStoreBasinDisjoint}{27}{49}{SharingBasin.stores_disjoint}
+\par\penalty0
+
+A retained primitive owner cannot represent two distinct actual edges.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingStoreBasinDisjoint}{56}{67}{SharingRootOrigin.retained_owner_injective}
+\par\penalty0
+
+\subsection{Sharing Tree Algebra}
+The general tree relation used by the paper's maximal-sharing argument. Every pair retains its actual common ordered interface and concrete trees.
+
+The focus Free assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeAlgebra}{9}{16}{SharingTreeAlgebra.focusFree}
+\par\penalty0
+
+The hole Free assertion excludes unfilled holes throughout the indicated graph and every nested box.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingTreeAlgebra}{18}{22}{SharingTreeAlgebra.holeFree}
+\par\penalty0
+
+This relation compares genuine finite contraction trees of one fixed sort and ordered interface, not arbitrary graphs with the same vertex count.
+\lean{Copying/SharingTreeAlgebra}{26}{28}{SharingTreeAlgebra.template}
+\par\penalty0
+
+The template sharing Trees assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeAlgebra}{30}{30}{SharingTreeAlgebra.template_sharingTrees}
+\par\penalty0
+
+The template output Closed assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeAlgebra}{32}{32}{SharingTreeAlgebra.template_outputClosed}
+\par\penalty0
+
+The template padding Closed assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeAlgebra}{34}{34}{SharingTreeAlgebra.template_paddingClosed}
+\par\penalty0
+
+Every actual pair of primitive sharing trees is a literal relation instance.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeAlgebra}{37}{39}{SharingTreeAlgebra.literal}
+\par\penalty0
+
+Fully checked sharing-graph presentations provide the same literal relation after the proved conversion to concrete primitive trees.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeAlgebra}{43}{45}{SharingTreeAlgebra.graphs}
+\par\penalty0
+
+\subsection{Sharing Tree Expansion}
+Simultaneous substitution preserves finite sharing trees. The proof uses actual path acyclicity of both the context and every inserted graph.
+
+Terminal distance in a finite acyclic graph with functional adjacency.
+\lean{Copying/SharingTreeExpansion}{13}{15}{SharingTreeExpansion.distance}
+\par\penalty0
+
+The distance spec assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeExpansion}{17}{20}{SharingTreeExpansion.distance_spec}
+\par\penalty0
+
+A forward adjacency consumes precisely one unit of terminal distance.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeExpansion}{23}{30}{SharingTreeExpansion.distance_step}
+\par\penalty0
+
+An acyclic one-target host remains acyclic after replacing its edges by acyclic one-target graphs. No global ordering of graph carriers is assumed.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly; the remaining natural-number index bounds follow by linear arithmetic.
+\lean{Copying/SharingTreeExpansion}{48}{83}{SharingTreeExpansion.acyclic_expand}
+\par\penalty0
+
+A contraction-tree context has sharing primitives and explicitly typed sharing holes; each hole has finitely many same-sort inputs and one output.
+\lean{Copying/SharingTreeExpansion}{89}{95}{SharingTreeContext}
+\par\penalty0
+
+Every original sharing-context edge has one target, including holes.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeExpansion}{101}{106}{SharingTreeContext.target_single}
+\par\penalty0
+
+Any simultaneous family of actual contraction trees supplies an acyclic expanded graph, independently of the presentation of each tree.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeExpansion}{110}{120}{SharingTreeContext.expansion_acyclic}
+\par\penalty0
+
+\subsection{Sharing Tree Fillings}
+A selected maximal sharing context yields two actual contraction trees and an original-template residual certificate, without flattening hole pairs into arbitrary tree equations.
+
+A literal corolla has no edge adjacency, since all targets are outputs and all sources are inputs. This remains true for arbitrary carrier names.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeFillings}{13}{20}{LabelCopy.no_adjacency}
+\par\penalty0
+
+The acyclic assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeFillings}{22}{27}{LabelCopy.acyclic}
+\par\penalty0
+
+Carrier-renamed sharing trees remain acyclic on both actual endpoints.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingTreeFillings}{32}{36}{SharingTreePair.acyclic}
+\par\penalty0
+
+The sole output type of every context label is the enclosing sharing sort.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeFillings}{43}{48}{SharingTreeContext.label_output}
+\par\penalty0
+
+Sharing primitives and holes are all focus-free.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeFillings}{51}{61}{SharingTreeContext.focusFree}
+\par\penalty0
+
+Each original selected slot expands to acyclic same-sort sharing edges. A retained unfilled hole is excluded by the actual closed left expansion.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeFillings}{66}{97}{SharingTreeContext.filling_shapes}
+\par\penalty0
+
+The left expansion is a genuine concrete sharing tree.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeFillings}{100}{102}{SharingTreeContext.left_sharingTreeGraph}
+\par\penalty0
+
+The right expansion has the same ordered boundary and sharing sort.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeFillings}{105}{107}{SharingTreeContext.right_sharingTreeGraph}
+\par\penalty0
+
+Normalizing the expanded graphs to primitive trees preserves the original common context and every original template relation, with identity token maps.
+\lean{Copying/SharingTreeFillings}{111}{120}{SharingTreeContext.treeWitness}
+\par\penalty0
+
+\subsection{Sharing Tree Matching}
+Full matching of every original local and contextual rewrite for sharing templates. Actual maximal components and original residuals are constructed.
+
+Exhaust the original nine local rules, retaining their actual stability and copyability premises. This includes arbitrary sharing trees and recursive beta bodies; no chosen matching or residual certificate is a hypothesis.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingTreeMatching}{25}{42}{SharingResidual.local_matching}
+\par\penalty0
+
+Any actual original contextual rewrite supplies its own complete local occurrence. The full matching pair is obtained without changing that rewrite.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeMatching}{46}{54}{SharingResidual.rewrite_matching}
+\par\penalty0
+
+Match an independently presented original successor, rather than the particular local successor chosen during the maximal-component construction.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingTreeMatching}{58}{73}{SharingResidual.step_matching}
+\par\penalty0
+
+Every padding-closed sharing template matches actual rewrites in both directions, even at entered specimens. The converse constructs the actual opposite-side maximal components and restores the original orientation.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeMatching}{83}{117}{PreTemplate.SharingTrees.stepMatching}
+\par\penalty0
+
+Full input safety, with exact paired entry costs and both possible stuck requests handled, follows for every original sharing template.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeMatching}{121}{124}{PreTemplate.SharingTrees.inputSafe}
+\par\penalty0
+
+Universal forward robustness in the paper's original all-context class.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeMatching}{127}{130}{PreTemplate.SharingTrees.robust}
+\par\penalty0
+
+Universal converse robustness reconstructs every original matching rewrite and its actual recursive specimen, rather than assuming a symmetric relation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeMatching}{134}{137}{PreTemplate.SharingTrees.robust_converse}
+\par\penalty0
+
+\subsection{Sharing Tree Pair}
+The common semantic interface of the paper's contraction-tree templates: both sides are actual sharing trees with identical ordered boundaries.
+
+Trees may differ in shape and carrier names but have the same sharing sort and the same number and order of external inputs.
+\lean{Copying/SharingTreePair}{14}{18}{SharingTreePair}
+\par\penalty0
+
+Every fragment pair of the pre-template has the original sharing-tree shape. This is an interface law, not an assumed operational simulation.
+\lean{Copying/SharingTreePair}{22}{23}{PreTemplate.SharingTrees}
+\par\penalty0
+
+Recursive carrier isomorphisms preserve the full sharing-tree property.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreePair}{28}{42}{SharingTreeGraph.iso}
+\par\penalty0
+
+Every concrete primitive tree gives a sharing-only hypernet at any allowance.
+For the proof, induction follows the original derivation or finite structure; constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingTreePair}{49}{60}{ContractionTree.sharingTreeGraph}
+\par\penalty0
+
+Sharing primitives block every operation-only path to the sole output.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreePair}{63}{70}{ContractionTree.oneWay}
+\par\penalty0
+
+Raising the allowance preserves the primitive tree literally.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreePair}{73}{74}{ContractionTree.atDepth_raise}
+\par\penalty0
+
+The converse assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingTreePair}{80}{82}{SharingTreePair.converse}
+\par\penalty0
+
+Extract the actual interface and primitive-label shape on both sides.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreePair}{85}{92}{SharingTreePair.shape}
+\par\penalty0
+
+Both directions are output-closed, including term-wire instances.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingTreePair}{95}{97}{SharingTreePair.oneWay}
+\par\penalty0
+
+The raise assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/SharingTreePair}{99}{105}{SharingTreePair.raise}
+\par\penalty0
+
+The converse assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreePair}{111}{112}{PreTemplate.SharingTrees.converse}
+\par\penalty0
+
+The output Closed assertion computes the indicated ordered boundary coordinate in the assembled graph.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreePair}{114}{115}{PreTemplate.SharingTrees.outputClosed}
+\par\penalty0
+
+\subsection{Sharing Tree Realisation}
+Recover the paper's primitive contraction trees from expanded sharing contexts without changing any vertex, edge or ordered incidence.
+
+The actual sharing-only hypernet property, before erasing its allowance.
+\lean{Copying/SharingTreeRealisation}{10}{14}{SharingTreeGraph}
+\par\penalty0
+
+The allowance-free sharing label of an existing edge.
+\lean{Copying/SharingTreeRealisation}{21}{24}{SharingTreeGraph.primitive}
+\par\penalty0
+
+The primitive label assertion verifies the indicated label compatibility or label exclusion at the original coordinate.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeRealisation}{26}{31}{SharingTreeGraph.primitive_label}
+\par\penalty0
+
+The primitive cases assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeRealisation}{33}{38}{SharingTreeGraph.primitive_cases}
+\par\penalty0
+
+Erasing the allowance changes only labels; all carriers and incidences are literally inherited from the actual graph.
+\lean{Copying/SharingTreeRealisation}{42}{69}{SharingTreeGraph.tree}
+\par\penalty0
+
+The recovered tree is the original hypernet, up to identity carrier maps; ordered interfaces, token coordinates and every incidence are preserved.
+\lean{Copying/SharingTreeRealisation}{73}{88}{SharingTreeGraph.treeIso}
+\par\penalty0
+
+Expansion by sharing-only acyclic fillings produces an actual tree at the same outer interface, with no assumption of any canonical tree presentation.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeRealisation}{97}{105}{SharingTreeContext.expandedTree}
+\par\penalty0
+
+\subsection{Sharing Tree Requests}
+Entering any term input of an actual sharing tree requests copying in exactly one original search step, independently of the tree presentation.
+
+A weakening has no input; hence the unique consumer of a tree input is an actual contraction, regardless of the number of unused predecessor leaves.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeRequests}{12}{23}{ContractionTree.request}
+\par\penalty0
+
+Independent carrier names and either sharing sort are handled through the literal pair's original ordered interface, with term typing excluding atom entry.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeRequests}{27}{38}{SharingTreePair.request}
+\par\penalty0
+
+The same entered original component on both sides requests rewriting at the unchanged common host port. No remote-token premise is used.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeRequests}{42}{62}{Specimen.sharing_requests}
+\par\penalty0
+
+\subsection{Sharing Tree Residuals}
+Literal residual specimens for changes to the sharing-tree component. Each residual retains the original selected-input weakening and distributors.
+
+The original primitive frame viewed at a copying allowance.
+\lean{Copying/SharingTreeResiduals}{12}{13}{FillingWitness.liftedFrame}
+\par\penalty0
+
+This defines the lifted Family data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingTreeResiduals}{15}{22}{FillingWitness.liftedFamily}
+\par\penalty0
+
+Relabelling a primitive simultaneous expansion changes no incidences.
+\lean{Copying/SharingTreeResiduals}{25}{47}{FillingWitness.primitiveExpansionIso}
+\par\penalty0
+
+Primitive frame expansion commutes with embedding into the copying alphabet. The paired witnesses may contain arbitrary recursive templates.
+\lean{Copying/SharingTreeResiduals}{51}{65}{FillingWitness.primitiveFrame}
+\par\penalty0
+
+Closing the selected input with the original weakening retains every paired tree fragment, with all remaining input positions unchanged.
+\lean{Copying/SharingTreeResiduals}{70}{77}{FillingWitness.sharingResidual}
+\par\penalty0
+
+A whole tree certificate and a paired payload give the exact original copying sources, at the same ordered input token coordinate.
+\lean{Copying/SharingTreeResiduals}{81}{84}{FillingWitness.sharingCopyBefore}
+\par\penalty0
+
+The two payload uses can have independent certificates; the tree pair is retained only in the residual branch, exactly as in the original rule.
+\lean{Copying/SharingTreeResiduals}{88}{97}{FillingWitness.sharingCopies}
+\par\penalty0
+
+The original term and atom distributors remain literal retained context edges after rewriting the paired maximal sharing trees.
+\lean{Copying/SharingTreeResiduals}{101}{108}{FillingWitness.sharingCopyAfter}
+\par\penalty0
+
+Dereference retains a certified whole atom tree on its source side.
+\lean{Copying/SharingTreeResiduals}{111}{118}{FillingWitness.sharingReadBefore}
+\par\penalty0
+
+Reading keeps the paired atom tree and the literal two-use term distributor.
+\lean{Copying/SharingTreeResiduals}{121}{130}{FillingWitness.sharingReadAfter}
+\par\penalty0
+
+Assignment can change the atom-tree pair and independently carry a paired new value, retaining the actual ordered output interface.
+\lean{Copying/SharingTreeResiduals}{134}{144}{FillingWitness.sharingAssignmentBefore}
+\par\penalty0
+
+The original store-write reduct retains both certified components; operational stability is supplied separately when constructing actual steps.
+\lean{Copying/SharingTreeResiduals}{148}{158}{FillingWitness.sharingAssignmentAfter}
+\par\penalty0
+
+Two selected inputs of the same certified atom tree keep their positions in the source of the true-equality rule.
+\lean{Copying/SharingTreeResiduals}{162}{169}{FillingWitness.sharingSameBefore}
+\par\penalty0
+
+The true result, both weakenings, both instances and store are retained; only the certified atom tree differs in the residual pair.
+\lean{Copying/SharingTreeResiduals}{173}{180}{FillingWitness.sharingSameAfter}
+\par\penalty0
+
+Different-store comparison preserves two independently certified trees.
+\lean{Copying/SharingTreeResiduals}{183}{193}{FillingWitness.sharingDifferentBefore}
+\par\penalty0
+
+The false-equality reduct keeps the two stores distinct and preserves both literal instance/tree attachments in their original order.
+\lean{Copying/SharingTreeResiduals}{197}{207}{FillingWitness.sharingDifferentAfter}
+\par\penalty0
+
+\subsection{Sharing Tree Serial Join}
+Joining disjoint complete occurrences along the exact ordered serial boundary. Internal freshness follows from the matched incidences themselves.
+
+This defines the port map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingTreeSerialJoin}{12}{19}{Opening.Occurrence.SerialJoin.ports}
+\par\penalty0
+
+This defines the edge map for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/SharingTreeSerialJoin}{21}{25}{Opening.Occurrence.SerialJoin.edges}
+\par\penalty0
+
+The joined port map restricts literally to the left original occurrence.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeSerialJoin}{28}{45}{Opening.Occurrence.SerialJoin.left_insert}
+\par\penalty0
+
+Shared junctions agree exactly; no permutation or copied wire is inserted.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeSerialJoin}{49}{66}{Opening.Occurrence.SerialJoin.right_insert}
+\par\penalty0
+
+Two actual disjoint complete matches assemble to a match of the actual serial graph. All internal injectivity obligations are implied by incidence.
+\lean{Copying/SharingTreeSerialJoin}{70}{112}{Opening.Occurrence.SerialJoin.matchEmbedding}
+\par\penalty0
+
+The assembled occurrence preserves full recursive labels, including unchanged or independently renamed box bodies in either component.
+\lean{Copying/SharingTreeSerialJoin}{116}{123}{Opening.Occurrence.SerialJoin.occurrence}
+\par\penalty0
+
+The occurrence left assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeSerialJoin}{125}{127}{Opening.Occurrence.SerialJoin.occurrence_left}
+\par\penalty0
+
+The occurrence right assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/SharingTreeSerialJoin}{129}{131}{Opening.Occurrence.SerialJoin.occurrence_right}
+\par\penalty0
+
+Every external input keeps the actual left occurrence's coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeSerialJoin}{134}{136}{Opening.Occurrence.SerialJoin.occurrence_input}
+\par\penalty0
+
+Every external output keeps the actual right occurrence's coordinate.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeSerialJoin}{139}{141}{Opening.Occurrence.SerialJoin.occurrence_output}
+\par\penalty0
+
+A matched sharing tree and a matched copyable payload cannot share an outer edge: their possible full outer labels are disjoint.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/SharingTreeSerialJoin}{150}{163}{Opening.Occurrence.tree_copyable_disjoint}
+\par\penalty0
+
+Joining a maximal selected term tree to its actual copyable payload needs only the observed common boundary; edge disjointness is a proved label fact.
+\lean{Copying/SharingTreeSerialJoin}{167}{173}{Opening.Occurrence.sharingCopyJoin}
+\par\penalty0
+
+\subsection{Template Consumption}
+Consume one actual entered template component after a proved finite search prefix and its original compute step. This is a generic graph construction, retaining all unrelated shallow and deep template occurrences.
+
+The exact original right component moves into the common context after one compute transition. The selected token becomes settled; the right endpoint takes zero steps. Every semantic hypothesis is an actual finite search trace or an original whole-graph rewrite, rather than equivalence.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/TemplateConsumption}{14}{101}{TemplateConsumption.consume}
+\par\penalty0
+
+\subsection{Unrestricted Atomic}
+Retained/deep atomic contributions for unrestricted contexts. Deep bodies carry genuine paired fillings; no binding-free condition is imposed.
+
+The Unrestricted Atomic data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/UnrestrictedAtomic}{8}{17}{UnrestrictedAtomic}
+\par\penalty0
+
+The congr map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedAtomic}{22}{26}{UnrestrictedAtomic.congr}
+\par\penalty0
+
+This defines the interfaces data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedAtomic}{28}{31}{UnrestrictedAtomic.interfaces}
+\par\penalty0
+
+The primitive Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedAtomic}{33}{42}{UnrestrictedAtomic.primitiveIso}
+\par\penalty0
+
+The Box View data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/UnrestrictedAtomic}{44}{48}{UnrestrictedAtomic.BoxView}
+\par\penalty0
+
+This defines the box View data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedAtomic}{50}{65}{UnrestrictedAtomic.boxView}
+\par\penalty0
+
+Extract exactly the retained and deep contribution selected by an original edge certificate; the original boxed-body context is retained by equality.
+\lean{Copying/UnrestrictedAtomic}{69}{85}{UnrestrictedAtomic.of_edge}
+\par\penalty0
+
+\subsection{Unrestricted Copyable}
+Copyable payloads survive unrestricted deep template fillings. The paired payload is the actual decorated graph, with an original-template witness.
+
+A primitive payload is unchanged up to its actual retained incidences.
+For the proof, the preceding component lemmas are composed or specialized at the stated parameters.
+\lean{Copying/UnrestrictedCopyable}{11}{16}{UnrestrictedDecoration.primitive_copyable}
+\par\penalty0
+
+A lambda retains its operation head and changes only the original boxed body through the supplied genuine recursive filling.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/UnrestrictedCopyable}{20}{37}{UnrestrictedDecoration.lambda_copyable}
+\par\penalty0
+
+Every original copyable payload constructor is preserved, without any binding-free restriction on contexts inside its boxes.
+For the proof, induction follows the original derivation or finite structure.
+\lean{Copying/UnrestrictedCopyable}{41}{53}{UnrestrictedDecoration.copyable_payload}
+\par\penalty0
+
+\subsection{Unrestricted Decoration}
+Edgewise retained and deep fillings reassociate through the unchanged local rule syntax. Extraction below is from an actual whole-graph occurrence.
+
+The Unrestricted Decoration data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/UnrestrictedDecoration}{10}{13}{UnrestrictedDecoration}
+\par\penalty0
+
+This defines the finite typed graph for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedDecoration}{17}{17}{UnrestrictedDecoration.graph}
+\par\penalty0
+
+The primitive Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedDecoration}{19}{22}{UnrestrictedDecoration.primitiveIso}
+\par\penalty0
+
+The primitive Iso vertex assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/UnrestrictedDecoration}{24}{26}{UnrestrictedDecoration.primitiveIso_vertex}
+\par\penalty0
+
+The pull map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedDecoration}{28}{35}{UnrestrictedDecoration.pull}
+\par\penalty0
+
+The pull Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedDecoration}{37}{45}{UnrestrictedDecoration.pullIso}
+\par\penalty0
+
+The pull Iso host assertion identifies the indicated constructions by an ordered recursive graph isomorphism.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/UnrestrictedDecoration}{47}{49}{UnrestrictedDecoration.pullIso_host}
+\par\penalty0
+
+This defines the component data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedDecoration}{51}{54}{UnrestrictedDecoration.component}
+\par\penalty0
+
+The grouped Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedDecoration}{56}{58}{UnrestrictedDecoration.groupedIso}
+\par\penalty0
+
+The corolla Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedDecoration}{60}{63}{UnrestrictedDecoration.corollaIso}
+\par\penalty0
+
+This defines the serial Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedDecoration}{65}{67}{UnrestrictedDecoration.serialLeft}
+\par\penalty0
+
+This defines the serial Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedDecoration}{69}{71}{UnrestrictedDecoration.serialRight}
+\par\penalty0
+
+The serial Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedDecoration}{73}{78}{UnrestrictedDecoration.serialIso}
+\par\penalty0
+
+This defines the tensor Left data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedDecoration}{80}{83}{UnrestrictedDecoration.tensorLeft}
+\par\penalty0
+
+This defines the tensor Right data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedDecoration}{85}{88}{UnrestrictedDecoration.tensorRight}
+\par\penalty0
+
+The tensor Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedDecoration}{90}{97}{UnrestrictedDecoration.tensorIso}
+\par\penalty0
+
+Extract an edgewise retained and deep transformation of the actual local source. Equality transport changes only the stated interface indices.
+\lean{Copying/UnrestrictedDecoration}{109}{115}{UnrestrictedFootprint.decoration}
+\par\penalty0
+
+This defines the decoration Skeleton data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedDecoration}{117}{123}{UnrestrictedFootprint.decorationSkeleton}
+\par\penalty0
+
+The extracted edgewise view is the actual paired right footprint, not a separately chosen graph with the same primitive matches.
+\lean{Copying/UnrestrictedDecoration}{127}{136}{UnrestrictedFootprint.decorationIso}
+\par\penalty0
+
+The decoration Iso host assertion is the compatibility law for the indicated component of this construction. It relates the actual finite coordinates or certificates, with the hypotheses stated in the linked declaration.
+For the proof, constructor and boundary cases are separated explicitly; the defined maps and incidence equations are substituted.
+\lean{Copying/UnrestrictedDecoration}{138}{142}{UnrestrictedFootprint.decorationIso_host}
+\par\penalty0
+
+\subsection{Unrestricted Deep Local}
+Genuine paired beta and copying reducts for arbitrary-template fillings. All body certificates come from the actual complete occurrence and finite cut.
+
+The original arbitrary beta body may contain arbitrary recursive fillings. Padding closure is the only template law needed to open that body.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/UnrestrictedDeepLocal}{11}{25}{UnrestrictedResidual.beta_local}
+\par\penalty0
+
+Every original copyable constructor transfers through the retained source, including active primitive operations and arbitrary recursively filled lambdas.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/UnrestrictedDeepLocal}{29}{43}{UnrestrictedResidual.copying_local}
+\par\penalty0
+
+\subsection{Unrestricted Local Transfer}
+Retained/deep local transport for an arbitrary template. This permits actual reversed operational certificates without reversing any machine rule. Beta uses proved padding closure; copying needs no template closure law.
+
+Pad and open the actual paired body, then splice the unchanged stable argument. The original common body context may contain binding paths to holes.
+\lean{Copying/UnrestrictedLocalTransfer}{12}{18}{UnrestrictedLocalTransfer.betaResidual}
+\par\penalty0
+
+This defines the boxes data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedLocalTransfer}{24}{24}{UnrestrictedLocalTransfer.Beta.boxes}
+\par\penalty0
+
+The source Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedLocalTransfer}{26}{34}{UnrestrictedLocalTransfer.Beta.sourceIso}
+\par\penalty0
+
+The paired source has an actual beta step and a constructed original-template local residual. The stable argument is the unchanged original graph.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/UnrestrictedLocalTransfer}{38}{53}{UnrestrictedLocalTransfer.Beta.transport}
+\par\penalty0
+
+The primitive transport assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, the defined maps and incidence equations are substituted.
+\lean{Copying/UnrestrictedLocalTransfer}{59}{71}{UnrestrictedLocalTransfer.Copying.primitive_transport}
+\par\penalty0
+
+This defines the boxes data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedLocalTransfer}{73}{73}{UnrestrictedLocalTransfer.Copying.boxes}
+\par\penalty0
+
+The source Iso map is an ordered recursive graph isomorphism between the stated original constructions.
+\lean{Copying/UnrestrictedLocalTransfer}{75}{81}{UnrestrictedLocalTransfer.Copying.sourceIso}
+\par\penalty0
+
+The lambda transport assertion excludes focus labels throughout the indicated graph, including recursively inside boxes.
+For the proof, constructor and boundary cases are separated explicitly.
+\lean{Copying/UnrestrictedLocalTransfer}{83}{98}{UnrestrictedLocalTransfer.Copying.lambda_transport}
+\par\penalty0
+
+Every constructor of original copyability is covered, including active operation payloads and recursive representation changes.
+For the proof, induction follows the original derivation or finite structure; the defined maps and incidence equations are substituted.
+\lean{Copying/UnrestrictedLocalTransfer}{102}{135}{UnrestrictedLocalTransfer.Copying.transport}
+\par\penalty0
+
+\subsection{Unrestricted Local Views}
+Full original lambda-body views without binding-free side conditions.
+
+The Lambda View data record the finite alternatives and their typed certificates used in this construction.
+\lean{Copying/UnrestrictedLocalViews}{11}{15}{UnrestrictedAtomic.LambdaView}
+\par\penalty0
+
+This defines the lambda View data for the construction just described. Boundary positions are kept distinct from newly inserted internal vertices.
+\lean{Copying/UnrestrictedLocalViews}{17}{34}{UnrestrictedAtomic.lambdaView}
+\par\penalty0
+
