@@ -717,3 +717,11 @@ import Hypernets.Copying.WeakeningCalculation
 import Hypernets.Copying.WeakeningDistributorLaws
 import Hypernets.Copying.WeakeningForests
 import Hypernets.Copying.WeakeningRows
+
+-- Semantic weakening with retained free resources.
+import Hypernets.Copying.ParallelSerial
+import Hypernets.Copying.DistributorExtension
+import Hypernets.Copying.SingleUseExtension
+import Hypernets.Copying.WeakeningSingleUse
+import Hypernets.Copying.WeakeningTranslationSteps
+import Hypernets.Copying.WeakeningTranslationExamples
