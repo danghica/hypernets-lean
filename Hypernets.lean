@@ -765,3 +765,14 @@ import Hypernets.Copying.PropositionAllocationPrograms
 import Hypernets.Copying.PropositionEnvironmentOpening
 import Hypernets.Copying.PropositionOpeningChecks
 import Hypernets.Copying.PropositionOperationalContexts
+
+-- Proposition 12.2: complete result normalization and concrete parametricity final segment.
+import Hypernets.Copying.FiniteGraphCertificate
+import Hypernets.Copying.PropositionResultGraphs
+import Hypernets.Copying.PropositionResultGeometry
+import Hypernets.Copying.PropositionResultNormalization
+import Hypernets.Copying.PropositionResultPadding
+import Hypernets.Copying.PropositionResultEnvironments
+import Hypernets.Copying.PropositionParametricityInstance
+import Hypernets.Copying.PropositionFinalSegment
+import Hypernets.Copying.PropositionFinalSegmentChecks
