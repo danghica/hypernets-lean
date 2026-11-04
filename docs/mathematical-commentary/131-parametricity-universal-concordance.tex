@@ -1,0 +1,2902 @@
+\clearpage
+\section{Universal parametricity: constructions and proofs}
+\label{sec:parametricity-universal-concordance}
+% Complete commentary fragment for the 25 derivation-semantics modules.
+% All declarations below were checked and axiom-audited; code links use the parent document commit pin.
+\subsection{Entire read and equality footprints remain in the common context}
+Suppose each replaced component has no outputs and every input enters a lambda. An actually retained edge cannot be an unfilled hole: its literal primitive label would contradict hole-freeness of the expanded source. The first two lemmas make this contradiction explicit and propagate retention backwards along an arbitrary edge-ancestry path. This backwards direction matters because an unused weakening branch of a contraction tree need not lie on the particular lookup path taken by the token.
+
+For dereference, the actual operand trace identifies the common-context store. Every edge of the original local read source reaches this store: the reader reaches its instance, the instance follows the selected atom path, and every edge of the complete atom tree reaches its root. Applying backwards retention proves the whole footprint avoids shallow holes. Same-store equality uses the same argument for two instances and one complete tree. Different-store equality applies it separately to both complete trees and both stores. The original store identities, including their inequality in the last case, are preserved; no tree pruning or identification of distinct stores is used.
+\par\penalty0
+\lean{Copying/LambdaEntryStoreOverlap}{18}{29}{Copying.LambdaEntryOverlap.retained_not_hole}
+\lean{Copying/LambdaEntryStoreOverlap}{30}{40}{Copying.LambdaEntryOverlap.ancestor_of_retained_not_hole}
+\lean{Copying/LambdaEntryStoreOverlap}{41}{68}{Copying.LambdaEntryOverlap.read_avoids}
+\lean{Copying/LambdaEntryStoreOverlap}{69}{109}{Copying.LambdaEntryOverlap.same_avoids}
+\par\penalty0
+\lean{Copying/LambdaEntryStoreOverlap}{110}{169}{Copying.LambdaEntryOverlap.different_avoids}
+
+\subsection{Actual store-operation residuals in both directions}
+The three matching theorems apply the proved footprint exclusions to the original primitive local read, same-store equality and different-store equality rules. The common-cut construction produces two actual whole-graph transitions and an original unrestricted-context quasi-specimen with equality on both residual sides. This construction retains the original contents interfaces and every unused tree branch.
+
+For each operation the forward robustness theorem identifies an independently supplied successor with the constructed successor using the proved machine determinism, and widens equality to the requested cost refinements. The converse theorem first reverses the actual filling certificates and then transports the resulting quasi-specimen into the opposite of the original specimen system. Thus its conclusion is a converse clause for the original relation, rather than a new independently chosen relation. None of these store-operation theorems assumes that its footprint was retained.
+\par\penalty0
+\lean{Copying/LambdaEntryStoreResiduals}{20}{36}{Copying.LambdaEntryOverlap.read_matching}
+\lean{Copying/LambdaEntryStoreResiduals}{37}{53}{Copying.LambdaEntryOverlap.read_robust_case}
+\lean{Copying/LambdaEntryStoreResiduals}{54}{70}{Copying.LambdaEntryOverlap.read_converse_robust_case}
+\lean{Copying/LambdaEntryStoreResiduals}{71}{87}{Copying.LambdaEntryOverlap.same_matching}
+\par\penalty0
+\lean{Copying/LambdaEntryStoreResiduals}{88}{104}{Copying.LambdaEntryOverlap.same_robust_case}
+\lean{Copying/LambdaEntryStoreResiduals}{105}{121}{Copying.LambdaEntryOverlap.same_converse_robust_case}
+\lean{Copying/LambdaEntryStoreResiduals}{122}{138}{Copying.LambdaEntryOverlap.different_matching}
+\lean{Copying/LambdaEntryStoreResiduals}{139}{155}{Copying.LambdaEntryOverlap.different_robust_case}
+\par\penalty0
+\lean{Copying/LambdaEntryStoreResiduals}{156}{170}{Copying.LambdaEntryOverlap.different_converse_robust_case}
+
+\subsection{The argument-exposing beta frame}
+The argument-exposing beta frame consists of the application, lambda and box of a beta match, with the argument exposed as an output wire so that its actual value stays in the surrounding graph.
+The finite edge type has precisely three constructors. Its existential and universal lemmas are exhaustive case analyses. The vertex type consists of the external application input, two internal function/thunk wires, the exposed argument output, and the free variable and atom outputs of the box. The free-port map and its ordered list place each original free output after the argument output; injectivity follows from injectivity of the successor map on finite indices.
+
+The label, source and target functions specify the original application operation, lambda operation and box, and the definition of the net checks every incidence, label and boundary condition. Given an actual application match, the port and edge maps select exactly those original incidences. Distinctness of the three selected edges follows from their incompatible labels and the original match. The free-port list is the original ordered box interface. These facts give a complete match embedding and then a full-label occurrence, whose input is the actual token and whose first output is the actual argument port. No graph representing the argument is included in the frame.
+\par\penalty0
+\lean{Copying/RetainedBetaFrame}{11}{14}{Copying.Application.RetainedFrame.Edge}
+\lean{Copying/RetainedBetaFrame}{15}{22}{Copying.Application.RetainedFrame.edge_exists}
+\lean{Copying/RetainedBetaFrame}{23}{30}{Copying.Application.RetainedFrame.edge_forall}
+\lean{Copying/RetainedBetaFrame}{31}{32}{Copying.Application.RetainedFrame.Vertex}
+\par\penalty0
+\lean{Copying/RetainedBetaFrame}{33}{33}{Copying.Application.RetainedFrame.freePort}
+\lean{Copying/RetainedBetaFrame}{34}{35}{Copying.Application.RetainedFrame.freePorts}
+\lean{Copying/RetainedBetaFrame}{36}{40}{Copying.Application.RetainedFrame.label}
+\lean{Copying/RetainedBetaFrame}{41}{44}{Copying.Application.RetainedFrame.source}
+\par\penalty0
+\lean{Copying/RetainedBetaFrame}{45}{49}{Copying.Application.RetainedFrame.target}
+\lean{Copying/RetainedBetaFrame}{50}{53}{Copying.Application.RetainedFrame.freePort_injective}
+\lean{Copying/RetainedBetaFrame}{54}{111}{Copying.Application.RetainedFrame.net}
+\lean{Copying/RetainedBetaFrame}{112}{117}{Copying.Application.RetainedFrame.ports}
+\par\penalty0
+\lean{Copying/RetainedBetaFrame}{118}{122}{Copying.Application.RetainedFrame.edges}
+\lean{Copying/RetainedBetaFrame}{123}{141}{Copying.Application.RetainedFrame.edges_injective}
+\lean{Copying/RetainedBetaFrame}{142}{154}{Copying.Application.RetainedFrame.ports_free}
+\lean{Copying/RetainedBetaFrame}{155}{178}{Copying.Application.RetainedFrame.embedding}
+\par\penalty0
+\lean{Copying/RetainedBetaFrame}{179}{187}{Copying.Application.RetainedFrame.occurrence}
+\lean{Copying/RetainedBetaFrame}{188}{189}{Copying.Application.RetainedFrame.occurrence_input}
+\lean{Copying/RetainedBetaFrame}{190}{193}{Copying.Application.RetainedFrame.occurrence_argument}
+
+\subsection{Opening the frame without postulating a transition}
+The canonical match of the frame identifies its three edges directly. The body-port lemma computes how every original body input, bound argument output and free output is attached after opening. The realization records the resulting finite complement and inserted open body; its incidence and carrier identities yield an original geometric opening certificate from the frame to the open body. This certificate describes a rewrite's geometry but does not assert that a bare exposed argument is stable.
+
+The final reboundary operation transports an opening certificate through proved equalities of interface lists. It changes only the presentation of the same ordered vertices and incidences. This operation is subsequently used when a finite cut gives an equal interface with a different list expression.
+\par\penalty0
+\lean{Copying/RetainedBetaOpening}{11}{25}{Copying.Application.RetainedFrame.matched}
+\lean{Copying/RetainedBetaOpening}{26}{40}{Copying.Application.RetainedFrame.bodyPort}
+\lean{Copying/RetainedBetaOpening}{41}{60}{Copying.Application.RetainedFrame.realization}
+\lean{Copying/RetainedBetaOpening}{61}{70}{Copying.Application.RetainedFrame.certificate}
+\par\penalty0
+\lean{Copying/RetainedBetaOpening}{71}{86}{Copying.Application.OpeningCertificate.reboundary}
+
+\subsection{Canonical whole-graph beta targets}
+A complete occurrence carries an opening certificate into its actual finite complement: first cast the local interfaces to the cut-hole interfaces, then plug the local certificate into that hole, and finally use the proved reconstruction isomorphism to recover the original source. The insertion-coordinate identity proves that the initial token is exactly the occurrence image of the original token.
+
+For an arbitrary original application match, the canonical state replaces only the application/lambda/box frame by the open body and resumes in search mode at its input. Its certificate follows from the preceding construction. Any actual original beta rewrite has a coherent opening certificate with the same source match, so source-relative opening coherence identifies its successor with this canonical state. All argument edges and all other unmatched host edges remain in the finite complement.
+\par\penalty0
+\lean{Copying/RetainedBetaCanonical}{15}{36}{Copying.Opening.Occurrence.openingCertificate}
+\lean{Copying/RetainedBetaCanonical}{37}{43}{Copying.Application.RetainedFrame.canonical}
+\lean{Copying/RetainedBetaCanonical}{44}{50}{Copying.Application.RetainedFrame.canonical_certificate}
+\lean{Copying/RetainedBetaCanonical}{51}{55}{Copying.Application.RetainedFrame.rewrite_canonical}
+
+\subsection{Paired deep bodies in a retained frame}
+The changed filling replaces only the box component of the frame, retaining the two primitive operation edges. Its label copies and expansion isomorphism are checked component by component. A full recursive isomorphism of the new box gives the corresponding ordered source isomorphism for the decorated frame.
+
+A recursive filling certificate on the box contains an actual filling witness for its two bodies. Extracting this witness proves the paired-body theorem. Padding closure then transports that body witness to the original open-body depth and proves the paired-opening theorem, including the exact resumed coordinate. This is the place where the original padding law is required; it is not inferred from determinism.
+\par\penalty0
+\lean{Copying/RetainedBetaDecoration}{14}{21}{Copying.Application.RetainedFrame.changedFill}
+\lean{Copying/RetainedBetaDecoration}{22}{26}{Copying.Application.RetainedFrame.changedCopy}
+\lean{Copying/RetainedBetaDecoration}{27}{34}{Copying.Application.RetainedFrame.changedIso}
+\lean{Copying/RetainedBetaDecoration}{35}{47}{Copying.Application.RetainedFrame.sourceIso}
+\par\penalty0
+\lean{Copying/RetainedBetaDecoration}{48}{58}{Copying.Application.RetainedFrame.paired_body}
+\lean{Copying/RetainedBetaDecoration}{59}{66}{Copying.Application.RetainedFrame.paired_opening}
+
+\subsection{Rooted readiness enables the original beta rule}
+The application, lambda and box occurrences are literal components of the three-edge frame. The lambda-to-box port equation and disjointness proof assemble the complete original lambda payload; the application input and function-link equations record its exact attachment.
+
+For a rooted rewrite token at an occurrence of this frame, the original search history supplies the stable argument required by the original beta rule. The enabledness theorem uses the application and complete lambda-payload occurrences to reconstruct a full original redex with that actual stable argument. Consequently the argument can contain shallow template material elsewhere in the host. Stability is proved from readiness and is never asserted for the bare exposed output itself.
+\par\penalty0
+\lean{Copying/RetainedBetaEnabled}{11}{13}{Copying.Application.RetainedFrame.appOccurrence}
+\lean{Copying/RetainedBetaEnabled}{14}{16}{Copying.Application.RetainedFrame.lambdaOccurrence}
+\lean{Copying/RetainedBetaEnabled}{17}{19}{Copying.Application.RetainedFrame.boxOccurrence}
+\lean{Copying/RetainedBetaEnabled}{20}{26}{Copying.Application.RetainedFrame.closure_link}
+\par\penalty0
+\lean{Copying/RetainedBetaEnabled}{27}{32}{Copying.Application.RetainedFrame.closure_disjoint}
+\lean{Copying/RetainedBetaEnabled}{33}{36}{Copying.Application.RetainedFrame.closureOccurrence}
+\lean{Copying/RetainedBetaEnabled}{37}{38}{Copying.Application.RetainedFrame.app_input}
+\lean{Copying/RetainedBetaEnabled}{39}{43}{Copying.Application.RetainedFrame.function_link}
+\par\penalty0
+\lean{Copying/RetainedBetaEnabled}{44}{51}{Copying.Application.RetainedFrame.rooted_enabled}
+
+\subsection{Exhaustive retained-versus-shallow function classification}
+An application head entering from the common host cannot enter a lambda-only template component. If the function lambda is also retained, its thunk edge reaches a retained box; the resulting three-edge frame avoids all shallow holes. The proof uses the actual match and original incidence uniqueness, so it does not require the argument graph to avoid holes.
+
+The classification theorem splits the original function-lambda owner into the two exhaustive possibilities: an original shallow template hole, or a retained argument-exposing beta frame. This is the precise distinction used by the eventual universal dispatcher. It does not classify an entire stable argument as retained.
+\par\penalty0
+\lean{Copying/LambdaEntryBetaOverlap}{21}{45}{Copying.LambdaEntryOverlap.beta_frame_avoids}
+\lean{Copying/LambdaEntryBetaOverlap}{46}{53}{Copying.LambdaEntryOverlap.beta_frame_classification}
+
+\subsection{Retained and deeply changed beta residuals}
+For a retained three-edge frame, recursive box certificates construct the paired bodies and their padded open-body witness. The whole-frame matcher uses rooted readiness separately on both sides, opens the actual bodies, retains the complement, and constructs the original quasi-specimen at the exact resumed position. Thus the matching theorem supplies actual two-sided transitions with no retained-argument premise.
+
+The matching-or-shallow theorem combines this construction with the exhaustive function-owner classification. The two robustness wrappers identify arbitrary supplied successors with those real transitions and return the corresponding forward or original-opposite quasi-specimen. The shallow-function alternative is intentionally left to the family diagrams developed below; it is not disguised as a hypothesis of a completed universal beta theorem.
+\par\penalty0
+\lean{Copying/LambdaEntryBetaResiduals}{22}{37}{Copying.LambdaEntryOverlap.beta_matching}
+\lean{Copying/LambdaEntryBetaResiduals}{38}{55}{Copying.LambdaEntryOverlap.beta_matching_or_shallow}
+\lean{Copying/LambdaEntryBetaResiduals}{56}{73}{Copying.LambdaEntryOverlap.beta_robust_case}
+\lean{Copying/LambdaEntryBetaResiduals}{74}{88}{Copying.LambdaEntryOverlap.beta_converse_robust_case}
+
+\subsection{Opening inside an actual common finite cut}
+A complete common-context occurrence determines a skeleton and its component fillings. The frame-opening operation casts a local opening certificate to the computed cut interface, plugs it into the original complement, and uses the actual grouping isomorphism. The operation at a specified source coordinate additionally proves that the initial point is the original host image of that coordinate.
+
+The successor theorem compares an independently supplied original rewrite with this constructed opening. Both certificates describe the same source-relative application, so proved opening coherence identifies the entire successors and their resumed positions. The selected occurrence may contain a shallow template hole; the construction does not require it to be primitive or wholly retained.
+\par\penalty0
+\lean{Copying/CommonContextOpening}{16}{32}{Copying.CommonContextCut.frame_opening}
+\lean{Copying/CommonContextOpening}{33}{43}{Copying.CommonContextCut.opening_at}
+\lean{Copying/CommonContextOpening}{44}{52}{Copying.CommonContextCut.opening_successor}
+
+\subsection{Count-preserving transport through the common complement}
+The transported state consists of the original complement with the local graph inserted, the unchanged mode, and the exact inserted vertex. Every original step lifts to one original step in this state: rewrite steps use the actual expansion rule, and search steps use its proved boundary and expansion transport. Induction on a finite run therefore preserves its exact number of transitions.
+
+The final label identity says that an inserted local token has exactly its original wire label. Its proof handles the interface equality casts explicitly. This identity later ensures that the resumed point of the transported private read is genuinely a term point.
+\par\penalty0
+\lean{Copying/CommonContextExecution}{15}{17}{Copying.CommonContextCut.afterState}
+\lean{Copying/CommonContextExecution}{18}{32}{Copying.CommonContextCut.after_step}
+\lean{Copying/CommonContextExecution}{33}{39}{Copying.CommonContextCut.after_run}
+\lean{Copying/CommonContextExecution}{40}{49}{Copying.CommonContextCut.after_label}
+
+\subsection{From geometric opening to an enabled transition}
+An opening certificate alone records where the lambda body will be inserted. At an actual rooted rewrite token the original search history reconstructs a stable argument and hence an enabled original beta rewrite. Source-relative opening coherence gives a recursive isomorphism from that real successor to the certified graph. Renaming the real rewrite along this isomorphism produces a rewrite to the exact certified target and exact certified resume point. No new machine rule is introduced.
+\par\penalty0
+\lean{Copying/RootedOpeningRewrite}{14}{21}{Copying.Application.OpeningCertificate.rooted_rewrite}
+
+\subsection{Transporting every correction link and residual specimen}
+The interface-reboundary operation transports a pointed filling witness together with its exact common-context vertex. An unchanged pointed witness then inserts such a local comparison into the actual finite common complement, using literal reflexive witnesses on all untouched components.
+
+Applying this construction separately to each link of a read correction preserves its original copying and two garbage-collection witnesses. The read-residual operation also preserves the final sharing-tree comparison. The paired-pointed operation instead uses the original recursive certificates on all untouched components, and the supplied original parametricity witness on the selected component. Thus the final whole-graph residual preserves every other shallow and deep template occurrence, while each semantic correction remains justified by its own already proved template.
+\par\penalty0
+\lean{Copying/ParametricityCommonRead}{13}{34}{Copying.BoxPullWeakening.PointedWitness.reboundary}
+\lean{Copying/ParametricityCommonRead}{35}{46}{Copying.CommonContextCut.unchangedPointed}
+\lean{Copying/ParametricityCommonRead}{47}{57}{Copying.CommonContextCut.readCorrection}
+\lean{Copying/ParametricityCommonRead}{58}{66}{Copying.CommonContextCut.readResidual}
+\par\penalty0
+\lean{Copying/ParametricityCommonRead}{67}{77}{Copying.CommonContextCut.pairedPointed}
+
+\subsection{Whole-host quantitative beta/read diagrams}
+The host diagram starts from two actual rooted rewrite tokens. The transported geometric opening certificates enable one original beta transition on each side. The exact local read run lifts through the common complement, giving a total of $n+1$ actual transitions on the left and one on the right. Hole-freeness of the actual left endpoint follows from the original transition invariants. Every copying, garbage and sharing correction is transported separately, and the final genuine parametricity witness transports the original rooted search information needed for those corrections.
+
+The diagram concludes with the forward improvement quasi-specimen and the converse overhead quasi-specimen in the original opposite system. The forward wrapper uses determinism to identify any supplied first successor, leaving $n$ further left transitions and one right transition; its numerical obligation is $1\leq 1+n$. The converse wrapper identifies the supplied right successor, uses zero further right transitions and $n+1$ left transitions, and proves the dual overhead comparison. These constructions work even when the argument belongs to another shallow parametricity family, since the argument remains outside the selected finite cut.
+\par\penalty0
+\lean{Copying/ParametricityBetaHost}{35}{60}{Copying.Parametricity.BetaHost.diagram}
+\lean{Copying/ParametricityBetaHost}{61}{83}{Copying.Parametricity.BetaHost.forward_case}
+\lean{Copying/ParametricityBetaHost}{84}{101}{Copying.Parametricity.BetaHost.converse_case}
+
+\subsection{Plugging a witness at its actual resumed point}
+The selected-edge plugging operation keeps an arbitrary pointed witness, including an internal resume vertex, at its actual inserted position in the host. It first expresses the plug as a one-component expansion, lifts the filling certificates using literal copies on all other components, and then peels the selected expansion. The exact insertion identity proves that both endpoint coordinates are those of the original plug, rather than merely existentially chosen equivalent vertices.
+\par\penalty0
+\lean{Copying/PointedPlugSelected}{10}{34}{Copying.BoxPullWeakening.PointedWitness.plugSelected}
+
+\subsection{Interface changes and reflexive correction chains}
+Reboundary transports each actual copying and garbage-collection witness and its pointed coordinates through equal interface lists. It also transports the sharing-tree link of a read residual. The reflexive correction and residual use genuine reflexive filling witnesses for the already proved correction families. They compare a graph only with itself. These identities let a beta case with no post-opening computation use the same proof-data structure as a case with a private read.
+\par\penalty0
+\lean{Copying/ParametricityResidualBoundary}{9}{16}{Copying.Parametricity.ReadCorrection.reboundary}
+\lean{Copying/ParametricityResidualBoundary}{17}{25}{Copying.Parametricity.ReadResidual.reboundary}
+\lean{Copying/ParametricityResidualBoundary}{26}{29}{Copying.Parametricity.ReadCorrection.refl}
+\lean{Copying/ParametricityResidualBoundary}{30}{32}{Copying.Parametricity.ReadResidual.refl}
+
+\subsection{A certificate for the actual family beta computation}
+A parametricity read diagram consists of two original beta opening certificates, an exact finite left read run, its independently proved structural corrections, and a genuine pointed parametricity residual.
+A read diagram stores the two original lambda bodies, their complete opening certificates, the exact resumed vertices, an $n$-transition original left run, and the resulting term point. It also stores the actual copying/garbage/sharing correction chain and a pointed original parametricity filling relating the corrected endpoint to the right opening. It is proof data, not a new operational or observational relation.
+
+The zero-step constructor uses two supplied openings and their genuine paired residual, together with a reflexive correction chain. Independent source isomorphisms transport only the two source presentations and their opening certificates, leaving all actual intermediate graphs and corrections intact. Interface-reboundary instead casts every graph and every point, and uses the original finite-run interface transport to preserve $n$ exactly.
+\par\penalty0
+\lean{Copying/ParametricityReadDiagram}{14}{39}{Copying.Parametricity.ReadDiagram}
+\lean{Copying/ParametricityReadDiagram}{40}{71}{Copying.Parametricity.ReadDiagram.of_pointed}
+\lean{Copying/ParametricityReadDiagram}{72}{96}{Copying.Parametricity.ReadDiagram.congr}
+\lean{Copying/ParametricityReadDiagram}{97}{127}{Copying.Parametricity.ReadDiagram.reboundary}
+
+\subsection{Synchronous input permutations preserve the entire computation}
+A pointed filling is put into the actual typed input-permutation context after casting its interface to the hole interface. The transparent frame reconstruction isomorphism identifies its exact inserted point with the original permutation action, including internal points. Applying this to each link transports the copying and garbage corrections, then the final sharing-tree link.
+
+The read-diagram operation transports both original opening certificates, every step of the finite run, every correction witness and the final original parametricity witness through that same context. The result retains the exact number of transitions and the original lambda bodies. Its term-point label follows from the typed boundary isomorphism. This is the semantic justification for synchronously reordering a selected family member; no invariance under an unproved graph equation is assumed.
+\par\penalty0
+\lean{Copying/ParametricityInputResidual}{11}{30}{Copying.BoxPullWeakening.PointedWitness.inputPermutation}
+\lean{Copying/ParametricityInputResidual}{31}{37}{Copying.Parametricity.ReadCorrection.inputPermutation}
+\lean{Copying/ParametricityInputResidual}{38}{45}{Copying.Parametricity.ReadResidual.inputPermutation}
+\lean{Copying/ParametricityInputResidual}{46}{68}{Copying.Parametricity.ReadDiagram.inputPermutation}
+
+\subsection{Recognizing the original bound-variable weakening}
+Two disjoint complete occurrences, one for a body fragment and one for a weakening edge, form the component family of the insertion construction. The inserted occurrence is assembled by the proved parallel join; the final occurrence accounts for the exact interface cast used by the original bound-variable adjoin operation.
+
+The old-port identity shows where every pre-existing body vertex lands. Its input specialization preserves the original body input, while the weakening equation identifies the newly inserted bound output with the actual weakening output. These ordered identities are later used to reconstruct the original opened lambda body with its discarded argument still exposed at the host boundary.
+\par\penalty0
+\lean{Copying/BoundWeakeningOccurrence}{20}{25}{Copying.BoxPullWeakening.AdjoinOccurrence.components}
+\lean{Copying/BoundWeakeningOccurrence}{26}{35}{Copying.BoxPullWeakening.AdjoinOccurrence.inserted}
+\lean{Copying/BoundWeakeningOccurrence}{36}{39}{Copying.BoxPullWeakening.AdjoinOccurrence.occurrence}
+\lean{Copying/BoundWeakeningOccurrence}{40}{51}{Copying.BoxPullWeakening.AdjoinOccurrence.old}
+\par\penalty0
+\lean{Copying/BoundWeakeningOccurrence}{52}{55}{Copying.BoxPullWeakening.AdjoinOccurrence.input}
+\lean{Copying/BoundWeakeningOccurrence}{56}{75}{Copying.BoxPullWeakening.AdjoinOccurrence.weakening}
+
+\subsection{The smaller-family opening and its actual private read}
+The opened left graph is the complete original family-read source tensored with a literal weakening for the bound argument. The private-reader and weakening occurrences are disjoint. Padding identifies the original opened read body with the reader-plus-weakening construction, and the bound-weakening occurrence gives its complete embedding. The three port lemmas distinguish the resumed input, the discarded bound argument output and the free private-reference output. Inverse cutting this complete body occurrence reconstructs the original beta source and its token; the resulting geometric certificate opens precisely that source.
+
+The corrected graph and its counterpart retain all remaining original family members and the arbitrary original private tree. Their original parametricity filling supplies the pointed residual. The proved eight-transition private read lifts into the tensor; the correction operation lifts its copying, garbage-collection and sharing links with the exact token. The factorization theorem records that actual run and all of those independent witnesses.
+
+The right construction uses the literal numeral occurrence and the same bound weakening. Their disjointness, padding isomorphism and complete body occurrence reconstruct the original numeral-returning lambda source by inverse cutting. Its input and bound-output equations give the right opening certificate. At no point is a value graph for the argument inserted into this local frame.
+\par\penalty0
+\lean{Copying/ParametricitySmallBareApplication}{15}{15}{Copying.Parametricity.SmallBareApplication.weak}
+\lean{Copying/ParametricitySmallBareApplication}{16}{16}{Copying.Parametricity.SmallBareApplication.opened}
+\lean{Copying/ParametricitySmallBareApplication}{17}{18}{Copying.Parametricity.SmallBareApplication.privateOccurrence}
+\lean{Copying/ParametricitySmallBareApplication}{19}{20}{Copying.Parametricity.SmallBareApplication.weakeningOccurrence}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareApplication}{21}{24}{Copying.Parametricity.SmallBareApplication.reader}
+\lean{Copying/ParametricitySmallBareApplication}{25}{31}{Copying.Parametricity.SmallBareApplication.reader_input}
+\lean{Copying/ParametricitySmallBareApplication}{32}{35}{Copying.Parametricity.SmallBareApplication.body_disjoint}
+\lean{Copying/ParametricitySmallBareApplication}{36}{39}{Copying.Parametricity.SmallBareApplication.bodyIso}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareApplication}{40}{45}{Copying.Parametricity.SmallBareApplication.bodyOccurrence}
+\lean{Copying/ParametricitySmallBareApplication}{46}{50}{Copying.Parametricity.SmallBareApplication.body_input}
+\lean{Copying/ParametricitySmallBareApplication}{51}{56}{Copying.Parametricity.SmallBareApplication.body_bound}
+\lean{Copying/ParametricitySmallBareApplication}{57}{60}{Copying.Parametricity.SmallBareApplication.body_free}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareApplication}{61}{62}{Copying.Parametricity.SmallBareApplication.before}
+\lean{Copying/ParametricitySmallBareApplication}{63}{67}{Copying.Parametricity.SmallBareApplication.token}
+\lean{Copying/ParametricitySmallBareApplication}{68}{73}{Copying.Parametricity.SmallBareApplication.opening}
+\lean{Copying/ParametricitySmallBareApplication}{74}{74}{Copying.Parametricity.SmallBareApplication.corrected}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareApplication}{75}{76}{Copying.Parametricity.SmallBareApplication.counterpart}
+\lean{Copying/ParametricitySmallBareApplication}{77}{80}{Copying.Parametricity.SmallBareApplication.paired}
+\lean{Copying/ParametricitySmallBareApplication}{81}{84}{Copying.Parametricity.SmallBareApplication.pointed}
+\lean{Copying/ParametricitySmallBareApplication}{85}{89}{Copying.Parametricity.SmallBareApplication.opened_focusFree}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareApplication}{90}{113}{Copying.Parametricity.SmallBareApplication.correction}
+\lean{Copying/ParametricitySmallBareApplication}{114}{128}{Copying.Parametricity.SmallBareApplication.read_factorization}
+\lean{Copying/ParametricitySmallBareApplication}{129}{133}{Copying.Parametricity.SmallBareApplication.numeralOccurrence}
+\lean{Copying/ParametricitySmallBareApplication}{134}{136}{Copying.Parametricity.SmallBareApplication.rightWeakening}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareApplication}{137}{141}{Copying.Parametricity.SmallBareApplication.right_disjoint}
+\lean{Copying/ParametricitySmallBareApplication}{142}{145}{Copying.Parametricity.SmallBareApplication.rightBodyIso}
+\lean{Copying/ParametricitySmallBareApplication}{146}{152}{Copying.Parametricity.SmallBareApplication.rightBody}
+\lean{Copying/ParametricitySmallBareApplication}{153}{157}{Copying.Parametricity.SmallBareApplication.rightBody_input}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareApplication}{158}{164}{Copying.Parametricity.SmallBareApplication.rightBody_bound}
+\lean{Copying/ParametricitySmallBareApplication}{165}{167}{Copying.Parametricity.SmallBareApplication.rightBefore}
+\lean{Copying/ParametricitySmallBareApplication}{168}{171}{Copying.Parametricity.SmallBareApplication.rightToken}
+\lean{Copying/ParametricitySmallBareApplication}{172}{177}{Copying.Parametricity.SmallBareApplication.rightOpening}
+
+\subsection{Recovering the unchanged complete smaller-family source}
+The host is the inverse cut constructed from the actual opened reader body. Its inserted three-edge frame supplies the original application and selected small lambda. The remaining original family and the complete private tree/cell have disjoint edge images from the removed body, so occurrences of both survive across the cut. Their disjointness from the selected lambda permits the exact isolated-family tensor join.
+
+The selected and remaining free outputs attach to their original ordered private-tree inputs; the family-to-cell equations and edge disjointness therefore give a complete occurrence of the closed family. Its first input is the application's function output. The application is disjoint from the entire closed family, and the family witness is the already proved original isolated parametricity specimen, adjusted only by a checked serial-association isomorphism. All original private-tree branches are retained.
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSource}{13}{13}{Copying.Parametricity.SmallBareSource.host}
+\lean{Copying/ParametricitySmallBareSource}{14}{14}{Copying.Parametricity.SmallBareSource.localSource}
+\lean{Copying/ParametricitySmallBareSource}{15}{16}{Copying.Parametricity.SmallBareSource.inserted}
+\lean{Copying/ParametricitySmallBareSource}{17}{17}{Copying.Parametricity.SmallBareSource.head}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSource}{18}{19}{Copying.Parametricity.SmallBareSource.selected}
+\lean{Copying/ParametricitySmallBareSource}{20}{22}{Copying.Parametricity.SmallBareSource.oldFamily}
+\lean{Copying/ParametricitySmallBareSource}{23}{28}{Copying.Parametricity.SmallBareSource.oldCell}
+\lean{Copying/ParametricitySmallBareSource}{29}{38}{Copying.Parametricity.SmallBareSource.family_avoids}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSource}{39}{56}{Copying.Parametricity.SmallBareSource.cell_avoids}
+\lean{Copying/ParametricitySmallBareSource}{57}{59}{Copying.Parametricity.SmallBareSource.remaining}
+\lean{Copying/ParametricitySmallBareSource}{60}{63}{Copying.Parametricity.SmallBareSource.cell}
+\lean{Copying/ParametricitySmallBareSource}{64}{67}{Copying.Parametricity.SmallBareSource.selected_remaining_disjoint}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSource}{68}{73}{Copying.Parametricity.SmallBareSource.family}
+\lean{Copying/ParametricitySmallBareSource}{74}{87}{Copying.Parametricity.SmallBareSource.selected_cell}
+\lean{Copying/ParametricitySmallBareSource}{88}{103}{Copying.Parametricity.SmallBareSource.remaining_cell}
+\lean{Copying/ParametricitySmallBareSource}{104}{120}{Copying.Parametricity.SmallBareSource.family_cell}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSource}{121}{128}{Copying.Parametricity.SmallBareSource.family_cell_disjoint}
+\lean{Copying/ParametricitySmallBareSource}{129}{133}{Copying.Parametricity.SmallBareSource.closedGraph}
+\lean{Copying/ParametricitySmallBareSource}{134}{137}{Copying.Parametricity.SmallBareSource.closedFamily}
+\lean{Copying/ParametricitySmallBareSource}{138}{144}{Copying.Parametricity.SmallBareSource.closed_zero}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSource}{145}{149}{Copying.Parametricity.SmallBareSource.head_function}
+\lean{Copying/ParametricitySmallBareSource}{150}{161}{Copying.Parametricity.SmallBareSource.head_family_disjoint}
+\lean{Copying/ParametricitySmallBareSource}{162}{167}{Copying.Parametricity.SmallBareSource.familyWitness}
+
+\subsection{A complete source isomorphism, including every edge}
+The application input is the original external token, every unselected family input stays in its original order, and the argument output is the original exposed boundary wire. These identities assemble the complete bare-application source occurrence. Its input and output theorems fix the whole external interface.
+
+Four coverage lemmas cover the application, selected lambda, remaining family and original private tree/cell. Coverage of the old opened graph separates the reader and bound weakening removed by inverse cutting from the untouched components. Combining these cases proves that every edge of the reconstructed source occurs in the bare source. The complete occurrence with fixed boundaries and surjective edge map then yields the genuine recursive graph isomorphism; no missing component or unspecified complement is hidden in the correspondence.
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSourceIso}{12}{16}{Copying.Parametricity.SmallBareSource.head_input}
+\lean{Copying/ParametricitySmallBareSourceIso}{17}{24}{Copying.Parametricity.SmallBareSource.remaining_input}
+\lean{Copying/ParametricitySmallBareSourceIso}{25}{33}{Copying.Parametricity.SmallBareSource.closed_input_succ}
+\lean{Copying/ParametricitySmallBareSourceIso}{34}{40}{Copying.Parametricity.SmallBareSource.argument_output}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSourceIso}{41}{45}{Copying.Parametricity.SmallBareSource.sourceOccurrence}
+\lean{Copying/ParametricitySmallBareSourceIso}{46}{58}{Copying.Parametricity.SmallBareSource.input}
+\lean{Copying/ParametricitySmallBareSourceIso}{59}{67}{Copying.Parametricity.SmallBareSource.output}
+\lean{Copying/ParametricitySmallBareSourceIso}{68}{69}{Copying.Parametricity.SmallBareSource.covers_head}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSourceIso}{70}{72}{Copying.Parametricity.SmallBareSource.covers_selected}
+\lean{Copying/ParametricitySmallBareSourceIso}{73}{75}{Copying.Parametricity.SmallBareSource.covers_remaining}
+\lean{Copying/ParametricitySmallBareSourceIso}{76}{82}{Copying.Parametricity.SmallBareSource.covers_cell}
+\lean{Copying/ParametricitySmallBareSourceIso}{83}{115}{Copying.Parametricity.SmallBareSource.opened_cover}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareSourceIso}{116}{145}{Copying.Parametricity.SmallBareSource.cover}
+\lean{Copying/ParametricitySmallBareSourceIso}{146}{150}{Copying.Parametricity.SmallBareSource.iso}
+
+\subsection{The actual smaller-family beta sources}
+The left and right graphs are the complete bare applications of the isolated families; the only additional presentation change is the proved append-empty interface equality. The source witness is an actual original parametricity filling in the bare application context. The two token lemmas identify the inverse-cut tokens with external input zero.
+
+The left and right opening certificates are transported through the independently proved complete source isomorphisms. The final theorem exposes the exact eight-step post-opening read, the genuine structural correction chain and the original pointed residual. These are geometric openings until placed at an actual rooted host token; original enabledness is supplied by the host theorem rather than by an assumed stable bare argument.
+\par\penalty0
+\lean{Copying/ParametricitySmallBareDiagram}{14}{15}{Copying.Parametricity.SmallBareDiagram.left}
+\lean{Copying/ParametricitySmallBareDiagram}{16}{20}{Copying.Parametricity.SmallBareDiagram.right}
+\lean{Copying/ParametricitySmallBareDiagram}{21}{24}{Copying.Parametricity.SmallBareDiagram.sourceWitness}
+\lean{Copying/ParametricitySmallBareDiagram}{25}{26}{Copying.Parametricity.SmallBareDiagram.left_token}
+\par\penalty0
+\lean{Copying/ParametricitySmallBareDiagram}{27}{31}{Copying.Parametricity.SmallBareDiagram.right_token}
+\lean{Copying/ParametricitySmallBareDiagram}{32}{39}{Copying.Parametricity.SmallBareDiagram.leftOpening}
+\lean{Copying/ParametricitySmallBareDiagram}{40}{50}{Copying.Parametricity.SmallBareDiagram.rightOpening}
+\lean{Copying/ParametricitySmallBareDiagram}{51}{58}{Copying.Parametricity.SmallBareDiagram.after_opening}
+
+\subsection{Packaging the smaller nine-versus-one computation}
+The first theorem packages the actual smaller-family openings, eight-transition read factorization and structural correction witnesses into a read diagram. The term type of the final read position is transferred across the proved correction to the known first input of the corrected graph. The second theorem removes only the append-empty interface presentation, casting the complete certificate and cancelling the inverse casts. Its source is exactly the canonical bare isolated family used for arbitrary-member selection. Together with the initial beta transitions this gives nine actual left steps and one actual right step.
+\par\penalty0
+\lean{Copying/ParametricitySmallReadDiagram}{14}{37}{Copying.Parametricity.SmallBareDiagram.readDiagram}
+\lean{Copying/ParametricitySmallReadDiagram}{38}{47}{Copying.Parametricity.SmallBareDiagram.normalized}
+
+\subsection{Every original family member has the proved beta diagram}
+The large canonical constructor packages the original two beta openings and the genuine remaining-family residual with zero post-opening transitions. To reach an arbitrary original member, the original family boundary isomorphism pulls back the exact supplied private tree. A checked serial-association isomorphism aligns this presentation with the canonical closed source. The left and right families have the same full input action; the original left free-output action attaches the original private tree in exactly that order.
+
+The boundary action is then lifted to the bare application frame. It fixes the active application input and the exposed argument output. Synchronous boundary transport applies an actual typed input-permutation context to both opening/read/correction certificates. The large theorem therefore gives zero post-opening steps at any chosen original large member; the small theorem gives eight at any chosen original small member. Both preserve every original family member and the arbitrary supplied private tree.
+
+Finally, the all-inputs theorem splits an arbitrary original index at the boundary between the large and small blocks. It includes empty blocks and the final member, proves the arithmetic interface identifications, and returns the exact original literal sources with a step count equal to either zero or eight. No selected-member decomposition, opposite transition, argument-retention condition or desired equivalence is left as an assumption.
+\par\penalty0
+\lean{Copying/ParametricityLiteralBeta}{16}{25}{Copying.Parametricity.LiteralBeta.largeCanonical}
+\lean{Copying/ParametricityLiteralBeta}{76}{106}{Copying.Parametricity.LiteralBeta.large}
+\lean{Copying/ParametricityLiteralBeta}{107}{138}{Copying.Parametricity.LiteralBeta.small}
+\lean{Copying/ParametricityLiteralBeta}{139}{164}{Copying.Parametricity.LiteralBeta.all_inputs}
+
+\subsection{Assignment Enabled}
+Reconstruct the unchanged assignment rule from its retained original
+atom frame and the actual rooted stable operand. The operand's complete
+corolla is selected independently, including a lambda inside a shallow family.
+
+A stable source denotes an actual complete stable corolla occurrence,
+with its own ordered output interface and exact original input attachment.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/AssignmentEnabled}{14}{31}{StableAt.occurrence}
+\par\penalty0
+
+The actual full original atom tree, instance and store, together with
+rooted readiness of the new value, construct an original assignment rewrite.
+No whole-value retention or matching/execution oracle is assumed.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/AssignmentEnabled}{51}{73}{Assignment.rooted_frame_enabled}
+\par\penalty0
+
+\subsection{Assignment Retained Canonical}
+The canonical assignment changes only two original target attachments
+and the retained assignment head. Every operand component, including an
+entire shallow lambda family, is retained as an original residual filling.
+
+The actual canonical target swap agrees with the swap in the original
+common context, preserving all old edge and vertex names exactly.
+\lean{Copying/AssignmentRetainedCanonical}{20}{37}{Retained.swapIso}
+\par\penalty0
+
+The entire common write reduct is assembled from the target-swapped
+original context and a single replacement by unit and both weakenings.
+\lean{Copying/AssignmentRetainedCanonical}{41}{41}{Retained.family}
+\par\penalty0
+
+Both the complete graph and resumed token of the actual canonical write
+agree with this original-context construction.
+\lean{Copying/AssignmentRetainedCanonical}{45}{91}{Retained.canonicalIso}
+\par\penalty0
+
+The canonical write replacement consists only of unit and two term
+weakenings, hence is focus-free at every depth.
+The proof separates the possible original constructors.
+\lean{Copying/AssignmentRetainedCanonical}{96}{102}{Retained.filler_free}
+\par\penalty0
+
+The original paired filling survives a write as a genuine pointed
+specimen. The proof uses the common target-swapped original context, not a
+new relation identifying the operands or their private boxes.
+\lean{Copying/AssignmentRetainedCanonical}{107}{127}{Retained.pointed}
+\par\penalty0
+
+\subsection{Beta Enabled}
+Original beta enabledness uses its actual application and complete
+lambda payload, together with the rooted readiness of the argument. The
+argument may be a lambda edge inside an arbitrary shallow template family.
+
+An original rooted application of the supplied complete lambda payload
+has an actual original beta rewrite. The stable argument corolla is recovered
+from the actual search history, without a footprint-retention assumption.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/BetaEnabled}{14}{82}{Application.rooted_payload_enabled}
+\par\penalty0
+
+\subsection{Contraction Tree Graft Boundary}
+A downstream boundary isomorphism transports a literal input graft.
+Every upstream input remains fixed; unselected downstream inputs follow the
+recorded permutation with the selected position removed.
+
+The actual image of a downstream input, with only its length equality exposed.
+\lean{Copying/ContractionTreeGraftBoundary}{16}{19}{BoundaryRight.image}
+\par\penalty0
+
+The image injective lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{21}{27}{BoundaryRight.image_injective}
+\par\penalty0
+
+The ordered input remaining after deleting the selected downstream input.
+\lean{Copying/ContractionTreeGraftBoundary}{30}{37}{BoundaryRight.remaining}
+\par\penalty0
+
+The right unselected lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{39}{46}{BoundaryRight.right_unselected}
+\par\penalty0
+
+The left construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ContractionTreeGraftBoundary}{47}{47}{BoundaryRight.left}
+\par\penalty0
+
+The right construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ContractionTreeGraftBoundary}{48}{49}{BoundaryRight.right}
+\par\penalty0
+
+The left ports lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ContractionTreeGraftBoundary}{51}{52}{BoundaryRight.left_ports}
+\par\penalty0
+
+The right ports lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{54}{58}{BoundaryRight.right_ports}
+\par\penalty0
+
+The link lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{60}{64}{BoundaryRight.link}
+\par\penalty0
+
+The disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ContractionTreeGraftBoundary}{66}{67}{BoundaryRight.disjoint}
+\par\penalty0
+
+Both complete original components are retained, with the selected
+attachment transported by the actual downstream input bijection.
+\lean{Copying/ContractionTreeGraftBoundary}{71}{72}{BoundaryRight.occurrence}
+\par\penalty0
+
+The upstream port lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{74}{81}{BoundaryRight.upstream_port}
+\par\penalty0
+
+The downstream port lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{83}{92}{BoundaryRight.downstream_port}
+\par\penalty0
+
+The output port lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{94}{101}{BoundaryRight.output_port}
+\par\penalty0
+
+The inputs lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{103}{118}{BoundaryRight.inputs}
+\par\penalty0
+
+The cover lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/ContractionTreeGraftBoundary}{120}{127}{BoundaryRight.cover}
+\par\penalty0
+
+The complete transported graft is recursively isomorphic with its
+actual induced boundary action. No original input order is silently erased.
+\lean{Copying/ContractionTreeGraftBoundary}{131}{133}{BoundaryRight.iso}
+\par\penalty0
+
+Every upstream input keeps its numerical position in the transported graft.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{136}{142}{BoundaryRight.iso_upstream}
+\par\penalty0
+
+Delete the selected position on each side, then apply the recorded
+input bijection. This is the complete induced action on remaining inputs.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ContractionTreeGraftBoundary}{146}{153}{BoundaryRight.iso_downstream}
+\par\penalty0
+
+Every external output follows exactly the original downstream action.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ContractionTreeGraftBoundary}{156}{161}{BoundaryRight.iso_output}
+\par\penalty0
+
+A nonempty upstream active input zero is fixed exactly.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{164}{166}{BoundaryRight.active}
+\par\penalty0
+
+The image congr lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{169}{175}{BoundaryRight.image_congr}
+\par\penalty0
+
+Equal downstream input actions induce equal whole-graft input actions,
+even if the downstream graphs have different output interfaces.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ContractionTreeGraftBoundary}{179}{196}{BoundaryRight.same_inputs}
+\par\penalty0
+
+\subsection{Converse Quasi Relations}
+Reversing the actual recursive specimen preserves arbitrary directed
+auxiliary relations, not just equality at the two endpoints.
+
+The original common context and token are unchanged when a reversed
+template specimen is viewed in the original opposite specimen system.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ConverseQuasiRelations}{10}{16}{Specimens.converse_quasi_rel}
+\par\penalty0
+
+\subsection{Copying Input Execution}
+An actual input-permutation context transports complete original opening
+certificates and every finite transition, including internal token positions.
+
+A fieldwise presentation of the same permutation-context isomorphism,
+whose internal carrier map is explicit rather than hidden by graph casts.
+\lean{Copying/CopyingInputExecution}{13}{45}{CopyingInputPermutation.pointedFrameIso}
+\par\penalty0
+
+Exact position map after inserting the original graph into the genuine
+permutation context and removing its empty corolla carrier.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/CopyingInputExecution}{49}{59}{CopyingInputPermutation.pointed_frame_insert}
+\par\penalty0
+
+All original rewrites transport at arbitrary actual token vertices;
+the new rule premises are those of the supplied original rewrite.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/CopyingInputExecution}{63}{74}{CopyingInputPermutation.rewrite_at}
+\par\penalty0
+
+The graph and focus are moved by the same recorded external action.
+\lean{Copying/CopyingInputExecution}{77}{78}{CopyingInputPermutation.state}
+\par\penalty0
+
+The step lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/CopyingInputExecution}{80}{84}{CopyingInputPermutation.step}
+\par\penalty0
+
+Finite runs transport with exactly the same number of transitions and
+with the stated concrete endpoint, not merely an existential representative.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/CopyingInputExecution}{88}{92}{CopyingInputPermutation.run}
+\par\penalty0
+
+The unchanged body opens after the actual common input permutation,
+including an arbitrary internal resumption position.
+\lean{Copying/CopyingInputExecution}{103}{114}{OpeningCertificate.inputPermutation}
+\par\penalty0
+
+\subsection{Copying Input Expansion}
+Input reindexing commutes with expansion by the identical original
+component family. Only external boundary occurrences move.
+
+The expansion insert lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/CopyingInputExpansion}{13}{29}{CopyingInputPermutation.expansion_insert}
+\par\penalty0
+
+The isomorphism is the identity on all original and inserted internal
+vertices and edges, with the external action already recorded in the target.
+\lean{Copying/CopyingInputExpansion}{33}{47}{CopyingInputPermutation.expansionIso}
+\par\penalty0
+
+\subsection{Lambda Entry Assignment}
+The complete assignment robustness case for closed-output lambda-entry
+templates. Both actual stable values are admitted, including shallow-family
+lambdas, and the residual retains the original template at every old hole.
+
+Every original assignment occurrence has a one-step/one-step diagram
+with a genuine original residual. The supplied full atom tree is retained;
+rooted search supplies the other filling's own stable value.
+The proof substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignment}{19}{41}{LambdaEntryOverlap.assignment_matching}
+\par\penalty0
+
+Assignment satisfies the quantitative robustness clause for every
+independently supplied actual successor, without a shallow-footprint premise.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/LambdaEntryAssignment}{45}{60}{LambdaEntryOverlap.assignment_robust_case}
+\par\penalty0
+
+The same construction proves the converse in the opposite original
+specimen system; no symmetry assumption on the template is introduced.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/LambdaEntryAssignment}{64}{79}{LambdaEntryOverlap.assignment_converse_robust_case}
+\par\penalty0
+
+\subsection{Lambda Entry Assignment Frame}
+Complete original atom-frame extraction for assignments in lambda-entry,
+closed-output fillings. Unused siblings of the actual supplied tree are
+retained by the backwards no-output barrier, without pruning that tree.
+
+The original supplied store is retained along its exact selected atom
+trace. This does not assert retention of the new stable value.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentFrame}{18}{25}{LambdaEntryOverlap.assignment_store_retained}
+\par\penalty0
+
+Every sibling of the supplied atom tree is retained: each reaches its
+store, and an empty-output filling cannot precede that retained store.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/LambdaEntryAssignmentFrame}{31}{39}{LambdaEntryOverlap.assignment_tree_retained}
+\par\penalty0
+
+The complete original atom tree avoids shallow holes, including its
+weakening leaves and all unrelated siblings.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentFrame}{43}{57}{LambdaEntryOverlap.assignment_tree_avoids}
+\par\penalty0
+
+Reflect the whole actual supplied tree, preserving all original boundary
+coordinates and its complete primitive labels.
+\lean{Copying/LambdaEntryAssignmentFrame}{61}{68}{LambdaEntryOverlap.assignment_tree}
+\par\penalty0
+
+The reflected tree occupies exactly its original host wires.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/LambdaEntryAssignmentFrame}{71}{75}{LambdaEntryOverlap.assignment_tree_host}
+\par\penalty0
+
+The instance introducing the selected atom is an unchanged primitive.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentFrame}{79}{95}{LambdaEntryOverlap.assignment_instance_retained}
+\par\penalty0
+
+\subsection{Lambda Entry Assignment Overlap}
+An assignment retains its operation, atom destination, full matched tree
+and store in a lambda-entry, closed-output specimen. Its stable new value may
+instead be an original shallow family lambda; no value-retention is assumed.
+
+A retained actual primitive has the identical original primitive label.
+The proof substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentOverlap}{14}{19}{LambdaEntryOverlap.retained_primitive}
+\par\penalty0
+
+Retention preserves the entire ordered target row, including the new
+value wire even when that wire enters a shallow lambda family.
+The proof substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentOverlap}{23}{26}{LambdaEntryOverlap.retained_target}
+\par\penalty0
+
+Atom-trace primitives cannot be lambda entries.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentOverlap}{29}{33}{LambdaEntryOverlap.forward_not_lambda}
+\par\penalty0
+
+Starting from an actual retained atom edge, successful store tracing
+stays in the original context, with its exact original hop count.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentOverlap}{38}{59}{LambdaEntryOverlap.store_trace_retained}
+\par\penalty0
+
+Every actual selected atom operand reflects to the original context.
+The operation is non-lambda; its stable value arguments need not be retained.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentOverlap}{63}{82}{LambdaEntryOverlap.store_operand_owner}
+\par\penalty0
+
+Source-determined assignment data reflects without changing the selected
+store, exact lookup count, or either ordered value wire.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentOverlap}{86}{112}{LambdaEntryOverlap.assignment_match_owner}
+\par\penalty0
+
+\subsection{Lambda Entry Assignment Residual}
+Assignment residuals preserve the full original paired filling, including
+stable lambda values inside shallow families. Only the retained assignment
+head and the two source-determined target attachments change.
+
+The assignment head at an original token is retained even when its new
+value belongs to a shallow lambda family.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentResidual}{16}{22}{LambdaEntryOverlap.assignment_head}
+\par\penalty0
+
+An original primitive head appears at the identical original token in
+both expansions. The statement preserves actual edge representatives.
+The proof substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentResidual}{26}{34}{LambdaEntryOverlap.primitive_head_expanded}
+\par\penalty0
+
+A retained edge with a fixed original owner is the unique edge of its
+literal corolla copy.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentResidual}{38}{43}{LambdaEntryOverlap.retained_edge_eq}
+\par\penalty0
+
+Any two actual opposite assignment successors are related by the
+original template. The original common match is identified by source
+uniqueness; neither stable argument is replaced by an assumed equivalence.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentResidual}{49}{73}{LambdaEntryOverlap.assignment_successor_pointed}
+\par\penalty0
+
+\subsection{Lambda Entry Assignment Selection}
+Extract the complete retained assignment frame and transfer it to the
+opposite actual filling. Rooted search selects that side's own stable value.
+
+Retained source rows use precisely the original host coordinates.
+The proof substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentSelection}{16}{19}{LambdaEntryOverlap.retained_source}
+\par\penalty0
+
+The assignment operation, instance, unchanged full atom tree, and store
+form one exact original context frame with the original ordered value wires.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentSelection}{24}{86}{LambdaEntryOverlap.assignment_selection}
+\par\penalty0
+
+The opposite filling contains the same complete original atom tree.
+\lean{Copying/LambdaEntryAssignmentSelection}{89}{96}{LambdaEntryOverlap.assignment_tree_right}
+\par\penalty0
+
+Opposite tree ports use the same original host coordinates.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/LambdaEntryAssignmentSelection}{99}{101}{LambdaEntryOverlap.assignment_tree_right_port}
+\par\penalty0
+
+Every actual assignment match has an opposite original assignment step.
+The original supplied atom tree is preserved in full; the other side's stable
+value is obtained from its actual rooted search history, including a lambda
+inside a shallow multi-input family.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryAssignmentSelection}{107}{132}{LambdaEntryOverlap.assignment_opposite_enabled}
+\par\penalty0
+
+\subsection{Lambda Entry Copy Classification}
+Exhaustive actual copying overlap classification for lambda-entry
+closed-output templates. The remote branch records an actual retained prefix,
+its exact first shallow input, and the complete selected lambda payload.
+
+Any original normalized copy match is either entirely resolved at a
+retained payload head, or enters one exact shallow family input through a
+complete original selected spine. Entry is immediately the actual lambda
+head, and every payload edge, including its full recursive box, has that owner.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryCopyClassification}{19}{72}{LambdaEntryCopy.match_cases}
+\par\penalty0
+
+\subsection{Lambda Entry Copy Retained}
+The retained-payload copy branch preserves the complete original tree,
+including all unused siblings. Deep template holes in the actual lambda box
+are transported by the proved unrestricted copying residual construction.
+
+Retaining the actual payload head retains its entire outer payload.
+The possible lambda box is reached through the head's original thunk output
+and cannot be the lambda head at any shallow-family input.
+The proof separates the possible original constructors.
+\lean{Copying/LambdaEntryCopyRetained}{20}{39}{LambdaEntryCopy.payload_avoids}
+\par\penalty0
+
+Every edge of the whole original copying source avoids shallow holes
+once its actual payload head is retained. The no-output law works backwards
+from the payload through every branch of the supplied tree.
+The proof separates the possible original constructors.
+\lean{Copying/LambdaEntryCopyRetained}{45}{66}{LambdaEntryCopy.source_avoids}
+\par\penalty0
+
+The retained-payload branch has actual one-step successors and a genuine
+original residual in arbitrary contexts, preserving the supplied whole tree
+and arbitrary deep template holes inside the copied lambda body.
+The proof substitutes the proved component identities.
+\lean{Copying/LambdaEntryCopyRetained}{82}{98}{LambdaEntryCopy.retained_matching}
+\par\penalty0
+
+The retained branch handles any independently supplied original copying
+successor, after its actual head-retention case has been classified.
+The proof substitutes the proved component identities.
+\lean{Copying/LambdaEntryCopyRetained}{102}{118}{LambdaEntryCopy.retained_robust_case}
+\par\penalty0
+
+Reversing the actual original certificates proves the retained copying
+branch in the opposite specimen system without a symmetry hypothesis.
+The proof substitutes the proved component identities.
+\lean{Copying/LambdaEntryCopyRetained}{123}{140}{LambdaEntryCopy.retained_converse_robust_case}
+\par\penalty0
+
+\subsection{Lambda Entry Copy Trace}
+First shallow entry of an actual copy trace for lambda-entry templates.
+The prefix is an original context trace; the entered lambda is terminal for
+copy tracing, and its whole recursive payload remains in that same hole.
+
+An actual copy trace either reflects entirely to the original context
+or has its first shallow entry at one exact original ordered hole input.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic.
+\lean{Copying/LambdaEntryCopyTrace}{16}{40}{LambdaEntryCopy.trace_cases}
+\par\penalty0
+
+A target of a shallow component with no outputs remains internal to that
+component. An actual following edge therefore has exactly the same owner.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/LambdaEntryCopyTrace}{44}{63}{LambdaEntryCopy.shallow_adjacent_owner}
+\par\penalty0
+
+The first shallow entry is already the actual matched lambda head.
+Its attached recursive box is in the same original hole, so every outer
+payload edge has that owner and the complete lambda body stays intact.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryCopyTrace}{68}{103}{LambdaEntryCopy.shallow_payload_owner}
+\par\penalty0
+
+\subsection{Lambda Entry Noncritical Dispatch}
+Exhaustive actual-machine dispatch for all seven original rules other
+than beta and copying. The two excluded heads are stated explicitly; this
+is a proved part of parametricity robustness, not its universal conclusion.
+
+The original token is not an application or term-contraction head.
+These are precisely the two local families handled by separate diagrams.
+\lean{Copying/LambdaEntryNoncriticalDispatch}{16}{27}{LambdaEntryOverlap.NoncriticalHead}
+\par\penalty0
+
+The unchanged nine-constructor local relation is dispatched exhaustively.
+All seven permitted branches construct the matching step and residual; beta
+and copying contradict the exact excluded original head labels.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/LambdaEntryNoncriticalDispatch}{33}{76}{LambdaEntryOverlap.noncritical_local}
+\par\penalty0
+
+Any supplied quotient-machine successor reflects to an actual original
+local occurrence and is handled by the complete noncritical dispatch.
+The proof separates the possible original constructors.
+\lean{Copying/LambdaEntryNoncriticalDispatch}{80}{96}{LambdaEntryOverlap.noncritical_step}
+\par\penalty0
+
+Every actual opposite noncritical successor satisfies the clause in the
+opposite of the original directed specimen system. No symmetry of the
+template or auxiliary cost relations is assumed.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/LambdaEntryNoncriticalDispatch}{102}{115}{LambdaEntryOverlap.noncritical_converse_step}
+\par\penalty0
+
+\subsection{Opening Certificate Inverse Cut}
+A complete occurrence of an opened body determines the actual inverse
+frame complement. This constructs an opening certificate, not a new rule.
+
+Insert the original source of a geometric opening into the computed
+complement of its actual target. Every unmatched edge and port is retained.
+\lean{Copying/OpeningCertificateInverseCut}{14}{27}{Occurrence.opening_into}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply}
+The actual application/family footprint exposes the argument as its sole
+output. The argument graph is wholly outside this footprint, so arbitrary
+shallow fillings there are preserved by the computed complement.
+
+The Vertex construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{12}{12}{BareApplyFirst.Vertex}
+\par\penalty0
+
+The active construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{13}{13}{BareApplyFirst.active}
+\par\penalty0
+
+The remaining construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{14}{14}{BareApplyFirst.remaining}
+\par\penalty0
+
+The label construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{15}{17}{BareApplyFirst.label}
+\par\penalty0
+
+The sources construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{18}{20}{BareApplyFirst.sources}
+\par\penalty0
+
+The targets construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{21}{23}{BareApplyFirst.targets}
+\par\penalty0
+
+The remaining ne lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic.
+\lean{Copying/ParametricityBareApply}{25}{29}{BareApplyFirst.remaining_ne}
+\par\penalty0
+
+The frame construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{31}{111}{BareApplyFirst.frame}
+\par\penalty0
+
+The pattern construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{113}{116}{BareApplyFirst.pattern}
+\par\penalty0
+
+The filling construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{118}{122}{BareApplyFirst.filling}
+\par\penalty0
+
+The net construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{124}{128}{BareApplyFirst.net}
+\par\penalty0
+
+The head construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{129}{130}{BareApplyFirst.head}
+\par\penalty0
+
+The family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{131}{132}{BareApplyFirst.family}
+\par\penalty0
+
+The head input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApply}{134}{134}{BareApplyFirst.head_input}
+\par\penalty0
+
+The head function lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApply}{135}{136}{BareApplyFirst.head_function}
+\par\penalty0
+
+The head argument lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareApply}{137}{137}{BareApplyFirst.head_argument}
+\par\penalty0
+
+The family succ lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApply}{138}{144}{BareApplyFirst.family_succ}
+\par\penalty0
+
+The witness construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApply}{146}{151}{BareApplyFirst.witness}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply At}
+Select any original family input without changing its graph carriers.
+The selected input is connected to the application; all other family inputs
+keep their relative order. The callback remains the sole external output.
+
+The order construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyAt}{14}{26}{BareApplyAt.order}
+\par\penalty0
+
+The order zero lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAt}{28}{28}{BareApplyAt.order_zero}
+\par\penalty0
+
+The order rest lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAt}{30}{33}{BareApplyAt.order_rest}
+\par\penalty0
+
+The order selected lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAt}{35}{38}{BareApplyAt.order_selected}
+\par\penalty0
+
+Only original boundary occurrences are reordered; every original family
+edge and internal vertex is retained literally.
+\lean{Copying/ParametricityBareApplyAt}{42}{42}{BareApplyAt.selected}
+\par\penalty0
+
+The net construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyAt}{44}{44}{BareApplyAt.net}
+\par\penalty0
+
+The head construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyAt}{46}{47}{BareApplyAt.head}
+\par\penalty0
+
+The family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyAt}{49}{51}{BareApplyAt.family}
+\par\penalty0
+
+The head input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAt}{53}{54}{BareApplyAt.head_input}
+\par\penalty0
+
+The head argument lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyAt}{56}{57}{BareApplyAt.head_argument}
+\par\penalty0
+
+The family port lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyAt}{59}{61}{BareApplyAt.family_port}
+\par\penalty0
+
+The head function lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAt}{63}{66}{BareApplyAt.head_function}
+\par\penalty0
+
+Canonical remaining positions denote the original inputs in their
+original relative order, with precisely the selected member removed.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAt}{70}{74}{BareApplyAt.family_remaining}
+\par\penalty0
+
+Every unselected original family input is still an external input;
+its position is exactly its index after deleting the selected member.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAt}{78}{93}{BareApplyAt.family_unselected}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply At Join}
+Complete original components assemble an application at any original
+family index. The other family inputs retain their original relative order.
+
+The selected Family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyAtJoin}{13}{14}{Join.selectedFamily}
+\par\penalty0
+
+The selected Family input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAtJoin}{16}{20}{Join.selectedFamily_input}
+\par\penalty0
+
+The occurrence construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyAtJoin}{22}{23}{Join.occurrence}
+\par\penalty0
+
+The input zero lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAtJoin}{25}{26}{Join.input_zero}
+\par\penalty0
+
+The input succ lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAtJoin}{28}{31}{Join.input_succ}
+\par\penalty0
+
+The output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyAtJoin}{33}{34}{Join.output}
+\par\penalty0
+
+The head port lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyAtJoin}{36}{38}{Join.head_port}
+\par\penalty0
+
+The family port lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyAtJoin}{40}{48}{Join.family_port}
+\par\penalty0
+
+The head edge lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareApplyAtJoin}{50}{51}{Join.head_edge}
+\par\penalty0
+
+The family edge lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareApplyAtJoin}{53}{54}{Join.family_edge}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply Boundary}
+Transport the original selected-family application through a recorded
+family boundary action. The active application input and callback output stay
+fixed; all other inputs follow the original family permutation with the
+selected position deleted on both sides.
+
+The image construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyBoundary}{14}{17}{Boundary.image}
+\par\penalty0
+
+The original construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyBoundary}{18}{19}{Boundary.original}
+\par\penalty0
+
+The link lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyBoundary}{21}{25}{Boundary.link}
+\par\penalty0
+
+The disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/ParametricityBareApplyBoundary}{27}{28}{Boundary.disjoint}
+\par\penalty0
+
+The occurrence construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyBoundary}{30}{31}{Boundary.occurrence}
+\par\penalty0
+
+The active input is fixed; the remaining action deletes the selected
+position before and after the actual original family permutation.
+\lean{Copying/ParametricityBareApplyBoundary}{35}{37}{Boundary.action}
+\par\penalty0
+
+The input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyBoundary}{39}{60}{Boundary.input}
+\par\penalty0
+
+The output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyBoundary}{62}{67}{Boundary.output}
+\par\penalty0
+
+The cover lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/ParametricityBareApplyBoundary}{69}{76}{Boundary.cover}
+\par\penalty0
+
+Full recursive labels and complete edge coverage give the required
+original-graph boundary isomorphism, with no semantic premise.
+\lean{Copying/ParametricityBareApplyBoundary}{80}{82}{Boundary.iso}
+\par\penalty0
+
+The iso input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyBoundary}{84}{88}{Boundary.iso_input}
+\par\penalty0
+
+The active lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyBoundary}{90}{92}{Boundary.active}
+\par\penalty0
+
+The iso output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyBoundary}{94}{97}{Boundary.iso_output}
+\par\penalty0
+
+The image congr lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyBoundary}{100}{104}{Boundary.image_congr}
+\par\penalty0
+
+The exact common family action produces the same application-context
+input action on both sides, including the selected active position.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyBoundary}{108}{113}{Boundary.same_inputs}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply Canonical}
+Direct transport of the checked canonical first-member diagrams to the
+actual originally selected family member, with its exact external action.
+
+The canonical construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyCanonical}{12}{13}{Boundary.canonical}
+\par\penalty0
+
+The canonical input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyCanonical}{15}{19}{Boundary.canonical_input}
+\par\penalty0
+
+The canonical active lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyCanonical}{21}{23}{Boundary.canonical_active}
+\par\penalty0
+
+The canonical output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyCanonical}{25}{28}{Boundary.canonical_output}
+\par\penalty0
+
+The canonical same inputs lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyCanonical}{30}{35}{Boundary.canonical_same_inputs}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply Closure}
+Closing the exposed argument of the bare application with the original
+argument graph recovers the original application graph exactly.
+
+The head family disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/ParametricityBareApplyClosure}{13}{14}{Closure.head_family_disjoint}
+\par\penalty0
+
+The original application contains the full exposed-argument footprint.
+\lean{Copying/ParametricityBareApplyClosure}{17}{19}{Closure.bare}
+\par\penalty0
+
+The boundary lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyClosure}{21}{26}{Closure.boundary}
+\par\penalty0
+
+The disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/ParametricityBareApplyClosure}{28}{29}{Closure.disjoint}
+\par\penalty0
+
+The occurrence construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyClosure}{31}{33}{Closure.occurrence}
+\par\penalty0
+
+The input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyClosure}{35}{48}{Closure.input}
+\par\penalty0
+
+The output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyClosure}{50}{53}{Closure.output}
+\par\penalty0
+
+The cover lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareApplyClosure}{55}{63}{Closure.cover}
+\par\penalty0
+
+This is a boundary-fixing isomorphism of the original finite graphs;
+no evaluation step or observational equation is used.
+\lean{Copying/ParametricityBareApplyClosure}{67}{68}{Closure.iso}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply Context}
+An actual application head and the original whole entered family hole
+give a complete common-context footprint, with its argument wire exposed.
+
+The hole construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyContext}{14}{14}{Context.hole}
+\par\penalty0
+
+The hole Occurrence construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyContext}{16}{17}{Context.holeOccurrence}
+\par\penalty0
+
+The disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyContext}{19}{30}{Context.disjoint}
+\par\penalty0
+
+The occurrence construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyContext}{32}{35}{Context.occurrence}
+\par\penalty0
+
+The input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyContext}{37}{38}{Context.input}
+\par\penalty0
+
+The output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyContext}{40}{41}{Context.output}
+\par\penalty0
+
+The head edge lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyContext}{43}{45}{Context.head_edge}
+\par\penalty0
+
+The hole edge lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyContext}{47}{51}{Context.hole_edge}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply Join}
+An actual application head and a complete family occurrence assemble the
+bare application footprint. The argument remains an original host wire.
+
+The host construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyJoin}{12}{15}{Join.host}
+\par\penalty0
+
+The components construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyJoin}{17}{22}{Join.components}
+\par\penalty0
+
+The inputs lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyJoin}{25}{50}{Join.inputs}
+\par\penalty0
+
+The outputs lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic.
+\lean{Copying/ParametricityBareApplyJoin}{52}{64}{Join.outputs}
+\par\penalty0
+
+All actual internal and boundary incidences are supplied by the original
+complete occurrences; disjointness is the only freshness requirement.
+\lean{Copying/ParametricityBareApplyJoin}{68}{78}{Join.occurrence}
+\par\penalty0
+
+The input zero lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyJoin}{80}{81}{Join.input_zero}
+\par\penalty0
+
+The input succ lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyJoin}{83}{87}{Join.input_succ}
+\par\penalty0
+
+The output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityBareApplyJoin}{89}{90}{Join.output}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply Join Laws}
+The assembled bare application preserves every vertex and edge of each
+original component, including internal vertices and exposed boundaries.
+
+The head port lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareApplyJoinLaws}{14}{19}{Join.head_port}
+\par\penalty0
+
+The family port lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareApplyJoinLaws}{21}{26}{Join.family_port}
+\par\penalty0
+
+The head edge lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareApplyJoinLaws}{28}{29}{Join.head_edge}
+\par\penalty0
+
+The family edge lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareApplyJoinLaws}{31}{32}{Join.family_edge}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply Source}
+The computed original application/hole cut expands to exactly the bare
+application of its complete selected filling. No argument graph is cut out.
+
+The filled Family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplySource}{14}{18}{Context.filledFamily}
+\par\penalty0
+
+Reassociate actual simultaneous expansion, collapse only the unchanged
+application corolla, and fill the whole original selected hole.
+\lean{Copying/ParametricityBareApplySource}{22}{54}{Context.filledIso}
+\par\penalty0
+
+The actual computed original common-context cut has exactly the stated
+bare source, retaining the entire callback graph outside the selected cut.
+\lean{Copying/ParametricityBareApplySource}{58}{69}{Context.sourceIso}
+\par\penalty0
+
+\subsection{Parametricity Bare Apply Zero}
+The selected-input construction at zero is exactly the previously used
+canonical bare application, up to boundary-fixing recursive representation.
+
+The congr construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyZero}{11}{16}{BareApplyFirst.congr}
+\par\penalty0
+
+The order zero identity lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyZero}{24}{28}{BareApplyAt.order_zero_identity}
+\par\penalty0
+
+The order zero inverse lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareApplyZero}{30}{34}{BareApplyAt.order_zero_inverse}
+\par\penalty0
+
+The zero Iso construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareApplyZero}{36}{39}{BareApplyAt.zeroIso}
+\par\penalty0
+
+\subsection{Parametricity Bare Call}
+A large parametricity body exposes its callback argument as a term
+output. The whole callback graph remains unevaluated and outside the family.
+
+The after construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareCall}{16}{16}{BareCall.after}
+\par\penalty0
+
+The first Block construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareCall}{17}{18}{BareCall.firstBlock}
+\par\penalty0
+
+The callback construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareCall}{19}{20}{BareCall.callback}
+\par\penalty0
+
+The head construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareCall}{21}{22}{BareCall.head}
+\par\penalty0
+
+The selected construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareCall}{23}{24}{BareCall.selected}
+\par\penalty0
+
+The function link lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareCall}{27}{31}{BareCall.function_link}
+\par\penalty0
+
+The argument link lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityBareCall}{33}{37}{BareCall.argument_link}
+\par\penalty0
+
+The selected callback disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareCall}{39}{40}{BareCall.selected_callback_disjoint}
+\par\penalty0
+
+The arguments construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareCall}{42}{44}{BareCall.arguments}
+\par\penalty0
+
+The argument ports lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic.
+\lean{Copying/ParametricityBareCall}{47}{61}{BareCall.argument_ports}
+\par\penalty0
+
+The head arguments disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityBareCall}{63}{65}{BareCall.head_arguments_disjoint}
+\par\penalty0
+
+The entire original inner app, smaller lambda and callback occur with
+their complete original bodies and ordered resource attachments.
+\lean{Copying/ParametricityBareCall}{69}{71}{BareCall.rawOccurrence}
+\par\penalty0
+
+The body Occurrence construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityBareCall}{73}{77}{BareCall.bodyOccurrence}
+\par\penalty0
+
+The raw input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareCall}{79}{84}{BareCall.raw_input}
+\par\penalty0
+
+The body input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareCall}{86}{87}{BareCall.body_input}
+\par\penalty0
+
+The bound callback variable is the unchanged exposed term output,
+including on the left where the original body output order is swapped.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityBareCall}{91}{99}{BareCall.body_argument}
+\par\penalty0
+
+\subsection{Parametricity Beta Extraction}
+An actual opening match determines the original application edge and
+the exact ordered input of its selected family component. The argument is
+never matched or required to lie outside a shallow family.
+
+The retained actual application and the selected component input form
+an original common-context footprint; only their genuine incidence is used.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricityBetaExtraction}{19}{43}{LambdaEntryOverlap.beta_entry}
+\par\penalty0
+
+\subsection{Parametricity Copy Host}
+The actual first entered parametricity hole and its retained prefix
+supply one computed common-context cut. Its literal graft source is proved,
+and the original paired residual is inserted with all untouched certificates.
+
+An actual prefix entering a complete original parametricity component
+has a one-step/one-step exact quasi-specimen in the original full host.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityCopyHost}{21}{57}{CopyHost.diagram}
+\par\penalty0
+
+The original Figure20 pair determines the full term-only input row and
+empty output row, including the possible empty family.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityCopyHost}{61}{66}{CopyHost.pair_boundaries}
+\par\penalty0
+
+The exact first shallow input obtained from the actual copy trace is
+sufficient to construct the whole original host diagram. Its existing input
+makes the entered family nonempty; no new scope assumption is introduced.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityCopyHost}{71}{104}{CopyHost.any_hole_diagram}
+\par\penalty0
+
+\subsection{Parametricity Copy Presentation}
+Arithmetic interface presentations do not alter the actual original
+private sharing tree. The pulled-back tree supplies a synchronized complete
+source presentation for the arbitrary selected family-copy diagram.
+
+The exact original private tree admits a pulled-back isolated source
+for any provably equal arity presentation. Its full external action is the
+recorded action of the original family isomorphism.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityCopyPresentation}{14}{22}{PrivateReindex.presentation}
+\par\penalty0
+
+\subsection{Parametricity Copy Reindex}
+Arbitrary injective selections and bijective reindexings of the literal
+ordered copies. Every complete recursive member is preserved, and every
+external coordinate follows the selected original member index.
+
+A concrete injection of whole original copies, recording the complete
+port and edge map of every member, including its nested box.
+\lean{Copying/ParametricityCopyReindex}{13}{17}{FamilyComponents.Selection}
+\par\penalty0
+
+Selecting any injective ordered list of members gives an actual complete
+occurrence; the construction uses only the original tensor recursion.
+\lean{Copying/ParametricityCopyReindex}{21}{100}{FamilyComponents.select}
+\par\penalty0
+
+Every source input follows the selected original member index exactly.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityCopyReindex}{103}{107}{Selection.input}
+\par\penalty0
+
+The private-output block follows the same selected original member,
+with its own local ordered outputs unchanged.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityCopyReindex}{111}{119}{Selection.output}
+\par\penalty0
+
+A bijective member selection covers every original edge.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityCopyReindex}{122}{127}{Selection.cover}
+\par\penalty0
+
+Any bijection of original members is a complete recursive boundary
+isomorphism of the actual ordered-copy graph.
+\lean{Copying/ParametricityCopyReindex}{131}{136}{FamilyComponents.reindex}
+\par\penalty0
+
+\subsection{Parametricity Copy Robustness}
+Complete forward and converse copying cases for the original Figure20
+parametricity family, at every original recursive specimen. Retained/deep
+payloads and every original shallow selected member are exhaustively covered.
+
+Every original copying rule occurrence has a proved opposite step and
+original residual. The supplied contraction tree and full recursive payload
+are arbitrary; shallow cases include every ordered large or small member.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityCopyRobustness}{20}{42}{CopyResidual.forward_case}
+\par\penalty0
+
+The same exhaustive original-host analysis proves converse copying
+robustness in the opposite specimen system, without a symmetry premise.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityCopyRobustness}{46}{71}{CopyResidual.converse_case}
+\par\penalty0
+
+\subsection{Parametricity Copy Transport}
+Transfer a constructed family-copy diagram through synchronized actual
+boundary isomorphisms. The common external action is an explicit graph
+context, so the residual remains a genuine original-template filling.
+
+Moving all source input positions by the recorded boundary action turns
+an actual boundary isomorphism into a boundary-fixing graph isomorphism.
+\lean{Copying/ParametricityCopyTransport}{13}{27}{CopyTransport.sourceIso}
+\par\penalty0
+
+The same explicit input-permutation context transports both original
+steps and their original residual. Only their recorded input actions and
+fixed active coordinate are required to agree.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricityCopyTransport}{32}{63}{CopyTransport.diagram}
+\par\penalty0
+
+\subsection{Parametricity Diagram Boundary}
+Move a complete original opening/read/correction certificate through
+different family-member presentations that have the same recorded input
+permutation and fixed external outputs.
+
+A boundary isomorphism whose input action is `p` and whose output action
+is fixed becomes an ordinary recursive isomorphism after the actual inverse
+input-permutation context. The transformation preserves all intermediate
+states and rewrite costs in a `ReadDiagram`.
+\lean{Copying/ParametricityDiagramBoundary}{43}{65}{ReadDiagram.synchronousBoundary}
+\par\penalty0
+
+\subsection{Parametricity Equivalence}
+The full literal Figure20 parametricity family is a contextual improvement
+and preserves successful termination. The large and small application cases
+retain their actual 1/1 and 9/1 runs; no exact-count equivalence is asserted.
+
+Exact left compensation and directed right overhead obey all four
+reasonableness conditions, retaining the reverse parametricity cost bound.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityEquivalence}{14}{18}{Parametricity.reasonable_reverse}
+\par\penalty0
+
+Arbitrarily many recursive original parametricity occurrences improve every
+successful execution in every unrestricted common context.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{22}{28}{Parametricity.filling_improvement}
+\par\penalty0
+
+The converse successful run has at least the right run's length. This
+uses the proved converse robustness with its original converse-cost safety
+condition, retaining the quantitative direction of the parametricity optimization.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{33}{39}{Parametricity.filling_reverse_overhead}
+\par\penalty0
+
+Costs are forgotten only after the forward and converse quantitative
+comparisons have both been proved for the actual original machine.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{43}{48}{Parametricity.filling_equiv}
+\par\penalty0
+
+Actual successful termination agrees without any premise that a callback
+or enclosing computation terminates, and with stuckness kept distinct.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{52}{63}{Parametricity.filling_termination}
+\par\penalty0
+
+The literal parametricity pair may be replaced at any original addressed site,
+including inside boxes, in every closed unrestricted observing graph.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{67}{72}{Parametricity.addressed_improvement}
+\par\penalty0
+
+The same arbitrary-depth addressed replacements preserve termination in
+both directions; the observing context need not be binding-free.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{76}{81}{Parametricity.addressed_equiv}
+\par\penalty0
+
+The actual paired residual at any common host token has the same directed
+improvement. Both original roots are the normal specimen applicability
+conditions, and the token is not already requesting a rewrite.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{86}{96}{Parametricity.pointed_improvement}
+\par\penalty0
+
+At the same actual common point, converse robustness supplies the original
+reverse cost inequality rather than an incorrect exact-count equivalence.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{100}{110}{Parametricity.pointed_reverse_overhead}
+\par\penalty0
+
+Pointed termination equivalence follows by forgetting costs only after
+both inequalities, and is available for actual residual compensation.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{114}{123}{Parametricity.pointed_equiv}
+\par\penalty0
+
+The original representation quotient receives the same pointed
+termination equivalence; no additional observation relation is introduced.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{127}{137}{Parametricity.pointed_class_equiv}
+\par\penalty0
+
+The same theorem specializes to every original binding-free observation
+whenever the related pair has an open-program interface. Arbitrary family
+arities remain available through the addressed and filling theorems above.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{142}{146}{Parametricity.pair_contextual_improvement}
+\par\penalty0
+
+Parametricity preserves the paper's termination observations in both directions
+for all original closing contexts of the actual open graph interfaces.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityEquivalence}{150}{157}{Parametricity.pair_contextual_equiv}
+\par\penalty0
+
+\subsection{Parametricity Family Reindex}
+Independent ordered permutations of the two original abstraction blocks.
+The same numerical input action applies to both paper sides, and each private
+left output follows its own abstraction's input.
+
+Reindexing sends each actual input to its designated original member.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{14}{17}{FamilyComponents.reindex_input}
+\par\penalty0
+
+Reindexing keeps the complete ordered output row of each original copy.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{20}{31}{FamilyComponents.reindex_output}
+\par\penalty0
+
+A full recursive reindexing of both literal family blocks.
+\lean{Copying/ParametricityFamilyReindex}{34}{35}{FamilyComponents.reindexFamily}
+\par\penalty0
+
+The full actual family port map includes the explicit interface casts.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{38}{48}{FamilyComponents.reindexFamily_port}
+\par\penalty0
+
+Every large input follows precisely the selected permutation of its block.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{51}{65}{FamilyComponents.reindexFamily_large_input}
+\par\penalty0
+
+Every small input follows its own block permutation after the large block.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{68}{82}{FamilyComponents.reindexFamily_small_input}
+\par\penalty0
+
+Every private output of a large member follows that complete member.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{85}{105}{FamilyComponents.reindexFamily_large_output}
+\par\penalty0
+
+Every private output of a small member keeps its local order and offset.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{108}{128}{FamilyComponents.reindexFamily_small_output}
+\par\penalty0
+
+The independent block permutations as one ordered external index map.
+\lean{Copying/ParametricityFamilyReindex}{131}{133}{FamilyComponents.blockIndex}
+\par\penalty0
+
+The complete family input action is independent of its output arity.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{136}{145}{FamilyComponents.reindexFamily_input}
+\par\penalty0
+
+For the private one-output family the output and input actions coincide.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityFamilyReindex}{148}{160}{FamilyComponents.reindexFamily_output_one}
+\par\penalty0
+
+\subsection{Parametricity Isolated Copy}
+The checked original family-copy diagrams expressed as literal grafts
+into complete isolated Figure20 families, including their exact private tree.
+This is a change of graph presentation only; no copying rule is altered.
+
+Equal list presentations at the private wires and serial reassociation
+identify the copy diagram's continuation with the full isolated original
+family, tree and cell. Every edge and all external ports are preserved.
+\lean{Copying/ParametricityIsolatedCopy}{29}{46}{IsolatedCopy.closedIso}
+\par\penalty0
+
+An arbitrary upstream term tree copies the first isolated large member
+in one transition on each side, with a constructed original parametricity
+residual. Both sources are literal grafts of complete original families.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityIsolatedCopy}{51}{71}{IsolatedCopy.large}
+\par\penalty0
+
+The same complete literal graft diagram copies the first isolated small
+member, preserving all untouched family members and the exact old tree.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityIsolatedCopy}{75}{95}{IsolatedCopy.small}
+\par\penalty0
+
+\subsection{Parametricity Large Bare Application}
+The larger family beta diagram exposes the actual argument wire.
+No argument edge is cut out of its owning original template component.
+
+The callback remains an unevaluated serial suffix; its free output is
+the original argument wire, with no value graph included in this footprint.
+\lean{Copying/ParametricityLargeBareApplication}{15}{15}{LargeBareApplication.leftAfter}
+\par\penalty0
+
+The right After construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareApplication}{16}{16}{LargeBareApplication.rightAfter}
+\par\penalty0
+
+The left Body construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareApplication}{18}{21}{LargeBareApplication.leftBody}
+\par\penalty0
+
+The right Body construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareApplication}{22}{26}{LargeBareApplication.rightBody}
+\par\penalty0
+
+The left input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareApplication}{28}{29}{LargeBareApplication.left_input}
+\par\penalty0
+
+The right input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareApplication}{30}{31}{LargeBareApplication.right_input}
+\par\penalty0
+
+The left argument lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityLargeBareApplication}{32}{33}{LargeBareApplication.left_argument}
+\par\penalty0
+
+The right argument lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityLargeBareApplication}{34}{35}{LargeBareApplication.right_argument}
+\par\penalty0
+
+The left Before construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareApplication}{37}{38}{LargeBareApplication.leftBefore}
+\par\penalty0
+
+The right Before construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareApplication}{39}{40}{LargeBareApplication.rightBefore}
+\par\penalty0
+
+These are complete source-relative geometric opening certificates.
+Actual beta in the running host is enabled separately by original rootedness.
+\lean{Copying/ParametricityLargeBareApplication}{44}{48}{LargeBareApplication.left_certificate}
+\par\penalty0
+
+The right certificate construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareApplication}{49}{54}{LargeBareApplication.right_certificate}
+\par\penalty0
+
+Opening replaces the selected large member by a small member and keeps
+the full original callback in a common graph context.
+\lean{Copying/ParametricityLargeBareApplication}{58}{60}{LargeBareApplication.residual}
+\par\penalty0
+
+The pointed construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareApplication}{62}{64}{LargeBareApplication.pointed}
+\par\penalty0
+
+\subsection{Parametricity Large Bare Diagram}
+The actual whole-family large beta sources, with their argument wire
+exposed. Both original openings leave a genuine pointed parametricity
+residual; no graph supplying the argument is included in the local cut.
+
+The left construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareDiagram}{12}{12}{LargeBareDiagram.left}
+\par\penalty0
+
+The right construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareDiagram}{13}{13}{LargeBareDiagram.right}
+\par\penalty0
+
+The source Witness construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareDiagram}{15}{16}{LargeBareDiagram.sourceWitness}
+\par\penalty0
+
+The original large read-body opening retains the complete unevaluated
+callback and private tree, while exposing the original argument wire.
+\lean{Copying/ParametricityLargeBareDiagram}{20}{24}{LargeBareDiagram.leftOpening}
+\par\penalty0
+
+The original right opening keeps the same callback and argument boundary.
+\lean{Copying/ParametricityLargeBareDiagram}{27}{31}{LargeBareDiagram.rightOpening}
+\par\penalty0
+
+No post-opening transition is needed: both actual targets retain the
+original family relation, with one fewer large and one more small member.
+\lean{Copying/ParametricityLargeBareDiagram}{35}{38}{LargeBareDiagram.residual}
+\par\penalty0
+
+\subsection{Parametricity Large Bare Source}
+The computed larger-beta predecessor contains the entire original
+isolated Figure20 large family, its arbitrary original private tree, and its literal
+allocated cell. The argument remains an exposed wire; no argument edge is included.
+
+The host construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{16}{16}{LargeBareSource.host}
+\par\penalty0
+
+The local Source construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{17}{17}{LargeBareSource.localSource}
+\par\penalty0
+
+The inserted construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{18}{19}{LargeBareSource.inserted}
+\par\penalty0
+
+The head construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{20}{20}{LargeBareSource.head}
+\par\penalty0
+
+The selected construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{21}{21}{LargeBareSource.selected}
+\par\penalty0
+
+The private Family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{23}{24}{LargeBareSource.privateFamily}
+\par\penalty0
+
+The old Family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{25}{30}{LargeBareSource.oldFamily}
+\par\penalty0
+
+The old Tree construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{31}{35}{LargeBareSource.oldTree}
+\par\penalty0
+
+The old Store construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{36}{39}{LargeBareSource.oldStore}
+\par\penalty0
+
+The tree store link lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityLargeBareSource}{41}{46}{LargeBareSource.tree_store_link}
+\par\penalty0
+
+The tree store disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityLargeBareSource}{48}{50}{LargeBareSource.tree_store_disjoint}
+\par\penalty0
+
+The old Cell construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{52}{55}{LargeBareSource.oldCell}
+\par\penalty0
+
+The family avoids lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityLargeBareSource}{57}{67}{LargeBareSource.family_avoids}
+\par\penalty0
+
+The cell avoids lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityLargeBareSource}{69}{80}{LargeBareSource.cell_avoids}
+\par\penalty0
+
+The remaining construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{82}{84}{LargeBareSource.remaining}
+\par\penalty0
+
+The cell construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{85}{87}{LargeBareSource.cell}
+\par\penalty0
+
+The selected remaining disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityLargeBareSource}{89}{91}{LargeBareSource.selected_remaining_disjoint}
+\par\penalty0
+
+The family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{93}{95}{LargeBareSource.family}
+\par\penalty0
+
+The selected cell lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSource}{97}{114}{LargeBareSource.selected_cell}
+\par\penalty0
+
+The remaining cell lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSource}{116}{134}{LargeBareSource.remaining_cell}
+\par\penalty0
+
+Before beta the selected large lambda retains exactly its original private
+variable attachment, although its callback is not part of the private tree.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSource}{138}{153}{LargeBareSource.family_cell}
+\par\penalty0
+
+The family cell disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/ParametricityLargeBareSource}{155}{162}{LargeBareSource.family_cell_disjoint}
+\par\penalty0
+
+The closed Graph construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeBareSource}{164}{165}{LargeBareSource.closedGraph}
+\par\penalty0
+
+Every original family abstraction, the entire arbitrary C, and the
+unchanged allocated cell constitute one complete actual source occurrence.
+\lean{Copying/ParametricityLargeBareSource}{169}{171}{LargeBareSource.closedFamily}
+\par\penalty0
+
+The closed zero lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSource}{173}{178}{LargeBareSource.closed_zero}
+\par\penalty0
+
+The head function lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSource}{180}{183}{LargeBareSource.head_function}
+\par\penalty0
+
+The head family disjoint lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSource}{185}{204}{LargeBareSource.head_family_disjoint}
+\par\penalty0
+
+The isolated original large family remains a genuine parametricity filling.
+\lean{Copying/ParametricityLargeBareSource}{207}{211}{LargeBareSource.familyWitness}
+\par\penalty0
+
+\subsection{Parametricity Large Bare Source Iso}
+Complete reconstruction identifies the computed larger-beta source
+with the original application context around its whole Figure20 family.
+
+The head input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSourceIso}{13}{16}{LargeBareSource.head_input}
+\par\penalty0
+
+The remaining input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSourceIso}{18}{45}{LargeBareSource.remaining_input}
+\par\penalty0
+
+The closed input succ lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSourceIso}{47}{54}{LargeBareSource.closed_input_succ}
+\par\penalty0
+
+The argument output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityLargeBareSourceIso}{56}{59}{LargeBareSource.argument_output}
+\par\penalty0
+
+The original bare application contains the complete original family and
+private cell, while its argument remains a boundary wire.
+\lean{Copying/ParametricityLargeBareSourceIso}{63}{66}{LargeBareSource.sourceOccurrence}
+\par\penalty0
+
+The input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSourceIso}{68}{79}{LargeBareSource.input}
+\par\penalty0
+
+The output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLargeBareSourceIso}{81}{88}{LargeBareSource.output}
+\par\penalty0
+
+The covers head lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityLargeBareSourceIso}{90}{91}{LargeBareSource.covers_head}
+\par\penalty0
+
+The covers selected lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityLargeBareSourceIso}{92}{94}{LargeBareSource.covers_selected}
+\par\penalty0
+
+The covers remaining lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityLargeBareSourceIso}{95}{97}{LargeBareSource.covers_remaining}
+\par\penalty0
+
+The covers cell lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityLargeBareSourceIso}{98}{100}{LargeBareSource.covers_cell}
+\par\penalty0
+
+Before the inverse beta cut, only the actual reader and discarded
+argument belong to the removed component; all other edges belong to the
+unchanged remaining family or the complete original private cell.
+The proof transports the established equations through the displayed graph maps.
+\lean{Copying/ParametricityLargeBareSourceIso}{105}{114}{LargeBareSource.covers_raw_body}
+\par\penalty0
+
+The opened cover lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityLargeBareSourceIso}{116}{135}{LargeBareSource.opened_cover}
+\par\penalty0
+
+Every actual source edge is covered by the three original components;
+this includes all unused sharing siblings and every argument resource edge.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/ParametricityLargeBareSourceIso}{139}{164}{LargeBareSource.cover}
+\par\penalty0
+
+The complete source is the original application context around the
+entire original Figure20 family, with only equal-interface presentation casts.
+The map fixes every external input and argument output.
+\lean{Copying/ParametricityLargeBareSourceIso}{169}{172}{LargeBareSource.iso}
+\par\penalty0
+
+\subsection{Parametricity Large Right Bare}
+The bare larger-right predecessor is exactly the original larger closed
+lambda and untouched family, exposing the original callback argument wire.
+
+The remaining construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityLargeRightBare}{11}{16}{LargeRightBare.remaining}
+\par\penalty0
+
+The apart lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityLargeRightBare}{18}{30}{LargeRightBare.apart}
+\par\penalty0
+
+The remaining input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeRightBare}{32}{42}{LargeRightBare.remaining_input}
+\par\penalty0
+
+The opened larger body contributes the actual inner app, selected
+smaller lambda and callback; the remaining old family covers every other edge.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityLargeRightBare}{46}{66}{LargeRightBare.cover}
+\par\penalty0
+
+Complete original large-right bare source correspondence, fixing all
+external family inputs and the original exposed argument wire.
+\lean{Copying/ParametricityLargeRightBare}{70}{78}{LargeRightBare.iso}
+\par\penalty0
+
+\subsection{Parametricity Literal Copy}
+Copy an arbitrary original Figure20 member through the actual retained
+upstream tree. Every boundary permutation is shared by both endpoints and
+the exact supplied private tree is recovered by the pulled-back source.
+
+Copying any originally selected large member has genuine opposite
+steps and a constructed original parametricity residual.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityLiteralCopy}{55}{90}{LiteralCopy.large}
+\par\penalty0
+
+Copying any originally selected small member has genuine opposite
+steps and a constructed original parametricity residual.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityLiteralCopy}{94}{129}{LiteralCopy.small}
+\par\penalty0
+
+\subsection{Parametricity Literal Reindex}
+Simultaneous reindexing of the literal left and right Figure20 families.
+Both sides share the full input action, and the private output action agrees.
+
+The actual left family with independently reordered complete blocks.
+\lean{Copying/ParametricityLiteralReindex}{13}{15}{FamilyLiteral.leftReindex}
+\par\penalty0
+
+The actual right family has the identical selected member ordering.
+\lean{Copying/ParametricityLiteralReindex}{18}{20}{FamilyLiteral.rightReindex}
+\par\penalty0
+
+Exact external action on the original left ordered inputs.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLiteralReindex}{23}{28}{FamilyLiteral.leftReindex_input}
+\par\penalty0
+
+Exact external action on the original right ordered inputs.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLiteralReindex}{31}{36}{FamilyLiteral.rightReindex_input}
+\par\penalty0
+
+Every private left output follows its original lambda input.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLiteralReindex}{39}{44}{FamilyLiteral.leftReindex_output}
+\par\penalty0
+
+Reindexing is synchronous on both original family inputs and private outputs.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityLiteralReindex}{47}{60}{FamilyLiteral.reindex_synchronous}
+\par\penalty0
+
+\subsection{Parametricity Noncritical Robustness}
+The complete original-host robustness branches for the seven local
+families other than beta and copying, specialized to literal Figure 20.
+
+Every actual original forward rewrite other than beta or copying has
+an actual matching opposite step and an admissible original parametricity
+residual. All template interface laws are proved internally.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityNoncriticalRobustness}{19}{31}{Parametricity.noncritical_step}
+\par\penalty0
+
+The original opposite specimen system has the corresponding complete
+seven-rule dispatch for independently supplied right successors. The
+remaining beta and copying heads are explicitly excluded, not assumed solved.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityNoncriticalRobustness}{36}{48}{Parametricity.noncritical_converse_step}
+\par\penalty0
+
+\subsection{Parametricity Pair Beta}
+Every independently represented original Figure20 family and every
+ordered input has the constructed beta/read/correction diagram.
+
+Independent recursive representations preserve the selected bare
+application, with all original external positions fixed.
+\lean{Copying/ParametricityPairBeta}{12}{15}{BareApplyAt.congr}
+\par\penalty0
+
+Every actual original pair and every selected entry has either zero or
+eight post-beta steps, with its entire original run, correction, and specimen
+data. No source-normalization or matching premise remains.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityPairBeta}{38}{46}{Pair.read_diagram_counted}
+\par\penalty0
+
+The complete original diagram is available without inspecting which
+original family block contains the selected member.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityPairBeta}{50}{57}{Pair.read_diagram}
+\par\penalty0
+
+\subsection{Parametricity Pair Copy}
+Every original parametricity pair and every ordered member admit a
+complete actual remote copying diagram. Only the original independent graph
+representations and proved arithmetic interface equalities are transported.
+
+The complete literal family diagram includes every large and small
+input, including the last member and a family with either block empty.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityPairCopy}{13}{38}{LiteralCopy.all_inputs}
+\par\penalty0
+
+Every independently represented original Figure20 pair and every one of
+its ordered inputs has actual opposite remote-copy steps and a genuine
+original-template residual. No selected-member or source-isolation hypothesis
+remains at this public boundary.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityPairCopy}{71}{83}{Pair.graft_diagram}
+\par\penalty0
+
+\subsection{Parametricity Private Reindex}
+Normalize an independently represented abstraction family while keeping
+the exact supplied original private tree on the target side. The isolated
+source tree is obtained by the inverse recorded private-output action.
+
+Pull back the actual original private tree along the inverse output
+permutation; its full primitive tree and every original carrier are retained.
+\lean{Copying/ParametricityPrivateReindex}{18}{19}{PrivateReindex.tree}
+\par\penalty0
+
+The pullback tree maps back to the exact supplied tree, with input action
+equal to the family's private-output action and its sole output fixed.
+\lean{Copying/ParametricityPrivateReindex}{23}{26}{PrivateReindex.treeIso}
+\par\penalty0
+
+The exact two occurrences of each private family wire agree.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityPrivateReindex}{29}{31}{PrivateReindex.compatible}
+\par\penalty0
+
+The whole isolated left graph maps to the original Figure20 left graph
+with the exact originally supplied tree and literal private cell.
+\lean{Copying/ParametricityPrivateReindex}{35}{39}{PrivateReindex.leftIso}
+\par\penalty0
+
+Closing the private store does not change the recorded external action.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityPrivateReindex}{42}{43}{PrivateReindex.leftIso_input}
+\par\penalty0
+
+Cancel the common input action to obtain a boundary-fixing isomorphism
+with the original left graph in an explicit common permutation context.
+\lean{Copying/ParametricityPrivateReindex}{47}{51}{PrivateReindex.leftCompensated}
+\par\penalty0
+
+The right side uses precisely the same common permutation context.
+\lean{Copying/ParametricityPrivateReindex}{54}{58}{PrivateReindex.rightCompensated}
+\par\penalty0
+
+The resulting whole-graph pair is an actual original-template filling
+of the exact supplied original pair, with no semantic closure assumption.
+\lean{Copying/ParametricityPrivateReindex}{62}{67}{PrivateReindex.filling}
+\par\penalty0
+
+\subsection{Parametricity Robustness Assembly}
+Assembly of the original nine-rule robustness dispatch. The explicitly
+named shallow-beta interface is an internal proof obligation; this file does
+not assert that the remaining shallow family cases have been discharged.
+
+The Forward Clause construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityRobustnessAssembly}{13}{19}{RobustnessAssembly.ForwardClause}
+\par\penalty0
+
+The Converse Clause construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityRobustnessAssembly}{21}{27}{RobustnessAssembly.ConverseClause}
+\par\penalty0
+
+Precise remaining forward shallow-beta obligation, for the actual
+selected original function and independently supplied whole-machine step.
+\lean{Copying/ParametricityRobustnessAssembly}{31}{44}{RobustnessAssembly.ShallowForward}
+\par\penalty0
+
+The opposite obligation starts from an actual right match and keeps the
+original directed cost inequality; no symmetry of the family is assumed.
+\lean{Copying/ParametricityRobustnessAssembly}{48}{61}{RobustnessAssembly.ShallowConverse}
+\par\penalty0
+
+Internal assembly data. An unconditional robustness theorem must supply
+both fields from actual shallow-family diagrams.
+\lean{Copying/ParametricityRobustnessAssembly}{65}{67}{RobustnessAssembly.ShallowBetaCases}
+\par\penalty0
+
+A retained actual noncritical head rules out both exceptional labels by
+the original unique-source incidence law.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityRobustnessAssembly}{71}{86}{RobustnessAssembly.noncritical_of_head}
+\par\penalty0
+
+The noncritical left lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityRobustnessAssembly}{90}{101}{RobustnessAssembly.noncritical_left}
+\par\penalty0
+
+The noncritical right lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityRobustnessAssembly}{103}{114}{RobustnessAssembly.noncritical_right}
+\par\penalty0
+
+Exhaustive forward dispatch on every original local constructor. Only
+the named shallow-beta field remains to be instantiated externally.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityRobustnessAssembly}{119}{160}{RobustnessAssembly.forward_local}
+\par\penalty0
+
+The converse dispatch uses the actual right source match independently;
+no converse operational classification premise is left implicit.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricityRobustnessAssembly}{164}{205}{RobustnessAssembly.converse_local}
+\par\penalty0
+
+The forward step lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityRobustnessAssembly}{207}{218}{RobustnessAssembly.forward_step}
+\par\penalty0
+
+The converse step lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricityRobustnessAssembly}{220}{231}{RobustnessAssembly.converse_step}
+\par\penalty0
+
+Once the independently constructed shallow-beta diagrams are supplied,
+all original specimens satisfy forward improvement robustness.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityRobustnessAssembly}{237}{265}{RobustnessAssembly.robust_of_shallow}
+\par\penalty0
+
+The actual converse dispatch yields the original reverse cost direction,
+conditional only on the explicitly named shallow-beta diagrams.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityRobustnessAssembly}{270}{298}{RobustnessAssembly.converse_robust_of_shallow}
+\par\penalty0
+
+\subsection{Parametricity Selected Entry}
+Every original family input exposes a complete original lambda payload,
+including its full recursive box body. Both sides select the same kind of
+member at the same external input; this is stronger than head recognition.
+
+The two possible complete corresponding payloads at an actual input.
+This records occurrences only; it adds no constructor to the template pair.
+\lean{Copying/ParametricitySelectedEntry}{14}{23}{Parametricity.SelectedEntry}
+\par\penalty0
+
+Independent whole-graph carrier changes fix the selected input and
+preserve complete payload incidences and recursive box labels.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedEntry}{27}{42}{SelectedEntry.rename}
+\par\penalty0
+
+The large Left Family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricitySelectedEntry}{47}{49}{MemberOccurrence.largeLeftFamily}
+\par\penalty0
+
+The large Right Family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricitySelectedEntry}{50}{52}{MemberOccurrence.largeRightFamily}
+\par\penalty0
+
+The small Left Family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricitySelectedEntry}{53}{55}{MemberOccurrence.smallLeftFamily}
+\par\penalty0
+
+The small Right Family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricitySelectedEntry}{56}{58}{MemberOccurrence.smallRightFamily}
+\par\penalty0
+
+The large Left Family input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedEntry}{60}{65}{MemberOccurrence.largeLeftFamily_input}
+\par\penalty0
+
+The large Right Family input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedEntry}{66}{71}{MemberOccurrence.largeRightFamily_input}
+\par\penalty0
+
+The small Left Family input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedEntry}{72}{77}{MemberOccurrence.smallLeftFamily_input}
+\par\penalty0
+
+The small Right Family input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedEntry}{78}{83}{MemberOccurrence.smallRightFamily_input}
+\par\penalty0
+
+The whole family occurs beneath its unchanged original tree and cell.
+\lean{Copying/ParametricitySelectedEntry}{86}{89}{MemberOccurrence.privateFamily}
+\par\penalty0
+
+The private Family input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedEntry}{91}{96}{MemberOccurrence.privateFamily_input}
+\par\penalty0
+
+At every original ordered input, the full corresponding large or small
+abstraction occurs on both sides, including all of its original box body.
+The proof separates the possible original constructors, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedEntry}{102}{125}{Literal.selected_entry}
+\par\penalty0
+
+The complete input-payload classification holds for independently
+represented original parametricity pairs, with no matching or semantic premise.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/ParametricitySelectedEntry}{129}{132}{Pair.selected_entry}
+\par\penalty0
+
+Two complete normalized payload occurrences at the same incoming wire
+have the same full recursive graph class, including all interface metadata.
+Head uniqueness supplies the edge equality required by payload rigidity.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedEntry}{142}{152}{NormalForm.related_inputs}
+\par\penalty0
+
+\subsection{Parametricity Selected Family}
+Isolate any original large or small abstraction, with the other members
+kept in their original relative block order. All external and private-output
+permutations are recorded by genuine recursive boundary isomorphisms.
+
+Move the selected original member to position zero in the source order;
+the target action inserts it back at its actual original index.
+\lean{Copying/ParametricitySelectedFamily}{12}{22}{FamilyLiteral.front}
+\par\penalty0
+
+The first isolated member is exactly the chosen original member.
+The proof checks the finite-index bounds by natural-number arithmetic.
+\lean{Copying/ParametricitySelectedFamily}{25}{25}{FamilyLiteral.front_zero}
+\par\penalty0
+
+Every remaining member retains its original order after deleting the
+selected index; no swap of two unrelated remaining members is hidden.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedFamily}{29}{33}{FamilyLiteral.front_rest}
+\par\penalty0
+
+Isolate any selected large member of the original left family.
+\lean{Copying/ParametricitySelectedFamily}{36}{38}{FamilyLiteral.leftLargeAt}
+\par\penalty0
+
+The corresponding right isolation uses the identical selected index.
+\lean{Copying/ParametricitySelectedFamily}{41}{43}{FamilyLiteral.rightLargeAt}
+\par\penalty0
+
+Isolate any selected small member, preserving all other large and small
+members in their original relative order.
+\lean{Copying/ParametricitySelectedFamily}{47}{49}{FamilyLiteral.leftSmallAt}
+\par\penalty0
+
+The complete original right small family has the same boundary action.
+\lean{Copying/ParametricitySelectedFamily}{52}{54}{FamilyLiteral.rightSmallAt}
+\par\penalty0
+
+Arbitrary-large isolation synchronizes both inputs and private outputs.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricitySelectedFamily}{57}{60}{FamilyLiteral.largeAt_synchronous}
+\par\penalty0
+
+Arbitrary-small isolation synchronizes both inputs and private outputs.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricitySelectedFamily}{63}{66}{FamilyLiteral.smallAt_synchronous}
+\par\penalty0
+
+The actual isolated large input maps to the chosen original large index.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedFamily}{69}{75}{FamilyLiteral.leftLargeAt_first_input}
+\par\penalty0
+
+The actual isolated right large input has exactly the same attachment.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedFamily}{78}{84}{FamilyLiteral.rightLargeAt_first_input}
+\par\penalty0
+
+The small selected entry is its actual index after the unchanged large block.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedFamily}{87}{93}{FamilyLiteral.leftSmallAt_first_input}
+\par\penalty0
+
+The actual right small entry has the identical original block offset.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedFamily}{96}{102}{FamilyLiteral.rightSmallAt_first_input}
+\par\penalty0
+
+\subsection{Parametricity Selected Isolated}
+Arbitrary selected members in the exact equal-list presentations used
+by the checked first-entry application and copying diagrams.
+
+The canonical isolated left family identifies any original large member.
+\lean{Copying/ParametricitySelectedIsolated}{11}{13}{IsolatedFamily.largeLeftAtIso}
+\par\penalty0
+
+The right canonical family identifies the same original large member.
+\lean{Copying/ParametricitySelectedIsolated}{16}{18}{IsolatedFamily.largeRightAtIso}
+\par\penalty0
+
+The canonical isolated left family identifies any original small member.
+\lean{Copying/ParametricitySelectedIsolated}{21}{23}{IsolatedFamily.smallLeftAtIso}
+\par\penalty0
+
+The right canonical family identifies the same original small member.
+\lean{Copying/ParametricitySelectedIsolated}{26}{28}{IsolatedFamily.smallRightAtIso}
+\par\penalty0
+
+Exact common input action for any originally selected large member.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedIsolated}{31}{35}{IsolatedFamily.largeAt_same_inputs}
+\par\penalty0
+
+Exact common input action for any originally selected small member.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedIsolated}{38}{42}{IsolatedFamily.smallAt_same_inputs}
+\par\penalty0
+
+The large private attachment agrees with the complete input action.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedIsolated}{45}{49}{IsolatedFamily.largeAt_private}
+\par\penalty0
+
+The small private attachment agrees with the complete input action.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedIsolated}{52}{56}{IsolatedFamily.smallAt_private}
+\par\penalty0
+
+The literal canonical first input denotes the chosen original large entry.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedIsolated}{59}{65}{IsolatedFamily.largeLeftAtIso_first}
+\par\penalty0
+
+The right canonical first input has the identical original large index.
+The proof checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedIsolated}{68}{74}{IsolatedFamily.largeRightAtIso_first}
+\par\penalty0
+
+The canonical small entry denotes its original offset after the large block.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedIsolated}{77}{83}{IsolatedFamily.smallLeftAtIso_first}
+\par\penalty0
+
+The right canonical small entry has the identical original block offset.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricitySelectedIsolated}{86}{92}{IsolatedFamily.smallRightAtIso_first}
+\par\penalty0
+
+\subsection{Parametricity Shallow Cases}
+Every actual shallow selected function yields its complete original
+family diagram in the actual original host. This discharges both shallow
+fields of the exhaustive nine-rule robustness assembly.
+
+An actually entered original family has positive term-input arity.
+Its exact selected member supplies the full forward host diagram.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityShallowCases}{35}{64}{ShallowCases.forward}
+\par\penalty0
+
+The same exact originally entered family supplies the converse diagram
+even when the independently given rewrite is on the right.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricityShallowCases}{68}{97}{ShallowCases.converse}
+\par\penalty0
+
+Both shallow-beta obligations are discharged by the actual arbitrary
+selected-family diagrams, source extraction and original whole-host cuts.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityShallowCases}{103}{117}{Parametricity.shallowBetaCases}
+\par\penalty0
+
+Full forward robustness of the literal Figure20 parametricity family
+for every original recursive unrestricted specimen and all original rules.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityShallowCases}{121}{124}{Parametricity.template_robust}
+\par\penalty0
+
+Full converse robustness of the same original directed family, retaining
+the original reverse cost inequality for every actual right successor.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/ParametricityShallowCases}{128}{131}{Parametricity.template_robust_converse}
+\par\penalty0
+
+\subsection{Parametricity Shallow Host}
+A constructed bare family diagram lifts through the exact original
+application-and-hole cut. The callback and every other original filling
+remain in its computed complement.
+
+The left Part construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityShallowHost}{21}{22}{ShallowHost.leftPart}
+\par\penalty0
+
+The right Part construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityShallowHost}{24}{25}{ShallowHost.rightPart}
+\par\penalty0
+
+The actual original application is unchanged on both filling sides;
+its primitive label discharges the retained-corolla premise.
+\lean{Copying/ParametricityShallowHost}{29}{35}{ShallowHost.appCopies}
+\par\penalty0
+
+The footprint construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityShallowHost}{37}{37}{ShallowHost.footprint}
+\par\penalty0
+
+The left Source Iso construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityShallowHost}{39}{44}{ShallowHost.leftSourceIso}
+\par\penalty0
+
+The right Source Iso construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricityShallowHost}{46}{56}{ShallowHost.rightSourceIso}
+\par\penalty0
+
+Both actual source isomorphisms transport the entire already proved
+opening/run/correction package, fixing the active input exactly.
+\lean{Copying/ParametricityShallowHost}{60}{72}{ShallowHost.localDiagram}
+\par\penalty0
+
+The actual original host realizes the forward quantitative clause once
+the selected original family's concrete read diagram has been supplied.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityShallowHost}{77}{89}{ShallowHost.forward_case}
+\par\penalty0
+
+The same actual original source pair gives the converse inequality for
+every independently supplied right successor, retaining the full correction.
+The proof substitutes the proved component identities.
+\lean{Copying/ParametricityShallowHost}{93}{105}{ShallowHost.converse_case}
+\par\penalty0
+
+\subsection{Parametricity Small Right Bare}
+The bare smaller-right predecessor is exactly the original isolated
+constant-returning family application, with no argument graph captured.
+
+The remaining construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/ParametricitySmallRightBare}{12}{17}{SmallRightBare.remaining}
+\par\penalty0
+
+The apart lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/ParametricitySmallRightBare}{19}{29}{SmallRightBare.apart}
+\par\penalty0
+
+The remaining input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/ParametricitySmallRightBare}{31}{33}{SmallRightBare.remaining_input}
+\par\penalty0
+
+The original opened numeral/weakening body and untouched family cover
+all actual reduct edges, including the canonical unused binder weakening.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/ParametricitySmallRightBare}{37}{60}{SmallRightBare.cover}
+\par\penalty0
+
+Exact original bare application source, at all family arities including
+an empty remaining family. The sole output is the untouched argument wire.
+\lean{Copying/ParametricitySmallRightBare}{64}{69}{SmallRightBare.iso}
+\par\penalty0
+
+\subsection{Retained Beta Frame Transfer}
+Lift complete beta-opening certificates through the actual retained
+footprint complement. The argument may remain in an unrelated shallow
+filling: certificates describe geometry, while actual original rewrites
+supply stability and are compared by proved source-determined coherence.
+
+The complete source-relative opening certificate lifts through the real
+common complement with every unmatched recursive contribution unchanged.
+\lean{Copying/RetainedBetaFrameTransfer}{21}{39}{RetainedFootprint.frame_opening}
+\par\penalty0
+
+The left certificate starts at the exact original matched token.
+\lean{Copying/RetainedBetaFrameTransfer}{42}{55}{RetainedFootprint.left_opening}
+\par\penalty0
+
+The paired right certificate starts at the same original specimen wire,
+including when the stable operand belongs to a shallow external family.
+\lean{Copying/RetainedBetaFrameTransfer}{59}{70}{RetainedFootprint.right_opening_at}
+\par\penalty0
+
+Every supplied actual original beta successor agrees with the explicitly
+framed opening and resumed token. No new operational opening rule is used.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/RetainedBetaFrameTransfer}{74}{82}{RetainedFootprint.left_opening_successor}
+\par\penalty0
+
+The same representation-independent comparison holds for an independently
+supplied original right successor at the actual paired specimen token.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/RetainedBetaFrameTransfer}{86}{96}{RetainedFootprint.right_opening_successor}
+\par\penalty0
+
+\subsection{Retained Beta Matching}
+Complete exact matching for the retained/deep app-lambda-box footprint.
+The whole actual argument, including any shallow multi-input lambda family,
+is retained in the computed complement and is never assumed to be a local
+paired filling. Actual rooted search independently enables the original rule.
+
+Every retained app/lambda/box match gives two actual one-step original
+beta successors and an exact original recursive quasi-specimen. The boxed
+body may contain arbitrary deep template fillings.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/RetainedBetaMatching}{28}{66}{RetainedFrame.matching}
+\par\penalty0
+
+Exact retained-beta robustness applies to any independently represented
+successor of the original combined machine, with no argument-retention law.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/RetainedBetaMatching}{70}{79}{RetainedFrame.robust_case}
+\par\penalty0
+
+The same exact paired construction covers every independently supplied
+opposite successor, without exchanging or approximating beta stability.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/RetainedBetaMatching}{83}{93}{RetainedFrame.converse_robust_case}
+\par\penalty0
+
+\subsection{Retained Beta Ports}
+Exact public component coordinates in the original argument-exposing
+beta frame, used to reconstruct original whole-family sources.
+
+The exposed argument remains output zero of the bare frame.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/RetainedBetaPorts}{11}{11}{RetainedFrame.app_argument}
+\par\penalty0
+
+Free closure resources follow the exposed bound argument output.
+The proof substitutes the proved component identities.
+\lean{Copying/RetainedBetaPorts}{14}{19}{RetainedFrame.closure_output}
+\par\penalty0
+
+The complete payload's lambda component is the original frame lambda.
+The proof checks the finite-index bounds by natural-number arithmetic.
+\lean{Copying/RetainedBetaPorts}{22}{26}{RetainedFrame.closure_left_edge}
+\par\penalty0
+
+The complete payload's box component is the original frame box.
+The proof checks the finite-index bounds by natural-number arithmetic.
+\lean{Copying/RetainedBetaPorts}{29}{33}{RetainedFrame.closure_right_edge}
+\par\penalty0
+
+\subsection{Retained Primitive Replacement}
+Replace one retained primitive contribution by an arbitrary common graph.
+The finite paired residual preserves all other original certificates, including
+shallow holes whose internal edges must not be projected to the context.
+
+The selected original edge is replaced; all other contributions are literal.
+\lean{Copying/RetainedPrimitiveReplacement}{17}{17}{RetainedReplacement.family}
+\par\penalty0
+
+Replacing the selected actual corolla in the expansion changes exactly
+one original family member, with the same resumed original source attachment.
+\lean{Copying/RetainedPrimitiveReplacement}{21}{49}{RetainedReplacement.canonicalIso}
+\par\penalty0
+
+The changed component is a reflexive original filling and all unselected
+components retain their original edge certificates.
+\lean{Copying/RetainedPrimitiveReplacement}{53}{63}{RetainedReplacement.witnesses}
+\par\penalty0
+
+Exact original common-coordinate residual after replacement.
+\lean{Copying/RetainedPrimitiveReplacement}{66}{74}{RetainedReplacement.pointed}
+\par\penalty0
+
+\subsection{Right Bare Application Cut}
+Reconstruct a closed selected abstraction and its untouched family by
+inverting the actual complete occurrence of its opened body. The argument
+is the external output wire and no argument edge enters this footprint.
+
+The target construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/RightBareApplicationCut}{19}{19}{RightBareApplicationCut.target}
+\par\penalty0
+
+The inserted construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/RightBareApplicationCut}{20}{20}{RightBareApplicationCut.inserted}
+\par\penalty0
+
+The head construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/RightBareApplicationCut}{21}{21}{RightBareApplicationCut.head}
+\par\penalty0
+
+The selected construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/RightBareApplicationCut}{22}{22}{RightBareApplicationCut.selected}
+\par\penalty0
+
+The remaining construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/RightBareApplicationCut}{23}{23}{RightBareApplicationCut.remaining}
+\par\penalty0
+
+The family construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/RightBareApplicationCut}{25}{26}{RightBareApplicationCut.family}
+\par\penalty0
+
+The selected remaining lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/RightBareApplicationCut}{28}{29}{RightBareApplicationCut.selected_remaining}
+\par\penalty0
+
+The family Occurrence construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/RightBareApplicationCut}{30}{32}{RightBareApplicationCut.familyOccurrence}
+\par\penalty0
+
+The family zero lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/RightBareApplicationCut}{34}{38}{RightBareApplicationCut.family_zero}
+\par\penalty0
+
+The head function lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/RightBareApplicationCut}{40}{41}{RightBareApplicationCut.head_function}
+\par\penalty0
+
+The head family lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors.
+\lean{Copying/RightBareApplicationCut}{43}{48}{RightBareApplicationCut.head_family}
+\par\penalty0
+
+The occurrence construction supplies the finite graph, map or certificate used in this module.
+\lean{Copying/RightBareApplicationCut}{50}{56}{RightBareApplicationCut.occurrence}
+\par\penalty0
+
+The head input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof substitutes the proved component identities.
+\lean{Copying/RightBareApplicationCut}{59}{61}{RightBareApplicationCut.head_input}
+\par\penalty0
+
+The family succ lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/RightBareApplicationCut}{64}{72}{RightBareApplicationCut.family_succ}
+\par\penalty0
+
+The head argument lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof transports the established equations through the displayed graph maps, then substitutes the proved component identities.
+\lean{Copying/RightBareApplicationCut}{75}{83}{RightBareApplicationCut.head_argument}
+\par\penalty0
+
+The input lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps, then checks the finite-index bounds by natural-number arithmetic, then substitutes the proved component identities.
+\lean{Copying/RightBareApplicationCut}{86}{95}{RightBareApplicationCut.input}
+\par\penalty0
+
+The output lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/RightBareApplicationCut}{98}{104}{RightBareApplicationCut.output}
+\par\penalty0
+
+The covers lemma proves the indicated boundary or incidence compatibility for the complete original construction.
+The proof separates the possible original constructors, then transports the established equations through the displayed graph maps.
+\lean{Copying/RightBareApplicationCut}{106}{125}{RightBareApplicationCut.covers}
+\par\penalty0
+
+Exact source correspondence for the inverse opening, exposing the
+original argument as the sole output rather than retaining its graph.
+\lean{Copying/RightBareApplicationCut}{129}{132}{RightBareApplicationCut.iso}
+\par\penalty0
+
+\subsection{Target Swap Host Expansion}
+A target exchange at two original context wires commutes with arbitrary
+recursive filling. No vertex inside a fresh component is moved, and every
+original component and its ordered interface is retained.
+
+The original host inclusion preserves boundary classification.
+The proof separates the possible original constructors.
+\lean{Copying/TargetSwapHostExpansion}{17}{18}{HostExpansion.host_not_input}
+\par\penalty0
+
+The exchanged values keep their original common type after filling.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/TargetSwapHostExpansion}{22}{24}{HostExpansion.host_typed}
+\par\penalty0
+
+Original source attachments are unchanged by a target-only exchange.
+The proof applies the previously established component theorems at these exact parameters.
+\lean{Copying/TargetSwapHostExpansion}{27}{28}{HostExpansion.source_port}
+\par\penalty0
+
+The actual ordered target attachment undergoes exactly the original exchange.
+The proof substitutes the proved component identities.
+\lean{Copying/TargetSwapHostExpansion}{31}{33}{HostExpansion.target_port}
+\par\penalty0
+
+On source occurrences, component insertion ignores the exchanged target wires.
+The proof separates the possible original constructors.
+\lean{Copying/TargetSwapHostExpansion}{36}{41}{HostExpansion.source_insert}
+\par\penalty0
+
+On target occurrences, the exchange acts on original wires only. All
+private component vertices remain fixed.
+The proof separates the possible original constructors, then substitutes the proved component identities.
+\lean{Copying/TargetSwapHostExpansion}{45}{61}{HostExpansion.target_insert}
+\par\penalty0
+
+Exact whole-graph commutation: all original component carriers, labels,
+internal incidences and external ordered attachments are preserved.
+\lean{Copying/TargetSwapHostExpansion}{65}{84}{HostExpansion.iso}
+\par\penalty0
+
+Recursive edge certificates depend on labels and component graphs, so
+they remain literally valid after changing only original target attachments.
+The proof separates the possible original constructors.
+\lean{Copying/TargetSwapHostExpansion}{88}{94}{HostExpansion.certificate}
+\par\penalty0
+

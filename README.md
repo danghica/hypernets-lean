@@ -9,50 +9,15 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: original parametricity family diagrams
+## Latest milestone: full original parametricity robustness
 
-**Contraction associativity, contraction commutativity, garbage collection and
-pulling weakening or contraction through boxes are complete.** Each has output closure,
-input safety, both robustness directions and exact contextual consequences in
-all original observing contexts, including sites beneath boxes. This closes
-five of the seven template families left at the preceding checkpoint.
+All seven previously outstanding template families are complete, including **parametricity**. The original Figure 20 relation now has output closure, input safety, universal forward and converse robustness, contextual improvement and termination equivalence. Its proof covers every original local rule, arbitrary family sizes and private trees, and shallow, retained, deep and mixed overlaps. The argument remains exposed in beta footprints, so another original family can supply it.
 
-The sharing proof constructs maximal term and atom components, actual matching
-rewrites for all nine original local rules, and original pointed residuals.
-Box-weakening copying retains the complete canonical distributor and uses two
-proved idempotence corrections. **Box-contraction pulling has its whole-graph copying
-correction and full forward and converse robustness**. Its exact contextual
-equivalence uses selected original-port reconstruction in arbitrary contexts.
+The exact costs remain explicit: large beta has one transition per side, and small beta has nine versus one. The original Proposition 12.2 terms, Figure 16 translation and machine rules are unchanged.
 
-**The full copying template is now complete too**, closing the sixth of those
-seven families. It has all-input safety, universal forward and converse
-robustness, contextual improvement and termination equivalence in unrestricted
-original contexts. Actual upstream/downstream copying diagrams retain all
-payloads, original tree branches and canonical weakening edges. Its original
-two-versus-zero input cost is preserved; exact-count equality is not claimed.
+Full build: **1,102 jobs**. All **7,520 distinct axiom audits** pass, with only `propext`, `Classical.choice` and `Quot.sound`. This milestone adds 88 Lean modules and 624 named declarations. The mathematical commentary explains the constructions, with immutable code links, and Appendix B.1 retains completed tasks with strikethrough.
 
-**Parametricity, correspondence,
-semantic weakening and the Figure 22 assembly remain unfinished.
-Proposition 12.2 is unproved.** Its terms, Figure 16 translation, copying rule
-and stability/copyability conditions are unchanged. Appendix B.1 keeps every
-completed task and subtask with strikethrough.
-
-Full build: **1,014 jobs**. All **6,897 axiom audits** pass (6 abstract, 542 graph,
-6,349 copying); no `sorryAx` or project-specific axioms. The commentary explains
-the proof and its correspondence with the paper, with immutable source links
-for all 3,091 newly published declarations in 370 modules. The only remaining template
-family is parametricity. Its complete original-family diagrams now cover copying either lambda kind,
-one-versus-one large beta, and nine-versus-one small beta, for arbitrary
-remaining family sizes and original private trees. Both beta sources are
-proved to be the original whole-family application contexts. Directed residual
-corrections derive the intermediate search roots; allocation and numeric
-branches construct actual opposite rewrites. The full host-overlap dispatch
-and universal parametricity robustness remain open.
-
-Estimated completion by mathematical effort is **roughly 65–75%, with low
-confidence**, as of 30 October 2026. The earlier **80% estimate is withdrawn**.
-The remaining universal template proofs, translation correspondence and final
-example chain have uncertain proof costs; checklist counts do not measure effort.
+**Proposition 12.2 is still unproved.** Correspondence audits, non-bijective graph renaming/substitution, semantic weakening and Figure 22 assembly remain. Estimated completion by mathematical effort: **70–80%, with low confidence**, as of 4 November 2026. This is an estimate of proof effort, not a count of completed checklist entries.
 
 ## Proposition 12.2: current extension target
 
