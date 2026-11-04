@@ -1045,3 +1045,13 @@ parametricity robustness or the final Proposition~12.2.
 
 \subsection{Full original parametricity robustness}
 The full build passes 1102 jobs. All 7520 distinct axiom audits use only the standard logical axioms; no project-specific axiom or \texttt{sorryAx} occurs. The 88 new modules contain 624 named declarations. The final parametricity endpoints have no robustness, matching or residual hypotheses: the actual shallow cases instantiate the exhaustive original-rule dispatcher. All eleven template families are complete, while Proposition~12.2 and the remaining correspondence and final-example obligations remain open.
+
+\subsection{Exact local semantic weakening}
+{\raggedright
+The full build passes 1109 jobs. All 7570 distinct axiom audits use only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}; neither
+\texttt{sorryAx} nor a project-specific axiom occurs. Seven new modules add
+50 audited public declarations. The audit includes the exact calculation
+interpreter, both arbitrary-size distributor calculations, the boxed
+normalization, and all ordered graph isomorphisms.\par}
+\lean{Copying/Audit}{7079}{7130}{Copying.Audit: local semantic weakening}

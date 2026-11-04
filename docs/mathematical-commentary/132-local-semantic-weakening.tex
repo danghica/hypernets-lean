@@ -1,0 +1,300 @@
+\clearpage
+\section{Exact local semantic weakening}
+\label{sec:local-semantic-weakening}
+This milestone begins the remaining semantic weakening argument for
+Proposition~12.2. It follows the two-template dependency in the paper's
+Proof~12.3 (HTML numbering): Idem removes redundant weakenings and BPullW
+moves an unused resource out of a box. The terms and the Figure~16 translation
+are unchanged. In particular, the canonical one-use and two-use distributors
+are retained before their contextual equivalence is proved.
+
+The completed forest laws hold for every finite number of resources, both
+sharing sorts, and every box-depth allowance. The completed boxed law allows
+arbitrarily many bound variables but no other free resources. Extending this
+boxed calculation to additional free resources, extracting the appropriate
+row in every translation constructor, and completing the induction on terms
+remain open. These local results do not by themselves prove the paper's full
+weakening proposition or Proposition~12.2.
+
+\Needspace{12\baselineskip}
+\subsection{Finite calculations and their exact meaning}
+\termdef{weakening-calculation}
+\begin{definition}[Weakening calculation]
+A calculation from $G$ to $H$, with fixed ordered input and output interfaces,
+is a finite proof tree. A leaf is either an ordered recursive graph
+isomorphism with a focus-free source, a genuine Idem filling witness, or a
+genuine BPullW filling witness. A tree can reverse a calculation or concatenate
+two calculations at an identical intermediate graph. It carries the actual
+recursive filling certificates, not an assertion that the template relation
+is transitive. The identity calculation uses the identity isomorphism.
+\end{definition}
+\lean{Copying/WeakeningCalculation}{14}{22}{Weakening.Calculation}
+\lean{Copying/WeakeningCalculation}{26}{27}{Weakening.Calculation.refl}
+
+\begin{lemma}[Admissible intermediates]
+Both endpoints of a calculation are focus-free. One endpoint is hole-free
+if and only if the other is hole-free.
+\end{lemma}
+\begin{proof}
+Induct on the finite calculation. At a filling leaf, focus freedom is part
+of the original witness. An Idem pair has no holes on either side; BPullW
+preserves the body's hole labels. The proved recursive filling theorem lifts
+these statements to the complete filled graphs. Isomorphisms preserve the
+same predicates. Reversal swaps the two conclusions and concatenation
+composes them. No invariant for every primitive-label predicate is claimed:
+Idem can remove contraction labels.
+\end{proof}
+\lean{Copying/WeakeningCalculation}{30}{37}{Weakening.Calculation.focusFree}
+\lean{Copying/WeakeningCalculation}{41}{49}{Weakening.Calculation.holeFree_iff}
+
+A calculation lifts to an arbitrary addressed site in a focus-free host by
+induction on its proof tree. Each leaf is lifted through that same site by
+the existing original filling construction, or by replacement congruence
+for its isomorphism. Thus the site may be inside any number of boxes.
+\lean{Copying/WeakeningCalculation}{52}{60}{Weakening.Calculation.plugAt}
+
+Serial lifting on the right retains a fixed focus-free suffix; serial lifting
+on the left retains a fixed focus-free prefix. At a filling leaf, serial
+assembly pairs its witness with a reflexive witness for the retained graph.
+At an isomorphism leaf, serial congruence gives the corresponding leaf.
+For two calculations $G\leadsto G'$ and $H\leadsto H'$, first calculate
+$G;H\leadsto G';H$ and then $G';H\leadsto G';H'$. This two-stage construction
+allows the two components to use different template families.
+\lean{Copying/WeakeningCalculation}{63}{71}{Weakening.Calculation.serialRight}
+\lean{Copying/WeakeningCalculation}{74}{82}{Weakening.Calculation.serialLeft}
+\lean{Copying/WeakeningCalculation}{85}{88}{Weakening.Calculation.serial}
+
+The tensor constructions have the same proof: retain one component, lift
+every leaf in the other, and then compose the two calculations. The
+ordered tensor boundary is unchanged. Boxing lifts every Idem or BPullW
+witness into the original recursive box and applies box congruence to
+isomorphisms. The binder count and all bound-output positions remain fixed.
+\lean{Copying/WeakeningCalculation}{90}{98}{Weakening.Calculation.tensorRight}
+\lean{Copying/WeakeningCalculation}{100}{108}{Weakening.Calculation.tensorLeft}
+\lean{Copying/WeakeningCalculation}{110}{113}{Weakening.Calculation.tensor}
+\lean{Copying/WeakeningCalculation}{116}{124}{Weakening.Calculation.boxed}
+
+Interface transport changes only equal interface indices. Raising the depth
+allowance transports each original witness using its proved padding-closure
+law. Iterating this construction gives finite padding; transporting the
+result along $d+(N-d)=N$, for $d\leq N$, gives padding to a chosen allowance.
+These are representation operations, not additional machine transitions.
+\lean{Copying/WeakeningCalculation}{127}{135}{Weakening.Calculation.reboundary}
+\lean{Copying/WeakeningCalculation}{139}{146}{Weakening.Calculation.raise}
+\lean{Copying/WeakeningCalculation}{148}{151}{Weakening.Calculation.pad}
+\lean{Copying/WeakeningCalculation}{153}{161}{Weakening.Calculation.padTo}
+
+\begin{theorem}[Exact semantic soundness]
+If a calculation relates hole-free graphs of interface $*\to\epsilon$, their
+initial states have equal-cost refinement in both directions in the original
+unbounded copying machine. Consequently they have the same successful runs
+at every specified transition count. If the endpoints are open programs,
+they are exactly contextually equivalent in every original binding-free
+closing context.
+\end{theorem}
+\begin{proof}
+Induct on the calculation. Idem and BPullW leaves use their completed
+robustness consequences. An isomorphism leaf can be expressed as a reflexive
+Idem filling transported by that isomorphism. Reversal swaps the two
+refinements, while concatenation uses transitivity of machine refinement.
+The preceding invariant supplies hole freedom of every intermediate.
+To obtain contextual equivalence, first lift the calculation through the
+closing context's actual site. Its unique-hole certificate proves that the
+resulting graphs are hole-free. To recover the count-by-count statement,
+apply refinement to a successful $n$-step run and use its exact cost relation
+to identify the returned count with $n$. No termination premise is needed.
+\end{proof}
+\lean{Copying/WeakeningCalculation}{164}{184}{Weakening.Calculation.exact_equiv}
+\lean{Copying/WeakeningCalculation}{187}{191}{Weakening.Calculation.contextual_exact}
+\lean{Copying/WeakeningCalculation}{195}{208}{Weakening.Calculation.termination_count}
+
+\Needspace{12\baselineskip}
+\subsection{The original unary and binary rows}
+\termdef{zero-fed-sharing-row}
+Write $w_s:\epsilon\to s$ for a weakening of sharing sort $s$, and $C_m$ for
+the original canonical $m$-input contraction row. A \emph{zero-fed row} has
+a weakening attached to every external input of $C_m$.
+The unary graph is $w_s;C_1$. It has two weakening edges and one contraction;
+the input-free weakening internal to $C_1$ is still present.
+\lean{Copying/WeakeningRows}{12}{13}{Weakening.unaryRow}
+
+\begin{lemma}[Unary and binary absorption]
+The graphs $w_s;C_1$ and $(w_s\otimes w_s);C_2$ each calculate to $w_s$,
+for either sharing sort and every allowance.
+\end{lemma}
+\begin{proof}
+The unary graph is ordered-isomorphic to the literal Idem source. Its
+incoming weakening is the second contraction input, and the row's own
+weakening is the first. The isomorphism exchanges their carrier tags,
+accounts for both internal wires, and fixes the external output. One Idem
+witness therefore proves the unary calculation.
+For the binary graph, the already established row isomorphism exposes a
+nested Idem source with three weakenings and two contractions. First collapse
+the non-root Idem occurrence, retaining the root weakening and contraction;
+then collapse the root occurrence. These are two actual Idem witnesses,
+not a substitution of a lone contraction for the canonical row.
+\end{proof}
+\lean{Copying/WeakeningRows}{74}{99}{Weakening.unaryRow_iso}
+\lean{Copying/WeakeningRows}{103}{106}{Weakening.unary}
+\lean{Copying/WeakeningRows}{110}{113}{Weakening.binary}
+
+Lifting these two calculations to an arbitrary original addressed site and
+applying exact soundness proves their unrestricted-host observational laws.
+The selected local interface is input-free; these theorems do not invoke a
+binding-free plugging lemma that requires a nonempty input interface.
+\lean{Copying/WeakeningRows}{117}{123}{Weakening.unary_addressed_exact}
+\lean{Copying/WeakeningRows}{125}{131}{Weakening.binary_addressed_exact}
+
+\Needspace{12\baselineskip}
+\subsection{Ordered finite forests}
+\termdef{weakening-forest-normalization}
+Let $W_k=D^s_{k,0}:\epsilon\to s^k$ denote the original zero-use distributor.
+The Lean constructor exposes its empty input by an equality transport;
+it does not rebuild or simplify the distributor.
+\lean{Copying/WeakeningForests}{11}{12}{Weakening.forest}
+
+A finite parallel family of forests $W_{m_a}$ is isomorphic to $W_k$ whenever
+its output boundary bijection enumerates exactly $k$ ordered resources.
+Both graphs have no internal vertices. Map the weakening at local resource
+$(a,j)$ to the weakening at the global output position prescribed by the
+boundary bijection, keeping its unique edge index. The inverse uses the
+inverse boundary map. This proves both bijection laws and equality of every
+ordered incidence, including when the family is empty.
+\lean{Copying/WeakeningForests}{16}{60}{Weakening.forest_parallel_iso}
+
+\begin{lemma}[Independent serial composition]
+Suppose $F_a:\epsilon\to J_a$ and $G_a:J_a\to O_a$ form a finite family,
+with an ordered boundary $B$ assembling the $G_a$. Assembling all $F_a$,
+then composing with the assembled $G_a$, is ordered-isomorphic to assembling
+the componentwise composites $F_a;G_a$.
+\end{lemma}
+The prefix boundary uses $B$'s input bijection as its output bijection and
+has the unique empty input action. The resulting boundary retains $B$'s
+output action. These define the two literal sides of the lemma.
+\lean{Copying/NullaryParallelSerial}{15}{20}{NullaryParallelSerial.beforeBoundary}
+\lean{Copying/NullaryParallelSerial}{23}{28}{NullaryParallelSerial.afterBoundary}
+\lean{Copying/NullaryParallelSerial}{30}{30}{NullaryParallelSerial.left}
+\lean{Copying/NullaryParallelSerial}{31}{31}{NullaryParallelSerial.right}
+
+\begin{proof}
+A shared wire in global position $j$ maps to the pair consisting of its
+unique component and local position, given by $B^{-1}(j)$. Internal vertices
+from either component retain their owner and switch only the order of the
+component and serial tags. Edges undergo the same tag reassociation.
+For each prefix output and suffix input, the two port maps agree by
+$B^{-1}B=\mathrm{id}$. Other ports are retained. Mapping each edge's complete
+source and target lists proves the ordered graph isomorphism. The proof
+allows heterogeneous component interfaces and an empty enumeration.
+\end{proof}
+\lean{Copying/NullaryParallelSerial}{127}{157}{NullaryParallelSerial.iso}
+
+The original distributor $D^s_{k,m}$ is ordered-isomorphic to its $k$ original
+canonical rows at any allowance. This is the commuting of primitive relabelling
+with parallel assembly, proved on every vertex and incidence. Combining this
+presentation with the preceding two lemmas exposes the exact rowwise form of
+$W_{km};D^s_{k,m}$. In particular, its resource order remains $i+kj$ for
+resource $i$ at use $j$.
+\lean{Copying/WeakeningForests}{64}{87}{Weakening.distributor_rows}
+\lean{Copying/WeakeningForests}{92}{103}{Weakening.distributor_feeding}
+
+The one-resource forest $W_1$ is isomorphic to $w_s$: its empty internal
+carrier disappears and its single component tag is removed. Likewise,
+$W_2$ is isomorphic to the two ordered weakenings $w_s\otimes w_s$; resource
+indices $0$ and $1$ select the two tensor components. In both cases the
+proof checks every original weakening output.
+\lean{Copying/WeakeningDistributorLaws}{10}{40}{Weakening.forest_one_iso}
+\lean{Copying/WeakeningDistributorLaws}{48}{83}{Weakening.forest_two_iso}
+
+Using these isomorphisms, the unary row has a single original Idem filling
+from $W_1;C_1$ to $W_1$. The binary row has a first filling from $W_2;C_2$
+to the literal Idem source and a second filling from that source to $W_1$.
+These certificates are obtained by transporting the preceding literal row
+witnesses, without weakening their relation or changing their graph sources.
+\lean{Copying/WeakeningDistributorLaws}{87}{92}{Weakening.unary_filling}
+\lean{Copying/WeakeningDistributorLaws}{95}{99}{Weakening.binary_first_filling}
+\lean{Copying/WeakeningDistributorLaws}{102}{105}{Weakening.binary_second_filling}
+
+\begin{theorem}[Finite distributor weakening]
+For every $k,d\in\mathbb N$ and $s\in\{*,\diamond\}$, there are checked
+weakening calculations
+\[
+ W_{k\cdot1};D^s_{k,1}\leadsto W_k,
+ \qquad W_{k\cdot2};D^s_{k,2}\leadsto W_k.
+\]
+They preserve every successful-transition count in any original surrounding
+closed graph, including at arbitrary box depth.
+\end{theorem}
+\begin{proof}
+Expose the rowwise source by the proved ordered isomorphism. For the unary
+case, assemble all unary Idem certificates in parallel. For the binary case,
+assemble all first certificates, then all second certificates. Finally,
+flatten the resulting forest of one-resource weakenings using its actual
+output boundary. Exact soundness of calculations supplies the observation
+claim. The construction includes $k=0$ without a positivity premise.
+\end{proof}
+\lean{Copying/WeakeningDistributorLaws}{109}{115}{Weakening.unary_distributor}
+\lean{Copying/WeakeningDistributorLaws}{119}{128}{Weakening.binary_distributor}
+
+\Needspace{12\baselineskip}
+\subsection{Pulling and absorbing a boxed unused resource}
+First consider an independent graph $G:I\to\epsilon$, a graph
+$W:\epsilon\to J$ and a suffix $R:J\to O$. The literal composites
+$(G\otimes W);R$ and $G\otimes(W;R)$ have the same ordered boundary.
+Their isomorphism moves the shared $J$-wires into the second tensor
+component and reassociates the internal and edge ownership tags. Since $G$
+has no outputs, it contributes no shared wire. Its input and all its edges
+remain unchanged. Portwise commutation for the three components proves
+equality of every incidence list; arbitrary nested boxes in $G$ are retained.
+\lean{Copying/ClosedTensorSerial}{10}{10}{ClosedTensorSerial.left}
+\lean{Copying/ClosedTensorSerial}{11}{11}{ClosedTensorSerial.right}
+\lean{Copying/ClosedTensorSerial}{94}{128}{ClosedTensorSerial.iso}
+
+\termdef{boxed-unused-resource-law}
+\begin{definition}[Boxed unused-resource pair]
+Let $G:*\to *^n$ be any focus-free body with $n$ bound outputs and no free
+resources. Let $L$ be the actual BPullW box with one extra unused free
+resource of sort $s$ inside it; let $R$ be the actual BPullW target, consisting
+of the original box and an outside weakening. The constructors expose the
+common interface $T^n(*)\to s$ by equality transport alone.
+\end{definition}
+\lean{Copying/WeakeningBoxLaw}{13}{14}{Weakening.BoxLaw.inside}
+\lean{Copying/WeakeningBoxLaw}{17}{18}{Weakening.BoxLaw.outside}
+
+The outside presentation is ordered-isomorphic to the tensor of the original
+closed box and $w_s$. The isomorphism retains both edges and, in particular,
+the original recursive body label. The first calculation $L\leadsto R$ is
+one actual BPullW witness with its original focus-free-body condition.
+\lean{Copying/WeakeningBoxLaw}{22}{39}{Weakening.BoxLaw.outside_iso}
+\lean{Copying/WeakeningBoxLaw}{42}{44}{Weakening.BoxLaw.pull}
+
+\begin{theorem}[Boxed unary absorption, closed-resource case]
+There is a checked calculation $L;C_1\leadsto R$, for arbitrary binder count,
+body depth and sharing sort. It preserves exact successful-transition counts
+at every original recursively addressed observing site.
+\end{theorem}
+\begin{proof}
+Apply BPullW beneath the unchanged suffix $C_1$. Expose $R$ as the tensor of
+the original closed box and $w_s$. The preceding independent-component
+isomorphism exposes $w_s;C_1$ beside that box. Apply the unary Idem
+calculation to this component and restore the outside presentation. Thus the
+proof uses one BPullW leaf and one Idem leaf, with only ordered isomorphisms
+between them. Addressed lifting and exact soundness yield the last claim.
+There is no assumption that a callback or surrounding graph terminates.
+\end{proof}
+\lean{Copying/WeakeningBoxLaw}{50}{61}{Weakening.BoxLaw.normalize}
+\lean{Copying/WeakeningBoxLaw}{65}{72}{Weakening.BoxLaw.addressed_exact}
+
+\Needspace{12\baselineskip}
+\subsection{Dependency map and the remaining induction}
+The row laws depend on the original canonical-row isomorphisms and full
+Idem semantics. Forest normalization additionally uses ordered parallel and
+serial isomorphisms. The boxed law depends on these unary results, full
+BPullW semantics, and the independent zero-output-component isomorphism.
+The calculation interpreter combines the two established exact semantic
+consequences; it does not assume a robustness theorem for their union.
+
+All these dependencies are proved. The next application obligations are to
+handle a selected unused resource while a box retains other free resources,
+to extract that resource through the original distributors and shuffles of
+each translation constructor, and to assemble the full term induction.
+The Figure~22 chain and arbitrary-environment Proposition~12.2 remain open.

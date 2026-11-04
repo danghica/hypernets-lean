@@ -9,15 +9,15 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: full original parametricity robustness
+## Latest milestone: exact local semantic weakening
 
-All seven previously outstanding template families are complete, including **parametricity**. The original Figure 20 relation now has output closure, input safety, universal forward and converse robustness, contextual improvement and termination equivalence. Its proof covers every original local rule, arbitrary family sizes and private trees, and shallow, retained, deep and mixed overlaps. The argument remains exposed in beta footprints, so another original family can supply it.
+Proved the original zero-fed unary and binary distributor laws for **every finite resource count**, both term and atom wires, and every depth allowance. The canonical rows are preserved: unary normalization uses one Idem certificate, binary normalization uses two stages. A finite Idem/BPullW calculation calculus proves exact successful-transition counts in arbitrary original observing graphs, with recursive-site, composition, boxing and padding laws.
 
-The exact costs remain explicit: large beta has one transition per side, and small beta has nine versus one. The original Proposition 12.2 terms, Figure 16 translation and machine rules are unchanged.
+The boxed unary law is also proved for arbitrary binder counts when the original body has no other free resources. The proof uses one actual BPullW certificate followed by Idem. The terms and Figure 16 translation are unchanged.
 
-Full build: **1,102 jobs**. All **7,520 distinct axiom audits** pass, with only `propext`, `Classical.choice` and `Quot.sound`. This milestone adds 88 Lean modules and 624 named declarations. The mathematical commentary explains the constructions, with immutable code links, and Appendix B.1 retains completed tasks with strikethrough.
+Full build: **1,109 jobs**. All **7,570 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Seven new modules contain 50 audited public declarations. The commentary includes immutable source links and retains completed Appendix B.1 subtasks with strikethrough.
 
-**Proposition 12.2 is still unproved.** Correspondence audits, non-bijective graph renaming/substitution, semantic weakening and Figure 22 assembly remain. Estimated completion by mathematical effort: **70–80%, with low confidence**, as of 4 November 2026. This is an estimate of proof effort, not a count of completed checklist entries.
+**Proposition 12.2 is still unproved.** All eleven template families are complete. The full term-weakening induction (including boxes with other free resources), correspondence audits, non-bijective graph renaming/substitution and Figure 22 assembly remain. Estimated completion by mathematical effort remains **70–80%, with low confidence**, as of 4 November 2026. Local prerequisites do not discharge the full semantic weakening task.
 
 ## Proposition 12.2: current extension target
 
