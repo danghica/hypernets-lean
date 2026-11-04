@@ -725,3 +725,12 @@ import Hypernets.Copying.SingleUseExtension
 import Hypernets.Copying.WeakeningSingleUse
 import Hypernets.Copying.WeakeningTranslationSteps
 import Hypernets.Copying.WeakeningTranslationExamples
+
+-- Independent binary/application semantic weakening and actual depth padding.
+import Hypernets.Copying.WeakeningRowPartition
+import Hypernets.Copying.WeakeningPairOccurrences
+import Hypernets.Copying.WeakeningBinaryRow
+import Hypernets.Copying.WeakeningBinaryPartition
+import Hypernets.Copying.WeakeningBinarySteps
+import Hypernets.Copying.WeakeningPadding
+import Hypernets.Copying.WeakeningBinaryExamples
