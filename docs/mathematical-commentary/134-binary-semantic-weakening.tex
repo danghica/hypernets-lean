@@ -1,0 +1,370 @@
+\clearpage
+\section{Binary semantic weakening with independent operands}
+\label{sec:binary-semantic-weakening}
+This milestone completes the application and binary-operation part of the
+weakening calculation, with arbitrary independent operands and all their
+old free variables and atoms retained. It also proves compatibility with
+the original maximum-depth padding and exact contextual observations.
+Together with Section~\ref{sec:resource-semantic-weakening}, this supplies
+the graph calculations for all non-atomic term constructors. The atomic
+translation cases and assembly of the full syntactic induction remain open.
+No term, Figure~16 translation clause, or machine rule has changed.
+
+The paper's weakening proof reduces two unused inputs of a binary distributor
+by Idem. Here those inputs come from different operand graphs, so the
+previous copying calculation for two copies of one payload does not suffice.
+The new proof identifies the two actual weakenings, cuts their actual common
+row out of the whole graph, and proves that the remaining graph is exactly
+the two old operands with all old distributor rows. The source is
+\href{https://arxiv.org/html/1907.01257v5\#S12.SS3}{Section~12.3 of the paper},
+the weakening proof preceding Proposition~12.2.
+
+\paragraph{Notation and scope.}
+Write $E_{k,h}=*^k\diamond^h$, and let $W_sG$ extend $G$ by one unused
+resource of sort $s$. The new resource lies at position $k$: a new variable
+is appended to the variable block, or a new atom is prepended to the atom
+block. Let $\iota_s$ be the resulting injection of old output positions.
+A calculation $G\leadsto H$ is the existing finite proof tree of genuine
+Idem and BPullW fillings, ordered recursive isomorphisms, reversal and
+composition. It is not an extra execution rule or an assumed equivalence.
+
+\Needspace{12\baselineskip}
+\subsection{A complete partition and its actual residual}
+\termdef{unused-binary-partition}
+Suppose $G:I\to E_{k,h}$ is the old graph and $H:I\to E_{k',h'}$ is a
+candidate extended graph. A partition consists of complete-label occurrences
+of $G$ and the canonical binary row fed by two weakenings in $H$. Their edge
+images must be disjoint and jointly exhaustive. The old occurrence fixes
+inputs and maps output $i$ to $\iota_s(i)$; the row's sole output is the new
+position $k$. These are geometric data, not semantic assumptions. They are
+all constructed below for the original paired translation.
+\lean{Copying/WeakeningRowPartition}{13}{27}{Weakening.RowPartition.Partition}
+
+The corrected graph is the computed finite complement with the selected
+five-edge pattern replaced by one primitive weakening. The old occurrence
+survives this replacement because it is edge-disjoint from the selected row.
+The new weakening has its literal occurrence in the inserted component of
+the replacement. Boundary transport accounts for the equal hole interfaces;
+it does not change a port or an incidence.
+\lean{Copying/WeakeningRowPartition}{29}{31}{Weakening.RowPartition.corrected}
+\lean{Copying/WeakeningRowPartition}{34}{37}{Weakening.RowPartition.retained}
+\lean{Copying/WeakeningRowPartition}{40}{47}{Weakening.RowPartition.inserted}
+
+The two final components are the retained old graph and that inserted
+weakening. Their edges have different replacement tags, hence are disjoint.
+Their ordered parallel assembly, using the original insertion boundary,
+gives an occurrence of $W_sG$ in the corrected graph. Its old-component
+port equation follows from the parallel occurrence's embedding equation.
+\lean{Copying/WeakeningRowPartition}{48}{54}{Weakening.RowPartition.finalComponents}
+\lean{Copying/WeakeningRowPartition}{55}{63}{Weakening.RowPartition.finalComponents_disjoint}
+\lean{Copying/WeakeningRowPartition}{66}{73}{Weakening.RowPartition.normalizationOccurrence}
+\lean{Copying/WeakeningRowPartition}{74}{80}{Weakening.RowPartition.normalization_old_port}
+
+For an old input or output, the injectivity of the finite-complement embedding
+identifies its cut coordinate with the expected external coordinate.
+The replacement therefore leaves every old input fixed and every old output
+at $\iota_s(i)$. The same argument at the selected row's output places the
+inserted weakening at $k$. The reconstruction's input equation follows by
+factoring through the old occurrence. Its component-output equation treats
+the old and new components separately; the inverse law of the insertion
+boundary then proves that every final output position is fixed.
+\lean{Copying/WeakeningRowPartition}{81}{93}{Weakening.RowPartition.retained_input}
+\lean{Copying/WeakeningRowPartition}{94}{106}{Weakening.RowPartition.retained_output}
+\lean{Copying/WeakeningRowPartition}{107}{122}{Weakening.RowPartition.inserted_output}
+\lean{Copying/WeakeningRowPartition}{123}{126}{Weakening.RowPartition.normalization_input}
+\lean{Copying/WeakeningRowPartition}{127}{149}{Weakening.RowPartition.normalization_component_output}
+\lean{Copying/WeakeningRowPartition}{151}{161}{Weakening.RowPartition.normalization_output}
+
+\begin{lemma}[Exhaustive residual reconstruction]
+The assembled occurrence of $W_sG$ in the corrected graph is an ordered
+recursive isomorphism.
+\end{lemma}
+\begin{proof}
+An edge of the replacement is either inserted or retained. An inserted edge
+is the new weakening and is in the assembled image. A retained edge comes
+from the complement of the selected row. By the assumed exhaustive partition,
+it belongs to the row or to the old occurrence. The first alternative
+contradicts complement membership; the second supplies its preimage.
+Thus the assembled occurrence is edge-surjective. Together with its complete
+incidence laws and fixed external interfaces, the existing occurrence-cover
+lemma upgrades it to a recursive isomorphism.
+\end{proof}
+\lean{Copying/WeakeningRowPartition}{164}{184}{Weakening.RowPartition.normalization_edge_surjective}
+\lean{Copying/WeakeningRowPartition}{187}{191}{Weakening.RowPartition.normalizationIso}
+
+\begin{theorem}[Two-Idem partition normalization]
+For any such partition, if $H$ is recursively focus-free, then
+$H\leadsto W_sG$ by two genuine Idem fillings.
+\end{theorem}
+\begin{proof}
+Apply the previously proved first Idem cut witness at the selected occurrence,
+then the second witness in the same computed complement. Compose the second
+witness's target representation with the inverse reconstruction isomorphism.
+The result is precisely $W_sG$, with every retained old component unchanged.
+\end{proof}
+\lean{Copying/WeakeningRowPartition}{194}{197}{Weakening.RowPartition.normalize}
+
+\Needspace{12\baselineskip}
+\subsection{Keeping two unrelated operands and their old distributor}
+Let $G,H:*\to E_{k,h}$ be arbitrary independent graphs. Their pair $P(G,H)$
+is the original Figure~16 ordered parallel assembly, which moves the left
+atom block past the right variable block. The auxiliary presentation exposes
+the output equality as explicit boundary transport. An equality theorem,
+not merely an isomorphism, identifies it with the original translation pair.
+Define the binary core by
+\[
+        C(G,H)=P(G,H);D_{k,h,2},
+\]
+where $D_{k,h,2}$ is the original term-and-atom environment distributor.
+\lean{Copying/WeakeningPairOccurrences}{13}{18}{Weakening.Pair.paired}
+\lean{Copying/WeakeningPairOccurrences}{19}{21}{Weakening.Pair.original_pair}
+\lean{Copying/WeakeningPairOccurrences}{23}{26}{Weakening.Pair.core}
+
+Either operand occurs in the pair with its own Boolean component tag.
+The input equation places the left and right inputs at positions $0$ and $1$.
+The output equation uses the existing pair-boundary index: old variable $i$
+at use $b$ has position $i+kb$, and atom positions follow the complete term
+block. Both equations follow directly from the prescribed shuffle.
+\lean{Copying/WeakeningPairOccurrences}{28}{33}{Weakening.Pair.component}
+\lean{Copying/WeakeningPairOccurrences}{34}{37}{Weakening.Pair.component_output}
+\lean{Copying/WeakeningPairOccurrences}{38}{46}{Weakening.Pair.component_input}
+
+Compose the old payload occurrence in $W_sG$ or $W_sH$ with the corresponding
+component occurrence in their enlarged pair. These two occurrences are
+disjoint by their Boolean tags, so their ordered parallel assembly retains
+the complete old pair. Following any component port through that assembly
+agrees with its direct old-component map. In particular, an old output at
+pair position $(b,i)$ goes to $(b,\iota_s(i))$, and the two inputs stay fixed.
+No equality between $G$ and $H$ is used.
+\lean{Copying/WeakeningPairOccurrences}{48}{53}{Weakening.Pair.oldComponent}
+\lean{Copying/WeakeningPairOccurrences}{54}{62}{Weakening.Pair.components_disjoint}
+\lean{Copying/WeakeningPairOccurrences}{64}{68}{Weakening.Pair.oldPair}
+\lean{Copying/WeakeningPairOccurrences}{69}{76}{Weakening.Pair.oldPair_component}
+\lean{Copying/WeakeningPairOccurrences}{77}{89}{Weakening.Pair.oldPair_output}
+\lean{Copying/WeakeningPairOccurrences}{90}{106}{Weakening.Pair.oldPair_input}
+
+The retained left occurrence is this old pair embedded into the enlarged
+core. The retained right occurrence is the already proved old two-use
+distributor embedding followed by its serial embedding. Their shared-port
+maps agree: every pair-boundary index has the form $(b,i)$, and both sides
+send it to $(b,\iota_s(i))$. Serial tags make their edges disjoint.
+Serial assembly therefore gives the complete old core occurrence. Its inputs
+are fixed and its outputs follow $\iota_s$, by the component input and
+distributor output equations.
+\lean{Copying/WeakeningPairOccurrences}{108}{110}{Weakening.Pair.oldLeft}
+\lean{Copying/WeakeningPairOccurrences}{111}{114}{Weakening.Pair.oldRight}
+\lean{Copying/WeakeningPairOccurrences}{115}{122}{Weakening.Pair.old_boundary}
+\lean{Copying/WeakeningPairOccurrences}{123}{125}{Weakening.Pair.old_disjoint}
+\lean{Copying/WeakeningPairOccurrences}{127}{130}{Weakening.Pair.old}
+\lean{Copying/WeakeningPairOccurrences}{131}{138}{Weakening.Pair.old_input}
+\lean{Copying/WeakeningPairOccurrences}{139}{145}{Weakening.Pair.old_output}
+
+\Needspace{12\baselineskip}
+\subsection{The actual selected five-edge pattern}
+\termdef{independent-operand-row}
+The selected row is the new resource's literal canonical two-use row inside
+the enlarged distributor. One new weakening edge comes from $W_sG$ and
+one from $W_sH$. Their operand tags are different, proving injectivity;
+the row is in the distributor side of the serial composite, proving
+disjointness from both. Each weakening has its original weakening label
+and an empty source list.
+\lean{Copying/WeakeningBinaryRow}{12}{14}{Weakening.Pair.row}
+\lean{Copying/WeakeningBinaryRow}{16}{22}{Weakening.Pair.weakEdge}
+\lean{Copying/WeakeningBinaryRow}{23}{25}{Weakening.Pair.weak_injective}
+\lean{Copying/WeakeningBinaryRow}{26}{29}{Weakening.Pair.weak_disjoint}
+\lean{Copying/WeakeningBinaryRow}{30}{33}{Weakening.Pair.weak_labels}
+\lean{Copying/WeakeningBinaryRow}{34}{44}{Weakening.Pair.weak_sources}
+
+For the target equation, use the occurrence's target preservation: the
+weakening in either extended operand targets its new external output.
+The pair-boundary equation sends this output to $(b,k)$, and serial gluing
+makes it the internal shared wire at that position. The selected distributor
+row's input equation identifies this very wire with its input $b$. Thus
+both added weakenings actually feed that row, with the original order.
+The auxiliary target lemma proves this by mapping the singleton target
+list through the occurrence; it does not infer connectivity from edge labels.
+\lean{Copying/WeakeningBinaryRow}{47}{59}{Weakening.Pair.weak_target_link}
+\lean{Copying/WeakeningBinaryRow}{60}{67}{Weakening.Pair.weak_targets}
+
+The established attachment construction now assembles the complete canonical
+pattern: two incoming weakenings, together with the row's own canonical
+weakening and two contractions. Its sole output is the new resource's
+external position $k$, obtained by specializing the selected row output
+through the serial right embedding.
+\lean{Copying/WeakeningBinaryRow}{69}{72}{Weakening.Pair.unusedRow}
+\lean{Copying/WeakeningBinaryRow}{73}{87}{Weakening.Pair.unusedRow_output}
+
+\begin{lemma}[The actual core has the required exhaustive partition]
+In $C(W_sG,W_sH)$, the selected five-edge pattern and the retained old core
+$C(G,H)$ are edge-disjoint and jointly exhaustive.
+\end{lemma}
+\begin{proof}
+Split a host edge by its outer serial tag. In the operand side, split again
+by operand and by the extension tag: it is either an old edge of that
+particular operand or its unique new weakening. In the distributor side,
+split by sharing sort and resource index. Under variable extension, an
+index is either below $k$ or equal to the new last index $k$; all atom rows
+are retained. Under atom extension, the new index is $0$ and every positive
+index comes from its predecessor; all variable rows are retained. The
+within-row edge index stays unchanged in every case. The same distinctions
+prove disjointness: new and old operand tags differ, and selected and old
+resource indices cannot coincide. This includes empty old resource blocks.
+\end{proof}
+\lean{Copying/WeakeningBinaryPartition}{11}{32}{Weakening.Pair.row_old_disjoint}
+\lean{Copying/WeakeningBinaryPartition}{35}{87}{Weakening.Pair.edge_cover}
+
+Package these proved facts and the previously proved boundary equations as
+the required partition. Focus freedom of the core follows from that of
+each operand and the language-label invariant of the original distributor.
+Focus freedom of each extension adds only an actual weakening edge. The
+general two-Idem theorem therefore gives the unconditional geometric law
+\[
+          C(W_sG,W_sH)\leadsto W_s C(G,H)
+\]
+for every recursively focus-free $G,H$. All partition and residual premises
+have been discharged for these actual endpoints.
+\lean{Copying/WeakeningBinaryPartition}{90}{98}{Weakening.Pair.partition}
+\lean{Copying/WeakeningBinaryPartition}{100}{103}{Weakening.Pair.core_free}
+\lean{Copying/WeakeningBinaryPartition}{106}{111}{Weakening.Pair.normalize}
+
+\Needspace{12\baselineskip}
+\subsection{Original application and every binary operation}
+\termdef{binary-translation-weakening}
+Recursive isomorphism commutes with extension: place the given isomorphism
+beside the identity of the new weakening, preserve the insertion boundary,
+and transport the equal external interface. This gives the extension
+congruence used in the following reassociation.
+\lean{Copying/WeakeningBinarySteps}{11}{16}{Weakening.extend_congr}
+
+Let $Q:I\to[*,*]$ be any unchanged focus-free head. The original clause has
+parenthesization $(Q;P(G,H));D_{k,h,2}$. Reassociate it to $Q;C(G,H)$.
+Apply the complete core law under the unchanged prefix $Q$, move the
+outside weakening past that prefix using the proved serial-extension
+isomorphism, then reassociate inside the extension. Every isomorphism fixes
+the ordered external boundary. This proves
+\[
+ (Q;P(W_sG,W_sH));D_{k',h',2}
+ \leadsto W_s\bigl((Q;P(G,H));D_{k,h,2}\bigr).
+\]
+\lean{Copying/WeakeningBinarySteps}{19}{36}{Weakening.binary_head_extend}
+
+For application take $Q$ to be the original application edge. For a binary
+operation take its original operation edge. Primitive labels establish
+focus freedom without an additional premise. Thus the endpoint laws cover
+application and all four binary operations, including assignment and atom
+equality, with arbitrary independent operands. The graphs retain the
+original full distributor, rather than replacing it by ideal wires.
+\lean{Copying/WeakeningBinarySteps}{38}{45}{Weakening.application_extend}
+\lean{Copying/WeakeningBinarySteps}{48}{56}{Weakening.binary_extend}
+
+Calculations lift through either side of a parallel assembly with any
+prescribed boundary. The proof is induction on the actual calculation:
+isomorphisms use parallel congruence; an Idem or BPullW leaf uses the genuine
+parallel filling certificate with a reflexive certificate for the unchanged
+component; reversal and composition lift recursively. Applying left and
+right lifting in succession, followed by the pair's equality transport,
+gives pair congruence. Adding the unchanged operation prefix and distributor
+suffix gives application and binary congruence.
+\lean{Copying/WeakeningBinarySteps}{59}{73}{Weakening.Calculation.parallelRight}
+\lean{Copying/WeakeningBinarySteps}{74}{88}{Weakening.Calculation.parallelLeft}
+\lean{Copying/WeakeningBinarySteps}{91}{98}{Weakening.Calculation.pair}
+\lean{Copying/WeakeningBinarySteps}{99}{104}{Weakening.Calculation.application}
+\lean{Copying/WeakeningBinarySteps}{105}{111}{Weakening.Calculation.binary}
+
+Consequently, actual subterm calculations $G'\leadsto W_sG$ and
+$H'\leadsto W_sH$ imply the corresponding application or binary calculation
+with target $W_s$ of the original compound clause. First lift both subterm
+calculations, then use the endpoint law. Focus freedom of $G$ and $H$ is
+recovered from the supplied calculations and the extension invariant.
+These are induction rules consuming proved subterm calculations; they do
+not assert the still-open atomic cases or assume the desired compound
+observational equivalence.
+\lean{Copying/WeakeningBinarySteps}{113}{120}{Weakening.application_step}
+\lean{Copying/WeakeningBinarySteps}{123}{130}{Weakening.binary_step}
+
+\Needspace{12\baselineskip}
+\subsection{Original common-depth padding and observations}
+\termdef{weakening-padding-compatibility}
+Padding $W_sG$ by $n$ layers equals extending the graph padded by $n$ layers.
+Induction on $n$ uses the existing exact one-layer extension equation.
+Transporting an equality of depth indices also commutes with extension,
+by elimination of that equality. Their composition proves the same equality
+for padding to any common allowance $N\geq d$.
+\lean{Copying/WeakeningPadding}{11}{18}{Weakening.extend_pad}
+\lean{Copying/WeakeningPadding}{20}{25}{Weakening.extend_castDepth}
+\lean{Copying/WeakeningPadding}{27}{32}{Weakening.extend_padTo}
+
+Padding a weakening calculation transports each original Idem or BPullW
+leaf by its proved padding-closure law. Rewriting the target by the exact
+extension equation gives a padded subterm calculation. For application or
+a binary operation with operand depths $d,e$, choose $N=\max(d,e)$, pad
+the two independent calculations to $N$, then apply the corresponding
+same-depth induction step. This is precisely the original Figure~16
+maximum-depth convention, including unequal depths and nested boxes.
+\lean{Copying/WeakeningPadding}{35}{42}{Weakening.Calculation.weakening_padTo}
+\lean{Copying/WeakeningPadding}{45}{58}{Weakening.application_step_padded}
+\lean{Copying/WeakeningPadding}{60}{73}{Weakening.binary_step_padded}
+
+The addressed theorems place each complete endpoint calculation at any
+recursive site of a focus-free closing host and apply the already proved
+exact-count soundness theorem. Hole freedom of the filled source supplies
+hole freedom of intermediates and the target. Both refinements then hold
+in the original unbounded machine with equal successful-transition counts.
+There is no operand termination premise, and the structural result covers
+all intended binding-free observation contexts, including observations
+that reuse a closure.
+\lean{Copying/WeakeningPadding}{76}{86}{Weakening.binary_addressed}
+\lean{Copying/WeakeningPadding}{89}{99}{Weakening.application_addressed}
+
+\Needspace{12\baselineskip}
+\subsection{Checked composite instances and dependency map}
+The first open body is the direct translation of $f(!a_1)$ with three
+variable outputs and two atom outputs. The separate literal graph is the
+translation of $1$ with two variable and two atom outputs. These definitions
+use the unchanged syntax and translation.
+\lean{Copying/WeakeningBinaryExamples}{11}{13}{Weakening.Examples.callbackBody}
+\lean{Copying/WeakeningBinaryExamples}{15}{20}{Weakening.Examples.allocationValue}
+
+The assignment instance combines an allocation weakening calculation at
+depth zero with an abstraction weakening calculation at depth one, then
+uses the padded binary induction step. Its target is exactly the original
+translation of $(\mathtt{ref}\ 1):=(\lambda f.\,f(!a_1))$, extended by one
+unused resource. Its source exposes the new weakening separately inside
+the two operand constructions; it is not asserted to be the translation
+of a syntactically weakened term. That additional identification needs the
+atomic translation base cases and full induction.
+\lean{Copying/WeakeningBinaryExamples}{21}{32}{Weakening.Examples.assignment_closure}
+
+A second body is the translation of $\lambda z.\,f\,z$ and already contains
+a box. Abstracting it gives a depth-two operand, independent of the depth-one
+callback just described. The padded application calculation has as target
+the actual translation of
+$(\lambda f.\lambda z.\,f\,z)(\lambda f.\,f(!a_1))$, extended by the unused
+resource. Both examples are checked for either sharing sort in a mixed
+nonempty environment. A separate finite-carrier calculation verifies that
+the removed canonical pattern has five edges and its residual has one,
+at every depth allowance. These are structural calculations, not claims
+that the displayed open programs terminate.
+\lean{Copying/WeakeningBinaryExamples}{34}{36}{Weakening.Examples.nestedCallbackBody}
+\lean{Copying/WeakeningBinaryExamples}{39}{50}{Weakening.Examples.unequal_depth_application}
+\lean{Copying/WeakeningBinaryExamples}{53}{57}{Weakening.Examples.removed_row_size}
+
+\paragraph{Dependency map and remaining work.}
+The completed path is: independent operand occurrences and old distributor
+embedding $\to$ actual attached five-edge row $\to$ exhaustive whole-core
+partition $\to$ two original Idem fillings and residual isomorphism
+$\to$ application and full binary-alphabet endpoint laws $\to$ separate
+subterm induction steps $\to$ original maximum-depth padding $\to$ exact
+addressed observations. The only semantic leaves are previously proved
+Idem and BPullW results. Recursive focus freedom is an application condition,
+not an unproved template or machine law.
+
+The remaining weakening work is the variable, atom and constant translation
+base cases and the full syntactic induction, including binder-index
+identifications. The padding component and independent binary/application
+component are now proved. Figure~22, arbitrary distinct-list environment
+extension, and the correspondence and substitution obligations in
+Appendix~B remain downstream. Proposition~12.2 is not yet proved. The
+conservative completion estimate remains 70--80\% of mathematical effort,
+with low confidence; this milestone does not justify a narrower numerical
+estimate.

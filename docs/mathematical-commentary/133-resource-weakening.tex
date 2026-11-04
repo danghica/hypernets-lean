@@ -21,9 +21,9 @@ count $k$, every old atom count $h$, and every depth allowance $d$.
 The old body may contain arbitrary nested boxes and may use its old free
 resources. The proof supplies concrete filling certificates and hence exact
 contextual equivalence; it assumes neither successful termination nor
-robustness of a new template. The base translation cases, extraction of the
-selected binary row from arbitrary distinct subterms, and assembly of the
-complete term induction remain open. Thus this is a completed part of
+robustness of a new template. The base translation cases and assembly of the complete term induction
+remain open. Section~\ref{sec:binary-semantic-weakening} subsequently
+completes extraction of the selected binary row for independent subterms. Thus this is a completed part of
 semantic weakening, not yet Proposition~12.2.
 
 \Needspace{12\baselineskip}
@@ -309,8 +309,8 @@ already-proved original Idem and BPullW templates. The input focus-freedom
 conditions are application conditions, not missing robustness proofs.
 
 What is still absent is the whole derivation for every translated term:
-the variable, atom and constant base cases, the application and binary-operation
-cases with independently supplied subterms, and their binder and padding
-bookkeeping must be assembled before arbitrary-environment weakening can
-be claimed. Figure~22 and the final general-environment Proposition~12.2
+the variable, atom and constant base cases and the full syntactic induction
+must be assembled before arbitrary-environment weakening can be claimed.
+The subsequent Section~\ref{sec:binary-semantic-weakening} proves the
+independent application/binary steps and their padding compatibility. Figure~22 and the final general-environment Proposition~12.2
 remain downstream, together with the correspondence audits in Appendix~B.

@@ -9,15 +9,15 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: semantic weakening with retained free resources
+## Latest milestone: independent application and binary weakening
 
-Proved the boxed weakening law for **arbitrary other free variables and atoms**, all binder counts and all depth allowances. A boundary-fixing isomorphism extracts the added unary row from the original distributor, with exhaustive edge coverage. One genuine Idem filling normalizes that row while retaining every other resource; BPullW followed by Idem proves the general boxed law.
+Proved the semantic weakening calculation for **application and every binary operation with arbitrary independent operands**. An exhaustive whole-graph partition identifies the two added weakenings and their actual selected distributor row. Two genuine Idem fillings reduce that five-edge pattern to one outside weakening, retaining both old operands, all old distributor rows and the original ordered interfaces.
 
-The original unary-operation and abstraction induction steps now also hold for both sorts. Nested-box, mixed-environment and allocation/read instances check in Lean. These calculations preserve exact successful-transition counts in original observing contexts. The terms, Figure 16 translation and machine rules are unchanged.
+Separate subterm calculations now lift through these original clauses, including operands at different box depths using the translation's maximum-depth padding. Exact-count observations hold at recursive closing sites. Checked composite instances combine allocation, assignment and independent nested callbacks in nonempty variable/atom environments. The terms, Figure 16 translation and machine rules are unchanged.
 
-Full build: **1,115 jobs**. All **7,621 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Six new modules contain 51 audited public declarations. The commentary provides immutable source links. Appendix B.1 removes previously struck tasks and strikes only this milestone's completed tasks.
+Full build: **1,122 jobs**. All **7,697 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Seven new modules contain 76 audited public declarations. The commentary provides immutable source links. Appendix B.1 removes previously struck tasks and strikes only this milestone's completed tasks.
 
-**Proposition 12.2 is still unproved.** All eleven template families are complete. Remaining work includes the translation base cases, binary/application weakening with independent subterms, the full term induction, correspondence audits, non-bijective graph renaming/substitution and Figure 22 assembly. Estimated completion by mathematical effort remains **70–80%, with low confidence**, as of 4 November 2026. The general boxed law closes a substantial weakening obligation; it does not discharge the entire induction.
+**Proposition 12.2 is still unproved.** All eleven template families are complete, and all non-atomic translation constructors now have graph-level weakening steps. The translation base cases, full syntactic term induction, correspondence audits, non-bijective graph renaming/substitution and Figure 22 assembly remain. Estimated completion by mathematical effort remains **70–80%, with low confidence**, as of 4 November 2026. The new result discharges the independent binary/application and padding obligations, not the entire weakening induction.
 
 ## Proposition 12.2: current extension target
 

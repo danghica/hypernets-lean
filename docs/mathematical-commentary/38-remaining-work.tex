@@ -30,9 +30,9 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 The machine, all eleven template families and their contextual consequences
-are proved. Section~\ref{sec:resource-semantic-weakening} completes the
-boxed weakening law with other free resources and the original unary and
-abstraction induction steps. The original terms and Figure~16 translation
+are proved. Section~\ref{sec:binary-semantic-weakening} completes the independent
+application/binary weakening calculation and its original common-depth
+padding, extending the boxed, unary and abstraction laws. The original terms and Figure~16 translation
 remain unchanged; Proposition~12.2 is not yet proved.
 
 Previously struck-through tasks have been removed. Only tasks completed in
@@ -55,14 +55,11 @@ semantic corrections, and retain the zero-input qualification of Lemma~E.1.
 \item \textbf{Semantic weakening and the final example.}
 Complete the semantic weakening laws, with these components:
 \begin{itemize}
-\item {\raggedright\completedtask{Extend the boxed calculation to arbitrary other free variables and atoms, preserving the bound interface and original body.}\par}
-\item {\raggedright\completedtask{Extract the selected unused unary row from the complete original environment distributor and construct its whole-graph Idem filling.}\par}
-\item {\raggedright\completedtask{Prove the original unary-operation and abstraction induction steps for both variable and atom extension.}\par}
 \item Prove the variable, atom and constant translation base cases.
-\item Extract and normalize the selected unused binary row in the application
-and binary-operation clauses with arbitrary, independently supplied subterms.
+\item {\raggedright\completedtask{Extract and normalize the selected unused binary row in the application and binary-operation clauses with arbitrary, independently supplied subterms.}\par}
+\item {\raggedright\completedtask{Prove maximum-depth padding compatibility and the application/binary induction steps for operands at different box depths.}\par}
 \item Assemble the full term-weakening induction, including syntactic binder
-lifting and depth-padding compatibility, and its environment-extension consequence.
+lifting, using the proved padding laws, and its environment-extension consequence.
 \end{itemize}
 Then assemble Figure~22's equivalence chain and obtain Proposition~12.2 for
 arbitrary distinct-list environments.
