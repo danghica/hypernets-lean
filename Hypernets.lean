@@ -734,3 +734,23 @@ import Hypernets.Copying.WeakeningBinaryPartition
 import Hypernets.Copying.WeakeningBinarySteps
 import Hypernets.Copying.WeakeningPadding
 import Hypernets.Copying.WeakeningBinaryExamples
+
+-- Full syntactic weakening and Proposition 12.2 ambient environments.
+import Hypernets.Copying.AtomicEmbeddingBoundary
+import Hypernets.Copying.AtomicEmbeddingIdentity
+import Hypernets.Copying.AtomicResourceComplement
+import Hypernets.Copying.AtomicResourceEmbedding
+import Hypernets.Copying.AtomicWeakening
+import Hypernets.Copying.AtomicWeakeningComplements
+import Hypernets.Copying.AtomicWeakeningOutputs
+import Hypernets.Copying.OccurrenceInterfaceTransport
+import Hypernets.Copying.OccurrenceTensorMap
+import Hypernets.Copying.PropositionEnvironmentWeakening
+import Hypernets.Copying.ResourceGap
+import Hypernets.Copying.SelectedResourceEmbedding
+import Hypernets.Copying.TermWeakening
+import Hypernets.Copying.TermWeakeningExamples
+import Hypernets.Copying.WeakeningComplement
+import Hypernets.Copying.WeakeningEdgeOccurrence
+import Hypernets.Copying.WeakeningExtensionIso
+import Hypernets.Copying.WeakeningTermTransport
