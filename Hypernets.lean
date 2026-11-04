@@ -754,3 +754,14 @@ import Hypernets.Copying.WeakeningComplement
 import Hypernets.Copying.WeakeningEdgeOccurrence
 import Hypernets.Copying.WeakeningExtensionIso
 import Hypernets.Copying.WeakeningTermTransport
+
+-- Actual Proposition 12.2 allocation/beta prefix and arbitrary environments.
+import Hypernets.Copying.AmbientWeakeningContext
+import Hypernets.Copying.ClosedBranchSerial
+import Hypernets.Copying.ClosedTranslationUnits
+import Hypernets.Copying.PropositionAllocationEquivalence
+import Hypernets.Copying.PropositionAllocationGeometry
+import Hypernets.Copying.PropositionAllocationPrograms
+import Hypernets.Copying.PropositionEnvironmentOpening
+import Hypernets.Copying.PropositionOpeningChecks
+import Hypernets.Copying.PropositionOperationalContexts
