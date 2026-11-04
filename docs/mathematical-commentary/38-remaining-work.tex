@@ -30,12 +30,12 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 The machine, all eleven template families and their contextual consequences
-are proved. Section~\ref{sec:term-semantic-weakening} completes full semantic
-weakening. Section~\ref{sec:proposition-opening} proves allocation and outer
-beta opening for the unchanged left-hand program in arbitrary finite and
-named environments, with actual binding-free contexts and a retained-store
-resolution theorem. The final equivalence to the right-hand program remains
-unproved.
+are proved. Full semantic weakening and the actual left program's allocation
+and beta-opening prefix are complete. Sections~\ref{sec:proposition-result-normalization}
+and~\ref{sec:proposition-final-segment} now complete right-hand normalization
+and concrete parametricity to the unchanged right-hand translation, in arbitrary
+finite environments and at every adequate allowance. The bridge from the
+actual opened left graph to the normalized private closure remains unproved.
 
 Previously struck-through tasks have been removed. Only tasks completed in
 this milestone are struck through below; every unstruck task remains open.
@@ -55,14 +55,16 @@ explicitly focused graphs, unique-hole inventories and replacement tuples.
 Preserve the proved execution and observation laws through any necessary
 semantic corrections, and retain the zero-input qualification of Lemma~E.1.
 \item \textbf{The final example and its graph normalization.}
-Semantic weakening is complete. The remaining chain is now split explicitly:
+The two ends of the concrete equivalence chain are proved; its source-normalization
+bridge is still open.
 \begin{itemize}
-\item {\raggedright\completedtask{Prove allocation and outer beta opening for the original left-hand translation, with the actual stable instance, binding-free contexts, retained store and arbitrary finite environment transport.}\par}
-\item Normalize the opened translated body and its retained sharing/box
-structure into the actual Figure~22 parametricity instance.
-\item Apply the parametricity equivalence and normalize the resulting graph
-to the unchanged constant-result translation.
-\item Compose the complete chain at the required common depth allowances
+\item {\raggedright\completedtask{Normalize the unchanged constant-result translation to the schematic constant closure, preserving exact successful counts at every adequate depth and termination observations in arbitrary finite environments.}\par}
+\item {\raggedright\completedtask{Instantiate concrete parametricity, retaining any certified private sharing tree, and compose it with normalization to the unchanged right-hand translation in arbitrary finite and named environments.}\par}
+\item Normalize the actual opened translated left body and its retained
+sharing/box structure into the Figure~22 parametricity source, preserving
+its private instance and store.
+\item Carry the original-left allocation/beta prefix and source-normalization
+certificates to the required common allowances, compose the complete chain,
 and obtain the public Proposition~12.2 theorem for arbitrary distinct-list
 environments.
 \end{itemize}

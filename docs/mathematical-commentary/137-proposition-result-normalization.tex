@@ -1,0 +1,226 @@
+\clearpage
+\section{Normalizing the unchanged constant-result program}
+\label{sec:proposition-result-normalization}
+The first milestone in this section completes the rightmost structural link
+of Figure~22. Let $P_R$ denote the \emph{original} inductive translation of
+$\lambda f.\,(\lambda w.\,1)\,(f\,())$. Let $R_d$ denote the single large
+right abstraction in the parametricity family, at allowance $d+2$.
+The theorem proves an exact-count contextual equivalence between the padded
+closed $P_R$ and $R_d$, for every $d\geq0$. It then connects the original
+translation in arbitrary finite variable and atom environments to $R_d$
+with genuine outside weakenings. No term, translation clause, primitive
+rule or observation class changes.
+
+\paragraph{Correspondence with the paper.}
+The \href{https://arxiv.org/html/1907.01257v5\#S12.SS3}{paper's Figure~22}
+labels this final link by associativity, commutativity, idempotence and
+box-weakening pulling. Lean first applies the already proved Idem/BPullW
+weakening calculation to the unused variable under the inner lambda. It
+then isolates the entire remaining finite sharing tree and applies the
+proved general sharing-tree equivalence. It does not enumerate a separate
+sequence of elementary associativity and commutativity moves for this tree.
+That broader tree theorem already has proved input safety, forward and
+converse robustness, and exact execution consequences. This is a difference
+in proof organization, not an assumed graph equality or a simplified translation.
+
+\subsection{Kernel-checked finite representation certificates}
+\termdef{finite-incidence-certificate}{Finite incidence certificate}.
+A finite incidence certificate consists of two candidate carrier maps and
+their inverses, together with proofs preserving every internal wire label,
+every recursive edge label, and every ordered source and target list. External
+ports are fixed. An auxiliary table function looks up a carrier in an explicit
+source inventory and returns the corresponding candidate target; its fallback
+only makes the function total. Acceptance depends on the inverse and incidence
+proofs, so the fallback cannot hide an omitted carrier.
+
+The inventory lemma turns a predicate checked at every listed entry into a
+predicate on the whole carrier, using the inventory's completeness proof.
+An empty inventory admits no element; applying this observation twice gives
+the unique bijection between two empty carriers. For nonempty carriers, the
+bijection constructor uses the two checked inverse laws. The isomorphism
+constructor applies inventory completeness to all label and ordered-incidence
+checks. These arguments neither assume that inventories have no repeats nor
+infer graph equality from matching counts.
+\lean{Copying/FiniteGraphCertificate}{23}{24}{FiniteGraphCertificate.table}
+\lean{Copying/FiniteGraphCertificate}{26}{27}{FiniteGraphCertificate.all}
+\lean{Copying/FiniteGraphCertificate}{29}{36}{FiniteGraphCertificate.emptyBijection}
+\lean{Copying/FiniteGraphCertificate}{37}{44}{FiniteGraphCertificate.bijection}
+\lean{Copying/FiniteGraphCertificate}{45}{59}{FiniteGraphCertificate.iso}
+
+The edge-rank lemma checks that every vertex shared by the target of one edge
+and the source of another makes the rank strictly increase. Completeness of
+the two edge inventories supplies this inequality for every adjacency.
+The existing path-rank theorem then shows that every finite path has distinct
+edges. Thus a finite computation establishes acyclicity without assuming it.
+\lean{Copying/FiniteGraphCertificate}{60}{65}{FiniteGraphCertificate.path_nodup}
+
+The small carrier-equality tactic recursively handles the actual finite sums
+and dependent tagged components. All concrete checks use Lean's kernel-checked
+\texttt{decide}; no native-evaluation axiom, external graph matcher, or
+unverified isomorphism oracle enters the proof. Candidate tables are proof
+inputs, and every certificate is rechecked against the original graph.
+\lean{Copying/FiniteGraphCertificate}{1}{22}{Finite carrier equality and certificate setup}
+
+\subsection{The literal graph and its complete sharing component}
+The two scoped terms name the callback $f\,()$ and the outer lambda's body
+$(\lambda w.\,1)\,(f\,())$, respectively, in the one-variable environment.
+They are subterms of the unchanged right program. The mixed intermediate
+keeps the original application and callback translation but replaces the
+inner lambda translation by its normalized closed abstraction beside an
+outside term weakening. Its callback is padded to allowance one exactly
+as prescribed by the original translation.
+\lean{Copying/PropositionResultGraphs}{11}{11}{Result.callbackTerm}
+\lean{Copying/PropositionResultGraphs}{12}{12}{Result.bodyTerm}
+\lean{Copying/PropositionResultGraphs}{14}{19}{Result.mixed}
+
+\termdef{result-sharing-tree}{Result sharing tree}.
+Write $W$ for a term weakening and $C_m$ for the original canonical
+$m$-input term tree. The complete retained sharing component is
+\[
+ T=\bigl(W\otimes((C_1\otimes W);C_2)\bigr);C_2.
+\]
+It contains five weakenings and five contractions. The first inner $W$
+comes from the unused variable of the unit argument, and the outer $W$
+comes from the unused variable of the closed sequencing lambda. Both
+original two-use distributors retain their own weakening. No canonical
+row is silently replaced by a binary contraction.
+
+For any one-input, one-output graph $U$, the schematic body is the outer
+application of the closed constant-returning lambda to the callback
+application, with $U$ on the callback's function wire and the literal unit
+on its argument wire. Substituting $T$ gives the mixed graph's actual
+sharing structure; substituting $C_1$ gives the original schematic
+\texttt{callOneBody}.
+\lean{Copying/PropositionResultGraphs}{20}{24}{Result.sharing}
+\lean{Copying/PropositionResultGraphs}{26}{30}{Result.schematic}
+
+The first finite isomorphism identifies the original constant translation
+in one variable with the schematic numeral beside an ignored binder. Both
+have exactly the same two edges; the certificate exchanges their carrier
+order and fixes the term input and unused output. The second isomorphism
+factors the whole mixed graph into the schematic operational skeleton and
+$T$. Its fifteen-edge certificate retains both application heads, the unit,
+the lambda, its entire original box body and all ten sharing edges. It
+checks every ordered incidence, including both contraction inputs.
+\lean{Copying/PropositionResultGeometry}{13}{35}{Result.ConstantBody.iso}
+\lean{Copying/PropositionResultGeometry}{39}{65}{Result.SharingFactorization.iso}
+
+\subsection{Pulling the unused resource through the real lambda}
+The closed inner lambda is first identified with the small schematic right
+abstraction: remove only the empty outer distributor and apply the numeral
+body isomorphism under its original box. The full term-weakening theorem
+then connects the actual inner lambda in environment $f$ to that closed
+abstraction with one outside weakening. Its only semantic leaves are the
+already established Idem and BPullW certificates.
+\lean{Copying/PropositionResultNormalization}{14}{19}{Result.closedSmall_iso}
+\lean{Copying/PropositionResultNormalization}{20}{26}{Result.inner_weakening}
+
+Lift this calculation through the left operand of the unchanged outer
+application. The padded callback operand and both application distributors
+remain present. Lift the result through the original outer abstraction,
+and remove its genuinely empty outside distributor by an isomorphism.
+The resulting calculation runs from the unchanged closed $P_R$ to the
+lambda payload containing the mixed body.
+\lean{Copying/PropositionResultNormalization}{27}{31}{Result.body_weakening}
+\lean{Copying/PropositionResultNormalization}{32}{42}{Result.program_weakening}
+
+\subsection{Replacing the whole sharing tree under both applications}
+The proof of the sharing-tree predicate exhausts all ten edges, showing that
+each is a term contraction or term weakening. In the graph's original edge
+enumeration the rank list is
+\[
+ (0,0,1,0,0,3,2,0,5,4).
+\]
+Every actual adjacency increases this rank, as checked against the source
+and target lists. The finite rank lemma therefore establishes acyclicity.
+The resulting actual sharing-tree predicate, together with the existing
+canonical-tree predicate, supplies a genuine sharing-template relation
+between $T$ and $C_1$ and hence a recursive filling witness.
+\lean{Copying/PropositionResultNormalization}{43}{56}{Result.sharing_tree}
+\lean{Copying/PropositionResultNormalization}{57}{62}{Result.sharing_witness}
+
+The body witness retains the unit, inner closed lambda and two application
+heads by reflexive fillings, tensors and serially composes them with the
+sharing witness, and changes the left representation using the whole-graph
+factorization certificate. Its right endpoint is definitionally the
+schematic call-one body. Boxing this witness with one bound variable and
+no free resources, and retaining the outer lambda edge, produces the
+program witness. The selected bound output is preserved throughout.
+\lean{Copying/PropositionResultNormalization}{63}{76}{Result.body_witness}
+\lean{Copying/PropositionResultNormalization}{77}{81}{Result.program_witness}
+
+The original, weakened and normalized open-program records package precisely
+these three graphs with proved focus and hole freedom. The original record
+uses translation invariants. The weakened record obtains both invariants
+from the actual weakening calculation. The normalized record uses the
+schematic family's recursive label theorem. None of these records contains
+a field assuming observational equivalence.
+\lean{Copying/PropositionResultNormalization}{83}{84}{Result.original}
+\lean{Copying/PropositionResultNormalization}{85}{86}{Result.weakened}
+\lean{Copying/PropositionResultNormalization}{87}{93}{Result.normalized}
+
+The first contextual comparison is the exact-count soundness of the
+weakening calculation. For the second, fill the sharing witness into each
+original binding-free closing context and apply the completed sharing
+robustness theorem. Both closed endpoints are hole-free by their actual
+program and context certificates. Composition preserves exact successful
+transition counts in both directions. The termination equivalence is
+obtained only afterwards by forgetting equality of costs.
+\lean{Copying/PropositionResultNormalization}{94}{100}{Result.original_normalized_exact}
+\lean{Copying/PropositionResultNormalization}{102}{104}{Result.original_normalized}
+
+\subsection{All adequate depth allowances}
+Padding is applied to structural certificates, rather than inferred from
+determinism. For any padding-closed template, the witness-padding helper
+writes $N=d+n$ and uses the proved $n$-fold padding construction, transporting
+the endpoints through the original padding equalities. The large-right
+padding isomorphism follows by induction on the extra allowance: the base
+case is self-padding, and the successor uses padding congruence followed
+by the previously proved one-layer schematic-abstraction isomorphism.
+\lean{Copying/PropositionResultPadding}{11}{20}{Result.padWitness}
+\lean{Copying/PropositionResultPadding}{21}{28}{Result.largeRight_padding}
+
+The three allowance-indexed program records pad the original and weakened
+graphs to $d+2$, while the normalized record uses the literal schematic
+abstraction at that allowance. The padded program witness keeps its left
+endpoint and uses the large-right padding isomorphism on its right endpoint.
+\lean{Copying/PropositionResultPadding}{30}{30}{Result.originalAt}
+\lean{Copying/PropositionResultPadding}{31}{31}{Result.weakenedAt}
+\lean{Copying/PropositionResultPadding}{32}{34}{Result.normalizedAt}
+\lean{Copying/PropositionResultPadding}{36}{43}{Result.program_witnessAt}
+
+The same two-stage soundness proof now applies at every allowance $d+2$:
+pad the original weakening calculation, then apply the padded sharing
+witness in an arbitrary closing context. Exact costs remain equal. Only
+the separate termination corollary forgets them. In particular, allowance
+three, needed by the allocating left-hand program, is already covered.
+\lean{Copying/PropositionResultPadding}{44}{52}{Result.original_normalizedAt_exact}
+\lean{Copying/PropositionResultPadding}{54}{57}{Result.original_normalizedAt}
+
+\subsection{Arbitrary variable and atom environments}
+Padding commutes with actual outside weakening. Induct first over the
+variable block and then over the atom block, applying the established
+single-extension padding equation at each successor. This proves equality
+of the two assembled graphs, including their original boundary order.
+\lean{Copying/PropositionResultEnvironments}{10}{22}{Result.ambient_padTo}
+
+The original-environment program is exactly \texttt{translatedProgram} of
+the unchanged constant-result term at allowance $d+2$. The normalized
+program is the schematic abstraction with its certified ambient weakenings.
+Pad the full term-weakening calculation for the original environment, then
+use the commuting equation to identify its endpoint with the actual ambient
+extension of the padded closed translation. This first link is exact-count.
+\lean{Copying/PropositionResultEnvironments}{24}{25}{Result.originalEnvironment}
+\lean{Copying/PropositionResultEnvironments}{26}{30}{Result.normalizedEnvironment}
+\lean{Copying/PropositionResultEnvironments}{31}{39}{Result.environment_weakening_exact}
+
+Compose this environment link with the closed normalization lifted through
+the already proved sole-hole ambient context. The resulting termination
+comparison holds for every finite pair of environment sizes. The named
+version substitutes the lengths of the original distinct lists. The
+observation corollary quantifies over every original binding-free closing
+context, and states equivalence of successful termination; it assumes
+neither callback termination nor single use of the returned closure.
+\lean{Copying/PropositionResultEnvironments}{40}{47}{Result.original_normalized_environment}
+\lean{Copying/PropositionResultEnvironments}{49}{56}{Result.original_normalized_named}
+\lean{Copying/PropositionResultEnvironments}{57}{60}{Result.original_normalized_termination}

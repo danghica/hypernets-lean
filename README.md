@@ -9,15 +9,15 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: the original program's allocation and beta-opening chain
+## Latest milestones: original right-hand normalization and concrete parametricity
 
-Proved **contextual equivalence from the unchanged Proposition 12.2 left-hand translation to its actual allocated, beta-opened intermediate graph**, in **every finite pair of variable and atom environments**, including named distinct lists. The proof applies the already proved reference-creation and micro-beta templates through explicitly certified binding-free contexts. It has no unproved machine, robustness or translation premises.
+Completed **two concrete links toward Proposition 12.2**. First, the unchanged constant-result translation is contextually equivalent to Figure 20's normalized constant closure, with **exact successful-transition counts at every adequate depth allowance**. The proof retains the actual callback, factors its complete ten-edge sharing component, and uses proved Idem/BPullW and sharing-tree results.
 
-The allocated store is separated from the primitive instance so beta uses its original stability requirement. The store and full canonical atom tree remain in the result. Checked incidence proofs show the opened instance resolves uniquely to that store in exactly two atom hops and the store still contains the original numeral `1`. A new sole-hole ambient context transports closed contextual equivalences to arbitrary environments, using the completed semantic weakening theorem.
+Second, **the normalized private-cell closure is contextually equivalent to the unchanged right-hand translation**, in every finite variable/atom environment, including named distinct lists. This completes the parametricity and final-normalization segment of Figure 22. Any certified one-input private term sharing tree is allowed; its canonical presentation is not an extra premise. Both quantitative directions are retained for the closed final segment before costs are forgotten.
 
-Full build: **1,149 jobs**. All **7,913 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Nine new modules contain 87 audited public declarations. Section 132 explains all new definitions and proofs with immutable source links. Appendix B.1 removes previously struck tasks and strikes only this milestone's completed task.
+Full build: **1,158 jobs**. All **7,982 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Nine new modules contain 69 audited public declarations. Sections 133–134 explain the definitions and proofs with immutable source links. Appendix B.1 removes previously struck tasks and strikes only these newly completed tasks.
 
-**Proposition 12.2 is still unproved.** The opened graph retains the original internal distributors; it is not yet the normalized parametricity instance drawn in Figure 22. The next work is structural normalization, the parametricity link, normalization to the unchanged right-hand translation, and final composition at the required depth allowances. Correspondence and remaining substitution/stability obligations also remain. Estimated completion stays **70–80% of mathematical effort, with low confidence**, as of 4 November 2026.
+**Proposition 12.2 is still unproved.** The missing chain link is structural normalization of the previously opened original left-hand graph into the parametricity source. The original-left prefix and that bridge must also be assembled at the required common depth allowances. Correspondence and remaining substitution/stability obligations remain. Estimated completion stays **70–80% of mathematical effort, with low confidence**, as of 4 November 2026; the remaining bridge and correspondence work are still substantial.
 
 ## Proposition 12.2: current extension target
 

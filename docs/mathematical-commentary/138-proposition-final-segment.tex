@@ -1,0 +1,177 @@
+\clearpage
+\section{Concrete parametricity and the final segment of Figure 22}
+\label{sec:proposition-final-segment}
+The second milestone instantiates parametricity with the actual private
+closure used by Figure~22 and composes it with the preceding section's
+normalization. Its endpoint is the unchanged right-hand term translation,
+in arbitrary finite environments and at every adequate common allowance.
+It also allows any certified one-input private term sharing tree, so the
+remaining source normalization need not first make that private tree canonical.
+
+\paragraph{The remaining boundary.}
+This theorem starts at the \emph{normalized private closure}, not at the
+original allocating left-hand translation. Section~\ref{sec:proposition-opening}
+already reaches the latter's actual opened graph. The structural bridge
+between that graph and the normalized private closure remains to be proved.
+No theorem here assumes that missing equivalence, and none is named or
+presented as the completed Proposition~12.2.
+
+\subsection{The actual single-closure family instance}
+A family with one large member and zero small members contains exactly the
+retained large member. The singleton-family isomorphism uses its original
+occurrence, whose input and output maps fix the ordered boundary. Every
+edge of the whole family lies in that occurrence: the other branch of the
+one-copy tensor and the entire zero-copy family have empty edge carriers.
+The existing occurrence theorem therefore supplies a whole-graph recursive
+isomorphism. Its applications give both the single large left family and
+the single large right family. No empty component is treated as a new
+identity wire or operational step.
+\lean{Copying/PropositionParametricityInstance}{13}{30}{ParametricInstance.singletonFamily_iso}
+\lean{Copying/PropositionParametricityInstance}{32}{35}{ParametricInstance.leftFamily_iso}
+\lean{Copying/PropositionParametricityInstance}{37}{43}{ParametricInstance.rightFamily_iso}
+
+\termdef{normalized-private-closure}{Normalized private closure}.
+Let $L_d$ be the large schematic read-after-callback abstraction and let
+$C$ be any actual finite acyclic one-input term contraction tree. The
+normalized private closure is
+\[
+ Q_{d,C}=(L_d;C);\mathsf{privateCell}_{d+2}.
+\]
+The private cell is the original instance followed by its full canonical
+atom tree, store edge and numeral one. Its interface has one term input and
+no outputs, so the private reference does not escape through a free
+resource output. The canonical specialization chooses $C=C_1$; the more
+general constructor retains $C$ without further normalization.
+\lean{Copying/PropositionParametricityInstance}{44}{49}{ParametricInstance.privateClosureWith}
+\lean{Copying/PropositionParametricityInstance}{50}{53}{ParametricInstance.privateClosure}
+
+The arbitrary-tree pair proof first uses the single-left-family isomorphism
+under the unchanged tree and store suffix. It then applies the literal
+parametricity family constructor with $m_1=1$ and $m_2=0$, and uses the
+inverse single-right-family isomorphism. This constructor asserts a
+syntactic template instance. Its semantic soundness is supplied by the
+already completed parametricity proof, including copying and garbage
+collection dependencies. The canonical pair specializes this construction.
+\lean{Copying/PropositionParametricityInstance}{54}{60}{ParametricInstance.pairWith}
+\lean{Copying/PropositionParametricityInstance}{61}{62}{ParametricInstance.pair}
+
+\subsection{Retaining both quantitative directions}
+The private-program record uses the actual pair's proved focus and hole
+freedom. Applying the original pair-contextual theorem yields directed
+improvement from the canonical private closure to the normalized constant
+closure. For the converse, place the same literal pair in each closing
+context and apply the existing reverse-overhead filling theorem. Both
+comparisons use the complete original machine and observation class.
+Successful termination equivalence follows after forgetting the costs.
+\lean{Copying/PropositionParametricityInstance}{64}{68}{ParametricInstance.privateProgram}
+\lean{Copying/PropositionParametricityInstance}{69}{74}{ParametricInstance.improvement}
+\lean{Copying/PropositionParametricityInstance}{75}{81}{ParametricInstance.reverse_overhead}
+\lean{Copying/PropositionParametricityInstance}{83}{88}{ParametricInstance.equivalent}
+
+Compose this concrete equivalence with the reverse of the right-hand
+normalization theorem. The result runs from $Q_{d,C_1}$ to the actual
+padded closed $P_R$. Directed improvement also survives the composition:
+the normalization contributes equal costs, which satisfy the required
+inequality reflexively. The separately proved reverse-overhead statement
+starts with the exact normalization in the opposite direction and then
+uses reverse parametricity. Thus no exact-cost claim is made for private-state
+elimination itself.
+\lean{Copying/PropositionParametricityInstance}{89}{95}{ParametricInstance.private_original}
+\lean{Copying/PropositionParametricityInstance}{96}{100}{ParametricInstance.private_original_improvement}
+\lean{Copying/PropositionFinalSegment}{44}{51}{ParametricInstance.private_original_reverse_overhead}
+
+\subsection{The full final segment in arbitrary environments}
+\termdef{figure22-final-segment}{Figure 22 final segment}.
+The ambient private-program record adds only the actual unused term and
+atom resources to the normalized private closure. Lift the closed concrete
+parametricity equivalence through the certified sole-hole ambient context,
+then compose with the reverse of the original-environment right normalization.
+This proves the final segment for every $d,k,h$:
+\[
+ \mathsf{ambient}_{k,h}(Q_{d,C_1})
+ \simeq R_d^{\mathrm{ambient}(k,h)}
+ \simeq (P_R\text{ in }k,h)^{\mathrm{pad}(d+2)}.
+\]
+The endpoint is the literal unchanged translation; there is no hypothesis
+postulating translation correctness, robustness or machine determinism.
+\lean{Copying/PropositionFinalSegment}{9}{13}{ParametricInstance.privateEnvironment}
+\lean{Copying/PropositionFinalSegment}{14}{18}{ParametricInstance.private_original_environment}
+
+The named theorem uses the lengths of the original distinct variable and
+atom lists. For any externally chosen $N\geq2$, the allowance theorem
+chooses $d=N-2$, proves $d+2=N$, and gives the same equivalence at that
+allowance. The observation corollary unfolds contextual equivalence into
+successful-termination equivalence for every binding-free closing context.
+The depth-three specialization has exactly the \texttt{translatedProgram}
+endpoint needed to compare with the original left program's allowance.
+\lean{Copying/PropositionFinalSegment}{20}{27}{ParametricInstance.private_original_named}
+\lean{Copying/PropositionFinalSegment}{28}{37}{ParametricInstance.private_original_at}
+\lean{Copying/PropositionFinalSegment}{38}{43}{ParametricInstance.private_original_termination}
+\lean{Copying/PropositionFinalSegment}{52}{57}{ParametricInstance.common_depth_three}
+
+For an arbitrary certified private tree $C$, package $Q_{d,C}$ with the
+focus and hole invariants of its actual pair. Apply the same parametricity
+and ambient-context theorems and compose with the same right normalization.
+The general environment theorem therefore retains the entire supplied tree;
+its hypothesis is the concrete contraction-tree data and acyclicity proof,
+not an assumed equivalence of that tree with a canonical presentation.
+\lean{Copying/PropositionFinalSegment}{58}{59}{ParametricInstance.privateProgramWith}
+\lean{Copying/PropositionFinalSegment}{61}{69}{ParametricInstance.private_original_with_tree}
+
+\subsection{Concrete regression statements}
+The application counter inspects only actual outer labels of an
+allowance-one body. The original translated right body, the mixed body and
+the normalized schematic body each contain two application edges. Hence
+the callback computation has not been removed during structural normalization.
+The corresponding total edge inventories are sixteen, fifteen and seven;
+the isolated sharing component has ten edges. These checked counts accompany
+the actual incidence and template proofs; counts alone are never used to
+justify an isomorphism or a rewrite.
+\lean{Copying/PropositionFinalSegmentChecks}{10}{13}{FinalSegmentChecks.applications}
+\lean{Copying/PropositionFinalSegmentChecks}{15}{20}{FinalSegmentChecks.callback_computation_retained}
+\lean{Copying/PropositionFinalSegmentChecks}{21}{28}{FinalSegmentChecks.sharing_edge_inventory}
+
+The depth-three canonical private closure has nine outer edges, while its
+constant closure has two. The genuine parametricity step accounts for this
+state elimination. A mixed-environment regression uses two variables and
+three atoms and supplies the ten-edge tree extracted from the original
+right translation as a \emph{noncanonical} private tree. It still reaches
+the unchanged translated right program at allowance three.
+\lean{Copying/PropositionFinalSegmentChecks}{29}{34}{FinalSegmentChecks.private_edge_inventory}
+\lean{Copying/PropositionFinalSegmentChecks}{35}{41}{FinalSegmentChecks.noncanonical_mixed_environment}
+
+Finally, for every exact step count $n$ and every binding-free observation,
+the right normalization has a successful $n$-step execution on one side
+if and only if it has one on the other. In each direction the exact-cost
+refinement produces a matching run whose cost equality identifies its
+length with $n$. This quantification includes repeated closure use and
+observations with divergent or stuck callbacks; it is not a test assuming
+that a selected callback terminates.
+\lean{Copying/PropositionFinalSegmentChecks}{42}{56}{FinalSegmentChecks.exact_observation_count}
+
+\subsection{Dependency map and remaining work}
+With $O$ denoting the previously proved actual opened left graph, the current
+chain is
+\[
+ P_L\ \underbrace{\simeq}_{\text{proved allocation/beta}}\ O
+ \ \underbrace{\dashrightarrow}_{\text{open structural bridge}}\ Q_{d,C}
+ \ \underbrace{\simeq}_{\text{proved parametricity}}\ R_d
+ \ \underbrace{\simeq}_{\text{proved normalization}}\ P_R.
+\]
+The last two links now have concrete endpoints, arbitrary finite-environment
+transport and all adequate common allowances. Their dependencies are the
+original Idem/BPullW weakening certificates, actual finite graph
+isomorphisms, the proved sharing-tree theorem, the proved full parametricity
+family and the certified ambient context. No application-level semantic
+assumption remains in these links.
+
+The open source bridge must normalize the opened translated body and its
+retained sharing and boxes to the schematic read-after-callback closure,
+while preserving the actual private cell. The original-left prefix and that
+bridge must be carried to the required common allowances before composing
+the complete public theorem. The correspondence, substitution and any
+required stability obligations in Appendix~\ref{app:remaining-work} also
+remain. Proposition~12.2 is not yet proved. Completion remains estimated at
+70--80\% of mathematical effort, with low confidence: these are two completed
+concrete links, but the remaining bridge and correspondence work can still
+require substantial mathematics.
