@@ -708,3 +708,12 @@ import Hypernets.Copying.RetainedPrimitiveReplacement
 import Hypernets.Copying.RightBareApplicationCut
 import Hypernets.Copying.RootedOpeningRewrite
 import Hypernets.Copying.TargetSwapHostExpansion
+
+-- Exact local semantic weakening for Proposition 12.2.
+import Hypernets.Copying.ClosedTensorSerial
+import Hypernets.Copying.NullaryParallelSerial
+import Hypernets.Copying.WeakeningBoxLaw
+import Hypernets.Copying.WeakeningCalculation
+import Hypernets.Copying.WeakeningDistributorLaws
+import Hypernets.Copying.WeakeningForests
+import Hypernets.Copying.WeakeningRows
