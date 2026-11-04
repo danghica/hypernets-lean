@@ -7,7 +7,8 @@ old free variables and atoms retained. It also proves compatibility with
 the original maximum-depth padding and exact contextual observations.
 Together with Section~\ref{sec:resource-semantic-weakening}, this supplies
 the graph calculations for all non-atomic term constructors. The atomic
-translation cases and assembly of the full syntactic induction remain open.
+translation cases and full syntactic induction are completed in
+Section~\ref{sec:term-semantic-weakening}.
 No term, Figure~16 translation clause, or machine rule has changed.
 
 The paper's weakening proof reduces two unused inputs of a binary distributor
@@ -359,12 +360,8 @@ addressed observations. The only semantic leaves are previously proved
 Idem and BPullW results. Recursive focus freedom is an application condition,
 not an unproved template or machine law.
 
-The remaining weakening work is the variable, atom and constant translation
-base cases and the full syntactic induction, including binder-index
-identifications. The padding component and independent binary/application
-component are now proved. Figure~22, arbitrary distinct-list environment
-extension, and the correspondence and substitution obligations in
-Appendix~B remain downstream. Proposition~12.2 is not yet proved. The
-conservative completion estimate remains 70--80\% of mathematical effort,
-with low confidence; this milestone does not justify a narrower numerical
-estimate.
+The atomic base cases, binder-index identifications, full syntactic induction
+and arbitrary finite environment-extension calculations are now completed in
+Section~\ref{sec:term-semantic-weakening}. Figure~22 and the correspondence and
+substitution obligations in Appendix~B remain downstream. Proposition~12.2
+is not yet proved.

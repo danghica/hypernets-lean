@@ -1,0 +1,583 @@
+\clearpage
+\section{Full term weakening and arbitrary finite environments}
+\label{sec:term-semantic-weakening}
+The semantic weakening induction is now complete for the original, full
+intrinsically scoped term language. For every term and either kind of unused
+resource, its actual renamed translation is connected to an outside weakening
+of its original translation by a finite calculation of proved Idem and BPullW
+fillings and recursive graph isomorphisms. The two unchanged Proposition~12.2
+programs consequently satisfy this law in every finite pair of environments,
+including the named distinct-list boundary. These are proved calculations,
+not hypotheses asserting that translation respects weakening.
+
+The milestone finishes the weakening task in Appendix~B.1. It does not prove
+the equivalence between the two closed programs: Figure~22's intermediate
+graphs and their equivalence chain still have to be assembled, along with the
+remaining correspondence obligations. The original terms, operation alphabet,
+translation clauses and machine rules are unchanged.
+
+\paragraph{Statement and notation.}
+Let $E_{k,h}=*^k\diamond^h$ and write $W_sG$ for adjoining one primitive
+weakening at the boundary between the term and atom blocks. For $s=*$ the
+variable injection is $i\mapsto i$ into $\mathrm{Fin}(k+1)$ and atoms are
+unchanged. For $s=\diamond$ variables are unchanged and the atom injection is
+$a\mapsto a+1$ into $\mathrm{Fin}(h+1)$. Write these maps as $\rho_s,\alpha_s$.
+The theorem constructs
+\[
+ \lbrack\!\lbrack\operatorname{rename}(\rho_s,\alpha_s,t)\rbrack\!\rbrack
+ \leadsto W_s\lbrack\!\lbrack t\rbrack\!\rbrack.
+\]
+Here the left graph's depth index is transported along the already proved
+renaming-depth equality. This changes only an equality index, not the graph.
+The calculation symbol has its existing meaning: isomorphisms, actual Idem
+and BPullW fillings, symmetry and transitivity. Its semantic interpretation
+preserves exact successful-run counts at the admitted recursive closing sites.
+No evaluation or termination premise is imposed on $t$.
+
+\Needspace{12\baselineskip}
+\subsection{Occurrences under ordered graph constructions}
+
+Equal-interface transport of an occurrence is defined by eliminating the
+four equalities identifying its source and target boundaries. The input and
+output laws transport the corresponding finite indices by the same equalities;
+after equality elimination, both proofs are the supplied port equation.
+
+\lean{Copying/OccurrenceInterfaceTransport}{7}{11}{Opening.Occurrence.castInterfaces}
+
+\lean{Copying/OccurrenceInterfaceTransport}{12}{18}{Opening.Occurrence.castInterfaces_input}
+
+\lean{Copying/OccurrenceInterfaceTransport}{19}{24}{Opening.Occurrence.castInterfaces_output}
+
+The occurrence of a tensor component is obtained from the actual tagged
+parallel inclusion. Two occurrences combine by the parallel-join constructor:
+their target edge images have different Boolean tags, so are disjoint. The
+left and right port laws follow from the join's component equation. Its four
+boundary specializations use the original tensor joining map, so both input
+and output orders are retained rather than inferred from their cardinalities.
+
+\lean{Copying/OccurrenceTensorMap}{8}{11}{Opening.Occurrence.tensorComponent}
+
+\lean{Copying/OccurrenceTensorMap}{12}{24}{Opening.Occurrence.tensorMap}
+
+\lean{Copying/OccurrenceTensorMap}{25}{33}{Opening.Occurrence.tensorMap_left}
+
+\lean{Copying/OccurrenceTensorMap}{34}{42}{Opening.Occurrence.tensorMap_right}
+
+\lean{Copying/OccurrenceTensorMap}{43}{52}{Opening.Occurrence.tensorMap_input_left}
+
+\lean{Copying/OccurrenceTensorMap}{53}{62}{Opening.Occurrence.tensorMap_input_right}
+
+\lean{Copying/OccurrenceTensorMap}{63}{72}{Opening.Occurrence.tensorMap_output_left}
+
+\lean{Copying/OccurrenceTensorMap}{73}{83}{Opening.Occurrence.tensorMap_output_right}
+
+A suffix occurrence fixing its input boundary can also be prefixed by an
+unchanged graph. The serial join glues each output of that prefix to the same
+suffix input; the fixed-input hypothesis is exactly the compatibility needed
+at this shared boundary. Its input law fixes the exterior prefix inputs and
+its output law follows the suffix's exterior output map.
+
+\lean{Copying/OccurrenceTensorMap}{84}{93}{Opening.Occurrence.serialPrefix}
+
+\lean{Copying/OccurrenceTensorMap}{94}{101}{Opening.Occurrence.serialPrefix_input}
+
+\lean{Copying/OccurrenceTensorMap}{102}{110}{Opening.Occurrence.serialPrefix_output}
+
+\Needspace{12\baselineskip}
+\subsection{Injective maps of the literal atomic graphs}
+
+In selected-resource coordinates there is one internal port, one input and
+one output per resource. The port map fixes the first two sorts and applies
+an arbitrary injection $\rho$ to outputs. The source-incidence equation is a
+case split on the edge tag. The target equation additionally uses
+$\rho(j)=\rho(i)\iff j=i$ to preserve the distinction between the selected row
+and all other rows. Thus the actual selected contraction and its attached
+weakening are retained; they are not replaced by an ideal identity wire.
+
+\lean{Copying/SelectedResourceEmbedding}{10}{14}{SelectedResource.mapOutput}
+
+\lean{Copying/SelectedResourceEmbedding}{15}{17}{SelectedResource.source_map}
+
+\lean{Copying/SelectedResourceEmbedding}{18}{29}{SelectedResource.target_map}
+
+The raw occurrence conjugates this coordinate map by the existing port
+bijections. Internals use the one-internal-vertex bijections; edges use the
+canonical index $\mathrm{Fin}(n)+1$ and the map $\rho+\mathrm{id}$. Injectivity
+follows by disjoint-sum cases. Label preservation follows from the canonical
+edge-label equations, and ordered incidences follow from the two preceding
+map equations. The input-interface equality removes all zero-use blocks;
+the output-interface equality sums the before, selected and after block
+lengths to $n$. Transport along these equalities gives the occurrence between
+the original selected-resource graphs. Its input is fixed and output $j$
+is sent to output $\rho(j)$.
+
+\lean{Copying/SelectedResourceEmbedding}{30}{65}{SelectedResource.rawEmbedding}
+
+\lean{Copying/SelectedResourceEmbedding}{66}{69}{SelectedResource.input_interface}
+
+\lean{Copying/SelectedResourceEmbedding}{70}{78}{SelectedResource.output_interface}
+
+\lean{Copying/SelectedResourceEmbedding}{79}{84}{SelectedResource.embedding}
+
+\lean{Copying/SelectedResourceEmbedding}{85}{93}{SelectedResource.embedding_input}
+
+\lean{Copying/SelectedResourceEmbedding}{94}{103}{SelectedResource.embedding_output}
+
+A zero-use distributor forest embeds under any injection by mapping its
+weakening row $j$ to row $\rho(j)$. Each row has its original label and singleton
+target, proving the output law. The variable occurrence tensors the selected
+term-resource occurrence with the atom forest occurrence. The atom occurrence
+retains its original instance edge in serial with the selected atom-resource
+occurrence, alongside the term forest. The constant occurrence retains the
+literal constant edge between the two forests. No semantic premise is used.
+
+\lean{Copying/AtomicResourceEmbedding}{10}{39}{Weakening.Atomic.forestEmbedding}
+
+\lean{Copying/AtomicResourceEmbedding}{40}{44}{Weakening.Atomic.forestEmbedding_output}
+
+\lean{Copying/AtomicResourceEmbedding}{45}{52}{Weakening.Atomic.variableMap}
+
+\lean{Copying/AtomicResourceEmbedding}{53}{61}{Weakening.Atomic.atom}
+
+\lean{Copying/AtomicResourceEmbedding}{62}{69}{Weakening.Atomic.constant}
+
+For each of these three atomic clauses, three separate boundary equations
+are proved: the sole term input is fixed, term output $i$ goes to $\rho(i)$,
+and atom output $a$ goes to $\alpha(a)$. The proofs apply the tensor and
+serial port equations and then the exact original interface casts. Finite
+indices are compared by their values, accounting explicitly for the length
+of the preceding term block in atom coordinates.
+
+\lean{Copying/AtomicEmbeddingBoundary}{10}{18}{Weakening.Atomic.variable_input}
+
+\lean{Copying/AtomicEmbeddingBoundary}{19}{27}{Weakening.Atomic.variable_term}
+
+\lean{Copying/AtomicEmbeddingBoundary}{28}{39}{Weakening.Atomic.variable_atom}
+
+\lean{Copying/AtomicEmbeddingBoundary}{40}{52}{Weakening.Atomic.atom_input}
+
+\lean{Copying/AtomicEmbeddingBoundary}{53}{62}{Weakening.Atomic.atom_term}
+
+\lean{Copying/AtomicEmbeddingBoundary}{63}{77}{Weakening.Atomic.atom_atom}
+
+\lean{Copying/AtomicEmbeddingBoundary}{78}{93}{Weakening.Atomic.constant_input}
+
+\lean{Copying/AtomicEmbeddingBoundary}{94}{106}{Weakening.Atomic.constant_term}
+
+\lean{Copying/AtomicEmbeddingBoundary}{107}{121}{Weakening.Atomic.constant_atom}
+
+\Needspace{12\baselineskip}
+\subsection{A complete one-edge complement}
+
+\termdef{resource-gap}
+A resource gap consists of an injective old-to-new index map, a fresh target
+index outside its image, and a proof that every target index is either old or
+that fresh index. Appending a variable uses $\mathrm{Fin.castSucc}$ with fresh
+index $n$; prepending an atom uses successor with fresh index zero. The first
+coverage proof splits a finite index at $n$, and the second splits it at zero.
+Injectivity and exclusion of the fresh index follow from these index values.
+
+\lean{Copying/ResourceGap}{6}{14}{Weakening.ResourceGap}
+
+\lean{Copying/ResourceGap}{15}{24}{Weakening.ResourceGap.append}
+
+\lean{Copying/ResourceGap}{25}{34}{Weakening.ResourceGap.prepend}
+
+A literal weakening edge in a graph gives an occurrence of the primitive
+weakening provided its label, empty source and singleton exterior target are
+specified. The construction maps the unique edge to that edge and the unique
+output to that target; its internal carrier is empty. The edge and output
+lemmas record these defining equations.
+
+\lean{Copying/WeakeningEdgeOccurrence}{8}{24}{Weakening.weakeningAt}
+
+\lean{Copying/WeakeningEdgeOccurrence}{25}{30}{Weakening.weakeningAt_edge}
+
+\lean{Copying/WeakeningEdgeOccurrence}{31}{34}{Weakening.weakeningAt_output}
+
+\termdef{one-weakening-complement}
+A complement certificate partitions the target's edges into a complete-label
+occurrence of the old graph and an occurrence of one genuine primitive
+weakening. Their images are disjoint and jointly exhaustive. The boundaries
+may initially differ; ordered boundary conditions are supplied only when
+constructing the final isomorphism. This is geometric evidence, not an assumed
+weakening or observational-equivalence law.
+
+\lean{Copying/WeakeningComplement}{10}{18}{Weakening.Complement}
+
+Tensoring this certificate on either side retains the unrelated component
+entirely in the old occurrence. Edge-tag cases prove disjointness and coverage:
+an edge in the retained component is old, while an edge in the changed
+component uses the original partition. Four interface equalities transport
+the certificate by equality elimination. The old-occurrence equation and
+added-output equation ensure the same port maps survive this transport.
+
+\lean{Copying/WeakeningComplement}{19}{35}{Weakening.Complement.tensorRight}
+
+\lean{Copying/WeakeningComplement}{36}{52}{Weakening.Complement.tensorLeft}
+
+\lean{Copying/WeakeningComplement}{53}{57}{Weakening.Complement.castInterfaces}
+
+\lean{Copying/WeakeningComplement}{58}{61}{Weakening.Complement.castInterfaces_old}
+
+\lean{Copying/WeakeningComplement}{62}{68}{Weakening.Complement.castInterfaces_added_output}
+
+Prefixing by a fixed serial graph retains all prefix edges in the old part.
+The suffix's old input map must be fixed, so the serial gluing agrees. Its
+coverage and disjointness proofs again split the serial edge tags. The added
+weakening's output equations for right tensor, left tensor and serial prefix
+are obtained by composing its given output equation with the corresponding
+actual component insertion.
+
+\lean{Copying/WeakeningComplement}{69}{87}{Weakening.Complement.serialPrefix}
+
+\lean{Copying/WeakeningComplement}{104}{111}{Weakening.Complement.tensorRight_added_output}
+
+\lean{Copying/WeakeningComplement}{112}{119}{Weakening.Complement.tensorLeft_added_output}
+
+\lean{Copying/WeakeningComplement}{120}{127}{Weakening.Complement.serialPrefix_added_output}
+
+A zero-use forest with a resource gap has precisely this partition: the
+old rows are the injected rows and the sole remaining row is the weakening
+at the gap. For the selected-resource graph, the gap cannot equal the selected
+index, by exclusion from the image. Its edge therefore has the weakening
+label and the fresh exterior target. Canonical edge-index case analysis proves
+coverage: every ordinary row is old or fresh, and the distinguished selected
+edge is always old. Equal-interface transport gives the certificate for the
+original selected-resource clause, with its old occurrence equal to the
+previously constructed embedding and its added output at the fresh index.
+
+\lean{Copying/AtomicResourceComplement}{8}{26}{Weakening.Atomic.forestComplement}
+
+\lean{Copying/AtomicResourceComplement}{27}{32}{Weakening.Atomic.forestComplement_output}
+
+\lean{Copying/AtomicResourceComplement}{33}{71}{Weakening.Atomic.selectedRawComplement}
+
+\lean{Copying/AtomicResourceComplement}{72}{77}{Weakening.Atomic.selectedComplement}
+
+\lean{Copying/AtomicResourceComplement}{78}{81}{Weakening.Atomic.selectedComplement_old}
+
+\lean{Copying/AtomicResourceComplement}{82}{91}{Weakening.Atomic.selectedComplement_output}
+
+\Needspace{12\baselineskip}
+\subsection{From the complete partition to a boundary-fixing isomorphism}
+
+\termdef{weakening-extension-witness}
+An extension witness adds three ordered boundary requirements to the
+complement: old inputs are fixed, old outputs use the prescribed insertion
+map, and the added weakening ends at the new position $k$. Its two components
+are the old and added occurrences. Their pairwise edge disjointness follows
+from the certificate, reversing the inequality for the opposite tag order.
+The ordered parallel join and original interface transport then give an
+occurrence of $W_sG$ in the target.
+
+\lean{Copying/WeakeningExtensionIso}{10}{22}{Weakening.Extension.Witness}
+
+\lean{Copying/WeakeningExtensionIso}{23}{25}{Weakening.Extension.components}
+
+\lean{Copying/WeakeningExtensionIso}{26}{33}{Weakening.Extension.disjoint}
+
+\lean{Copying/WeakeningExtensionIso}{34}{38}{Weakening.Extension.occurrence}
+
+The old-port equation follows from the parallel join's component equation;
+the input law follows by applying it to the retained payload input. For output
+ports, first prove the equation separately for the old and added component.
+The old case uses the insertion-index equation; the added case uses uniqueness
+of the element of $\mathrm{Fin}(1)$ and the fact that the new position is $k$.
+Every exterior output is recovered using the inverse of the ordered boundary
+bijection, so the assembled occurrence fixes it pointwise. Edge surjectivity
+is exactly the certificate's coverage, choosing the corresponding component
+tag. The existing finite-occurrence theorem therefore yields a recursive
+isomorphism. Its hypotheses include the exterior boundary equations just
+proved, not merely an edge-count equality.
+
+\lean{Copying/WeakeningExtensionIso}{39}{43}{Weakening.Extension.old_port}
+
+\lean{Copying/WeakeningExtensionIso}{44}{46}{Weakening.Extension.input}
+
+\lean{Copying/WeakeningExtensionIso}{47}{65}{Weakening.Extension.component_output}
+
+\lean{Copying/WeakeningExtensionIso}{66}{75}{Weakening.Extension.output}
+
+\lean{Copying/WeakeningExtensionIso}{76}{81}{Weakening.Extension.edge_surjective}
+
+\lean{Copying/WeakeningExtensionIso}{82}{84}{Weakening.Extension.iso}
+
+The complement-to-extension function packages those three proved boundary
+equations into an extension witness and invokes its isomorphism. All atomic
+applications below construct the complement and discharge the equations;
+none assumes the desired isomorphism as an input.
+
+\lean{Copying/WeakeningComplement}{88}{103}{Weakening.Complement.extensionIso}
+
+\Needspace{12\baselineskip}
+\subsection{Atomic base cases with the original selected rows}
+
+Several identity equations identify retained components without replacing
+their finite carriers. Occurrences with the same port and edge maps are equal:
+the internal-map law determines the internal map, and remaining proof fields
+are propositionally irrelevant. Tensoring two identity occurrences is the
+identity by component port equations and edge tags; the serial-prefix identity
+also checks the shared ports against the prefix's output embedding. The
+forest embedding at identity is pointwise identity. For the raw selected
+embedding, the port, internal and edge-coordinate inverse equations give the
+same conclusion. Equality elimination proves the interface-cast identity,
+and hence the selected-resource identity.
+
+\lean{Copying/AtomicEmbeddingIdentity}{9}{17}{Weakening.Atomic.occurrence_ext}
+
+\lean{Copying/AtomicEmbeddingIdentity}{18}{48}{Weakening.Atomic.tensorMap_identity}
+
+\lean{Copying/AtomicEmbeddingIdentity}{49}{64}{Weakening.Atomic.serialPrefix_identity}
+
+\lean{Copying/AtomicEmbeddingIdentity}{65}{74}{Weakening.Atomic.forestEmbedding_id}
+
+\lean{Copying/AtomicEmbeddingIdentity}{75}{92}{Weakening.Atomic.rawEmbedding_id}
+
+\lean{Copying/AtomicEmbeddingIdentity}{93}{97}{Weakening.Atomic.castIdentity}
+
+\lean{Copying/AtomicEmbeddingIdentity}{98}{103}{Weakening.Atomic.selectedEmbedding_id}
+
+The four resource-map equations identify variable insertion with
+$\mathrm{Fin.castSucc}$, atom insertion with successor, and both unaffected
+maps with identity. For a variable clause, variable insertion uses its
+selected-term complement while atom insertion uses the atom-forest complement.
+For an atom clause, variable insertion uses the term forest; atom insertion
+uses the selected-atom complement prefixed by the unchanged instance edge.
+For a constant clause the changed forest supplies the complement and the
+constant edge remains in the old part. In every case tensoring retains all
+other components. The three old-occurrence equalities use the preceding
+identity laws to identify these composite witnesses with the original
+atomic embedding maps.
+
+\lean{Copying/AtomicWeakeningComplements}{10}{10}{Weakening.Atomic.termResource_term}
+
+\lean{Copying/AtomicWeakeningComplements}{11}{11}{Weakening.Atomic.termResource_atom}
+
+\lean{Copying/AtomicWeakeningComplements}{12}{12}{Weakening.Atomic.atomResource_term}
+
+\lean{Copying/AtomicWeakeningComplements}{13}{14}{Weakening.Atomic.atomResource_atom}
+
+\lean{Copying/AtomicWeakeningComplements}{15}{25}{Weakening.Atomic.variableComplement}
+
+\lean{Copying/AtomicWeakeningComplements}{26}{39}{Weakening.Atomic.atomComplement}
+
+\lean{Copying/AtomicWeakeningComplements}{40}{52}{Weakening.Atomic.constantComplement}
+
+\lean{Copying/AtomicWeakeningComplements}{53}{60}{Weakening.Atomic.variableComplement_old}
+
+\lean{Copying/AtomicWeakeningComplements}{61}{68}{Weakening.Atomic.atomComplement_old}
+
+\lean{Copying/AtomicWeakeningComplements}{69}{74}{Weakening.Atomic.constantComplement_old}
+
+The three added-output equations follow the selected complement's fresh
+output through serial, tensor and interface transports. Their global value is
+$k$ for either sort. The environment-output lemma splits an arbitrary exterior
+index at $k$: below it the term-boundary law applies, and above it the atom
+law applies after subtracting $k$. The insertion-index lemmas then identify
+this with the required global old-output map.
+
+\lean{Copying/AtomicWeakeningOutputs}{10}{26}{Weakening.Atomic.variableComplement_output}
+
+\lean{Copying/AtomicWeakeningOutputs}{27}{47}{Weakening.Atomic.atomComplement_output}
+
+\lean{Copying/AtomicWeakeningOutputs}{48}{70}{Weakening.Atomic.constantComplement_output}
+
+\lean{Copying/AtomicWeakeningOutputs}{71}{82}{Weakening.Atomic.environment_output}
+
+The variable, atom and constant isomorphisms now follow by applying the
+complement-to-extension theorem to their actual complements. Input, old-output
+and fresh-output conditions are the proved equations above. Reversing each
+isomorphism and supplying the already proved focus freedom of the original
+atomic translation gives the three base calculations, at every box allowance
+and for either resource sort. This is the missing atomic step in the full
+syntactic induction.
+
+\lean{Copying/AtomicWeakening}{10}{18}{Weakening.variable_iso}
+
+\lean{Copying/AtomicWeakening}{19}{27}{Weakening.atom_iso}
+
+\lean{Copying/AtomicWeakening}{28}{37}{Weakening.constant_iso}
+
+\lean{Copying/AtomicWeakening}{38}{43}{Weakening.variable_extend}
+
+\lean{Copying/AtomicWeakening}{44}{49}{Weakening.atom_extend}
+
+\lean{Copying/AtomicWeakening}{50}{53}{Weakening.constant_extend}
+
+\Needspace{12\baselineskip}
+\subsection{Binder transport and the full structural induction}
+
+The lifted variable inclusion is again the inclusion: a finite-index split
+checks the new bound variable zero and each successor separately. Expanding
+syntactic renaming therefore identifies renaming an abstraction with
+abstracting the correspondingly renamed body, for both variable and atom
+extension; the atom case uses the identity-lifting law.
+
+\lean{Copying/WeakeningTermTransport}{9}{12}{Weakening.lift_castSucc}
+
+\lean{Copying/WeakeningTermTransport}{13}{16}{Weakening.rename_lam_term}
+
+\lean{Copying/WeakeningTermTransport}{17}{20}{Weakening.rename_lam_atom}
+
+Depth transport commutes with unary translation and with abstraction,
+using the successor equality for the latter. Both proofs eliminate the depth
+equality. Equal terms have equal depth-transported translations: eliminate
+the term equality, then use proof irrelevance of the depth equality. Combining
+this fact with the two binder-renaming equations and abstraction transport
+gives the two explicit abstraction-translation equations. This avoids
+rewriting a term underneath an equality whose type itself depends on that
+term. No semantic assumption is hidden in these dependent transports.
+
+\lean{Copying/WeakeningTermTransport}{21}{25}{Weakening.castDepth_unary}
+
+\lean{Copying/WeakeningTermTransport}{26}{31}{Weakening.castDepth_abstraction}
+
+\lean{Copying/WeakeningTermTransport}{32}{37}{Weakening.castTerm_eq}
+
+\lean{Copying/WeakeningTermTransport}{38}{46}{Weakening.castTerm_lam_term}
+
+\lean{Copying/WeakeningTermTransport}{47}{55}{Weakening.castTerm_lam_atom}
+
+For application and binary operations, independent equalities for the two
+operand depths induce an equality of their maxima. Transporting the original
+maximum-padded translation is equal to translating the separately transported
+operands with their new maximum padding. Eliminating the two depth equalities
+reduces both statements to reflexivity; the original padding construction and
+its depth inequalities are retained.
+
+\lean{Copying/WeakeningTermTransport}{56}{65}{Weakening.castDepth_application}
+
+\lean{Copying/WeakeningTermTransport}{66}{74}{Weakening.castDepth_binary}
+
+\termdef{full-term-weakening}
+The full theorem is proved by structural induction on $t$, generalizing over
+the resource sort. Variables, atoms and constants use the three actual base
+calculations. A unary constructor transports depth and invokes the already
+proved unary induction step. Application and every binary operation combine
+the independent operand hypotheses by the proved padded steps; the maximum
+depth transport equations identify their sources with the original translated
+renamed term. In the abstraction case, split the resource sort, use the
+corresponding binder-translation equation, and apply the proved abstraction
+step to the body's induction hypothesis. The body's boundary transport is
+reflexive after the sort is fixed. Thus every constructor is discharged,
+including arbitrary nested binders, shared variables and all store operations.
+
+\lean{Copying/TermWeakening}{12}{50}{Weakening.term_weakening}
+
+\Needspace{12\baselineskip}
+\subsection{The original programs in all finite environments}
+
+A calculation survives adding the same unused resource to both endpoints:
+parallel composition retains the actual primitive weakening and its focus
+freedom, then the original insertion-interface equality restores the desired
+boundary. This lifts the actual proof leaves and introduces no new execution
+step. Iterating term extension from an empty variable block defines
+$V_k(G)$, and iterating atom extension from an empty atom block defines $A_h(G)$.
+The ambient extension of a closed graph is $A_h(V_k(G))$; its ordered interface
+is exactly $E_{k,h}$.
+
+\lean{Copying/PropositionEnvironmentWeakening}{11}{18}{Weakening.Calculation.extend}
+
+\lean{Copying/PropositionEnvironmentWeakening}{19}{24}{Weakening.addVariables}
+
+\lean{Copying/PropositionEnvironmentWeakening}{25}{30}{Weakening.addAtoms}
+
+\lean{Copying/PropositionEnvironmentWeakening}{31}{33}{Weakening.ambient}
+
+Write $P_{k,h}$ and $Q_{k,h}$ for the unchanged allocating and constant-result
+translations in Proposition~12.2. Applying full term weakening directly gives
+$P_{k',h'}\leadsto W_sP_{k,h}$ and $Q_{k',h'}\leadsto W_sQ_{k,h}$.
+These specializations need no extra term equivalence: the closed program
+syntax is unchanged by ambient renaming, and its depth is respectively three
+and two. Induction on $k$ proves the variable-only consequences. The base
+calculation is identity; the successor composes the one-step theorem with
+the previous calculation extended by a variable.
+
+\lean{Copying/PropositionEnvironmentWeakening}{34}{37}{Weakening.privateCell_step}
+
+\lean{Copying/PropositionEnvironmentWeakening}{38}{41}{Weakening.constantResult_step}
+
+\lean{Copying/PropositionEnvironmentWeakening}{42}{47}{Weakening.privateCell_variables}
+
+\lean{Copying/PropositionEnvironmentWeakening}{48}{55}{Weakening.constantResult_variables}
+
+Induction on $h$ now proves
+\[
+ P_{k,h}\leadsto A_h(V_k(P_{0,0})),\qquad
+ Q_{k,h}\leadsto A_h(V_k(Q_{0,0})).
+\]
+The base is the variable-only result; the successor composes the one-atom law
+with the extended induction hypothesis. The named-environment versions take
+$k=|\Gamma|$ and $h=|\Delta|$ from the existing environment structure, which
+already carries the two distinctness proofs. There is no additional freshness,
+termination, machine-determinism or translation-correctness premise.
+
+\lean{Copying/PropositionEnvironmentWeakening}{56}{62}{Weakening.privateCell_environment}
+
+\lean{Copying/PropositionEnvironmentWeakening}{63}{69}{Weakening.constantResult_environment}
+
+\lean{Copying/PropositionEnvironmentWeakening}{70}{74}{Weakening.privateCell_named}
+
+\lean{Copying/PropositionEnvironmentWeakening}{75}{81}{Weakening.constantResult_named}
+
+Each calculation yields exact successful-run equivalence when inserted at
+any admitted recursive closing site. The surrounding graph must be focus
+free, and filling the source must be hole free; these are the existing
+observation admissibility conditions, not unproved machine or template laws.
+Apply the calculation's proved site-lifting operation and exact-equivalence
+theorem. The general result covers every renamed term; the two program
+specializations cover arbitrary $k,h$ at their original depths. Termination
+equivalence follows by forgetting the exact count, but no count is discarded
+in these declarations.
+
+\lean{Copying/PropositionEnvironmentWeakening}{82}{96}{Weakening.term_weakening_addressed}
+
+\lean{Copying/PropositionEnvironmentWeakening}{97}{105}{Weakening.privateCell_environment_addressed}
+
+\lean{Copying/PropositionEnvironmentWeakening}{106}{112}{Weakening.constantResult_environment_addressed}
+
+\Needspace{12\baselineskip}
+\subsection{Checked instances and dependency boundary}
+
+The effectful regression term combines a freely chosen unary and binary
+operation with an old variable and dereference of an old atom, in a nonempty
+mixed environment. Its theorem specializes full weakening for every operation
+and either sort. A second term has two nested abstractions and invokes the
+same outer callback twice before reading an old atom; its weakening calculation
+checks capture-free lifting under both binders. The self-application example
+specializes the theorem to the existing $\Omega$ syntax without a termination
+premise; this is not a new proof of divergence. Finally, a product packages
+both original program calculations at two variables and three atoms. These
+instances check actual translated renamed terms rather than manually
+substituted graph endpoints.
+
+\lean{Copying/TermWeakeningExamples}{12}{14}{Weakening.Examples.effectTerm}
+
+\lean{Copying/TermWeakeningExamples}{15}{21}{Weakening.Examples.all_operations}
+
+\lean{Copying/TermWeakeningExamples}{22}{25}{Weakening.Examples.repeatedCallback}
+
+\lean{Copying/TermWeakeningExamples}{26}{32}{Weakening.Examples.nested_repeated_callback}
+
+\lean{Copying/TermWeakeningExamples}{33}{39}{Weakening.Examples.self_application}
+
+\lean{Copying/TermWeakeningExamples}{40}{43}{Weakening.Examples.proposition_mixed_environment}
+
+\paragraph{Dependency map and remaining work.}
+Completed dependencies are: injective atomic occurrences $\to$ exhaustive
+one-weakening complements $\to$ boundary-fixing atomic isomorphisms; these,
+together with the existing unary, boxed and independent padded binary laws,
+give the full syntactic induction $\to$ arbitrary finite ambient-extension
+calculations for both original programs $\to$ exact addressed observations.
+The semantic leaves remain the already proved Idem and BPullW results and
+recursive isomorphism laws. Focus-free hosts and hole-free fillings are
+explicit application conditions.
+
+Figure~22's closed-program equivalence chain is still unfinished, as are the
+correspondence and further substitution/stability obligations retained in
+Appendix~B.1. The ambient-extension theorem does not assume or supply that
+closed equivalence, so it cannot by itself prove Proposition~12.2. The estimate
+remains 70--80\% of mathematical effort, with low confidence: a substantial
+structural task has closed, but the remaining chain and correspondence work
+still prevent a defensible narrower estimate.

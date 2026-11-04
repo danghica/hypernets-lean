@@ -228,10 +228,14 @@ proves the boxed law for every old free environment, and supplies the original
 unary-operation and abstraction induction steps. Section~\ref{sec:binary-semantic-weakening} completes the independent
 application and binary-operation cases, with exhaustive residual reconstruction
 and original maximum-depth padding. These are actual Idem/BPullW calculations
-with exact observational consequences. The translation base cases and the
-complete syntactic term-weakening induction remain open.
+with exact observational consequences. Section~\ref{sec:term-semantic-weakening}
+completes all atomic base cases and the full syntactic induction, including
+binder lifting. It proves finite environment-extension calculations for both
+unchanged programs, including named distinct-list environments, and their
+exact addressed observations. It does not supply the still-missing equivalence
+between the two closed programs.
 
-The earlier estimate of 80\% completion of Proposition~12.2 was withdrawn. The current estimate is 70--80\% of mathematical effort, with low confidence, as of 4 November 2026. Correspondence audits, non-bijective graph renaming and substitution, semantic weakening, and the final Figure~22 chain remain. The proposition itself is not yet proved; declaration and checklist counts do not measure the remaining difficulty.
+The earlier estimate of 80\% completion of Proposition~12.2 was withdrawn. The current estimate is 70--80\% of mathematical effort, with low confidence, as of 4 November 2026. Correspondence audits, non-bijective graph renaming and substitution, any further required stability invariants, and the final Figure~22 chain remain. The proposition itself is not yet proved; declaration and checklist counts do not measure the remaining difficulty.
 
 The new recognition predicate records proved facts about the existing source
 graph. It is not a new reduction rule or a replacement for stability and

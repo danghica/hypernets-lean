@@ -30,10 +30,10 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 The machine, all eleven template families and their contextual consequences
-are proved. Section~\ref{sec:binary-semantic-weakening} completes the independent
-application/binary weakening calculation and its original common-depth
-padding, extending the boxed, unary and abstraction laws. The original terms and Figure~16 translation
-remain unchanged; Proposition~12.2 is not yet proved.
+are proved. Section~\ref{sec:term-semantic-weakening} completes full syntactic
+semantic weakening and the arbitrary finite environment-extension calculations
+for both original Proposition~12.2 programs. Their terms and Figure~16
+translation remain unchanged; the equivalence between them is still unproved.
 
 Previously struck-through tasks have been removed. Only tasks completed in
 this milestone are struck through below; every unstruck task remains open.
@@ -53,13 +53,10 @@ explicitly focused graphs, unique-hole inventories and replacement tuples.
 Preserve the proved execution and observation laws through any necessary
 semantic corrections, and retain the zero-input qualification of Lemma~E.1.
 \item \textbf{Semantic weakening and the final example.}
-Complete the semantic weakening laws, with these components:
+The semantic weakening component is complete:
 \begin{itemize}
-\item Prove the variable, atom and constant translation base cases.
-\item {\raggedright\completedtask{Extract and normalize the selected unused binary row in the application and binary-operation clauses with arbitrary, independently supplied subterms.}\par}
-\item {\raggedright\completedtask{Prove maximum-depth padding compatibility and the application/binary induction steps for operands at different box depths.}\par}
-\item Assemble the full term-weakening induction, including syntactic binder
-lifting, using the proved padding laws, and its environment-extension consequence.
+\item {\raggedright\completedtask{Prove the variable, atom and constant translation base cases.}\par}
+\item {\raggedright\completedtask{Assemble the full term-weakening induction, including syntactic binder lifting, using the proved padding laws, and its environment-extension consequence for both original programs.}\par}
 \end{itemize}
 Then assemble Figure~22's equivalence chain and obtain Proposition~12.2 for
 arbitrary distinct-list environments.

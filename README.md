@@ -9,15 +9,15 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: independent application and binary weakening
+## Latest milestone: full term weakening and arbitrary finite environments
 
-Proved the semantic weakening calculation for **application and every binary operation with arbitrary independent operands**. An exhaustive whole-graph partition identifies the two added weakenings and their actual selected distributor row. Two genuine Idem fillings reduce that five-edge pattern to one outside weakening, retaining both old operands, all old distributor rows and the original ordered interfaces.
+Proved **semantic weakening for every term in the original full language**, including all atomic cases, nested binders, independent operands and the original maximum-depth padding. The proof constructs actual Idem/BPullW calculations; it assumes no translation-correctness or operational law. Atomic cases use exhaustive whole-graph partitions into the retained original graph and one genuine weakening edge.
 
-Separate subterm calculations now lift through these original clauses, including operands at different box depths using the translation's maximum-depth padding. Exact-count observations hold at recursive closing sites. Checked composite instances combine allocation, assignment and independent nested callbacks in nonempty variable/atom environments. The terms, Figure 16 translation and machine rules are unchanged.
+Both unchanged Proposition 12.2 programs now have **proved arbitrary finite environment-extension calculations**, including the named distinct-list boundary. Their translations in Γ and Δ are connected to their empty-environment translations with explicit outside weakenings. Exact-count observations hold at admitted recursive closing sites. Checked instances include all operation choices, nested binders with repeated callback use, self-application syntax without a termination premise, and both programs in a mixed environment.
 
-Full build: **1,122 jobs**. All **7,697 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Seven new modules contain 76 audited public declarations. The commentary provides immutable source links. Appendix B.1 removes previously struck tasks and strikes only this milestone's completed tasks.
+Full build: **1,140 jobs**. All **7,826 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Eighteen new modules contain 129 audited public declarations. The commentary explains each declaration with immutable source links. Appendix B.1 removes previously struck tasks and strikes only this milestone's completed tasks.
 
-**Proposition 12.2 is still unproved.** All eleven template families are complete, and all non-atomic translation constructors now have graph-level weakening steps. The translation base cases, full syntactic term induction, correspondence audits, non-bijective graph renaming/substitution and Figure 22 assembly remain. Estimated completion by mathematical effort remains **70–80%, with low confidence**, as of 4 November 2026. The new result discharges the independent binary/application and padding obligations, not the entire weakening induction.
+**Proposition 12.2 is still unproved.** All eleven template families and the semantic weakening induction are complete. Figure 22's closed-program equivalence chain, correspondence audits, and remaining non-bijective graph renaming/substitution and stability obligations remain. Estimated completion by mathematical effort remains **70–80%, with low confidence**, as of 4 November 2026. This closes a substantial structural obligation; the difficulty of the remaining chain and correspondence work does not justify a narrower estimate.
 
 ## Proposition 12.2: current extension target
 
