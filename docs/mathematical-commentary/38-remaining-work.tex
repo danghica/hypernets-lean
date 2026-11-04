@@ -30,10 +30,12 @@ is now an explicit extension target.
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
 The machine, all eleven template families and their contextual consequences
-are proved. Section~\ref{sec:term-semantic-weakening} completes full syntactic
-semantic weakening and the arbitrary finite environment-extension calculations
-for both original Proposition~12.2 programs. Their terms and Figure~16
-translation remain unchanged; the equivalence between them is still unproved.
+are proved. Section~\ref{sec:term-semantic-weakening} completes full semantic
+weakening. Section~\ref{sec:proposition-opening} proves allocation and outer
+beta opening for the unchanged left-hand program in arbitrary finite and
+named environments, with actual binding-free contexts and a retained-store
+resolution theorem. The final equivalence to the right-hand program remains
+unproved.
 
 Previously struck-through tasks have been removed. Only tasks completed in
 this milestone are struck through below; every unstruck task remains open.
@@ -52,14 +54,18 @@ Prove correspondence between the coordinate specimens and the paper's
 explicitly focused graphs, unique-hole inventories and replacement tuples.
 Preserve the proved execution and observation laws through any necessary
 semantic corrections, and retain the zero-input qualification of Lemma~E.1.
-\item \textbf{Semantic weakening and the final example.}
-The semantic weakening component is complete:
+\item \textbf{The final example and its graph normalization.}
+Semantic weakening is complete. The remaining chain is now split explicitly:
 \begin{itemize}
-\item {\raggedright\completedtask{Prove the variable, atom and constant translation base cases.}\par}
-\item {\raggedright\completedtask{Assemble the full term-weakening induction, including syntactic binder lifting, using the proved padding laws, and its environment-extension consequence for both original programs.}\par}
+\item {\raggedright\completedtask{Prove allocation and outer beta opening for the original left-hand translation, with the actual stable instance, binding-free contexts, retained store and arbitrary finite environment transport.}\par}
+\item Normalize the opened translated body and its retained sharing/box
+structure into the actual Figure~22 parametricity instance.
+\item Apply the parametricity equivalence and normalize the resulting graph
+to the unchanged constant-result translation.
+\item Compose the complete chain at the required common depth allowances
+and obtain the public Proposition~12.2 theorem for arbitrary distinct-list
+environments.
 \end{itemize}
-Then assemble Figure~22's equivalence chain and obtain Proposition~12.2 for
-arbitrary distinct-list environments.
 \end{enumerate}
 No claim of completion is made until the final general-environment theorem
 passes the build and axiom audit. The current estimate remains 70--80\% of

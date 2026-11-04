@@ -1092,3 +1092,17 @@ isomorphisms, full syntactic weakening, both original programs in arbitrary
 finite and named environments, exact addressed observations, and mixed,
 effectful, nested-binder and self-application regression instances.\par}
 \lean{Copying/Audit}{7263}{7392}{Copying.Audit: full term weakening and environments}
+
+
+\Needspace{12\baselineskip}
+\subsection{The original program's allocation and beta-opening chain}
+{\raggedright
+The full build passes 1149 jobs. All 7913 distinct axiom audits use only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}; no
+\texttt{sorryAx} or project-specific axiom occurs. Nine new modules contain
+87 audited public declarations. The endpoints include the original translated
+program's closed and arbitrary-environment allocation/beta equivalences,
+actual binding-free application, store and ambient contexts, literal graph
+isomorphisms, exact environment weakening, local operational improvement,
+and the opened reference's unique two-hop resolution and retained numeral.\par}
+\lean{Copying/Audit}{7394}{7481}{Copying.Audit: actual proposition allocation and beta opening}

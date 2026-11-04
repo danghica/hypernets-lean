@@ -9,15 +9,15 @@ The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
 The current extension target is the example equivalence of Proposition 12.2.
 
-## Latest milestone: full term weakening and arbitrary finite environments
+## Latest milestone: the original program's allocation and beta-opening chain
 
-Proved **semantic weakening for every term in the original full language**, including all atomic cases, nested binders, independent operands and the original maximum-depth padding. The proof constructs actual Idem/BPullW calculations; it assumes no translation-correctness or operational law. Atomic cases use exhaustive whole-graph partitions into the retained original graph and one genuine weakening edge.
+Proved **contextual equivalence from the unchanged Proposition 12.2 left-hand translation to its actual allocated, beta-opened intermediate graph**, in **every finite pair of variable and atom environments**, including named distinct lists. The proof applies the already proved reference-creation and micro-beta templates through explicitly certified binding-free contexts. It has no unproved machine, robustness or translation premises.
 
-Both unchanged Proposition 12.2 programs now have **proved arbitrary finite environment-extension calculations**, including the named distinct-list boundary. Their translations in Γ and Δ are connected to their empty-environment translations with explicit outside weakenings. Exact-count observations hold at admitted recursive closing sites. Checked instances include all operation choices, nested binders with repeated callback use, self-application syntax without a termination premise, and both programs in a mixed environment.
+The allocated store is separated from the primitive instance so beta uses its original stability requirement. The store and full canonical atom tree remain in the result. Checked incidence proofs show the opened instance resolves uniquely to that store in exactly two atom hops and the store still contains the original numeral `1`. A new sole-hole ambient context transports closed contextual equivalences to arbitrary environments, using the completed semantic weakening theorem.
 
-Full build: **1,140 jobs**. All **7,826 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Eighteen new modules contain 129 audited public declarations. The commentary explains each declaration with immutable source links. Appendix B.1 removes previously struck tasks and strikes only this milestone's completed tasks.
+Full build: **1,149 jobs**. All **7,913 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Nine new modules contain 87 audited public declarations. Section 132 explains all new definitions and proofs with immutable source links. Appendix B.1 removes previously struck tasks and strikes only this milestone's completed task.
 
-**Proposition 12.2 is still unproved.** All eleven template families and the semantic weakening induction are complete. Figure 22's closed-program equivalence chain, correspondence audits, and remaining non-bijective graph renaming/substitution and stability obligations remain. Estimated completion by mathematical effort remains **70–80%, with low confidence**, as of 4 November 2026. This closes a substantial structural obligation; the difficulty of the remaining chain and correspondence work does not justify a narrower estimate.
+**Proposition 12.2 is still unproved.** The opened graph retains the original internal distributors; it is not yet the normalized parametricity instance drawn in Figure 22. The next work is structural normalization, the parametricity link, normalization to the unchanged right-hand translation, and final composition at the required depth allowances. Correspondence and remaining substitution/stability obligations also remain. Estimated completion stays **70–80% of mathematical effort, with low confidence**, as of 4 November 2026.
 
 ## Proposition 12.2: current extension target
 

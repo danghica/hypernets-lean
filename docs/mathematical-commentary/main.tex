@@ -61,7 +61,7 @@
 % Appendix B.1: remove previous struck tasks; strike only this milestone's achievements.
 % ulem permits line breaks, while normalem preserves the meaning of \emph.
 \newcommand{\completedtask}[1]{\sout{#1}}
-\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/cee525ae323abf0d4cac25369ecd716792b80fe6}
+\newcommand{\repobase}{https://github.com/danghica/hypernets-lean/blob/f3407696d8a961a3f429418ebeca5511674b2eb5}
 \newcommand{\lean}[4]{\par\nopagebreak[4]\smallskip\nopagebreak[4]\noindent{\small\href{\repobase/Hypernets/#1.lean\#L#2-L#3}{\textsf{Lean: }\texttt{\detokenize{#4}}}}\par\nopagebreak[3]\smallskip}
 \newcommand{\leanfile}[2]{\href{\repobase/#1}{\texttt{\detokenize{#2}}}}
 % Definition destinations and the alphabetical appendix use internal PDF links.
@@ -69,7 +69,7 @@
 \newcommand{\glossaryentry}[3]{\par\addvspace{7pt}\Needspace{4\baselineskip}\noindent\hyperref[term:#1]{\textbf{#2}}\hfill\hyperref[term:#1]{\small p.~\pageref*{term:#1}}\par\nopagebreak[4]\noindent#3\par}
 \title{Robustness and Typed Hypernet Contexts\\\large A mathematical commentary on the Lean development}
 \author{Companion to \texttt{danghica/hypernets-lean}}
-\date{4 November 2026\\\small Source snapshot: \texttt{cee525a}; Lean \texttt{4.35.0}}
+\date{4 November 2026\\\small Source snapshot: \texttt{f340769}; Lean \texttt{4.35.0}}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -304,6 +304,7 @@ Converse residual synthesis and Proposition~12.2 remain unfinished.
 \input{133-resource-weakening}
 \input{134-binary-semantic-weakening}
 \input{135-term-semantic-weakening}
+\input{136-proposition-opening}
 \input{11-audit}
 \Needspace{14\baselineskip}
 \begin{thebibliography}{9}
@@ -314,7 +315,7 @@ Logical Methods in Computer Science 21(2:8), 2025.
 Reference version: \href{https://arxiv.org/abs/1907.01257v5}{arXiv:1907.01257v5}.
 \bibitem{code}
 \emph{Hypernets in Lean 4}.
-\href{https://github.com/danghica/hypernets-lean/tree/cee525ae323abf0d4cac25369ecd716792b80fe6}{Repository at revision \texttt{cee525a}}.
+\href{https://github.com/danghica/hypernets-lean/tree/f3407696d8a961a3f429418ebeca5511674b2eb5}{Repository at revision \texttt{f340769}}.
 \end{thebibliography}
 \clearpage
 \appendix

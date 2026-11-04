@@ -1,0 +1,466 @@
+\clearpage
+\section{Allocation and beta opening of the original private-cell program}
+\label{sec:proposition-opening}
+This milestone proves a concrete contextual equivalence starting from the
+unchanged left-hand Proposition~12.2 translation, first allocating its private
+store and then opening its outer let-body by micro-beta. The theorem holds
+in arbitrary finite variable and atom environments and in every original
+binding-free closing context at unrestricted surrounding depth. It has no
+unproved determinism, robustness or translation-correctness premise.
+
+The endpoint is a specific graph containing the actual opened translated
+body and the retained allocated store. It is not the right-hand program.
+The checked reference resolves to this store in exactly two atom hops, and
+the store is still attached to the original numeral one. The private state
+has not yet been eliminated.
+
+\paragraph{Relationship to the paper.}
+The proof uses the reference-creation and micro-beta templates from the
+\href{https://arxiv.org/html/1907.01257v5\#S12.SS3}{paper's Figure~22 chain}.
+The paper first normalizes the internal sharing and box arrangement. Here
+allocation and outer beta are applied directly to the unchanged translation,
+after only representation isomorphisms removing genuinely empty forests and
+reassociating graph assembly. Thus the opened intermediate still contains
+the original internal distributors and is not asserted to be literally the
+fourth canonical drawing of Figure~22. Structural normalization to the
+parametricity instance, the parametricity link, and the final normalization
+remain. This ordering changes neither a term nor a translation clause, and
+every link used here has its own proved contextual consequence.
+
+\paragraph{The concrete chain.}
+Let $B$ be the actual translation of the outer let-body, let $N$ be the
+numeral-one corolla, and let $i$ be the primitive instance edge. Write
+$R=(C^\diamond_1;\mathsf{store});N$ for the retained store suffix, where $C^\diamond_1$ is the canonical
+one-use atom tree. The proved chain is
+\[
+ \begin{aligned}
+ P_{0,0}&\cong\mathsf{before}_{\beta}(B,\mathsf{before}_{\mathrm{ref}}(N))\\
+ &\simeq\mathsf{before}_{\beta}(B,\mathsf{after}_{\mathrm{ref}}(N))\\
+ &\cong\mathsf{before}_{\beta}(B,i);R\\
+ &\simeq\mathsf{after}_{\beta}(B,i);R=O.
+ \end{aligned}
+\]
+The isomorphisms fix the external interface. The contextual equivalences use
+the universal cost relation; the local directed improvement results are
+retained separately. Crucially, beta's stable argument is $i$, not the whole
+instance--sharing-tree--store graph. Stability of the latter is explicitly
+refuted in the checked development.
+
+\Needspace{12\baselineskip}
+\subsection{Only genuinely empty forests are removed}
+
+A graph with no outputs can be followed by an edge-free graph of interface
+$\epsilon\Rightarrow\epsilon$ without changing its recursive isomorphism
+class. The old left occurrence fixes inputs, has no output equations to
+check, and covers every target edge because a right-component edge is
+impossible. The finite edge-cover theorem constructs the isomorphism.
+Tensoring an arbitrary graph with an edge-free empty-interface component
+on either side is handled similarly. On the right the original append-empty
+interface equalities are transported explicitly. These lemmas do not discard
+any nonempty weakening forest.
+
+\lean{Copying/ClosedTranslationUnits}{10}{17}{ClosedTranslation.serial_empty}
+
+\lean{Copying/ClosedTranslationUnits}{18}{27}{ClosedTranslation.tensor_empty_right}
+
+\lean{Copying/ClosedTranslationUnits}{28}{37}{ClosedTranslation.tensor_empty_left}
+
+A distributor with zero resources has no edges: any edge would contain an
+element of $\mathrm{Fin}(0)$. This proves emptiness for either sharing sort,
+then for the paired zero-environment distributor and its single-use interface
+cast. Consequently a closed constant translation is isomorphic to its literal
+constant corolla. A closed unary translation loses only its empty trailing
+distributor, and a closed abstraction loses only its empty outer distributor;
+its original box body is retained unchanged.
+
+\lean{Copying/ClosedTranslationUnits}{38}{41}{ClosedTranslation.distributor_empty}
+
+\lean{Copying/ClosedTranslationUnits}{42}{45}{ClosedTranslation.environment_empty}
+
+\lean{Copying/ClosedTranslationUnits}{46}{48}{ClosedTranslation.singleUse_empty}
+
+\lean{Copying/ClosedTranslationUnits}{49}{57}{ClosedTranslation.constant}
+
+\lean{Copying/ClosedTranslationUnits}{58}{61}{ClosedTranslation.unary}
+
+\lean{Copying/ClosedTranslationUnits}{62}{64}{ClosedTranslation.abstraction}
+
+The closed binary operand pair has no output ports to shuffle. Join the two
+original operand occurrences with the tensor boundary; input zero and input
+one are checked separately, output preservation is vacuous, and the two edge
+tags exhaust the target. The resulting isomorphism identifies the actual
+Figure~16 pair with the tensor of its operands. Closed application then
+removes its empty final distributor and uses this pair isomorphism under
+the unchanged application head.
+
+\lean{Copying/ClosedTranslationUnits}{65}{85}{ClosedTranslation.pair}
+
+\lean{Copying/ClosedTranslationUnits}{86}{90}{ClosedTranslation.application}
+
+\Needspace{12\baselineskip}
+\subsection{Moving a closed-output branch past a neighbouring connection}
+
+For $G:I\Rightarrow\epsilon$, $W:K\Rightarrow J$ and $R:J\Rightarrow O$,
+the two graphs $(G\otimes W);R$ and $G\otimes(W;R)$ have the same ordered
+interface $IK\Rightarrow O$. Unlike the earlier nullary-neighbour lemma,
+$W$ may have arbitrary inputs; the instance edge needs this generality.
+These two expressions define the left and right assembly shapes.
+
+\lean{Copying/ClosedBranchSerial}{11}{11}{ClosedBranchSerial.left}
+
+\lean{Copying/ClosedBranchSerial}{12}{98}{ClosedBranchSerial.right}
+
+The isomorphism reassociates the three edge tags and the three component
+internal-vertex tags, retaining the junction indexed by $J$. Its inverse
+restores the old tags, and the two inverse equations follow by tag cases.
+For ports of $G$, output cases are impossible; its inputs keep their original
+positions. Inputs of $W$ retain the second input block, and its outputs become
+the same serial junctions as inputs of $R$. Outputs of $R$ keep their exterior
+positions. These three component port equations prove both ordered incidence
+laws by mapping each source or target list. Labels are unchanged, including
+all nested box bodies. This is a representation isomorphism, not a rewrite
+that moves state across a box.
+
+\lean{Copying/ClosedBranchSerial}{99}{134}{ClosedBranchSerial.iso}
+
+\Needspace{12\baselineskip}
+\subsection{Literal program geometry and the stable beta fragment}
+
+\termdef{private-cell-opened-body}
+The body term is exactly
+$\lambda f.(\lambda w.!x)(f\ ())$ in the single-variable environment for $x$.
+Under its sequencing binder $x$ is index two. Its translation $B$ has depth
+two and interface $*\Rightarrow *$. The numeral graph is the original
+constant-one corolla at the requested allowance. These definitions merely
+name parts of the original desugared term.
+
+\lean{Copying/PropositionAllocationGeometry}{12}{14}{Proposition12_2.bodyTerm}
+
+\lean{Copying/PropositionAllocationGeometry}{15}{16}{Proposition12_2.body}
+
+\lean{Copying/PropositionAllocationGeometry}{17}{18}{Proposition12_2.numeral}
+
+Padding a primitive corolla to a larger allowance gives that same primitive
+corolla at the new allowance. Induct on the inequality between allowances:
+the reflexive case uses self-padding, and a successor uses the original
+padding-successor equation and primitive-raising equation. Combining this
+with the closed-constant isomorphism gives the padded constant translation.
+The source isomorphism unfolds only the outer original application clause,
+uses self-padding of the depth-three abstraction, commutes padding through
+the reference unary clause, and applies the closed constructor isomorphisms.
+The entire nested body remains $B$.
+
+\lean{Copying/PropositionAllocationGeometry}{19}{24}{Proposition12_2.padTo_primitive}
+
+\lean{Copying/PropositionAllocationGeometry}{25}{32}{Proposition12_2.constant_padding}
+
+\lean{Copying/PropositionAllocationGeometry}{33}{44}{Proposition12_2.source_iso}
+
+\termdef{private-cell-store-suffix}
+The store suffix $R$ is the serial composite of the actual canonical
+one-use atom tree, the store edge and the numeral-one graph. The allocated
+graph retains the original application/closure with the freshly allocated
+argument. The beta-source graph exposes only the instance as the argument
+and places $R$ outside it. The opened graph replaces this beta-source fragment
+by the actual micro-beta reduct, keeping the same $R$. All three are explicit
+depth-three closed graph expressions.
+
+\lean{Copying/PropositionAllocationGeometry}{45}{47}{Proposition12_2.storeSuffix}
+
+\lean{Copying/PropositionAllocationGeometry}{48}{50}{Proposition12_2.allocated}
+
+\lean{Copying/PropositionAllocationGeometry}{51}{54}{Proposition12_2.betaSource}
+
+\lean{Copying/PropositionAllocationGeometry}{55}{57}{Proposition12_2.opened}
+
+Three serial associativity isomorphisms factor the allocated argument into
+instance followed by $R$. Tensor congruence retains the closed closure, the
+closed-output branch isomorphism moves $R$ to the outside of that tensor,
+and inverse serial association exposes the application/closure/instance
+beta fragment. No store edge is deleted, duplicated or included in beta's
+stable argument.
+
+\lean{Copying/PropositionAllocationGeometry}{58}{66}{Proposition12_2.allocated_argument_iso}
+
+\lean{Copying/PropositionAllocationGeometry}{67}{72}{Proposition12_2.allocated_iso}
+
+\Needspace{12\baselineskip}
+\subsection{The actual binding-free observation contexts}
+
+The allocation context applies a fixed closed closure to a single closed
+term hole. Its address follows the right tensor component and then the
+right side of the application-head serial composite. Sole-hole preservation
+uses hole freedom of the retained closure and operation head. Binding freedom
+holds independently in the tensor components; the application operation has
+no prohibited binding label. Its filling isomorphism combines the proved
+serial and parallel addressed-filling laws with the primitive-hole filling
+isomorphism. The result is exactly the literal application graph.
+
+\lean{Copying/PropositionOperationalContexts}{10}{25}{Proposition12_2.applicationContext}
+
+\lean{Copying/PropositionOperationalContexts}{26}{34}{Proposition12_2.applicationContext_fill}
+
+The store context is a single hole of type $*\Rightarrow\diamond$ followed
+by the focus-free, hole-free store suffix. Its unique address is in the left
+serial component. Directed serial paths cannot travel backwards from the
+suffix into the hole, and the suffix contains no hole; the existing serial
+binding-free theorem therefore applies. Serial addressed filling and the
+primitive-hole isomorphism identify each filled context with the required
+literal fragment followed by $R$.
+
+\lean{Copying/PropositionOperationalContexts}{35}{41}{Proposition12_2.storeContext}
+
+\lean{Copying/PropositionOperationalContexts}{42}{48}{Proposition12_2.storeContext_fill}
+
+The context-equivalence lemma takes a proved contextual equivalence, an
+actual certified graph context, and isomorphisms from its filled endpoints
+to the desired graphs. Concrete contextual congruence compares the fillings;
+concrete isomorphism invariance compares their endpoint representations.
+Reverse the left isomorphism comparison and compose the three equivalences.
+The execution laws invoked here are previously proved concrete-machine
+results, not premises on this application.
+
+\lean{Copying/PropositionOperationalContexts}{49}{57}{Proposition12_2.context_equiv}
+
+\Needspace{12\baselineskip}
+\subsection{Focus-free and hole-free program certificates}
+
+The body is focus free and hole free by the original term-translation
+invariants. The closure inherits each property through its lambda edge and
+original box. A generic label lemma for the store suffix reduces to four
+primitive cases: atom weakening, atom contraction, store and numeral one.
+Serial label closure and the canonical-tree edge cases prove it. Specializing
+the predicate excludes focus and hole labels at every depth.
+
+\lean{Copying/PropositionAllocationPrograms}{8}{8}{Proposition12_2.body_focusFree}
+
+\lean{Copying/PropositionAllocationPrograms}{9}{10}{Proposition12_2.body_holeFree}
+
+\lean{Copying/PropositionAllocationPrograms}{11}{12}{Proposition12_2.closure_focusFree}
+
+\lean{Copying/PropositionAllocationPrograms}{13}{15}{Proposition12_2.closure_holeFree}
+
+\lean{Copying/PropositionAllocationPrograms}{16}{30}{Proposition12_2.storeSuffix_labels}
+
+\lean{Copying/PropositionAllocationPrograms}{31}{33}{Proposition12_2.storeSuffix_focusFree}
+
+\lean{Copying/PropositionAllocationPrograms}{34}{37}{Proposition12_2.storeSuffix_holeFree}
+
+The two reference programs package the actual local allocation endpoints
+with their focus/hole proofs: the source uses the reference operation and
+stable numeral, and the target uses the allocation preservation lemmas.
+The two beta programs package the original before/after pair with the
+unchanged body and stable primitive instance. The existing beta safety theorem
+proves all four required endpoint properties. Their interface is
+$*\Rightarrow\diamond$, exposing the reference output to the store context.
+
+\lean{Copying/PropositionAllocationPrograms}{38}{44}{Proposition12_2.referenceSource}
+
+\lean{Copying/PropositionAllocationPrograms}{45}{49}{Proposition12_2.referenceTarget}
+
+\lean{Copying/PropositionAllocationPrograms}{50}{54}{Proposition12_2.betaLeft}
+
+\lean{Copying/PropositionAllocationPrograms}{55}{59}{Proposition12_2.betaRight}
+
+The original-program record has the exact Proposition~12.2 left graph and
+its translation invariants. The allocated record uses the application label
+lemmas with the certified allocated argument. The beta-source and opened
+records combine the corresponding certified beta fragment with the already
+certified store suffix. These records establish graph admissibility only;
+no record field assumes contextual equivalence.
+
+\lean{Copying/PropositionAllocationPrograms}{60}{64}{Proposition12_2.originalProgram}
+
+\lean{Copying/PropositionAllocationPrograms}{65}{71}{Proposition12_2.allocatedProgram}
+
+\lean{Copying/PropositionAllocationPrograms}{72}{76}{Proposition12_2.betaSourceProgram}
+
+\lean{Copying/PropositionAllocationPrograms}{77}{80}{Proposition12_2.openedProgram}
+
+\Needspace{12\baselineskip}
+\subsection{Composing the two proved operational links}
+
+The reference pair instantiates the original reference-creation template
+with the numeral's proved stability. The beta pair instantiates micro-beta
+with the body's proved focus freedom and the primitive instance's proved
+stability. Both use identity endpoint isomorphisms. The two directed
+contextual improvement theorems apply the already proved robustness endpoints
+without forgetting costs.
+
+\lean{Copying/PropositionAllocationEquivalence}{8}{10}{Proposition12_2.referencePair}
+
+\lean{Copying/PropositionAllocationEquivalence}{11}{14}{Proposition12_2.betaPair}
+
+\lean{Copying/PropositionAllocationEquivalence}{15}{17}{Proposition12_2.reference_improvement}
+
+\lean{Copying/PropositionAllocationEquivalence}{18}{21}{Proposition12_2.beta_improvement}
+
+Allocation in the actual original program follows from the reference
+pair's termination equivalence in the certified application context. The
+left filling is identified with the original program by the source
+isomorphism, and the right filling is the allocated graph. The next link is
+the allocated-to-beta-source representation isomorphism. Applying the beta
+pair in the certified store context proves the third link. Transitivity
+then connects the original program to the actual opened graph in every
+binding-free closing context, and the observation equivalence characterization
+gives the corresponding successful-termination biconditional.
+
+\lean{Copying/PropositionAllocationEquivalence}{22}{29}{Proposition12_2.original_allocated}
+
+\lean{Copying/PropositionAllocationEquivalence}{30}{34}{Proposition12_2.allocated_betaSource}
+
+\lean{Copying/PropositionAllocationEquivalence}{35}{42}{Proposition12_2.betaSource_opened}
+
+\lean{Copying/PropositionAllocationEquivalence}{43}{46}{Proposition12_2.original_opened}
+
+\lean{Copying/PropositionAllocationEquivalence}{47}{50}{Proposition12_2.original_opened_termination}
+
+\Needspace{12\baselineskip}
+\subsection{Arbitrary finite and named environments}
+
+\termdef{ambient-weakening-context}
+Extend any certified graph context by one genuine primitive weakening using
+the existing ordered insertion boundary and its interface equalities. The
+old address is lifted through the left parallel component and cast with the
+host interface. The new weakening contributes no holes, so the address stays
+sole; independent parallel components preserve binding freedom. The filling
+isomorphism follows from the parallel addressed-filling law, then the same
+interface cast. Its target is exactly outside weakening of the original
+filled graph.
+
+\lean{Copying/AmbientWeakeningContext}{10}{25}{Weakening.extendContext}
+
+\lean{Copying/AmbientWeakeningContext}{26}{39}{Weakening.extendContext_fill}
+
+Start with the original primitive closed-term-hole context. Iterating term
+extension $k$ times gives the variable context; iterating atom extension $h$
+times gives the ambient context. Induction constructs filling isomorphisms
+to the previously defined $V_k(G)$ and $A_h(V_k(G))$. The base is the actual
+primitive-hole filling theorem; each successor composes the one-extension
+filling isomorphism with extension congruence of the induction hypothesis.
+Thus the ambient context has its own proved address, sole-hole certificate,
+binding freedom and literal filling law.
+
+\lean{Copying/AmbientWeakeningContext}{40}{45}{Weakening.emptyContext}
+
+\lean{Copying/AmbientWeakeningContext}{46}{49}{Weakening.variableContext}
+
+\lean{Copying/AmbientWeakeningContext}{50}{53}{Weakening.ambientContext}
+
+\lean{Copying/AmbientWeakeningContext}{54}{59}{Weakening.variableContext_fill}
+
+\lean{Copying/AmbientWeakeningContext}{60}{66}{Weakening.ambientContext_fill}
+
+A primitive-label predicate survives ambient extension if it holds of the
+original graph and both weakening sorts. Induct first on the variable count,
+then on the atom count, using the one-extension label equivalence. The
+ambient program record specializes this lemma to focus and hole freedom.
+Any closed contextual equivalence then lifts to arbitrary finite ambient
+environments through the certified ambient context and its filling
+isomorphisms. This proves the missing contextual transport of a closed chain,
+rather than merely a pair of separate translation-weakening calculations.
+
+\lean{Copying/AmbientWeakeningContext}{67}{77}{Weakening.ambient_allLabels}
+
+\lean{Copying/AmbientWeakeningContext}{78}{84}{Weakening.ambientProgram}
+
+\lean{Copying/AmbientWeakeningContext}{85}{89}{Weakening.ambient_equiv}
+
+The original-in-environment record is precisely the unchanged private-cell
+translation at $k,h$; the opened-in-environment record is ambient extension
+of $O$. The previous full term-weakening theorem first gives an exact-count
+equivalence from the former to ambient extension of the closed original
+program. Only then is its cost relation weakened to the universal relation.
+Compose with ambient transport of the newly proved closed allocation/beta
+chain. The named-environment theorem substitutes the two original list
+lengths, and the final observation theorem gives successful-termination
+equivalence for every binding-free closing context.
+
+\lean{Copying/PropositionEnvironmentOpening}{10}{14}{Proposition12_2.originalInEnvironment}
+
+\lean{Copying/PropositionEnvironmentOpening}{15}{18}{Proposition12_2.openedInEnvironment}
+
+\lean{Copying/PropositionEnvironmentOpening}{19}{24}{Proposition12_2.environment_weakening_exact}
+
+\lean{Copying/PropositionEnvironmentOpening}{25}{33}{Proposition12_2.original_opened_environment}
+
+\lean{Copying/PropositionEnvironmentOpening}{34}{41}{Proposition12_2.original_opened_named}
+
+\lean{Copying/PropositionEnvironmentOpening}{42}{45}{Proposition12_2.original_opened_environment_termination}
+
+\Needspace{12\baselineskip}
+\subsection{Store resolution and concrete regression checks}
+
+Four explicit edge coordinates in $O$ identify the instance retained by
+beta, the retained atom contraction, the retained store and numeral one.
+Each label equation is definitional: nested serial tags select the original
+edge without relabelling it. The instance target and a contraction source
+share the outer atom junction; the contraction target and store source
+share the inner atom junction. These two concrete incidence witnesses prove
+the two atom hops.
+
+\lean{Copying/PropositionOpeningChecks}{8}{9}{Proposition12_2.openedInstance}
+
+\lean{Copying/PropositionOpeningChecks}{10}{10}{Proposition12_2.openedContraction}
+
+\lean{Copying/PropositionOpeningChecks}{11}{11}{Proposition12_2.openedStore}
+
+\lean{Copying/PropositionOpeningChecks}{12}{13}{Proposition12_2.openedOne}
+
+\lean{Copying/PropositionOpeningChecks}{14}{14}{Proposition12_2.opened_instance_label}
+
+\lean{Copying/PropositionOpeningChecks}{15}{15}{Proposition12_2.opened_contraction_label}
+
+\lean{Copying/PropositionOpeningChecks}{16}{16}{Proposition12_2.opened_store_label}
+
+\lean{Copying/PropositionOpeningChecks}{17}{19}{Proposition12_2.opened_one_label}
+
+\lean{Copying/PropositionOpeningChecks}{20}{26}{Proposition12_2.opened_instance_hop}
+
+\lean{Copying/PropositionOpeningChecks}{27}{31}{Proposition12_2.opened_contraction_hop}
+
+Composing the two hops and the store-label equation proves resolution in
+exactly two hops. The already proved store-trace uniqueness theorem shows
+that every successful resolution from that instance has this same store and
+length. A separate literal junction witnesses adjacency of the store to the
+numeral-one edge. The allocation non-stability theorem confirms that the
+whole heap argument cannot satisfy beta's stable-fragment premise.
+
+Finite enumeration checks the outer edge counts: five in the original graph,
+eight after allocation, eight in the reassociated beta source, and nine after
+opening the box. The increase after beta is compatible with opening previously
+nested body edges; no claim of a graph-size decreasing rule is made. Finally,
+the environment theorem is instantiated at two variables and three atoms.
+Termination equivalence is quantified over all closing observations, so no
+assumption of terminating callbacks or single-use closures is introduced.
+
+\lean{Copying/PropositionOpeningChecks}{32}{34}{Proposition12_2.opened_resolves}
+
+\lean{Copying/PropositionOpeningChecks}{35}{38}{Proposition12_2.opened_resolves_unique}
+
+\lean{Copying/PropositionOpeningChecks}{39}{43}{Proposition12_2.opened_store_content}
+
+\lean{Copying/PropositionOpeningChecks}{44}{46}{Proposition12_2.allocated_argument_not_stable}
+
+\lean{Copying/PropositionOpeningChecks}{47}{52}{Proposition12_2.intermediate_edge_counts}
+
+\lean{Copying/PropositionOpeningChecks}{53}{55}{Proposition12_2.mixed_environment_opening}
+
+\paragraph{Dependency map and remaining work.}
+Completed: empty-forest representation isomorphisms and original padding
+$\to$ exact source normalization; branch/serial reassociation $\to$ stable
+instance/store separation; proved reference and beta template consequences
+plus actual binding-free contexts $\to$ closed original-to-opened equivalence;
+full weakening plus a certified ambient context $\to$ arbitrary finite and
+named-environment equivalence. Concrete store resolution is proved on the
+opened endpoint. No semantic leaf is an assumed template or machine theorem.
+
+Still unfinished: normalize the retained translated body and sharing/box
+structure into the required parametricity instance; apply parametricity and
+normalize to the unchanged constant-result translation; complete the chain
+at the required common depth allowances and discharge the remaining
+correspondence/substitution obligations. Proposition~12.2 itself is not yet
+proved. The estimate remains 70--80\% of mathematical effort, with low
+confidence: this is a concrete program-equivalence milestone, while the
+remaining structural normalization and correspondence work are still hard
+to size.
