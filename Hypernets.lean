@@ -776,3 +776,14 @@ import Hypernets.Copying.PropositionResultEnvironments
 import Hypernets.Copying.PropositionParametricityInstance
 import Hypernets.Copying.PropositionFinalSegment
 import Hypernets.Copying.PropositionFinalSegmentChecks
+
+-- Proposition 12.2: complete source normalization and general-environment theorem.
+import Hypernets.Copying.PropositionStructuralCalculation
+import Hypernets.Copying.PropositionSourceGraphs
+import Hypernets.Copying.PropositionSourceGeometry
+import Hypernets.Copying.PropositionSourceInner
+import Hypernets.Copying.PropositionSourceOuterGeometry
+import Hypernets.Copying.PropositionSourceNormalization
+import Hypernets.Copying.PropositionPrefixPadding
+import Hypernets.Copying.PropositionComplete
+import Hypernets.Copying.PropositionCompleteChecks
