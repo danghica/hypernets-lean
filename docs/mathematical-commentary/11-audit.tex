@@ -1121,5 +1121,21 @@ parametricity with any certified private sharing tree, both quantitative
 closed comparisons, and the final segment ending at the actual translated
 right program. The finite incidence certificates, all intermediate structural
 witnesses, callback-retention and mixed noncanonical-tree checks are included.
-The original-left-to-parametricity normalization remains open.\par}
+The subsequent source normalization and final theorem are audited below.\par}
 \lean{Copying/Audit}{7483}{7552}{Copying.Audit: right normalization and concrete parametricity}
+
+\Needspace{12\baselineskip}
+\subsection{Complete source normalization and Proposition 12.2}
+{\raggedright
+The full build passes 1167 jobs. All 8093 distinct axiom audits use only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}; neither
+\texttt{sorryAx} nor a project-specific axiom occurs. Nine new modules contain
+111 audited public declarations. The audit includes every new calculation
+constructor and lifting law, all eleven finite representation certificates,
+all five sharing-tree certificates, the complete opened-source normalization,
+the padded allocation/beta prefix, and the public general-environment theorem.
+The final \texttt{Examples.proposition12\_2} theorem itself depends only on
+those three standard Lean axioms. Full-language context congruence, the looping
+callback, repeated closure use, mixed named environments, extra allowances and
+all binding-free graph observations are checked as regression instances.\par}
+\lean{Copying/Audit}{7554}{7665}{Copying.Audit: complete Proposition 12.2}

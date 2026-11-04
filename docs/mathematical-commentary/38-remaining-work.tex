@@ -25,29 +25,31 @@ Output closure, input safety, robustness, deterministic and refocusing
 behaviour, and a reasonable cost triple remain semantic hypotheses on an
 application. The copying UAM, language translations, and application-specific
 equivalences were outside the selected general-theorem milestone; Proposition~12.2
-is now an explicit extension target.
+is now proved in the copying extension, as recorded below.
 
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
-The machine, all eleven template families and their contextual consequences
-are proved. Full semantic weakening and the actual left program's allocation
-and beta-opening prefix are complete. Sections~\ref{sec:proposition-result-normalization}
-and~\ref{sec:proposition-final-segment} now complete right-hand normalization
-and concrete parametricity to the unchanged right-hand translation, in arbitrary
-finite environments and at every adequate allowance. The bridge from the
-actual opened left graph to the normalized private closure remains unproved.
+The formal Proposition~12.2 theorem is complete. Sections~\ref{sec:proposition-source-normalization}
+and~\ref{sec:proposition-complete} close the source-normalization bridge and
+assemble the unchanged programs for arbitrary distinct-list environments,
+every adequate allowance and all original binding-free graph observations.
+The full build and axiom audit pass; no unproved semantic assumption is a
+premise of the public theorem. The remaining items below concern broader
+translation laws and correspondence with the paper, rather than unfinished
+proof obligations in that theorem.
 
-Previously struck-through tasks have been removed. Only tasks completed in
-this milestone are struck through below; every unstruck task remains open.
-Earlier achievements remain documented in the main commentary.
+Previously struck-through tasks have been removed. Only the two tasks
+completed in this milestone are struck through below. Earlier achievements
+remain documented in the main commentary.
 % Progress policy: delete the previous milestone's completedtask entries;
 % strike only achievements newly completed in the current milestone.
 \begin{enumerate}
 \item \textbf{Stability, renaming and substitution.}
 \begin{itemize}
-\item Prove any further stability/copyability invariants required by the
-remaining specimen and translation arguments.
-\item Prove non-bijective renaming and graph-level substitution laws.
+\item Audit whether the broader specimen and translation correspondence
+requires further stability/copyability invariants; none is an unproved
+premise of the completed Proposition~12.2 derivation.
+\item Prove general non-bijective renaming and graph-level substitution laws.
 \end{itemize}
 \item \textbf{Specimens and observations.}
 Prove correspondence between the coordinate specimens and the paper's
@@ -55,21 +57,12 @@ explicitly focused graphs, unique-hole inventories and replacement tuples.
 Preserve the proved execution and observation laws through any necessary
 semantic corrections, and retain the zero-input qualification of Lemma~E.1.
 \item \textbf{The final example and its graph normalization.}
-The two ends of the concrete equivalence chain are proved; its source-normalization
-bridge is still open.
 \begin{itemize}
-\item {\raggedright\completedtask{Normalize the unchanged constant-result translation to the schematic constant closure, preserving exact successful counts at every adequate depth and termination observations in arbitrary finite environments.}\par}
-\item {\raggedright\completedtask{Instantiate concrete parametricity, retaining any certified private sharing tree, and compose it with normalization to the unchanged right-hand translation in arbitrary finite and named environments.}\par}
-\item Normalize the actual opened translated left body and its retained
-sharing/box structure into the Figure~22 parametricity source, preserving
-its private instance and store.
-\item Carry the original-left allocation/beta prefix and source-normalization
-certificates to the required common allowances, compose the complete chain,
-and obtain the public Proposition~12.2 theorem for arbitrary distinct-list
-environments.
+\item {\raggedright\completedtask{Normalize the actual opened translated left body and its retained sharing/box structure into the Figure 22 parametricity source, preserving its private instance and store.}\par}
+\item {\raggedright\completedtask{Carry the original-left allocation/beta prefix and source-normalization certificates to every adequate common allowance, compose the complete chain, and prove the public Proposition 12.2 theorem for arbitrary distinct-list environments.}\par}
 \end{itemize}
 \end{enumerate}
-No claim of completion is made until the final general-environment theorem
-passes the build and axiom audit. The current estimate remains 70--80\% of
-mathematical effort, with low confidence; the number of completed declarations
-or checklist items is not a measure of the remaining difficulty.
+The formal endpoint is now complete, rather than a percentage estimate.
+This does not claim that every theorem or correspondence audit for the paper
+is complete. The remaining independent questions are displayed above and in
+Appendix~B's preceding two-item audit list.

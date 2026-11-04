@@ -1,0 +1,127 @@
+\clearpage
+\section{Proposition 12.2 in every finite environment}
+\label{sec:proposition-complete}
+\termdef{completed-proposition12-2}{Completed Proposition 12.2}.
+The public theorem now proves, for every finite distinct-list variable
+environment $\Gamma$ and atom environment $\Delta$,
+\[
+ \Gamma\mid\Delta\vDash
+ \mathtt{let}\ x=\mathtt{ref}\ 1\ \mathtt{in}\
+ \lambda f.\,(f\,();!x)
+ \ \simeq^{\ddagger}\ \lambda f.\,(f\,();1).
+\]
+The Lean statement uses the original scoped terms and their unchanged
+Figure~16 translation. Its execution is the complete copying UAM, and
+its observations range over every original binding-free closing graph
+context at every common adequate fragment allowance. No determinism,
+robustness, translation-correctness or callback-termination premise is supplied.
+
+\subsection{The original operational prefix at every allowance}
+An operational pair survives one extra allowance by its already proved
+padding law. Induction gives a pair after any $n$ extra allowances.
+For a pair used inside a fixed certified graph context, first prove the
+fragment equivalence at every padded allowance. The existing context-padding
+and context-congruence theorems then lift it through that actual context.
+The supplied endpoint isomorphisms are padded too. This proves the helper
+for the entire contextual use; it does not promote an arbitrary equivalence
+to a padded equivalence.
+\lean{Copying/PropositionPrefixPadding}{11}{19}{operational_pair_pad}
+\lean{Copying/PropositionPrefixPadding}{20}{30}{context_equiv_pad}
+
+Apply this helper to reference creation in the application context containing
+the original let-body closure. Apply it again to micro-beta in the certified
+store-suffix context. The beta argument remains the stable instance alone,
+with its allocated store outside. The intervening store factorization is a
+padded recursive isomorphism. Their composition proves the complete
+allocation/beta prefix for every $n$. For any $N\geq3$, write $N=3+n$ and
+use the proved agreement between adding $n$ allowances and padding to $N$.
+\lean{Copying/PropositionPrefixPadding}{31}{39}{original_allocated_pad}
+\lean{Copying/PropositionPrefixPadding}{40}{47}{betaSource_opened_pad}
+\lean{Copying/PropositionPrefixPadding}{48}{55}{original_opened_pad}
+\lean{Copying/PropositionPrefixPadding}{56}{60}{original_opened_padTo}
+
+\subsection{Assembling the closed chain without a padding assumption}
+The normalized private graph also commutes with an extra allowance:
+serial padding transports its large closure, complete term tree and actual
+private cell. Inducting on $d$ gives a recursive isomorphism from the
+minimum-depth private closure padded to $d+3$ to $Q_{d+1}$.
+Pad the source-normalization calculation itself to that allowance and
+append this isomorphism. Exact contextual soundness gives the opened-to-private
+comparison at every depth. Compose it with the padded operational prefix,
+forgetting costs only where termination equivalence is required.
+\lean{Copying/PropositionComplete}{13}{17}{private_raise}
+\lean{Copying/PropositionComplete}{19}{29}{private_padding}
+\lean{Copying/PropositionComplete}{30}{35}{opened_private_exact}
+\lean{Copying/PropositionComplete}{36}{42}{original_private}
+
+\subsection{Arbitrary environments and the final theorem}
+The original-environment record is precisely the translated left term padded
+to $d+3$. Pad its already proved finite-environment weakening calculation,
+and use the proved equality commuting ambient weakening with padding.
+This yields exact contextual equivalence to the ambient extension of the
+closed original left graph. Lift the complete closed prefix through that
+certified ambient context. Finally compose with the completed parametricity
+and right-normalization segment in the same environment. The result is
+\[
+ (P_L^{\Gamma,\Delta})^{\mathrm{pad}(d+3)}
+ \simeq
+ (P_R^{\Gamma,\Delta})^{\mathrm{pad}(d+3)}.
+\]
+The cost relation here is universal; the source structural links separately
+retain exact successful counts and the earlier operational/parametricity
+lemmas retain their directed quantitative comparisons.
+\lean{Copying/PropositionComplete}{43}{47}{originalEnvironment}
+\lean{Copying/PropositionComplete}{48}{57}{source_environment_exact}
+\lean{Copying/PropositionComplete}{58}{75}{equivalence_at}
+
+For arbitrary common allowance $N$, the left term's depth condition gives
+$3\leq N$. Writing $N=d+3$ supplies the preceding theorem; the right term's
+minimum depth is two. This proves scoped observational equivalence for all
+finite scope sizes. The named theorem specializes those sizes to the lengths
+of $\Gamma$ and $\Delta$ and accepts their distinctness proofs. The scoped
+proof actually works for every pair of natural sizes; names do not enter
+the machine. Variables and atoms are separate namespaces, so no disjointness
+between the two lists is required. A companion theorem consumes the existing
+named-environment record directly.
+\lean{Copying/PropositionComplete}{76}{88}{Examples.proposition12_2_scoped}
+\lean{Copying/PropositionComplete}{89}{95}{Examples.proposition12_2}
+\lean{Copying/PropositionComplete}{96}{100}{Examples.proposition12_2_environment}
+
+\subsection{Semantic regression instances and the scope of the result}
+Full concrete term-context congruence lifts the final theorem into any
+context of the original annotated grammar. In particular, one regression
+passes a callback whose body is the usual self-application loop. The result
+compares all observations of the two filled terms without assuming callback
+termination. It is not a separate theorem constructing an infinite machine
+trace. Another context binds the returned closure once and invokes that same
+closure twice with unit callbacks; the same full observational theorem applies.
+\lean{Copying/PropositionCompleteChecks}{9}{14}{CompleteChecks.contextual}
+\lean{Copying/PropositionCompleteChecks}{15}{16}{CompleteChecks.loopingCallback}
+\lean{Copying/PropositionCompleteChecks}{18}{21}{CompleteChecks.loopContext}
+\lean{Copying/PropositionCompleteChecks}{22}{26}{CompleteChecks.looping_callback}
+\lean{Copying/PropositionCompleteChecks}{27}{29}{CompleteChecks.repeatedContext}
+\lean{Copying/PropositionCompleteChecks}{31}{36}{CompleteChecks.repeated_closure_use}
+
+A named mixed-environment instance uses two variable names and three atom
+names, deliberately allowing the same spelling in both namespaces. A depth-seven
+instance checks an allowance larger than either minimum depth. The final
+observation lemma unfolds the theorem to successful-termination equivalence
+for every original closing graph context, not only contexts obtained from terms.
+\lean{Copying/PropositionCompleteChecks}{37}{42}{CompleteChecks.named_mixed_environment}
+\lean{Copying/PropositionCompleteChecks}{43}{48}{CompleteChecks.extra_allowance}
+\lean{Copying/PropositionCompleteChecks}{49}{53}{CompleteChecks.observations}
+
+\paragraph{Proof correspondence and remaining audits.}
+The proof uses the paper's template method and the indirect copying and
+garbage-collection dependencies already discharged by parametricity. It
+performs allocation and outer beta before the structural normalization;
+Figure~22 displays some structural moves earlier. For sharing components it
+uses the proved general sharing-tree theorem, rather than displaying an
+elementary associativity/commutativity sequence. All finite representation
+maps are kernel-checked, and all semantic changes use proved templates.
+The broader correspondence audits retained in Appendix~B concern the
+relationship between formal predicates and the paper, and general translation
+laws beyond the instances needed here. They are not premises or unfinished
+Lean obligations in \texttt{Examples.proposition12\_2}. Thus the formal
+endpoint is complete; this does not declare every independent paper-correspondence
+question or every theorem in the paper settled.

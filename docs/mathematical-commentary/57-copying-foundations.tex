@@ -4,12 +4,13 @@
 \Needspace{14\baselineskip}
 \subsection{Scope, dependency map, and semantic boundary}
 
-The new namespace \texttt{Hypernets.Copying} begins the extension needed for
-Proposition~12.2 of the PDF (Proposition~12 in the HTML). The requested endpoint
-is the observational equivalence of the private-cell program and the constant
-program in every distinct-list environment. That endpoint is \emph{not yet
-proved}. In particular, the new syntax is not an operational semantics, and
-its substitution equations are not unrestricted call-by-value beta rules.
+The namespace \texttt{Hypernets.Copying} supplies the separate copying
+extension for Proposition~12.2 of the PDF (Proposition~12 in the HTML).
+The public theorem is now proved for the original private-cell and constant
+programs in every distinct-list environment; see
+Section~\ref{sec:proposition-complete}. The original syntax and Figure~16
+translation are unchanged. Syntax substitution equations are not treated as
+unrestricted call-by-value beta rules.
 
 The following dependency map distinguishes checked prerequisites from pending
 semantic work. The paper references use the PDF numbering, with HTML aliases
@@ -129,7 +130,8 @@ translation. Template output closure, safety and robustness remain application
 proofs. The remaining correspondence work concerns explicitly focused graphs,
 unique-hole inventories and replacement tuples. The subsequent template results and their remaining obligations are summarized in
 Section~\ref{sec:copying-four-templates} and Appendix~B.1. Section~\ref{sec:copying-full-copying-template} completes copying. Parametricity,
-semantic weakening and the final Figure~22 argument remain open.
+semantic weakening and the final Figure~22 argument are now complete in the
+later sections ending with Section~\ref{sec:proposition-complete}.
 Section~\ref{sec:copying-box-permutation-opening} discharges BPerm output
 closure and operational input safety, and proves its local beta-opening diagram
 with equal transition counts and recursively isomorphic successors. External
@@ -211,28 +213,33 @@ Section~\ref{sec:copying-operational-converse-robustness} completes that
 synthesis, including two selected inputs for same-store equality. Universal
 converse robustness and the contextual improvement/termination consequences
 are now proved for both operational families.
-\item \textbf{Pending templates:} Table~3 requires contraction associativity,
-commutativity and idempotence; copying and garbage collection;
-pulling contractions and pulling weakening; micro-beta; reference creation;
-and parametricity. Micro-beta and reference creation now have output closure,
-input safety, universal forward/converse robustness and contextual consequences.
-Contraction idempotence is now also completed for both wire sorts in
-Section~\ref{sec:copying-contraction-idempotence}, with exact successful counts
-in unrestricted original observing contexts. The seven other families still
-require their template obligations. These proofs use the transfer results
-of Appendices~G--H. Prove base structural templates before the dependent
-copying, box-pulling and parametricity arguments; do not assume their contextual
-consequences in a circular proof.
-\item \textbf{Pending assembly:} the semantic weakening laws (Proposition~12.1;
-HTML Proposition~11), the empty-environment chain of Figure~22, and extension
-to arbitrary environments (Proposition~12.2; HTML Proposition~12). The copying
-and garbage-collection templates are indirect dependencies, as Table~4 records.
+\item \textbf{Completed template closure:} all eleven Table~3 families now
+have the required closure, safety and forward/converse robustness consequences:
+associativity, commutativity, idempotence, copying, garbage collection,
+BPerm, BPullC, BPullW, micro-beta, reference creation and parametricity.
+The later template sections record their constructive residual specimens and
+transfer dependencies. Table~4's indirect copying and garbage-collection
+dependencies are retained in the parametricity proof; they are not assumed
+away in the example.
+\item \textbf{Completed example assembly:} Proposition~12.1 weakening is
+proved by actual Idem and BPullW calculations. The unchanged left translation
+undergoes allocation and beta in certified binding-free contexts, then its
+actual opened graph is normalized by structural templates
+(Section~\ref{sec:proposition-source-normalization}). Concrete parametricity
+and right normalization complete the closed chain. Padding each certificate
+and extending by proved ambient weakening give Proposition~12.2 for arbitrary
+finite distinct-list environments and all adequate allowances
+(Section~\ref{sec:proposition-complete}).
+\item \textbf{Open correspondence work, not theorem premises:} compare the
+coordinate specimen interface with the paper's focused-graph and replacement-tuple
+presentation, and finish the general non-bijective graph renaming/substitution
+laws. Appendix~B retains these questions and the earlier linear-theorem audits.
+No unfinished Lean proof obligation for the final proposition depends on them.
 \end{enumerate}
-The final public theorem is reserved as
-\texttt{Copying.Examples.proposition12\_2}; no placeholder theorem with that name
-is introduced. Definitions and theorems below are reusable prerequisites rather
-than a conditional assertion of the requested conclusion.
-
+The final public theorem is
+\texttt{Copying.Examples.proposition12\_2}, proved without semantic premises.
+The detailed prerequisites below retain their original definitions; historical
+local milestones should be read with the completed dependency status above.
 
 \Needspace{14\baselineskip}
 \subsection{Scoped terms and the two programs}

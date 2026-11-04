@@ -6,15 +6,16 @@ closure used by Figure~22 and composes it with the preceding section's
 normalization. Its endpoint is the unchanged right-hand term translation,
 in arbitrary finite environments and at every adequate common allowance.
 It also allows any certified one-input private term sharing tree, so the
-remaining source normalization need not first make that private tree canonical.
+source normalization need not first make that private tree canonical.
 
-\paragraph{The remaining boundary.}
+\paragraph{The boundary of this segment.}
 This theorem starts at the \emph{normalized private closure}, not at the
 original allocating left-hand translation. Section~\ref{sec:proposition-opening}
 already reaches the latter's actual opened graph. The structural bridge
-between that graph and the normalized private closure remains to be proved.
-No theorem here assumes that missing equivalence, and none is named or
-presented as the completed Proposition~12.2.
+between that graph and the normalized private closure is proved in
+Section~\ref{sec:proposition-source-normalization}.
+No theorem in this segment assumes that equivalence; the complete assembly
+is supplied in Section~\ref{sec:proposition-complete}.
 
 \subsection{The actual single-closure family instance}
 A family with one large member and zero small members contains exactly the
@@ -149,29 +150,24 @@ observations with divergent or stuck callbacks; it is not a test assuming
 that a selected callback terminates.
 \lean{Copying/PropositionFinalSegmentChecks}{42}{56}{FinalSegmentChecks.exact_observation_count}
 
-\subsection{Dependency map and remaining work}
-With $O$ denoting the previously proved actual opened left graph, the current
-chain is
+\subsection{Dependency map and completed assembly}
+With $O$ denoting the actual opened left graph, the complete chain is
 \[
- P_L\ \underbrace{\simeq}_{\text{proved allocation/beta}}\ O
- \ \underbrace{\dashrightarrow}_{\text{open structural bridge}}\ Q_{d,C}
- \ \underbrace{\simeq}_{\text{proved parametricity}}\ R_d
- \ \underbrace{\simeq}_{\text{proved normalization}}\ P_R.
+ P_L\ \underbrace{\simeq}_{\text{allocation/beta}}\ O
+ \ \underbrace{\simeq}_{\text{structural templates}}\ Q_{d,C}
+ \ \underbrace{\simeq}_{\text{parametricity}}\ R_d
+ \ \underbrace{\simeq}_{\text{normalization}}\ P_R.
 \]
-The last two links now have concrete endpoints, arbitrary finite-environment
-transport and all adequate common allowances. Their dependencies are the
-original Idem/BPullW weakening certificates, actual finite graph
-isomorphisms, the proved sharing-tree theorem, the proved full parametricity
-family and the certified ambient context. No application-level semantic
+The final two links are proved in this section and the preceding section.
+Their dependencies are the original Idem/BPullW weakening certificates,
+actual finite graph isomorphisms, the proved sharing-tree theorem, full
+parametricity and the certified ambient context. No application-level semantic
 assumption remains in these links.
 
-The open source bridge must normalize the opened translated body and its
-retained sharing and boxes to the schematic read-after-callback closure,
-while preserving the actual private cell. The original-left prefix and that
-bridge must be carried to the required common allowances before composing
-the complete public theorem. The correspondence, substitution and any
-required stability obligations in Appendix~\ref{app:remaining-work} also
-remain. Proposition~12.2 is not yet proved. Completion remains estimated at
-70--80\% of mathematical effort, with low confidence: these are two completed
-concrete links, but the remaining bridge and correspondence work can still
-require substantial mathematics.
+Section~\ref{sec:proposition-source-normalization} now proves the source bridge,
+retaining the actual private cell while normalizing both lambda bodies and
+their sharing structure. Section~\ref{sec:proposition-complete} carries the
+actual prefix and structural certificates to all common adequate allowances
+and proves the final theorem in arbitrary finite distinct-list environments.
+The independent correspondence and general translation-law questions remain
+in Appendix~\ref{app:remaining-work}; the formal proposition endpoint is complete.

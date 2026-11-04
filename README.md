@@ -7,49 +7,54 @@ The reference version is [arXiv:1907.01257v5](https://arxiv.org/abs/1907.01257v5
 
 The general sufficiency-of-robustness theorem (PDF Theorem 8.11; HTML Theorem 6)
 is proved in the concrete encoding, subject to the correspondence audits below.
-The current extension target is the example equivalence of Proposition 12.2.
+The example equivalence of **Proposition 12.2 is now proved** in the copying encoding.
 
-## Latest milestones: original right-hand normalization and concrete parametricity
+## Latest milestones: complete source normalization and Proposition 12.2
 
-Completed **two concrete links toward Proposition 12.2**. First, the unchanged constant-result translation is contextually equivalent to Figure 20's normalized constant closure, with **exact successful-transition counts at every adequate depth allowance**. The proof retains the actual callback, factors its complete ten-edge sharing component, and uses proved Idem/BPullW and sharing-tree results.
+The actual opened left-hand translation now normalizes to the concrete private
+parametricity closure through checked sharing, BPerm, BPullC and BPullW
+calculations. Its private instance, atom tree, store and numeral are preserved.
+The proof fixes the bound outputs of both boxes and retains the actual callback.
 
-Second, **the normalized private-cell closure is contextually equivalent to the unchanged right-hand translation**, in every finite variable/atom environment, including named distinct lists. This completes the parametricity and final-normalization segment of Figure 22. Any certified one-input private term sharing tree is allowed; its canonical presentation is not an extra premise. Both quantitative directions are retained for the closed final segment before costs are forgotten.
+The complete allocation/beta prefix and structural certificates now work at
+**every adequate depth allowance**. Composing them with concrete parametricity,
+right-hand normalization and semantic weakening proves
+[`Hypernets.Copying.Examples.proposition12_2`](Hypernets/Copying/PropositionComplete.lean)
+for **arbitrary finite distinct-list Γ and Δ**, against **all binding-free closing
+graph contexts**. The original terms and Figure 16 translation are unchanged.
+There are no unproved determinism, robustness, translation or termination premises.
 
-Full build: **1,158 jobs**. All **7,982 distinct axiom audits** pass, using only `propext`, `Classical.choice` and `Quot.sound`. Nine new modules contain 69 audited public declarations. Sections 133–134 explain the definitions and proofs with immutable source links. Appendix B.1 removes previously struck tasks and strikes only these newly completed tasks.
+Full build: **1,167 jobs**. All **8,093 distinct axiom audits** pass, using only
+`propext`, `Classical.choice` and `Quot.sound`, including the final theorem.
+Nine new modules contain 111 audited public declarations. Regression instances
+cover a looping callback, repeated use of the same returned closure, mixed named
+environments and larger allowances. The looping regression compares observations;
+it does not assert a separately constructed infinite execution trace.
 
-**Proposition 12.2 is still unproved.** The missing chain link is structural normalization of the previously opened original left-hand graph into the parametricity source. The original-left prefix and that bridge must also be assembled at the required common depth allowances. Correspondence and remaining substitution/stability obligations remain. Estimated completion stays **70–80% of mathematical effort, with low confidence**, as of 4 November 2026; the remaining bridge and correspondence work are still substantial.
+Sections 135–136 of the mathematical commentary explain both milestones with
+immutable source links. Appendix B.1 removes the previous struck tasks and
+strikes only the source bridge and final theorem newly completed here.
 
-## Proposition 12.2: current extension target
+**The formal Proposition 12.2 endpoint is complete.** Broader correspondence audits,
+general non-bijective graph renaming and graph substitution remain separate
+work; they are not premises of the final theorem. This is not a claim that
+all the paper's mathematics or representation-correspondence questions are settled.
 
-The requested private-reference equivalence is **not yet proved**. The new
-`Hypernets.Copying` namespace contains scoped terms with separate variable/atom
-indices, capture-avoiding substitution and its composition laws, the complete
-example operation alphabet, typed atom-aware boxes, recursive graph isomorphism,
-nested replacement, and canonical contraction trees matching Definition 10.1.
-Ordered distributors now assemble these trees with the exact input permutation
-`i + k*j`, including zero resources and zero uses. Generic parallel assembly
-preserves and reflects component paths; serial assembly connects typed shared
-interfaces. Tree/distributor acyclicity and label-predicate closure are proved. The combined copying execution now includes all local operation families;
-its determinism, refocusing and coordinate specimen interface are proved; the
-paper-correspondence obligations and example equivalence remain unfinished. Arbitrary contraction trees
-now have proved root reachability and unique terminal traces. Atom-store
-resolution is unique, invariant under renaming and depth padding, and checked
-in a cyclic-store graph without assuming the whole host is acyclic.
+## Proposition 12.2: completed in the copying encoding
 
-The Proposition 12.2 terms must remain unchanged. Translation follows Figure 16,
-including its single-use distributors, weakening, and ordered box interfaces.
-All seven Figure 16 clauses and the full recursive term translation now compile.
-Both unchanged proposition terms have concrete hypernets in arbitrary environments,
-with proved global language, focus-free, and hole-free properties. Full-syntax bijective graph renaming now has exact-cost contextual semantics
-via explicit BPerm derivations and inverse external resource compensation;
-non-bijective graph renaming, graph substitution, the remaining correspondence
-and template proofs, and the final equivalence remain open.
+The separate `Hypernets.Copying` namespace contains the complete example
+operation alphabet, the unchanged scoped terms and translation, copying and
+store semantics, proved machine laws, concrete specimens, all eleven template
+families, semantic weakening and the complete example equivalence. Definitions
+and statements are explained in the mathematical commentary, including the
+paper-to-Lean correspondence qualifications in its opening section.
 
 Stable graphs (Definition 10.3) and copyable payloads (Definition 10.2) now
 have separate predicates and proved structural/renaming properties. The actual
 right-hand proposition graph factors into a copyable lambda payload followed
 by the original single-use distributors. The local copying, store and application rules and their representation
-laws are now proved; the remaining operational invariants are tracked in Appendix B.1.
+laws and operational invariants are now proved; broader correspondence questions
+are tracked in Appendix B.1.
 Reference allocation is now proved with its stable premise and retained argument;
 the local dereference rule preserves the store and requests the required copying.
 
@@ -58,14 +63,13 @@ isomorphism invariance. Plugging closure is proved at arbitrary nesting depth
 when the replaced hole has an input, as every translated term hole does. A
 checked finite counterexample shows why unrestricted closure at zero-input
 holes does not follow from the literal source-based definition. Concrete observation reflection and full term-context congruence now have
-proved execution representation laws. Four broader Appendix B.1 work packages
-remain open.
+proved execution representation laws. The remaining broader correspondence
+questions are recorded separately in Appendix B.1.
 
 The commentary's section **Copying and store: foundations for Proposition 12.2**
 contains the dependency map; **Ordered distributors and graph assembly**
-explains the new constructions and proofs. Appendix B tracks the remaining
-stability/copyability preservation, translation laws, copying machine,
-binding-free contexts, eleven template families, and final Figure 22 assembly.
+explains the new constructions and proofs. Appendix B records the remaining correspondence and general translation-law
+questions and marks the newly completed final Figure 22 assembly.
 The existing two paper-correspondence audits remain open.
 
 Validation: `lake build`; `lake env lean Hypernets/Copying/Audit.lean`.
@@ -820,7 +824,8 @@ of the filled term. The proof covers both application and binary positions,
 lambdas and unary operations; a mixed regression checks all constructors and
 a genuine depth mismatch. Appendix B.1 item 3 now retains observational
 congruence and the observation/padding audit, including the concrete machine's
-representation obligations. Proposition 12.2 remains unfinished.
+representation obligations at that historical milestone. These are now
+discharged, and Proposition 12.2 is proved as described at the top of this file.
 
 
 Section 67 proves observation transfer through padded closing contexts and

@@ -11,7 +11,18 @@ and many references in this commentary follow the HTML numbering. They do not
 identify a different mathematical result. This section uses the PDF numbering
 when discussing the original statement.
 
-The Lean theorem proves the two corresponding contextual-refinement
+{\raggedright
+Proposition~12.2 is now also proved in the copying encoding.
+Its public theorem, \texttt{Examples.proposition12\_2}, compares the unchanged terms in
+arbitrary distinct-list variable and atom environments, at every common
+adequate allowance and in every binding-free closing graph context.
+Sections~\ref{sec:proposition-source-normalization} and~\ref{sec:proposition-complete}
+explain the final source normalization, assembly and axiom audit. The result
+has no unproved machine, template, translation or termination premise.
+The qualifications below concern mathematical correspondence, not missing
+hypotheses hidden inside that formal theorem.\par}
+
+The formal sufficiency theorem proves the two corresponding contextual-refinement
 implications for the definitions constructed in this repository. It is not a
 literal transcription of the paper. Some changes are representation choices
 with proved comparison lemmas; others require a further audit of the
@@ -237,7 +248,7 @@ and outer beta links for the unchanged left program, including a proved
 binding-free ambient context lifting the result to arbitrary finite and named
 environments. Its opened endpoint retains the original internal distributors
 and allocated store. It is not asserted to be the normalized Figure~22
-parametricity graph; that source normalization remains unfinished.
+parametricity graph by representation alone; Section~\ref{sec:proposition-source-normalization} now supplies the required structural-template calculation.
 Sections~\ref{sec:proposition-result-normalization} and~\ref{sec:proposition-final-segment}
 now complete the other end of the chain: the unchanged right-hand translation
 normalizes with exact successful costs, and concrete parametricity connects
@@ -250,7 +261,13 @@ sequence. Finite representation tables are fully checked for inverses, labels
 and ordered incidences by the Lean kernel. No graph equality or semantic
 premise is introduced by those tables.
 
-The earlier estimate of 80\% completion of Proposition~12.2 was withdrawn. The current estimate is 70--80\% of mathematical effort, with low confidence, as of 4 November 2026. Correspondence audits, non-bijective graph renaming and substitution, any further required stability invariants, and the missing source-normalization bridge and full Figure~22 assembly remain. The proposition itself is not yet proved; declaration and checklist counts do not measure the remaining difficulty.
+The formal Proposition~12.2 endpoint is complete as of 4 November 2026:
+the actual source normalization, all-allowance prefix and final named-environment
+assembly now pass the full build and axiom audit. A percentage estimate is no
+longer needed for that endpoint. This is not a claim that all work on the
+paper is finished: the correspondence audits and general non-bijective graph
+renaming/substitution laws remain separately listed in Appendix~B. They do
+not occur as premises in the final theorem.
 
 The new recognition predicate records proved facts about the existing source
 graph. It is not a new reduction rule or a replacement for stability and
@@ -514,8 +531,8 @@ explicit execution isomorphism and padding laws. Section~\ref{sec:copying-combin
 now discharges isomorphism invariance for the concrete subsystem; Section~\ref{sec:copying-arithmetic-padding} now proves
 forward execution padding as well. Section~\ref{sec:copying-padding-reflection}
 discharges reverse padding transport. The remaining full-machine laws are
-listed in Appendix~B.1. No equivalence of the
-proposition programs is inferred.
+discharged in the later machine sections. The final equivalence of the
+proposition programs is proved in Section~\ref{sec:proposition-complete}.
 Earlier statements that no work remained for the paper's theorem should be
 read with this qualification: completion of the formal construction does not
 settle these external correspondence questions.
@@ -555,7 +572,8 @@ constructor congruence for arbitrary operands with a typed boundary isomorphism.
 The original single-use graphs are retained. Allocation and dereference subterms
 are covered structurally. Their subsequently proved local operational rules are
 described in Sections~\ref{sec:copying-allocation} and~\ref{sec:copying-dereference};
-full-machine integration and the proposition remain open.
+full-machine integration and the proposition are completed in the later
+machine sections and Section~\ref{sec:proposition-complete}.
 
 
 Section~\ref{sec:copying-lambda-free-renaming} completes bijective translation
@@ -567,5 +585,5 @@ induction using explicit BPerm derivations. Their semantic interpretation is
 now proved in Section~\ref{sec:copying-semantic-renaming}, using the subsequently
 completed machine and BPerm laws. This preserves successful observations at
 every exact count; it does not identify divergence with a separate observable
-outcome. Non-bijective graph renaming, graph substitution and the final
-proposition remain open.
+outcome. Non-bijective graph renaming and general graph substitution remain
+separate correspondence work; the final proposition is now proved.

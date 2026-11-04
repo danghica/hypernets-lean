@@ -1,0 +1,262 @@
+\clearpage
+\section{Complete normalization of the original private-reference source}
+\label{sec:proposition-source-normalization}
+This section closes the missing structural bridge. Let $O$ be the actual
+opened translated left graph of Section~\ref{sec:proposition-opening},
+and let $Q_1$ be the normalized private closure of
+Section~\ref{sec:proposition-final-segment}, with its canonical one-input
+term sharing tree. We construct a finite structural calculation
+\[
+ O\ \equiv_{\mathrm{exact}}\ Q_1.
+\]
+It preserves the private instance, the complete atom tree, the store and
+numeral one. All changes occur in the original translated body's sharing
+and box structure. No term, translation clause, machine step or observation
+predicate is changed.
+
+\subsection{A finite structural calculation with original certificates}
+\termdef{proposition-structural-calculation}{Proposition structural calculation}.
+A calculation is a finite proof object whose leaves are boundary-fixing
+recursive isomorphisms or genuine original filling witnesses for Idem,
+BPullW, BPullC, BPerm or the proved sharing-tree relation. Symmetry and
+transitivity compose calculations. They do not add transitive closure to
+any template relation. Reflexivity is the identity isomorphism, with a
+focus-free source. The focus-freedom lemma follows by induction on the
+calculation: each leaf proves its two endpoints focus-free; symmetry swaps
+them and transitivity keeps the first and last endpoints.
+\lean{Copying/PropositionStructuralCalculation}{20}{36}{Structural.Calculation}
+\lean{Copying/PropositionStructuralCalculation}{38}{41}{Structural.Calculation.refl}
+\lean{Copying/PropositionStructuralCalculation}{42}{55}{Structural.Calculation.focusFree}
+
+The hole-freedom lemma also uses induction. Isomorphisms preserve all labels.
+BPullC, BPullW and BPerm preserve the relevant label predicate through their
+original fillers. Idem and sharing-tree leaves have hole-free local endpoints,
+so the common recursive filling preserves hole freedom in both directions.
+Consequently intermediate hole freedom is derived rather than assumed.
+An existing weakening calculation embeds leaf by leaf into this larger
+calculus without changing its graph endpoints.
+\lean{Copying/PropositionStructuralCalculation}{56}{69}{Structural.Calculation.holeFree_iff}
+\lean{Copying/PropositionStructuralCalculation}{262}{271}{Structural.Calculation.ofWeakening}
+
+Plugging a calculation into an addressed site lifts every leaf by the
+existing genuine-filling constructor. An unchanged serial prefix or suffix
+is retained by an identity filling on that component. Changing both serial
+components is achieved by changing the first and then the second. The three
+tensor constructions use the same argument, preserving branch order.
+\lean{Copying/PropositionStructuralCalculation}{70}{83}{Structural.Calculation.plugAt}
+\lean{Copying/PropositionStructuralCalculation}{84}{97}{Structural.Calculation.serialRight}
+\lean{Copying/PropositionStructuralCalculation}{98}{111}{Structural.Calculation.serialLeft}
+\lean{Copying/PropositionStructuralCalculation}{112}{115}{Structural.Calculation.serial}
+\lean{Copying/PropositionStructuralCalculation}{117}{128}{Structural.Calculation.tensorRight}
+\lean{Copying/PropositionStructuralCalculation}{130}{141}{Structural.Calculation.tensorLeft}
+\lean{Copying/PropositionStructuralCalculation}{143}{148}{Structural.Calculation.tensor}
+
+Boxing lifts every leaf into the same box, fixing its bound prefix and free
+interface. Equal-interface transport changes no graph data. A typed output
+permutation is applied to both endpoints through an actual permuted filling
+context; it is not asserted to be an ordered isomorphism. Parallel-left and
+parallel-right lifting retain a specified boundary shuffle. Their composition
+therefore lifts both operands through Figure~16's exact paired-subterm
+constructor. Application adds its unchanged head and complete distributor.
+Abstraction adds its unchanged lambda head, box and outer single-use rows;
+the payload variant adds the head and box only.
+\lean{Copying/PropositionStructuralCalculation}{149}{162}{Structural.Calculation.boxed}
+\lean{Copying/PropositionStructuralCalculation}{163}{177}{Structural.Calculation.reboundary}
+\lean{Copying/PropositionStructuralCalculation}{272}{285}{Structural.Calculation.permuted}
+\lean{Copying/PropositionStructuralCalculation}{311}{330}{Structural.Calculation.parallelRight}
+\lean{Copying/PropositionStructuralCalculation}{332}{354}{Structural.Calculation.parallelLeft}
+\lean{Copying/PropositionStructuralCalculation}{355}{361}{Structural.Calculation.pair}
+\lean{Copying/PropositionStructuralCalculation}{363}{367}{Structural.Calculation.application}
+\lean{Copying/PropositionStructuralCalculation}{286}{298}{Structural.Calculation.abstraction}
+\lean{Copying/PropositionStructuralCalculation}{299}{310}{Structural.Calculation.payload}
+
+One-step allowance padding raises each original certificate using that
+particular template's proved padding-closure theorem. Iterated padding is
+induction on the added allowance. Padding to $N$ iterates $N-d$ times and
+transports the resulting equality of depth indices. No semantic padding
+law is inferred from machine determinism.
+\lean{Copying/PropositionStructuralCalculation}{178}{188}{Structural.Calculation.raise}
+\lean{Copying/PropositionStructuralCalculation}{190}{193}{Structural.Calculation.pad}
+\lean{Copying/PropositionStructuralCalculation}{195}{205}{Structural.Calculation.padTo}
+
+For a closed calculation, exact-count soundness follows by induction from
+the already proved robustness consequences of its five leaf families.
+The isomorphism case uses a reflexive filling with an isomorphic endpoint.
+Symmetry reverses the two refinements; transitivity composes them, using
+the derived hole-freedom invariant for the intermediate graph. Plugging
+this result into every original binding-free closing context proves
+contextual exact equivalence. Unfolding the two refinements gives equality
+of the existence of successful runs at each exact count $n$, including
+cases in which neither side terminates.
+\lean{Copying/PropositionStructuralCalculation}{206}{237}{Structural.Calculation.exact_equiv}
+\lean{Copying/PropositionStructuralCalculation}{238}{245}{Structural.Calculation.contextual_exact}
+\lean{Copying/PropositionStructuralCalculation}{246}{261}{Structural.Calculation.termination_count}
+
+\subsection{The inner read body and its actual sharing rows}
+Write $W_d$ for a term weakening, $C_d$ for the complete canonical one-use
+term tree, $U_d=W_d;C_d$ and $V_d=C_d;C_d$. Here $C_d$ contains both its
+weakening and contraction; it is never replaced by an identity wire.
+The scoped read term is $!x$, with $x$ at index two beneath $w$ and $f$.
+For zero-input term trees $A,B$ and a one-input tree $T$, define
+\[
+ \mathsf{readParts}(A,B,T)=(A\otimes B)\otimes(\mathsf{deref};T).
+\]
+Its ordered outputs are $w,f,x$. The factored body chooses $A=B=U_0$,
+$T=V_0$; the reduced body chooses $A=B=W_0$, $T=C_0$.
+\lean{Copying/PropositionSourceGraphs}{11}{11}{Source.readTerm}
+\lean{Copying/PropositionSourceGraphs}{12}{12}{Source.weak}
+\lean{Copying/PropositionSourceGraphs}{13}{13}{Source.use}
+\lean{Copying/PropositionSourceGraphs}{14}{14}{Source.unusedRow}
+\lean{Copying/PropositionSourceGraphs}{15}{15}{Source.usedRow}
+\lean{Copying/PropositionSourceGraphs}{17}{20}{Source.readParts}
+\lean{Copying/PropositionSourceGraphs}{22}{22}{Source.readFactored}
+\lean{Copying/PropositionSourceGraphs}{23}{25}{Source.readReduced}
+
+The first whole-graph certificate identifies the actual eleven-edge
+translation with that factored graph. Its inverse maps, every label, and
+every ordered incidence are checked against the complete finite inventories.
+The unused row has three edges and ranks $(0,0,1)$; the used row has four
+edges and ranks $(0,1,0,2)$. Exhaustive labels show that they contain only
+term weakenings and contractions. The ranks strictly increase at every
+edge adjacency, so every path has distinct edges. These are genuine
+zero-input and one-input contraction trees. The sharing-tree template
+therefore replaces $U_0$ by a weakening and $V_0$ by $C_0$. Tensor and serial
+lifting yield the reduced read body from the unchanged translation.
+\lean{Copying/PropositionSourceGeometry}{27}{56}{Source.ReadFactor.iso}
+\lean{Copying/PropositionSourceInner}{18}{28}{Source.unused_tree}
+\lean{Copying/PropositionSourceInner}{29}{37}{Source.used_tree}
+\lean{Copying/PropositionSourceInner}{39}{43}{Source.unusedCalculation}
+\lean{Copying/PropositionSourceInner}{44}{46}{Source.usedCalculation}
+\lean{Copying/PropositionSourceInner}{48}{55}{Source.readCalculation}
+
+\subsection{Moving only free resources through the two boxes}
+\termdef{private-source-free-row}{Private-source free row}.
+For a body $G$ with ordered outputs $w,x$, adjoin an unused free output
+last, giving $w,x,z$, and apply the free-output swap extended by the identity
+on $w$. Call the result $\mathsf{beforeX}(G)$, with outputs $w,z,x$.
+Contract its final two free outputs to obtain $\mathsf{insideUse}(G)$.
+This is precisely the canonical one-use row on $x$ inside the box.
+The permutation pair records and proves the fixed bound output explicitly.
+The specialized read body is $\mathsf{insideUse}(\mathsf{readBody}_0)$,
+and its lambda payload is the corresponding smaller read closure.
+The reduced read body is isomorphic to $\mathsf{beforeX}$ of this specialized
+body, with the additional unused output representing $f$.
+\lean{Copying/PropositionSourceGraphs}{26}{28}{Source.swapPair}
+\lean{Copying/PropositionSourceGraphs}{29}{33}{Source.beforeX}
+\lean{Copying/PropositionSourceGraphs}{34}{36}{Source.insideUse}
+\lean{Copying/PropositionSourceGraphs}{38}{38}{Source.readUsed}
+\lean{Copying/PropositionSourceGraphs}{40}{40}{Source.smallUsed}
+\lean{Copying/PropositionSourceGeometry}{57}{86}{Source.ReadUnused.iso}
+
+The auxiliary endpoints retain the literal rule shapes. The reduced inner
+translation is its original abstraction constructor. The contraction-pull
+endpoint is a lambda head followed by BPullC's literal right graph.
+The serial contraction endpoint places the same two-output lambda payload
+before a primitive contraction. The permuted-box endpoint is BPerm's
+right graph with its unchanged lambda head. The outside-weakening endpoint
+replaces that box by BPullW's literal right graph. The intermediate with
+outer rows retains Figure~16's entire two-resource single-use distributor.
+The normalized inner graph has an outside weakening for $f$, the original
+small read closure followed by $C_1$, and both original outer rows.
+\lean{Copying/PropositionSourceGraphs}{42}{44}{Source.innerReduced}
+\lean{Copying/PropositionSourceGraphs}{45}{49}{Source.pullRight}
+\lean{Copying/PropositionSourceGraphs}{50}{51}{Source.contractBox}
+\lean{Copying/PropositionSourceGraphs}{53}{55}{Source.permutedBox}
+\lean{Copying/PropositionSourceGraphs}{57}{61}{Source.outsideWeak}
+\lean{Copying/PropositionSourceGraphs}{62}{62}{Source.innerAfterWeak}
+\lean{Copying/PropositionSourceGraphs}{64}{68}{Source.innerNormal}
+
+The generic unused-output calculation first applies the literal BPerm pair
+to move the free swap outside the box, then applies BPullW under that same
+external swap. The original bound output stays fixed throughout. The
+generic contraction calculation applies literal BPullC to
+$\mathsf{beforeX}(G)$ under the unchanged lambda head. Both require only
+focus freedom of $G$, which is proved for each concrete use.
+\lean{Copying/PropositionSourceInner}{56}{71}{Source.removeWeak}
+\lean{Copying/PropositionSourceInner}{72}{81}{Source.pullContraction}
+
+For the small read closure, the first finite certificate reassociates
+BPullC's literal output contraction into the serial contraction endpoint.
+The unused-output calculation then moves the weakening outside. The second
+finite certificate identifies the resulting weakening/contraction with the
+complete canonical one-use tree outside the small closure. A further
+certificate identifies the outside unused $f$ with a tensor of its weakening
+and the same small closure. All three certificates preserve the whole
+recursive box label. Combining them with the read-body calculation proves
+the original inner lambda equivalent to the normalized inner graph, while
+retaining both outer translation rows.
+\lean{Copying/PropositionSourceGeometry}{87}{116}{Source.SmallPull.iso}
+\lean{Copying/PropositionSourceGeometry}{147}{176}{Source.SmallUse.iso}
+\lean{Copying/PropositionSourceGeometry}{207}{215}{Source.UnusedOutside.iso}
+\lean{Copying/PropositionSourceInner}{82}{93}{Source.smallUseCalculation}
+\lean{Copying/PropositionSourceInner}{94}{106}{Source.innerCalculation}
+
+\subsection{The callback application and the outer private closure}
+The callback term is literally $f\,()$ in the environment $f,x$; the
+sequence term applies the original read lambda to that callback. The
+normalized sequence changes only the function subgraph by the preceding
+calculation and retains the actual padded callback and application distributor.
+\lean{Copying/PropositionSourceGraphs}{69}{69}{Source.callbackTerm}
+\lean{Copying/PropositionSourceGraphs}{70}{70}{Source.sequenceTerm}
+\lean{Copying/PropositionSourceGraphs}{72}{75}{Source.sequenceNormal}
+\lean{Copying/PropositionSourceNormalization}{64}{69}{Source.sequenceCalculation}
+
+Its two complete sharing components are
+\[
+\begin{aligned}
+ F&=(U_1\otimes((C_1\otimes W_1);D_{1,2}));D_{1,2},\\
+ X&=(V_1\otimes((W_1\otimes W_1);D_{1,2}));D_{1,2}.
+\end{aligned}
+\]
+Here $D_{1,2}$ denotes the original canonical two-use term tree at the
+same allowance. Both $F$ and $X$ have twelve edges. The schematic sequence
+places $X$ after the small read closure and $F$ in the callback's function
+branch, retains both application heads and unit, then swaps the outputs
+into the order $f,x$. A checked whole-graph isomorphism factors the actual
+29-edge normalized sequence into this schematic sequence. Each extracted
+tree has exhaustive sharing labels and an explicit strictly increasing
+edge rank. Thus both are replaced through the proved sharing-tree relation
+by $C_1$, retaining the entire operational skeleton.
+\lean{Copying/PropositionSourceGraphs}{76}{79}{Source.callbackTree}
+\lean{Copying/PropositionSourceGraphs}{80}{83}{Source.privateTree}
+\lean{Copying/PropositionSourceGraphs}{85}{90}{Source.sequenceParts}
+\lean{Copying/PropositionSourceOuterGeometry}{27}{56}{Source.SequenceFactor.iso}
+\lean{Copying/PropositionSourceNormalization}{15}{28}{Source.callback_tree}
+\lean{Copying/PropositionSourceNormalization}{29}{42}{Source.private_tree}
+\lean{Copying/PropositionSourceNormalization}{53}{55}{Source.callbackCalculation}
+\lean{Copying/PropositionSourceNormalization}{56}{58}{Source.privateCalculation}
+
+The reduced schematic sequence is isomorphic to
+$\mathsf{insideUse}(\mathsf{callReadBody}_0)$. Hence the generic BPullC,
+BPerm and BPullW calculations apply to the large box as well. Their two
+finite endpoint certificates retain its complete nested read box. The
+large closure has its free $x$ row moved outside while $f$ remains bound.
+\lean{Copying/PropositionSourceOuterGeometry}{57}{86}{Source.SequenceUse.iso}
+\lean{Copying/PropositionSourceNormalization}{70}{83}{Source.sequenceSharing}
+\lean{Copying/PropositionSourceGeometry}{117}{146}{Source.LargePull.iso}
+\lean{Copying/PropositionSourceGeometry}{177}{206}{Source.LargeUse.iso}
+\lean{Copying/PropositionSourceNormalization}{84}{96}{Source.largeUseCalculation}
+
+The outer abstraction's own single-use row remains after that moved row.
+A representation certificate identifies the resulting suffix with $V_2$;
+the intermediate body-normal graph is the large closure followed by $V_2$.
+The four-edge rank proof certifies $V_2$ as a one-input tree, so another
+sharing leaf replaces it by $C_2$. This proves the full original translated
+let body equivalent to the large schematic read closure followed by its
+canonical one-use tree.
+\lean{Copying/PropositionSourceGraphs}{92}{92}{Source.bodyNormal}
+\lean{Copying/PropositionSourceOuterGeometry}{87}{116}{Source.AbstractionSuffix.iso}
+\lean{Copying/PropositionSourceNormalization}{43}{51}{Source.outer_tree}
+\lean{Copying/PropositionSourceNormalization}{59}{63}{Source.outerCalculation}
+\lean{Copying/PropositionSourceNormalization}{97}{106}{Source.bodyCalculation}
+
+The opened whole-program certificate identifies $O$ with the raised original
+body followed by the unchanged private cell. Raising the body calculation
+uses the proved closure of each leaf family. Padding the schematic closure
+and its row commutes by the existing constructor isomorphisms. Retaining
+the private cell as a serial suffix therefore yields $Q_1$ exactly. This
+completes the source-normalization bridge, with no assumption of the desired
+equivalence and no replacement of the allocated store.
+\lean{Copying/PropositionSourceOuterGeometry}{117}{125}{Source.Opened.iso}
+\lean{Copying/PropositionSourceNormalization}{107}{113}{Source.normalized_raise}
+\lean{Copying/PropositionSourceNormalization}{114}{122}{Source.openedCalculation}
