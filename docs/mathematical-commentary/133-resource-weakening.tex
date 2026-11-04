@@ -1,0 +1,316 @@
+\clearpage
+\section{Semantic weakening with retained free resources}
+\label{sec:resource-semantic-weakening}
+This milestone removes the restriction on other free resources in the boxed
+weakening calculation. It also proves the unary-operation and abstraction
+induction steps for the original Figure~16 translation, for both variable
+and atom extension. No term, translation clause, canonical distributor,
+or machine rule has changed.
+
+The connection to the paper is the proof of the weakening laws in
+Section~12.3 (HTML Proof~12.3 of Proposition~11; PDF Proposition~12.1).
+Its third local situation pulls an unused output through a box and then
+reduces its unary distributor using Idem. The present construction retains
+all other free-resource rows while performing exactly that calculation.
+The original source is
+\href{https://arxiv.org/html/1907.01257v5\#S12.SS3}{Section~12.3 of the paper}.
+
+\paragraph{Scope of the result.}
+The completed box law permits every binder count $n$, every old variable
+count $k$, every old atom count $h$, and every depth allowance $d$.
+The old body may contain arbitrary nested boxes and may use its old free
+resources. The proof supplies concrete filling certificates and hence exact
+contextual equivalence; it assumes neither successful termination nor
+robustness of a new template. The base translation cases, extraction of the
+selected binary row from arbitrary distinct subterms, and assembly of the
+complete term induction remain open. Thus this is a completed part of
+semantic weakening, not yet Proposition~12.2.
+
+\Needspace{12\baselineskip}
+\subsection{Serial composition of ordered parallel families}
+\termdef{serial-parallel-interchange}
+Let $F_a:I_a\to J_a$ and $R_a:J_a\to O_a$ be finite families of hypernets.
+A prefix boundary $C$ orders all the $I_a$ and $J_a$ ports; a suffix boundary
+$B$ orders all the $J_a$ and $O_a$ ports. Assume that $C$'s output bijection
+is exactly $B$'s input bijection. The composite boundary uses $C$'s input
+bijection and $B$'s output bijection. The two presentations are
+\[
+ \Bigl(\mathop{\parallel}_C F_a\Bigr);
+ \Bigl(\mathop{\parallel}_B R_a\Bigr)
+ \quad\hbox{and}\quad
+ \mathop{\parallel}_{C,B}(F_a;R_a).
+\]
+Unlike the earlier input-free interchange, the $I_a$ are arbitrary here.
+\lean{Copying/ParallelSerial}{16}{20}{ParallelSerial.afterBoundary}
+\lean{Copying/ParallelSerial}{22}{22}{ParallelSerial.left}
+\lean{Copying/ParallelSerial}{23}{23}{ParallelSerial.right}
+
+\begin{theorem}[Ordered serial-parallel interchange]
+These two presentations are recursively isomorphic with every external
+boundary position fixed.
+\end{theorem}
+\begin{proof}
+Send a shared global wire $j$ to the unique component and local port selected
+by $B$'s inverse input bijection. Reassociate a prefix internal vertex
+$(\mathsf{left},a,v)$ as $(a,\mathsf{left},v)$, and likewise for suffix
+vertices and all edges. The inverse maps use $B$'s forward input bijection.
+Its two inverse laws prove that these maps are bijections. The shared-wire
+label law is precisely $B$'s input typing law. For incidence, prefix outputs
+and suffix inputs become the same shared internal vertex; the compatibility
+assumption identifies their two original orderings. Original external inputs
+and outputs remain external at the same positions. Mapping each source and
+target list through these commuting port maps proves the isomorphism.
+\end{proof}
+\lean{Copying/ParallelSerial}{131}{161}{ParallelSerial.iso}
+
+\Needspace{12\baselineskip}
+\subsection{Retaining resources in the original distributors}
+\termdef{resource-distributor-embedding}
+Write $E_{k,h}=*^k\diamond^h$. Adding a resource of sort $s$ means adding a
+variable at the end of the variable block, or adding an atom at the start
+of the atom block. In either case the new global output is at position $k$.
+Old outputs before $k$ stay fixed; old outputs at or after $k$ move one
+position to the right. This is the existing BPullW insertion convention.
+
+For every number of uses $m$, a canonical term row has its literal occurrence
+in the term half of $D_{k,m}^{*}\otimes D_{h,m}^{\diamond}$; an atom row has
+its literal occurrence in the atom half. The maps tag each internal vertex
+and edge by its sort and resource index. Their incidence laws are the
+original parallel embeddings. The selected new row is the last term row
+or the first atom row of the enlarged distributor.
+\lean{Copying/DistributorExtension}{11}{31}{DistributorExtension.termOccurrence}
+\lean{Copying/DistributorExtension}{34}{54}{DistributorExtension.atomOccurrence}
+\lean{Copying/DistributorExtension}{58}{63}{DistributorExtension.selected}
+
+Assemble all the old term rows into one occurrence using their original
+ordered distributor boundary, and do the same for the old atom rows.
+Their resource injections are injective, so distinct rows have disjoint
+edges. Their term/atom tags are different, so the two complete forests are
+also disjoint. Their parallel assembly is the occurrence of the entire
+old environment distributor in the enlarged distributor.
+\lean{Copying/DistributorExtension}{65}{74}{DistributorExtension.termForest}
+\lean{Copying/DistributorExtension}{76}{85}{DistributorExtension.atomForest}
+\lean{Copying/DistributorExtension}{87}{99}{DistributorExtension.distributor}
+
+The four component-port lemmas say that following a port first into its
+old forest and then into the enlarged distributor gives exactly the same
+port as entering its corresponding new row directly. They follow from the
+parallel-assembly port equation, first within each sort and then across
+the term/atom split. They apply to internal, input and output ports.
+\lean{Copying/DistributorExtension}{101}{110}{DistributorExtension.termForest_port}
+\lean{Copying/DistributorExtension}{112}{121}{DistributorExtension.atomForest_port}
+\lean{Copying/DistributorExtension}{123}{130}{DistributorExtension.distributor_term_port}
+\lean{Copying/DistributorExtension}{132}{139}{DistributorExtension.distributor_atom_port}
+
+Every old output follows the insertion map just described. More precisely,
+the input for old variable $i$ at use $u$ originally has coordinate $i+ku$;
+after extension it has coordinate $\iota_s(i)+k'u$. For atoms the analogous
+coordinate is $j+hu$ inside the atom block, with that block following all
+$k'm$ term inputs in the enlarged graph. These are the original use-major
+coordinates, not a resource-major reordering. The output theorem splits at
+$k$; the two input theorems instantiate the component-port lemmas at use $u$.
+\lean{Copying/DistributorExtension}{141}{155}{DistributorExtension.distributor_output}
+\lean{Copying/DistributorExtension}{157}{162}{DistributorExtension.distributor_term_input}
+\lean{Copying/DistributorExtension}{164}{172}{DistributorExtension.distributor_atom_input}
+
+\Needspace{12\baselineskip}
+\subsection{Exhaustive extraction of the added unary row}
+\termdef{selected-unused-row}
+Let $R_{k,h}$ denote the original single-use environment distributor. Its
+input equalities $k\cdot1=k$ and $h\cdot1=h$ can be expressed by explicit
+boundary transport. The auxiliary raw presentation changes only this
+transport; the original single-use graph equals it.
+\lean{Copying/SingleUseExtension}{12}{13}{SingleUseExtension.raw}
+\lean{Copying/SingleUseExtension}{15}{16}{SingleUseExtension.original}
+
+Specializing the resource-preserving embedding to $m=1$ and transporting
+its boundaries gives the retained occurrence. Both its inputs and outputs
+follow the same old-resource insertion map. For inputs, split the interface
+into its term and atom blocks and specialize the use coordinate to zero;
+for outputs, use the general output theorem.
+\lean{Copying/SingleUseExtension}{19}{21}{SingleUseExtension.retained}
+\lean{Copying/SingleUseExtension}{23}{28}{SingleUseExtension.retained_output}
+\lean{Copying/SingleUseExtension}{30}{54}{SingleUseExtension.retained_input}
+
+The added occurrence is the selected original $D_{1,1}^{s}$ row. Its sole
+input and output both map to the new global position $k$. The boundary for
+assembling the retained forest beside this row uses the same typed insertion
+bijection on inputs and outputs. Its old-port and added-port equations
+therefore agree exactly with those of the two occurrences.
+\lean{Copying/SingleUseExtension}{57}{59}{SingleUseExtension.added}
+\lean{Copying/SingleUseExtension}{61}{70}{SingleUseExtension.added_input}
+\lean{Copying/SingleUseExtension}{72}{81}{SingleUseExtension.added_output}
+\lean{Copying/SingleUseExtension}{95}{108}{SingleUseExtension.boundary}
+\lean{Copying/SingleUseExtension}{111}{113}{SingleUseExtension.boundary_old}
+\lean{Copying/SingleUseExtension}{115}{119}{SingleUseExtension.boundary_added}
+
+The component family consists of the retained occurrence and the added row.
+They are disjoint: an old variable index is strictly below the new last
+variable, while an old atom index after insertion is positive and the new
+atom index is zero. Opposite-sort edges have different tags. Parallel
+assembly gives their combined occurrence; the boundary equations prove
+that it fixes every external input and output.
+\lean{Copying/SingleUseExtension}{122}{125}{SingleUseExtension.components}
+\lean{Copying/SingleUseExtension}{143}{154}{SingleUseExtension.occurrence}
+
+\begin{lemma}[Exhaustive row coverage]
+Every edge of the original enlarged single-use distributor belongs to one
+of these two occurrences.
+\end{lemma}
+\begin{proof}
+For variable extension, split a variable row index into $i<k$ and $i=k$;
+all atom rows are retained. For atom extension, split an atom row index
+into $i=0$ and $i>0$; in the latter case its old index is $i-1$. All variable
+rows are retained. Each case preserves the original within-row edge index.
+This includes empty old variable or atom blocks. Complete incidence then
+supplies internal-vertex coverage as well. The existing occurrence-cover
+lemma upgrades this edge-surjective, boundary-fixing occurrence to an
+ordered recursive isomorphism.
+\end{proof}
+\lean{Copying/SingleUseExtension}{182}{218}{SingleUseExtension.edge_coverage}
+\lean{Copying/SingleUseExtension}{222}{229}{SingleUseExtension.iso}
+
+\Needspace{12\baselineskip}
+\subsection{The complete single-use weakening calculation}
+Let $W_sG$ denote the original BPullW extension of $G$ by a separate weakening.
+For an arbitrary $G:I\to E_{k,h}$, the prefix assembly places $G$ beside
+that weakening, retaining $I$ unchanged and ordering its outputs by the
+same insertion bijection. The extension isomorphism identifies this
+presentation with $W_sG$ by identity maps on edges and internal vertices;
+only the explicitly equal boundary presentations differ.
+\lean{Copying/WeakeningSingleUse}{13}{24}{Weakening.SingleUse.prefixBoundary}
+\lean{Copying/WeakeningSingleUse}{27}{48}{Weakening.SingleUse.extension_iso}
+
+\begin{theorem}[Single-use extension law]
+If $G$ is focus-free, there is a genuine Idem filling witnessing
+\[
+       (W_sG);R_{k',h'}\ \leadsto\ W_s(G;R_{k,h}),
+\]
+where $(k',h')$ is the enlarged environment. In particular, the two graphs
+are connected by a weakening calculation.
+\end{theorem}
+\begin{proof}
+Extract the added row from $R_{k',h'}$, then apply serial-parallel
+interchange. The resulting components are the unchanged $G;R_{k,h}$ and
+one incoming weakening followed by the actual $D_{1,1}^{s}$. The latter
+still contains its own canonical weakening and contraction. Apply the
+proved unary Idem witness to this component, and a reflexive witness to
+the old component. Parallel assembly and the endpoint isomorphisms give
+one original whole-graph Idem filling. Its calculation is simply the Idem
+constructor applied to that certificate.
+\end{proof}
+\lean{Copying/WeakeningSingleUse}{51}{65}{Weakening.SingleUse.feeding_iso}
+\lean{Copying/WeakeningSingleUse}{69}{85}{Weakening.SingleUse.filling}
+\lean{Copying/WeakeningSingleUse}{89}{93}{Weakening.SingleUse.normalize}
+
+\Needspace{12\baselineskip}
+\subsection{Boxes with arbitrary other free resources}
+\termdef{boxed-resource-weakening}
+\begin{theorem}[General boxed weakening]
+Let $G:*\to E_{n+k,h}$ be any focus-free body, with its first $n$ term
+outputs bound. Let $B(G):\mathsf{thunk}(n)\to E_{k,h}$ be its original box.
+Then the following is an exact weakening calculation:
+\[
+ B(W_sG);R_{k',h'}\ \leadsto\ W_s\bigl(B(G);R_{k,h}\bigr).
+\]
+Here $W_sG$ denotes the existing bound-aware BPullW body constructor, so
+none of the first $n$ bound outputs is moved.
+\end{theorem}
+\begin{proof}
+Use the literal BPullW certificate to move the weakening outside the box,
+retaining the outer distributor as an unchanged serial suffix. Apply the
+single-use extension law to the original box. The result retains the whole
+body $G$ and all its old free-resource rows. The two stages are therefore
+one BPullW filling followed by one Idem filling, with only ordered graph
+isomorphisms used to expose the selected row.
+\end{proof}
+\lean{Copying/WeakeningTranslationSteps}{12}{21}{Weakening.boxed_resources}
+
+The addressed theorem plugs this complete calculation into any recursive
+site of a focus-free closing host. Hole freedom of the filled source is the
+only hole-freedom premise; the calculation supplies it for the target and
+intermediates. Exact semantic soundness then proves both refinements with
+equality of successful-transition counts in the original unbounded machine.
+No binding-free assumption is needed for this structural result; it therefore
+also applies to all the intended binding-free observation contexts.
+\lean{Copying/WeakeningTranslationSteps}{89}{101}{Weakening.boxed_resources_addressed}
+
+\Needspace{12\baselineskip}
+\subsection{The original unary and abstraction induction steps}
+\termdef{unary-abstraction-weakening}
+For a unary operation $o$, write $U_o(G)$ for the unchanged Figure~16
+clause: the operation edge, then $G$, then $R_{k,h}$. The extension law
+\[
+ U_o(W_sG)\leadsto W_s(U_o(G))
+\]
+first moves the separate weakening past the unchanged operation prefix by
+serial-extension isomorphism, then applies the single-use extension law.
+It covers negation, allocation and dereference without a special operational
+assumption. Given an actual body calculation $G'\leadsto W_sG$, serial
+lifting through the operation and enlarged distributor, followed by this
+law, gives $U_o(G')\leadsto W_s(U_o(G))$.
+\lean{Copying/WeakeningTranslationSteps}{25}{36}{Weakening.unary_extend}
+\lean{Copying/WeakeningTranslationSteps}{40}{49}{Weakening.unary_step}
+
+For abstraction, the original body has $k+1$ term outputs. The existing
+\texttt{betaBody} constructor expresses unused-resource insertion in that
+convention while preserving the distinguished bound output. The abstraction
+extension law uses the proved BPullW lambda-payload witness, keeps the outer
+single-use distributor, and then applies the same row correction. This
+proves $A(W_sG)\leadsto W_s(A(G))$ for the original abstraction clause $A$.
+\lean{Copying/WeakeningTranslationSteps}{53}{61}{Weakening.abstraction_extend}
+
+Calculation congruence for abstraction first transports the equality
+$k+1=1+k$, boxes the body calculation, adds the unchanged lambda head,
+and appends the unchanged single-use distributor. This is a lift of the
+actual proof tree; no equivalence hypothesis is introduced. Consequently,
+from a body calculation $G'\leadsto\mathtt{betaBody}(G,s)$, abstraction
+congruence followed by the extension law gives
+$A(G')\leadsto W_s(A(G))$. Focus freedom of $G$ is recovered from the
+supplied calculation and the proved extension invariant.
+\lean{Copying/WeakeningTranslationSteps}{65}{75}{Weakening.Calculation.abstraction}
+\lean{Copying/WeakeningTranslationSteps}{79}{85}{Weakening.abstraction_step}
+
+\Needspace{12\baselineskip}
+\subsection{Checked instances and remaining dependency}
+The regression body is the direct translation of $\lambda z.\,(v_1\ a_1)$
+in an environment with two variables and two atoms: under its binder the
+variable index is $2$ and the atom index is $1$. It already contains a box
+and uses both an outer variable and an ambient atom. Its recursive focus
+freedom follows from the general translation theorem.
+\lean{Copying/WeakeningTranslationExamples}{11}{12}{Weakening.Examples.nestedBody}
+\lean{Copying/WeakeningTranslationExamples}{14}{15}{Weakening.Examples.nestedBody_free}
+
+The mixed-box instance encloses this graph in another box while keeping one
+old free variable and both atoms. The mixed-abstraction instance uses the
+actual lambda translation clause. Both are checked for either added sort.
+The allocation/read instance composes the allocation extension law with
+the dereference induction step. These are structural semantic calculations,
+not claims that every supplied program terminates.
+\lean{Copying/WeakeningTranslationExamples}{19}{25}{Weakening.Examples.mixed_box}
+\lean{Copying/WeakeningTranslationExamples}{29}{32}{Weakening.Examples.mixed_abstraction}
+\lean{Copying/WeakeningTranslationExamples}{36}{39}{Weakening.Examples.allocation_read}
+
+The finite boundary checks verify that the new resource is at position $2$
+when $k=h=2$. The second old atom moves from position $3$ to position $4$;
+for atom extension, the old variable at position $1$ stays fixed. Decidable
+finite computation proves these equations. In particular, the atom case
+would fail if the new atom were incorrectly appended after the old atoms.
+\lean{Copying/WeakeningTranslationExamples}{43}{45}{Weakening.Examples.term_boundary_order}
+\lean{Copying/WeakeningTranslationExamples}{49}{52}{Weakening.Examples.atom_boundary_order}
+
+\paragraph{Dependency map.}
+The proved path is: original distributor occurrences $\to$ disjoint retained
+and added rows $\to$ exhaustive unary-forest isomorphism $\to$ ordered
+serial-parallel interchange $\to$ genuine whole-graph Idem filling
+$\to$ BPullW plus Idem for general boxes $\to$ unary and lambda induction
+steps $\to$ exact addressed observations. The semantic leaves are the
+already-proved original Idem and BPullW templates. The input focus-freedom
+conditions are application conditions, not missing robustness proofs.
+
+What is still absent is the whole derivation for every translated term:
+the variable, atom and constant base cases, the application and binary-operation
+cases with independently supplied subterms, and their binder and padding
+bookkeeping must be assembled before arbitrary-environment weakening can
+be claimed. Figure~22 and the final general-environment Proposition~12.2
+remain downstream, together with the correspondence audits in Appendix~B.

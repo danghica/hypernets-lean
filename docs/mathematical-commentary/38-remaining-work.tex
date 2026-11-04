@@ -29,232 +29,45 @@ is now an explicit extension target.
 
 \clearpage
 \subsection{Remaining work for Proposition 12.2}
-Completed prerequisites are recorded in
-Sections~\ref{sec:copying-foundations}--\ref{sec:copying-contraction-idempotence}.
-Machine determinism, refocusing, coordinate specimen laws and execution
-representation are proved. BPerm has full robustness and exact-cost
-consequences; structural derivations and bijective renaming preserve closing
-observations. Micro-beta and reference creation now have output closure,
-input safety and universal forward/converse robustness for the original
-binding-free specimens. All nine original local rules are covered; every
-eligible right rewrite has a constructed matching left rewrite and an
-admissible residual. Contextual improvement and termination equivalence now
-follow for both families, including arbitrary recursive paired fillings.
-Contraction idempotence now also has full output closure, input safety,
-forward/converse robustness and exact-cost contextual equivalence for both
-sharing sorts in unrestricted original contexts. Contraction associativity, commutativity and garbage collection now also have
-full template proofs and exact contextual consequences. Pulling weakening
-or contraction through a box has full forward and converse robustness and exact contextual
-consequences. The copying template is also complete: Section~\ref{sec:copying-full-copying-template}
-proves quantitative improvement and termination equivalence, retaining its two-versus-zero input cost. Parametricity is now also complete: Section~\ref{sec:parametricity-universal-hosts} constructs all original host cases and proves both universal robustness directions and contextual consequences. Correspondence, semantic weakening and the final Figure~22 chain remain open. The original terms and Figure~16 translation are unchanged.
+The machine, all eleven template families and their contextual consequences
+are proved. Section~\ref{sec:resource-semantic-weakening} completes the
+boxed weakening law with other free resources and the original unary and
+abstraction induction steps. The original terms and Figure~16 translation
+remain unchanged; Proposition~12.2 is not yet proved.
 
-The four work packages below retain completed tasks and subtasks with
-strikethrough; unstruck entries remain open. A completed prerequisite does not
-discharge a broader task unless its full conclusion has been proved.
-% Progress policy: retain completed tasks and subtasks; wrap their plain-text
-% descriptions in \completedtask rather than deleting them. Keep references
-% outside the macro so that PDF links remain ordinary clickable text.
+Previously struck-through tasks have been removed. Only tasks completed in
+this milestone are struck through below; every unstruck task remains open.
+Earlier achievements remain documented in the main commentary.
+% Progress policy: delete the previous milestone's completedtask entries;
+% strike only achievements newly completed in the current milestone.
 \begin{enumerate}
 \item \textbf{Stability, renaming and substitution.}
-Preserve the terms of Proposition~12.2 and the translation of Figure~16.
 \begin{itemize}
-\item {\raggedright\completedtask{Prove recursive label safety and stable-input inertness.}\par}
 \item Prove any further stability/copyability invariants required by the
-specimen and template arguments.
-\item {\raggedright\completedtask{Construct the structural bijective-renaming derivations.}\par}
-\item {\raggedright\completedtask{Give these derivations their contextual-equivalence
-interpretation using proved BPerm robustness and execution congruence.}\par}
-The result preserves exact successful-transition counts in every original
-closing context; see Section~\ref{sec:copying-semantic-renaming}. Box
-permutations are not identified with ordered isomorphisms.
+remaining specimen and translation arguments.
 \item Prove non-bijective renaming and graph-level substitution laws.
 \end{itemize}
 \item \textbf{Specimens and observations.}
-\begin{itemize}
-\item {\raggedright\completedtask{Prove copying-machine determinism, refocusing and the
-coordinate specimen laws.}\par}
-\item {\raggedright\completedtask{Prove execution-isomorphism, exact padding and observation
-representation laws.}\par}
-\item Prove correspondence between the coordinate specimens and the paper's
+Prove correspondence between the coordinate specimens and the paper's
 explicitly focused graphs, unique-hole inventories and replacement tuples.
-Preserve the completed execution and observation laws through any necessary
+Preserve the proved execution and observation laws through any necessary
 semantic corrections, and retain the zero-input qualification of Lemma~E.1.
-\end{itemize}
-\item \textbf{Template proofs.}
-Follow Table~3's dependency order, including the indirect copying and
-garbage-collection dependencies.
+\item \textbf{Semantic weakening and the final example.}
+Complete the semantic weakening laws, with these components:
 \begin{itemize}
-\item {\raggedright\completedtask{Prove BPerm output closure and input safety.}\par}
-\item {\raggedright\completedtask{Classify every BPerm source overlap, including primitive,
-shallow, deep and mixed cases.}\par}
-\item {\raggedright\completedtask{Recover compatible replacement contexts and construct
-matching whole-graph rewrites for stable operands and shallow, deep or mixed
-copying payloads.}\par}
-\item {\raggedright\completedtask{Construct pointed residual specimen certificates in every
-classified case, discharging the component-rewrite and residual premises of
-the framed transfer law.}\par}
-\item {\raggedright\completedtask{Assemble universal forward and converse BPerm robustness
-and derive exact counts of successful transitions for closed paired fillings.}\par}\par
-See Section~\ref{sec:copying-full-bperm} for these completed BPerm obligations.
-\item {\raggedright\completedtask{Construct concrete output-closed pre-templates for
-micro-beta and reference creation.}\par}
-See Section~\ref{sec:copying-overlap-classification}.
-\item {\raggedright\completedtask{Prove input safety for micro-beta and reference creation
-in unrestricted and binding-free contexts.}\par}
-See Section~\ref{sec:copying-operational-safety}; the quantitative prefix
-comparisons are retained.
-\item {\raggedright\completedtask{Prove forward/converse robustness for micro-beta and reference creation.}\par}
-\begin{itemize}
-\item {\raggedright\completedtask{Construct finite complements, realize whole graph rewrites,
-and factor the supplied successors.}\par}
-\item {\raggedright\completedtask{Reflect retained footprints with arbitrary unrelated
-fillings and reconstruct paired skeletons with original labels.}\par}
-\item {\raggedright\completedtask{Group both sides in one computed frame and construct
-whole-graph rewrites and recursive residual certificates from local diagrams.}\par}
-\item {\raggedright\completedtask{Prove the binding-path barrier for copied payloads and
-preserve exact sharing-hop counts.}\par}
-\item {\raggedright\completedtask{Construct padding with certified common contexts and
-binding-free beta and copying residuals.}\par}
-\item {\raggedright\completedtask{Prove forward and converse quantitative robustness
-for framed deep beta and copying cases, including independent successors.}\par}
-See Section~\ref{sec:copying-operational-transfer}.
-\item {\raggedright\completedtask{Classify original forward rewrites at non-entering positions and
-construct their finite cuts with actual successor correspondence.}\par}
-\item {\raggedright\completedtask{Preserve untouched hole names and box bodies in grafted
-residuals, and prove their exact pointed correspondence.}\par}
-\item {\raggedright\completedtask{Prove admissible sink and guarded residuals, with counted
-arithmetic, read and atom equality cases in both directions.}\par}\par
-See Section~\ref{sec:copying-forward-overlaps}. These converse cases use the
-constructed paired footprint; they do not classify arbitrary right overlaps.
-\item {\raggedright\completedtask{Finish allocation and assignment residuals and extract
-admissible deep beta/copying residuals for the classified original forward cases.}\par}
-See Section~\ref{sec:copying-operational-forward-robustness}; the residual
-contexts and their binding freedom are constructed from the original matches.
-\item {\raggedright\completedtask{Classify arbitrary converse operational overlaps, construct all their
-admissible residual specimens, and assemble universal robustness.}\par}
-\begin{itemize}
-\item {\raggedright\completedtask{Classify every actual converse rewrite into a retained
-complete footprint or an intrinsic original-context store/copy match.}\par}
-Unused sibling branches need not be retained. The classification keeps the
-actual rule premises, selected lookup information and successor correspondence.
-\item {\raggedright\completedtask{Assemble universal forward robustness of both operational
-templates for the original binding-free specimens and all nine rules.}\par}
-\item {\raggedright\completedtask{Construct actual converse matching rewrites and admissible residuals from
-the reflected selectors, including atom-tree footprints with two selected inputs;
-then assemble universal converse robustness.}\par}
-See Section~\ref{sec:copying-operational-converse-robustness}; all nine actual
-right rule occurrences construct the opposite rewrite and residual, and the
-contextual consequences now have no safety or robustness assumptions.
+\item {\raggedright\completedtask{Extend the boxed calculation to arbitrary other free variables and atoms, preserving the bound interface and original body.}\par}
+\item {\raggedright\completedtask{Extract the selected unused unary row from the complete original environment distributor and construct its whole-graph Idem filling.}\par}
+\item {\raggedright\completedtask{Prove the original unary-operation and abstraction induction steps for both variable and atom extension.}\par}
+\item Prove the variable, atom and constant translation base cases.
+\item Extract and normalize the selected unused binary row in the application
+and binary-operation clauses with arbitrary, independently supplied subterms.
+\item Assemble the full term-weakening induction, including syntactic binder
+lifting and depth-padding compatibility, and its environment-extension consequence.
 \end{itemize}
-\end{itemize}
-\item {\raggedright\completedtask{Prove output closure, input safety and forward/converse robustness for
-the other eight template families.}\par}
-\begin{itemize}
-\item {\raggedright\completedtask{Prove contraction-idempotence output closure, input safety,
-forward/converse robustness and contextual equivalence for both term and atom wires.}\par}
-The result preserves exact successful-transition counts at arbitrary original
-addressed sites, including inside boxes; see
-Section~\ref{sec:copying-contraction-idempotence}.
-\item {\raggedright\completedtask{Complete contraction associativity and commutativity, copying, garbage
-collection, pulling contraction and weakening through boxes, and parametricity.}\par}
-Section~\ref{sec:copying-four-templates} explains the completed families and their dependencies.
-The original seven-family task is retained below, with each completed family
-and sub-obligation struck through.
-\begin{itemize}
-\item {\raggedright\completedtask{Complete contraction associativity: output closure, input safety,
-forward and converse robustness, and exact contextual equivalence for both wire sorts.}\par}
-\item {\raggedright\completedtask{Complete contraction commutativity with the original ordered crossing,
-including both robustness directions and exact contextual equivalence.}\par}
-\item {\raggedright\completedtask{Complete garbage collection for the paper's actual copyable payload,
-including all-context input safety, both robustness directions and exact observations.}\par}
-\item {\raggedright\completedtask{Complete pulling weakening through boxes, including universal forward
-and converse robustness and exact contextual equivalence.}\par}
-\begin{itemize}
-\item {\raggedright\completedtask{Retain the full canonical distributor in the copying overlap and
-construct its two actual idempotence corrections and original residual specimen.}\par}
-\item {\raggedright\completedtask{Classify arbitrary original reverse rewrites and construct matching
-left rewrites with the original larger box interface and unchanged rule premises.}\par}
-\end{itemize}
-\item {\raggedright\completedtask{Complete the copying template.}\par}
-\begin{itemize}
-\item {\raggedright\completedtask{Define the literal token-erased Figure 17 pair, prove output closure and padding,
-and construct the actual copying request at every input.}\par}
-\item {\raggedright\completedtask{Prove the distinguished-input two-versus-zero consumption prefix.}\par}
-\item {\raggedright\completedtask{Prove the two-copy interchange with its actual three payload copies,
-residual tree and ordered resource distributors.}\par}
-\item {\raggedright\completedtask{Prove all-input safety and universal forward and converse robustness.}\par}
-\end{itemize}
-\item {\raggedright\completedtask{Complete pulling contraction through boxes.}\par}
-\begin{itemize}
-\item {\raggedright\completedtask{Define the original pair and prove output closure, input safety and padding.}\par}
-\item {\raggedright\completedtask{Prove the literal stable beta diamond and exact local observations.}\par}
-\item {\raggedright\completedtask{Prove that both actual four-input copying rows are genuine sharing trees,
-retaining every canonical weakening branch.}\par}
-\item {\raggedright\completedtask{Reconstruct the whole corrected copying successor,
-including fixed external boundaries and exhaustive coverage of every original edge.}\par}
-\item {\raggedright\completedtask{Prove universal forward robustness for all nine original rules
-and arbitrary recursive unrestricted contexts.}\par}
-\item {\raggedright\completedtask{Prove universal converse robustness and contextual consequences.}\par}
-\end{itemize}
-\item {\raggedright\completedtask{Complete parametricity.}\par}
-\begin{itemize}
-\item {\raggedright\completedtask{Define the two literal Figure 20 families, with arbitrary term contraction tree,
-and prove output closure, input safety and padding.}\par}
-\item {\raggedright\completedtask{Construct the concrete private-store beta/read/copy execution prefix with
-its exact nine-transition cost and arbitrary original stable argument.}\par}
-\item {\raggedright\completedtask{Construct the actual private-read correction through one copying
-and two garbage-collection witnesses, with the store and every unused argument output retained.}\par}
-\item {\raggedright\completedtask{Prove the larger abstractions' actual one-step beta diagrams,
-retaining the unevaluated original callback on both sides.}\par}
-\item {\raggedright\completedtask{Construct the compensated residual specimens, including the copying and
-garbage-collection dependencies, and prove both robustness directions.}\par}
-The following completed parts of this obligation are retained explicitly;
-Section~\ref{sec:parametricity-family-diagrams} gives their dependency map.
-\par\smallskip
-\par\noindent {\raggedright\completedtask{Enumerate, isolate and double the literal original large and small
-families, prove their boundary synchrony, and compensate the private tree
-through an actual common input-permutation context.}\par}
-\par\noindent {\raggedright\completedtask{Construct both actual copying-family rewrites and genuine enlarged
-parametricity residuals, retaining all original canonical resource rows.}\par}
-\par\noindent {\raggedright\completedtask{Identify both larger-beta sources with original whole-family
-application contexts and prove the complete one-versus-one family diagram.}\par}
-\par\noindent {\raggedright\completedtask{Identify both smaller-beta sources with original whole-family
-application contexts and prove the complete nine-versus-one family diagram,
-including explicit Copying, GC, GC and sharing corrections.}\par}
-\par\noindent {\raggedright\completedtask{Prove exact lambda-family search and rootedness transport, then
-construct the forward improvement and converse overhead quasi-clauses
-without assuming a root for the corrected intermediate state.}\par}
-\par\noindent {\raggedright\completedtask{Construct matching allocation rewrites with shallow lambda operands
-preserved, and the complete unary and binary arithmetic residual branches.}\par}
-\par\noindent {\raggedright\completedtask{Extract all canonical copying and beta situations from arbitrary original
-host rewrites, and discharge every remaining preserved and deep/mixed
-operation overlap, including assignment and store access.}\par}
-\par\noindent {\raggedright\completedtask{Assemble exhaustive forward and converse parametricity robustness and
-derive its contextual consequences.}\par}
-\par
-\end{itemize}
-\end{itemize}
-\end{itemize}
-\end{itemize}
-\clearpage
-\item \textbf{Weakening and the final example.}
-\begin{itemize}
-\item {\raggedright\completedtask{Prove the syntactic weakening and substitution identities.}\par}
-\item Prove the semantic weakening laws.
-The semantic weakening induction remains open. Section~\ref{sec:local-semantic-weakening}
-now proves the following prerequisites, retained here with strikethrough.
-\begin{itemize}
-\item {\raggedright\completedtask{Construct finite Idem and BPullW calculations and prove exact contextual soundness, including recursive sites and padding.}\par}
-\item {\raggedright\completedtask{Normalize the original unary and binary zero-fed distributor forests for every finite resource count and both sharing sorts.}\par}
-\item {\raggedright\completedtask{Pull and absorb the unary distributor of a boxed unused resource when the original body has no other free resources, for arbitrary binder count.}\par}
-\item Extend the boxed calculation to retain additional free resources, and
-extract the selected unused row through every original translation constructor.
-\item Assemble the full term-weakening induction and its environment-extension consequence.
-\end{itemize}
-\item Assemble Figure~22's equivalence chain.
-\item Obtain Proposition~12.2 for arbitrary distinct-list environments.
-\end{itemize}
+Then assemble Figure~22's equivalence chain and obtain Proposition~12.2 for
+arbitrary distinct-list environments.
 \end{enumerate}
-Completed syntactic weakening and substitution identities do not discharge the
-semantic weakening item. No claim of completion is made until the final
-proposition passes the build and axiom audit.
+No claim of completion is made until the final general-environment theorem
+passes the build and axiom audit. The current estimate remains 70--80\% of
+mathematical effort, with low confidence; the number of completed declarations
+or checklist items is not a measure of the remaining difficulty.

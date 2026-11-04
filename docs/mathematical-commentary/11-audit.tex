@@ -1055,3 +1055,14 @@ The full build passes 1109 jobs. All 7570 distinct axiom audits use only
 interpreter, both arbitrary-size distributor calculations, the boxed
 normalization, and all ordered graph isomorphisms.\par}
 \lean{Copying/Audit}{7079}{7130}{Copying.Audit: local semantic weakening}
+
+\subsection{Weakening with retained free resources}
+{\raggedright
+The full build passes 1115 jobs. All 7621 distinct axiom audits use only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}; no
+\texttt{sorryAx} or project-specific axiom occurs. Six new modules contain
+51 audited public declarations. These include exhaustive row coverage,
+the actual Idem filling, arbitrary-environment boxed normalization, unary
+and abstraction induction steps, exact addressed observations, and
+nonempty mixed-environment and nested-box instances.\par}
+\lean{Copying/Audit}{7132}{7183}{Copying.Audit: retained-resource weakening}
